@@ -1,0 +1,2902 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Final Fantasy VII · Guide express</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-express" class="compact"><a href="../../" style="position:fixed;right:14px;bottom:14px;z-index:9999;background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:8px 14px;font:600 14px/1 system-ui,sans-serif;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)" class="no-print">&#8592; Tous les guides</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="hero">
+  <div class="glyph-row" aria-hidden="true"><div class="glyph">☽</div><div class="glyph">✦</div><div class="glyph">☉</div></div>
+  <p class="eyebrow">Guide express</p>
+  <div class="titre">Final Fantasy <em>VII</em></div>
+  <p class="sous-titre">Le guide complet en version resserrée : l&#x27;essentiel de chaque lieu, sans rien rater.</p>
+  <p class="meta">19 parties · généré le 21 septembre 2026<span class="lien-pdf"> · <a href="final-fantasy-vii-express.pdf">version PDF</a></span></p>
+  <div class="progress-wrap">
+    <div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <button class="reset-btn" id="resetBtn" type="button">Réinitialiser la progression</button>
+  </div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <button class="btn-plier" id="btnPlier" type="button">Tout déplier</button>
+    <div class="marque">Final Fantasy <em>VII</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="#00-mode-demploi"><span class="num">00</span><span class="libelle">Mode d&#x27;emploi</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="#01-les-reacteurs-n1-et-n5"><span class="num">01</span><span class="libelle">Les réacteurs n°1 et n°5</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="#02-wall-market-les-egouts-et-le-pilier"><span class="num">02</span><span class="libelle">Wall Market, les égouts et le pilier</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="#03-le-batiment-shinra"><span class="num">03</span><span class="libelle">Le Bâtiment Shinra</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="#04-kalm-le-marais-la-mine-de-mythril-et-junon"><span class="num">04</span><span class="libelle">Kalm, le marais, la Mine de Mythril et Junon</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="#05-le-cargo-costa-del-sol-le-mont-corel-et-le-gold-saucer"><span class="num">05</span><span class="libelle">Le cargo, Costa del Sol, le Mont Corel et le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="#06-gongaga-le-canyon-cosmo-et-nibelheim"><span class="num">06</span><span class="libelle">Gongaga, le Canyon Cosmo et Nibelheim</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="#07-le-village-de-la-fusee-et-le-temple-des-anciens"><span class="num">07</span><span class="libelle">Le Village de la Fusée et le Temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="#08-la-cite-des-anciens-et-le-grand-glacier"><span class="num">08</span><span class="libelle">La Cité des Anciens et le Grand Glacier</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="#09-la-falaise-de-gaea-le-cratere-nord-et-la-fuite-de-junon"><span class="num">09</span><span class="libelle">La Falaise de Gaëa, le Cratère Nord et la fuite de Junon</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="#10-mideel-et-les-quatre-mega-materias"><span class="num">10</span><span class="libelle">Mideel et les quatre Méga-Matérias</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="#11-le-retour-a-midgar-et-la-grotte-nord"><span class="num">11</span><span class="libelle">Le retour à Midgar et la Grotte Nord</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="#12-youfie-vincent-et-leurs-quetes"><span class="num">12</span><span class="libelle">Youfie, Vincent et leurs quêtes</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="#13-le-gold-saucer"><span class="num">13</span><span class="libelle">Le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="#14-lelevage-de-chocobos-et-les-grottes-a-materia"><span class="num">14</span><span class="libelle">L&#x27;élevage de chocobos et les grottes à Matéria</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="#15-armes-ultimes-limites-materias-et-talents"><span class="num">15</span><span class="libelle">Armes ultimes, Limites, Matérias et Talents</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="#16-lavion-gelnika-et-les-armes"><span class="num">16</span><span class="libelle">L&#x27;avion Gelnika et les Armes</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="#99-le-recapitulatif-des-manquables"><span class="num">99</span><span class="libelle">Le récapitulatif des manquables</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="#sources"><span class="num">✦</span><span class="libelle">Sources</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section replie" id="section-1">
+<header class="tete-section">
+<p class="eyebrow">Avant de partir</p>
+<h1 id="00-mode-demploi">Mode d&#x27;emploi</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-1"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-1">
+<h2 id="ce-guide-express" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Ce guide express</span></h2>
+<p>La version courte du guide complet de Final Fantasy VII (version de 1997, traduction française d'origine). Mêmes rubriques, mais resserrées : chaque partie regroupe plusieurs lieux et va droit au but.</p>
+<ul>
+<li><strong>Objectif</strong> : ce que tu viens faire ici.</li>
+<li><strong>Itinéraire</strong> : le trajet en quelques lignes.</li>
+<li><strong>Déroulé</strong> : les étapes dans l'ordre, coffres et boss compris, avec l'astuce qui règle chaque combat.</li>
+<li><strong>Butin</strong> : les objets qui comptent. Armes, armures, accessoires, Matérias, objets clés. Les potions de passage ont été regroupées.</li>
+<li><strong>Conseils et pièges</strong> : ce qui change vraiment quelque chose dans la zone.</li>
+<li><strong>Alertes</strong> : les ⏳ et les ⚠️, à lire avant de quitter le lieu.</li>
+<li><strong>Check-list</strong> : à cocher au fur et à mesure.</li>
+</ul>
+<p>Les parties 01 à 11 suivent l'histoire ; les parties 12 à 16 regroupent les quêtes annexes. Pour un tableau de butin exhaustif ou le détail d'une énigme, reporte-toi au <strong>guide complet</strong>.</p>
+<h2 id="les-six-regles-dor" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Les six règles d'or</span></h2>
+<ol>
+<li><strong>Les Matérias font tout</strong> : sorts, invocations, commandes et bonus viennent d'elles. Relie-les sur les doubles-orifices (<strong>Tout + Restaurer</strong>).</li>
+<li><strong>Retire les Matérias</strong> d'un personnage qui quitte l'équipe : elles partent avec lui.</li>
+<li><strong>Garde toujours une Matéria Talent de l'ennemi équipée</strong> : plusieurs talents ne s'apprennent qu'une fois.</li>
+<li><strong>Vole les boss et les ennemis rares</strong> : certaines armures uniques ne s'obtiennent que comme ça.</li>
+<li><strong>Recrute Youfie et Vincent</strong> : le jeu ne les annonce jamais.</li>
+<li><strong>Lis les ⏳ et les ⚠️</strong> avant de quitter un lieu : Midgar, le Temple des Anciens et la quête d'Utai se ferment pour de bon.</li>
+</ol>
+<h2 id="legende" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Légende</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : objet ou événement perdu si tu ne le fais pas maintenant.</li>
+<li class="alerte">⚠️ Point de non-retour ou précaution importante.</li>
+<li>Les noms sont ceux de la <strong>version française d'origine</strong> : <strong>Clad</strong>, <strong>Aéris</strong>, <strong>Youfie</strong>, <strong>Nanaki</strong>, <strong>Utai</strong>.</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-2">
+<header class="tete-section">
+<p class="eyebrow">Partie 01</p>
+<h1 id="01-les-reacteurs-n1-et-n5">Les réacteurs n°1 et n°5</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-2"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-2">
+<h2 id="objectif" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Faire sauter deux <strong>réacteurs Mako</strong> avec <strong>Avalanche</strong>, rejoindre le bar <strong>Septième ciel</strong> au Secteur 7, puis atterrir dans l'église d'<strong>Aéris</strong> au Secteur 5. Le chapitre des bases : combats, Matérias, et premiers points d'affection.</p>
+<h2 id="itineraire" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Réacteur n°1</strong> : les gardes, l'ascenseur, les échelles, le cœur du réacteur, la fuite.</li>
+<li><strong>Secteur 8</strong> (la marchande de fleurs), puis <strong>Secteur 7</strong> : le bar, le marchand d'armes, la boutique.</li>
+<li><strong>Le train</strong> pour le Secteur 5, le tunnel, le <strong>réacteur n°5</strong>.</li>
+<li><strong>L'église</strong>, les toits, les <strong>taudis du Secteur 5</strong>, la maison d'Aéris, l'aire de jeu.</li>
+</ol>
+<h2 id="deroule" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li>Ramasse les <strong>2 Potions</strong> près des premiers gardes. Dans le réacteur, fouille la petite salle en bas de l'écran avant de reparler à Jesse (<strong>Queue de Phénix</strong>), puis la <strong>Potion</strong> devant elle.</li>
+<li>Dans la grande allée : la <strong>Matéria Restaurer</strong>. <strong>Boss : Scorpion gardien</strong> — n'attaque pas quand il lève la queue. Équipe le <strong class="objet">Fusil d'attaque</strong> gagné à Barret, puis sors avant la fin du compte à rebours.</li>
+<li><strong>Secteur 8</strong> : achète une fleur à 1 Gil à Aéris en répondant « <strong>Rien… écoute…</strong> » (affection), puis <strong>Potion</strong> près des lampadaires.</li>
+<li><strong>Secteur 7</strong> : Barret te paie <strong>1 500 Gils</strong>. Au <strong>premier étage du marchand d'armes</strong>, l'homme à droite offre la <strong>Matéria Tout</strong>, et un coffre cache un <strong>Ether</strong>. Achète la <strong>Matéria Feu</strong> dans le préfabriqué.</li>
+<li><strong>Train du Secteur 5</strong>, pendant l'alarme : parle aux passagers (<strong>Queue de Phénix</strong> au premier wagon, <strong>Super potion</strong> au deuxième) et rattrape le voleur du troisième (« <strong>Ça va</strong> » : 100 Gils rendus).</li>
+<li><strong>Tunnel</strong> : conduit de gauche (<strong>Ether</strong>), <strong>Potion</strong> et <strong>Tente</strong> près de Jesse et Biggs. <strong>Ether</strong> à la sortie de l'ascenseur. Porte à trois boutons : appuie en même temps que tes coéquipiers.</li>
+<li><strong>Boss : Briseur de l'air</strong>, faible à la Foudre. Il frappe le personnage qui lui fait face.</li>
+<li><strong>Église</strong> : pour éviter les combats d'Aéris pendant la fuite, pousse les barils dans l'ordre (près du toit et de l'escalier, puis près du toit et du mur au fond à gauche, puis le plus proche du mur au fond à droite).</li>
+<li><strong>Taudis du Secteur 5</strong> : dans la maison du petit garçon, lis l'affiche (<strong>1er prospectus du Turtle's Paradise</strong>) et <strong>laisse les 5 Gils</strong> du tiroir secret. <strong>Jardin d'Aéris</strong> : <strong>Ether</strong> à droite et <strong>Matéria Couverture</strong> au bout à gauche. Chez Aéris, <strong>Potion</strong> et <strong>Queue de Phénix</strong> près de la porte ; descends l'escalier <strong>en marchant</strong>.</li>
+</ol>
+<h2 id="butin" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Restaurer</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Grande allée du réacteur n°1</td>
+</tr>
+<tr>
+<td><strong>Fusil d'attaque</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Barret</span></td>
+<td>Scorpion gardien</td>
+</tr>
+<tr>
+<td><strong>Tout</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Premier étage du marchand d'armes, Secteur 7</td>
+</tr>
+<tr>
+<td><strong>Feu</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Boutique du préfabriqué, Secteur 7</td>
+</tr>
+<tr>
+<td><strong>Couverture</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Jardin d'Aéris, au bout à gauche</td>
+</tr>
+<tr>
+<td><strong>Ether turbo</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Le petit garçon, si tu as laissé les 5 Gils</td>
+</tr>
+<tr>
+<td><strong>Queue de Phénix</strong> ×3, <strong>Super potion</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Réacteur n°1, passagers du train, chez Aéris</td>
+</tr>
+<tr>
+<td><strong>Ether</strong> ×5, <strong>Potion</strong> ×6, <strong>Tente</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Réacteurs, tunnel, jardin, Secteur 7</td>
+</tr>
+<tr>
+<td><strong>1 500 Gils</strong>, <strong>100 Gils</strong></td>
+<td><span class="badge gils">Gils</span></td>
+<td>Barret, le voleur du train</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Les Matérias font tout</strong> : elles donnent sorts et commandes, et montent en niveau avec les AP. <strong>Tout + Restaurer</strong> soigne tout le groupe.</li>
+<li><strong>Barret frappe à distance</strong> sans pénalité : garde-le en seconde ligne.</li>
+<li><strong>La fleur</strong>, puis à qui tu la donnes (Tifa ou Marlène), compte pour la soirée du Gold Saucer.</li>
+</ul>
+<h2 id="alertes" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : les objets des <strong>passagers du train</strong>, seulement pendant l'alarme.</li>
+<li class="alerte manquable">⏳ Manquable : l'<strong>Ether turbo</strong>, si tu prends les 5 Gils du tiroir.</li>
+<li class="alerte">⚠️ <strong>Tout Midgar</strong> sera perdu en quittant la ville, trois chapitres plus loin.</li>
+</ul>
+<h2 id="check-list" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Matéria Restaurer</strong>, Scorpion gardien vaincu, <strong class="objet">Fusil d'attaque</strong> équipé</li>
+<li class="tache"><input type="checkbox"> Fleur achetée à Aéris</li>
+<li class="tache"><input type="checkbox"> <strong>Matéria Tout</strong>, Ether du marchand d'armes, <strong>Matéria Feu</strong></li>
+<li class="tache"><input type="checkbox"> Objets des passagers et 100 Gils du voleur</li>
+<li class="tache"><input type="checkbox"> Briseur de l'air vaincu</li>
+<li class="tache"><input type="checkbox"> Prospectus n°1 lu, 5 Gils laissés</li>
+<li class="tache"><input type="checkbox"> <strong>Matéria Couverture</strong> et Ether du jardin</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-3">
+<header class="tete-section">
+<p class="eyebrow">Partie 02</p>
+<h1 id="02-wall-market-les-egouts-et-le-pilier">Wall Market, les égouts et le pilier</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-3"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-3">
+<h2 id="objectif-2" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Retrouver <strong>Tifa</strong> chez <strong>Don Cornéo</strong> grâce au déguisement le plus réussi, traverser les égouts et le cimetière des trains, assister à la chute du pilier du Secteur 7, puis grimper jusqu'au <strong>Bâtiment Shinra</strong>.</p>
+<h2 id="itineraire-2" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Wall Market</strong> : magasin de vêtements, bar, gymnase, restaurant, pharmacie, auberge, magasin de Matérias, Honey Bee Inn.</li>
+<li><strong>Le palais de Cornéo</strong>, puis les <strong>égouts</strong> et le <strong>cimetière des trains</strong>.</li>
+<li><strong>Le pilier</strong> du Secteur 7.</li>
+<li><strong>Aire de jeu</strong>, <strong>Secteur 5</strong>, magasin <strong>GUN</strong>, puis <strong>l'ascension du câble</strong>.</li>
+</ol>
+<h2 id="deroule-2" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li>Au <strong>Honey Bee Inn</strong>, demande à l'homme en rose « <strong>Connaitrais-tu Tifa ?</strong> ». Aéris propose le déguisement.</li>
+<li><strong>Les quatre meilleures pièces</strong> (elles garantissent que Cornéo te choisit) :
+<ul>
+<li><strong class="objet">Robe soie</strong> : au bar, l'homme à droite de l'entrée ; demande une robe <strong>douce et chatoyante</strong> ;</li>
+<li><strong class="objet">Perruque-blonde</strong> : <strong>gagne</strong> le concours d'accroupissements du gymnase (<strong>carré, croix, rond</strong> en boucle, 30 secondes) ;</li>
+<li><strong class="objet">Parfum sexy</strong> : plat à 70 Gils au restaurant, « <strong>C'était bon</strong> », <strong>Coupons pharmacie</strong> échangés contre le <strong>Digestif</strong>, apporté à la femme des toilettes du bar ;</li>
+<li><strong class="objet">Diadème diamants</strong> : achète l'objet à <strong>200 Gils</strong> du distributeur de l'auberge la nuit, rapporte-le au vendeur de Matérias.</li>
+</ul>
+</li>
+<li>Bonus : la <strong class="objet">Carte membre</strong> (homme en bas à droite de l'entrée) ouvre le <strong>Honey Bee Inn</strong> ; demande « <strong>Fais-les se maquiller</strong> » pour plus de beauté.</li>
+<li><strong>Palais</strong> : <strong>Ether</strong> derrière Tifa et Aéris, à la salle des tortures ; <strong>Hyper</strong> derrière le lit de Cornéo. <strong>Queue de Phénix</strong> à droite de la salle si tu n'es pas choisi. Pour viser Barret au rendez-vous : « <strong>Ummm…</strong> » puis « <strong>Si, il s'appelle Barret</strong> ».</li>
+<li><strong>Boss : Aps</strong>, faible à la Foudre et à la Glace. Son raz-de-marée touche tout le groupe s'il te fait face : attaque-le dans le dos.</li>
+<li><strong>Égouts</strong> : <strong>Potion</strong>, puis la <strong>Matéria Voler</strong>. <strong>Cimetière des trains</strong> : <strong>3 Super potions</strong>, <strong>Écran sonore</strong>, <strong>Ether</strong>, plusieurs <strong>Potions</strong>. <strong>Vole le Bâton de frappe</strong> sur un <strong>Eligor</strong>.</li>
+<li><strong>Pilier</strong> : achète tes objets à l'homme en rose et sauvegarde. <strong>Boss : Réno</strong> — frappe les <strong>pyramides</strong> pour libérer tes équipiers.</li>
+<li>Retourne à l'<strong>aire de jeu</strong> : <strong>Matéria Sentir</strong> en bas à droite. Récupère l'<strong>Ether turbo</strong> du petit garçon (5 Gils laissés).</li>
+<li>Achète <strong>3 Batteries</strong> (300 Gils) au magasin <strong>GUN</strong> du Wall Market, puis grimpe : une batterie à chaque générateur. Saute sur la barre quand elle se rapproche. Poser la <strong>troisième batterie</strong> rapporte un <strong>Ether</strong>.</li>
+</ol>
+<h2 id="butin-2" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Robe soie</strong>, <strong>Perruque-blonde</strong>, <strong>Parfum sexy</strong>, <strong>Diadème diamants</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Quêtes du Wall Market</td>
+</tr>
+<tr>
+<td><strong>Carte membre</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Homme en bas à droite de l'entrée</td>
+</tr>
+<tr>
+<td><strong>Voler</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Égouts</td>
+</tr>
+<tr>
+<td><strong>Bâton de frappe</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Aéris</span></td>
+<td>À voler sur Eligor, cimetière des trains</td>
+</tr>
+<tr>
+<td><strong>Sentir</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Aire de jeu du Secteur 6, après le pilier</td>
+</tr>
+<tr>
+<td><strong>Batterie</strong> ×3</td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Magasin GUN, 300 Gils</td>
+</tr>
+<tr>
+<td><strong>Hyper</strong>, <strong>Écran sonore</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Chambre de Cornéo, cimetière des trains</td>
+</tr>
+<tr>
+<td><strong>Super potion</strong> ×3, <strong>Ether</strong> ×4, <strong>Potion</strong> ×4, <strong>Ether turbo</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Palais, cimetière, générateur, petit garçon</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-2" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Les quatre meilleures pièces</strong> évitent deux combats au palais et ouvrent les répliques qui comptent pour Barret.</li>
+<li><strong>Eligor</strong> n'apparaît qu'une fois sur quatre au deuxième écran du cimetière : insiste pour le Bâton de frappe.</li>
+<li><strong>Équipe Voler</strong> sur un personnage rapide : beaucoup d'ennemis de Midgar portent des objets utiles.</li>
+</ul>
+<h2 id="alertes-2" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : <strong>les pièces du déguisement</strong> et le choix de Cornéo, la séquence ne se rejoue pas.</li>
+<li class="alerte manquable">⏳ Manquable : la <strong>Matéria Sentir</strong> si tu ne repasses pas par l'aire de jeu, et le <strong class="objet">Bâton de frappe</strong>.</li>
+<li class="alerte">⚠️ Midgar devient inaccessible après le Bâtiment Shinra : vide les boutiques maintenant.</li>
+</ul>
+<h2 id="check-list-2" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Robe soie, Perruque-blonde, Parfum sexy, Diadème diamants</li>
+<li class="tache"><input type="checkbox"> Choisi par Cornéo</li>
+<li class="tache"><input type="checkbox"> Ether et Hyper du palais</li>
+<li class="tache"><input type="checkbox"> Aps vaincu</li>
+<li class="tache"><input type="checkbox"> <strong>Matéria Voler</strong> et objets du cimetière</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bâton de frappe</strong> volé</li>
+<li class="tache"><input type="checkbox"> Réno vaincu au pilier</li>
+<li class="tache"><input type="checkbox"> <strong>Matéria Sentir</strong>, Ether turbo</li>
+<li class="tache"><input type="checkbox"> 3 Batteries, Ether du générateur</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-4">
+<header class="tete-section">
+<p class="eyebrow">Partie 03</p>
+<h1 id="03-le-batiment-shinra">Le Bâtiment Shinra</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-4"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-4">
+<h2 id="objectif-3" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Monter jusqu'au 67e étage pour sauver <strong>Aéris</strong>, recruter <strong>Nanaki</strong>, puis t'enfuir de Midgar à moto. Quatre Matérias, trois coupons et un mot de passe à ne pas rater.</p>
+<h2 id="itineraire-3" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Rez-de-chaussée</strong> et <strong>1er étage</strong> (magasin), puis l'ascenseur jusqu'au <strong>59e</strong>.</li>
+<li><strong>60e à 65e</strong> : les statuettes, le mot de passe, les coupons, le gymnase, la maquette.</li>
+<li><strong>66e à 68e</strong> : le conseil, le laboratoire de Hojo, le boss.</li>
+<li><strong>La fuite</strong> : 69e, 70e, puis l'autoroute.</li>
+</ol>
+<h2 id="deroule-3" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li>Passe <strong>par-devant</strong> (ascenseur). Au rez-de-chaussée, fond à droite : <strong>2e prospectus du Turtle's Paradise</strong>. Les deux coffres fermés du 1er étage attendent le disque 3.</li>
+<li><strong>59e</strong> : bats les gardes rouges, <strong class="objet">Carte 60</strong>. <strong>60e</strong> : traverse sans te faire voir (la voie s'ouvre après quatre échecs). <strong>61e</strong> : l'homme en costume gris, réponds « <strong>…</strong> » : <strong>Carte 62</strong>.</li>
+<li><strong>62e</strong> : le mot de passe de Domino est <strong>MAKO</strong>. Du <strong>premier coup</strong>, tu gagnes la <strong>Matéria El. Base</strong>. <strong>Carte 65</strong>.</li>
+<li><strong>63e</strong>, trois portes seulement : <strong>tout en haut à droite</strong>, puis la <strong>plus haute de la troisième rangée</strong> (<strong>Coupon A</strong>), le conduit en tournant à gauche (<strong>Coupon B</strong>), puis la <strong>troisième porte</strong> à gauche (<strong>Coupon C</strong>). À l'ordinateur central : <strong class="objet">Pendentif étoilé</strong>, <strong class="objet">Quatre orifices</strong>, <strong>Matéria Tout</strong>.</li>
+<li><strong>64e</strong> : ⚠️ <strong>mets 250 Gils dans le distributeur</strong> et tape dessus une fois — ça rapportera deux Sources au disque 3. Vestiaires : <strong>Queue de Phénix</strong> et <strong>Ether</strong>.</li>
+<li><strong>65e</strong> : reconstitue la maquette (cinq coffres de Secteur) : <strong>Carte 66</strong>. <strong>66e</strong> : monte sur les toilettes pour espionner.</li>
+<li><strong>67e</strong> : vole le <strong class="objet">Bord-dur</strong> aux SOLDAT : 3e. <strong>Matéria Poison</strong> au fond du laboratoire. <strong>Boss : Specimen H0512</strong>.</li>
+<li><strong>Retourne dans la cellule d'Aéris : Matéria Talent de l'ennemi.</strong> Puis <strong class="objet">Carte 68</strong> et <strong>2 Potions</strong> sur la passerelle.</li>
+<li>En cellule : « <strong>Je me demande comment va Aéris ?</strong> », puis « <strong>Dormir un peu</strong> ». Au réveil, libère tout le monde, <strong>2 Potions</strong> dans le couloir aux traces de sang.</li>
+<li><strong>70e</strong> : <strong>retire les Matérias</strong> des personnages hors combat. <strong>Boss : Cent artilleurs</strong>, puis <strong>Hélimitrailleuse</strong>, puis <strong>duel Clad contre Rufus</strong>.</li>
+<li><strong>Moto</strong> : protège la camionnette, puis <strong>boss : Boule motorisée</strong>.</li>
+</ol>
+<h2 id="butin-3" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>El. Base</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Mot de passe MAKO du premier coup</td>
+</tr>
+<tr>
+<td><strong>Pendentif étoilé</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coupon A</td>
+</tr>
+<tr>
+<td><strong>Quatre orifices</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Coupon B</td>
+</tr>
+<tr>
+<td><strong>Tout</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Coupon C</td>
+</tr>
+<tr>
+<td><strong>Bord-dur</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Clad</span></td>
+<td>À voler sur un SOLDAT : 3e</td>
+</tr>
+<tr>
+<td><strong>Poison</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Laboratoire de Hojo</td>
+</tr>
+<tr>
+<td><strong>Talent de l'ennemi</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Cellule d'Aéris, après le boss</td>
+</tr>
+<tr>
+<td><strong>Carte 60</strong> à <strong>Carte 68</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Étages successifs</td>
+</tr>
+<tr>
+<td><strong>Élixir</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Escaliers de derrière</td>
+</tr>
+<tr>
+<td><strong>Queue de Phénix</strong>, <strong>Ether</strong>, <strong>Potion</strong> ×4</td>
+<td><span class="badge neutre">Soin</span></td>
+<td>64e, passerelle, couloir</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-3" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>La Matéria Talent de l'ennemi</strong> ouvre toute la collection de techniques bleues : ne quitte pas le 67e sans elle.</li>
+<li><strong>Garde une Matéria Talent de l'ennemi équipée</strong> désormais : tu apprendras <strong>Magique Matra</strong> dès la sortie de Midgar.</li>
+<li><strong>Au 70e, Clad affronte Rufus seul</strong> : donne-lui les meilleures Matérias avant.</li>
+</ul>
+<h2 id="alertes-3" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : <strong class="objet">El. Base</strong> (mot de passe du premier coup), les <strong>trois coupons</strong>, la <strong>Matéria Talent de l'ennemi</strong>.</li>
+<li class="alerte manquable">⏳ Manquable : les <strong>250 Gils du distributeur</strong> — sans eux, pas de Source spirituelle ni de Source de rapidité au disque 3.</li>
+<li class="alerte">⚠️ <strong>Point de non-retour</strong> : quitter Midgar ferme la ville jusqu'à la fin du disque 2.</li>
+</ul>
+<h2 id="check-list-3" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Prospectus n°2</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">El. Base</strong> (MAKO du premier coup)</li>
+<li class="tache"><input type="checkbox"> Coupons A, B, C : <strong class="objet">Pendentif étoilé</strong>, <strong class="objet">Quatre orifices</strong>, <strong class="objet">Tout</strong></li>
+<li class="tache"><input type="checkbox"> 250 Gils dans le distributeur, distributeur frappé</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bord-dur</strong> volé, <strong>Matéria Poison</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Matéria Talent de l'ennemi</strong></li>
+<li class="tache"><input type="checkbox"> Rufus et Boule motorisée vaincus</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-5">
+<header class="tete-section">
+<p class="eyebrow">Partie 04</p>
+<h1 id="04-kalm-le-marais-la-mine-de-mythril-et-junon">Kalm, le marais, la Mine de Mythril et Junon</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-5"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-5">
+<h2 id="objectif-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Écouter le récit de Clad à <strong>Kalm</strong>, traverser le marais du <strong>Zolom</strong>, la <strong>Mine de Mythril</strong>, puis réussir les deux <strong>parades</strong> de <strong>Junon</strong> avant d'embarquer sur le cargo. Beaucoup de Sources et deux Matérias uniques.</p>
+<h2 id="itineraire-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Kalm</strong> : les maisons, l'auberge, le flash-back de Nibelheim.</li>
+<li><strong>La ferme de chocobos</strong>, puis <strong>le marais</strong>.</li>
+<li><strong>La Mine de Mythril</strong>, avec un détour possible par le <strong>Fort Condor</strong>.</li>
+<li><strong>Junon</strong> : la plage, Priscilla, la ville haute, les deux parades.</li>
+</ol>
+<h2 id="deroule-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Autour de Midgar</strong>, apprends <strong>Magique Matra</strong> sur les <strong>Sweepers personnalisés</strong>.</li>
+<li><strong>Kalm</strong> : <strong>3 Ethers</strong> dans les placards et l'armoire des maisons ; dans la maison la plus à l'est, le grenier (escalier en colimaçon) cache le <strong class="objet">Pacificateur</strong> et la commode du premier étage une <strong>Source de protection</strong>.</li>
+<li><strong>Flash-back</strong> : dans la chambre de Tifa à Nibelheim, <strong>joue du piano</strong> (« <strong>Ouais, j'ai fait quelques notes</strong> ») — ça rapporte une Matéria au disque 2.</li>
+<li>Après le récit, <strong>ouvre cinq fois</strong> la commode de la chambre : <strong>Mégalixir</strong>. Tu reçois le <strong class="objet">PHS</strong>.</li>
+<li><strong>Ferme de chocobos</strong> : dis « <strong>Wark</strong> » à un chocobo (<strong>Matéria Choco/Mog</strong>) et <strong>achète l'Appât-chocobo</strong> (2 000 Gils) à Choco Billy, plus des Légumes Curiel.</li>
+<li><strong>Marais</strong> : traverse à dos de chocobo, loin du Zolom. Dès le niveau 12, tu peux le battre pour le talent <strong>Bêta</strong>.</li>
+<li><strong>Mine de Mythril</strong> : <strong>Ether</strong> et <strong>Tente</strong> à droite de l'entrée, <strong>Matéria Longue portée</strong> en haut de la liane de gauche, <strong>Source spirituelle</strong> dans la salle de gauche, <strong>Élixir</strong> et <strong>Super potion</strong> au nord. Talent <strong>Lance-flammes</strong> sur les <strong>Dragons voûtés</strong>.</li>
+<li><strong>Facultatif</strong> : le <strong>Fort Condor</strong> (« <strong>Nous allons t'aider</strong> ») et <strong>Youfie</strong> dans les forêts (chapitre 12). Vole le <strong class="objet">Boomerang</strong> aux <strong>Formule</strong>.</li>
+<li><strong>Junon</strong> : <strong>boss : Grand œdème</strong> sur la plage, puis le bouche-à-bouche (<strong>41 respirations</strong>, jamais plus de dix d'affilée). Le lendemain, <strong>Priscilla</strong> donne la <strong>Matéria Shiva</strong> et le sifflet.</li>
+<li><strong>Première parade</strong> : glisse-toi derrière une rangée incomplète et martèle Valider. Plus de 50 d'audience = <strong>5 000 Gils</strong>.</li>
+<li><strong>Ville haute</strong> : le <strong>hall des débutants</strong> (par le soldat du magasin adjacent) cache une <strong>2e Matéria Talent de l'ennemi</strong> ; les bâtiments donnent <strong>Source spirituelle</strong>, <strong>Source de chance</strong>, <strong>Source de pouvoir</strong>, <strong>Source de protection</strong>, <strong>Source de rapidité</strong> et deux <strong>Soldat 1/35</strong>.</li>
+<li><strong>Seconde parade</strong> : 100 points ou plus = <strong class="objet">Voleur fou</strong> (Clad), 60 à 90 = <strong>Matéria Super HP</strong>.</li>
+</ol>
+<h2 id="butin-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pacificateur</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td>Grenier de la maison est de Kalm</td>
+</tr>
+<tr>
+<td><strong>Choco/Mog</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>« Wark » à un chocobo de la ferme</td>
+</tr>
+<tr>
+<td><strong>Appât-chocobo</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Choco Billy, 2 000 Gils</td>
+</tr>
+<tr>
+<td><strong>Longue portée</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Liane de gauche, Mine de Mythril</td>
+</tr>
+<tr>
+<td><strong>Boomerang</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Youfie</span></td>
+<td>À voler sur un Formule</td>
+</tr>
+<tr>
+<td><strong>Shiva</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Priscilla</td>
+</tr>
+<tr>
+<td><strong>Talent de l'ennemi</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Hall des débutants de Junon</td>
+</tr>
+<tr>
+<td><strong>Voleur fou</strong> ou <strong>Super HP</strong></td>
+<td><span class="badge arme">Arme (Clad), Matéria</span></td>
+<td>Seconde parade</td>
+</tr>
+<tr>
+<td><strong>PHS</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Après le récit de Kalm</td>
+</tr>
+<tr>
+<td><strong>Source de protection</strong> ×2, <strong>Source spirituelle</strong> ×2, <strong>Source de chance</strong>, <strong>Source de pouvoir</strong>, <strong>Source de rapidité</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Kalm, mine, Junon</td>
+</tr>
+<tr>
+<td><strong>Mégalixir</strong>, <strong>Élixir</strong>, <strong>Super potion</strong>, <strong>Ether</strong> ×4, <strong>Tente</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Kalm, Mine de Mythril</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Magique Matra</strong>, <strong>Bêta</strong> et <strong>Lance-flammes</strong> : trois talents bleus à prendre dans ce chapitre.</li>
+<li><strong>Le Zolom</strong> se franchit aussi sans chocobo : sauvegarde et recharge quand il approche.</li>
+<li><strong>Vise 100 points à la seconde parade</strong> : le Voleur fou est une excellente arme pour Clad.</li>
+</ul>
+<h2 id="alertes-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : le <strong>piano de Tifa</strong> pendant le flash-back, et le <strong>Mégalixir</strong> de la commode.</li>
+<li class="alerte manquable">⏳ Manquable : l'<strong class="objet">Appât-chocobo</strong> au prix du disque 1, et les lots des <strong>deux parades</strong>.</li>
+<li class="alerte">⚠️ Monter sur le <strong>cargo</strong> te fait quitter le continent : finis tes achats avant.</li>
+</ul>
+<h2 id="check-list-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Magique Matra appris</li>
+<li class="tache"><input type="checkbox"> Ethers, <strong class="objet">Pacificateur</strong> et Source de protection de Kalm</li>
+<li class="tache"><input type="checkbox"> Piano de Tifa joué, <strong>Mégalixir</strong> de la commode</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Choco/Mog</strong> et <strong class="objet">Appât-chocobo</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Longue portée</strong> et objets de la mine</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Shiva</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Talent de l'ennemi</strong> n°2 et les cinq Sources de Junon</li>
+<li class="tache"><input type="checkbox"> Lots des deux parades</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-6">
+<header class="tete-section">
+<p class="eyebrow">Partie 05</p>
+<h1 id="05-le-cargo-costa-del-sol-le-mont-corel-et-le-gold-saucer">Le cargo, Costa del Sol, le Mont Corel et le Gold Saucer</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-6"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-6">
+<h2 id="objectif-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Traverser l'océan en cargo, franchir le <strong>Mont Corel</strong>, découvrir le <strong>Gold Saucer</strong>, puis sortir de la <strong>prison du désert</strong> en gagnant ta première course de chocobos. Récompense : le <strong class="objet">Buggy</strong>, et une moisson de Talents de l'ennemi.</p>
+<h2 id="itineraire-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Le cargo</strong> : la cale, la salle de contrôle, le boss.</li>
+<li><strong>Costa del Sol</strong> : la villa, le bar, la plage.</li>
+<li><strong>Le Mont Corel</strong> : les rails qui cèdent, le nid, l'écran secret.</li>
+<li><strong>Corel Nord</strong> et le <strong>Gold Saucer</strong>.</li>
+<li><strong>La prison du désert</strong>, puis la course.</li>
+</ol>
+<h2 id="deroule-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Cargo</strong> : <strong>Ether</strong> dans le coffre de gauche de la cale, <strong>3e Matéria Tout</strong> entre les cartons à droite. Retrouve Aéris, Tifa et Nanaki déguisés.</li>
+<li>Salle de contrôle : <strong>avant d'aller au fond</strong>, monte sur la passerelle (<strong class="objet">Tailleur de vent</strong>, Aéris). <strong>Boss : Jénova·NAISSANCE</strong>, puis <strong>ramasse la Matéria Ifrit</strong> au sol.</li>
+<li><strong>Costa del Sol</strong> : la villa se vend 300 000 Gils (plus tard), mais son <strong>sous-sol</strong> est ouvert : <strong class="objet">Anneau feu</strong>, <strong class="objet">Moteur</strong> (Tifa), <strong>Source de pouvoir</strong>. Vois <strong>Hojo</strong> sur la plage avant de dormir.</li>
+<li><strong>Mont Corel</strong> : au croisement, prends le <strong>rail du haut</strong>. Quand il cède, maintiens <strong>gauche</strong> (<strong class="objet">Bâton magicien</strong>) ou <strong>droite</strong> (<strong class="objet">Pendentif étoilé</strong>) en martelant Valider, puis l'autre rail pour l'autre objet. <strong class="objet">Mitrailleuse W</strong> (Barret) en haut, <strong>Ether turbo</strong>, <strong>Matéria Transformation</strong>.</li>
+<li>Abaisse le pont depuis la cabane, grimpe au <strong>nid</strong> : combat contre le <strong>Cokatolis</strong>, <strong>10 Queues de Phénix</strong>.</li>
+<li><strong>Écran secret</strong> : le rail qui semble aller vers l'eau, à gauche, mène à <strong>Tente</strong>, <strong>Source spirituelle</strong> et <strong>Source de pouvoir</strong>.</li>
+<li><strong>Corel Nord</strong> : <strong>Ether</strong> dans le panier près du frigidaire, tente du sud-est.</li>
+<li><strong>Gold Saucer</strong> : <strong>Cait Sith</strong> rejoint l'équipe avec la <strong>Matéria Manipuler</strong>. Prospectus n°3 dans l'hôtel du Ghost Square. Visite tout avant d'entrer au <strong>Battle Square</strong>, qui t'envoie en prison.</li>
+<li><strong>Prison</strong> : talents <strong>Laser</strong> (Griffes de la mort) et <strong>Magique Matra</strong> (Moteurs de taureau). Chez M. Coates, <strong>Matéria Ramuh</strong> près de l'affiche de la salle des jockeys. Gagne la course : le <strong class="objet">Buggy</strong>.</li>
+<li><strong>Avec le Buggy</strong> : <strong>Scaphandre</strong> sur les <strong>Harpies</strong> du désert, <strong>Grand garde</strong> en manipulant une <strong>Bonde de plage</strong>, <strong>Vent blanc</strong> en manipulant un <strong>Zemzelett</strong> (région de Junon). Les <strong>Cactuères</strong> rapportent <strong>10 000 Gils</strong>.</li>
+</ol>
+<h2 id="butin-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tout</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Cale du cargo, entre les cartons</td>
+</tr>
+<tr>
+<td><strong>Tailleur de vent</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Aéris</span></td>
+<td>Passerelle de la salle de contrôle</td>
+</tr>
+<tr>
+<td><strong>Ifrit</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Au sol, après Jénova·NAISSANCE</td>
+</tr>
+<tr>
+<td><strong>Anneau feu</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Sous-sol de la villa</td>
+</tr>
+<tr>
+<td><strong>Moteur</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Tifa</span></td>
+<td>Sous-sol de la villa</td>
+</tr>
+<tr>
+<td><strong>Bâton magicien</strong>, <strong>Pendentif étoilé</strong></td>
+<td><span class="badge arme">Arme (Aéris), Accessoire</span></td>
+<td>Rails qui cèdent</td>
+</tr>
+<tr>
+<td><strong>Mitrailleuse W</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Barret</span></td>
+<td>En haut du premier rail</td>
+</tr>
+<tr>
+<td><strong>Transformation</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Après le troisième rail</td>
+</tr>
+<tr>
+<td><strong>Manipuler</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Équipée sur Cait Sith</td>
+</tr>
+<tr>
+<td><strong>Ramuh</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Salle des jockeys</td>
+</tr>
+<tr>
+<td><strong>Buggy</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Victoire à la course</td>
+</tr>
+<tr>
+<td><strong>Source de pouvoir</strong> ×2, <strong>Source spirituelle</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Villa, écran secret</td>
+</tr>
+<tr>
+<td><strong>Queue de Phénix</strong> ×10, <strong>Ether turbo</strong>, <strong>Ether</strong> ×2, <strong>Tente</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Nid, rails, cargo, Corel Nord</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Le passe à vie du Gold Saucer</strong> (30 000 Gils, ou 300 GP plus tard) : tu y reviendras souvent.</li>
+<li><strong class="objet">Manipuler</strong> sert à apprendre les talents défensifs : lance-les sur le porteur de la Matéria Talent de l'ennemi.</li>
+<li><strong>Voir aussi le chapitre 13</strong> pour tout ce que le Gold Saucer rapporte.</li>
+</ul>
+<h2 id="alertes-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : la <strong>Matéria Ifrit</strong> si tu quittes la salle de contrôle, et la scène d'Hojo si tu dors d'abord.</li>
+<li class="alerte manquable">⏳ Manquable : les objets des <strong>rails qui cèdent</strong> et l'<strong>écran secret</strong>.</li>
+<li class="alerte manquable">⏳ Manquable : la <strong>Matéria Ramuh</strong>, et la prison devient inaccessible après la course.</li>
+</ul>
+<h2 id="check-list-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> 3e <strong>Matéria Tout</strong>, <strong class="objet">Tailleur de vent</strong>, <strong class="objet">Ifrit</strong></li>
+<li class="tache"><input type="checkbox"> Sous-sol de la villa : <strong class="objet">Anneau feu</strong>, <strong class="objet">Moteur</strong>, Source de pouvoir</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bâton magicien</strong>, <strong class="objet">Pendentif étoilé</strong>, <strong class="objet">Mitrailleuse W</strong>, <strong class="objet">Transformation</strong></li>
+<li class="tache"><input type="checkbox"> Cokatolis et écran secret</li>
+<li class="tache"><input type="checkbox"> Prospectus n°3</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Ramuh</strong>, course gagnée, <strong class="objet">Buggy</strong></li>
+<li class="tache"><input type="checkbox"> Talents Laser, Scaphandre, Grand garde, Vent blanc</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-7">
+<header class="tete-section">
+<p class="eyebrow">Partie 06</p>
+<h1 id="06-gongaga-le-canyon-cosmo-et-nibelheim">Gongaga, le Canyon Cosmo et Nibelheim</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-7"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-7">
+<h2 id="objectif-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Récupérer <strong class="objet">Titan</strong> à Gongaga, suivre Nanaki au <strong>Canyon Cosmo</strong> et dans la <strong>Grotte Gi</strong>, puis revenir à <strong>Nibelheim</strong> : le manoir, le coffre-fort, <strong>Vincent</strong>, et le <strong>Mont Nibel</strong>.</p>
+<h2 id="itineraire-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Gongaga</strong> : les ruines du réacteur, le village.</li>
+<li><strong>Canyon Cosmo</strong> : le bar, les boutiques, Bugenhagen, la <strong>Grotte Gi</strong>.</li>
+<li><strong>Nibelheim</strong> : le village, le manoir, le sous-sol.</li>
+<li><strong>Le Mont Nibel</strong> : les tuyaux, les grottes, le Gardien de Matéria.</li>
+</ol>
+<h2 id="deroule-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Gongaga</strong> (Buggy) : <strong>boss : Réno et Rude</strong> si tu arrives assez tôt. Côté gauche du réacteur, dans un trou : <strong>Matéria Titan</strong>. Au village : <strong class="objet">Mégaphone blanc</strong> (maison nord-est), <strong>Potion-X</strong> (dernière maison), <strong>Matéria Coup mortel</strong> à la sortie nord-ouest. Talent <strong>Air de crapaud</strong> sur les <strong>Touche-Moi</strong>.</li>
+<li><strong>Canyon Cosmo</strong> : prospectus n°4 et <strong>Élixir</strong> à l'étage du bar, prospectus n°5 près du magasin d'armes. Achète <strong class="objet">Super HP</strong> et <strong class="objet">Super MP</strong>.</li>
+<li>Bugenhagen, le feu de camp (parle à Barret, Aéris, Tifa, Nanaki), puis la <strong>Grotte Gi</strong> avec Clad et Nanaki. Talent <strong>Peine de mort</strong> sur les <strong>Spectateurs Gi</strong>.</li>
+<li><strong>Grotte Gi</strong> : le mécanisme « <strong>Ce rocher a une drôle de forme</strong> » ouvre la porte. <strong>Marche</strong> sur les flaques d'huile ; le chemin du sud mène à la <strong>Matéria Effet supplémentaire</strong>. Puis <strong class="objet">Mégaphone noir</strong>, <strong>Ether</strong>, et dans la salle aux cinq cavités : <strong class="objet">Anneau fée</strong>, <strong>Potion-X</strong>, <strong>Ether turbo</strong> (passages secrets). Contre les <strong>Piqueurs</strong>, <strong>Air de crapaud</strong> ou <strong>Mini</strong>.</li>
+<li><strong>Boss : Gi Nattak</strong> — les soins le blessent. <strong>Matéria Gravité</strong> au sol. En partant, Nanaki reçoit le <strong class="objet">Peigne séraphin</strong>.</li>
+<li><strong>Nibelheim</strong> : ⚠️ la <strong>Source de chance</strong> de la première maison à gauche et la <strong>Source spirituelle</strong> de l'homme près du manoir <strong>s'excluent</strong> — choisis. <strong>Élixir</strong> (homme n°12), <strong>Ether turbo</strong> (homme n°11), <strong class="objet">Poing de platine</strong> (homme n°4, chez Tifa), <strong>Source de chance</strong> (clones de la maison voisine).</li>
+<li><strong>Manoir</strong> : coffre-fort <strong>Droite 36, Gauche 10, Droite 59, Droite 97</strong> : <strong>boss Numéro perdu</strong>, <strong>Matéria Odin</strong>, <strong class="objet">Clé sous-sol</strong> et <strong class="objet">Mémoire Cosmos</strong> (Limite 4 de Nanaki). Puis <strong class="objet">Lanceur ennemi</strong>, <strong class="objet">Vipère jumelle</strong>, <strong class="objet">Mégaphone argent</strong>, <strong>Source de magie</strong>.</li>
+<li><strong>Vincent</strong> au sous-sol (Clé sous-sol) : détails au chapitre 12. Séphiroth te donne la <strong>Matéria Destruction</strong> dans la bibliothèque. Talent <strong>????</strong> sur les <strong>Jersey</strong> (sans les frapper physiquement).</li>
+<li><strong>Mont Nibel</strong> : <strong class="objet">Sabre rune</strong> au premier croisement, <strong class="objet">Barrette Plus</strong> au sommet de la petite route de droite. Déplie la seconde échelle, puis tuyaux 2 (<strong>Matéria Tout</strong>) et 4 (<strong class="objet">Arme de pouvoir</strong>). <strong>Élixir</strong> en longeant le mur gauche, <strong>Matéria El. Base</strong> près de la fontaine, <strong class="objet">CR d'embuscade</strong> (Vincent).</li>
+<li><strong>Boss : Gardien de Matéria</strong> (talent <strong>Trine</strong>), puis <strong>Matéria Contre-attaque</strong> derrière lui.</li>
+</ol>
+<h2 id="butin-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Titan</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Réacteur de Gongaga</td>
+</tr>
+<tr>
+<td><strong>Coup mortel</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Sortie nord-ouest de Gongaga</td>
+</tr>
+<tr>
+<td><strong>Mégaphone blanc</strong>, <strong>Mégaphone noir</strong>, <strong>Mégaphone argent</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cait Sith</span></td>
+<td>Gongaga, Grotte Gi, manoir</td>
+</tr>
+<tr>
+<td><strong>Super HP</strong>, <strong>Super MP</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Magasin du Canyon Cosmo</td>
+</tr>
+<tr>
+<td><strong>Effet supplémentaire</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Grotte Gi, chemin sud</td>
+</tr>
+<tr>
+<td><strong>Anneau fée</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Passage secret de la Grotte Gi</td>
+</tr>
+<tr>
+<td><strong>Gravité</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Après Gi Nattak</td>
+</tr>
+<tr>
+<td><strong>Peigne séraphin</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Nanaki</span></td>
+<td>Départ du Canyon Cosmo</td>
+</tr>
+<tr>
+<td><strong>Poing de platine</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Tifa</span></td>
+<td>Maison de Tifa</td>
+</tr>
+<tr>
+<td><strong>Odin</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Après Numéro perdu</td>
+</tr>
+<tr>
+<td><strong>Clé sous-sol</strong>, <strong>Mémoire Cosmos</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Numéro perdu</td>
+</tr>
+<tr>
+<td><strong>Lanceur ennemi</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Barret</span></td>
+<td>Manoir</td>
+</tr>
+<tr>
+<td><strong>Vipère jumelle</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Youfie</span></td>
+<td>Manoir</td>
+</tr>
+<tr>
+<td><strong>Destruction</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Séphiroth, bibliothèque</td>
+</tr>
+<tr>
+<td><strong>Sabre rune</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Clad</span></td>
+<td>Mont Nibel</td>
+</tr>
+<tr>
+<td><strong>Barrette Plus</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Nanaki</span></td>
+<td>Mont Nibel</td>
+</tr>
+<tr>
+<td><strong>Tout</strong>, <strong>El. Base</strong>, <strong>Contre-attaque</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Mont Nibel</td>
+</tr>
+<tr>
+<td><strong>Arme de pouvoir</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Barret</span></td>
+<td>Quatrième tuyau</td>
+</tr>
+<tr>
+<td><strong>CR d'embuscade</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Vincent</span></td>
+<td>Mont Nibel</td>
+</tr>
+<tr>
+<td><strong>Source de chance</strong> ×2 (ou 1 + <strong>Source spirituelle</strong>), <strong>Source de magie</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Nibelheim, manoir</td>
+</tr>
+<tr>
+<td><strong>Élixir</strong> ×3, <strong>Ether turbo</strong> ×2, <strong>Potion-X</strong> ×2, <strong>Ether</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Partout</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Super HP et Super MP</strong> valent chaque Gil : ce sont deux des meilleures Matérias du jeu.</li>
+<li><strong>Numéro perdu</strong> est plus facile plus tard, mais il rapporte Odin et une Limite niveau 4 : à toi de voir.</li>
+<li><strong>Les Jersey</strong> ne lancent plus <strong>????</strong> une fois frappés : attends qu'ils le lancent.</li>
+</ul>
+<h2 id="alertes-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : <strong class="objet">Titan</strong>, <strong class="objet">Effet supplémentaire</strong> et les objets des passages secrets de la Grotte Gi.</li>
+<li class="alerte manquable">⏳ Manquable : une des deux Sources de Nibelheim, par construction.</li>
+<li class="alerte">⚠️ <strong>Vincent</strong> est facultatif : l'oublier coûte son arme ultime et sa Limite finale.</li>
+</ul>
+<h2 id="check-list-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Titan</strong>, <strong class="objet">Coup mortel</strong>, Mégaphone blanc</li>
+<li class="tache"><input type="checkbox"> Prospectus n°4 et n°5, <strong class="objet">Super HP</strong>, <strong class="objet">Super MP</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Effet supplémentaire</strong>, <strong class="objet">Anneau fée</strong>, <strong class="objet">Gravité</strong></li>
+<li class="tache"><input type="checkbox"> Source de Nibelheim choisie, <strong class="objet">Poing de platine</strong></li>
+<li class="tache"><input type="checkbox"> Numéro perdu : <strong class="objet">Odin</strong>, <strong class="objet">Mémoire Cosmos</strong>, <strong class="objet">Clé sous-sol</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Vincent</strong> recruté, <strong class="objet">Destruction</strong></li>
+<li class="tache"><input type="checkbox"> Mont Nibel : <strong class="objet">Sabre rune</strong>, <strong class="objet">Barrette Plus</strong>, <strong class="objet">Tout</strong>, <strong class="objet">El. Base</strong>, <strong class="objet">Contre-attaque</strong></li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-8">
+<header class="tete-section">
+<p class="eyebrow">Partie 07</p>
+<h1 id="07-le-village-de-la-fusee-et-le-temple-des-anciens">Le Village de la Fusée et le Temple des Anciens</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-8"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-8">
+<h2 id="objectif-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Recruter <strong>Cid</strong> et gagner le <strong>Tiny Bronco</strong>, obtenir la <strong class="objet">Clé de pierre</strong> dans l'arène de Dio, vivre la <strong>soirée au Gold Saucer</strong>, puis vider le <strong>Temple des Anciens</strong> — qui disparaît entièrement à la fin du chapitre.</p>
+<h2 id="itineraire-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Le Village de la Fusée</strong> : le vieil homme, les maisons, la fusée.</li>
+<li><strong>Le vendeur d'armes</strong> de Gongaga, puis le <strong>Battle Square</strong> du Gold Saucer.</li>
+<li><strong>La nuit au Gold Saucer</strong>.</li>
+<li><strong>Le Temple des Anciens</strong> : le labyrinthe, les pierres roulantes, l'horloge, la salle du mage, les fresques.</li>
+</ol>
+<h2 id="deroule-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Village de la Fusée</strong> : parle au vieil homme jusqu'à ce qu'il propose de voir la fusée : <strong class="objet">Yoshiyuki</strong> (Clad). <strong>Source de pouvoir</strong> dans la maison à l'extrême droite, <strong class="objet">Bras vis</strong> (Barret) dans la voisine.</li>
+<li><strong>Boss : Palmer</strong>, très facile. <strong>Cid</strong> rejoint le groupe avec le <strong>Tiny Bronco</strong> (eaux claires seulement).</li>
+<li>Entraîne-toi sur les <strong>Chasseurs de têtes</strong> de la région de <strong>Mideel</strong> jusqu'au niveau 35.</li>
+<li>Le vendeur d'armes de Gongaga t'envoie chez <strong>Dio</strong>. Arène du <strong>Battle Square</strong> : <strong>8 victoires</strong> = <strong class="objet">Gilet protection</strong> + <strong class="objet">Plume chocobo</strong> ; 5 ou plus = Gilet protection. Tu reçois la <strong class="objet">Clé de pierre</strong> dans tous les cas.</li>
+<li><strong>Nuit au Gold Saucer</strong> : le rendez-vous (chapitre 13). Poursuis Cait Sith (Battle, Speed, Wonder, Chocobo), puis <strong>ouvre l'armoire à droite de la fenêtre</strong> : <strong>Élixir</strong>, une seule chance.</li>
+<li><strong>Temple</strong> (Clad et Aéris obligatoires) : Tseng rend la clé, pose-la sur l'autel. <strong class="objet">Trident</strong> (Cid), <strong>Source spirituelle</strong>, <strong class="objet">Fusil argent</strong> (Vincent), <strong>Ether turbo</strong>, <strong class="objet">Punch foudroyant</strong> (Tifa).</li>
+<li>Avant de suivre le second mage : sous l'arche, escalier de droite, sous le grand escalier : <strong>Matéria Super chance</strong>.</li>
+<li><strong>Pierres roulantes</strong> : abrite-toi dans le creux des rochers. <strong>Matéria Trans.</strong> après la source.</li>
+<li><strong>Horloge</strong> (ne touche jamais l'aiguille des secondes) : salle <strong>IIII</strong> <strong class="objet">Garde de princesse</strong>, salle <strong>V</strong> <strong class="objet">Ruban</strong>, salle <strong>VII</strong> <strong class="objet">Conque</strong>, salle <strong>VIII</strong> <strong>Mégalixir</strong>, plus deux coffres gardés en <strong>I</strong> et <strong>III</strong>. Tomber donne le <strong class="objet">Coup d'ongle</strong>.</li>
+<li><strong>Salle VI</strong> : entre directement par la <strong>porte n°2</strong> (troisième du premier étage) pour bloquer le mage. <strong class="objet">Gant de travail</strong> en bas de la salle.</li>
+<li><strong>Boss : Dragon rouge</strong>, puis <strong>Matéria Bahamut</strong> — équipe-la. <strong>Boss : Porte des démons</strong> en salle XII. <strong>Matéria noire</strong> au centre.</li>
+</ol>
+<h2 id="butin-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Yoshiyuki</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Clad</span></td>
+<td>Le vieil homme du Village de la Fusée</td>
+</tr>
+<tr>
+<td><strong>Bras vis</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Barret</span></td>
+<td>Maison voisine</td>
+</tr>
+<tr>
+<td><strong>Clé de pierre</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Dio</td>
+</tr>
+<tr>
+<td><strong>Gilet protection</strong>, <strong>Plume chocobo</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Arène de Dio</td>
+</tr>
+<tr>
+<td><strong>Trident</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cid</span></td>
+<td>Premier coffre du temple</td>
+</tr>
+<tr>
+<td><strong>Fusil argent</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Vincent</span></td>
+<td>Salle du mage marchand</td>
+</tr>
+<tr>
+<td><strong>Punch foudroyant</strong>, <strong>Gant de travail</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Tifa</span></td>
+<td>Temple</td>
+</tr>
+<tr>
+<td><strong>Super chance</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Sous le grand escalier</td>
+</tr>
+<tr>
+<td><strong>Trans.</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Après les pierres roulantes</td>
+</tr>
+<tr>
+<td><strong>Garde de princesse</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Aéris</span></td>
+<td>Salle IIII</td>
+</tr>
+<tr>
+<td><strong>Ruban</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Salle V</td>
+</tr>
+<tr>
+<td><strong>Conque</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cait Sith</span></td>
+<td>Salle VII</td>
+</tr>
+<tr>
+<td><strong>Coup d'ongle</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Clad</span></td>
+<td>Étage inférieur</td>
+</tr>
+<tr>
+<td><strong>Bahamut</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Après le Dragon rouge</td>
+</tr>
+<tr>
+<td><strong>Source de pouvoir</strong>, <strong>Source spirituelle</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Village de la Fusée, temple</td>
+</tr>
+<tr>
+<td><strong>Élixir</strong>, <strong>Mégalixir</strong>, <strong>Ether turbo</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Hôtel, salle VIII, temple</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Équipe Bahamut avant la Porte des démons</strong> : c'est l'invocation qui fait la différence.</li>
+<li><strong>Poison</strong> tue les Œil 8 de la salle III.</li>
+<li><strong>Entraîne Aéris</strong> avant le temple, elle est obligatoire.</li>
+</ul>
+<h2 id="alertes-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : <strong>tout le temple</strong> — <strong class="objet">Ruban</strong>, <strong class="objet">Super chance</strong>, <strong class="objet">Trans.</strong>, armes de l'horloge — disparaît à la fin du chapitre.</li>
+<li class="alerte manquable">⏳ Manquable : l'<strong>Élixir de l'armoire</strong> de l'hôtel, et la <strong class="objet">Plume chocobo</strong> de l'arène.</li>
+<li class="alerte">⚠️ Le <strong>rendez-vous</strong> dépend de choix faits depuis le début : impossible à rattraper maintenant.</li>
+</ul>
+<h2 id="check-list-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Yoshiyuki</strong>, <strong class="objet">Bras vis</strong>, Source de pouvoir</li>
+<li class="tache"><input type="checkbox"> Cid recruté, Tiny Bronco</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Clé de pierre</strong>, <strong class="objet">Gilet protection</strong>, <strong class="objet">Plume chocobo</strong></li>
+<li class="tache"><input type="checkbox"> Élixir de l'armoire fantôme</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Super chance</strong> et <strong class="objet">Trans.</strong></li>
+<li class="tache"><input type="checkbox"> Horloge : <strong class="objet">Garde de princesse</strong>, <strong class="objet">Ruban</strong>, <strong class="objet">Conque</strong>, Mégalixir</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Gant de travail</strong>, <strong class="objet">Bahamut</strong></li>
+<li class="tache"><input type="checkbox"> Porte des démons vaincue</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-9">
+<header class="tete-section">
+<p class="eyebrow">Partie 08</p>
+<h1 id="08-la-cite-des-anciens-et-le-grand-glacier">La Cité des Anciens et le Grand Glacier</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-9"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-9">
+<h2 id="objectif-8" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Déterrer la <strong class="objet">Harpe lunaire</strong> au Village des ossements, attraper <strong class="objet">Kjata</strong> dans la Forêt endormie, vider la <strong>Cité des Anciens</strong>, puis, au disque 2, traverser la Vallée de Corral, le <strong>Village Glaçon</strong> et le <strong>Grand Glacier</strong> — où se cache <strong class="objet">Alexandre</strong>.</p>
+<h2 id="itineraire-8" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Village des ossements</strong>, <strong>Forêt endormie</strong>, <strong>Vallée de Corral</strong>.</li>
+<li><strong>La Cité des Anciens</strong>, jusqu'à l'autel.</li>
+<li><strong>La grotte de la Vallée de Corral</strong>, puis le <strong>Village Glaçon</strong>.</li>
+<li><strong>Le surf</strong>, puis le <strong>Grand Glacier</strong> et ses écrans numérotés.</li>
+</ol>
+<h2 id="deroule-8" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Village des ossements</strong> : « <strong>Commencer à creuser</strong> ». Les hommes regardent vers l'objet : la <strong class="objet">Harpe lunaire</strong> est dans la <strong>zone verte</strong> (100 Gils par fouille). <strong class="objet">Mop</strong> (Cid) en zone orange, <strong class="objet">Cordage</strong> (Vincent) en zone bleue.</li>
+<li><strong>Forêt endormie</strong>, deuxième écran : <strong>attrape Kjata</strong>, qui roule et se téléporte. <strong>Vallée de Corral</strong> : <strong class="objet">Cercle d'eau</strong> sous le tronc (utile contre Jénova·VIE).</li>
+<li><strong>Cité des Anciens</strong> : <strong>Source de magie</strong> (maison nord-ouest), <strong class="objet">Bracelet aurore</strong> (coffre caché en bas des escaliers à l'est), <strong>Source de protection</strong>, <strong>Élixir</strong>. Après t'être reposé, <strong>Matéria Talent de l'ennemi</strong> derrière le lit du fond.</li>
+<li><strong>Maison en coquillage</strong> : <strong>Matéria Comète</strong> tout en haut. Puis l'autel. <strong>Boss : Jénova·VIE</strong> (Cercle d'eau équipé). Fin du disque 1.</li>
+<li><strong>Disque 2, grotte de Corral</strong> : <strong class="objet">Vipère hallebarde</strong> (contourne le coquillage par la gauche), <strong class="objet">Bracelet éclair</strong>, <strong class="objet">Hypnocouronne</strong>, <strong>Mégalixir</strong>, <strong>Matéria Super magie</strong> au bas de la grande échelle, <strong>Source de pouvoir</strong>.</li>
+<li><strong>Village Glaçon</strong> : esquive Elena en martelant gauche/droite. <strong class="objet">Surf des neiges</strong> (garçon blessé), <strong class="objet">Carte-glacier</strong> au mur de la maison de droite, <strong>Vaccin</strong>, <strong>Boisson de héros</strong>, <strong>Potion-X</strong> (auberge), <strong>Ether turbo</strong> (maison nord-ouest).</li>
+<li><strong>Surf</strong> : le choix aux deux intersections fixe l'écran d'arrivée (gauche-droite = 1, gauche-gauche = 2, droite-droite = 3, droite-gauche = 10).</li>
+<li><strong>Grand Glacier</strong> (carte avec la touche carrée) : <strong>Source spirituelle</strong> (écran 2), <strong>Potion</strong> (5), <strong>Élixir</strong> (12), <strong>Matéria Tout</strong> (16).</li>
+<li><strong class="objet">Alexandre</strong> : touche la <strong>source d'eau chaude</strong> (écran 14), puis entre dans la caverne à droite de la caverne centrale du désert enneigé. <strong>Boss : Neige</strong> (Confusion) : <strong>Matéria Alexandre</strong>.</li>
+<li><strong class="objet">Bit de sûreté</strong> (écran 6/8) : les 25 glaçons — chaque saut ouvre les voisins directs et referme ceux qui étaient ouverts.</li>
+<li><strong class="objet">Coupure supplémentaire</strong> : depuis l'écran 13, bifurcation <strong>nord-est</strong>, à mi-parcours du second écran de neige.</li>
+<li>S'évanouir dans le froid te réveille chez <strong>Holzoff</strong>, au pied de la Falaise de Gaëa : c'est la suite logique.</li>
+</ol>
+<h2 id="butin-8" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Harpe lunaire</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Zone verte du Village des ossements</td>
+</tr>
+<tr>
+<td><strong>Mop</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cid</span></td>
+<td>Zone orange</td>
+</tr>
+<tr>
+<td><strong>Cordage</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Vincent</span></td>
+<td>Zone bleue</td>
+</tr>
+<tr>
+<td><strong>Kjata</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Forêt endormie</td>
+</tr>
+<tr>
+<td><strong>Cercle d'eau</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Sous le tronc, Vallée de Corral</td>
+</tr>
+<tr>
+<td><strong>Bracelet aurore</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Cité des Anciens, coffre caché</td>
+</tr>
+<tr>
+<td><strong>Talent de l'ennemi</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Derrière le lit du fond</td>
+</tr>
+<tr>
+<td><strong>Comète</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Haut de la maison en coquillage</td>
+</tr>
+<tr>
+<td><strong>Vipère hallebarde</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cid</span></td>
+<td>Derrière le grand coquillage</td>
+</tr>
+<tr>
+<td><strong>Bracelet éclair</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Grotte de Corral</td>
+</tr>
+<tr>
+<td><strong>Hypnocouronne</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Grotte de Corral</td>
+</tr>
+<tr>
+<td><strong>Super magie</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Bas de la grande échelle</td>
+</tr>
+<tr>
+<td><strong>Surf des neiges</strong>, <strong>Carte-glacier</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Village Glaçon</td>
+</tr>
+<tr>
+<td><strong>Tout</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Écran 16 du glacier</td>
+</tr>
+<tr>
+<td><strong>Alexandre</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Caverne de la sorcière</td>
+</tr>
+<tr>
+<td><strong>Bit de sûreté</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Énigme des glaçons</td>
+</tr>
+<tr>
+<td><strong>Coupure supplémentaire</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Écrans de neige nord-est</td>
+</tr>
+<tr>
+<td><strong>Source de magie</strong>, <strong>Source de protection</strong>, <strong>Source de pouvoir</strong>, <strong>Source spirituelle</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Cité, grotte, glacier</td>
+</tr>
+<tr>
+<td><strong>Mégalixir</strong>, <strong>Élixir</strong> ×2, <strong>Potion-X</strong>, <strong>Ether turbo</strong>, <strong>Vaccin</strong>, <strong>Boisson de héros</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Partout</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-8" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong class="objet">Kjata</strong> se laisse attraper quand elle roule vers toi : ne quitte pas la forêt sans elle.</li>
+<li><strong>Pose des repères</strong> (touche ronde) dans le désert enneigé pour ne pas tourner en rond.</li>
+<li><strong>La source d'eau chaude</strong> suffit à toucher une fois pour toute la partie.</li>
+</ul>
+<h2 id="alertes-8" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : <strong class="objet">Kjata</strong>, <strong class="objet">Comète</strong>, <strong class="objet">Talent de l'ennemi</strong>, <strong class="objet">Bracelet aurore</strong> et <strong class="objet">Cercle d'eau</strong> — on ne revient pas vite à la Cité.</li>
+<li class="alerte manquable">⏳ Manquable à court terme : <strong class="objet">Alexandre</strong>, <strong class="objet">Coupure supplémentaire</strong>, <strong class="objet">Tout</strong> et <strong class="objet">Bit de sûreté</strong> du glacier.</li>
+</ul>
+<h2 id="check-list-8" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Harpe lunaire</strong>, Mop, Cordage</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Kjata</strong>, <strong class="objet">Cercle d'eau</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bracelet aurore</strong>, <strong class="objet">Talent de l'ennemi</strong> n°3, <strong class="objet">Comète</strong></li>
+<li class="tache"><input type="checkbox"> Jénova·VIE vaincue</li>
+<li class="tache"><input type="checkbox"> Grotte de Corral : <strong class="objet">Vipère hallebarde</strong>, <strong class="objet">Bracelet éclair</strong>, <strong class="objet">Hypnocouronne</strong>, <strong class="objet">Super magie</strong></li>
+<li class="tache"><input type="checkbox"> Village Glaçon : Surf des neiges, Carte-glacier et objets</li>
+<li class="tache"><input type="checkbox"> Glacier : <strong class="objet">Tout</strong>, <strong class="objet">Alexandre</strong>, <strong class="objet">Bit de sûreté</strong>, <strong class="objet">Coupure supplémentaire</strong></li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-10">
+<header class="tete-section">
+<p class="eyebrow">Partie 09</p>
+<h1 id="09-la-falaise-de-gaea-le-cratere-nord-et-la-fuite-de-junon">La Falaise de Gaëa, le Cratère Nord et la fuite de Junon</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-10"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-10">
+<h2 id="objectif-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Escalader la <strong>Falaise de Gaëa</strong> sans geler, franchir le <strong>Labyrinthe Tornade</strong>, puis, après les événements du Cratère Nord, t'échapper de <strong>Junon</strong> avec <strong>Tifa</strong> et retrouver Clad à <strong>Mideel</strong>. Deux <strong>Rubans</strong> possibles et plusieurs Matérias en route.</p>
+<h2 id="itineraire-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Falaise de Gaëa</strong> : les corniches, trois grottes, le boss.</li>
+<li><strong>Labyrinthe Tornade</strong> : trois crevasses, Jénova·MORT.</li>
+<li><strong>Junon</strong> : la cellule, la chambre à gaz, le canon, le Hautvent.</li>
+<li><strong>Le tour du monde de Tifa</strong>, puis <strong>Mideel</strong>.</li>
+</ol>
+<h2 id="deroule-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Falaise</strong> : réchauffe-toi à chaque corniche avec la touche carrée — <strong>sous 27 °C</strong>, tu t'évanouis.</li>
+<li><strong>Première grotte</strong> : après le <strong>pont le plus au sud</strong>, <strong>continue dans le mur</strong> dans l'alignement du pont : salle cachée avec un <strong class="objet">Ruban</strong>. Puis <strong class="objet">Javelot</strong> (Cid). Fais tomber le rocher pour briser les cristaux.</li>
+<li><strong>Deuxième grotte</strong> : <strong>Élixir</strong>. Talents <strong>Souffle magie</strong> et <strong>Trine</strong> sur les <strong>Stilva</strong>, <strong>Haleine aigre</strong> sur les <strong>Malboro</strong> (équipe le Ruban !). <strong class="objet">Bracelet feu</strong> à l'étage.</li>
+<li><strong>Quatre cristaux</strong> à faire tomber (combats) : <strong>ne saute pas</strong> avant le <strong>Mégalixir</strong> du bout de l'allée. <strong>Source de rapidité</strong> par l'escalier de glaçons, <strong class="objet">Super épée</strong> (Clad) derrière la porte nord.</li>
+<li><strong>Troisième caverne</strong> : <strong>Bracelets dragon</strong> sur les Dragons bleus, source blanche de soin. <strong>Boss : Schizo</strong>.</li>
+<li><strong>Labyrinthe Tornade</strong> : <strong>Matéria Néo Bahamut</strong> en bas du premier écran. <strong>Super potion</strong> et <strong>Ether</strong> auprès des hommes à cape noire. Traverse les crevasses <strong>quand le vent se calme</strong> (écran le moins flou). <strong class="objet">Poing de Kaiser</strong> (Tifa).</li>
+<li><strong>Boss : Jénova·MORT</strong>, puis <strong>Matéria Turbo MP</strong> au sol et <strong class="objet">Anneau poison</strong>.</li>
+<li><strong>Junon</strong> : Tifa se libère de la chambre à gaz — <strong>jambes ×2</strong>, <strong>tête + jambes</strong>, <strong>tête + bras gauche</strong>, <strong>bras gauche + bras droit</strong> — puis passe derrière la chaise. Martèle Valider pour rendre les gifles de Scarlet. Récupère Youfie devant le cameraman si elle était dans l'équipe.</li>
+<li><strong>Tour du monde de Tifa</strong> : à <strong>Nibelheim</strong>, si tu avais joué du piano au flash-back, rejoue : <strong>Matéria El. Base</strong>. <strong>Canyon Cosmo</strong> : passe <strong>à droite du vendeur</strong> du magasin d'éléments : <strong>Matéria Guérison Max</strong>, <strong>Élixir</strong>, <strong>Source de magie</strong>. <strong>Village de la Fusée</strong> : <strong class="objet">4ème bracelet</strong> et <strong>Source de protection</strong>. <strong>Ferme</strong> : <strong>2e Appât-chocobo</strong> à droite de l'entrée.</li>
+<li>Refais les boutiques (stocks renouvelés), puis <strong>Mideel</strong> au sud-est : Clad est à la clinique.</li>
+</ol>
+<h2 id="butin-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ruban</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Salle cachée dans le mur, après le pont sud</td>
+</tr>
+<tr>
+<td><strong>Javelot</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cid</span></td>
+<td>Première grotte</td>
+</tr>
+<tr>
+<td><strong>Bracelet feu</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Étage de la deuxième grotte</td>
+</tr>
+<tr>
+<td><strong>Super épée</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Clad</span></td>
+<td>Passage enneigé</td>
+</tr>
+<tr>
+<td><strong>Bracelet dragon</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Dragons bleus</td>
+</tr>
+<tr>
+<td><strong>Néo Bahamut</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Premier écran du Labyrinthe Tornade</td>
+</tr>
+<tr>
+<td><strong>Poing de Kaiser</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Tifa</span></td>
+<td>Après la première crevasse</td>
+</tr>
+<tr>
+<td><strong>Turbo MP</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Après Jénova·MORT</td>
+</tr>
+<tr>
+<td><strong>Anneau poison</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coffre près du point de sauvegarde</td>
+</tr>
+<tr>
+<td><strong>El. Base</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Piano de Tifa, Nibelheim</td>
+</tr>
+<tr>
+<td><strong>Guérison Max</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Passage secret du magasin, Canyon Cosmo</td>
+</tr>
+<tr>
+<td><strong>4ème bracelet</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Village de la Fusée</td>
+</tr>
+<tr>
+<td><strong>Appât-chocobo</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Ferme de chocobos</td>
+</tr>
+<tr>
+<td><strong>Source de rapidité</strong>, <strong>Source de magie</strong>, <strong>Source de protection</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Falaise, Canyon Cosmo, Village de la Fusée</td>
+</tr>
+<tr>
+<td><strong>Mégalixir</strong>, <strong>Élixir</strong> ×2, <strong>Super potion</strong>, <strong>Ether</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Falaise, labyrinthe, Canyon Cosmo</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Souffle magie</strong> est l'un des meilleurs talents du jeu : prends-le sur les Stilva.</li>
+<li><strong>Le Ruban caché</strong> demande de marcher « dans le mur » : suis la ligne du pont.</li>
+<li><strong>Le passage secret du Canyon Cosmo</strong> n'est signalé par rien : il est littéralement à droite du vendeur.</li>
+</ul>
+<h2 id="alertes-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : le <strong class="objet">Ruban</strong> caché et le <strong>Mégalixir</strong> des cristaux.</li>
+<li class="alerte manquable">⏳ Manquable : <strong>Souffle magie</strong> (sinon, attendre les Parasites du disque 3).</li>
+<li class="alerte manquable">⏳ Manquable : la <strong>Matéria El. Base du piano</strong>, si tu n'as pas joué pendant le flash-back.</li>
+</ul>
+<h2 id="check-list-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Ruban</strong>, Javelot, Bracelet feu, <strong class="objet">Super épée</strong>, Mégalixir</li>
+<li class="tache"><input type="checkbox"> Talents Souffle magie, Trine, Haleine aigre</li>
+<li class="tache"><input type="checkbox"> Schizo vaincu</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Néo Bahamut</strong>, <strong class="objet">Poing de Kaiser</strong></li>
+<li class="tache"><input type="checkbox"> Jénova·MORT, <strong class="objet">Turbo MP</strong>, Anneau poison</li>
+<li class="tache"><input type="checkbox"> Tifa libérée</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">El. Base</strong> du piano, <strong class="objet">Guérison Max</strong>, <strong class="objet">4ème bracelet</strong>, 2e <strong class="objet">Appât-chocobo</strong></li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-11">
+<header class="tete-section">
+<p class="eyebrow">Partie 10</p>
+<h1 id="10-mideel-et-les-quatre-mega-materias">Mideel et les quatre Méga-Matérias</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-11"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-11">
+<h2 id="objectif-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Boucler les quêtes de <strong>Mideel</strong>, puis récupérer les <strong>quatre Méga-Matérias</strong> : le train à charbon de Corel, le Fort Condor, le réacteur sous-marin de Junon et la fusée. Chacune ne se tente <strong>qu'une fois</strong>. Avec les quatre, <strong class="objet">Bahamut ZÉRO</strong> t'attend chez Bugenhagen.</p>
+<h2 id="itineraire-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Mideel</strong> : la clinique, le magasin d'armes, le chocobo blanc.</li>
+<li><strong>Corel Nord</strong> : le train à charbon.</li>
+<li><strong>Fort Condor</strong> : la dernière bataille.</li>
+<li><strong>Junon</strong> : le réacteur sous-marin et le sous-marin.</li>
+<li><strong>Village de la Fusée</strong> : le décollage.</li>
+<li><strong>Canyon Cosmo</strong> et <strong>Cité des Anciens</strong>, puis l'<strong>Arme de diamant</strong>.</li>
+</ol>
+<h2 id="deroule-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Mideel</strong> : <strong>Élixir</strong> sur un lit près de la clinique. <strong>Observe la porte du fond</strong> du magasin d'armes, puis la charpente de la cabane du pont (vieille clé) ; la clé casse, réponds « <strong>Excuse-toi et finis-en !</strong> » : <strong class="objet">Anneau maudit</strong>.</li>
+<li><strong>Chocobo blanc</strong> : donne-lui un <strong>Légume Mimett</strong>, puis chatouille-lui <strong>les oreilles</strong> : <strong>Matéria Contenir</strong>.</li>
+<li><strong>Train à charbon</strong> (sauvegarde avant) : actionne les leviers en alternance. <strong>Vole le Bijou de guerrier</strong> à l'<strong>Arme d'aigle</strong>. Freine avec les quatre touches indiquées. <strong>1re Méga-Matéria</strong>, puis <strong>Matéria Ultima</strong> du garçon et <strong class="objet">Catastrophe</strong> (Limite 4 de Barret) de la fille à la casquette.</li>
+<li><strong>Fort Condor</strong> : attends que la ligne rouge descende et <strong>ne place que des Défenseurs</strong>. <strong>Matéria Phénix</strong> derrière la porte de gauche, <strong>2e Méga-Matéria</strong>.</li>
+<li><strong>Retour à Mideel</strong> : Dernière arme attaque, puis la <strong>Rivière de la vie</strong> (Tifa parle aux Clad dans l'ordre). Clad revient.</li>
+<li><strong>Réacteur sous-marin</strong> (ascenseur à 10 Gils) : <strong>tue un Vaisseau fantôme avec Trans.</strong> devant le tube de verre (le <strong class="objet">Guide</strong>, pour le voyageur de Kalm). <strong>Boss : Porte-armure</strong>. <strong class="objet">Bugle de combat</strong>, <strong class="objet">Cimeterre</strong> (AP triplés) et surtout les <strong class="objet">Écailles-Léviathan</strong>.</li>
+<li><strong>Mini-jeu du sous-marin</strong> : coule le sous-marin rouge en dix minutes. <strong>3e Méga-Matéria</strong> dans son épave, au sud. <strong>Évite l'Arme d'émeraude.</strong> <strong class="objet">Clef des Anciens</strong> au nord sous l'eau.</li>
+<li><strong>Village de la Fusée</strong> : <strong>boss : Rude</strong>. Dans la fusée, code <strong>rond, carré, croix, croix</strong> : <strong>4e Méga-Matéria</strong>. De retour, parle <strong>trois fois</strong> au vieil homme : <strong class="objet">Evangile de Vénus</strong> (arme ultime de Cid).</li>
+<li><strong>Bugenhagen</strong> : avec Bahamut et Néo Bahamut, la Méga-Matéria bleue donne <strong class="objet">Bahamut ZÉRO</strong>.</li>
+<li><strong>Cité des Anciens</strong> avec la <strong class="objet">Clef des Anciens</strong>, puis <strong>boss : Arme de diamant</strong> devant Midgar (Bracelet feu, magie seulement en première phase).</li>
+</ol>
+<h2 id="butin-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Anneau maudit</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Vendeur d'armes de Mideel, après les excuses</td>
+</tr>
+<tr>
+<td><strong>Contenir</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Oreilles du chocobo blanc</td>
+</tr>
+<tr>
+<td><strong>Bijou de guerrier</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>À voler sur l'Arme d'aigle</td>
+</tr>
+<tr>
+<td><strong>Méga-Matéria</strong> ×4</td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Train, Fort Condor, épave, fusée</td>
+</tr>
+<tr>
+<td><strong>Ultima</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Garçon de Corel Nord</td>
+</tr>
+<tr>
+<td><strong>Catastrophe</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Fille à la casquette, Corel Nord</td>
+</tr>
+<tr>
+<td><strong>Phénix</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Fort Condor</td>
+</tr>
+<tr>
+<td><strong>Garde impérial</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Si tu combats le CMD.Corne majestueuse</td>
+</tr>
+<tr>
+<td><strong>Bugle de combat</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cait Sith</span></td>
+<td>Complexe sous-marin</td>
+</tr>
+<tr>
+<td><strong>Cimeterre</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cid</span></td>
+<td>Complexe sous-marin</td>
+</tr>
+<tr>
+<td><strong>Écailles-Léviathan</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Bout de l'allée, complexe sous-marin</td>
+</tr>
+<tr>
+<td><strong>Guide</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Vaisseau fantôme tué avec Trans.</td>
+</tr>
+<tr>
+<td><strong>Clef des Anciens</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Couloir sous-marin, au nord</td>
+</tr>
+<tr>
+<td><strong>4ème bracelet</strong>, <strong>Source de protection</strong></td>
+<td><span class="badge armure">Armure, Divers</span></td>
+<td>Village de la Fusée</td>
+</tr>
+<tr>
+<td><strong>Evangile de Vénus</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cid</span></td>
+<td>Le vieil homme, trois conversations</td>
+</tr>
+<tr>
+<td><strong>Bahamut ZÉRO</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Méga-Matéria bleue</td>
+</tr>
+<tr>
+<td><strong>Élixir</strong></td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Mideel</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Sauvegarde avant chaque Méga-Matéria</strong> : une seule tentative.</li>
+<li><strong>Les Écailles-Léviathan</strong> ne servent qu'une fois, mais sans elles l'<strong>Oritsuru</strong> et <strong>Vol simultané</strong> sont perdus.</li>
+<li><strong>Le code de la fusée</strong> : rond, carré, croix, croix.</li>
+</ul>
+<h2 id="alertes-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : chaque <strong class="objet">Méga-Matéria</strong>, le <strong class="objet">Bijou de guerrier</strong>, <strong class="objet">Catastrophe</strong>.</li>
+<li class="alerte manquable">⏳ Manquable : <strong class="objet">Bahamut ZÉRO</strong> au disque 2 s'il manque une Méga-Matéria.</li>
+<li class="alerte">⚠️ <strong>L'Arme d'émeraude</strong> rôde sous l'eau dès que tu as le sous-marin.</li>
+</ul>
+<h2 id="check-list-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Anneau maudit</strong>, <strong class="objet">Contenir</strong></li>
+<li class="tache"><input type="checkbox"> Train arrêté, <strong class="objet">Bijou de guerrier</strong> volé, <strong class="objet">Ultima</strong>, <strong class="objet">Catastrophe</strong></li>
+<li class="tache"><input type="checkbox"> Fort Condor : <strong class="objet">Phénix</strong>, 2e Méga-Matéria</li>
+<li class="tache"><input type="checkbox"> Guide obtenu, <strong class="objet">Cimeterre</strong>, <strong class="objet">Écailles-Léviathan</strong></li>
+<li class="tache"><input type="checkbox"> Mini-jeu gagné, 3e Méga-Matéria, <strong class="objet">Clef des Anciens</strong></li>
+<li class="tache"><input type="checkbox"> 4e Méga-Matéria, <strong class="objet">Evangile de Vénus</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bahamut ZÉRO</strong></li>
+<li class="tache"><input type="checkbox"> Arme de diamant affrontée</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-12">
+<header class="tete-section">
+<p class="eyebrow">Partie 11</p>
+<h1 id="11-le-retour-a-midgar-et-la-grotte-nord">Le retour à Midgar et la Grotte Nord</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-12"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-12">
+<h2 id="objectif-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Rentrer une dernière fois dans <strong>Midgar</strong> — et ouvrir enfin les coffres fermés du Bâtiment Shinra, dont <strong>deux armes ultimes</strong> — puis descendre dans la <strong>Grotte Nord</strong> jusqu'au combat final, en récupérant au passage les Matérias uniques et les doublons du disque 3.</p>
+<h2 id="itineraire-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Souterrains du Secteur 8</strong>, puis le <strong>Bâtiment Shinra</strong>, puis la ruelle du canon.</li>
+<li><strong>Disque 3</strong> : le Canyon Cosmo, puis la <strong>Grotte Nord</strong>.</li>
+<li><strong>La séparation du groupe</strong> en trois chemins, la salle circulaire, la descente finale.</li>
+</ol>
+<h2 id="deroule-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Souterrains</strong> : <strong>Élixir</strong> et <strong>Mégalixir</strong> le long des tuyaux, <strong class="objet">Bracelet Aégis</strong> en haut de l'échelle nord-ouest, <strong>Élixir</strong> et <strong class="objet">Téléphone d'étoiles</strong> à l'entrée du conduit, <strong class="objet">Rayon maximum</strong> (Barret).</li>
+<li><strong>Pars d'abord vers le sud</strong> : quatre <strong>Sources</strong> et la <strong>Matéria Elément-W</strong> (duplique les objets). Turks au nord.</li>
+<li><strong>Bâtiment Shinra</strong> : 1er étage, <strong class="objet">Bunker</strong> et <strong class="objet">Poing maître</strong> (arme ultime de Tifa). 63e : <strong class="objet">Lance croissance</strong>. 64e, vestiaires : <strong class="objet">Cri HP</strong> (Cait Sith). Distributeur : « <strong>Taper dessus</strong> » si tu avais mis 250 Gils (<strong>Source spirituelle</strong>, <strong>Source de rapidité</strong>). Escaliers de derrière : <strong class="objet">Corne béhémoth</strong>.</li>
+<li><strong>Boss : Superbe Lourdaud</strong>, puis <strong>Élixir</strong> et <strong class="objet">Mystile</strong>. <strong>Barret dans l'équipe</strong> : <strong class="objet">Manuscrit absent</strong> (son arme ultime). <strong>Boss : Hojo</strong> (trois formes).</li>
+<li><strong>Disque 3</strong> : va voir <strong>Bugenhagen dans sa chambre</strong> au Canyon Cosmo avec Nanaki : <strong class="objet">Lune limitée</strong>. Duplique tes <strong>Élixirs</strong> avec l'Elément-W.</li>
+<li><strong>Grotte Nord</strong> (niveau 60+, 70-75 pour la fin) : <strong class="objet">Cristal sauf</strong> (sauvegarde portative, jamais sur les écrans de séparation). <strong>Pot magique</strong> (donne-lui un Élixir) : 8 000 EXP, 1 000 AP. <strong>Déménageur</strong> : 90 000 Gils.</li>
+<li>Écrans 1 à 3 : <strong>Source de protection</strong> ×3, <strong>Source de pouvoir</strong> ×2, <strong>Source spirituelle</strong> ×2, <strong>Source de magie</strong>, <strong>Matéria Absorption HP</strong>, <strong>Élixir</strong>, <strong>Boisson de héros</strong>, <strong>Mégalixir</strong>.</li>
+<li><strong>Séparation conseillée</strong> : <strong>Tifa et Barret à droite</strong> ; au second croisement, <strong>Youfie, Nanaki et Cid en haut</strong>, toi en bas avec Vincent et Cait Sith. Fais les <strong>trois chemins</strong> via l'antre de la salle circulaire <strong>avant</strong> le regroupement : tu repars avec <strong>deux Mystile</strong>, <strong>deux Bouclier</strong>, <strong>deux Opposition</strong> et <strong>deux Garde impérial</strong>.</li>
+<li><strong>Droite</strong> : <strong class="objet">Mystile</strong>, <strong class="objet">Tétra élémentaire</strong>, 2 Mégalixirs. <strong>Gauche-haut</strong> : <strong class="objet">Bouclier</strong>, <strong class="objet">Garde impérial</strong>, <strong class="objet">Opposition</strong>, <strong class="objet">Magie-W</strong>. <strong>Gauche-bas</strong> : <strong class="objet">Opposition Magie</strong>, <strong class="objet">Méga tous</strong> (aller-retour entre deux rochers en martelant Valider).</li>
+<li><strong>Talent Boîte-Pandore</strong> : le <strong>Dragon Zombie</strong> ne le lance <strong>qu'une fois</strong> dans toute la partie. Garde toujours une Matéria Talent de l'ennemi.</li>
+<li><strong>Salle circulaire</strong> : <strong>Source de chance</strong>. « <strong>Allez, on avance</strong> » = point de non-retour. <strong>Boss : Jénova·SYNTHESE</strong>, <strong>Bizarro·Sephiroth</strong>, <strong>Safer·Sephiroth</strong> (même équipe), puis le duel final.</li>
+</ol>
+<h2 id="butin-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bracelet Aégis</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Souterrains, échelle nord-ouest</td>
+</tr>
+<tr>
+<td><strong>Téléphone d'étoiles</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Entrée du conduit</td>
+</tr>
+<tr>
+<td><strong>Rayon maximum</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Barret</span></td>
+<td>Après le conduit</td>
+</tr>
+<tr>
+<td><strong>Elément-W</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Sud des souterrains</td>
+</tr>
+<tr>
+<td><strong>Bunker</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>1er étage du Bâtiment Shinra</td>
+</tr>
+<tr>
+<td><strong>Poing maître</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Tifa</span></td>
+<td>1er étage</td>
+</tr>
+<tr>
+<td><strong>Lance croissance</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cid</span></td>
+<td>63e étage</td>
+</tr>
+<tr>
+<td><strong>Cri HP</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cait Sith</span></td>
+<td>64e étage</td>
+</tr>
+<tr>
+<td><strong>Corne béhémoth</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Nanaki</span></td>
+<td>Escaliers de derrière</td>
+</tr>
+<tr>
+<td><strong>Mystile</strong> ×2</td>
+<td><span class="badge armure">Armure</span></td>
+<td>Ruelle du canon, chemin de droite</td>
+</tr>
+<tr>
+<td><strong>Manuscrit absent</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Barret</span></td>
+<td>Escaliers du canon, avec Barret</td>
+</tr>
+<tr>
+<td><strong>Lune limitée</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Nanaki</span></td>
+<td>Bugenhagen, disque 3</td>
+</tr>
+<tr>
+<td><strong>Cristal sauf</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Premier écran de la Grotte Nord</td>
+</tr>
+<tr>
+<td><strong>Absorption HP</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Deuxième écran</td>
+</tr>
+<tr>
+<td><strong>Tétra élémentaire</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Chemin de droite</td>
+</tr>
+<tr>
+<td><strong>Bouclier</strong>, <strong>Opposition</strong>, <strong>Magie-W</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Chemin gauche-haut</td>
+</tr>
+<tr>
+<td><strong>Garde impérial</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Chemin gauche-haut</td>
+</tr>
+<tr>
+<td><strong>Opposition Magie</strong>, <strong>Méga tous</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Chemin gauche-bas</td>
+</tr>
+<tr>
+<td><strong>Sources</strong> (une dizaine)</td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Souterrains, distributeur, Grotte Nord</td>
+</tr>
+<tr>
+<td><strong>Mégalixir</strong> ×5, <strong>Élixir</strong> ×5, <strong>Potion-X</strong> ×2, <strong>Ether turbo</strong> ×2</td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Partout</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Barret dans l'équipe</strong> avant les escaliers du canon, sinon pas de Manuscrit absent.</li>
+<li><strong>Ne rejoins pas le regroupement final</strong> avant d'avoir fait les trois chemins.</li>
+<li><strong>Équipe ta première équipe à fond</strong> : elle enchaîne Bizarro·Sephiroth et Safer·Sephiroth.</li>
+</ul>
+<h2 id="alertes-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : <strong class="objet">Manuscrit absent</strong>, objets du <strong>distributeur</strong>, <strong>Boîte-Pandore</strong>, doublons, <strong class="objet">Méga tous</strong>.</li>
+<li class="alerte">⚠️ Bug : <strong class="objet">Cristal sauf</strong> posé sur un écran de séparation = partie bloquée.</li>
+<li class="alerte">⚠️ <strong>Point de non-retour</strong> : « Allez, on avance ».</li>
+</ul>
+<h2 id="check-list-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bracelet Aégis</strong>, <strong class="objet">Elément-W</strong>, quatre Sources</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Poing maître</strong>, <strong class="objet">Bunker</strong>, <strong class="objet">Cri HP</strong>, Lance croissance, Corne béhémoth</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Mystile</strong>, <strong class="objet">Manuscrit absent</strong>, Hojo vaincu</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Lune limitée</strong></li>
+<li class="tache"><input type="checkbox"> Grotte Nord : trois chemins faits, doublons récupérés</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bouclier</strong>, <strong class="objet">Opposition</strong>, <strong class="objet">Magie-W</strong>, <strong class="objet">Opposition Magie</strong>, <strong class="objet">Méga tous</strong>, <strong class="objet">Tétra élémentaire</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Boîte-Pandore</strong> appris</li>
+<li class="tache"><input type="checkbox"> Combat final remporté</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-13">
+<header class="tete-section">
+<p class="eyebrow">Partie 12</p>
+<h1 id="12-youfie-vincent-et-leurs-quetes">Youfie, Vincent et leurs quêtes</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-13"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-13">
+<h2 id="objectif-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Recruter les deux personnages facultatifs, <strong>Youfie</strong> et <strong>Vincent</strong>, puis finir leurs quêtes : <strong>Utai</strong>, la <strong>Tour pagode</strong>, le <strong>mont Da-chao</strong> et la <strong>caverne de Lucrécia</strong>. Deux Limites niveau 4, plusieurs Matérias uniques.</p>
+<h2 id="itineraire-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Une forêt</strong> : le Ninja mystère.</li>
+<li><strong>Le manoir de Nibelheim</strong> : le coffre-fort et le cercueil.</li>
+<li><strong>Utai</strong> : la ville, la maison de Godo, le mont Da-chao, la Tour pagode.</li>
+<li><strong>La cascade de la Région de Nibel</strong> : la caverne de Lucrécia.</li>
+</ol>
+<h2 id="deroule-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Youfie</strong> : combat dans une forêt contre le <strong>Ninja mystère</strong>. La petite forêt de la <strong>Région de Fusée</strong> (près de la sortie du Mont Nibel) la fait apparaître <strong>à 100 %</strong>.</li>
+<li>Après le combat, <strong>n'ouvre pas le menu, ne sauvegarde pas</strong> : parle-lui et réponds <strong>2 – 1 – 2 – 1 – 2</strong> (avec Clad : « Ça ne m'intéresse pas », « Tu as la trouille », « Attendre un moment ! », « C'est ça », « Dépêchons-nous »).</li>
+<li><strong>Vincent</strong> : coffre-fort du manoir, <strong>Droite 36, Gauche 10, Droite 59, Droite 97</strong>, sans jamais dépasser un chiffre (20 secondes). <strong>Boss : Numéro perdu</strong> : <strong>Clé sous-sol</strong>, <strong class="objet">Odin</strong>, <strong class="objet">Mémoire Cosmos</strong>. Au sous-sol, parle au cercueil (Séphiroth, puis son prénom), sors et reviens vers l'escalier.</li>
+<li><strong>Quête d'Utai</strong> (disques 1 et 2 uniquement) : accoste en Tiny Bronco sur la plage sud du continent ouest. Youfie vole tes Matérias.</li>
+<li>En ville : parle aux <strong>Turks</strong> au Turtle's Paradise. Chez <strong>Godo</strong> (maison de droite devant la tour) : <strong class="objet">Shuriken magique</strong> derrière le tissu, <strong class="objet">Épingle cheveux</strong> derrière le mur gris coulissant. <strong class="objet">Absorption MP</strong> au magasin d'éléments (volée puis rendue).</li>
+<li>Paravent, <strong>potiche qui bouge</strong>, cage du sous-sol (relève la manette), puis la <strong>cloche</strong> de la maison de gauche : <strong class="objet">Éclair furtif</strong> et <strong>Élixir</strong>.</li>
+<li><strong>Mont Da-chao</strong> : <strong class="objet">Lance de dragon</strong> dans la caverne en feu. <strong>Boss : Rapps</strong>. Tes Matérias te sont rendues — dans le désordre.</li>
+<li><strong>Maison aux chats</strong> : <strong class="objet">Absorption HP</strong>. Talents <strong>Marteau magie</strong> (Herbe rasoir) et <strong>Force de mort</strong> (Adamantaimai), et <strong>vole un Bijou Adaman</strong> à ces derniers.</li>
+<li><strong>Tour pagode</strong> (Youfie seule, tous les disques) : Gorki, Secousse, Chekhov, Stanif, Godo. <strong class="objet">Léviathan</strong> et <strong class="objet">Tout-création</strong>.</li>
+<li><strong>Avec les Écailles-Léviathan</strong>, éteins les flammes du Da-chao : <strong class="objet">Oritsuru</strong> et <strong class="objet">Vol simultané</strong>.</li>
+<li><strong>Caverne de Lucrécia</strong> (chocobo vert/noir/doré ou sous-marin, par la faille nord-est) avec Vincent. Repars, fais <strong>exactement dix combats</strong>, reviens : <strong class="objet">Peine de mort</strong> et <strong class="objet">Chaos</strong>.</li>
+</ol>
+<h2 id="butin-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Odin</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Numéro perdu</td>
+</tr>
+<tr>
+<td><strong>Mémoire Cosmos</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Numéro perdu (Limite 4 de Nanaki)</td>
+</tr>
+<tr>
+<td><strong>Shuriken magique</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Youfie</span></td>
+<td>Maison de Godo</td>
+</tr>
+<tr>
+<td><strong>Épingle cheveux</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Nanaki</span></td>
+<td>Maison de Godo</td>
+</tr>
+<tr>
+<td><strong>Absorption MP</strong>, <strong>Absorption HP</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Utai</td>
+</tr>
+<tr>
+<td><strong>Éclair furtif</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Youfie</span></td>
+<td>Maison à la cloche</td>
+</tr>
+<tr>
+<td><strong>Lance de dragon</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cid</span></td>
+<td>Mont Da-chao</td>
+</tr>
+<tr>
+<td><strong>Bijou Adaman</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>À voler aux Adamantaimai</td>
+</tr>
+<tr>
+<td><strong>Léviathan</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Godo, Tour pagode</td>
+</tr>
+<tr>
+<td><strong>Tout-création</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Godo (Limite 4 de Youfie)</td>
+</tr>
+<tr>
+<td><strong>Oritsuru</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Youfie</span></td>
+<td>Da-chao, flammes éteintes</td>
+</tr>
+<tr>
+<td><strong>Vol simultané</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Da-chao, flammes éteintes</td>
+</tr>
+<tr>
+<td><strong>Peine de mort</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Vincent</span></td>
+<td>Caverne de Lucrécia</td>
+</tr>
+<tr>
+<td><strong>Chaos</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Caverne de Lucrécia (Limite 4 de Vincent)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Fais Utai dès le Tiny Bronco</strong> : tu accostes déjà au bon endroit.</li>
+<li><strong>Équipe bien Youfie</strong> avant la Tour pagode : elle combat seule, mais perdre ne fait rien.</li>
+<li><strong>Compte tes dix combats</strong> pour Lucrécia.</li>
+</ul>
+<h2 id="alertes-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Point de non-retour</strong> : la quête d'Utai est impossible au disque 3.</li>
+<li class="alerte manquable">⏳ Manquable : <strong class="objet">Oritsuru</strong> et <strong class="objet">Vol simultané</strong> sans les Écailles-Léviathan.</li>
+<li class="alerte manquable">⏳ Manquable : tout ce chapitre si tu ne recrutes pas Youfie et Vincent.</li>
+</ul>
+<h2 id="check-list-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Youfie</strong> recrutée</li>
+<li class="tache"><input type="checkbox"> Numéro perdu : <strong class="objet">Odin</strong>, <strong class="objet">Mémoire Cosmos</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Vincent</strong> recruté</li>
+<li class="tache"><input type="checkbox"> Quête d'Utai : <strong class="objet">Shuriken magique</strong>, <strong class="objet">Épingle cheveux</strong>, <strong class="objet">Éclair furtif</strong>, <strong class="objet">Lance de dragon</strong>, Rapps vaincu</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Absorption HP</strong> et <strong>MP</strong>, <strong class="objet">Bijou Adaman</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Léviathan</strong> et <strong class="objet">Tout-création</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Oritsuru</strong> et <strong class="objet">Vol simultané</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Peine de mort</strong> et <strong class="objet">Chaos</strong></li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-14">
+<header class="tete-section">
+<p class="eyebrow">Partie 13</p>
+<h1 id="13-le-gold-saucer">Le Gold Saucer</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-14"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-14">
+<h2 id="objectif-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Tirer du parc de Dio tout ce qu'il donne : <strong class="objet">Omnislash</strong>, <strong class="objet">Invocation-W</strong>, la <strong>Matéria Attaque Finale</strong>, le <strong class="objet">Parapluie</strong> et le <strong class="objet">Fouet</strong>, <strong class="objet">Super Gil</strong> et <strong class="objet">Super EXP</strong> — et choisir qui partagera ta <strong>soirée</strong>.</p>
+<h2 id="itineraire-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>L'entrée</strong> : ticket, GP et BP.</li>
+<li><strong>Battle Square</strong> : l'arène et le combat spécial.</li>
+<li><strong>Speed Square</strong>, <strong>Wonder Square</strong>, <strong>Chocobo Square</strong>.</li>
+<li><strong>La soirée</strong> de fin de disque 1.</li>
+</ol>
+<h2 id="deroule-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong class="objet">Ticket d'or</strong> : 30 000 Gils à l'entrée, ou <strong>300 GP</strong> au Wonder Square. Les <strong>BP</strong> retombent à zéro en quittant la salle du Battle Square : achète avant de sortir.</li>
+<li><strong>Battle Square</strong> (10 GP) : huit combats en solo, une roulette de handicap entre chaque. Plus le handicap est dur, plus il rapporte (« Toutes les Matérias cassées » à la 7e roulette = 10 000 BP). <strong>Un Fumigène ou Escapade au 8e combat</strong> garde tous les BP.</li>
+<li>Après ta première série gagnée, la femme en bas des escaliers offre des <strong class="objet">Baskets</strong>.</li>
+<li><strong>Lots</strong> : <strong class="objet">Omnislash</strong> (51 200 BP fin CD1, 32 000 au CD2) et <strong class="objet">Invocation-W</strong> (64 000 BP, CD2), une fois chacun. <strong class="objet">Écharpe champion</strong> aussi.</li>
+<li><strong>Combat spécial</strong> (Dernière arme battue, Omnislash appris, Invocation-W achetée), toujours avec Clad : 1re victoire <strong class="objet">Attaque Finale</strong>, 10e victoire <strong class="objet">Ruban</strong>.</li>
+<li><strong>Speed Square</strong> : 5 000 points = <strong class="objet">Parapluie</strong> (avant le Hautvent) puis <strong class="objet">Fouet</strong> (après). Vise le <strong>Rocher vert</strong>, la <strong>Roue du bateau</strong>, la <strong>Grande soucoupe</strong> et le <strong>Projecteur</strong> ; ne reste jamais appuyé sur le tir.</li>
+<li><strong>Wonder Square</strong> : le <strong>Combat 3D</strong> rapporte <strong>300 GP</strong> en te laissant battre dix fois par l'homme invisible (attaque centrale). <strong class="objet">Super Gil</strong> (1 000 GP) et <strong class="objet">Super EXP</strong> (2 000 GP) après le Hautvent. <strong>Maison de Mog</strong> : 5 noix puis 3, 30 GP. <strong>Moto-G</strong> ≥ 10 000 : <strong>Source de rapidité</strong>. <strong>Jeu du sous-marin</strong> : cinq victoires = <strong>Encre</strong>, <strong>Bombe T/S</strong>, <strong>Dent de dragon</strong>, <strong>Écailles de dragon</strong>, <strong>Chaudron</strong>. <strong>Jeu sur neige</strong> (score ≥ 89) : <strong class="objet">Bit de sûreté</strong>, <strong class="objet">Tout</strong>, <strong class="objet">Bijou cristal</strong>.</li>
+<li><strong>Chocobo Square</strong> : trois victoires = une classe. <strong>Dix victoires en A+</strong> avec le même chocobo : <strong class="objet">Chocobracelet</strong>, <strong class="objet">Montre précieuse</strong>, <strong class="objet">Baskets</strong>, <strong class="objet">Clochette de chat</strong>, <strong class="objet">Contre-attaque</strong>. Préfère les <strong>GP</strong> aux objets pour financer Super Gil et Super EXP.</li>
+<li><strong>La soirée</strong> : l'affection de départ est Aéris 50, Tifa 30, Youfie 10, Barret 0. Pour Barret : fleur à Marlène, trois mauvais tonneaux dans l'église, choisi par Cornéo, Tifa baissée en prison, Barret retenu à Kalm. Pour Youfie : recrutée tôt, trois mauvaises réponses avant de la recruter, un <strong>Calmant</strong> offert sur le cargo, Utai au disque 1.</li>
+</ol>
+<h2 id="butin-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ticket d'or</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>300 GP au Wonder Square</td>
+</tr>
+<tr>
+<td><strong>Baskets</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Première série gagnée</td>
+</tr>
+<tr>
+<td><strong>Omnislash</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Battle Square</td>
+</tr>
+<tr>
+<td><strong>Invocation-W</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Battle Square, 64 000 BP</td>
+</tr>
+<tr>
+<td><strong>Écharpe champion</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Battle Square</td>
+</tr>
+<tr>
+<td><strong>Attaque Finale</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>1re victoire au combat spécial</td>
+</tr>
+<tr>
+<td><strong>Ruban</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>10e victoire au combat spécial</td>
+</tr>
+<tr>
+<td><strong>Parapluie</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Aéris</span></td>
+<td>Speed Square, avant le Hautvent</td>
+</tr>
+<tr>
+<td><strong>Fouet</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cid</span></td>
+<td>Speed Square, après le Hautvent</td>
+</tr>
+<tr>
+<td><strong>Super Gil</strong>, <strong>Super EXP</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Wonder Square</td>
+</tr>
+<tr>
+<td><strong>Noix de Caroube</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>500 GP, Wonder Square</td>
+</tr>
+<tr>
+<td><strong>Bit de sûreté</strong>, <strong>Bijou cristal</strong></td>
+<td><span class="badge neutre">Accessoire, Armure</span></td>
+<td>Jeu sur neige</td>
+</tr>
+<tr>
+<td><strong>Tout</strong>, <strong>Contre-attaque</strong>, <strong>Attaque Furtive</strong>, <strong>Opposition Magie</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Jeu sur neige, courses de chocobos</td>
+</tr>
+<tr>
+<td><strong>Chocobracelet</strong>, <strong>Montre précieuse</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Dix victoires en A+</td>
+</tr>
+<tr>
+<td><strong>Clochette de chat</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Dix victoires en A+</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Combat 3D</strong> : la meilleure machine à GP du parc.</li>
+<li><strong>Vlakorados</strong> (66 666 HP) au Battle Square : empoisonne-le.</li>
+<li><strong>Sur PC</strong>, plus de 32 767 points au Speed Square annulent le lot.</li>
+</ul>
+<h2 id="alertes-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : le <strong class="objet">Parapluie</strong>, avant le Hautvent.</li>
+<li class="alerte">⚠️ <strong class="objet">Omnislash</strong> et <strong class="objet">Invocation-W</strong> : un seul exemplaire chacun.</li>
+<li class="alerte">⚠️ Le parc est fermé pendant l'absence de Clad au disque 2.</li>
+</ul>
+<h2 id="check-list-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Ticket d'or</strong>, <strong class="objet">Baskets</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Omnislash</strong>, <strong class="objet">Invocation-W</strong></li>
+<li class="tache"><input type="checkbox"> Combat spécial : <strong class="objet">Attaque Finale</strong>, <strong class="objet">Ruban</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Parapluie</strong> et <strong class="objet">Fouet</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Super Gil</strong>, <strong class="objet">Super EXP</strong></li>
+<li class="tache"><input type="checkbox"> Jeux du sous-marin et sur neige terminés</li>
+<li class="tache"><input type="checkbox"> Dix victoires A+ au Chocobo Square</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-15">
+<header class="tete-section">
+<p class="eyebrow">Partie 14</p>
+<h1 id="14-lelevage-de-chocobos-et-les-grottes-a-materia">L&#x27;élevage de chocobos et les grottes à Matéria</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-15"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-15">
+<h2 id="objectif-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Obtenir le <strong>chocobo doré</strong>, qui va partout, pour vider les <strong>quatre grottes à Matéria</strong> — dont celle des <strong class="objet">Chevaliers de la Table Ronde</strong>. Raccourci possible : la <strong>Rose du désert</strong> de l'Arme de rubis contre un chocobo doré chez le voyageur de Kalm.</p>
+<h2 id="itineraire-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Les traces de chocobos</strong>, avec l'<strong>Appât-chocobo</strong>.</li>
+<li><strong>La Ferme de chocobos</strong> (écuries) et le <strong>Chocobo Sage</strong> (légumes).</li>
+<li><strong>Le Chocobo Square</strong> pour monter en classe.</li>
+<li><strong>Les quatre grottes à Matéria</strong>.</li>
+</ol>
+<h2 id="deroule-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Six écuries</strong> chez <strong>Choco Bill</strong> (10 000 Gils chacune), à partir du disque 2.</li>
+<li><strong>Capture</strong> : Appât-chocobo sur les traces, tue seulement les monstres qui l'accompagnent, jette un légume s'il relève la tête. <strong>Retrait</strong> (Matéria Quitter) le capture d'office.</li>
+<li><strong>Chocobo Sage</strong> (Région du Glaçon) : son chocobo vert, « <strong>Qui va là ?</strong> » : <strong>Matéria Talent de l'ennemi</strong>. Il vend les <strong>Légumes Sylkis</strong> (5 000 Gils) : <strong>duplique-les à l'Elément-W</strong>.</li>
+<li><strong>Étape 1</strong> : deux <strong>Chocobos magnifiques</strong> (avec des <strong>Spirale</strong>, Région de Mideel), mâle et femelle, nourris aux Sylkis, montés en <strong>classe A</strong>. Le sexe est tiré au transfert : sauvegarde, combats, relance si besoin.</li>
+<li><strong>Étape 2</strong> : croise-les avec une <strong class="objet">Noix de Caroube</strong> (Vlakorados, près du Village des ossements) : un <strong>vert</strong> et un <strong>bleu</strong>, de sexes opposés (3 à 10 combats entre deux croisements).</li>
+<li><strong>Étape 3</strong> : nouveau-nés nourris et en classe A (3 à 18 combats pour qu'ils grandissent), puis Noix de Caroube : <strong>chocobo noir</strong>.</li>
+<li><strong>Étape 4</strong> : un <strong>Grand chocobo</strong> (accompagné de <strong>Saut</strong>, près du Village Glaçon), sexe opposé au noir, les deux en <strong>A+</strong>. <strong class="objet">Noix de Zeio</strong> (Gobelin, Île de Gobelin). Croisement : <strong>chocobo doré</strong>.</li>
+<li><strong>Les grottes</strong> :
+<ul>
+<li><strong>Mideel</strong> (bleu, noir, doré, ou Hautvent via un bug) : <strong class="objet">Quadruple magie</strong> ;</li>
+<li><strong>Utai</strong> (vert, noir, doré) : <strong class="objet">Mimer</strong> ;</li>
+<li><strong>Corel Nord</strong> (noir, doré) : <strong class="objet">HP&lt;–&gt;MP</strong> ;</li>
+<li><strong>Île Ronde</strong> (doré uniquement) : <strong class="objet">Chevaliers de la Table Ronde</strong>.</li>
+</ul>
+</li>
+</ol>
+<h2 id="butin-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Talent de l'ennemi</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Chocobo vert du Chocobo Sage</td>
+</tr>
+<tr>
+<td><strong>Noix de Caroube</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Vlakorados</td>
+</tr>
+<tr>
+<td><strong>Noix de Zeio</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Gobelin</td>
+</tr>
+<tr>
+<td><strong>Quadruple magie</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Grotte de Mideel</td>
+</tr>
+<tr>
+<td><strong>Mimer</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Grotte d'Utai</td>
+</tr>
+<tr>
+<td><strong>HP&lt;–&gt;MP</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Grotte de Corel Nord</td>
+</tr>
+<tr>
+<td><strong>Chevaliers de la Table Ronde</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Grotte de l'Île Ronde</td>
+</tr>
+<tr>
+<td><strong>Légumes Sylkis</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Chocobo Sage</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Ne commence jamais avec un Grand chocobo</strong> : il ne donne ni vert ni bleu.</li>
+<li><strong>Le Midgar Zolom</strong> près de la ferme sert de compteur de combats.</li>
+<li><strong>Sauvegarde avant chaque croisement</strong> : couleur et sexe sont tirés au hasard.</li>
+</ul>
+<h2 id="alertes-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ Les <strong class="objet">Chevaliers de la Table Ronde</strong> exigent le chocobo doré : c'est tout ou rien.</li>
+<li class="alerte">⚠️ Un chocobo relâché est perdu pour de bon.</li>
+</ul>
+<h2 id="check-list-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Six écuries</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Talent de l'ennemi</strong> du Chocobo Sage</li>
+<li class="tache"><input type="checkbox"> Deux magnifiques en classe A</li>
+<li class="tache"><input type="checkbox"> Vert et bleu, puis noir</li>
+<li class="tache"><input type="checkbox"> Grand chocobo, <strong class="objet">Noix de Zeio</strong>, chocobo doré</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Quadruple magie</strong>, <strong class="objet">Mimer</strong>, <strong class="objet">HP&lt;–&gt;MP</strong>, <strong class="objet">Chevaliers de la Table Ronde</strong></li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-16">
+<header class="tete-section">
+<p class="eyebrow">Partie 15</p>
+<h1 id="15-armes-ultimes-limites-materias-et-talents">Armes ultimes, Limites, Matérias et Talents</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-16"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-16">
+<h2 id="objectif-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Réunir les <strong>neuf armes ultimes</strong>, les <strong>huit Limites niveau 4</strong>, les invocations et les <strong>24 Talents de l'ennemi</strong>, et boucler deux lieux secrets : la <strong>Forêt Ancienne</strong> et la <strong>caverne du vieil homme qui dort</strong>.</p>
+<h2 id="itineraire-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Les Limites</strong> : comment les apprendre.</li>
+<li><strong>La caverne du vieil homme</strong> (est de Junon) et le <strong>vendeur d'armes</strong> (Gongaga).</li>
+<li><strong>La Forêt Ancienne</strong> (Région Cosmo).</li>
+<li><strong>Le voyageur de Kalm</strong> et les <strong>Méga-Matérias</strong>.</li>
+</ol>
+<h2 id="deroule-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Limites</strong> : la jauge monte quand tu encaisses. Les premières limites de chaque niveau s'apprennent en <strong>tuant des ennemis</strong>, les secondes en <strong>lançant la première</strong> plusieurs fois. Un <strong>Hyper</strong> (Fureur) double la vitesse de la jauge. Farme les <strong>Moulure de câble</strong> par 5 dans les forêts de Junon.</li>
+<li><strong>Limite 4</strong> : un objet à utiliser depuis l'inventaire, <strong>une fois toutes les autres limites apprises</strong> (voir le tableau).</li>
+<li><strong>Piano de Tifa</strong> (Nibelheim, disque 2, Tifa dans l'équipe) : <strong>Do Ré Mi Si La Do Ré Mi Sol Fa Do Ré Do</strong>.</li>
+<li><strong>Vieil homme qui dort</strong> (est de Junon) : nombre de combats aux deux derniers chiffres identiques et impairs, ou multiple de 100 = <strong>Mythril</strong>. Chez le <strong>vendeur d'armes</strong> : <strong class="objet">Grand évangile</strong> (étage) ou <strong class="objet">Bracelet or</strong> (rez-de-chaussée, duplicable sans combattre entre les allers-retours).</li>
+<li><strong>Forêt Ancienne</strong> (chocobo vert, ou après Dernière arme) : insectes et grenouilles dans les plantes poches, pierres dans les carnivores. <strong class="objet">Supercoup ST</strong>, <strong class="objet">Broche de fusil</strong>, <strong class="objet">FurieMax</strong>, <strong class="objet">Cercle Minerve</strong>, <strong class="objet">Typoon</strong>, <strong class="objet">Apocalypse</strong> (AP triplés), <strong>Élixir</strong>.</li>
+<li><strong>Voyageur de Kalm</strong> : <strong>Guide</strong> → <strong>Matéria Sous-marin</strong> ; <strong>Harpe terrestre</strong> (Arme d'émeraude) → <strong class="objet">Magie maîtresse</strong>, <strong class="objet">Commande maître</strong>, <strong class="objet">Invocation maître</strong> ; <strong>Rose du désert</strong> (Arme de rubis) → chocobo doré.</li>
+<li><strong>Méga-Matérias</strong> chez Bugenhagen : verte (21 magies maîtres), jaune (7 commandes maîtres), rouge (16 invocations maîtres), bleue (Bahamut ZÉRO).</li>
+<li><strong>Talents de l'ennemi à ne pas rater</strong> : <strong>Boîte-Pandore</strong> (Dragon Zombie, une fois), <strong>Chocoboucle</strong> (Légume Mimett puis <strong>Suicide N4</strong> sur un chocobo de niveau 16 ou 36), <strong>Trine</strong> (Godo, si tu as besoin de la 4e Matéria).</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Personnage</th>
+<th>Arme ultime</th>
+<th>Limite niveau 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Clad</strong></td>
+<td><strong>Dernière arme</strong> (superboss)</td>
+<td><strong>Omnislash</strong> (Battle Square)</td>
+</tr>
+<tr>
+<td><strong>Barret</strong></td>
+<td><strong>Manuscrit absent</strong> (Midgar, disque 3)</td>
+<td><strong>Catastrophe</strong> (Corel Nord)</td>
+</tr>
+<tr>
+<td><strong>Tifa</strong></td>
+<td><strong>Poing maître</strong> (Bâtiment Shinra)</td>
+<td><strong>Dernier paradis</strong> (piano)</td>
+</tr>
+<tr>
+<td><strong>Aéris</strong></td>
+<td><strong>Parapluie</strong> (Speed Square)</td>
+<td><strong>Grand évangile</strong> (vendeur d'armes)</td>
+</tr>
+<tr>
+<td><strong>Nanaki</strong></td>
+<td><strong>Lune limitée</strong> (Bugenhagen)</td>
+<td><strong>Mémoire Cosmos</strong> (Numéro perdu)</td>
+</tr>
+<tr>
+<td><strong>Cait Sith</strong></td>
+<td><strong>Cri HP</strong> (Bâtiment Shinra)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Youfie</strong></td>
+<td><strong>Conformiste</strong> (Gelnika)</td>
+<td><strong>Tout-création</strong> (Tour pagode)</td>
+</tr>
+<tr>
+<td><strong>Vincent</strong></td>
+<td><strong>Peine de mort</strong> (Lucrécia)</td>
+<td><strong>Chaos</strong> (Lucrécia)</td>
+</tr>
+<tr>
+<td><strong>Cid</strong></td>
+<td><strong>Evangile de Vénus</strong> (Village de la Fusée)</td>
+<td><strong>Hautvent</strong> (Gelnika)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dernier paradis</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Piano de Tifa</td>
+</tr>
+<tr>
+<td><strong>Grand évangile</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Vendeur d'armes, contre du Mythril</td>
+</tr>
+<tr>
+<td><strong>Bracelet or</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Vendeur d'armes</td>
+</tr>
+<tr>
+<td><strong>Anneau éclair</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Vieil homme, chiffres pairs identiques</td>
+</tr>
+<tr>
+<td><strong>Supercoup ST</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Vincent</span></td>
+<td>Forêt Ancienne</td>
+</tr>
+<tr>
+<td><strong>Broche de fusil</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Nanaki</span></td>
+<td>Forêt Ancienne</td>
+</tr>
+<tr>
+<td><strong>FurieMax</strong>, <strong>Typoon</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Forêt Ancienne</td>
+</tr>
+<tr>
+<td><strong>Cercle Minerve</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Forêt Ancienne</td>
+</tr>
+<tr>
+<td><strong>Apocalypse</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Clad</span></td>
+<td>Forêt Ancienne</td>
+</tr>
+<tr>
+<td><strong>Sous-marin</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Voyageur de Kalm, Guide</td>
+</tr>
+<tr>
+<td><strong>Magie maîtresse</strong>, <strong>Commande maître</strong>, <strong>Invocation maître</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Harpe terrestre ou Méga-Matérias</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong class="objet">Apocalypse</strong> et <strong>Cimeterre</strong> sont les deux seules armes qui triplent les AP.</li>
+<li><strong>Tout + Restaurer</strong>, <strong>Opposition Magie + Guérison Max</strong>, <strong>Absorption HP + Chevaliers de la Table Ronde</strong> : les trois combinaisons qui changent une partie.</li>
+<li><strong>Plus de huit Matérias à déclenchement automatique</strong> ne servent à rien.</li>
+</ul>
+<h2 id="alertes-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : <strong class="objet">Dernier paradis</strong> si tu n'y vas pas avec Tifa, <strong>Parapluie</strong> avant le Hautvent.</li>
+<li class="alerte">⚠️ Cait Sith n'a pas de Limite niveau 4.</li>
+</ul>
+<h2 id="check-list-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Les huit objets de Limite niveau 4</li>
+<li class="tache"><input type="checkbox"> Les neuf armes ultimes</li>
+<li class="tache"><input type="checkbox"> Mythril, <strong class="objet">Grand évangile</strong>, <strong class="objet">Bracelet or</strong></li>
+<li class="tache"><input type="checkbox"> Forêt Ancienne vidée, <strong class="objet">Apocalypse</strong></li>
+<li class="tache"><input type="checkbox"> Voyageur de Kalm : trois objets rendus</li>
+<li class="tache"><input type="checkbox"> Les 24 Talents de l'ennemi</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-17">
+<header class="tete-section">
+<p class="eyebrow">Partie 16</p>
+<h1 id="16-lavion-gelnika-et-les-armes">L&#x27;avion Gelnika et les Armes</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-17"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-17">
+<h2 id="objectif-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Vider l'<strong>avion Gelnika coulé</strong> dès que tu as le sous-marin, puis abattre les <strong>Armes</strong> : <strong class="objet">Dernière arme</strong>, <strong>Arme de diamant</strong>, <strong>Arme d'émeraude</strong> (1 000 000 HP) et <strong>Arme de rubis</strong> (800 000 HP).</p>
+<h2 id="itineraire-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Le Gelnika</strong>, sous l'eau près du désert du Gold Saucer.</li>
+<li><strong class="objet">Dernière arme</strong> : du cratère de Junon au Canyon Cosmo.</li>
+<li><strong>Arme de rubis</strong> : le désert du Gold Saucer.</li>
+<li><strong>Arme d'émeraude</strong> : sous l'eau, entre Junon et Costa del Sol.</li>
+</ol>
+<h2 id="deroule-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé</span></h2>
+<ol>
+<li><strong>Gelnika</strong> : <strong class="objet">Nuage du paradis</strong> (Clad), <strong>Mégalixir</strong>, <strong class="objet">Garde d'escorte</strong>, <strong class="objet">Attaque double</strong>, <strong class="objet">Conformiste</strong> (arme ultime de Youfie, caché sous la passerelle). <strong>Boss : Réno et Rude</strong> (seulement si tu ne les as pas affrontés au Secteur 8 au disque 3). <strong>Mégalixir</strong>, <strong class="objet">Lance spirituelle</strong> (Cid), <strong class="objet">Hadès</strong>, <strong class="objet">Hautvent</strong> (Limite 4 de Cid), <strong class="objet">Outsider</strong> (Vincent).</li>
+<li>Les six ennemis du Gelnika, tués avec <strong>Trans.</strong>, donnent des <strong>Sources</strong> ; avec le Conformiste, Youfie transforme sans perte de dégâts.</li>
+<li><strong class="objet">Dernière arme</strong> : percute-la en Hautvent au-dessus du cratère de Junon, puis poursuis-la. Sous 20 000 HP, elle file au-dessus du <strong>Canyon Cosmo</strong> pour le dernier combat. <strong>Longue portée</strong> sur Clad, un tireur à distance, <strong>Voler</strong> pour le <strong class="objet">Brassard</strong>. Matéria Talent de l'ennemi équipée : <strong>Éclat d'ombre</strong>. Récompense : <strong class="objet">Dernière arme</strong>.</li>
+<li><strong>Arme de rubis</strong> (après Dernière arme, sauvegarder et recharger) : commence avec <strong>deux alliés KO</strong> pour qu'elle sorte ses tentacules. <strong>Mystile</strong> ou <strong>Bracelet Aégis</strong> contre Ultima, <strong>Collier</strong> contre les tentacules. Méthodes : <strong>Fin de partie</strong> de Cait Sith, les <strong>7 porte-bonheur</strong> (Clad à 7 777 HP), ou les <strong>Chevaliers de la Table Ronde</strong> en boucle avec Phénix et Hadès. Récompense : <strong class="objet">Rose du désert</strong>.</li>
+<li><strong>Arme d'émeraude</strong> : <strong>Matéria Sous-marin</strong> obligatoire (sinon 20 minutes). <strong>Aire Tam Storm</strong> = 1 111 dégâts par Matéria équipée : <strong>moins de neuf Matérias</strong> par personnage. Tue trois des quatre <strong>Œil</strong>. Méthodes : chaîne <strong>Opposition + Mimer</strong> sur l'Ungarmax de Barret, 7 porte-bonheur, ou Chevaliers en boucle. Récompense : <strong class="objet">Harpe terrestre</strong>.</li>
+</ol>
+<h2 id="butin-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Type</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nuage du paradis</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Clad</span></td>
+<td>Gelnika, première pièce</td>
+</tr>
+<tr>
+<td><strong>Garde d'escorte</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Gelnika, salle nord</td>
+</tr>
+<tr>
+<td><strong>Attaque double</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Gelnika, salle nord</td>
+</tr>
+<tr>
+<td><strong>Conformiste</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Youfie</span></td>
+<td>Sous la passerelle, salle nord</td>
+</tr>
+<tr>
+<td><strong>Lance spirituelle</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cid</span></td>
+<td>Gelnika, dernière pièce</td>
+</tr>
+<tr>
+<td><strong>Hadès</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Près de l'hélicoptère</td>
+</tr>
+<tr>
+<td><strong>Hautvent</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Près des débris</td>
+</tr>
+<tr>
+<td><strong>Outsider</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Vincent</span></td>
+<td>En bas à gauche</td>
+</tr>
+<tr>
+<td><strong>Dernière arme</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Clad</span></td>
+<td>Superboss Dernière arme</td>
+</tr>
+<tr>
+<td><strong>Brassard</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>À voler sur Dernière arme</td>
+</tr>
+<tr>
+<td><strong>Rose du désert</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Arme de rubis</td>
+</tr>
+<tr>
+<td><strong>Harpe terrestre</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Arme d'émeraude</td>
+</tr>
+<tr>
+<td><strong>Mégalixir</strong> ×2</td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Gelnika</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Visite le Gelnika tôt</strong> : arme ultime, Limite 4 de Cid, Attaque double et Hadès.</li>
+<li><strong>En ressortant</strong>, si l'Arme d'émeraude stationne devant l'épave, remonte immédiatement.</li>
+<li><strong>Vingt Mégalixirs</strong> pour les superboss : duplique-les à l'Elément-W.</li>
+</ul>
+<h2 id="alertes-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : le combat des Turks au Gelnika.</li>
+<li class="alerte">⚠️ <strong>Dernière arme au-dessus de Midgar au disque 2</strong> = tu survoles la ville pour la suite.</li>
+<li class="alerte">⚠️ <strong>Aire Tam Storm</strong> tue net à neuf Matérias.</li>
+</ul>
+<h2 id="check-list-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Gelnika vidé : <strong class="objet">Conformiste</strong>, <strong class="objet">Hadès</strong>, <strong class="objet">Hautvent</strong>, <strong class="objet">Attaque double</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Dernière arme</strong> et <strong class="objet">Brassard</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Matéria Sous-marin</strong></li>
+<li class="tache"><input type="checkbox"> Arme d'émeraude : <strong class="objet">Harpe terrestre</strong></li>
+<li class="tache"><input type="checkbox"> Arme de rubis : <strong class="objet">Rose du désert</strong></li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-18">
+<header class="tete-section">
+<p class="eyebrow">Pour finir</p>
+<h1 id="99-le-recapitulatif-des-manquables">Le récapitulatif des manquables</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-18"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-18">
+<h2 id="a-ne-jamais-laisser-derriere-soi" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>À ne jamais laisser derrière soi</span></h2>
+<p>Ces objets et événements sont <strong>définitivement perdus</strong> si tu passes à côté.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Partie</th>
+<th>Ce qui se perd</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01 — Réacteurs n°1 et n°5</td>
+<td>La <strong>fleur</strong> d'Aéris, les objets des <strong>passagers du train</strong>, l'<strong>Ether turbo</strong> (5 Gils laissés)</td>
+</tr>
+<tr>
+<td>02 — Wall Market et pilier</td>
+<td>Les <strong>pièces du déguisement</strong>, la <strong>Matéria Sentir</strong>, le <strong>Bâton de frappe</strong> d'Eligor</td>
+</tr>
+<tr>
+<td>03 — Bâtiment Shinra</td>
+<td><strong>El. Base</strong> (MAKO du premier coup), les <strong>trois coupons</strong>, la <strong>Matéria Talent de l'ennemi</strong>, les <strong>250 Gils du distributeur</strong></td>
+</tr>
+<tr>
+<td>04 — Kalm à Junon</td>
+<td>Le <strong>piano de Tifa</strong>, le <strong>Mégalixir</strong> de la commode, l'<strong>Appât-chocobo</strong> du disque 1, les lots des <strong>parades</strong></td>
+</tr>
+<tr>
+<td>05 — Cargo à la prison</td>
+<td><strong>Ifrit</strong>, la scène d'Hojo, les <strong>rails qui cèdent</strong>, l'<strong>écran secret</strong>, <strong>Ramuh</strong></td>
+</tr>
+<tr>
+<td>06 — Gongaga à Nibelheim</td>
+<td><strong>Titan</strong>, <strong>Effet supplémentaire</strong>, les passages secrets de la Grotte Gi, une des deux <strong>Sources</strong> de Nibelheim, le talent <strong>????</strong></td>
+</tr>
+<tr>
+<td>07 — Fusée et Temple</td>
+<td>L'<strong>Élixir</strong> de l'armoire fantôme, la <strong>Plume chocobo</strong>, <strong>tout le Temple des Anciens</strong> (<strong>Ruban</strong>, <strong>Super chance</strong>, <strong>Trans.</strong>, <strong>Bahamut</strong>)</td>
+</tr>
+<tr>
+<td>08 — Cité des Anciens et glacier</td>
+<td><strong>Kjata</strong>, <strong>Comète</strong>, la 3e <strong>Talent de l'ennemi</strong>, <strong>Bracelet aurore</strong> ; à court terme, <strong>Alexandre</strong> et le glacier</td>
+</tr>
+<tr>
+<td>09 — Falaise de Gaëa, Mideel</td>
+<td>Le <strong>Ruban</strong> caché, le <strong>Mégalixir</strong> des cristaux, <strong>Souffle magie</strong>, l'<strong>El. Base</strong> du piano</td>
+</tr>
+<tr>
+<td>10 — Méga-Matérias</td>
+<td>Chaque <strong>Méga-Matéria</strong> (une tentative), le <strong>Bijou de guerrier</strong>, <strong>Catastrophe</strong>, les <strong>Écailles-Léviathan</strong></td>
+</tr>
+<tr>
+<td>11 — Midgar et Grotte Nord</td>
+<td>Le <strong>Manuscrit absent</strong>, les objets du <strong>distributeur</strong>, <strong>Boîte-Pandore</strong>, les <strong>doublons</strong>, <strong>Méga tous</strong></td>
+</tr>
+<tr>
+<td>12 — Youfie et Vincent</td>
+<td><strong>La quête d'Utai</strong> (impossible au disque 3), <strong>Oritsuru</strong> et <strong>Vol simultané</strong> sans les Écailles-Léviathan</td>
+</tr>
+<tr>
+<td>13 — Gold Saucer</td>
+<td>Le <strong>Parapluie</strong> (avant le Hautvent)</td>
+</tr>
+<tr>
+<td>16 — Gelnika et Armes</td>
+<td>Le combat des <strong>Turks</strong> au Gelnika</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="points-de-non-retour" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Points de non-retour</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Fuite du Bâtiment Shinra</strong> : Midgar fermé jusqu'au chapitre 11.</li>
+<li class="alerte">⚠️ <strong>Fin du Temple des Anciens</strong> : le temple disparaît.</li>
+<li class="alerte">⚠️ <strong>Traversée de la Forêt endormie</strong> : Kjata perdue si tu ne l'as pas attrapée.</li>
+<li class="alerte">⚠️ <strong>Obtention du Hautvent</strong> : le Parapluie n'est plus gagnable.</li>
+<li class="alerte">⚠️ <strong>Début du disque 3</strong> : la quête d'Utai n'est plus possible.</li>
+<li class="alerte">⚠️ <strong>« Allez, on avance »</strong> dans la Grotte Nord : le combat final.</li>
+</ul>
+<h2 id="check-list-finale-de-completion" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list finale de complétion</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Youfie</strong> et <strong>Vincent</strong> recrutés</li>
+<li class="tache"><input type="checkbox"> Les <strong>neuf armes ultimes</strong></li>
+<li class="tache"><input type="checkbox"> Les <strong>huit Limites niveau 4</strong></li>
+<li class="tache"><input type="checkbox"> Les <strong>17 invocations</strong>, dont les <strong>Chevaliers de la Table Ronde</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Magie maîtresse</strong>, <strong>Commande maître</strong>, <strong>Invocation maître</strong></li>
+<li class="tache"><input type="checkbox"> Les <strong>24 Talents de l'ennemi</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Chocobo doré</strong> et les quatre grottes à Matéria</li>
+<li class="tache"><input type="checkbox"> <strong>Forêt Ancienne</strong> et <strong>Gelnika</strong> vidés</li>
+<li class="tache"><input type="checkbox"> <strong>Omnislash</strong>, <strong>Invocation-W</strong>, combat spécial du Battle Square</li>
+<li class="tache"><input type="checkbox"> Les quatre <strong>Armes</strong> vaincues</li>
+<li class="tache"><input type="checkbox"> Combat final remporté</li>
+</ul>
+</div>
+</section>
+<section class="section replie" id="section-19">
+<header class="tete-section">
+<p class="eyebrow">Références</p>
+<h1 id="sources">Sources</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-19"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-19">
+<p>Cette version express est un condensé du <strong>guide complet de Final Fantasy VII</strong> (dossier <code>guides/final-fantasy-vii</code>) : chaque partie reprend les rubriques du guide complet (objectif, itinéraire, déroulé, butin, conseils, alertes, check-list) sous une forme resserrée, sans nouvelle recherche.</p>
+<p>La source d'origine — FF7.fr (solutions par disque, quêtes annexes, listes d'armes, de Matérias, de limites et de talents) — est détaillée section par section dans le fichier <code>SOURCES.md</code> du guide complet.</p>
+</div>
+</section>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII · guide express généré le 21 septembre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+</body>
+</html>

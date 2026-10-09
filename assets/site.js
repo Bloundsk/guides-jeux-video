@@ -305,6 +305,100 @@
     clearTimeout(annoncer.t); annoncer.t = setTimeout(function () { z.hidden = true; }, 6000);
   }
 
+  /* ---------- Application et lecture hors connexion ----------
+     sw.js (généré par outils/site.py) garde les pages du site et chaque guide ouvert.
+     Les guides gardés vivent dans le cache « gjv-guides » : on peut en ajouter un depuis
+     sa fiche sans l'ouvrir, et les retirer depuis Mon espace. */
+  var CACHE_GUIDES = "gjv-guides";
+  var swOk = "serviceWorker" in navigator && "caches" in window && (location.protocol === "https:" || location.hostname === "localhost");
+  if (swOk) navigator.serviceWorker.register(BASE + "sw.js").catch(function () {});
+  function urlAbsolue(u) { var x = new URL(u, location.href); return x.origin + x.pathname; }
+  function estGarde(u) {
+    return caches.open(CACHE_GUIDES).then(function (c) { return c.match(urlAbsolue(u)); }).then(function (r) { return !!r; });
+  }
+  function enMo(octets) { return (octets / 1048576).toFixed(1).replace(".", ",") + " Mo"; }
+
+  document.querySelectorAll("[data-hors-ligne]").forEach(function (b) {
+    if (!swOk) return;
+    var url = b.getAttribute("data-hors-ligne"), lib = b.querySelector(".lib"), info = b.parentNode.querySelector(".hl-info");
+    function maj(garde) {
+      b.hidden = false; b.disabled = false;
+      b.setAttribute("aria-pressed", String(garde));
+      lib.textContent = garde ? "Retirer de cet appareil" : "Garder hors connexion";
+      if (info) info.textContent = garde ? "✓ Ce guide est gardé sur cet appareil : il s'ouvre même sans réseau." : "";
+    }
+    estGarde(url).then(maj);
+    b.addEventListener("click", function () {
+      b.disabled = true;
+      estGarde(url).then(function (garde) {
+        if (garde) return caches.open(CACHE_GUIDES).then(function (c) { return c.delete(urlAbsolue(url)); }).then(function () { maj(false); });
+        lib.textContent = "Téléchargement…";
+        return fetch(url, { cache: "no-cache" }).then(function (rep) {
+          if (!rep.ok) throw new Error(rep.status);
+          return caches.open(CACHE_GUIDES).then(function (c) { return c.put(urlAbsolue(url), rep); });
+        }).then(function () { maj(true); }, function () { maj(false); if (info) info.textContent = "Le téléchargement a échoué : vérifie ta connexion et réessaie."; });
+      });
+    });
+  });
+
+  function rendreHorsLigne() {
+    var listes = document.querySelectorAll("[data-liste-hors-ligne]");
+    if (!listes.length) return;
+    var zoneVide = function (l, vide) { var m = l.parentNode.querySelector(".message-vide"); if (m) m.hidden = !vide; };
+    if (!("caches" in window)) { listes.forEach(function (l) { zoneVide(l, true); }); return; }
+    caches.open(CACHE_GUIDES).then(function (c) {
+      return c.keys().then(function (reqs) {
+        return Promise.all(reqs.map(function (r) {
+          return c.match(r).then(function (rep) { return rep ? rep.blob() : null; }).then(function (b) { return { url: r.url, taille: b ? b.size : 0 }; });
+        }));
+      });
+    }).then(function (gardes) {
+      var lignes = gardes.map(function (g) {
+        var m = new URL(g.url).pathname.match(/\/guides\/([^\/]+)\/([^\/]+)\.html$/), j = m && parSlug[m[1]];
+        if (!j) return "";
+        var variante = /-compact$/.test(m[2]) ? " · version compacte" : /-express$/.test(m[2]) ? " · version express" : "";
+        return '<div class="ligne-prog" style="--c1:' + j.c1 + ";--c2:" + j.c2 + '"><span class="emoji" aria-hidden="true">' + j.emoji +
+          '</span><div><h3><a href="' + echapper(g.url) + '">' + echapper(j.titre) + variante + '</a></h3><p class="sous">Gardé sur cet appareil · ' +
+          enMo(g.taille) + '</p><div class="liens"><a href="' + echapper(g.url) + '">Ouvrir</a>' +
+          '<button type="button" class="lien-bouton" data-retirer="' + echapper(g.url) + '">Retirer de l\'appareil</button></div></div></div>';
+      }).filter(Boolean);
+      listes.forEach(function (l) { l.innerHTML = lignes.join(""); zoneVide(l, !lignes.length); });
+    });
+  }
+  rendreHorsLigne();
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-retirer]");
+    if (!b) return;
+    caches.open(CACHE_GUIDES).then(function (c) { return c.delete(b.getAttribute("data-retirer")); }).then(rendreHorsLigne);
+  });
+
+  // Bouton « Installer l'application » (Chrome, Edge, Android) ; sur iPhone, le texte d'aide suffit.
+  var invite = null;
+  window.addEventListener("beforeinstallprompt", function (e) {
+    e.preventDefault(); invite = e;
+    document.querySelectorAll("[data-installer]").forEach(function (b) { b.hidden = false; });
+  });
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-installer]");
+    if (!b || !invite) return;
+    invite.prompt();
+    invite.userChoice.then(function () { invite = null; b.hidden = true; });
+  });
+  window.addEventListener("appinstalled", function () {
+    document.querySelectorAll("[data-installer]").forEach(function (b) { b.hidden = true; });
+  });
+
+  /* ---------- Signaler une erreur (fiche du jeu) ----------
+     Ouvre la messagerie avec un message prérempli ; l'adresse n'est pas écrite en clair dans la page. */
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-signaler]");
+    if (!b) return;
+    var jeu = b.getAttribute("data-signaler"), a = "docmaster.contact" + String.fromCharCode(64) + "proton.me";
+    var corps = "Guide : " + jeu + "\nPartie : \nPage : " + location.href +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + a + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu) + "&body=" + encodeURIComponent(corps);
+  });
+
   /* ---------- Recherche globale ---------- */
   var index = null, chargement = null;
   function chargerIndex() {

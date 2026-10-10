@@ -3,9 +3,9 @@
    - guides : gardés à chaque ouverture (cache « gjv-guides », conservé d'une version à l'autre) ;
    - pages : réseau d'abord (pour avoir la dernière version), copie gardée si le réseau manque ou traîne ;
    - PDF : jamais mis en cache (trop lourds ; on les télécharge). */
-var VERSION = "ded44ece8f", COQUILLE = "gjv-coquille-" + VERSION, GUIDES = "gjv-guides";
+var VERSION = "f32dd5877f", COQUILLE = "gjv-coquille-" + VERSION, GUIDES = "gjv-guides";
 var PORTEE = new URL("./", self.location).pathname;
-var PRECACHE = ["./", "index.html", "guides.html", "mon-espace.html", "a-propos.html", "faq.html", "mentions-legales.html", "plan-du-site.html", "hors-ligne.html", "404.html", "site.webmanifest", "assets/recherche.json", "assets/favicon.svg", "assets/icone-192.png", "assets/fonts/inter-latin.woff2", "assets/fonts/inter-latin-ext.woff2", "assets/fonts/literata-700-latin.woff2", "guides/cyberpunk-2077/index.html", "guides/dark-souls-3/index.html", "guides/elden-ring/index.html", "guides/final-fantasy-ix/index.html", "guides/final-fantasy-vii/index.html", "guides/final-fantasy-vii-rebirth/index.html", "guides/final-fantasy-vii-remake/index.html", "guides/final-fantasy-x/index.html", "guides/hogwarts-legacy/index.html", "guides/octopath-traveler-2/index.html", "guides/pokemon-pokopia/index.html", "guides/spiritfarer/index.html", "guides/super-mario-odyssey/index.html", "assets/style.css?v=2d2e6e55", "assets/site.js?v=152708e0", "assets/jeux.js?v=855e1140"];
+var PRECACHE = ["./", "index.html", "guides.html", "mon-espace.html", "a-propos.html", "faq.html", "mentions-legales.html", "plan-du-site.html", "hors-ligne.html", "404.html", "site.webmanifest", "assets/recherche.json", "assets/favicon.svg", "assets/icone-192.png", "assets/fonts/inter-latin.woff2", "assets/fonts/inter-latin-ext.woff2", "assets/fonts/literata-700-latin.woff2", "guides/cyberpunk-2077/index.html", "guides/dark-souls-3/index.html", "guides/elden-ring/index.html", "guides/final-fantasy-ix/index.html", "guides/final-fantasy-vii/index.html", "guides/final-fantasy-vii-rebirth/index.html", "guides/final-fantasy-vii-remake/index.html", "guides/final-fantasy-x/index.html", "guides/hogwarts-legacy/index.html", "guides/octopath-traveler-2/index.html", "guides/pokemon-pokopia/index.html", "guides/spiritfarer/index.html", "guides/super-mario-odyssey/index.html", "assets/jaquettes/cyberpunk-2077.jpg", "assets/jaquettes/octopath-traveler-2.jpg", "assets/style.css?v=a0fe5ecf", "assets/site.js?v=152708e0", "assets/jeux.js?v=855e1140"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(COQUILLE).then(function (c) { return c.addAll(PRECACHE); }).then(function () { return self.skipWaiting(); }));
@@ -47,6 +47,7 @@ self.addEventListener("fetch", function (e) {
   e.respondWith(caches.match(req).then(function (r) {
     return r || fetch(req).then(function (rep) {
       if (rep.ok && /\/assets\//.test(url.pathname)) { var copie = rep.clone(); caches.open(COQUILLE).then(function (c) { c.put(req, copie); }); }
+      else if (rep.ok && /\/guides\/.+\.(jpe?g|png|webp)$/i.test(url.pathname)) { var img = rep.clone(); caches.open(GUIDES).then(function (c) { c.put(req, img); }); }
       return rep;
     });
   }));

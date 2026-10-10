@@ -29914,6 +29914,10 @@ footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 
     if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
   }
   if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
   // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
   document.getElementById("gjv-signaler").addEventListener("click", function () {
     var secs = document.querySelectorAll("section.section"), cur = null;

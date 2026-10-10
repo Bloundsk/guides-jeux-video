@@ -265,6 +265,60 @@ footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 
   body.compact .alerte { padding: 1.6mm 3mm; }
 }
 </style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
 </head>
 <body data-guide="final-fantasy-ix" class="compact"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1394,21 +1448,32 @@ footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 
 <h1 id="05-laeronef-et-lindblum">L&#x27;Aéronef et Lindblum</h1>
 <button class="bascule" type="button" aria-expanded="false" aria-controls="corps-6"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
 <div class="corps" id="corps-6">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Boss</strong> : Valseur n° 3, à bord de l'Aéronef.</li>
+<li><strong>À ne pas rater</strong> : l'<strong>Autographe</strong> et la <strong>Panoplie</strong> du quartier théâtral, avant d'entrer chez les Tantalas.</li>
+<li><strong>Choix du moment</strong> : qui gagne la Fête de la chasse (un seul prix possible).</li>
+<li><strong>Avant de partir</strong> : fais le plein de soins, c'est la dernière boutique du disque 1.</li>
+</ul>
+</blockquote>
 <h2 id="objectif-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
-<p>Rejoindre <strong>Lindblum</strong>, la grande cité industrielle du roi <strong>Cid</strong>, visiter ses trois quartiers, et remporter la <strong>Fête de la chasse</strong>. C'est le premier vrai temps libre du jeu : la ville regorge d'objets, de trésors cachés et de quêtes qui se prolongent jusqu'à la fin de l'aventure.</p>
+<p>Rejoindre <strong>Lindblum</strong>, la grande cité industrielle du roi Cid, visiter ses trois quartiers et remporter la <strong>Fête de la chasse</strong>.</p>
+<p>C'est le premier vrai temps libre du jeu. La ville regorge d'objets, de trésors cachés et de quêtes qui se prolongent jusqu'à la fin de l'aventure.</p>
 <h2 id="itineraire-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
 <p>📍 <strong>La zone en images</strong> : <a href="https://www.actugaming.net/solution-lindblum-final-fantasy-9-340340/">Lindblum</a> · <a href="https://www.actugaming.net/solution-calme-avant-la-tempete-final-fantasy-9-340341/">Le calme avant la tempête</a> — soluce illustrée sur ActuGaming, en français.</p>
 <ol>
-<li><strong>L'Aéronef</strong> : avancer dans l'appareil jusqu'au boss.</li>
-<li><strong>Lindblum, quartier commerçant</strong> : l'auberge, l'église, la forge, la maison à l'horloge.</li>
-<li><strong>Quartier ouvrier</strong> et <strong>quartier théâtral</strong> par le <strong>Taxair</strong>, puis le <strong>repaire des Tantalas</strong>.</li>
-<li><strong>Château de Lindblum</strong> : la chambre de Dagga, le vol d'uniforme, l'ascenseur, le sommet.</li>
-<li><strong>La Fête de la chasse</strong>, puis la <strong>Porte du Dragon Terrestre</strong>.</li>
+<li><strong>L'Aéronef</strong> : avance jusqu'au boss.</li>
+<li><strong>Quartier commerçant</strong> : auberge, église, maison à l'horloge, forge.</li>
+<li><strong>Quartier ouvrier</strong>, puis <strong>quartier théâtral</strong>, par le Taxair.</li>
+<li><strong>Repaire des Tantalas</strong>.</li>
+<li><strong>Château de Lindblum</strong> : chambre de Dagga, uniforme, ascenseur, sommet.</li>
+<li><strong>Fête de la chasse</strong>, puis <strong>Porte du Dragon Terrestre</strong>.</li>
 </ol>
 <h2 id="deroule-pas-a-pas-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
 <h3 id="laeronef">L'Aéronef</h3>
 <ol>
-<li>Monte à bord et avance : les discussions s'enchaînent. Un troisième Valseur finit par attaquer l'appareil.</li>
+<li><strong>Monte à bord</strong> et avance. Les discussions s'enchaînent, puis un troisième Valseur attaque l'appareil.</li>
 </ol>
 <h3 id="boss-valseur-n-3">Boss : Valseur n° 3</h3>
 <div class="tableau"><table>
@@ -1430,34 +1495,67 @@ footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 
 </tbody>
 </table></div>
 <ul>
-<li><strong>Bibi commence en Transe</strong> : profite immédiatement de sa capacité à lancer <strong>deux sorts par tour</strong>.</li>
-<li><strong>Quand le Valseur s'envole, le corps à corps ne l'atteint plus</strong> : ce sont les sorts de Bibi et le <strong>Mgklame</strong> qui font le travail.</li>
-<li>Il riposte souvent par <strong>Foudre +</strong> : garde les HP de tout le monde au-dessus de la moitié.</li>
-<li>Prends le temps de <strong>voler ses trois pièces</strong>, elles valent mieux que tout ce que tu peux acheter à ce stade.</li>
+<li>Bibi commence <strong>en Transe</strong> : il lance <strong>deux sorts par tour</strong>, profites-en tout de suite.</li>
+<li>Quand le Valseur s'envole, le corps à corps ne l'atteint plus. Passe aux sorts de Bibi et au <strong>Mgklame</strong>.</li>
+<li>Il riposte souvent par Foudre + : garde tout le monde au-dessus de la moitié des HP.</li>
+<li><strong>Vole ses trois pièces</strong> : elles valent mieux que tout ce qui se vend à ce stade.</li>
 </ul>
 <h3 id="la-ville">La ville</h3>
 <ol start="2">
-<li>Après l'accueil du conseiller <strong>Olmetta</strong>, suis le roi <strong>Cid</strong> et écoute. Djidane part ensuite en ville et croise <strong>Freyja</strong>, une vieille amie.</li>
-<li>Tu te réveilles à l'auberge du <strong>quartier commerçant</strong>. Regarde l'ATE de Mogoo, puis descends dans la rue pour celui de Bibi.</li>
-<li><strong>Visite le quartier commerçant en entier</strong> avant de prendre le Taxair : auberge (<strong>163 Gils</strong>), église (<strong>Tente</strong>, <strong class="objet">Cuirasse</strong> tout en haut à droite), maison à l'horloge et aux oiseaux (<strong>Bocca</strong>, <strong>Maxi Potion</strong>), forge (<strong class="objet">Gantelex</strong> au fond à gauche).</li>
-<li>Prends le <strong>Taxair</strong>, en face de l'auberge, pour le <strong>quartier ouvrier</strong> : <strong class="objet">Cuirgnet</strong> à côté de la sortie, <strong class="objet">Erlastron</strong> à droite de l'entrée du restaurant, <strong class="objet">Chapopointu</strong> et <strong class="objet">Carte Mimi</strong> dans la dernière maison.</li>
-<li>Va ensuite au <strong>quartier théâtral</strong> : <strong>127 Gils</strong> au premier plan en sortant du Taxair, <strong>Gemme</strong> en bas de la maison de l'artiste.</li>
-<li><strong>Avant d'entrer dans le repaire des Tantalas</strong>, fais le tour du quartier théâtral et parle à tout le monde : deux objets clés ne s'y trouvent qu'à ce moment, l'<strong>Autographe</strong> que te signe l'acteur <strong>Rowell</strong>, déguisé en mog pour fuir ses fans, et sa <strong>Panoplie</strong> (le costume de mog), derrière le fauteuil rouge de la maison de l'artiste. Une fois que tu es entré dans le repaire, ils sont perdus.</li>
-<li>Dans le <strong>repaire des Tantalas</strong> : <strong>282</strong>, <strong>68</strong> et <strong>97 Gils</strong>, et surtout la <strong class="objet">Mini Bloumécia</strong>, un trésor à ne pas laisser.</li>
-<li>Un <strong>ATE</strong> te donne un <strong class="objet">Grain de Coubo</strong>, ramassé par Bibi. Garde-le précieusement : il sert à libérer un Mog coincé dans la Caverne de Guismar.</li>
+<li><strong>Arrivée au château</strong> : écoute le conseiller Olmetta, puis suis le roi Cid. Djidane part ensuite en ville et croise Freyja, une vieille amie.</li>
+<li><strong>Réveil à l'auberge</strong> du quartier commerçant : regarde l'ATE de Mogoo, puis descends dans la rue pour celui de Bibi.</li>
+<li><strong>Quartier commerçant</strong> : fouille-le en entier avant de prendre le Taxair.
+<ul>
+<li>Auberge : <strong>163 Gils</strong></li>
+<li>Église : <strong>Tente</strong>, <strong class="objet">Cuirasse</strong> (tout en haut à droite)</li>
+<li>Maison à l'horloge et aux oiseaux : <strong>Bocca</strong>, <strong>Maxi Potion</strong></li>
+<li>Forge : <strong class="objet">Gantelex</strong> (au fond à gauche)</li>
+</ul>
+</li>
+<li><strong>Quartier ouvrier</strong> : le Taxair est en face de l'auberge.
+<ul>
+<li>À côté de la sortie du Taxair : <strong class="objet">Cuirgnet</strong></li>
+<li>À droite de l'entrée du restaurant : <strong class="objet">Erlastron</strong></li>
+<li>Dernière maison : <strong class="objet">Chapopointu</strong>, <strong class="objet">Carte Mimi</strong></li>
+</ul>
+</li>
+<li><strong>Quartier théâtral</strong> :
+<ul>
+<li>En sortant du Taxair, au premier plan : <strong>127 Gils</strong></li>
+<li>En bas de la maison de l'artiste : <strong>Gemme</strong></li>
+</ul>
+</li>
+<li><strong>Quartier théâtral, avant le repaire des Tantalas</strong> : parle à tout le monde. Deux objets clés ne s'obtiennent qu'à ce moment.
+<ul>
+<li><strong>Autographe</strong> : l'acteur Rowell te le signe. Il est déguisé en mog pour fuir ses fans.</li>
+<li><strong>Panoplie</strong> : son costume de mog, derrière le fauteuil rouge de la maison de l'artiste.</li>
+</ul>
+</li>
+<li><strong>Repaire des Tantalas</strong> :
+<ul>
+<li><strong>282</strong>, <strong>68</strong> et <strong>97 Gils</strong></li>
+<li><strong class="objet">Mini Bloumécia</strong>, un trésor à ne pas laisser</li>
+</ul>
+</li>
+<li><strong>ATE de Bibi</strong> : il ramasse un <strong class="objet">Grain de Coubo</strong>. Garde-le, il libère un Mog coincé dans la Caverne de Guismar.</li>
 </ol>
 <h3 id="le-chateau">Le château</h3>
 <ol start="10">
-<li>Monte au <strong>château</strong>, va jusqu'à la fontaine puis à droite, et rejoins la <strong>chambre de Dagga</strong>, tout en haut (<strong class="objet">Vitrilumet</strong>, <strong class="objet">Ether</strong>). Steiner y est. Parle au Mog.</li>
-<li>L'accès aux étages est bloqué : descends l'escalier et parle au <strong>garde assis en bas à gauche</strong>. Djidane lui <strong>vole son uniforme</strong>.</li>
-<li>Reviens à la fontaine, prends l'<strong>ascenseur</strong>, monte au dernier étage, puis à <strong>gauche</strong> vers la machinerie : Dagga est tout en haut, en train de chanter.</li>
-<li>Tu peux manipuler le <strong>télescope</strong> pour repérer les environs de Lindblum. La Fête de la chasse est annoncée : Djidane s'inscrit.</li>
+<li><strong>Chambre de Dagga</strong> : monte au château, va jusqu'à la fontaine puis à droite, et grimpe tout en haut.
+<ul>
+<li><strong class="objet">Vitrilumet</strong>, <strong class="objet">Ether</strong></li>
+<li>Steiner est là. Parle au Mog.</li>
+</ul>
+</li>
+<li><strong>L'uniforme</strong> : les étages sont bloqués. Descends l'escalier et parle au garde assis en bas à gauche : Djidane <strong>vole son uniforme</strong>.</li>
+<li><strong>Le sommet</strong> : reviens à la fontaine, prends l'ascenseur jusqu'au dernier étage, puis à gauche vers la machinerie. Dagga chante tout en haut.</li>
+<li><strong>Le télescope</strong> (facultatif) : il montre les environs de Lindblum. La Fête de la chasse est annoncée et Djidane s'inscrit.</li>
 </ol>
 <h3 id="la-fete-de-la-chasse">La Fête de la chasse</h3>
 <ol start="14">
-<li><strong>Équipe Djidane au mieux</strong> et sauvegarde avant de commencer. Tu as <strong>12 minutes</strong> pour marquer le plus de points possible en battant des monstres, en changeant de quartier si tu veux.</li>
-<li>Commence par le <strong>quartier théâtral</strong>, puis rejoins le <strong>quartier commerçant</strong> pour les <strong>cinq dernières minutes</strong> : un monstre énorme, le <strong>Phacoche</strong>, apparaît sur la place à la fontaine. Freyja vient t'aider si tu l'affrontes.</li>
-<li><strong>Choisir son vainqueur</strong> : le gagnant est celui qui a le plus de points, et le Phacoche en rapporte assez pour tout renverser.</li>
+<li><strong>Prépare-toi</strong> : équipe Djidane au mieux et <strong>sauvegarde</strong>. Tu as <strong>12 minutes</strong> pour marquer un maximum de points en battant des monstres.</li>
+<li><strong>Où chasser</strong> : commence par le quartier théâtral. Pour les <strong>cinq dernières minutes</strong>, rejoins la place à la fontaine du quartier commerçant : le <strong>Phacoche</strong>, un monstre énorme, y apparaît. Freyja vient t'aider si tu l'affrontes.</li>
+<li><strong>Choisis ton vainqueur</strong> : celui qui a le plus de points gagne, et le Phacoche suffit à tout renverser.</li>
 </ol>
 <div class="tableau"><table>
 <thead>
@@ -1470,7 +1568,7 @@ footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 
 <tbody>
 <tr>
 <td>Djidane</td>
-<td>Gagner normalement, et achever le Phacoche</td>
+<td>Gagner normalement et achever le Phacoche</td>
 <td>5 000 Gils</td>
 </tr>
 <tr>
@@ -1487,13 +1585,18 @@ footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 
 </table></div>
 <p>Le vainqueur reçoit aussi la <strong class="objet">Diane d'or</strong>, un trésor à conserver.</p>
 <ol start="17">
-<li>Un messager de Bloumécia interrompt la fête. Dagga endort Djidane pour s'éclipser avec Steiner.</li>
-<li>Suis Cid jusqu'à la <strong>Porte du Dragon Terrestre</strong>. Le marchand qui s'y trouve est ta <strong>dernière boutique avant longtemps</strong> : achète un maximum de <strong>Potions</strong> et de <strong>Renais</strong>, il n'y a plus rien à acheter jusqu'à la fin du disque, et Dagga n'est plus là pour soigner.</li>
+<li><strong>Fin de la fête</strong> : un messager de Bloumécia l'interrompt. Dagga endort Djidane pour s'éclipser avec Steiner.</li>
+<li><strong>Porte du Dragon Terrestre</strong> : suis Cid jusque-là.
+<ul>
+<li><strong>Tente</strong>, derrière le quai</li>
+<li>Le marchand est ta <strong>dernière boutique avant longtemps</strong>. Achète un maximum de <strong>Potions</strong> et de <strong>Renais</strong> : plus rien à acheter jusqu'à la fin du disque, et Dagga n'est plus là pour soigner.</li>
+</ul>
+</li>
 </ol>
 <h2 id="quetes-et-lieux-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
 <ul>
-<li><strong>Trois quartiers</strong> reliés par le <strong>Taxair</strong> : commerçant (auberge, forge, boutiques), ouvrier (restaurant, maisons), théâtral (artistes, repaire des Tantalas).</li>
-<li><strong>La Fête de la chasse ne se rejoue jamais.</strong> Le prix dépend du vainqueur, et faire gagner Bibi demande de perdre volontairement.</li>
+<li><strong>Trois quartiers</strong> reliés par le Taxair : commerçant (auberge, forge, boutiques), ouvrier (restaurant, maisons), théâtral (artistes, repaire des Tantalas).</li>
+<li><strong>La Fête de la chasse</strong> ne se rejoue jamais. Le prix dépend du vainqueur, et faire gagner Bibi demande de perdre volontairement.</li>
 <li><strong>Le Grain de Coubo</strong> obtenu par ATE est la clé d'un coffre de la Caverne de Guismar.</li>
 <li><strong>Les chocobos</strong> : la Forêt des Chocobos, au sud, s'ouvre bientôt. Voir la section Chocobos et chocographes.</li>
 </ul>
@@ -1620,14 +1723,14 @@ footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 
 </table></div>
 <h2 id="conseils-et-pieges-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
 <ul>
-<li><strong>Fais tes achats à la Porte du Dragon Terrestre sans retenue.</strong> Jusqu'à la fin du disque 1, tu n'auras plus de boutique et plus de soigneuse : les Gils économisés ne servent à rien, les Potions oui.</li>
+<li><strong>Fais tes achats sans retenue</strong> à la Porte du Dragon Terrestre. Jusqu'à la fin du disque 1, plus de boutique ni de soigneuse : les Gils économisés ne servent à rien, les Potions si.</li>
 <li><strong>La Fête de la chasse se gagne au rythme.</strong> Reste dans un quartier riche en monstres, ne cours pas d'un Taxair à l'autre, et garde du temps pour le Phacoche.</li>
-<li><strong>Freyja</strong> rejoint l'équipe avec <strong>Sauter</strong>, qui la met hors de portée pendant un tour avant de frapper fort. C'est une réponse précieuse aux boss qui frappent en zone.</li>
+<li><strong>Freyja</strong> rejoint l'équipe avec <strong>Sauter</strong> : elle reste hors de portée un tour, puis frappe fort. Une bonne réponse aux boss qui frappent en zone.</li>
 <li><strong>Regarde les capacités avant de revendre</strong> : l'Armure de lin et le Gantelex volés au Valseur enseignent des capacités utiles à plusieurs personnages.</li>
 </ul>
 <h2 id="alertes-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
 <ul>
-<li class="alerte manquable">⏳ Manquable : les deux objets clés du <strong>quartier théâtral</strong> (l'<strong>Autographe</strong> et la <strong>Panoplie</strong>). Ils disparaissent dès que tu entres dans le repaire des Tantalas.</li>
+<li class="alerte manquable">⏳ Manquable : les deux objets clés du quartier théâtral (l'<strong>Autographe</strong> et la <strong>Panoplie</strong>). Ils disparaissent dès que tu entres dans le repaire des Tantalas.</li>
 <li class="alerte manquable">⏳ Manquable : la <strong>Fête de la chasse</strong> et son prix. Elle ne se rejoue pas, et chaque vainqueur donne un objet différent.</li>
 <li class="alerte manquable">⏳ Manquable : la <strong class="objet">Mini Bloumécia</strong> du repaire des Tantalas.</li>
 <li class="alerte">⚠️ Dernière boutique du disque à la <strong>Porte du Dragon Terrestre</strong> : fais le plein avant d'embarquer.</li>
@@ -7753,6 +7856,111 @@ footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 
   });
   document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
   document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g;
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
 })();
 </script>
 <script>

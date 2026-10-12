@@ -1,1 +1,1 @@
-window.GJV_FIREBASE = null;
+window.GJV_FIREBASE = {"apiKey": "AIzaSyAMttEZy0XJDiAyXSa_1jPuUHOwaV60Wvc", "authDomain": "manette-en-main.firebaseapp.com", "projectId": "manette-en-main", "storageBucket": "manette-en-main.firebasestorage.app", "messagingSenderId": "639704520653", "appId": "1:639704520653:web:bbd400ac41d4364c535684"};

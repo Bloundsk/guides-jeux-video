@@ -134,6 +134,7 @@ async function demarrer() {
 .gjv-c-msg{min-height:1.2em;font-size:13px;margin-top:10px;color:#ffb4a8}.gjv-c-msg.ok{color:#7fe3d6}
 .gjv-c-fermer{float:right;background:none;border:0;color:#8ea8b0;font-size:22px;line-height:1;cursor:pointer}
 .gjv-c-danger{color:#ff8272!important;border-color:rgba(255,130,114,.45)!important}
+@media (max-width:560px){.entete .gjv-c-btn .gjv-c-lib{display:none}.entete .gjv-c-btn{padding:7px 10px}}
 @media print{.gjv-c-btn{display:none}}`;
   document.head.appendChild(style);
 

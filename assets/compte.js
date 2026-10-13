@@ -7,12 +7,19 @@
      (favoris, cases cochées, dernière partie lue, guides hors connexion), comme l'export de Mon espace.
    - Un document par utilisateur : progression/{uid} = { cles: {clé: valeur}, maj: {clé: horodatage} }.
      À chaque clé, la modification la plus récente l'emporte ; sans date connue (première connexion
-     sur un appareil déjà utilisé), les cases cochées, favoris et lectures sont fusionnés. */
+     sur un appareil déjà utilisé), les cases cochées, favoris et lectures sont fusionnés.
+   - Âge : chaque compte répond une fois à « As-tu 15 ans ou plus ? » (champ age15 = true, ou "parent"
+     quand un moins de 15 ans confirme l'accord d'un parent). Aucune date de naissance n'est gardée ;
+     tant que la question est sans réponse, rien n'est synchronisé.
+   - Quota gratuit Firestore (20 000 écritures par jour) : au plus un envoi toutes les 30 s, un envoi en
+     quittant la page, et aucun envoi quand rien n'a changé depuis le dernier. */
 const CONFIG = window.GJV_FIREBASE;
 const MOTIF = /^(gjv:|guide-coches:)/;
 const K_MAJ = "gjv-sync:maj";          // horodatage local de chaque clé modifiée
 const K_COMPTE = "gjv-sync:compte";    // dernier uid connecté sur cet appareil
 const SDK = "https://www.gstatic.com/firebasejs/10.12.2/";
+const DELAI_ENVOI = 30000;             // regroupe les modifications : une écriture toutes les 30 s au plus
+const K_INVITE = "gjv:invite-vue";      // l'invitation à créer un compte n'apparaît qu'une fois
 
 function lireJSON(k, d) { try { const v = JSON.parse(localStorage.getItem(k)); return v == null ? d : v; } catch (e) { return d; } }
 function ecrireBrut(k, v) { try { if (v == null) Storage.prototype.removeItem.call(localStorage, k); else Storage.prototype.setItem.call(localStorage, k, v); } catch (e) {} }
@@ -27,6 +34,7 @@ async function demarrer() {
   auth.languageCode = "fr";
   const db = F.getFirestore(app);
   let utilisateur = null, minuteur = null, dernierEnvoi = null, enCours = false;
+  let age15 = null, ageEnAttente = null, pret = false, ageManquant = false, signatureDistante = null;
 
   // --- suivi des modifications locales (pour savoir quelle version est la plus récente)
   const setOrig = Storage.prototype.setItem, rmOrig = Storage.prototype.removeItem;
@@ -34,7 +42,8 @@ async function demarrer() {
     if (!MOTIF.test(k)) return;
     const maj = lireJSON(K_MAJ, {}); maj[k] = Date.now();
     setOrig.call(localStorage, K_MAJ, JSON.stringify(maj));
-    if (utilisateur) { clearTimeout(minuteur); minuteur = setTimeout(envoyer, 2500); }
+    if (utilisateur && pret && !minuteur) minuteur = setTimeout(() => { minuteur = null; envoyer(); }, DELAI_ENVOI);
+    if (!utilisateur && k.startsWith("guide-coches:")) peutEtreInviter();
   }
   Storage.prototype.setItem = function (k, v) { setOrig.call(this, k, v); if (this === localStorage) noter(String(k)); };
   Storage.prototype.removeItem = function (k) { rmOrig.call(this, k); if (this === localStorage) noter(String(k)); };
@@ -80,20 +89,23 @@ async function demarrer() {
     return changees;
   }
 
-  async function recevoir() {
-    const snap = await F.getDoc(F.doc(db, "progression", utilisateur.uid));
-    return appliquer(snap.exists() ? snap.data() : null);
+  // Empreinte stable d'un état (clés triées) : sert à ne rien écrire quand rien n'a changé.
+  function signature(cles, maj, age) {
+    const trie = o => Object.keys(o || {}).sort().map(k => [k, o[k]]);
+    return JSON.stringify([trie(cles), trie(maj), age || null]);
   }
 
   async function envoyer() {
-    if (!utilisateur || enCours) return;
+    if (!utilisateur || enCours || !pret) return;
+    const { cles, maj } = etatLocal();
+    // les suppressions voyagent aussi : une clé datée mais absente est envoyée vide
+    for (const k in maj) if (!(k in cles) && MOTIF.test(k)) cles[k] = null;
+    const s = signature(cles, maj, age15);
+    if (s === signatureDistante) { dernierEnvoi = dernierEnvoi || new Date(); afficherEtat(); return; }
     enCours = true; afficherEtat("Synchronisation…");
     try {
-      const { cles, maj } = etatLocal();
-      // les suppressions voyagent aussi : une clé datée mais absente est envoyée vide
-      for (const k in maj) if (!(k in cles) && MOTIF.test(k)) cles[k] = null;
-      await F.setDoc(F.doc(db, "progression", utilisateur.uid), { cles, maj, appareil: navigator.userAgent.slice(0, 120), le: Date.now() });
-      dernierEnvoi = new Date(); afficherEtat();
+      await F.setDoc(F.doc(db, "progression", utilisateur.uid), { cles, maj, age15, appareil: navigator.userAgent.slice(0, 120), le: Date.now() });
+      signatureDistante = s; dernierEnvoi = new Date(); afficherEtat();
     } catch (e) { afficherEtat("Échec de la synchronisation : " + messageErreur(e)); }
     enCours = false;
   }
@@ -101,7 +113,13 @@ async function demarrer() {
   async function synchroniser(recharger) {
     if (!utilisateur) return;
     try {
-      const changees = await recevoir();
+      const snap = await F.getDoc(F.doc(db, "progression", utilisateur.uid));
+      const distant = snap.exists() ? snap.data() : null;
+      age15 = (distant && distant.age15) || age15 || ageEnAttente;
+      if (!age15) { pret = false; ageManquant = true; demanderAge(); return; }   // rien ne se synchronise sans réponse
+      pret = true; ageManquant = false;
+      signatureDistante = distant ? signature(distant.cles, distant.maj, distant.age15) : null;
+      const changees = appliquer(distant);
       await envoyer();
       // la page a lu le stockage à son chargement : on la recharge une fois si sa progression a changé
       if (recharger && changees.length && !sessionStorage.getItem("gjv-sync:recharge")) {
@@ -134,8 +152,19 @@ async function demarrer() {
 .gjv-c-msg{min-height:1.2em;font-size:13px;margin-top:10px;color:#ffb4a8}.gjv-c-msg.ok{color:#7fe3d6}
 .gjv-c-fermer{float:right;background:none;border:0;color:#8ea8b0;font-size:22px;line-height:1;cursor:pointer}
 .gjv-c-danger{color:#ff8272!important;border-color:rgba(255,130,114,.45)!important}
+.gjv-c-age{border:1px solid rgba(133,196,196,.25);border-radius:10px;padding:10px 12px 12px;margin:14px 0 0}
+.gjv-c-age legend{padding:0 6px;font-weight:600;color:#f2f8f6;font-size:14px}
+.gjv-c-boite .gjv-c-age label{display:flex;gap:9px;align-items:flex-start;color:#dfeef0;font-size:14px;margin:8px 0 0;cursor:pointer}
+.gjv-c-boite .gjv-c-age input{width:auto;margin:3px 0 0;flex:none;accent-color:#4fd6c8}
+.gjv-c-parent{margin-top:6px;padding-top:6px;border-top:1px dashed rgba(133,196,196,.25)}
+.gjv-c-boite a{color:#4fd6c8}
+.gjv-c-invite{position:fixed;left:50%;bottom:72px;transform:translateX(-50%);z-index:9997;width:min(430px,calc(100vw - 24px));box-sizing:border-box;background:#101f30;color:#dfeef0;border:1px solid rgba(79,214,200,.45);border-radius:14px;padding:14px 16px;font:14px/1.5 system-ui,sans-serif;box-shadow:0 12px 34px rgba(0,0,0,.45)}
+.gjv-c-invite b{color:#f2f8f6}.gjv-c-invite p{margin:0 0 10px}
+.gjv-c-invite div{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.gjv-c-invite button{font:600 14px system-ui,sans-serif;border-radius:999px;padding:8px 14px;cursor:pointer;border:1px solid rgba(133,196,196,.35);background:none;color:#dfeef0}
+.gjv-c-invite button[data-oui]{background:#4fd6c8;color:#0a1420;border-color:#4fd6c8}
 @media (max-width:560px){.entete .gjv-c-btn .gjv-c-lib{display:none}.entete .gjv-c-btn{padding:7px 10px}}
-@media print{.gjv-c-btn{display:none}}`;
+@media print{.gjv-c-btn,.gjv-c-invite{display:none}}`;
   document.head.appendChild(style);
 
   const bouton = document.createElement("button");
@@ -165,10 +194,70 @@ async function demarrer() {
     boite.innerHTML = '<div class="gjv-c-boite" role="dialog" aria-modal="true" aria-labelledby="gjv-c-titre"><button type="button" class="gjv-c-fermer" aria-label="Fermer">×</button><div data-corps></div></div>';
     boite.querySelector(".gjv-c-fermer").onclick = fermer;
     document.body.appendChild(boite);
-    if (utilisateur) vueConnecte(); else vueConnexion(onglet || "connexion");
+    if (utilisateur) { if (ageManquant) demanderAge(); else vueConnecte(); } else vueConnexion(onglet || "connexion");
   }
   const corps = () => boite.querySelector("[data-corps]");
   const message = (t, ok) => { const m = boite.querySelector(".gjv-c-msg"); if (m) { m.textContent = t || ""; m.classList.toggle("ok", !!ok); } };
+
+  // --- âge : une seule question, sans date de naissance
+  function champAge() {
+    return `<fieldset class="gjv-c-age"><legend>As-tu 15 ans ou plus ?</legend>
+<label><input type="radio" name="gjv-age" value="oui"> Oui</label>
+<label><input type="radio" name="gjv-age" value="non"> Non, j'ai moins de 15 ans</label>
+<div class="gjv-c-parent" hidden><label><input type="checkbox" id="gjv-c-parent"> Un de mes parents (ou la personne qui s'occupe de moi) est d'accord pour que je crée ce compte.</label>
+<p style="font-size:13px;margin:8px 0 0">Montre-lui d'abord <a href="${racine()}mentions-legales.html#moins-de-15-ans" target="_blank" rel="noopener">ce qu'il faut savoir</a> : ça prend une minute.</p></div></fieldset>`;
+  }
+  function brancherAge() {
+    corps().querySelectorAll('input[name="gjv-age"]').forEach(r => r.onchange = () => {
+      corps().querySelector(".gjv-c-parent").hidden = r.value !== "non" || !r.checked;
+    });
+  }
+  // Renvoie true (15 ans ou plus), "parent" (moins de 15 ans avec l'accord d'un parent) ou null en affichant pourquoi.
+  function lireAge() {
+    const r = corps().querySelector('input[name="gjv-age"]:checked');
+    if (!r) { message("Réponds d'abord à la question sur ton âge."); return null; }
+    if (r.value === "oui") return true;
+    if (!corps().querySelector("#gjv-c-parent").checked) { message("Avant 15 ans, il faut l'accord d'un de tes parents pour créer un compte. Tu peux lire tous les guides sans compte."); return null; }
+    return "parent";
+  }
+  function demanderAge() {
+    if (!boite) ouvrir();
+    corps().innerHTML = `
+<h2 id="gjv-c-titre">Une dernière question</h2>
+<p>Avant de synchroniser ta progression, on a besoin de savoir une seule chose. Aucune date de naissance n'est enregistrée.</p>
+${champAge()}
+<button type="button" class="gjv-c-principal" data-valider>Valider</button>
+<button type="button" class="gjv-c-second" data-annuler>Annuler et supprimer ce compte</button>
+<div class="gjv-c-msg" role="status"></div>`;
+    brancherAge();
+    corps().querySelector("[data-valider]").onclick = () => {
+      const a = lireAge(); if (!a) return;
+      ageEnAttente = a; fermer(); synchroniser(true);
+    };
+    corps().querySelector("[data-annuler]").onclick = async () => {
+      try { await A.deleteUser(utilisateur); fermer(); }
+      catch (e) { await A.signOut(auth); fermer(); }
+    };
+  }
+
+  // --- invitation discrète, une seule fois, après la 10e case cochée sans compte
+  let authConnu = false;
+  function peutEtreInviter() {
+    if (!authConnu || utilisateur || localStorage.getItem(K_INVITE) || document.querySelector(".gjv-c-invite")) return;
+    let n = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith("guide-coches:")) { const o = lireJSON(k, {}); for (const c in o) if (o[c] === true) n++; }
+    }
+    if (n < 10) return;
+    ecrireBrut(K_INVITE, "1");
+    const d = document.createElement("div"); d.className = "gjv-c-invite"; d.setAttribute("role", "status");
+    d.innerHTML = `<p><b>Déjà ${n} cases cochées !</b> Elles ne sont gardées que dans ce navigateur. Un compte gratuit permet de les retrouver sur ton téléphone ou un autre ordinateur.</p>
+<div><button type="button" data-non>Plus tard</button><button type="button" data-oui>Créer un compte</button></div>`;
+    d.querySelector("[data-non]").onclick = () => d.remove();
+    d.querySelector("[data-oui]").onclick = () => { d.remove(); ouvrir("inscription"); };
+    document.body.appendChild(d);
+  }
 
   function vueConnexion(onglet) {
     const inscription = onglet === "inscription";
@@ -176,6 +265,7 @@ async function demarrer() {
 <h2 id="gjv-c-titre">Ton compte</h2>
 <p>Facultatif : il sert à retrouver tes favoris et tes cases cochées sur tous tes appareils.</p>
 <div class="gjv-c-onglets"><button type="button" data-o="connexion" aria-pressed="${!inscription}">Se connecter</button><button type="button" data-o="inscription" aria-pressed="${inscription}">Créer un compte</button></div>
+${inscription ? champAge() : ""}
 <form novalidate>
 <label for="gjv-c-mail">Adresse e-mail</label><input id="gjv-c-mail" type="email" autocomplete="email" required>
 <label for="gjv-c-mdp">Mot de passe${inscription ? " (8 caractères minimum)" : ""}</label><input id="gjv-c-mdp" type="password" autocomplete="${inscription ? "new-password" : "current-password"}" required minlength="8">
@@ -188,7 +278,9 @@ ${inscription ? "" : '<button type="button" class="gjv-c-lien" data-oubli>Mot de
 <div class="gjv-c-msg" role="status"></div>
 <p style="font-size:12px;color:#5c7379">En créant un compte, tu acceptes que ton adresse e-mail et ta progression soient conservées par Firebase (Google) pour ce service. Détails dans les <a style="color:#4fd6c8" href="${racine()}mentions-legales.html#compte">mentions légales</a>.</p>`;
     corps().querySelectorAll("[data-o]").forEach(b => b.onclick = () => vueConnexion(b.dataset.o));
+    if (inscription) brancherAge();
     corps().querySelector("[data-google]").onclick = async () => {
+      if (inscription) { const a = lireAge(); if (!a) return; ageEnAttente = a; }
       try { await A.signInWithPopup(auth, new A.GoogleAuthProvider()); fermer(); }
       catch (e) { message(messageErreur(e)); }
     };
@@ -205,6 +297,8 @@ ${inscription ? "" : '<button type="button" class="gjv-c-lien" data-oubli>Mot de
       if (!mail || !mdp) return message("Remplis l'adresse e-mail et le mot de passe.");
       try {
         if (inscription) {
+          const a = lireAge(); if (!a) return;
+          ageEnAttente = a;
           if (mdp.length < 8) return message("Le mot de passe doit faire au moins 8 caractères.");
           if (mdp !== corps().querySelector("#gjv-c-mdp2").value) return message("Les deux mots de passe ne sont pas identiques.");
           const r = await A.createUserWithEmailAndPassword(auth, mail, mdp);
@@ -241,7 +335,9 @@ ${u.emailVerified || !u.email ? "" : '<p style="color:#e0a15c">Ton adresse n\'es
   }
 
   A.onAuthStateChanged(auth, async u => {
-    utilisateur = u;
+    utilisateur = u; authConnu = true;
+    if (!u) { age15 = null; ageEnAttente = null; pret = false; ageManquant = false; signatureDistante = null; clearTimeout(minuteur); minuteur = null; }
+    else document.querySelectorAll(".gjv-c-invite").forEach(d => d.remove());
     bouton.querySelector(".gjv-c-lib").textContent = u ? "Mon compte" : "Se connecter";
     bouton.title = u ? "Connecté : " + (u.email || "compte Google") : "Se connecter pour synchroniser ta progression";
     if (u) {
@@ -250,11 +346,15 @@ ${u.emailVerified || !u.email ? "" : '<p style="color:#e0a15c">Ton adresse n\'es
       await synchroniser(true);
     }
     afficherEtat();
-    if (boite) { if (u) vueConnecte(); else vueConnexion("connexion"); }
+    if (boite) { if (!u) vueConnexion("connexion"); else if (pret) vueConnecte(); }
   });
-  // reprise de l'onglet : on récupère ce qui a été fait ailleurs
-  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible" && utilisateur) synchroniser(true); });
-  addEventListener("pagehide", () => { if (utilisateur && minuteur) { clearTimeout(minuteur); envoyer(); } });
+  // reprise de l'onglet : on récupère ce qui a été fait ailleurs ; en le quittant, on envoie ce qui attendait
+  document.addEventListener("visibilitychange", () => {
+    if (!utilisateur) return;
+    if (document.visibilityState === "visible") synchroniser(true);
+    else if (minuteur) { clearTimeout(minuteur); minuteur = null; envoyer(); }
+  });
+  addEventListener("pagehide", () => { if (utilisateur && minuteur) { clearTimeout(minuteur); minuteur = null; envoyer(); } });
 }
 
 function racine() { return new URL("../", import.meta.url).href; }   // compte.js est dans assets/

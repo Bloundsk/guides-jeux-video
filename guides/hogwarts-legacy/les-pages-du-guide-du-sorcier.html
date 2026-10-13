@@ -1,0 +1,3058 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les pages du Guide du Sorcier – Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Hogwarts Legacy : L&#x27;Héritage de Poudlard, Les pages du Guide du Sorcier : 236 pages, plus 5 pages bonus. Six méthodes : Revelio, Accio, Levioso, Lumos…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/les-pages-du-guide-du-sorcier.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Les pages du Guide du Sorcier · Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard">
+<meta property="og:description" content="Hogwarts Legacy : L&#x27;Héritage de Poudlard, Les pages du Guide du Sorcier : 236 pages, plus 5 pages bonus. Six méthodes : Revelio, Accio, Levioso, Lumos…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/les-pages-du-guide-du-sorcier.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Hogwarts Legacy : L'Héritage de Poudlard", "item": "https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/"}, {"@type": "ListItem", "position": 3, "name": "Les pages du Guide du Sorcier", "item": "https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/les-pages-du-guide-du-sorcier.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="hogwarts-legacy" class="compact" data-partie="les-pages-du-guide-du-sorcier"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Hogwarts Legacy : L&#x27;Héritage de Poudlard : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Hogwarts Legacy : L&#x27;Héritage de <em>Poudlard</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="le-prologue-la-repartition-et-les-premiers-pas.html"><span class="num">✦</span><span class="libelle">Le prologue, la Répartition et les premiers pas</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="les-premiers-cours-et-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les premiers cours et Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="la-reserve-la-botanique-et-les-potions.html"><span class="num">✦</span><span class="libelle">La réserve, la botanique et les potions</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="lheritage-dollivander-le-vol-et-la-salle-sur-demande.html"><span class="num">✦</span><span class="libelle">L&#x27;héritage d&#x27;Ollivander, le vol et la Salle sur Demande</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="lepreuve-de-percival-rackham-et-les-creatures-magiques.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Percival Rackham et les créatures magiques</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="lepreuve-de-charles-rookwood.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Charles Rookwood</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="lepreuve-de-niamh-fitzgerald.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Niamh Fitzgerald</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="lepreuve-de-san-bakar.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de San Bakar</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="le-dernier-depot-et-la-coupe-des-quatre-maisons.html"><span class="num">✦</span><span class="libelle">Le dernier dépôt et la Coupe des Quatre Maisons</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="poudlard-le-chateau-aile-par-aile.html"><span class="num">✦</span><span class="libelle">Poudlard : le château, aile par aile</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="pre-au-lard-2.html"><span class="num">✦</span><span class="libelle">Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="les-abords-de-poudlard-et-la-vallee-de-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les abords de Poudlard et la vallée de Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="la-vallee-de-poudlard-la-foret-interdite-et-le-marais-du-north-ford.html"><span class="num">✦</span><span class="libelle">La vallée de Poudlard, la Forêt interdite et le marais du North Ford</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="la-region-de-feldcroft-et-le-marais-de-southsea.html"><span class="num">✦</span><span class="libelle">La région de Feldcroft et le marais de Southsea</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="la-cote-du-collet-la-caverne-cotiere-et-cragcroftshire.html"><span class="num">✦</span><span class="libelle">La côte du Collet, la Caverne côtière et Cragcroftshire</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="le-lac-de-grottaleau-la-pointe-du-manoir-et-la-cote-de-salgat.html"><span class="num">✦</span><span class="libelle">Le lac de Grottaleau, la Pointe du Manoir et la côte de Salgât</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="sebastian-pallow-et-les-sorts-impardonnables.html"><span class="num">✦</span><span class="libelle">Sebastian Pallow et les Sorts Impardonnables</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="natsai-onai.html"><span class="num">✦</span><span class="libelle">Natsai Onai</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="poppy-sweeting-et-amit-thakkar.html"><span class="num">✦</span><span class="libelle">Poppy Sweeting et Amit Thakkar</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="les-12-devoirs-et-les-26-sortileges.html"><span class="num">✦</span><span class="libelle">Les 12 devoirs et les 26 sortilèges</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="les-6-cartes-au-tresor.html"><span class="num">✦</span><span class="libelle">Les 6 cartes au trésor</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat-la-magie-ancienne-et-les-enchainements.html"><span class="num">✦</span><span class="libelle">Le combat, la magie ancienne et les enchaînements</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-talents.html"><span class="num">✦</span><span class="libelle">Les talents</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="lequipement-les-attributs-et-le-metier-a-tisser.html"><span class="num">✦</span><span class="libelle">L&#x27;équipement, les attributs et le métier à tisser</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="la-salle-sur-demande-les-potions-les-plantes-et-les-creasorts.html"><span class="num">✦</span><span class="libelle">La Salle sur Demande, les potions, les plantes et les créasorts</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="le-vivarium-et-les-creatures-magiques.html"><span class="num">✦</span><span class="libelle">Le vivarium et les créatures magiques</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="les-balais-les-montures-et-les-courses.html"><span class="num">✦</span><span class="libelle">Les balais, les montures et les courses</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-95-epreuves-de-merlin.html"><span class="num">✦</span><span class="libelle">Les 95 épreuves de Merlin</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="#les-pages-du-guide-du-sorcier"><span class="num">✦</span><span class="libelle">Les pages du Guide du Sorcier</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="les-coffres-de-collection-les-portes-darithmancie-et-les-coffres-a-œil.html"><span class="num">✦</span><span class="libelle">Les coffres de collection, les portes d&#x27;arithmancie et les coffres à œil</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="les-statues-de-demiguise-et-les-cles-du-dedale.html"><span class="num">✦</span><span class="libelle">Les statues de Demiguise et les clés du dédale</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="les-tables-dastronomie-les-ballons-les-plateformes-et-les-sources-de-magie-ancienne.html"><span class="num">✦</span><span class="libelle">Les tables d&#x27;astronomie, les ballons, les plateformes et les sources de magie ancienne</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="les-ennemis-connus-les-arenes-et-les-campements.html"><span class="num">✦</span><span class="libelle">Les ennemis connus, les arènes et les campements</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="les-46-trophees-le-contenu-deluxe-et-la-route-du-100.html"><span class="num">✦</span><span class="libelle">Les 46 trophées, le contenu Deluxe et la route du 100 %</span><span class="compte"></span></a></li>
+<li data-section="section-36"><a href="les-quetes-annexes-de-poudlard-et-de-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes de Poudlard et de Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-37"><a href="les-quetes-annexes-des-highlands.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes des Highlands</span><span class="compte"></span></a></li>
+<li data-section="section-38"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-39"><a href="sources-hogwarts-legacy-lheritage-de-poudlard.html"><span class="num">✦</span><span class="libelle">Sources — Hogwarts Legacy : L&#x27;Héritage de Poudlard</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-30">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="les-pages-du-guide-du-sorcier">Les pages du Guide du Sorcier</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-30"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-30">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>236 pages</strong>, plus 5 pages bonus.</li>
+<li><strong>Six méthodes</strong> : Revelio, Accio, Levioso, Lumos, Incendio, Confringo.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Trouver les 236 pages du Guide du Sorcier — 150 à Poudlard, 55 à Pré-au-Lard, 31 dans les Highlands — plus les 5 pages bonus verrouillées derrière des quêtes.</p>
+<p><strong>Et voici ce que personne n'explique</strong> : il y a <strong>six</strong> façons différentes de révéler une page, et chacune a son sort.</p>
+<p>Un joueur qui ne connaît que le Revelio trouvera environ 60 % des pages et cherchera les autres pendant des heures.</p>
+<p>Les pages donnent de l'expérience, du lore, et remplissent l'onglet <strong>Collection</strong> de ton Guide du Sorcier — donc le trophée <strong>« Collectionnite »</strong> <em>(partie <strong>36</strong>)</em>.</p>
+<h3 id="les-abreviations-de-cette-partie">Les abréviations de cette partie</h3>
+<p>Les tableaux qui suivent sont longs. Trois raccourcis les rendent lisibles.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>L'abréviation</th>
+<th>Ce que ça veut dire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FC</strong></td>
+<td><strong>Flamme de Cheminette</strong></td>
+</tr>
+<tr>
+<td><strong>Tour dcfm</strong></td>
+<td>Tour de défense contre les forces du Mal</td>
+</tr>
+<tr>
+<td><strong>Salle dcfm</strong></td>
+<td>Salle de défense contre les forces du Mal</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="itineraire-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>L'ensemble</th>
+<th>Le nombre</th>
+<th>Les méthodes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Poudlard</strong></td>
+<td><strong>150</strong> <em>(+ 5 bonus)</em></td>
+<td><strong>Les six</strong></td>
+</tr>
+<tr>
+<td><strong>Pré-au-Lard</strong></td>
+<td><strong>55</strong></td>
+<td><strong>Revelio, Accio, Lumos</strong></td>
+</tr>
+<tr>
+<td><strong>Les Highlands</strong></td>
+<td><strong>31</strong></td>
+<td><strong>Revelio seulement</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Total : 236 pages, plus 5 bonus.</strong></p>
+<p>Et quatre zones des Highlands n'ont <strong>aucune</strong> page : la Forêt interdite, la côte du Collet, le lac de Grottaleau et la Pointe du Manoir <em>(parties <strong>13</strong>, <strong>15</strong> et <strong>16</strong>)</em>.</p>
+<p class="alerte">⚠️ La Salle sur Demande n'en a aucune non plus. C'est la seule des 7 zones du château à ne pas figurer dans cette liste <em>(partie <strong>10</strong>)</em>.</p>
+<h3 id="un-ecart-de-compte-a-connaitre">Un écart de compte à connaître</h3>
+<p>Deux sources françaises ne comptent pas les pages de la même façon. Voilà les deux lectures.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La lecture</th>
+<th>Ce qu'elle dit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La soluce détaillée</strong></td>
+<td><strong>236 pages, toutes méthodes confondues</strong> <em>(c'est le décompte de cette partie)</em></td>
+</tr>
+<tr>
+<td><strong>Le guide des trophées</strong></td>
+<td><strong>L'onglet collection demande 150 pages de Revelio</strong>, et les pages volantes, celles des tableaux vides et celles des brasiers ne serviraient qu'à l'expérience</td>
+</tr>
+</tbody>
+</table></div>
+<p>Si on ne compte que les pages de Revelio, on en trouve 147 : 86 à Poudlard, 30 à Pré-au-Lard, 31 dans les Highlands. Il manque donc 3 pages au compte de 150.</p>
+<p class="alerte">⚠️ <strong>à vérifier en jeu</strong> : quelles pages comptent exactement pour l'onglet Collection. Le conseil du guide est simple et sans risque : <strong>prends-les toutes.</strong> Les 89 pages « qui ne compteraient pas » donnent de l'expérience, et l'expérience, c'est le <strong>niveau 40</strong> <em>(parties <strong>25</strong> et <strong>36</strong>)</em>.</p>
+<h2 id="deroule-pas-a-pas-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="les-6-methodes">Les 6 méthodes</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La méthode</th>
+<th>Comment la reconnaître</th>
+<th>Le geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Page de Revelio</strong></td>
+<td>Un objet remarquable : tableau, statue, squelette, vitrine, fontaine…</td>
+<td>Lance <strong>Revelio</strong> devant l'objet</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Page volante</td>
+<td>Une page qui <strong>flotte en l'air</strong>, souvent en hauteur</td>
+<td>Lève la tête, puis <strong>Accio</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Statue</td>
+<td>Une petite statue de pierre isolée</td>
+<td>Lance <strong>Levioso</strong> sur la statue</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Tableau vide</td>
+<td>Un cadre <strong>vide</strong> accroché au mur</td>
+<td>Lumos devant le cadre, puis va chercher le <strong>papillon</strong> et ramène-le au cadre au Lumos</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Brasier à Incendio</strong></td>
+<td>Une coupe de pierre <strong>en forme de dragon</strong>, éteinte</td>
+<td><strong>Incendio dessus</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Brasier à Confringo</strong></td>
+<td>Une <strong>torche éteinte accrochée au mur</strong>, en hauteur</td>
+<td>Confringo pour l'allumer, <strong>puis Accio</strong> pour attirer la page</td>
+</tr>
+</tbody>
+</table></div>
+<p>La différence entre les deux brasiers est la clé.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le brasier</th>
+<th>Sa forme</th>
+<th>Le sort</th>
+<th>Après</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Incendio</strong></td>
+<td>En forme de dragon, au sol ou sur pied</td>
+<td><strong>Incendio</strong> <em>(courte portée)</em></td>
+<td>La page tombe devant toi</td>
+</tr>
+<tr>
+<td><strong>Confringo</strong></td>
+<td>Une torche murale, en hauteur et loin</td>
+<td><strong>Confringo</strong> <em>(longue portée)</em></td>
+<td>Il faut <strong>Accio</strong> pour la récupérer</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et le <strong>tableau vide</strong> est la méthode la plus longue : le papillon est toujours <strong>ailleurs</strong>, parfois à deux étages de distance. Chaque tableau est donc un petit aller-retour.</p>
+<p class="alerte">⚠️ Prends le talent <strong>Maîtrise de Revelio</strong> avant de te lancer <em>(partie <strong>25</strong>)</em>. Il augmente la portée du sort, donc le rayon dans lequel les pages s'illuminent. Sur 236 pages, c'est des heures gagnées.</p>
+<h3 id="les-5-pages-bonus-verrouillees-derriere-une-quete">Les 5 pages bonus, verrouillées derrière une quête</h3>
+<p>Ces cinq pages ne s'obtiennent <strong>que pendant</strong> leur quête. Hors quête, elles n'existent pas.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La page</th>
+<th>La quête</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Aile d'astronomie, bonus n° 1</strong></td>
+<td>Devoir du professeur Ronen <em>(partie <strong>22</strong>)</em></td>
+<td>À l'est de la Cour de métamorphose, sous les arches de pierre ; <strong>page volante</strong></td>
+</tr>
+<tr>
+<td><strong>Aile d'astronomie, bonus n° 2</strong></td>
+<td>Devoir du professeur Ronen</td>
+<td>Tour dcfm, elle vole vers l'escalier entre le rez-de-chaussée et le 1er étage</td>
+</tr>
+<tr>
+<td><strong>Aile du Clocher, bonus n° 1</strong></td>
+<td><strong>Cours d'histoire de la magie</strong> <em>(partie <strong>20</strong>)</em></td>
+<td>Revelio face au <strong>crâne de Grimbald Brode</strong>, près de la FC de la Cour du clocher</td>
+</tr>
+<tr>
+<td><strong>Aile du Clocher, bonus n° 2</strong></td>
+<td>Cours d'histoire de la magie</td>
+<td>Revelio face à la <strong>statue du Chevalier saluant</strong>, au même endroit</td>
+</tr>
+<tr>
+<td><strong>Annexe de la bibliothèque, bonus</strong></td>
+<td>Devoir du professeur Weasley <em>(partie <strong>22</strong>)</em></td>
+<td>Obtenue <strong>obligatoirement</strong> pendant la tâche</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte manquable">⏳ <strong>Bonne nouvelle</strong> : les devoirs de <strong>Ronen</strong> et de <strong>Weasley</strong> sont obligatoires pour avancer dans l'histoire <em>(partie <strong>22</strong>)</em>, et « Cours d'histoire de la magie » est nécessaire au trophée <strong>« Une bonne âme »</strong>, qui demande <strong>toutes</strong> les quêtes annexes <em>(partie <strong>36</strong>)</em>.</p>
+<p class="alerte">⚠️ Aucune de ces cinq pages n'est donc vraiment perdue — mais si tu bâcles ces trois quêtes, tu ne les reverras pas.</p>
+<p>Et cela résout une question laissée ouverte dans la partie 20 : oui, la <strong>statue du chevalier saluant</strong> donne bien une page.</p>
+<h3 id="poudlard-les-150-pages-zone-par-zone">Poudlard — les 150 pages, zone par zone</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La zone</th>
+<th>Revelio</th>
+<th>Volantes</th>
+<th>Statues</th>
+<th>Tableaux</th>
+<th>Incendio</th>
+<th>Confringo</th>
+<th>Total</th>
+<th>Bonus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Aile d'astronomie</strong></td>
+<td><strong>12</strong></td>
+<td><strong>2</strong></td>
+<td><strong>3</strong></td>
+<td><strong>3</strong></td>
+<td><strong>1</strong></td>
+<td><strong>2</strong></td>
+<td><strong>23</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>Aile du Clocher</strong></td>
+<td><strong>20</strong></td>
+<td><strong>5</strong></td>
+<td><strong>4</strong></td>
+<td><strong>2</strong></td>
+<td><strong>2</strong></td>
+<td><strong>1</strong></td>
+<td><strong>34</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>Grand escalier</strong></td>
+<td><strong>18</strong></td>
+<td><strong>2</strong></td>
+<td><strong>1</strong></td>
+<td><strong>3</strong></td>
+<td><strong>0</strong></td>
+<td><strong>2</strong></td>
+<td><strong>26</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>Grande Salle</strong></td>
+<td><strong>14</strong></td>
+<td><strong>3</strong></td>
+<td><strong>2</strong></td>
+<td><strong>2</strong></td>
+<td><strong>3</strong></td>
+<td><strong>0</strong></td>
+<td><strong>24</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>Annexe de la bibliothèque</strong></td>
+<td><strong>10</strong></td>
+<td><strong>4</strong></td>
+<td><strong>2</strong></td>
+<td><strong>3</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>20</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Aile sud</strong></td>
+<td><strong>12</strong></td>
+<td><strong>3</strong></td>
+<td><strong>3</strong></td>
+<td><strong>2</strong></td>
+<td><strong>2</strong></td>
+<td><strong>1</strong></td>
+<td><strong>23</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>86</strong></td>
+<td><strong>19</strong></td>
+<td><strong>15</strong></td>
+<td><strong>15</strong></td>
+<td><strong>9</strong></td>
+<td><strong>6</strong></td>
+<td><strong>150</strong></td>
+<td><strong>5</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>L'aile du clocher est la zone la plus riche du château : <strong>34 pages, dont 20 au Revelio.</strong></p>
+<h3 id="poudlard-aile-dastronomie">Poudlard — Aile d'astronomie</h3>
+<p><strong>Pages de Revelio</strong> <em>(12)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Au centre de la Cour de métamorphose, sur la Fontaine de la Vouivre</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Salle dcfm, au balcon du fond, face au Squelette de Noir des Hébrides <em>(le dragon suspendu au plafond)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Depuis la Salle dcfm, descends d'un étage, dépasse le squelette de rhinocéros, monte l'escalier à gauche ; en haut, à droite, sur le Squelette d'Augurey en vitrine, à côté des instruments de musique qui jouent tout seuls</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Juste en face de la Salle sur Demande <em>(couloir du 7e étage)</em>, sur la <strong>Tapisserie de Barnabas le Follet</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>À côté du squelette de rhinocéros, sur le vitrail de la Fenêtre au motif serpentin</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Tout en haut de la Tour d'astronomie, sur le <strong>Télescope d'astronomie</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Salle de sortilèges : <strong>Alohomora 1</strong> pour le bureau du professeur, escalier en colimaçon, puis <strong>Alohomora 2</strong> sur la grille ; Revelio derrière → <strong>Cellule de la Tour sombre</strong></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>FC de la Tour dcfm, descends <strong>2 étages</strong>, entre dans le <strong>passage puant</strong> à l'ouest <em>(il porte bien son nom)</em>, Revelio au milieu</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>FC de la Cour de métamorphose, entre dans la Tour dcfm, <strong>directement à droite</strong>, face au Tableau d'Illyius</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td><strong>Salle de métamorphose, devant la métamorphose partielle</strong> <em>(une tasse de thé à moitié transformée en rat, à gauche)</em></td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>Rez-de-chaussée de la Tour dcfm : <strong>Alohomora 2</strong> sur la porte cadenassée, puis Revelio devant le Placard d'Épouvantard au fond</td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>FC de la Cour du clocher → escalier de gauche → porte en face → escaliers → porte → escaliers → Statue de dragon endormi ; tourne-lui le dos, porte en face, <strong>Alohomora 2</strong>, Revelio derrière → Cours d'alchimie</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pages volantes</strong> <em>(2 + 2 bonus)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bonus 1</strong></td>
+<td>À l'est de la Cour de métamorphose, sous les arches de pierre — <strong>seulement pendant le devoir de Ronen</strong></td>
+</tr>
+<tr>
+<td><strong>Bonus 2</strong></td>
+<td>Tour dcfm, elle vole vers l'escalier entre le rez-de-chaussée et le 1er étage — <strong>même devoir</strong></td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td>Dans les <strong>cachots</strong>, à côté de la grille de la Salle de la carte et du meuble de maison ; <strong>regarde vers le haut</strong></td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td>Juste à côté de la Salle de sortilèges, elle vole <strong>en hauteur</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Statues (Levioso)</strong> <em>(3)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>15</strong></td>
+<td>Depuis la Cour de métamorphose, <strong>sous les arches de pierre à l'est</strong></td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td>Au pied de l'escalier en colimaçon qui sépare la Tour dcfm de la Tour d'astronomie</td>
+</tr>
+<tr>
+<td><strong>17</strong></td>
+<td>Depuis la grille de la Salle de la carte <em>(cachots)</em>, descends, <strong>à droite</strong>, <strong>Alohomora 1</strong> sur la grille ; interagis avec la <strong>statue de grenouille</strong> pour faire apparaître la statue à Levioso</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Tableaux vides (Lumos)</strong> <em>(3)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le tableau</th>
+<th>Le papillon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>18</strong></td>
+<td>FC de la Tour ouest, <strong>couloir puant vers l'est</strong></td>
+<td>Sur la tapisserie à gauche de la FC de la Tour ouest</td>
+</tr>
+<tr>
+<td><strong>19</strong></td>
+<td>FC de la Tour dcfm, le tableau est <strong>à proximité</strong></td>
+<td>Étage supérieur, couloir à droite de la Flamme, jusqu'à la FC de la <strong>salle de classe du professeur Fig</strong> ; le papillon est <strong>à côté des tapisseries</strong></td>
+</tr>
+<tr>
+<td><strong>20</strong></td>
+<td>Tour d'astronomie, <strong>quelques étages plus haut</strong></td>
+<td>Tout en haut de la tour, <strong>à côté du gros télescope</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Brasier à Incendio</strong> <em>(1)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>21</strong></td>
+<td>Tout en haut de la Tour d'astronomie, devant le gros télescope, <strong>descends en sous-sol</strong> par l'escalier voisin → brasier <strong>en forme de dragon</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Brasiers à Confringo</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>22</strong></td>
+<td>FC de la salle de classe du professeur Fig, regarde <strong>vers le nord-ouest</strong> : torche éteinte au mur ; <strong>Confringo puis Accio</strong></td>
+</tr>
+<tr>
+<td><strong>23</strong></td>
+<td><strong>Même chemin que la page 12 : FC de la Cour du clocher → la <strong>Statue de dragon endormi</strong> → porte en face à l'<strong>Alohomora 2</strong> → <strong>Salle d'alchimie</strong> ; avance jusqu'à la cheminée, <strong>tourne-toi et lève la tête</strong></strong> ; <strong>Confringo puis Accio</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="poudlard-aile-du-clocher">Poudlard — Aile du Clocher</h3>
+<p><strong>Pages de Revelio</strong> <em>(20 + 2 bonus)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>FC de la Cour du clocher, <strong>vers le nord</strong>, sur les Cloches des Trois sœurs</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>FC de la Cour du clocher, sur le <strong>Balai brisé</strong> à côté de la porte de sortie</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>FC de la Cour du clocher, escalier sud-ouest, sur l'Artéfact de gobelin <em>(la corne sous verre, sous les hallebardes et le casque)</em></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Depuis la page 3, tourne-toi, monte encore l'escalier, sur les Marques de brûlure au mur</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Entre à Poudlard par la <strong>porte ouest</strong>, escaliers à gauche, sur le <strong>Chat en bois sous cloche</strong> à côté de la porte</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Tout en haut de la <strong>volière</strong>, sur la colline au-dessus de la Salle du cours sur les créatures magiques ; au milieu des Hiboux de Poudlard</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>FC de la Cour du clocher → escalier de gauche → porte en face → escaliers → porte → escaliers → face à la Statue de dragon endormi</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td><strong>Juste au-dessus de la statue du dragon endormi, dans les cachots, sur l'<strong>Urne de cendres</strong> à côté du meuble de maison</strong></td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>FC de la Cour du clocher → escalier de gauche → porte en face → petit escalier en face → grande porte en bois → <strong>salle d'histoire de la magie</strong> ; <strong>directement à droite</strong>, sur les <strong>Fenêtres de l'histoire de la magie</strong></td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Dans le clocher, au centre de la <strong>salle de musique</strong>, sur le Chœur des grenouilles</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td><strong>FC de la Cour du clocher, sur l'<strong>Armure aplatie</strong> à côté de la porte de sortie</strong></td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>FC de la Cour de métamorphose → porte vers l'aile du clocher → <strong>directement à gauche</strong> → <strong>Alohomora 1</strong> → sur la Statue de Sphinx</td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td><strong>FC de la Cour du clocher → escalier de gauche → porte en bois → escalier → <strong>statue du dragon endormi</strong> → <strong>à droite</strong>, première porte à gauche à l'<strong>Alohomora 1</strong> ; face au <strong>canon</strong> → <strong>artéfact important de Moldu</strong></strong></td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td>FC de la Sortie nord de Poudlard, reste dans l'enceinte, longe la muraille <strong>vers le sud</strong> ; dans l'avant-dernière tour**, une baignoire derrière des barreaux**</td>
+</tr>
+<tr>
+<td><strong>15</strong></td>
+<td>Même départ ; <strong>entre les deux dernières tours</strong>, passe dans l'ouverture de la muraille et fais face au <strong>terrain de Quidditch</strong></td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td>Même départ ; fais face au château et regarde <strong>directement à droite</strong> : une <strong>étable à sombrals</strong> ; <strong>Alohomora 1</strong> sur le cadenas, puis Revelio sur la <strong>viande saignante</strong></td>
+</tr>
+<tr>
+<td><strong>17</strong></td>
+<td>FC de la Cour du clocher, sors du château, <strong>en balai</strong> jusqu'à la <strong>première tour de la muraille à droite</strong> ; à l'intérieur → Remparts du château</td>
+</tr>
+<tr>
+<td><strong>18</strong></td>
+<td>FC de la Cour du clocher, sors et <strong>longe le château par la droite</strong> jusqu'à l'extérieur de la Serre ; <strong>nord-est du jardin</strong>, les <strong>ruches de Grinchebourdons</strong></td>
+</tr>
+<tr>
+<td><strong>19</strong></td>
+<td>FC de la bibliothèque, monte à l'étage, Revelio <strong>tout de suite</strong>, face au <strong>portrait du Vieux bibliothécaire</strong></td>
+</tr>
+<tr>
+<td><strong>20</strong></td>
+<td>FC de la Cour du clocher → escalier de gauche → porte en face → escalier → porte → une <strong>tapisserie avec un grand « K »</strong> ; <strong>c'est une porte secrète : avance dedans</strong> ; puis Revelio devant les Tapisseries saga des loups-garous</td>
+</tr>
+<tr>
+<td><strong>Bonus 1</strong></td>
+<td>Revelio face au <strong>crâne de Grimbald Brode</strong>, près de la FC de la Cour du clocher — <strong>seulement pendant « cours d'histoire de la magie »</strong></td>
+</tr>
+<tr>
+<td><strong>Bonus 2</strong></td>
+<td>Revelio face à la <strong>statue du Chevalier saluant</strong>, au même endroit — <strong>même quête</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pages volantes</strong> <em>(5)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>21</strong></td>
+<td>À l'extérieur de la serre, <strong>au-dessus de la fontaine au nord-ouest</strong>, non loin des ruches</td>
+</tr>
+<tr>
+<td><strong>22</strong></td>
+<td><strong>Tout en haut de la volière : monte à l'<strong>échelle</strong> et <strong>regarde en hauteur</strong></strong></td>
+</tr>
+<tr>
+<td><strong>23</strong></td>
+<td>FC de la Cour de métamorphose → porte vers l'aile du clocher → à gauche → <strong>Alohomora 1</strong> → la <strong>statue de Sphinx</strong> ; la page vole <strong>en hauteur sur la gauche</strong></td>
+</tr>
+<tr>
+<td><strong>24</strong></td>
+<td>FC de la Cour du clocher, <strong>en hauteur sur la droite</strong>, au-dessus de l'escalier</td>
+</tr>
+<tr>
+<td><strong>25</strong></td>
+<td>Vers la <strong>Salle de soin sur les créatures magiques</strong> : elle vole <strong>autour de la cabane</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Statues (Levioso)</strong> <em>(4)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>26</strong></td>
+<td><strong>Tout en haut de la volière : prends l'<strong>échelle</strong> et <strong>fais le tour</strong></strong></td>
+</tr>
+<tr>
+<td><strong>27</strong></td>
+<td>Depuis la Cour de métamorphose, <strong>Alohomora 1</strong> sur la porte verrouillée, puis monte à l'étage</td>
+</tr>
+<tr>
+<td><strong>28</strong></td>
+<td>FC de la Cour de métamorphose → porte vers l'aile du clocher → à gauche → <strong>Alohomora 1</strong> → la statue de Sphinx ; la statue à Levioso est <strong>sur la gauche</strong></td>
+</tr>
+<tr>
+<td><strong>29</strong></td>
+<td>FC de la Sortie nord de Poudlard, <strong>en balai</strong> sur la muraille juste au-dessus, <strong>Alohomora 1</strong> pour entrer</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Tableaux vides (Lumos)</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le tableau</th>
+<th>Le papillon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>30</strong></td>
+<td>FC de la Cour du clocher → escalier de gauche → porte en face → petit escalier en face → continue <strong>à gauche</strong></td>
+<td>Redescends cet escalier, <strong>à gauche face au globe terrestre</strong>, puis <strong>à droite à l'angle</strong>, <strong>Alohomora 1</strong> ; le papillon est <strong>au fond à droite</strong></td>
+</tr>
+<tr>
+<td><strong>31</strong></td>
+<td><strong>FC de la Sortie nord de Poudlard, face au château, à gauche : l'<strong>étable</strong> ; <strong>Alohomora 1</strong> pour entrer</strong></td>
+<td>Sors, <strong>longe la muraille vers l'est</strong>, dépasse l'escalier qui monte, et saute par-dessus le rebord en pierre juste après ; le papillon est <strong>sur le mur à gauche</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Brasiers à Incendio</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>32</strong></td>
+<td>FC de la Cour du clocher, <strong>escalier de droite jusqu'en haut</strong> → brasier en forme de dragon</td>
+</tr>
+<tr>
+<td><strong>33</strong></td>
+<td>FC de la Cour du clocher → escalier de gauche → porte en bois → escalier <strong>jusqu'en haut</strong> → <strong>Alohomora 1</strong> → le brasier est dans la nouvelle salle</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Brasier à Confringo</strong> <em>(1)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>34</strong></td>
+<td>FC de la Sortie nord de Poudlard, face au château, <strong>regarde à gauche en hauteur</strong> : brasier accroché à la muraille ; <strong>Confringo puis Accio</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="poudlard-le-grand-escalier">Poudlard — Le grand escalier</h3>
+<p><strong>Pages de Revelio</strong> <em>(18)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Au milieu de l'escalier en colimaçon de la Tour de Serdaigle, sur le Buste de Serdaigle</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>À côté de la FC de la Salle des trophées, sur l'<strong>Armure de Troll</strong></strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Dans la Salle des trophées, sur le <strong>Reliquaire de la Coupe de Feu</strong>, au centre</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>FC du Grand escalier, descends l'escalier en colimaçon, à mi-chemin, sur le Livre de recettes des elfes de maison <em>(sur un meuble sombre)</em></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Même escalier <strong>jusqu'en bas</strong>, au bout du couloir, devant les Tonneaux de Poufsouffle</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Tourne le dos aux <strong>Sabliers des points de maison</strong> et Revelio sur la statue de l'<strong>Architecte de Poudlard</strong></strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>FC du Grand escalier, monte quelques étages sur les escaliers flottants, devant un <strong>tableau de chat</strong></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>FC de la Tour des professeurs, tout de suite à droite : la statue de la sorcière borgne, le Passage vers Honeydukes <em>(partie <strong>20</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Depuis la Partie basse du grand escalier, <strong>couloir nord</strong> puis <strong>escalier vers l'ouest</strong> → la Statue de Kelpy</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Au sommet de la Tour de Serdaigle, devant le Heurtoir de Serdaigle</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>Dans la Salle des trophées, vers le centre, face à une <strong>vitrine de trophées</strong></td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td><strong>De l'autre côté de la Salle des trophées, sur l'<strong>Armure d'Elfe de maison</strong></strong></td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td><strong>FC de la Salle des trophées, fais le tour de l'étage : l'<strong>Armure de Centaure</strong> derrière une vitrine</strong></td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td>FC de la Salle des trophées, fais le tour de l'étage jusqu'à une <strong>grille verrouillée</strong> ; <strong>Alohomora 1</strong>, monte tout en haut, <strong>à gauche</strong>, sur la <strong>Gargouille du bureau du directeur</strong></td>
+</tr>
+<tr>
+<td><strong>15</strong></td>
+<td><strong>À l'entrée du Scriptorium de Salazar Serpentard</strong> <em>(trouvé pendant « Dans l'ombre de l'étude », partie <strong>17</strong>)</em> ; on y revient par la FC de la Partie basse du grand escalier : descends l'escalier en face et longe le mur à droite</td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td><strong>Dans le bureau du directeur</strong> <em>(par l'extérieur, en balai jusqu'à la plus haute tour, puis <strong>Alohomora 2</strong> sur la porte — partie <strong>10</strong>)</em> ; sur les Portraits endormis, à droite en arrivant</td>
+</tr>
+<tr>
+<td><strong>17</strong></td>
+<td>Même bureau, devant le Choixpeau magique, en face de l'entrée</td>
+</tr>
+<tr>
+<td><strong>18</strong></td>
+<td>Dans la salle secrète à côté du bureau du directeur <em>(le secret de Poudlard, partie <strong>10</strong>)</em>, devant la Plume d'acceptation et le livre d'admission</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pages volantes</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>19</strong></td>
+<td>Depuis le Grand escalier, <strong>regarde en hauteur</strong></td>
+</tr>
+<tr>
+<td><strong>20</strong></td>
+<td>FC de la Cour centrale, <strong>au-dessus de l'escalier qui mène au sud-est</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Statue (Levioso)</strong> <em>(1)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>21</strong></td>
+<td>À côté du <strong>couloir peint en bleu</strong>, non loin de la Tour de Serdaigle</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Tableaux vides (Lumos)</strong> <em>(3)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le tableau</th>
+<th>Le papillon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>22</strong></td>
+<td>Dans le <strong>couloir qui mène à la Grande Salle</strong>, à côté de la salle aux Sabliers</td>
+<td>Juste <strong>derrière le siège du directeur</strong>, derrière le pupitre</td>
+</tr>
+<tr>
+<td><strong>23</strong></td>
+<td>Au pied de l'escalier en colimaçon de la Tour de Serdaigle</td>
+<td>Monte le même escalier jusqu'à la <strong>salle tapissée de vert</strong></td>
+</tr>
+<tr>
+<td><strong>24</strong></td>
+<td>FC de la Salle des trophées, fais le tour jusqu'à la grille verrouillée, <strong>Alohomora 1</strong>, monte tout en haut, <strong>à gauche</strong></td>
+<td>Tout en bas de l'escalier qui t'a mené là : lève la tête vers les poutres en forme d'étoile</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Brasiers à Confringo</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>25</strong></td>
+<td>FC de la Cour centrale, au-dessus de la statue de dragon à droite : brasier au mur ; <strong>Confringo puis Accio</strong></td>
+</tr>
+<tr>
+<td><strong>26</strong></td>
+<td>FC de la Tour du grand escalier, sors du couloir vers le grand escalier et regarde tout de suite à droite, un peu en hauteur ; <strong>Confringo puis Accio</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="poudlard-la-grande-salle">Poudlard — La Grande Salle</h3>
+<p><strong>Pages de Revelio</strong> <em>(14)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Depuis la Cour du viaduc, la grande porte de la Grande Salle, sur le Blason de Poudlard</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Depuis la Grande Salle, <strong>deux portes vers le nord</strong> → les <strong>Sabliers des points de maison</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>FC du Grand escalier, escalier en colimaçon jusqu'en bas, sur le Portrait de poire</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Partie basse du grand escalier, couloir nord puis couloir est → les toilettes des filles ; Revelio dedans → le Lavabo des Serpentard <em>(la Chambre des Secrets)</em></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Dans la Grande Salle, face au Pupitre hibou des directeurs</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>À peine arrivé dans la Grande Salle, devant les tables → le <strong>Plafond de la Grande Salle</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Depuis la Grande Salle, sors par la <strong>porte ouest</strong>, face à la Gargouille qui bâille</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>FC de la Cour du viaduc, reste au même étage, tout droit, puis <strong>sous les arches de pierre à droite</strong> → un <strong>ascenseur vers le Port souterrain</strong> ; en bas, <strong>ponton de droite</strong>, Revelio <strong>à côté du dernier bateau</strong></td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Depuis les Hangars à bateaux, Revelio à côté de celui <strong>à moitié dans le Lac Noir</strong></td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>FC de la Partie basse du grand escalier, <strong>à droite à l'intersection</strong>, suis le chemin jusqu'à une <strong>grille verrouillée à gauche</strong> ; <strong>Alohomora 1</strong>, puis Revelio devant la <strong>Tapisserie du club des chasseurs sans tête</strong>, tout au bout du couloir</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>Dans la même salle, devant le <strong>buffet</strong> → la <strong>Salle de l'anniversaire de mort</strong></td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>Même chemin, jusqu'à une <strong>porte en bois verrouillée</strong> ; <strong>Alohomora 2</strong>, puis Revelio → la Salle de retenue</td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td>FC du Grand escalier, escalier en colimaçon jusqu'à un <strong>tableau d'un plateau de fruits</strong> ; interagis → <strong>passage secret vers les cuisines</strong> ; au fond à droite, devant les <strong>tonneaux avec les fenêtres</strong> → les <strong>Quartiers des Elfes de maison</strong></td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td>Depuis la page 13, Revelio <strong>au milieu de la pièce</strong> → les Tables de cuisine</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pages volantes</strong> <em>(3)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>15</strong></td>
+<td>Depuis la Cour du viaduc, la grande porte de la Grande Salle, <strong>monte les escaliers</strong> : elle vole au-dessus de toi</td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td>Depuis la Cour du viaduc, fais le tour du bâtiment de la Grande Salle <strong>par l'extérieur</strong> : elle vole <strong>au-dessus du kiosque</strong></td>
+</tr>
+<tr>
+<td><strong>17</strong></td>
+<td>FC de la Partie basse du grand escalier, à droite, la grille à l'ALOHOMORA 1, jusqu'à la salle de l'anniversaire de mort : elle vole <strong>entre les bougies</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Statues (Levioso)</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>18</strong></td>
+<td>Depuis la Cour du viaduc, la grande porte de la Grande Salle : la statue est à mi-chemin de l'escalier, à gauche du grand blason</td>
+</tr>
+<tr>
+<td><strong>19</strong></td>
+<td>Depuis la Cour du viaduc, <strong>sous les arches à l'est</strong>, non loin de la porte de la Grande Salle</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Tableaux vides (Lumos)</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le tableau</th>
+<th>Le papillon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>20</strong></td>
+<td>Depuis la Cour du viaduc, <strong>escaliers du côté nord-ouest, à l'extérieur</strong></td>
+<td>À côté de la <strong>statue de dragon</strong>, dans le <strong>coin sud-ouest de la Cour</strong></td>
+</tr>
+<tr>
+<td><strong>21</strong></td>
+<td>Partie basse du grand escalier, <strong>couloir nord</strong> puis <strong>couloir est</strong>, à côté des <strong>toilettes pour hommes</strong></td>
+<td>Continue <strong>à droite</strong>, puis <strong>à gauche au fond du couloir</strong>, à côté d'une tapisserie</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Brasiers à Incendio</strong> <em>(3)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>22</strong></td>
+<td>Dans le Hangar à bateaux, le brasier en forme de dragon est bien visible</td>
+</tr>
+<tr>
+<td><strong>23</strong></td>
+<td>Depuis la Grande Salle, <strong>escalier au nord-ouest</strong> puis <strong>escalier en bois</strong></td>
+</tr>
+<tr>
+<td><strong>24</strong></td>
+<td>FC de la Partie basse du grand escalier, à droite, jusqu'à une <strong>porte à barreaux verrouillée à gauche</strong> ; <strong>Alohomora 1</strong> → brasier à l'intérieur</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="poudlard-lannexe-de-la-bibliotheque">Poudlard — L'annexe de la bibliothèque</h3>
+<p><strong>Pages de Revelio</strong> <em>(10 + 1 bonus)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Dans le Hall central, sur la <strong>Statue de Grégoire le Hautain</strong>, à côté de la FC de la Salle de potions</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Depuis les Serres, <strong>porte gauche de l'aile est</strong> ; en bas des escaliers, sur l'arbre aux Prunes dirigeables</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Dans la réserve de la bibliothèque, descends quelques escaliers, sur le Livre enchanté <em>(il bouge tout seul)</em></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Dans le Hall central, sur la <strong>fontaine au centre</strong>, en regardant vers l'<strong>escalier à l'est</strong></strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Dans la salle de potions, devant le bureau du professeur Sharp → son Badge d'Auror</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Depuis la Tour de Serdaigle, au pied de l'escalier en colimaçon, traverse la <strong>passerelle extérieure</strong>, autre escalier ; tout en bas, <strong>prends l'angle au même étage</strong>, sur le Portrait de Sir Cadogan à gauche</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Dans la Salle de Divination, Revelio <strong>au milieu de la pièce</strong> → le Modèle de chiromancie</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>FC de la Cour du clocher <em>(aile du clocher)</em>, grande porte à l'ALOHOMORA 1 ; directement à droite, une porte d'arithmancie <em>(partie <strong>32</strong>)</em> ; ouvre-la et Revelio sur le Portrait de Gorgone</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td><strong>Au centre de la Serre, autour de l'<strong>immense arbre à fleurs</strong></strong></td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>FC de la Salle de Divination, va <strong>vers les combles</strong> et passe la <strong>porte d'arithmancie</strong> → Salle d'arithmancie ; Revelio juste après la porte de la classe</td>
+</tr>
+<tr>
+<td><strong>Bonus</strong></td>
+<td>Obtenue obligatoirement pendant le <strong>devoir du professeur Weasley</strong> <em>(partie <strong>22</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pages volantes</strong> <em>(4)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>11</strong></td>
+<td>Dans le Hall central, regarde vers la <strong>porte sud</strong></td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>Dans le Hall central, regarde <strong>vers l'ouest</strong>, à gauche de la grande <strong>fresque murale au dragon</strong></td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td>Dans la bibliothèque, monte à l'étage et regarde <strong>vers l'est</strong> : elle vole vers le milieu de la salle</td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td>FC de la Salle de Divination, marche sur les <strong>planches à l'ouest</strong> et arrête-toi dans le <strong>couloir des combles vers le sud</strong> ; <strong>attends qu'elle vienne à toi</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Statues (Levioso)</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>15</strong></td>
+<td>Dans la réserve de la bibliothèque, descends plusieurs escaliers jusqu'à un <strong>débarras sombre</strong></td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td><strong>Depuis le Hall central, va vers la <strong>grande porte verte de la serre</strong> sans l'emprunter ; <strong>à droite</strong>, porte en bois à l'<strong>Alohomora 1</strong></strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Tableaux vides (Lumos)</strong> <em>(3)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le tableau</th>
+<th>Le papillon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>17</strong></td>
+<td>Le tableau vide à côté de la fontaine du Hall central</td>
+<td>C'est la récompense de la quête annexe <strong>« et la lumière fut »</strong> <em>(partie <strong>20</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>18</strong></td>
+<td><strong>FC de la Cour du clocher <em>(aile du clocher)</em>, grande porte à l'<strong>Alohomora 1</strong> ; le tableau est <strong>au milieu du couloir</strong></strong></td>
+<td>Juste derrière, <strong>au-dessus de la vitrine contenant un troll</strong></td>
+</tr>
+<tr>
+<td><strong>19</strong></td>
+<td>FC de la bibliothèque, étage, <strong>coin sud-est</strong></td>
+<td>Reviens <strong>en haut des escaliers</strong> : il est <strong>posé sur le pupitre</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Brasier à Incendio</strong> <em>(1)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>20</strong></td>
+<td>FC du Hall central, descends jusqu'à la fontaine puis <strong>escalier de droite</strong> → brasier en forme de dragon</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="poudlard-aile-sud">Poudlard — Aile sud</h3>
+<p><strong>Pages de Revelio</strong> <em>(12)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>FC de la Tour dcfm, porte à côté de l'escalier en face, traverse le pont, porte en bois au bout du couloir à droite ; devant la porte des Toilettes hantées <em>(Peeves en sort parfois — partie <strong>03</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Rez-de-chaussée de la Tour des professeurs, sur la <strong>Carte d'Argyllshire</strong>, à côté de la porte vers l'extérieur</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>FC de la Tour des professeurs, au bout du couloir <strong>vers le sud-ouest</strong>, sur le Portrait de Baruffio</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>FC de la Tour des professeurs, au bout du couloir puis <strong>un étage plus haut</strong> : le <strong>Portrait de la Grosse Dame</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Depuis la Cour de la tour de l'horloge, à l'extérieur, sur le Puits aux Quatre Créatures</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Rez-de-chaussée de la Tour des professeurs, sur la statue de Lachelan le Maigre, à côté de l'escalier qui mène à la Carte d'Argyllshire</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Depuis la Tour des professeurs, traverse le couloir, <strong>première porte à droite à l'Alohomora</strong> ; monte <strong>deux étages</strong>, sur la <strong>Carapace de tortue incrustée de pierres précieuses</strong>, sous verre à côté d'une porte verrouillée</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>FC de l'Infirmerie, <strong>escalier en colimaçon</strong>, sur la statue de Boris le Hagard, à côté de la salle de bain des préfets</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Même escalier, entre dans la <strong>salle de bain des préfets à gauche</strong>, face à la <strong>peinture murale de sirène</strong></td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>FC de l'Infirmerie, sur la <strong>Fontaine de la licorne</strong>, à côté du point de téléportation</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>FC de l'Infirmerie, <strong>couloir à droite</strong> → Tour de l'horloge ; descends en longeant le <strong>mur ouest</strong> jusqu'aux <strong>engrenages</strong></td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td><strong>FC de la Tour des professeurs, monte à l'étage par la <strong>porte verrouillée <em>(niveau 1)</em></strong>, puis <strong>Alohomora 2</strong> sur la <strong>chambre du professeur Onai</strong>, directement à droite ; Revelio devant sa <strong>Collection de romans d'aventures</strong>, en face du lit</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pages volantes</strong> <em>(3)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>13</strong></td>
+<td>FC de la Cour de la tour de l'horloge, <strong>lève les yeux bien haut</strong> : elle vole vers l'est</td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td>Depuis la Tour des professeurs, couloir, <strong>première porte à droite à l'Alohomora</strong>, monte <strong>deux étages</strong> : elle vole <strong>juste au-dessus de l'escalier</strong></td>
+</tr>
+<tr>
+<td><strong>15</strong></td>
+<td>FC de l'Infirmerie, entre et <strong>regarde vers le haut</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Statues (Levioso)</strong> <em>(3)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>16</strong></td>
+<td>Juste à côté de la FC de la Cour de la tour de l'horloge</td>
+</tr>
+<tr>
+<td><strong>17</strong></td>
+<td><strong>FC de la Cour centrale, monte l'<strong>escalier qui mène au sud-est</strong></strong></td>
+</tr>
+<tr>
+<td><strong>18</strong></td>
+<td>FC de l'Infirmerie, <strong>escalier en colimaçon</strong>, la statue est <strong>juste à droite</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Tableaux vides (Lumos)</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le tableau</th>
+<th>Le papillon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>19</strong></td>
+<td>Rez-de-chaussée de la Tour des professeurs : Repulso sur le bouton au-dessus de la Carte d'Argyllshire → passage secret ; le tableau est dedans</td>
+<td>Sors, <strong>à gauche</strong>, puis <strong>encore à gauche à l'angle</strong> → les <strong>toilettes des filles</strong></td>
+</tr>
+<tr>
+<td><strong>20</strong></td>
+<td>FC de la Cour de la tour de l'horloge, <strong>Alohomora</strong> sur le <strong>débarras à droite de la grille</strong> qui mène à la cour</td>
+<td>Sur le <strong>mur de la cour, coin nord-ouest</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Brasiers à Incendio</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>21</strong></td>
+<td>Tour des professeurs, rez-de-chaussée, <strong>tourne à droite devant la Carte d'Argyllshire</strong> ; en bas des escaliers, le brasier est <strong>dans l'angle</strong></td>
+</tr>
+<tr>
+<td><strong>22</strong></td>
+<td>FC de la Tour des professeurs, couloir, <strong>première porte à droite</strong>, monte <strong>deux étages</strong> jusqu'à une <strong>porte verrouillée avec une pile de chaudrons</strong> ; <strong>Alohomora 3</strong> pour l'ouvrir ; <strong>puis Glacius sur la cheminée pour l'éteindre</strong> ; prends le <strong>passage secret derrière</strong>, le brasier est <strong>en haut des escaliers</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Brasier à Confringo</strong> <em>(1)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>23</strong></td>
+<td>FC de l'Infirmerie, <strong>escalier en colimaçon</strong>, traverse le <strong>couloir aux portraits</strong> ; depuis la salle du bout, le brasier est <strong>accroché au mur</strong> ; <strong>Confringo puis Accio</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="pre-au-lard-les-55-pages">Pré-au-Lard — les 55 pages</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La méthode</th>
+<th>Le nombre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pages de Revelio</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Pages volantes (Accio)</strong></td>
+<td><strong>20</strong></td>
+</tr>
+<tr>
+<td><strong>Tableaux vides (Lumos)</strong></td>
+<td><strong>5</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et à Pré-au-Lard, il n'y a <strong>ni statue ni brasier</strong> <em>(partie <strong>11</strong>)</em>.</p>
+<p><strong>Pages de Revelio</strong> <em>(30)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Chez Potions Pippin, passe <strong>derrière le comptoir</strong>, sur le <strong>chaudron</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Chez Bôbalais, devant le <strong>mannequin</strong> → les Articles de sport Bôbalais</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Chez Amanites et Chiendent, contre le <strong>tronc d'arbre</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Juste à côté de Timothy Teasdale, le vendeur du Navet magique</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Chez <strong>Tomes et parchemins</strong> : interagis avec le <strong>livre posé sur la table de droite</strong> pour faire apparaître l'Escalier enchanté**, puis Revelio au pied de ce dernier**</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Devant les <strong>Chaudrons de Ceridwen</strong>, en face de Tomes et parchemins</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td><strong>Devant la boutique d'<strong>Ollivander</strong></strong></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Dans le <strong>parc entre Potions Pippin et Ollivander</strong></td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Face à la <strong>tête de sanglier</strong> dans le bar éponyme</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Derrière la Tête de Sanglier, sur les <strong>planches en bois</strong> → les <strong>Quais de la Tête de Sanglier</strong></td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>Devant le <strong>Magasin de farces et attrapes de Zonko</strong></td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>Sur le Savon sauteur, à gauche en entrant chez Zonko</td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td>Devant les Bombabouse, à l'étage de Zonko, sur la droite</td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td>Devant le Puits à eau, à côté de chez Zonko</td>
+</tr>
+<tr>
+<td><strong>15</strong></td>
+<td>Devant la <strong>cheminée au fond des Trois Balais</strong></td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td>Dans la Salle privée des Trois Balais, au troisième étage — <strong>Alohomora 1 pour y accéder</strong></td>
+</tr>
+<tr>
+<td><strong>17</strong></td>
+<td>Devant les Tonneaux de Bièraubeurre, à l'extérieur des Trois Balais</td>
+</tr>
+<tr>
+<td><strong>18</strong></td>
+<td>Devant la boutique Gaichiffon</td>
+</tr>
+<tr>
+<td><strong>19</strong></td>
+<td>Sur le Mannequin de Gaichiffon, à droite en entrant</td>
+</tr>
+<tr>
+<td><strong>20</strong></td>
+<td>Chez le <strong>forgeron</strong> <em>(qui partage la boutique de Gaichiffon)</em>, sur le Scrutoscope, à côté du squelette ailé</td>
+</tr>
+<tr>
+<td><strong>21</strong></td>
+<td>Dans la <strong>boutique de plumes Scribenpenne</strong>, à gauche de l'arbre du centre-ville, devant les <strong>chats</strong></td>
+</tr>
+<tr>
+<td><strong>22</strong></td>
+<td>Sur le Courrier magique, dans le <strong>bureau de poste</strong> du centre-ville</td>
+</tr>
+<tr>
+<td><strong>23</strong></td>
+<td>Devant la <strong>statue de Hengist de Woodcroft</strong>, au centre-ville</td>
+</tr>
+<tr>
+<td><strong>24</strong></td>
+<td>Dans le Magasin de thé, devant les <strong>décorations</strong></td>
+</tr>
+<tr>
+<td><strong>25</strong></td>
+<td>Devant l'entrée de Honeydukes</td>
+</tr>
+<tr>
+<td><strong>26</strong></td>
+<td>Devant les Fizwizbiz, à gauche en arrivant chez Honeydukes</td>
+</tr>
+<tr>
+<td><strong>27</strong></td>
+<td>Devant les Bonbons explosifs, à côté de la <strong>statue de Niffleur</strong> chez Honeydukes</td>
+</tr>
+<tr>
+<td><strong>28</strong></td>
+<td>À côté de la <strong>nourriture pour animaux</strong>, chez Pique &amp; Peck</td>
+</tr>
+<tr>
+<td><strong>29</strong></td>
+<td>À l'entrée de Pré-au-Lard**, devant le pont qui mène au village**</td>
+</tr>
+<tr>
+<td><strong>30</strong></td>
+<td>Devant la <strong>maison du Vieux fou</strong>, au nord de Pré-au-Lard → la Boutique abandonnée</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pages volantes</strong> <em>(20)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>31</strong></td>
+<td><strong>À l'étage de Tomes et parchemins</strong> : touche le livre sur la table à côté du vendeur, puis monte l'escalier</td>
+</tr>
+<tr>
+<td><strong>32</strong></td>
+<td>À l'ouest de Pré-au-Lard, autour du <strong>pont qui mène au Navet magique</strong></td>
+</tr>
+<tr>
+<td><strong>33</strong></td>
+<td>Juste <strong>au-dessus du Navet magique</strong></td>
+</tr>
+<tr>
+<td><strong>34</strong></td>
+<td>Juste <strong>au-dessus d'Amanites et Chiendent</strong></td>
+</tr>
+<tr>
+<td><strong>35</strong></td>
+<td>Au-dessus du <strong>pont de pierre</strong> entre le nord de Pré-au-Lard et Amanites et Chiendent</td>
+</tr>
+<tr>
+<td><strong>36</strong></td>
+<td>En arrivant par l'entrée sud**, regarde sur la gauche**</td>
+</tr>
+<tr>
+<td><strong>37</strong></td>
+<td>En arrivant par l'entrée sud, <strong>passe entre les deux bâtiments à droite</strong> : elle est derrière</td>
+</tr>
+<tr>
+<td><strong>38</strong></td>
+<td>Dans le parc entre Potions Pippin et Ollivander, <strong>en hauteur</strong></td>
+</tr>
+<tr>
+<td><strong>39</strong></td>
+<td>Contourne <strong>Tomes et parchemins par la gauche</strong> : elle vole derrière le pâté de maisons</td>
+</tr>
+<tr>
+<td><strong>40</strong></td>
+<td>À droite de Potions Pippin, entre deux maisons</td>
+</tr>
+<tr>
+<td><strong>41</strong></td>
+<td>Depuis le <strong>puits à côté de chez Zonko</strong>, regarde <strong>en hauteur vers le nord-ouest</strong></td>
+</tr>
+<tr>
+<td><strong>42</strong></td>
+<td>Dans la <strong>ruelle entre Pique &amp; Peck</strong> et la maison juste au sud</td>
+</tr>
+<tr>
+<td><strong>43</strong></td>
+<td>Depuis Zonko, <strong>escalier à droite</strong> puis <strong>petit passage en bois à droite</strong></td>
+</tr>
+<tr>
+<td><strong>44</strong></td>
+<td>Autour du <strong>salon de thé</strong> du centre-ville</td>
+</tr>
+<tr>
+<td><strong>45</strong></td>
+<td>En sortant de chez Pique &amp; Peck, <strong>juste en face de toi</strong></td>
+</tr>
+<tr>
+<td><strong>46</strong></td>
+<td>Sur le chemin du <strong>moulin au nord-est</strong>, <strong>en hauteur</strong>, du côté de la dernière maison</td>
+</tr>
+<tr>
+<td><strong>47</strong></td>
+<td>Dans le <strong>parc au sud de Pré-au-Lard</strong>, autour d'un arbre</td>
+</tr>
+<tr>
+<td><strong>48</strong></td>
+<td>Au <strong>nord-ouest du Navet magique</strong>, vers les <strong>collines rocheuses</strong></td>
+</tr>
+<tr>
+<td><strong>49</strong></td>
+<td>Au-dessus du <strong>chemin qui mène au Vieux fou</strong>, au nord</td>
+</tr>
+<tr>
+<td><strong>50</strong></td>
+<td>Prends le <strong>pont de pierre au nord</strong>, puis le chemin vers la <strong>sortie nord</strong> : elle vole près de la <strong>roue du moulin à eau</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Tableaux vides (Lumos)</strong> <em>(5)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le tableau</th>
+<th>Le papillon</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>51</strong></td>
+<td>Chez Amanites et Chiendent</td>
+<td>Sors de la boutique et <strong>grimpe aux rebords à gauche</strong> jusqu'à la <strong>cheminée</strong></td>
+</tr>
+<tr>
+<td><strong>52</strong></td>
+<td>Contourne <strong>Tomes et parchemins par la gauche</strong> : le tableau est contre un mur du pâté de maisons</td>
+<td>Sur les <strong>Quais derrière la Tête de Sanglier</strong></td>
+</tr>
+<tr>
+<td><strong>53</strong></td>
+<td>Dans le <strong>moulin, tout au nord-est</strong> de Pré-au-Lard</td>
+<td>Juste <strong>en bas des escaliers</strong> qui t'ont mené là</td>
+</tr>
+<tr>
+<td><strong>54</strong></td>
+<td>À côté de la <strong>FC du Sud de Pré-au-Lard</strong></td>
+<td>Tourne-lui le dos et passe <strong>derrière la maison vers le sud-est</strong> : il est <strong>sur des caisses</strong></td>
+</tr>
+<tr>
+<td><strong>55</strong></td>
+<td>Dans le <strong>bâtiment du Vieux fou</strong>, au nord</td>
+<td>Juste <strong>derrière le bâtiment, sur une caisse</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-highlands-les-31-pages-toutes-au-revelio">Les Highlands — les 31 pages, toutes au Revelio</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La zone</th>
+<th>Le nombre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vallée de Poudlard</strong></td>
+<td><strong>8</strong></td>
+</tr>
+<tr>
+<td><strong>Région de Feldcroft</strong></td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td><strong>Vallée de Pré-au-Lard</strong></td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td><strong>Région sud de Poudlard</strong></td>
+<td><strong>3</strong></td>
+</tr>
+<tr>
+<td><strong>Marais du North Ford</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>Cragcroftshire</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>Côte de Salgât</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>Région nord de Poudlard</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Marais de Southsea</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Caverne côtière</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Forêt interdite</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>Côte du Collet</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>Lac de Grottaleau</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>Pointe du Manoir</strong></td>
+<td><strong>0</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Marais du North Ford</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Dans Pitt-upon-Ford, face au <strong>Signal d'araignée</strong>, à côté du pont de pierre au sud-ouest</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>À l'extrémité <strong>nord-est</strong> de la région, non loin de l'arène de combat, devant le <strong>Cor ancien</strong> sur le ponton face à l'étang</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Vallée de Pré-au-Lard</strong> <em>(4)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>À l'extérieur de Pré-au-Lard, tout au <strong>sud-ouest</strong>, passe devant la <strong>haie en forme de dragon</strong>, monte les escaliers, Revelio face au <strong>bac au sud-est</strong> → des <strong>Chocogrenouilles</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Au nord de Campolard-en-Haut, entre dans le <strong>bar qui fait aussi moulin</strong>, devant les bouteilles de <strong>Soda à la citrouille</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Au sud de la FC « Est de la Vallée de Poudlard », une <strong>ferme de citrouilles</strong> ; devant la <strong>Chaumière de Cracmol</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Dans la bâtisse en ruines au nord-est du Château de Falbarton**, devant l'<strong>Œuf de Runespoor</strong> posé sur la table**</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Région nord de Poudlard</strong> <em>(1)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Depuis la FC de la Forêt interdite, passe de l'autre côté de l'étang <strong>vers le nord-est</strong> ; en haut de la colline, devant la boîte de Caramel à l'Alihotsy posée sur le banc</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Région sud de Poudlard</strong> <em>(3)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Sur le chemin de Campolard-en-Bas, entre dans la <strong>cabane</strong>, Revelio sur les <strong>Outils du gardien</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Au nord-est de Poudlard, devant le <strong>Guichet de la gare de Pré-au-Lard</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Dans Aranshire, devant la <strong>cage en bois ouverte</strong> → des <strong>Morceaux d'araignée</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Vallée de Poudlard</strong> <em>(8)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Depuis <strong>Campolard-en-Bas</strong>, la route vers le sud jusqu'à une <strong>tente</strong> → l'<strong>Écaille de Noir des Hébrides</strong></strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Dans le petit campement de bandits au sud-ouest de Pont-Désir, sous la <strong>tente principale</strong> → un <strong>Œuf de Doxy</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Un peu à l'ouest de la FC du Centre de la Vallée de Poudlard, devant les <strong>Tentacules de Murlap</strong>, à côté de quelques <strong>cairns</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>À l'ouest de <strong>Bourg-Garenne</strong>, devant l'<strong>Épouvantail enchanté</strong></strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Dans Pont-Désir, devant le <strong>bar</strong> à côté de la Flamme de Cheminette → de la Racine de gingembre</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Dans Pont-Désir, devant les Ruches, à l'est</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Dans Pont-Désir, devant la Maison penchée, à l'ouest</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Derrière les <strong>ruines à l'ouest de Pont-Désir</strong>, devant la <strong>pierre tombale</strong> → un Napperon en dentelle</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Région de Feldcroft</strong> <em>(7)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Juste au-dessus de la FC « Ouest de la Vallée de Poudlard », devant la <strong>Poudre d'obscurité instantanée du Pérou</strong>, sur un <strong>muret à l'est du campement</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>À côté de la marchande itinérante Priya Treadwell, au nord de Feldcroft : Revelio sur le toit de la tour juste derrière elle → des Jumelles cassées</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Dans Feldcroft, devant le Puits de Feldcroft</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Dans Feldcroft, devant les Mannequins d'entraînement, au nord-est</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Sur un chemin entre deux parois rocheuses au sud de Feldcroft, devant le Bouquet de Livèches, posé sur une pierre dans un renfoncement latéral</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>À l'est des <strong>Catacombes de Feldcroft</strong>, entre un petit et un moyen campement de bandits, devant une <strong>grande cheminée</strong> → de l'<strong>Écorce de cannelle</strong></strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Dans Irondale, devant les <strong>escaliers du moulin</strong> → une Broche sertie</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Marais de Southsea</strong> <em>(1)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Au cœur du marais, juste au sud de la FC « Nord du Marais de Southsea », devant la Cabane abandonnée</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Caverne côtière</strong> <em>(1)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>À côté de la FC « Nord de la Côte du Collet », face à la <strong>vue imprenable</strong> sur la région → la Boussole ancienne</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Cragcroftshire</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Dans <strong>Cragcroft</strong>, devant l'<strong>arbre au centre</strong> → l'<strong>Ombre d'arbre géant</strong></strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Sur la <strong>plage au sud</strong> de la région, devant le Squelette de dragon</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Côte de Salgât</strong> <em>(2)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où, et sur quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Juste au sud du <strong>campement de bandits moyen du nord-ouest</strong>, devant le Venin d'acromentule, posé sur des planches en bois</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>À l'ouest des <strong>ruines au centre</strong> de la région, non loin d'un petit campement, devant le Bulbe d'ognon piquant, sur une table cassée dans une tente en ruines</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="quetes-et-lieux-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-pages-liees-a-une-quete">Les pages liées à une quête</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La page</th>
+<th>La quête</th>
+<th>Partie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Aile d'astronomie, bonus 1 et 2</strong></td>
+<td>Devoir du professeur Ronen</td>
+<td><strong>22</strong></td>
+</tr>
+<tr>
+<td><strong>Aile du Clocher, bonus 1 et 2</strong></td>
+<td>Cours d'histoire de la magie</td>
+<td><strong>20</strong></td>
+</tr>
+<tr>
+<td><strong>Annexe de la bibliothèque, bonus</strong></td>
+<td>Devoir du professeur Weasley</td>
+<td><strong>22</strong></td>
+</tr>
+<tr>
+<td><strong>Annexe de la bibliothèque, tableau n° 17</strong></td>
+<td>Et la lumière fut</td>
+<td><strong>20</strong></td>
+</tr>
+<tr>
+<td><strong>Grand escalier n° 15</strong></td>
+<td>Dans l'ombre de l'étude <em>(le Scriptorium)</em></td>
+<td><strong>17</strong></td>
+</tr>
+<tr>
+<td><strong>Grande Salle n° 8</strong></td>
+<td>Le Port souterrain, aussi visité pour le devoir de Weasley</td>
+<td><strong>22</strong></td>
+</tr>
+<tr>
+<td><strong>Grand escalier n° 16, 17 et 18</strong></td>
+<td>Le secret du Bureau du directeur</td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Pré-au-Lard n° 10</strong></td>
+<td>Les Quais de la Tête de Sanglier</td>
+<td><strong>11</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-pages-derriere-un-alohomora">Les pages derrière un Alohomora</h3>
+<p>Vingt pages du château sont derrière une serrure. Sans Alohomora, tu ne les verras jamais <em>(partie <strong>33</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le niveau</th>
+<th>Les pages concernées</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Alohomora 1</strong></td>
+<td>Astronomie 7 et 17 ; Clocher 12, 13, 16, 23, 27, 28, 29, 30, 31, 33 ; grand escalier 14 et 24 ; Grande Salle 10, 17 et 24 ; annexe 8 et 16 ; aile sud 7, 12, 14 et 20 ; Pré-au-Lard 16</td>
+</tr>
+<tr>
+<td><strong>Alohomora 2</strong></td>
+<td>Astronomie 7, 11, 12 et 23 ; grand escalier 16 et 17 ; Grande Salle 12 ; aile sud 12</td>
+</tr>
+<tr>
+<td><strong>Alohomora 3</strong></td>
+<td><strong>Aile sud N° 22</strong> <em>(la porte à la pile de chaudrons)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Une seule page du jeu demande l'Alohomora niveau 3 : le brasier de l'aile sud, derrière la cheminée qu'il faut <strong>éteindre au Glacius</strong>. C'est la page la plus cachée du château.</p>
+<h3 id="les-deux-portes-darithmancie-des-pages">Les deux portes d'arithmancie des pages</h3>
+<p>Deux pages de l'annexe de la bibliothèque sont derrière une porte d'arithmancie <em>(parties <strong>10</strong> et <strong>32</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La page</th>
+<th>La porte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Annexe n° 8</strong></td>
+<td>La porte <strong>directement à droite</strong> après la grande porte de la Cour du clocher</td>
+</tr>
+<tr>
+<td><strong>Annexe n° 10</strong></td>
+<td>La porte des <strong>combles de la Salle de Divination</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-passages-secrets-qui-cachent-une-page">Les passages secrets qui cachent une page</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le passage</th>
+<th>Où</th>
+<th>La page</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La tapisserie au grand « K »</strong></td>
+<td>Aile du Clocher</td>
+<td><strong>Clocher n° 20</strong></td>
+</tr>
+<tr>
+<td><strong>Le tableau au plateau de fruits</strong> <em>(les cuisines)</em></td>
+<td>Grand escalier</td>
+<td>Grande Salle n° 13 et 14</td>
+</tr>
+<tr>
+<td><strong>Le bouton Repulso au-dessus de la Carte d'Argyllshire</strong></td>
+<td>Tour des professeurs</td>
+<td><strong>Aile sud n° 19</strong></td>
+</tr>
+<tr>
+<td><strong>Le livre de Tomes et parchemins</strong> <em>(l'Escalier enchanté)</em></td>
+<td>Pré-au-Lard</td>
+<td><strong>Pré-au-Lard n° 5 et 31</strong></td>
+</tr>
+<tr>
+<td><strong>La cheminée à éteindre au Glacius</strong></td>
+<td>Tour des professeurs</td>
+<td><strong>Aile sud n° 22</strong></td>
+</tr>
+<tr>
+<td><strong>La statue de grenouille des cachots</strong></td>
+<td>Aile d'astronomie</td>
+<td><strong>Astronomie n° 17</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les 150 pages de Poudlard</strong></td>
+<td><span class="badge neutre">Collectible</span></td>
+<td><strong>6 zones, 6 méthodes</strong> <em>(voir les tableaux ci-dessus)</em></td>
+<td><strong>« Collectionnite »</strong>, <strong>expérience, lore</strong></td>
+</tr>
+<tr>
+<td><strong>Les 55 pages de Pré-au-Lard</strong></td>
+<td><span class="badge neutre">Collectible</span></td>
+<td>30 Revelio, 20 volantes, 5 tableaux vides</td>
+<td><strong>« Collectionnite »</strong></td>
+</tr>
+<tr>
+<td><strong>Les 31 pages des Highlands</strong></td>
+<td><span class="badge neutre">Collectible</span></td>
+<td><strong>Toutes au Revelio</strong>, <strong>sur 10 zones</strong></td>
+<td><strong>« Collectionnite »</strong></td>
+</tr>
+<tr>
+<td><strong>Les 5 pages bonus</strong></td>
+<td><span class="badge neutre">Collectible</span></td>
+<td><strong>Devoir de Ronen <em>(2)</em>, Cours d'histoire de la magie <em>(2)</em>, Devoir de Weasley <em>(1)</em></strong></td>
+<td><strong>« Collectionnite »</strong></td>
+</tr>
+<tr>
+<td><strong>Trophée Collectionnite</strong></td>
+<td><span class="badge neutre">Trophée</span></td>
+<td>Compléter toutes les collections</td>
+<td><strong>Partie 36</strong></td>
+</tr>
+<tr>
+<td><strong>Trophée Un effort exceptionnel</strong></td>
+<td><span class="badge neutre">Trophée</span></td>
+<td><strong>Atteindre le niveau 40</strong>, <strong>que l'expérience des pages alimente</strong></td>
+<td><strong>Partie 36</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="la-methode-de-ratissage-piece-par-piece">La méthode de ratissage, pièce par pièce</h3>
+<p class="alerte">⚠️ La seule façon de ne rien rater est d'entrer dans chaque pièce avec une Check-list mentale de six gestes.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le geste, dans l'ordre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Revelio</strong> — <strong>et relance-le en avançant</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Lève la tête — une page qui flotte ne s'illumine pas au sol</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Cherche une <strong>petite statue</strong> isolée → Levioso</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Cherche un <strong>cadre vide</strong> → Lumos, puis le papillon</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Cherche une <strong>coupe en forme de dragon</strong> → Incendio</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Cherche une <strong>torche murale éteinte</strong> en hauteur → Confringo puis Accio</td>
+</tr>
+</tbody>
+</table></div>
+<p>Six gestes, trente secondes par pièce. C'est long, mais c'est la seule méthode qui marche.</p>
+<h3 id="lordre-conseille">L'ordre conseillé</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>L'étape</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Prends Maîtrise de Revelio</strong> <em>(partie <strong>25</strong>)</em></td>
+<td>Portée augmentée</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Monte Alohomora au niveau 3</strong> <em>(partie <strong>33</strong>)</em></td>
+<td>20 pages sont derrière une serrure</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Apprends Levioso, Lumos, Incendio, Confringo, Accio et Glacius <em>(partie <strong>22</strong>)</em></td>
+<td>Les six méthodes, plus la cheminée de l'aile sud</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Fais Pré-au-Lard d'un coup</td>
+<td>55 pages sur un seul village, et aucune statue ni brasier</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Puis le château, <strong>zone par zone</strong></td>
+<td><strong>Commence par l'aile du Clocher</strong> <em>(34 pages)</em></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Les 31 pages des Highlands <strong>en passant</strong></td>
+<td>Toutes au Revelio, et sur des lieux que tu traverses déjà</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Et dézoome sur la carte du monde</strong> : elle affiche ce qu'il te reste à trouver <strong>par région</strong> <em>(partie <strong>32</strong>)</em>.</p>
+<h3 id="les-pieges-10">Les pièges</h3>
+<ul>
+<li>Ne connaître que le <strong>Revelio</strong>. Il y a <strong>six</strong> méthodes, et 64 pages du château ne sortent pas au Revelio.</li>
+<li>Ne jamais <strong>lever la tête</strong>. 19 pages du château et 20 de Pré-au-Lard <strong>flottent en l'air</strong>.</li>
+<li>Lancer <strong>Incendio</strong> sur une torche murale lointaine. C'est <strong>Confringo</strong> qu'il faut, et <strong>Accio</strong> ensuite.</li>
+<li>Lancer <strong>Lumos</strong> sur un cadre vide et repartir. Il faut aller chercher le <strong>papillon</strong> et le ramener.</li>
+<li><strong>Oublier l'<strong>Accio</strong> après un brasier à Confringo.</strong> <strong>La page est révélée mais pas ramassée.</strong></li>
+<li>Bâcler le <strong>devoir de Ronen</strong>, le <strong>devoir de Weasley</strong> ou « cours d'histoire de la magie ». 5 pages n'existent <strong>que</strong> pendant ces trois quêtes.</li>
+<li>Partir à la chasse <strong>sans Alohomora 3</strong>. La page du brasier de l'aile sud est derrière cette serrure.</li>
+<li>Oublier le <strong>Glacius</strong> pour éteindre la cheminée de l'aile sud <em>(page n° 22)</em>.</li>
+<li>Chercher une page dans la Salle sur Demande. Il n'y en a aucune.</li>
+<li>Ratisser la Forêt interdite, la <strong>côte du Collet</strong>, le <strong>lac de Grottaleau</strong> ou la Pointe du Manoir pour des pages. Ces quatre zones en ont <strong>zéro</strong>.</li>
+</ul>
+<h2 id="alertes-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>236 pages au total</strong> : 150 À Poudlard, 55 À Pré-au-Lard, 31 dans les Highlands, <strong>plus 5 pages bonus.</strong></li>
+<li class="alerte">⚠️ <strong>Il y a six méthodes</strong> : Revelio, page volante <em>(Accio)</em>, statue <em>(Levioso)</em>, tableau vide <em>(Lumos + papillon)</em>, brasier dragon <em>(Incendio)</em>, torche murale <em>(Confringo puis Accio)</em>.</li>
+<li class="alerte">⚠️ Les 31 pages des Highlands sont <strong>toutes</strong> au Revelio.</li>
+<li class="alerte">⚠️ <strong>Quatre zones des Highlands n'ont aucune page</strong> : Forêt interdite, côte du Collet, lac de Grottaleau, Pointe du Manoir.</li>
+<li class="alerte">⚠️ La Salle sur Demande n'a aucune page non plus.</li>
+<li class="alerte">⚠️ À Pré-au-Lard, il n'y a <strong>ni statue ni brasier</strong>.</li>
+<li class="alerte">⚠️ <strong>5 pages n'existent que pendant leur quête</strong> : 2 au devoir de Ronen, 2 À « cours d'histoire de la magie », 1 au devoir de Weasley.</li>
+<li class="alerte">⚠️ Et oui, la <strong>statue du chevalier saluant</strong> donne bien une page <em>(question laissée ouverte en partie <strong>20</strong>)</em>.</li>
+<li class="alerte">⚠️ 20 pages du château sont derrière un Alohomora, et une seule demande le niveau 3 : le brasier de l'aile sud, derrière une cheminée à éteindre au Glacius.</li>
+<li class="alerte">⚠️ Deux pages de l'annexe de la bibliothèque sont derrière une <strong>porte d'arithmancie</strong> <em>(partie <strong>32</strong>)</em>.</li>
+<li class="alerte">⚠️ Prends le talent <strong>Maîtrise de Revelio</strong> avant de commencer <em>(partie <strong>25</strong>)</em>.</li>
+<li class="alerte">⚠️ L'aile du clocher est la zone la plus riche du château : <strong>34 pages.</strong></li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : quelles pages comptent exactement pour l'onglet Collection ; une source annonce 150 pages de Revelio quand le décompte détaillé n'en trouve que 147, et affirme que les pages volantes, de tableaux vides et de brasiers ne serviraient qu'à l'expérience. Dans le doute, prends-les toutes.</li>
+</ul>
+<h2 id="check-list-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="poudlard-150-pages-5-bonus">Poudlard — 150 pages + 5 bonus</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Aile d'astronomie — 23 pages</strong> <em>(12 Revelio, 2 volantes, 3 statues, 3 tableaux, 1 Incendio, 2 Confringo)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Aile du Clocher — 34 pages</strong> <em>(20 Revelio, 5 volantes, 4 statues, 2 tableaux, 2 Incendio, 1 Confringo)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Grand escalier — 26 pages</strong> <em>(18 Revelio, 2 volantes, 1 statue, 3 tableaux, 2 Confringo)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Grande Salle — 24 pages</strong> <em>(14 Revelio, 3 volantes, 2 statues, 2 tableaux, 3 Incendio)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Annexe de la bibliothèque — 20 pages</strong> <em>(10 Revelio, 4 volantes, 2 statues, 3 tableaux, 1 Incendio)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Aile sud — 23 pages</strong> <em>(12 Revelio, 3 volantes, 3 statues, 2 tableaux, 2 Incendio, 1 Confringo)</em></li>
+</ul>
+<h3 id="les-5-pages-bonus">Les 5 pages bonus</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Aile d'astronomie, bonus 1</strong> <em>(devoir de Ronen)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Aile d'astronomie, bonus 2</strong> <em>(devoir de Ronen)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Aile du Clocher, bonus 1</strong> <em>(crâne de Grimbald Brode)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Aile du Clocher, bonus 2</strong> <em>(statue du Chevalier saluant)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Annexe de la bibliothèque, bonus</strong> <em>(devoir de Weasley)</em></li>
+</ul>
+<h3 id="pre-au-lard-55-pages">Pré-au-Lard — 55 pages</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 30 pages de Revelio</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Les 20 pages volantes</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Les 5 tableaux vides</strong></li>
+</ul>
+<h3 id="les-highlands-31-pages">Les Highlands — 31 pages</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Vallée de Poudlard — 8</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Région de Feldcroft — 7</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Vallée de Pré-au-Lard — 4</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Région sud de Poudlard — 3</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Marais du North Ford — 2</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cragcroftshire — 2</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Côte de Salgât — 2</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Région nord de Poudlard — 1</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Marais de Southsea — 1</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Caverne côtière — 1</strong></li>
+</ul>
+<h3 id="la-preparation-3">La préparation</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Maîtrise de Revelio prise</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Alohomora niveau 3 obtenu</strong></li>
+<li class="tache"><input type="checkbox"> Levioso, Lumos, Incendio, Confringo, Accio et Glacius appris</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="les-95-epreuves-de-merlin.html" rel="prev"><small>← Partie précédente</small><b>Les 95 épreuves de Merlin</b></a><a class="suiv" href="les-coffres-de-collection-les-portes-darithmancie-et-les-coffres-a-œil.html" rel="next"><small>Partie suivante →</small><b>Les coffres de collection, les portes d&#x27;arithmancie et les coffres à œil</b></a><a class="tout" href="hogwarts-legacy.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Hogwarts Legacy : L&#x27;Héritage de Poudlard · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

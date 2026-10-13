@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapitre 8 : Les fleurs des retrouvailles – Guide Final Fantasy VII Remake</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Remake, Chapitre 8 : Les fleurs des retrouvailles : Boss : Reno, puis Rude. À ne pas rater : la matéria Chakra (retour à l&#x27;église), PM…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/chapitre-8-les-fleurs-des-retrouvailles.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Chapitre 8 : Les fleurs des retrouvailles · Guide Final Fantasy VII Remake">
+<meta property="og:description" content="Final Fantasy VII Remake, Chapitre 8 : Les fleurs des retrouvailles : Boss : Reno, puis Rude. À ne pas rater : la matéria Chakra (retour à l&#x27;église), PM…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/chapitre-8-les-fleurs-des-retrouvailles.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Remake", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/"}, {"@type": "ListItem", "position": 3, "name": "Chapitre 8 : Les fleurs des retrouvailles", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/chapitre-8-les-fleurs-des-retrouvailles.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-remake" class="compact" data-partie="chapitre-8-les-fleurs-des-retrouvailles"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Remake</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Remake : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Remake</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-sabotage-du-reacteur-mako-n1.html"><span class="num">✦</span><span class="libelle">Chapitre 1 : Sabotage du réacteur Mako n°1</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-rencontres-determinantes.html"><span class="num">✦</span><span class="libelle">Chapitre 2 : Rencontres déterminantes</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-le-septieme-ciel.html"><span class="num">✦</span><span class="libelle">Chapitre 3 : Le Septième Ciel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-viree-nocturne.html"><span class="num">✦</span><span class="libelle">Chapitre 4 : Virée nocturne</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-suivez-le-chien.html"><span class="num">✦</span><span class="libelle">Chapitre 5 : Suivez le chien</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-les-soleils-des-bidonvilles.html"><span class="num">✦</span><span class="libelle">Chapitre 6 : Les soleils des bidonvilles</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-dans-la-gueule-du-loup.html"><span class="num">✦</span><span class="libelle">Chapitre 7 : Dans la gueule du loup</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="#chapitre-8-les-fleurs-des-retrouvailles"><span class="num">✦</span><span class="libelle">Chapitre 8 : Les fleurs des retrouvailles</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-le-quartier-des-desirs.html"><span class="num">✦</span><span class="libelle">Chapitre 9 : Le quartier des désirs</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-dans-lobscurite-des-egouts.html"><span class="num">✦</span><span class="libelle">Chapitre 10 : Dans l&#x27;obscurité des égouts</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-despiegles-fantomes.html"><span class="num">✦</span><span class="libelle">Chapitre 11 : D&#x27;espiègles fantômes</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-la-lutte-desesperee-davalanche.html"><span class="num">✦</span><span class="libelle">Chapitre 12 : La lutte désespérée d&#x27;Avalanche</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-un-monde-en-ruine.html"><span class="num">✦</span><span class="libelle">Chapitre 13 : Un monde en ruine</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-en-quete-despoir.html"><span class="num">✦</span><span class="libelle">Chapitre 14 : En quête d&#x27;espoir</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="chapitre-15-a-la-lueur-du-coucher-de-soleil.html"><span class="num">✦</span><span class="libelle">Chapitre 15 : À la lueur du coucher de soleil</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="chapitre-16-infiltration-de-la-tour-shinra.html"><span class="num">✦</span><span class="libelle">Chapitre 16 : Infiltration de la tour Shinra</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="chapitre-17-echapper-au-chaos.html"><span class="num">✦</span><span class="libelle">Chapitre 17 : Échapper au chaos</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="chapitre-18-singularite-du-destin.html"><span class="num">✦</span><span class="libelle">Chapitre 18 : Singularité du destin</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="les-materias-2.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="les-armes-et-les-manuscrits-2.html"><span class="num">✦</span><span class="libelle">Les armes et les manuscrits</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="les-invocations-2.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-rapports-de-chadley-et-le-simulateur-shinra.html"><span class="num">✦</span><span class="libelle">Les rapports de Chadley et le simulateur Shinra</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="le-colisee-de-corneo.html"><span class="num">✦</span><span class="libelle">Le Colisée de Cornéo</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-mini-jeux.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="intermission-chapitre-1-lemissaire-de-wutai.html"><span class="num">✦</span><span class="libelle">INTERmission — Chapitre 1 : L&#x27;émissaire de Wutai</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="intermission-chapitre-2-le-vol-de-la-materia-ultime.html"><span class="num">✦</span><span class="libelle">INTERmission — Chapitre 2 : Le vol de la Matéria ultime</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="les-quetes-annexes-et-laffinite.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes et l&#x27;affinité</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="intermission-fort-condor-annexes-et-armes.html"><span class="num">✦</span><span class="libelle">INTERmission — Fort Condor, annexes et armes</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-remake.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Remake</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-9">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="chapitre-8-les-fleurs-des-retrouvailles">Chapitre 8 : Les fleurs des retrouvailles</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-9"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-9">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Boss</strong> : Reno, puis Rude.</li>
+<li><strong>À ne pas rater</strong> : la <strong>matéria Chakra</strong> (retour à l'église), <strong>PM augmentés</strong> (fond du jardin d'Aerith), <strong>Shiva</strong> (simulateur de Chadley), le <strong class="objet">Bâton en argent</strong> (boutique Mog).</li>
+<li><strong>Le choix du moment</strong> : le nombre de missions annexes décide de la robe d'Aerith au chapitre 9.</li>
+<li><strong>Facile à rater</strong> : le <strong>Disque 19 « Costa del Sol »</strong>, chez le marchand de matérias.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Rencontrer <strong>Aerith</strong> pour de bon, traverser le <strong>bidonville du Secteur 5</strong>, battre <strong>Reno</strong> puis <strong>Rude</strong>, et repartir vers le Secteur 7.</p>
+<p>C'est le plus gros chapitre du jeu jusqu'ici, et sans doute le plus important à faire correctement : <strong>treize coffres</strong>, <strong>deux matérias au sol</strong>, <strong>six missions annexes</strong>, <strong>deux histoires annexes</strong>, <strong>trois disques de musique</strong>, <strong>une arme pour Cloud</strong>, <strong>la boutique Mog</strong>, et <strong>l'invocation Shiva</strong> chez Chadley.</p>
+<p class="alerte">⚠️ <strong>Et le piège de structure du chapitre</strong> : plusieurs contenus ne s'ouvrent qu'après en avoir terminé un autre. « Les enfants en patrouille » débloque deux missions, « Machines déréglées » en débloque une troisième, et sauver les enfants ouvre une salle de la Maison Feuillue.</p>
+<h2 id="itineraire-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.actugaming.net/chapitre-8-final-fantasy-vii-remake-323730/">Chapitre 8</a> — soluce illustrée sur ActuGaming, en français.</p>
+<ol>
+<li><strong>L'église</strong> : <strong>Reno</strong>, puis la fuite — <strong>deux coffres</strong>.</li>
+<li><strong>Les toits du Secteur 5</strong> : <strong>deux coffres</strong>, <strong>Aerith rejoint l'équipe</strong>.</li>
+<li><strong>La gare</strong> : un coffre, <strong>le Disque 21</strong>.</li>
+<li><strong>Le chemin détourné</strong> : l'histoire annexe « La porte bloquée », <strong>deux coffres</strong>, <strong>le Fumifacturier</strong>.</li>
+<li><strong>Le bidonville</strong> : l'écran géant, <strong>la maison d'Aerith</strong>, <strong>la commande de fleurs</strong>.</li>
+<li><strong>Quartier libre</strong> : <strong>cinq coffres</strong>, <strong>la matéria PM augmentés</strong>, <strong>deux disques</strong>, <strong>Chadley</strong>.</li>
+<li><strong>À la rescousse des enfants</strong> : <strong>trois coffres</strong>, <strong>le Collier fait main</strong>.</li>
+<li><strong>Les six missions annexes</strong> d'Oates et des habitants.</li>
+<li><strong>Shiva</strong> au simulateur de Chadley, et <strong>la matéria Chakra de l'église</strong>.</li>
+<li><strong>Rude</strong>, puis <strong>l'histoire annexe « Le langage des fleurs »</strong>, et la fuite nocturne.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="leglise-et-reno">L'église et Reno</h3>
+<ol>
+<li>Cloud se réveille dans l'église du Secteur 5, auprès d'Aerith.</li>
+<li><strong>Parle avec elle</strong> : Reno et quelques soldats débarquent.</li>
+<li><strong>Démolis la piétaille</strong> d'abord : Reno ne rejoint le combat qu'ensuite.</li>
+</ol>
+<h3 id="boss-reno">Boss : Reno</h3>
+<p>Reno n'a aucune faiblesse élémentaire, et il résiste à la Foudre.</p>
+<p><strong>Le conseil de préparation qui compte</strong> : associe une matéria Foudre à ta protection — pas pour attaquer, mais pour encaisser, puisqu'il abuse de cet élément.</p>
+<p><strong>Phase 1 — ne l'attaque pas de front</strong></p>
+<ul>
+<li>Il esquive la plupart des attaques frontales et <strong>contre-attaque</strong>.</li>
+<li><strong>La solution</strong> : garde ou pare ses attaques pour le déstabiliser, puis <strong>enchaîne derrière</strong>.</li>
+<li><strong>Passe en mode Bravoure</strong> pour parer et contrer dès que sa garde est levée.</li>
+<li>Privilégie les attaques à fort potentiel de Choc.</li>
+</ul>
+<p><strong>Phase 2 — les mines électriques</strong></p>
+<ul>
+<li>Il lance des mines électriques qui <strong>flottent autour de toi</strong>.</li>
+<li><strong>Elles étourdissent ou explosent</strong>, et Reno peut s'en servir pour une attaque renforcée.</li>
+<li><strong>Détruis-les en priorité</strong>, et <strong>reste très mobile</strong>.</li>
+<li class="alerte">⚠️ Quand il se concentre pour envoyer une boule d'énergie, attends le dernier moment pour esquiver : sinon tu es paralysé et vulnérable à ses combos.</li>
+</ul>
+<h3 id="la-fuite-de-leglise">La fuite de l'église</h3>
+<ol>
+<li><strong>Suis Aerith dans les escaliers.</strong></li>
+<li>Arrivé à l'escalier suivant, au lieu de monter vers les combles, descends : <strong>le coffre 01</strong> — <strong>1 Talisman</strong>.</li>
+<li><strong>Grimpe à l'étage supérieur</strong> et <strong>traverse la planche</strong>. Aerith dégringole à l'étage inférieur.</li>
+<li><strong>Accroche-toi au plafond</strong> et fais tomber le lustre sur les soldats. <strong>Ne traîne pas</strong> : les gardes te mitraillent sans relâche.</li>
+<li><strong>Rejoins Aerith</strong> et <strong>suis-la vers les combles</strong>.</li>
+<li class="alerte manquable">⏳ Dans les combles, avant de rejoindre le corps principal de l'église, regarde sur la gauche : le coffre 02 — <strong>1 Flacon à sels</strong>.</li>
+<li><strong>Suis les planches</strong> pour sortir.</li>
+</ol>
+<p class="alerte manquable">⏳ <strong>Et retiens bien ceci</strong> : tu as vu une matéria jaune au rez-de-chaussée de l'église, inaccessible pour l'instant. Tu reviendras la chercher plus tard dans ce même chapitre.</p>
+<h3 id="les-toits-du-secteur-5">Les toits du Secteur 5</h3>
+<ol>
+<li><strong>Suis Aerith sur les toits.</strong></li>
+<li>Le premier bâtiment, celui à la petite tour, cache le coffre 03 en contrebas, sur la gauche — <strong>1 Médaille Mog</strong>.</li>
+<li>Quand Aerith te dit que tu avances trop vite, <strong>monte à l'échelle</strong> — le toit couvert d'herbe sèche — et va sur la droite : le coffre 04 — <strong>1 Éther</strong>.</li>
+<li><strong>Grimpe sur la citerne</strong> et <strong>hisse Aerith</strong>, <strong>traverse le tuyau</strong>, et <strong>redescends au sol</strong>.</li>
+<li>Suis le chemin droit devant, <strong>élimine les adversaires</strong>, et passe à travers le grillage vers la gare.</li>
+</ol>
+<p>Aerith rejoint l'équipe à partir d'ici. Prends le temps d'ajuster son équipement et ses matérias : <strong>c'est ta première magicienne</strong>, et ses sorts valent bien plus que ses coups.</p>
+<p>Les nouveaux ennemis des toits sont sensibles à la Glace.</p>
+<h3 id="la-gare">La gare</h3>
+<ol>
+<li>En arrivant, le coffre 05 est sur la droite, à l'extrémité du quai — <strong>500 gils</strong>.</li>
+<li><strong>Un distributeur est à l'opposé</strong> : achète le Disque 21 « Cait Sith's Theme ».</li>
+<li><strong>Essaie de quitter la gare</strong> : cinématique, un nouveau Turk apparaît.</li>
+</ol>
+<h3 id="le-chemin-detourne-la-vallee-du-crepuscule">Le chemin détourné — la Vallée du Crépuscule</h3>
+<ol>
+<li>Emprunte la ruelle à la suite d'Aerith et <strong>nettoie les monstres</strong>.</li>
+<li>Au premier embranchement, file à droite <em>(vers l'est)</em> — il n'y a rien à faire à gauche pour l'instant.</li>
+<li class="alerte manquable">⏳ Emprunte la porte grillagée : <strong>elle refuse de s'ouvrir</strong>, et tu obtiens l'histoire annexe « La porte bloquée ».</li>
+<li>Suis Aerith entre les containers sur la gauche. <strong>Déplace le container vert.</strong></li>
+<li>Occupe-toi des monstres qui assaillent la marchande de fleurs, puis <strong>grimpe à l'échelle</strong>.</li>
+<li>En haut, va d'abord sur la droite et suspends-toi aux barres : <strong>le coffre 06</strong> — <strong>1 Bracelet ténébreux</strong>.</li>
+<li>Puis fais demi-tour et prends le chemin de gauche.</li>
+<li><strong>Admire le panorama</strong>, <strong>élimine les bestioles</strong>, et suis la route en face.</li>
+<li>Après le pont fait de tuyaux, suspends-toi aux barres de fer sur ta gauche : <strong>le coffre 13</strong> — <strong>1 Remède</strong>.</li>
+</ol>
+<p>Tu croises aussi une porte aux décorations chinoises, fermée. C'est normal : elle s'ouvrira plus tard dans le jeu.</p>
+<ol start="10">
+<li><strong>Ouvre la grille</strong> et <strong>affronte un Fumifacturier</strong>.</li>
+</ol>
+<p><strong>Le Fumifacturier, deux avertissements</strong> : <strong>ses attaques empoisonnent</strong>, et <strong>il explose en mourant</strong>. <strong>Écarte-toi au dernier coup.</strong></p>
+<ol start="11">
+<li class="alerte">⚠️ La grille suivante est bloquée. <strong>Pour l'ouvrir</strong> :
+<ul>
+<li>Grimpe sur les containers à gauche et pousse le container vert tout au fond.</li>
+<li>Va à gauche pour prendre de la hauteur, et traverse en t'aidant des barres métalliques.</li>
+<li>Tu passes de l'autre côté et tu l'ouvres pour Aerith.</li>
+</ul>
+</li>
+<li><strong>Suis le chemin</strong> : tu arrives au point de rendez-vous.</li>
+</ol>
+<h3 id="lhistoire-annexe-la-porte-bloquee">L'histoire annexe — La porte bloquée</h3>
+<p>Elle se termine un peu plus loin dans le même chapitre.</p>
+<ol>
+<li>Continue l'histoire principale jusqu'aux Collines des Boulons et des Écrous.</li>
+<li><strong>Va tout droit en face de toi</strong> : <strong>une échelle</strong> — ou, selon FFRing, une échelle au nord-ouest de la Rue de derrière.</li>
+<li class="alerte manquable">⏳ Elle mène à la porte qui était bloquée : <strong>ouvre-la de l'intérieur</strong>.</li>
+<li class="alerte manquable">⏳ <strong>Tu débloques un raccourci très utile</strong> pour tout le reste du chapitre, et <strong>l'histoire annexe est validée</strong>.</li>
+</ol>
+<h3 id="lecran-geant-et-la-maison-daerith">L'écran géant et la maison d'Aerith</h3>
+<ol>
+<li><strong>Suis Aerith jusqu'à l'écran géant</strong> : <strong>un reportage édifiant</strong>.</li>
+<li><strong>Reprends la route</strong> vers <strong>la maison d'Aerith</strong>, en faisant connaissance avec les habitants au passage.</li>
+<li><strong>Papote avec Aerith et sa mère.</strong></li>
+</ol>
+<h3 id="la-commande-pour-la-maison-feuillue">La commande pour la Maison Feuillue</h3>
+<ol>
+<li><strong>Ressors</strong>, suis Aerith dans le jardin, et aide-la à choisir les fleurs.</li>
+<li><strong>Emmène les fleurs à la Maison Feuillue.</strong></li>
+<li><strong>Aerith t'abandonne : c'est le quartier libre.</strong></li>
+</ol>
+<h3 id="quartier-libre-la-tournee-du-bidonville">Quartier libre — la tournée du bidonville</h3>
+<p class="alerte">⚠️ C'est le moment le plus rentable du chapitre. Fais tout avant de reprendre l'histoire.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Où</th>
+<th>Quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Le bar à gauche de la Maison Feuillue, à gauche du jukebox</td>
+<td><strong>Coffre 07</strong> — <strong>1 Boisson de vitesse</strong></td>
+</tr>
+<tr>
+<td><strong>Le jukebox du bar</strong></td>
+<td>Disque 25 « Tango of Tears »</td>
+</tr>
+<tr>
+<td><strong>Chez le marchand de matérias</strong></td>
+<td><strong>Disque 19 « Costa del Sol »</strong>, à lui acheter — le disque le plus facile à rater du jeu <em>(partie <strong>27</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>En sortant du bar, au coin de la rue</strong></td>
+<td><strong>Coffre 08</strong> — <strong>1 Écran d'écho</strong></td>
+</tr>
+<tr>
+<td><strong>La ruelle entre le marchand de matérias et la Maison Feuillue</strong></td>
+<td><strong>Coffre 09</strong> — <strong>200 gils</strong></td>
+</tr>
+<tr>
+<td><strong>La partie la plus au fond du jardin d'Aerith</strong></td>
+<td><strong>La matéria PM augmentés</strong>, au sol</td>
+</tr>
+<tr>
+<td><strong>Chadley</strong></td>
+<td>Les récompenses de tes rapports</td>
+</tr>
+<tr>
+<td><strong>Les échoppes</strong></td>
+<td>Marchand d'armes, marchand de matérias, boutique d'objets</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le jardin d'Aerith est le plus facile à oublier : retourne-y pendant qu'elle est à la Maison Feuillue, et <strong>va tout au fond</strong>.</p>
+<p><strong>Quand tu as fini</strong>, parle à l'enfant à côté de Chadley, puis <strong>retourne voir Aerith</strong>, en grande conversation avec lui.</p>
+<h3 id="a-la-rescousse-des-enfants">À la rescousse des enfants</h3>
+<ol>
+<li><strong>Suis l'enfant</strong> dans les rues jusqu'au <strong>repaire des enfants</strong>.</li>
+<li>Immédiatement à droite en entrant : le coffre 10 — <strong>1 Médaille Mog</strong>.</li>
+<li><strong>Suis Oates</strong>, puis quitte les lieux par le trou dans la clôture.</li>
+<li><strong>Élimine les ennemis</strong>, puis au premier embranchement, grimpe sur la droite : le coffre 11 — <strong>1 Méga-Potion</strong>.</li>
+<li><strong>Reviens sur tes pas</strong> et rejoins Aerith sur le pont.</li>
+<li><strong>File vers les enfants</strong> et les monstres qui les terrifient.</li>
+</ol>
+<p>Le combat arrive par salves et il peut durer. Prends le temps de te soigner entre les vagues.</p>
+<ol start="7">
+<li>Rejoins les enfants pour les sauver, puis repars avec ta petite troupe en nettoyant les monstres du chemin.</li>
+<li>De retour dans la base secrète : tu reçois un Collier fait main.</li>
+</ol>
+<h3 id="deux-choses-qui-souvrent-apres-avoir-sauve-les-enfants">Deux choses qui s'ouvrent après avoir sauvé les enfants</h3>
+<ol>
+<li>La salle de classe de la Maison Feuillue est maintenant ouverte : <strong>le coffre 12</strong> — <strong>1 Éther</strong>.</li>
+<li class="alerte manquable">⏳ Le chemin vers la gare, auparavant inaccessible, donne <strong>1 Bracelet en mithril</strong>.</li>
+<li>Chadley te propose désormais son simulateur de combat : avec la matéria Shiva à la clé.</li>
+</ol>
+<p>Shiva est ta troisième invocation, et elle s'obtient uniquement par le simulateur de Chadley <em>(parties <strong>22</strong> et <strong>24</strong>)</em>.</p>
+<h3 id="le-mercenaire-itinerant-les-six-missions-annexes">Le mercenaire itinérant — les six missions annexes</h3>
+<p><strong>En quittant le repaire</strong>, <strong>cinématique</strong> <em>(un autre homme en noir)</em>, puis Oates te confie des missions.</p>
+<p><strong>Et une conséquence que personne n'anticipe</strong> : le nombre de missions annexes que tu termines dans ce chapitre détermine la robe d'audition qu'Aerith portera au chapitre 9.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Missions annexes terminées</th>
+<th>La robe d'Aerith</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Aucune</strong></td>
+<td>La robe rose claire</td>
+</tr>
+<tr>
+<td><strong>3 à 5 sur 6</strong></td>
+<td>La robe rose foncée</td>
+</tr>
+<tr>
+<td><strong>Les 6</strong></td>
+<td>La robe rouge</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les neuf robes d'audition donnent deux trophées</strong> : Accro à la mode <em>(3)</em> et Super modèle <em>(toutes)</em>. Il faut donc refaire ce chapitre deux fois, avec un nombre différent de quêtes à chaque passage <em>(partie <strong>23</strong>)</em>.</p>
+<p><strong>Pour une première partie</strong> : <strong>fais les six</strong> — <strong>la robe rouge</strong>, et tout le butin du chapitre.</p>
+<p class="alerte">⚠️ Les six missions de ce chapitre s'enchaînent en cascade. Voilà l'ordre qui les débloque toutes :</p>
+<h3 id="mission-1-la-boutique-mog">Mission 1 — La boutique Mog</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qui la donne</strong></td>
+<td>Oates, puis <strong>l'enfant grimé en Mog</strong> derrière toi</td>
+</tr>
+<tr>
+<td><strong>Récompense</strong></td>
+<td><strong>La Carte de Membre</strong>, qui <strong>ouvre la boutique Mog</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li><strong>Parle à l'enfant déguisé en Mog</strong>, dans le repaire des enfants.</li>
+<li>Achète-lui la Carte de Membre avec tes <strong>Médailles Mog</strong>.</li>
+<li><strong>La boutique est ouverte.</strong></li>
+</ol>
+<p>C'est la mission la plus importante du chapitre, parce qu'elle ouvre la boutique où s'achètent :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Article</th>
+<th>À quoi ça sert</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les manuscrits I</strong> de chaque personnage <em>(5 Médailles Mog chacun)</em></td>
+<td>Des PA en plus pour les noyaux d'armes <em>(partie <strong>21</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>La Clé du Cimetière</strong> <em>(1 Médaille Mog)</em></td>
+<td>Obligatoire pour « Contre un instant de recueillement »</td>
+</tr>
+<tr>
+<td><strong>Le Bâton en argent</strong> <em>(2 Médailles Mog)</em></td>
+<td>Une arme d'Aerith qui ne s'obtient <strong>que là</strong> <em>(partie <strong>21</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Le Disque 20 « Gold Saucer »</strong></td>
+<td>Collectible</td>
+</tr>
+</tbody>
+</table></div>
+<p>Achète la Clé du Cimetière tout de suite : tu en auras besoin dans deux missions.</p>
+<h3 id="mission-2-les-enfants-en-patrouille">Mission 2 — Les enfants en patrouille</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qui la donne</strong></td>
+<td>L'institutrice, près de la Maison Feuillue</td>
+</tr>
+<tr>
+<td><strong>Récompense</strong></td>
+<td><strong>La Batte cloutée</strong>, nouvelle arme de Cloud</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les cinq enfants :</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Juste devant le centre communautaire</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Tout près, dans le virage non loin du centre, au <strong>sud du bidonville</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>À côté des échoppes, près de l'écran géant, au <strong>nord-est</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Un peu plus au nord, dans la rue menant à la gare</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>À côté du marchand d'armes</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li><strong>Retourne voir l'institutrice</strong> : la mission n'est pas terminée.</li>
+<li>Direction la base secrète des enfants, puis le point marqué sur la carte.</li>
+<li>Combat contre le Tetarosor Roi. Élimine d'abord ses acolytes, sensibles à la Glace, puis <strong>occupe-toi du roi</strong>.</li>
+<li><strong>Retourne immédiatement à la Maison Feuillue</strong> pour terminer la mission et récupérer <strong>la Batte cloutée</strong>.</li>
+</ol>
+<p class="alerte">⚠️ Cette mission débloque « Une preuve de bravoure » et « L'ange gardien ». <strong>Fais-la tôt.</strong></p>
+<h3 id="mission-3-machines-dereglees">Mission 3 — Machines déréglées</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qui la donne</strong></td>
+<td>L'homme craintif, en direction de la gare</td>
+</tr>
+<tr>
+<td><strong>Récompense</strong></td>
+<td>non documentée par les sources consultées</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li><strong>Parle-lui</strong> : les robots prennent la fuite à ton arrivée.</li>
+<li>Rejoins la Rue de derrière et <strong>poursuis vers l'impasse</strong> : <strong>trois Vigiforeuses</strong>.</li>
+</ol>
+<p><strong>Deux choses sur les Vigiforeuses</strong> : elles sont sensibles au Vent, et les attaques physiques sont inutiles quand leur protection est active.</p>
+<ol start="3">
+<li>Trouve les deux autres Vigiforeuses à proximité, dans la Vallée du Crépuscule.</li>
+<li><strong>Retourne voir l'homme craintif.</strong></li>
+</ol>
+<p class="alerte">⚠️ Cette mission débloque « Contre un instant de recueillement ».</p>
+<h3 id="mission-4-une-preuve-de-bravoure">Mission 4 — Une preuve de bravoure</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qui la donne</strong></td>
+<td><strong>La jeune fille près de la sortie</strong> de la base secrète ; <strong>après « Les enfants en patrouille »</strong></td>
+</tr>
+<tr>
+<td><strong>Récompense</strong></td>
+<td><strong>non documentée</strong> ; mais une Médaille Mog à chaque tentative du mini-jeu</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li><strong>Elle te propose un défi à Brise-Boîtes</strong> : détruire un maximum de boîtes dans le temps imparti.</li>
+<li><strong>L'astuce</strong> : utilise le mode Bravoure de Cloud pour te frayer un chemin le plus vite possible et atteindre le bout de la zone, qui regorge de boîtes rouges — elles rallongent la durée de l'épreuve.</li>
+<li>Utilise les compétences spéciales sur les boîtes à 1 500 points.</li>
+</ol>
+<p><strong>Et voilà la vraie raison de rejouer</strong> : chaque tentative à Brise-Boîtes rapporte une Médaille Mog. C'est le meilleur moyen de financer les manuscrits de la boutique Mog <em>(partie <strong>26</strong>)</em>.</p>
+<h3 id="mission-5-lange-gardien">Mission 5 — L'ange gardien</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qui la donne</strong></td>
+<td>Le journaliste, devant le <strong>centre communautaire</strong> ; <strong>après « Les enfants en patrouille »</strong></td>
+</tr>
+<tr>
+<td><strong>Récompense</strong></td>
+<td>non documentée par les sources consultées</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li>Il te demande d'interroger les habitants. Tu peux parler aux PNJ du centre, mais la bonne personne est Mireille, à l'entrée.</li>
+<li><strong>Retourne voir le journaliste</strong>, puis <strong>rejoins le poste d'observation</strong>.</li>
+<li><strong>Mini-boss : le Toxicodisperseur.</strong></li>
+</ol>
+<p><strong>La méthode</strong> : concentre des sorts de Foudre sur son boulet — sa jauge de Choc grimpe —, puis enchaîne les attaques musclées en mode Bravoure.</p>
+<ol start="4">
+<li>Récupère la carte posée sur la table et <strong>retourne voir le journaliste</strong>.</li>
+</ol>
+<h3 id="mission-6-contre-un-instant-de-recueillement">Mission 6 — Contre un instant de recueillement</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qui la donne</strong></td>
+<td>Le vieil homme, près du <strong>marchand d'armes</strong> ; <strong>après « Machines déréglées »</strong></td>
+</tr>
+<tr>
+<td><strong>Récompense</strong></td>
+<td>non documentée par les sources consultées</td>
+</tr>
+</tbody>
+</table></div>
+<ol>
+<li>Achète d'abord la Clé du Cimetière à la boutique Mog — <strong>1 Médaille Mog</strong>.</li>
+<li><strong>Rends-toi au cimetière</strong> et <strong>nettoie la zone</strong>.</li>
+</ol>
+<p>Les ennemis du cimetière sont coriaces et infligent beaucoup d'altérations, le Poison en particulier. <strong>Trois conseils</strong> :</p>
+<ul>
+<li><strong>Ils sont sensibles à la Glace.</strong></li>
+<li><strong>Protège-toi avec Barrière.</strong></li>
+<li><strong>Laisse Aerith soigner.</strong></li>
+</ul>
+<ol start="3">
+<li><strong>Retourne voir le vieil homme.</strong></li>
+</ol>
+<h3 id="la-materia-chakra-de-leglise">La matéria Chakra de l'église</h3>
+<p class="alerte">⚠️ <strong>Le manquable le plus discret du chapitre.</strong></p>
+<p>Une fois arrivé à la partie « Le mercenaire itinérant », tu peux te balader librement dans le Secteur 5. Profites-en pour retourner à l'église d'Aerith.</p>
+<ol>
+<li>Va dans l'arrière-salle de l'église — là où tu t'es retrouvé après le combat contre Reno.</li>
+<li>La matéria Chakra t'attend dans une petite salle sur la droite.</li>
+</ol>
+<p class="alerte manquable">⏳ C'est la matéria jaune que tu avais vue, inaccessible, pendant la fuite.</p>
+<h3 id="boss-rude">Boss : Rude</h3>
+<p>Sur le chemin de chez Aerith, Rude te propose un duel.</p>
+<p><strong>Sa faiblesse : le Vent.</strong> Il résiste au Feu — <strong>n'y touche pas</strong>.</p>
+<p><strong>La préparation</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ce qu'il faut</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Matéria Vent</strong>, idéalement <strong>couplée à l'Affinité élémentaire</strong></td>
+<td>Gros dégâts supplémentaires</td>
+</tr>
+<tr>
+<td><strong>Matérias de Soin</strong></td>
+<td>Le combat est long</td>
+</tr>
+<tr>
+<td><strong>Des Sels en stock</strong></td>
+<td>Il endort régulièrement le second personnage</td>
+</tr>
+<tr>
+<td><strong>Jouer Aerith</strong></td>
+<td><strong>Elle est plus efficace à distance</strong> ; équipe Cloud du Croissant de Lune porte-bonheur pour qu'il encaisse moins</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le combat</strong></p>
+<ul>
+<li>Rude enchaîne vite et fort au corps à corps.</li>
+<li>Ses attaques de terre à tête chercheuse font très mal : esquive à temps, ou garde.</li>
+<li>À environ un quart de vie en moins, il adopte une garde quasi impénétrable. Temporise, et rentre-lui dedans quand il la baisse.</li>
+<li>Fais monter sa jauge de Choc avec tes matérias : c'est là que tu lui infliges une correction.</li>
+<li><strong>Le coup malin</strong> : utilise la compétence Sceau Sacré d'Aerith pour doubler tes sorts de Vent, tout en gardant tes distances.</li>
+</ul>
+<h3 id="lhistoire-annexe-le-langage-des-fleurs">L'histoire annexe — Le langage des fleurs</h3>
+<p><strong>Immédiatement disponible après le combat contre Rude.</strong></p>
+<ol>
+<li><strong>Va chez Aerith.</strong> En arrivant dans son jardin, tu obtiens l'histoire annexe.</li>
+<li>Aerith t'invite à la suivre dans le jardin. <strong>Parle avec elle.</strong></li>
+<li>C'est fini — c'est une histoire très courte, mais elle compte pour le 100 %.</li>
+<li><strong>Entre dans la maison</strong> : <strong>cinématique</strong>.</li>
+</ol>
+<h3 id="la-fuite-nocturne">La fuite nocturne</h3>
+<ol>
+<li class="alerte">⚠️ Avant de partir, récupère le coffre 12 dans la salle de classe de la Maison Feuillue — <strong>1 Éther</strong> — maintenant ouverte.</li>
+<li><strong>Sors de la chambre.</strong> Marche en évitant les objets au sol pour sortir discrètement.</li>
+<li><strong>Rejoins l'extérieur</strong> et pars vers la place principale du bidonville.</li>
+<li>Ne va pas vers la gare. Pars vers la droite, dans la rue qui longe le marchand d'armes — l'objectif est au <strong>sud-est du bidonville</strong>.</li>
+<li><strong>Tu croises Aerith</strong>, qui décide de t'accompagner jusqu'au Secteur 7 : <strong>fin du chapitre</strong>.</li>
+</ol>
+<h2 id="quetes-et-lieux-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-six-missions-annexes-et-leurs-dependances">Les six missions annexes et leurs dépendances</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Mission</th>
+<th>Qui la donne</th>
+<th>Condition</th>
+<th>Récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La boutique Mog</strong></td>
+<td>Oates, puis <strong>l'enfant grimé en Mog</strong></td>
+<td>—</td>
+<td><strong>Carte de Membre</strong></td>
+</tr>
+<tr>
+<td><strong>Les enfants en patrouille</strong></td>
+<td>L'institutrice</td>
+<td>—</td>
+<td><strong>Batte cloutée</strong> <em>(Cloud)</em></td>
+</tr>
+<tr>
+<td><strong>Machines déréglées</strong></td>
+<td>L'homme craintif</td>
+<td>—</td>
+<td><strong>non documentée</strong></td>
+</tr>
+<tr>
+<td><strong>Une preuve de bravoure</strong></td>
+<td>La jeune fille de la base secrète</td>
+<td>Les enfants en patrouille</td>
+<td><strong>Médaille Mog par tentative</strong> à Brise-Boîtes</td>
+</tr>
+<tr>
+<td><strong>L'ange gardien</strong></td>
+<td>Le journaliste</td>
+<td>Les enfants en patrouille</td>
+<td><strong>non documentée</strong></td>
+</tr>
+<tr>
+<td><strong>Contre un instant de recueillement</strong></td>
+<td>Le vieil homme</td>
+<td>Machines déréglées ; <strong>Clé du Cimetière</strong></td>
+<td><strong>non documentée</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-deux-histoires-annexes">Les deux histoires annexes</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Histoire</th>
+<th>Comment la déclencher</th>
+<th>Comment la finir</th>
+<th>Récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La porte bloquée</strong></td>
+<td><strong>Trouver la porte grillagée bloquée</strong> de la Vallée du Crépuscule</td>
+<td>L'échelle des Collines des Boulons et des Écrous, puis l'ouvrir de l'intérieur</td>
+<td>Un raccourci</td>
+</tr>
+<tr>
+<td><strong>Le langage des fleurs</strong></td>
+<td>Entrer dans le jardin d'Aerith après le combat contre Rude</td>
+<td>Parler avec elle</td>
+<td>Narrative</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-lieux-4">Les lieux</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'on y trouve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L'église</strong></td>
+<td>Reno, <strong>coffres 01 et 02</strong>, <strong>la matéria Chakra</strong> <em>(à récupérer plus tard)</em></td>
+</tr>
+<tr>
+<td><strong>Le chemin des toits</strong></td>
+<td><strong>Coffres 03 et 04</strong></td>
+</tr>
+<tr>
+<td><strong>La gare</strong></td>
+<td><strong>Coffre 05</strong>, le <strong>distributeur</strong> et <strong>le Disque 21</strong></td>
+</tr>
+<tr>
+<td><strong>La Vallée du Crépuscule</strong></td>
+<td><strong>Coffre 06</strong>, <strong>la porte bloquée</strong>, <strong>les Vigiforeuses</strong>, <strong>la porte aux décorations chinoises</strong></td>
+</tr>
+<tr>
+<td><strong>La Montagne d'Acier</strong></td>
+<td><strong>Coffre 13</strong>, aux barres de fer après les tuyaux</td>
+</tr>
+<tr>
+<td><strong>Les Collines des Boulons et des Écrous</strong></td>
+<td>L'échelle qui termine « La porte bloquée »</td>
+</tr>
+<tr>
+<td><strong>Le quartier central</strong></td>
+<td><strong>Coffres 07, 08, 09 et 12</strong>, <strong>le bar et son jukebox</strong>, <strong>la Maison Feuillue</strong>, <strong>les échoppes</strong>, Chadley</td>
+</tr>
+<tr>
+<td><strong>La maison et le jardin d'Aerith</strong></td>
+<td><strong>La matéria PM augmentés</strong>, <strong>la commande de fleurs</strong>, <strong>« Le langage des fleurs »</strong></td>
+</tr>
+<tr>
+<td><strong>Le repaire secret des enfants</strong></td>
+<td><strong>Coffre 10</strong>, <strong>la boutique Mog</strong>, Brise-Boîtes</td>
+</tr>
+<tr>
+<td><strong>La zone non-développée : route des casse-cous</strong></td>
+<td><strong>Coffre 11</strong></td>
+</tr>
+<tr>
+<td><strong>Le centre communautaire</strong></td>
+<td>Le journaliste et Mireille</td>
+</tr>
+<tr>
+<td><strong>Le poste d'observation</strong></td>
+<td>Le Toxicodisperseur</td>
+</tr>
+<tr>
+<td><strong>Le cimetière</strong></td>
+<td>Nécessite la Clé du Cimetière</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Matéria PM augmentés</strong></td>
+<td><span class="badge neutre">Matéria violette</span></td>
+<td>Au sol, tout au fond du jardin d'Aerith, pendant qu'elle est à la Maison Feuillue</td>
+<td>Augmente les PM maximum</td>
+</tr>
+<tr>
+<td><strong>Matéria Chakra</strong></td>
+<td><span class="badge neutre">Matéria jaune</span></td>
+<td><strong>Arrière-salle de l'église</strong>, <strong>petite salle sur la droite</strong> ; accessible une fois arrivé à « Le mercenaire itinérant »</td>
+<td><strong>Soigne en échangeant des PV</strong> ; <strong>effet exact à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Shiva</strong></td>
+<td><span class="badge neutre">Matéria d&#x27;invocation</span></td>
+<td><strong>Simulateur de combat de Chadley</strong>, qui s'ouvre <strong>après avoir sauvé les enfants</strong></td>
+<td><strong>Ta troisième invocation</strong></td>
+</tr>
+<tr>
+<td><strong>Batte cloutée</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cloud</span></td>
+<td><strong>Récompense de « Les enfants en patrouille »</strong>, à la Maison Feuillue</td>
+<td><strong>La troisième arme de Cloud</strong> <em>(partie <strong>21</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Carte de Membre</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td><strong>Achetée à l'enfant grimé en Mog</strong> avec des Médailles Mog</td>
+<td>Ouvre la boutique Mog</td>
+</tr>
+<tr>
+<td><strong>Clé du Cimetière</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td><strong>Boutique Mog</strong>, <strong>1 Médaille Mog</strong></td>
+<td>Obligatoire pour « Contre un instant de recueillement »</td>
+</tr>
+<tr>
+<td><strong>Bâton en argent</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Aerith</span></td>
+<td><strong>Boutique Mog</strong>, <strong>2 Médailles Mog</strong></td>
+<td><strong>50 de Magie</strong> ; <strong>introuvable ailleurs</strong> <em>(partie <strong>21</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Collier fait main</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td><strong>Récompense pour avoir sauvé les enfants</strong>, au repaire</td>
+<td>Effet exact à vérifier en jeu</td>
+</tr>
+<tr>
+<td><strong>Bracelet en mithril</strong></td>
+<td><span class="badge neutre">Bracelet</span></td>
+<td><strong>Sur le chemin vers la gare</strong>, <strong>auparavant inaccessible</strong>, une fois les enfants sauvés</td>
+<td>Effet exact à vérifier en jeu</td>
+</tr>
+<tr>
+<td><strong>Talisman</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td><strong>Coffre 01</strong> — église : descendre au second escalier au lieu de monter aux combles</td>
+<td>Effet exact à vérifier en jeu</td>
+</tr>
+<tr>
+<td><strong>Flacon à sels</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 02</strong> — combles de l'église, <strong>sur la gauche</strong> avant le corps principal</td>
+<td><strong>Soigne le Sommeil</strong> ; <strong>utile contre Rude</strong></td>
+</tr>
+<tr>
+<td><strong>Médaille Mog</strong></td>
+<td><span class="badge neutre">Objet d&#x27;échange</span></td>
+<td><strong>Coffre 03</strong> — chemin des toits, <strong>en contrebas à gauche</strong> du bâtiment à la petite tour</td>
+<td>La monnaie de la boutique Mog</td>
+</tr>
+<tr>
+<td><strong>Éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 04</strong> — chemin des toits, <strong>à droite</strong> après l'échelle du toit d'herbe sèche</td>
+<td>Rend des PM</td>
+</tr>
+<tr>
+<td><strong>500 gils</strong></td>
+<td><span class="badge gils">Argent</span></td>
+<td><strong>Coffre 05</strong> — gare, <strong>à droite</strong>, à l'extrémité du quai</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Bracelet ténébreux</strong></td>
+<td><span class="badge neutre">Bracelet</span></td>
+<td><strong>Coffre 06</strong> — Vallée du Crépuscule : <strong>en haut de l'échelle, aller à droite</strong> et <strong>se suspendre aux barres</strong></td>
+<td>Effet exact à vérifier en jeu</td>
+</tr>
+<tr>
+<td><strong>Boisson de vitesse</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 07</strong> — quartier central, dans le bar à gauche de la Maison Feuillue, <strong>à gauche du jukebox</strong></td>
+<td><strong>Augmente la vitesse</strong> ; <strong>effet exact à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Écran d'écho</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 08</strong> — quartier central, en sortant du bar, au coin de la rue</td>
+<td>Protège du Silence</td>
+</tr>
+<tr>
+<td><strong>200 gils</strong></td>
+<td><span class="badge gils">Argent</span></td>
+<td><strong>Coffre 09</strong> — quartier central, ruelle entre le marchand de matérias et la Maison Feuillue</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Médaille Mog</strong></td>
+<td><span class="badge neutre">Objet d&#x27;échange</span></td>
+<td><strong>Coffre 10</strong> — repaire secret des enfants, <strong>immédiatement à droite en entrant</strong></td>
+<td><strong>Idem</strong></td>
+</tr>
+<tr>
+<td><strong>Méga-Potion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 11</strong> — route des casse-cous : <strong>grimper sur la droite au premier embranchement</strong></td>
+<td><strong>Gros soin</strong></td>
+</tr>
+<tr>
+<td><strong>Éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 12</strong> — <strong>salle de classe de la Maison Feuillue</strong>, ouverte <strong>après avoir sauvé les enfants</strong></td>
+<td>Rend des PM</td>
+</tr>
+<tr>
+<td><strong>Remède</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 13</strong> — Montagne d'Acier : après les tuyaux, se suspendre aux barres de fer à gauche</td>
+<td>Soigne toutes les altérations</td>
+</tr>
+<tr>
+<td><strong>Disque 20 « Gold Saucer »</strong></td>
+<td><span class="badge neutre">Disque de musique</span></td>
+<td><strong>Boutique Mog</strong></td>
+<td><strong>Collectible</strong> <em>(partie <strong>27</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Disque 21 « Cait Sith's Theme »</strong></td>
+<td><span class="badge neutre">Disque de musique</span></td>
+<td>Distributeur de la gare</td>
+<td><strong>Collectible</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 25 « Tango of Tears »</strong></td>
+<td><span class="badge neutre">Disque de musique</span></td>
+<td><strong>Jukebox du bar</strong> à gauche de la Maison Feuillue</td>
+<td><strong>Collectible</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 19 « Costa del Sol »</strong></td>
+<td><span class="badge neutre">Disque de musique</span></td>
+<td>À acheter au marchand de matérias du quartier central</td>
+<td>Le disque le plus facile à rater du jeu <em>(partie <strong>27</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Manuscrits I</strong></td>
+<td><span class="badge neutre">Objets</span></td>
+<td><strong>Boutique Mog</strong>, <strong>5 Médailles Mog</strong> chacun</td>
+<td><strong>Des PA en plus</strong> <em>(partie <strong>21</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="lordre-optimal-du-chapitre-3">L'ordre optimal du chapitre</h3>
+<ol>
+<li><strong>L'église</strong> : Reno, <strong>coffres 01 et 02</strong>. Repère la matéria jaune du rez-de-chaussée.</li>
+<li><strong>Les toits</strong> : <strong>coffres 03 et 04</strong>, <strong>ajuster l'équipement d'Aerith</strong>.</li>
+<li><strong>La gare</strong> : <strong>coffre 05</strong>, <strong>Disque 21</strong>.</li>
+<li><strong>La Vallée du Crépuscule</strong> : déclencher <strong>« La porte bloquée »</strong>, coffre 06 à droite avant de partir à gauche, coffre 13 aux barres de fer, le Fumifacturier.</li>
+<li class="alerte manquable">⏳ <strong>Finir « La porte bloquée »</strong> aux Collines des Boulons et des Écrous.</li>
+<li><strong>La maison d'Aerith</strong>, <strong>la commande de fleurs</strong>.</li>
+<li><strong>Quartier libre</strong> : <strong>coffres 07, 08, 09</strong>, matéria PM augmentés au fond du jardin, <strong>Disque 25</strong>, Chadley.</li>
+<li><strong>Sauver les enfants</strong> : <strong>coffres 10 et 11</strong>, <strong class="objet">Collier fait main</strong>.</li>
+<li><strong>Ce qui vient de s'ouvrir</strong> : <strong>coffre 12</strong> <em>(salle de classe)</em>, <strong>Bracelet en mithril</strong> <em>(chemin de la gare)</em>, Shiva au simulateur.</li>
+<li><strong>La boutique Mog</strong> d'abord : <strong class="objet">Carte de Membre</strong>, <strong class="objet">Clé du Cimetière</strong>, <strong>Disque 20</strong>, <strong>manuscrits I</strong>.</li>
+<li><strong>Les enfants en patrouille</strong> → <strong class="objet">Batte cloutée</strong>, et ça débloque deux missions.</li>
+<li><strong>Machines déréglées</strong> → ça débloque la sixième.</li>
+<li><strong>Une preuve de bravoure</strong>, L'ange gardien, Contre un instant de recueillement.</li>
+<li><strong>Brise-Boîtes en boucle</strong> pour farmer des <strong>Médailles Mog</strong>.</li>
+<li><strong>La matéria Chakra de l'église.</strong></li>
+<li><strong>Rude</strong>, puis <strong>« Le langage des fleurs »</strong>, puis la <strong>fuite nocturne</strong>.</li>
+</ol>
+<h3 id="les-quatre-faiblesses-a-preparer">Les quatre faiblesses à préparer</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Adversaire</th>
+<th>Faiblesse</th>
+<th>Résistance</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reno</strong></td>
+<td>Aucune</td>
+<td><strong>Foudre</strong></td>
+<td><strong>Mets la Foudre sur ta protection</strong>, pas sur ton arme</td>
+</tr>
+<tr>
+<td><strong>Rude</strong></td>
+<td><strong>Vent</strong></td>
+<td><strong>Feu</strong></td>
+<td>Sceau Sacré d'Aerith pour doubler les sorts de Vent</td>
+</tr>
+<tr>
+<td><strong>Vigiforeuse</strong></td>
+<td><strong>Vent</strong></td>
+<td>—</td>
+<td>Physique inutile quand sa protection est active</td>
+</tr>
+<tr>
+<td><strong>Toxicodisperseur</strong></td>
+<td><strong>Foudre</strong></td>
+<td>—</td>
+<td>Sur son boulet</td>
+</tr>
+<tr>
+<td><strong>Tetarosor Roi</strong> <em>(et acolytes)</em></td>
+<td><strong>Glace</strong></td>
+<td>—</td>
+<td>Les acolytes d'abord</td>
+</tr>
+<tr>
+<td><strong>Ennemis du cimetière</strong></td>
+<td><strong>Glace</strong></td>
+<td>—</td>
+<td>Barrière + Aerith en soigneur</td>
+</tr>
+<tr>
+<td><strong>Ennemis des toits</strong></td>
+<td><strong>Glace</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="brise-boites-la-vraie-mine-dor">Brise-Boîtes, la vraie mine d'or</h3>
+<p>Chaque tentative rapporte une Médaille Mog. Et il te faut 5 Médailles par manuscrit I, plus 1 pour la Clé du Cimetière.</p>
+<p><strong>La méthode</strong> :</p>
+<ol>
+<li>Mode Bravoure pour te frayer un chemin au plus vite.</li>
+<li><strong>Fonce au bout de la zone</strong> : elle regorge de boîtes rouges, qui rallongent le chrono.</li>
+<li><strong>Compétences spéciales sur les boîtes à 1 500 points.</strong></li>
+</ol>
+<h3 id="les-pieges-du-chapitre-8">Les pièges du chapitre</h3>
+<ul>
+<li>Monter aux combles sans descendre au second escalier. Le Talisman est en bas, pas en haut.</li>
+<li>Grimper l'échelle de la Vallée du Crépuscule et partir directement à gauche. Le Bracelet ténébreux est à droite, aux barres.</li>
+<li>Ne pas retourner au fond du jardin d'Aerith. La matéria PM augmentés est là.</li>
+<li>Ne pas retourner à l'église. La matéria Chakra y attend dans l'arrière-salle.</li>
+<li>Ne pas repasser à la Maison Feuillue après avoir sauvé les enfants. La salle de classe est maintenant ouverte.</li>
+<li>Ne pas repasser sur le chemin de la gare. Le Bracelet en mithril y est.</li>
+<li>Négliger le simulateur de Chadley. C'est la seule source de Shiva.</li>
+<li>Faire « Contre un instant de recueillement » sans la Clé du Cimetière. Elle s'achète 1 Médaille Mog à la boutique Mog.</li>
+<li class="alerte">⚠️ Ne pas faire « Les enfants en patrouille » tôt. Elle débloque deux autres missions.</li>
+<li>Partir chercher Rude sans Vent et sans Sels. Il résiste au Feu et il endort Aerith.</li>
+<li><strong>Oublier les quatre disques.</strong> Jukebox du bar, distributeur de la gare, boutique Mog, et le marchand de matérias.</li>
+</ul>
+<h2 id="alertes-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Manquable</strong> : la matéria Chakra de l'église. Il faut y retourner de sa propre initiative, pendant la partie « Le mercenaire itinérant ».</li>
+<li class="alerte">⚠️ <strong>Manquable</strong> : <strong>la matéria PM augmentés</strong>, tout au fond du jardin d'Aerith.</li>
+<li class="alerte">⚠️ <strong>Manquable</strong> : <strong>la matéria Shiva</strong>, qui s'obtient uniquement au simulateur de combat de Chadley.</li>
+<li class="alerte">⚠️ <strong>Manquable</strong> : <strong>la Batte cloutée</strong>, récompense de <strong>« Les enfants en patrouille »</strong>.</li>
+<li class="alerte">⚠️ <strong>Manquable</strong> : <strong>le Bâton en argent</strong>, 2 Médailles Mog à la boutique Mog — une des six armes d'Aerith, introuvable ailleurs <em>(partie <strong>21</strong>)</em>.</li>
+<li class="alerte manquable">⏳ <strong>Manquables</strong> : les treize coffres du chapitre. Le bidonville du Secteur 5 est revisitable plus tard dans le jeu, mais l'église, les toits, la gare et la Vallée du Crépuscule se referment au fil du chapitre.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : le coffre 12 de la salle de classe, qui n'est ouvert qu'après avoir sauvé les enfants.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : <strong>le Bracelet en mithril</strong> du chemin de la gare, même condition.</li>
+<li class="alerte manquable">⏳ <strong>Manquables</strong> : les quatre disques de musique et <strong>les deux histoires annexes</strong>.</li>
+<li class="alerte">⚠️ <strong>Manquable facile</strong> : le Disque 19 « Costa del Sol », à acheter au marchand de matérias — aucune soluce de chapitre ne le signale <em>(partie <strong>27</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>Dépendances de missions</strong> : <strong>« Les enfants en patrouille »</strong> débloque <strong>« Une preuve de bravoure »</strong> et <strong>« L'ange gardien »</strong> ; <strong>« Machines déréglées »</strong> débloque « Contre un instant de recueillement ». Ne quitte pas le chapitre avant d'avoir fait les six.</li>
+<li class="alerte">⚠️ <strong>Conséquence sur les robes</strong> : le nombre de missions annexes terminées ici décide de la robe d'audition d'Aerith au chapitre 9 — <strong>0 → rose claire</strong>, <strong>3 à 5 → rose foncée</strong>, <strong>6 → rouge</strong>. Les trois sont nécessaires au trophée « Super modèle » <em>(partie <strong>23</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>Et il faut terminer le chapitre</strong> pour que les actions soient prises en compte dans le registre de progression.</li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : les <strong>récompenses de « Machines déréglées »</strong>, <strong>« Une preuve de bravoure »</strong>, <strong>« L'ange gardien »</strong> et « Contre un instant de recueillement », que les sources ne détaillent pas.</li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong class="objet">Talisman</strong>, du <strong>Bracelet ténébreux</strong>, du <strong class="objet">Collier fait main</strong>, du <strong>Bracelet en mithril</strong>, de la <strong>Boisson de vitesse</strong> et de la <strong>matéria Chakra</strong>.</li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : la position exacte de l'échelle qui termine <strong>« La porte bloquée »</strong> — jeuxvideo.com dit « tout droit en face de vous » aux Collines des Boulons et des Écrous, FFRing dit « au nord-ouest de la Zone Abandonnée – Rue de derrière ».</li>
+<li class="alerte manquable">⏳ <strong>Pas de point de non-retour interne</strong>, mais <strong>la fuite nocturne clôt le chapitre</strong> : tout ce qui n'est pas fait avant est reporté.</li>
+</ul>
+<h2 id="check-list-9" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="les-treize-coffres">Les treize coffres</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Coffre 01</strong> — <strong>1 Talisman</strong> <em>(église, descendre au 2e escalier)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 02</strong> — 1 Flacon à sels <em>(combles, à gauche)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 03</strong> — <strong>1 Médaille Mog</strong> <em>(toits, en contrebas à gauche)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 04</strong> — 1 Éther <em>(toits, à droite après l'échelle)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 05</strong> — 500 gils <em>(gare, à droite du quai)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 06</strong> — <strong>1 Bracelet ténébreux</strong> <em>(Vallée du Crépuscule, à droite aux barres)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 07</strong> — 1 Boisson de vitesse <em>(bar, à gauche du jukebox)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 08</strong> — 1 Écran d'écho <em>(coin de rue en sortant du bar)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 09</strong> — 200 gils <em>(ruelle entre le marchand de matérias et la Maison Feuillue)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 10</strong> — <strong>1 Médaille Mog</strong> <em>(repaire des enfants, à droite)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 11</strong> — 1 Méga-Potion <em>(route des casse-cous, à droite)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 12</strong> — 1 Éther <em>(salle de classe, après avoir sauvé les enfants)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 13</strong> — 1 Remède <em>(Montagne d'Acier, barres de fer après les tuyaux)</em></li>
+</ul>
+<h3 id="les-materias-et-les-armes">Les matérias et les armes</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Matéria PM augmentés</strong> <em>(fond du jardin d'Aerith)</em></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Matéria Chakra</strong> <em>(arrière-salle de l'église)</em></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Matéria Shiva</strong> <em>(simulateur de Chadley)</em></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Batte cloutée</strong> <em>(« Les enfants en patrouille »)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Bracelet en mithril</strong> <em>(chemin de la gare, après les enfants)</em></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Collier fait main</strong> <em>(repaire des enfants)</em></li>
+</ul>
+<h3 id="les-six-missions-annexes-2">Les six missions annexes</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>La boutique Mog</strong> — <strong class="objet">Carte de Membre</strong> achetée</li>
+<li class="tache"><input type="checkbox"> <strong>Les enfants en patrouille</strong> — <strong>les 5 enfants</strong>, <strong>Tetarosor Roi</strong>, <strong class="objet">Batte cloutée</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Machines déréglées</strong> — <strong>les 5 Vigiforeuses</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Une preuve de bravoure</strong> — <strong>Brise-Boîtes</strong></li>
+<li class="tache"><input type="checkbox"> <strong>L'ange gardien</strong> — <strong>Mireille</strong>, <strong>Toxicodisperseur</strong>, la carte sur la table</li>
+<li class="tache"><input type="checkbox"> Contre un instant de recueillement — <strong class="objet">Clé du Cimetière</strong>, <strong>le cimetière nettoyé</strong></li>
+</ul>
+<h3 id="les-deux-histoires-annexes-2">Les deux histoires annexes</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>La porte bloquée</strong> — ouverte de l'intérieur</li>
+<li class="tache"><input type="checkbox"> <strong>Le langage des fleurs</strong> — après Rude</li>
+</ul>
+<h3 id="les-quatre-disques-et-la-boutique-mog">Les quatre disques et la boutique Mog</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Disque 20 « Gold Saucer »</strong> <em>(boutique Mog)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Disque 21 « Cait Sith's Theme »</strong> <em>(distributeur de la gare)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Disque 25 « Tango of Tears »</strong> <em>(jukebox du bar)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Disque 19 « Costa del Sol »</strong> <em>(marchand de matérias)</em></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Clé du Cimetière</strong> achetée</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bâton en argent</strong> acheté <em>(2 Médailles Mog)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Manuscrits I</strong> achetés <em>(5 Médailles Mog chacun)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Brise-Boîtes</strong> rejoué pour farmer des Médailles Mog</li>
+</ul>
+<h3 id="les-combats-2">Les combats</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Reno</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> <strong>Fumifacturier</strong> battu</li>
+<li class="tache"><input type="checkbox"> <strong>Tetarosor Roi</strong> battu</li>
+<li class="tache"><input type="checkbox"> <strong>Les 5 Vigiforeuses</strong> battues</li>
+<li class="tache"><input type="checkbox"> <strong>Toxicodisperseur</strong> battu</li>
+<li class="tache"><input type="checkbox"> <strong>Les ennemis du cimetière</strong> battus</li>
+<li class="tache"><input type="checkbox"> <strong>Rude</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> <strong>Chapitre terminé</strong></li>
+</ul>
+<h3 id="pour-les-rapports-de-chadley-5">Pour les rapports de Chadley</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Reno</strong> et <strong>Rude</strong> analysés</li>
+<li class="tache"><input type="checkbox"> <strong>Fumifacturier</strong> analysé</li>
+<li class="tache"><input type="checkbox"> <strong>Vigiforeuse</strong> analysée</li>
+<li class="tache"><input type="checkbox"> <strong>Tetarosor Roi</strong> analysé</li>
+<li class="tache"><input type="checkbox"> <strong>Toxicodisperseur</strong> analysé</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="chapitre-7-dans-la-gueule-du-loup.html" rel="prev"><small>← Partie précédente</small><b>Chapitre 7 : Dans la gueule du loup</b></a><a class="suiv" href="chapitre-9-le-quartier-des-desirs.html" rel="next"><small>Partie suivante →</small><b>Chapitre 9 : Le quartier des désirs</b></a><a class="tout" href="final-fantasy-vii-remake.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Remake · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le Gold Saucer et ses jeux – Guide Final Fantasy VII</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII, Le Gold Saucer et ses jeux : À ne pas rater : le Parapluie (5 000 points au Speed Square avant le Hautvent ). Lots uniques : Omnislash…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii/24-le-gold-saucer-et-ses-jeux.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Le Gold Saucer et ses jeux · Guide Final Fantasy VII">
+<meta property="og:description" content="Final Fantasy VII, Le Gold Saucer et ses jeux : À ne pas rater : le Parapluie (5 000 points au Speed Square avant le Hautvent ). Lots uniques : Omnislash…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii/24-le-gold-saucer-et-ses-jeux.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii/"}, {"@type": "ListItem", "position": 3, "name": "Le Gold Saucer et ses jeux", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii/24-le-gold-saucer-et-ses-jeux.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii" class="compact" data-partie="24-le-gold-saucer-et-ses-jeux"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII</a><span aria-hidden="true">›</span><span>Partie 24</span></nav>
+<p class="gjv-jeu">Final Fantasy VII : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy <em>VII</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction.html"><span class="num">00</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-le-reacteur-n1-et-le-secteur-7.html"><span class="num">01</span><span class="libelle">Le réacteur n°1 et le Secteur 7</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-le-reacteur-n5-et-les-taudis-du-secteur-5.html"><span class="num">02</span><span class="libelle">Le réacteur n°5 et les taudis du Secteur 5</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-wall-market-et-le-palais-de-don-corneo.html"><span class="num">03</span><span class="libelle">Wall Market et le palais de Don Cornéo</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-les-egouts-le-cimetiere-des-trains-et-le-pilier.html"><span class="num">04</span><span class="libelle">Les égouts, le cimetière des trains et le pilier</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-le-batiment-shinra.html"><span class="num">05</span><span class="libelle">Le Bâtiment Shinra</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-kalm-et-le-passe-de-clad.html"><span class="num">06</span><span class="libelle">Kalm et le passé de Clad</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-le-marais-la-mine-de-mythril-et-junon.html"><span class="num">07</span><span class="libelle">Le marais, la Mine de Mythril et Junon</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-la-traversee-de-locean-et-costa-del-sol.html"><span class="num">08</span><span class="libelle">La traversée de l&#x27;océan et Costa del Sol</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-le-mont-corel-et-le-gold-saucer.html"><span class="num">09</span><span class="libelle">Le Mont Corel et le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-la-prison-du-desert.html"><span class="num">10</span><span class="libelle">La prison du désert</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="11-gongaga-et-le-canyon-cosmo.html"><span class="num">11</span><span class="libelle">Gongaga et le Canyon Cosmo</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-nibelheim-et-le-mont-nibel.html"><span class="num">12</span><span class="libelle">Nibelheim et le Mont Nibel</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="13-le-village-de-la-fusee-et-la-cle-de-pierre.html"><span class="num">13</span><span class="libelle">Le Village de la Fusée et la Clé de pierre</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="14-le-temple-des-anciens.html"><span class="num">14</span><span class="libelle">Le Temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="15-le-village-des-ossements-et-la-cite-des-anciens.html"><span class="num">15</span><span class="libelle">Le Village des ossements et la Cité des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="16-la-vallee-de-corral-le-village-glacon-et-le-grand-glacier.html"><span class="num">16</span><span class="libelle">La Vallée de Corral, le Village Glaçon et le Grand Glacier</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="17-la-falaise-de-gaea-et-le-labyrinthe-tornade.html"><span class="num">17</span><span class="libelle">La Falaise de Gaëa et le Labyrinthe Tornade</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="18-la-fuite-de-junon-et-mideel.html"><span class="num">18</span><span class="libelle">La fuite de Junon et Mideel</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="19-mideel-le-train-a-charbon-et-le-fort-condor.html"><span class="num">19</span><span class="libelle">Mideel, le train à charbon et le Fort Condor</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="20-le-reacteur-sous-marin-et-le-voyage-dans-lespace.html"><span class="num">20</span><span class="libelle">Le réacteur sous-marin et le voyage dans l&#x27;espace</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="21-les-souterrains-du-secteur-8.html"><span class="num">21</span><span class="libelle">Les souterrains du Secteur 8</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="22-la-grotte-nord-et-laffrontement-final.html"><span class="num">22</span><span class="libelle">La Grotte Nord et l&#x27;affrontement final</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="23-les-personnages-secrets-youfie-et-vincent.html"><span class="num">23</span><span class="libelle">Les personnages secrets : Youfie et Vincent</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="#24-le-gold-saucer-et-ses-jeux"><span class="num">24</span><span class="libelle">Le Gold Saucer et ses jeux</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="25-lelevage-de-chocobos-et-les-grottes-a-materia.html"><span class="num">25</span><span class="libelle">L&#x27;élevage de chocobos et les grottes à Matéria</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="26-les-armes-ultimes-et-les-limites-niveau-4.html"><span class="num">26</span><span class="libelle">Les armes ultimes et les Limites niveau 4</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="27-les-materias-les-invocations-et-les-talents-de-lennemi.html"><span class="num">27</span><span class="libelle">Les Matérias, les invocations et les Talents de l&#x27;ennemi</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="28-lavion-gelnika-et-les-armes.html"><span class="num">28</span><span class="libelle">L&#x27;avion Gelnika et les Armes</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="99-annexes.html"><span class="num">99</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="sources.html"><span class="num">✦</span><span class="libelle">Sources</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-25">
+<header class="tete-section">
+<p class="eyebrow">Partie 24</p>
+<h1 id="24-le-gold-saucer-et-ses-jeux">Le Gold Saucer et ses jeux</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-25"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-25">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>À ne pas rater</strong> : le <strong class="objet">Parapluie</strong> (5 000 points au Speed Square <strong>avant le Hautvent</strong>).</li>
+<li><strong>Lots uniques</strong> : <strong class="objet">Omnislash</strong> et <strong class="objet">Invocation-W</strong>, un seul exemplaire chacun.</li>
+<li><strong>Version PC</strong> : plus de 32 767 points au Speed Square, aucun lot.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-25" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Transformer le parc d'attractions de Dio en distributeur d'objets rares. Le Gold Saucer contient l'<strong>arme ultime de Clad</strong> (l'objet <strong class="objet">Omnislash</strong>), la <strong>Matéria Invocation-W</strong>, deux armes introuvables ailleurs, la <strong>Matéria Attaque Finale</strong> et de quoi financer toute ta partie. C'est aussi le seul endroit où se joue la fameuse <strong>soirée</strong> de fin de disque 1.</p>
+<h2 id="itineraire-24" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://finalfantasy.fandom.com/wiki/Gold_Saucer_(Final_Fantasy_VII_field)">Gold Saucer</a> — sur le Final Fantasy Wiki, en anglais : carte, captures et objets de chaque lieu.</p>
+<ol>
+<li><strong>L'entrée</strong> : le tramway depuis Corel Nord, le ticket, les GP.</li>
+<li><strong>Ghost Square</strong>, <strong>Round Square</strong>, <strong>Event Square</strong> : les trois petits.</li>
+<li><strong>Battle Square</strong> : l'arène, les handicaps, les lots.</li>
+<li><strong>Chocobo Square</strong>, <strong>Speed Square</strong>, <strong>Wonder Square</strong>.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-24" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="les-bases">Les bases</h3>
+<ol>
+<li>On arrive par le <strong>tramway</strong> depuis Corel Nord, sans traverser le désert. ⚠️ <strong>Le parc ferme pendant toute l'absence de Clad</strong> (une partie du disque 2).</li>
+<li>À l'entrée, deux formules :
+<ul>
+<li><strong>3 000 Gils</strong> : un <strong>passage simple</strong>, plus valable dès que tu repasses par Corel Nord.</li>
+<li><strong>30 000 Gils</strong> : le <strong class="objet">Ticket d'or</strong>, un objet clé qui t'ouvre le parc à vie. <strong>Indispensable si tu comptes élever des chocobos</strong>, et il s'achète aussi <strong>300 GP</strong> au Wonder Square.</li>
+</ul>
+</li>
+<li><strong>Deux monnaies locales</strong> :
+<ul>
+<li>les GP (maximum <strong>10 000</strong>) : ils paient les attractions, les lots du Wonder Square, et <strong>5 GP</strong> pour sauvegarder près du tramway ;</li>
+<li>les BP (PC sur la version PC, maximum <strong>65 000</strong>) : uniquement au Battle Square. ⚠️ <strong>Tes BP retombent à zéro dès que tu sors de la salle du Battle Square.</strong></li>
+</ul>
+</li>
+<li><strong>Acheter des GP</strong> : au disque 2, un homme apparaît <strong>une fois sur huit</strong> devant la petite maison à l'arrière de la salle du tramway.
+<ul>
+<li>Il échange <strong>1 000 Gils contre 10 GP</strong>, jusqu'à <strong>10 000 Gils contre 100 GP</strong>.</li>
+<li>Fais des allers-retours entre la station et le tramway pour le faire réapparaître.</li>
+<li>Cela dit, <strong>les courses de chocobos rapportent bien plus vite</strong>.</li>
+</ul>
+</li>
+<li><strong>Sept squares</strong> : Battle, Chocobo, Speed, Wonder, Ghost, Round et Event.</li>
+</ol>
+<h3 id="les-trois-petits-squares">Les trois petits squares</h3>
+<ol start="6">
+<li><strong>Ghost Square</strong> : l'hôtel (<strong>5 GP</strong> la nuit) et plusieurs boutiques. C'est là que tout le monde se retrouve quand le tramway tombe en panne — et là que commence la <strong>soirée</strong> de fin de disque 1.</li>
+<li><strong>Round Square</strong> : la nacelle panoramique, <strong>3 GP</strong> le tour. Trois belles cinématiques, mais <strong>rien à gagner</strong> : une fois suffit.</li>
+<li><strong>Event Square</strong> : totalement inutile <strong>sauf pendant la soirée</strong> du disque 1.</li>
+<li><strong>Le musée de Dio</strong> se visite dans la petite loge du Battle Square.</li>
+</ol>
+<h3 id="battle-square-larene">Battle Square : l'arène</h3>
+<ol start="10">
+<li><strong>10 GP</strong> pour inscrire <strong>un personnage seul</strong>. Une série compte <strong>huit combats</strong> maximum.</li>
+<li>Après chaque combat, tu choisis d'<strong>arrêter</strong> ou de <strong>continuer</strong>. Si tu continues, une <strong>roulette</strong> détermine ton <strong>handicap</strong> pour le combat suivant : <strong>sept roulettes</strong> au total, <strong>23 signes</strong> possibles (mais chaque roulette n'en contient que trois, tirés avant la série).</li>
+<li><strong>Plus le handicap est méchant, plus tu gagnes de BP.</strong> C'est tout l'équilibre du jeu.</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Signe</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Toutes les Matérias cassées</strong></td>
+<td>Aucune Matéria utilisable</td>
+</tr>
+<tr>
+<td><strong>Matérias vertes / jaunes / bleues / roses / rouges cassées</strong></td>
+<td>Magies / commandes / soutiens / indépendantes / invocations neutralisées</td>
+</tr>
+<tr>
+<td><strong>Arme cassée</strong></td>
+<td>L'arme perd progressivement sa puissance</td>
+</tr>
+<tr>
+<td><strong>Armure cassée</strong></td>
+<td>Armure inopérante, protections élémentaires comprises</td>
+</tr>
+<tr>
+<td><strong>Accessoire cassé</strong></td>
+<td>Accessoire inopérant</td>
+</tr>
+<tr>
+<td><strong>Commande élément scellée</strong></td>
+<td>Plus de commande Élément</td>
+</tr>
+<tr>
+<td><strong>1/2 HP</strong>, <strong>1/2 MP</strong>, <strong>1/2 HP et MP</strong></td>
+<td>Maximums divisés par deux (au-delà des plafonds 9999 / 999)</td>
+</tr>
+<tr>
+<td><strong>0 MP</strong></td>
+<td>MP actuels réduits à zéro</td>
+</tr>
+<tr>
+<td><strong>Mini</strong>, <strong>Grenouille</strong>, <strong>Poison</strong></td>
+<td>Statut infligé d'office — ⚠️ <strong>ni Vaccin ni Resist. n'en protègent</strong></td>
+</tr>
+<tr>
+<td><strong>Temps x 30</strong></td>
+<td>Dégâts = heures de jeu × 30 HP, sans jamais tuer</td>
+</tr>
+<tr>
+<td><strong>Baisse de cinq / dix niveaux</strong></td>
+<td>Attaque et précision réduites</td>
+</tr>
+<tr>
+<td><strong>1/2 vitesse</strong></td>
+<td>Dextérité divisée par deux</td>
+</tr>
+<tr>
+<td><strong>Cure de guérison</strong></td>
+<td>Tous les HP restaurés</td>
+</tr>
+<tr>
+<td><strong>7 chanceux !</strong></td>
+<td>Aucun handicap</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="13">
+<li><strong>La dernière roulette fait tout le score.</strong> « Toutes les Matérias cassées » à la <strong>septième</strong> vaut <strong>10 000 BP</strong> à elle seule ; un maximum théorique tourne autour de <strong>13 000 BP</strong> par série.</li>
+<li><strong>Dans l'arène</strong> : impossible d'apprendre des Talents de l'ennemi, mais tu peux <strong>voler</strong> et <strong>transformer</strong> à volonté. Les ennemis ont <strong>le double de HP</strong> et <strong>+25 % d'Attaque et d'Attaque magique</strong>.</li>
+<li><strong>La série s'arrête</strong> si tu finis les huit combats, si tu quittes volontairement, si tu es <strong>pétrifié ou mort</strong>, ou si tu <strong>fuis avec la commande de fuite</strong>. ⚠️ Mort, pétrification et fuite directe : <strong>zéro BP</strong>.</li>
+<li><strong>L'astuce à retenir</strong> : <strong>un Fumigène ou la magie Escapade</strong> te font quitter le <strong>huitième combat</strong> en <strong>conservant tous tes BP</strong>. Parfait face au Vaisseau fantôme et à son Goannai, contre lequel aucune protection n'existe.</li>
+<li><strong>Après ta première série remportée</strong>, parle à la <strong>femme en bas des escaliers</strong> : elle offre des <strong class="objet">Baskets</strong> (il faut lui avoir déjà parlé une première fois).</li>
+<li><strong>Un lot de consolation</strong> — un <strong>Mouchoir</strong> — t'attend après chaque série normale, gagnée ou perdue.</li>
+</ol>
+<h3 id="les-lots-du-battle-square">Les lots du Battle Square</h3>
+<ol start="19">
+<li>Les deux machines à gauche et à droite de l'entrée échangent tes BP. <strong>Les prix changent trois fois dans la partie</strong> — et <strong>baissent</strong> au fil de l'aventure.</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Début du CD1</th>
+<th>BP</th>
+<th>Fin du CD1</th>
+<th>BP</th>
+<th>CD2</th>
+<th>BP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Potion</td>
+<td>80</td>
+<td>Queue de Phénix</td>
+<td>100</td>
+<td>Remède</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Queue de Phénix</td>
+<td>160</td>
+<td>Remède</td>
+<td>200</td>
+<td>Appât-ennemi</td>
+<td>250</td>
+</tr>
+<tr>
+<td>Shrapnel</td>
+<td>320</td>
+<td>Légumes Mimett</td>
+<td>400</td>
+<td>Bras droit</td>
+<td>500</td>
+</tr>
+<tr>
+<td>Ether</td>
+<td>640</td>
+<td>Appât-ennemi</td>
+<td>800</td>
+<td>Prévention</td>
+<td>1 000</td>
+</tr>
+<tr>
+<td>Légumes Mimett</td>
+<td>1 280</td>
+<td>Aile d'oiseau</td>
+<td>1 600</td>
+<td>Légumes Reagan</td>
+<td>2 000</td>
+</tr>
+<tr>
+<td>Anneau de furie</td>
+<td>2 560</td>
+<td>Mine-S</td>
+<td>3 200</td>
+<td>Super vitesse</td>
+<td>4 000</td>
+</tr>
+<tr>
+<td>Appât-ennemi</td>
+<td>5 120</td>
+<td>Prévention</td>
+<td>6 400</td>
+<td>Poussière d'étoiles</td>
+<td>8 000</td>
+</tr>
+<tr>
+<td>Prévention</td>
+<td>10 240</td>
+<td>Super vitesse</td>
+<td>12 800</td>
+<td>Écharpe champion</td>
+<td>16 000</td>
+</tr>
+<tr>
+<td>Super vitesse</td>
+<td>20 480</td>
+<td>Écharpe champion</td>
+<td>25 600</td>
+<td><strong>Omnislash</strong></td>
+<td><strong>32 000</strong></td>
+</tr>
+<tr>
+<td>Écharpe champion</td>
+<td>40 960</td>
+<td><strong>Omnislash</strong></td>
+<td><strong>51 200</strong></td>
+<td><strong>Invocation-W</strong></td>
+<td><strong>64 000</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ol start="20">
+<li class="alerte">⚠️ <strong class="objet">Omnislash</strong> et <strong class="objet">Invocation-W</strong> ne s'achètent <strong>qu'une seule fois</strong> chacun. Tous les autres lots sont illimités.</li>
+<li><strong>Deux bizarreries de traduction</strong> : l'<strong class="objet">Écharpe champion</strong> s'appelle Ceinture noire sur PC, et <strong>toute la colonne du début du CD1 est décalée</strong> — le Shrapnel ne figure pas dans la liste et s'obtient en choisissant l'<strong>Ether</strong>, l'Ether en choisissant les Légumes Mimett, et ainsi de suite jusqu'au bout.</li>
+</ol>
+<h3 id="le-combat-special">Le combat spécial</h3>
+<ol start="22">
+<li><strong>Trois conditions</strong> pour le débloquer :
+<ul>
+<li>avoir <strong>battu Dernière arme</strong> au-dessus du Canyon Cosmo ;</li>
+<li>avoir gagné <strong class="objet">Omnislash</strong> et l'avoir <strong>déjà appris à Clad</strong> (donc ne plus l'avoir en inventaire) ;</li>
+<li>avoir échangé <strong>64 000 BP</strong> contre la <strong>Matéria Invocation-W</strong>.</li>
+</ul>
+</li>
+<li>Parle ensuite à la <strong>réceptionniste</strong> : le combat spécial se joue <strong>toujours avec Clad</strong>, contre <strong>huit ennemis toujours identiques</strong>, seuls mais redoutables.</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Bataille</th>
+<th>Ennemi</th>
+<th>HP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Ver de mer</td>
+<td>18 000</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ho-chu</td>
+<td>8 600</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Inconnu 3</strong></td>
+<td>30 000</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Serpent</td>
+<td>28 000</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Wolfmeister</td>
+<td>20 000</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Béhémoth</td>
+<td>14 000</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Kimaira Maximal</td>
+<td>8 000</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Superbe Lourdaud + Armure jamar</td>
+<td>120 000 + 40 000</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="24">
+<li><strong>L'équipement conseillé</strong> : <strong>Dernière arme</strong> (9999 de dégâts quand les HP sont hauts), armure <strong>Garde d'escorte</strong> (annule Foudre, Terre, Eau et Poison — donc le Souffle de vipère du Serpent et la Canine empoisonnée d'Inconnu 3), et <strong class="objet">Ruban</strong> contre les statuts.</li>
+<li><strong>Les Matérias</strong> :
+<ul>
+<li><strong>Attaque double</strong> niveau 2, pour frapper en <strong>4x</strong></li>
+<li><strong>Opposition Magie + Guérison Max</strong>, pour être soigné à chaque coup reçu</li>
+<li><strong>Mimer</strong>, pour répéter l'Omnislash au dernier combat</li>
+<li><strong>Chevaliers de la Table Ronde</strong> (avec <strong>Absorption HP</strong> ou <strong>Absorption MP</strong>), en secours</li>
+<li><strong>Talent de l'ennemi</strong>, pour <strong>Grand garde</strong> (qui donne la Hâte) et <strong>Mot d'ange</strong></li>
+</ul>
+</li>
+<li><strong>Les récompenses</strong> dépendent du <strong>nombre de victoires</strong> :</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Victoire</th>
+<th>Lot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1re</td>
+<td><strong>Matéria Attaque Finale</strong></td>
+</tr>
+<tr>
+<td>2e</td>
+<td><strong>Autographe</strong></td>
+</tr>
+<tr>
+<td>3e</td>
+<td><strong>Carnet de combat</strong></td>
+</tr>
+<tr>
+<td>4e</td>
+<td><strong>Joueur</strong></td>
+</tr>
+<tr>
+<td>10e</td>
+<td><strong>Ruban</strong></td>
+</tr>
+<tr>
+<td>5e à 9e et au-delà de la 10e</td>
+<td>Autographe (33,6 %), Carnet de combat (33,6 %) ou Joueur (32,8 %)</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="27">
+<li><strong>Dans les séries normales</strong>, préfère <strong>FurieMax niveau 1 ou 2</strong> à Attaque double : les ennemis arrivent en groupe. Le seul vrai problème est Vlakorados (<strong>66 666 HP</strong>, immunisé à Mort) : <strong>empoisonne-le</strong> avec un sort de Poison ou <strong>Haleine aigre</strong>, il perd <strong>2 083 HP</strong> par tour.</li>
+</ol>
+<h3 id="chocobo-square">Chocobo Square</h3>
+<ol start="28">
+<li><strong>Avant le Hautvent</strong>, tu ne cours pas toi-même : tu <strong>paries</strong>. <strong>200 Gils</strong> de droits d'inscription, puis <strong>100 Gils</strong> le pari en classe C, <strong>200</strong> en B, <strong>300</strong> en A et <strong>500</strong> en A+/S.</li>
+<li><strong>Quinze vignettes</strong> représentent tous les duos possibles pour les deux premiers de la course. Tu peux en retourner <strong>trois</strong>.</li>
+<li><strong>Deux tactiques</strong> : miser sur les <strong>trois chocobos qui te semblent les meilleurs</strong> (1-4, 1-6, 4-6 par exemple), ou <strong>tout miser sur un seul</strong> favori (1-6, 2-6, 3-6).</li>
+<li>Derrière les vignettes se cachent trois niveaux de récompense : le <strong>moins bon derrière 7 vignettes</strong>, le <strong>moyen derrière 5</strong>, le <strong>meilleur derrière 3</strong>. ⚠️ <strong>Sur la version PC, ce tirage est buggé</strong> : tu n'obtiens presque jamais ce que tu devrais.</li>
+<li><strong>Accepte les GP</strong> plutôt que l'objet quand la réceptionniste te le propose : c'est le moyen le plus rapide de financer <strong class="objet">Super Gil</strong> et <strong class="objet">Super EXP</strong> au Wonder Square.</li>
+<li><strong>Quand tu élèves tes propres chocobos</strong>, adresse-toi à Ester, devant la porte à gauche de l'entrée. <strong>Appuie sur [sélect] en début de course</strong> pour passer en <strong>pilotage manuel</strong>. Si Tifa ou Cid sont dans l'équipe, ils réclament la manette <strong>une fois sur deux</strong>.</li>
+<li><strong>Trois victoires avec le même chocobo = une classe de plus.</strong> De la classe C à la classe A+, il faut donc <strong>neuf courses gagnées</strong>.</li>
+<li><strong>Teioh</strong>, le chocobo de Joe, est toujours <strong>10 % plus rapide</strong> et <strong>25 % plus résistant</strong> que le tien. Il se bat quand même : <strong>martèle la touche carrée</strong> pour l'effet de vitesse régulier, et <strong>remonte ta résistance</strong> dès qu'elle baisse.</li>
+<li><strong>Deux zones ralentissent les chocobos</strong> : la ligne droite finale de la petite course et le tunnel sous-marin de la longue. <strong>Seuls les chocobos vert, noir et doré y échappent</strong> — le bleu, lui, ralentit comme les autres.</li>
+<li><strong>Dix victoires en classe A+ avec le même chocobo</strong> : Ester offre d'un coup :
+<ul>
+<li>armures <strong class="objet">Chocobracelet</strong> et <strong class="objet">Montre précieuse</strong></li>
+<li>accessoires <strong class="objet">Baskets</strong> et <strong class="objet">Clochette de chat</strong></li>
+<li><strong>Matéria Contre-attaque</strong> (traduite <strong>Opposition</strong>, à tort, sur PC)</li>
+</ul>
+</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lot</th>
+<th>Classes</th>
+<th>Valeur en GP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Potion</td>
+<td>C</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Queue de Phénix</td>
+<td>C, B, A, A+</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Hyper, Calmant</td>
+<td>C, B</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Super potion</td>
+<td>C, B, A</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Boisson de héros</td>
+<td>B, A, A+</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Vent antarctique, Dent de feu</td>
+<td>C, B, A</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Plume d'éclair</td>
+<td>C, B, A, A+</td>
+<td>20</td>
+</tr>
+<tr>
+<td>Ether</td>
+<td>C, B, A</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Cristal de glace, Éclair furtif, Voile de feu</td>
+<td>A, A+</td>
+<td>50</td>
+</tr>
+<tr>
+<td>Ether turbo</td>
+<td>B, A+</td>
+<td>150</td>
+</tr>
+<tr>
+<td>Élixir</td>
+<td>B, A, A+</td>
+<td>200</td>
+</tr>
+<tr>
+<td>Repousse-ennemi</td>
+<td>B, A, A+</td>
+<td>300</td>
+</tr>
+<tr>
+<td><strong>Attaque Furtive</strong>, <strong>Contre-attaque</strong></td>
+<td>A, A+</td>
+<td>300</td>
+</tr>
+<tr>
+<td><strong>Montre précieuse</strong>, Mégalixir</td>
+<td>A+</td>
+<td>300</td>
+</tr>
+<tr>
+<td><strong>Chocobracelet</strong></td>
+<td>A+</td>
+<td>400</td>
+</tr>
+<tr>
+<td><strong>Opposition Magie</strong></td>
+<td>A+</td>
+<td>500</td>
+</tr>
+<tr>
+<td><strong>Clochette de chat</strong>, <strong>Baskets</strong></td>
+<td>A, A+</td>
+<td>500</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="speed-square">Speed Square</h3>
+<ol start="38">
+<li><strong>10 GP</strong> la partie. Tes trois personnages montent dans un wagonnet et tirent au laser sur un parcours <strong>toujours identique</strong>.</li>
+<li class="alerte">⚠️ <strong>Ne reste pas appuyé sur le tir</strong> : le laser s'épuise. Vise en <strong>coups saccadés</strong> et garde la jauge <strong>au-dessus de 50 %</strong>.</li>
+<li><strong>Les cibles</strong>, dans l'ordre du parcours :</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Cible</th>
+<th>Points</th>
+<th>Quantité</th>
+<th>Cible</th>
+<th>Points</th>
+<th>Quantité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fantôme</td>
+<td>40</td>
+<td>10</td>
+<td>Petit stalactite</td>
+<td>40</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Cactus</td>
+<td>30</td>
+<td>3</td>
+<td>Gros stalactite</td>
+<td>50</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Cactus tordu</td>
+<td>30</td>
+<td>2</td>
+<td>Ballon</td>
+<td>30</td>
+<td>19</td>
+</tr>
+<tr>
+<td>Avion bleu</td>
+<td>50 ou 60</td>
+<td>9 + 1</td>
+<td>Grand ballon rouge</td>
+<td>70</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Grand cactus</td>
+<td>50</td>
+<td>1</td>
+<td>Soucoupe volante</td>
+<td>60 ou 80</td>
+<td>9 + 3</td>
+</tr>
+<tr>
+<td>Avion gris</td>
+<td>50 ou 60</td>
+<td>11 + 1</td>
+<td>Fusée</td>
+<td>50</td>
+<td>8</td>
+</tr>
+<tr>
+<td><strong>Rocher vert</strong></td>
+<td><strong>200</strong></td>
+<td>1</td>
+<td>Hélices de dirigeable (PC)</td>
+<td>4 960 ou 25 480</td>
+<td>1 + 1</td>
+</tr>
+<tr>
+<td>Poisson jaune</td>
+<td>60</td>
+<td>3</td>
+<td>Boule de lave</td>
+<td>70</td>
+<td>7</td>
+</tr>
+<tr>
+<td><strong>Roue du bateau</strong></td>
+<td>1 à 285</td>
+<td>1</td>
+<td>Hélicoptère</td>
+<td>40 ou 50</td>
+<td>8 + 1</td>
+</tr>
+<tr>
+<td>Étoile</td>
+<td>40</td>
+<td>10</td>
+<td>Grande soucoupe volante</td>
+<td><strong>1 000</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td>Cristal de neige</td>
+<td>70</td>
+<td>6</td>
+<td>Projecteur</td>
+<td><strong>200</strong></td>
+<td>1</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="41">
+<li><strong>Les trois cibles cachées à ne jamais rater</strong> :
+<ul>
+<li>le Rocher vert (200 pts), en haut du canyon, au moment où un Avion gris passe au-dessus du wagonnet ;</li>
+<li>la Roue du bateau, en bas à gauche après le premier Poisson jaune : touche-la <strong>au dernier moment</strong> en restant appuyé, ou tire avec la jauge presque vide, pour monter jusqu'à <strong>285</strong> ;</li>
+<li>le Projecteur (200 pts) : quand les projecteurs se lèvent à l'arrivée, vise <strong>en bas à droite ou à gauche</strong> et tire quelques fois.</li>
+</ul>
+</li>
+<li><strong>La caverne glacée fait le score</strong> : place le laser à mi-hauteur et balaie de gauche à droite en tirant régulièrement. Vise surtout les Cristaux de neige. <strong>Environ 2 000 points en sortant de la caverne</strong> = tu es sur la bonne trajectoire pour 5 000.</li>
+<li><strong>La Grande soucoupe volante</strong> (1 000 points) s'abat avec des tirs qui vident <strong>un tiers de la jauge</strong>, répétés pendant une bonne vingtaine de secondes — <strong>continue de viser même quand elle passe dans l'ombre</strong>.</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Score</th>
+<th>Lot</th>
+<th>Condition</th>
+<th>Chance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3 000 et plus</td>
+<td><strong>Soldat 1/35</strong></td>
+<td>Toujours</td>
+<td>33,2 %</td>
+</tr>
+<tr>
+<td>3 000 et plus</td>
+<td><strong>Sweeper super</strong></td>
+<td>Toujours</td>
+<td>33,2 %</td>
+</tr>
+<tr>
+<td>3 000 et plus</td>
+<td><strong>Lame Masamune</strong></td>
+<td>Toujours</td>
+<td>33,6 %</td>
+</tr>
+<tr>
+<td><strong>5 000 et plus</strong></td>
+<td><strong>Parapluie</strong> (arme d'Aéris)</td>
+<td><strong>Avant l'obtention du Hautvent</strong>, une seule fois</td>
+<td>100 %</td>
+</tr>
+<tr>
+<td><strong>5 000 et plus</strong></td>
+<td><strong>Fouet</strong> (arme de Cid)</td>
+<td>Après l'obtention du Hautvent, une seule fois</td>
+<td>100 %</td>
+</tr>
+<tr>
+<td>32 767 et plus</td>
+<td><strong>Rien du tout</strong></td>
+<td>Version PC</td>
+<td>100 %</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="44">
+<li class="alerte manquable">⏳ <strong>Le Parapluie ne s'obtient qu'avant le Hautvent</strong> : le bon moment est <strong>juste avant ou juste après la soirée au Gold Saucer</strong>. Après, il est perdu.</li>
+<li class="alerte">⚠️ Sur PC, dépasser <strong>32 767 points</strong> te fait disparaître du tableau des scores <strong>et annule ton lot</strong>. Or, sur PC précisément, viser les <strong>hélices du gros dirigeable jaune</strong> (quand arrivent les Fusées et les Soucoupes) rapporte <strong>plus de 25 000 points d'un coup</strong>. Sur PS, cette astuce n'existe pas — un <strong>sans-faute théorique</strong> y plafonne à <strong>7 835 points</strong>.</li>
+<li><strong>Soldat 1/35</strong>, <strong>Sweeper super</strong> et <strong>Lame Masamune</strong> ne servent strictement à rien : ce sont des bibelots.</li>
+</ol>
+<h3 id="wonder-square">Wonder Square</h3>
+<ol start="47">
+<li>Tous les jeux se paient en Gils et rapportent des GP. La femme à l'entrée échange tes GP contre des lots.</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lot</th>
+<th>Coût en GP</th>
+<th>Attraction</th>
+<th>Prix</th>
+<th>Gain maximum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Potion</td>
+<td>1</td>
+<td>Méga-Sumo</td>
+<td>100 Gils</td>
+<td>2 GP</td>
+</tr>
+<tr>
+<td>Ether (affiché <strong>Teinture</strong>, erreur de traduction)</td>
+<td>20</td>
+<td>Match de basket ball</td>
+<td>200 Gils</td>
+<td><strong>300 GP</strong></td>
+</tr>
+<tr>
+<td>Potion-X</td>
+<td>80</td>
+<td>Super catcheur</td>
+<td>100 Gils</td>
+<td>100 GP</td>
+</tr>
+<tr>
+<td>Ether turbo</td>
+<td>100</td>
+<td><strong>Combat 3D</strong></td>
+<td>200 Gils</td>
+<td><strong>300 GP</strong></td>
+</tr>
+<tr>
+<td><strong>Ticket d'or</strong></td>
+<td>300</td>
+<td>Maison de Mog</td>
+<td>100 Gils</td>
+<td>30 GP</td>
+</tr>
+<tr>
+<td><strong>Noix de Caroube</strong></td>
+<td>500</td>
+<td>Moto-G</td>
+<td>200 Gils</td>
+<td>10 GP</td>
+</tr>
+<tr>
+<td><strong>Super Gil</strong></td>
+<td>1 000</td>
+<td><strong>Jeu du sous-marin</strong></td>
+<td>200 Gils</td>
+<td>20 GP</td>
+</tr>
+<tr>
+<td><strong>Super EXP</strong></td>
+<td>2 000</td>
+<td>Jeu sur neige</td>
+<td>200 Gils</td>
+<td><strong>430 GP</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ol start="48">
+<li class="alerte manquable">⏳ <strong class="objet">Super Gil</strong> et <strong class="objet">Super EXP</strong> n'apparaissent dans la liste qu'<strong>après l'obtention du Hautvent</strong>. Les trois lots les plus chers restent cachés jusque-là.</li>
+<li><strong>Match de basket ball</strong> : appuie sur la touche de tir ni trop longtemps ni trop brièvement. <strong>1 GP par panier</strong>. Au <strong>dixième panier d'affilée</strong>, la Double chance double tes gains — mais la rater te ramène à <strong>1 GP</strong>. Le record de <strong>300 GP</strong> demande <strong>44 paniers</strong> avec quatre Double chance réussies (à 10, 30, 70 et 150 GP).</li>
+<li><strong>Combat 3D</strong> : un pierre-feuille-ciseaux à coups de poings.
+<ul>
+<li><strong>Triangle = coup supérieur</strong>, <strong>carré = central</strong>, <strong>croix = inférieur</strong>. Supérieur bat inférieur, central bat supérieur, inférieur bat central.</li>
+<li>Le troisième adversaire vaut <strong>3 GP</strong>, le quatrième <strong>30 GP</strong>.</li>
+<li><strong>Le cinquième, « l'homme invisible », est imbattable</strong> : il fait toujours l'attaque supérieure. Fais <strong>dix fois l'attaque centrale (triangle)</strong> pour te laisser mettre au tapis et empocher <strong>300 GP</strong>, la meilleure récompense du parc.</li>
+</ul>
+</li>
+<li><strong>Super catcheur</strong> : une machine à sous déguisée. Rien à faire, rien à maîtriser. <strong>100 GP</strong> sortent <strong>une fois sur 256</strong> à droite, <strong>80 GP</strong> à gauche.</li>
+<li><strong>Méga-Sumo</strong> : martèle la touche de validation. <strong>1 GP</strong> contre le Lutteur sumo, <strong>2 GP</strong> contre le Lutteur. Anecdotique.</li>
+<li><strong>Maison de Mog</strong> : nourris Mog de noix de Kupo pour qu'il s'envole. <strong>Cinq noix avant le premier envol, trois avant le second</strong>, devant Mag — c'est la solution à tous les coups. Ensuite, parle à l'<strong>homme à côté du jeu</strong> : <strong>30 GP</strong>, une seule fois.</li>
+<li><strong>Moto-G</strong> : la moto du disque 1. <strong>10 GP</strong> au-delà de <strong>10 000 points</strong>, et une <strong>Source de rapidité</strong> la première fois que tu franchis ce cap.</li>
+<li><strong>Jeu du sous-marin</strong> (disponible après la bataille navale de Junon) : <strong>cinq batailles</strong>, <strong>20 GP</strong> chacune, et <strong>un objet par victoire, dans l'ordre</strong>, quelle que soit la bataille choisie — <strong>cinq victoires suffisent</strong> pour tout avoir.</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Bataille</th>
+<th>Cible</th>
+<th>Victoire</th>
+<th>Récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Réacteur Mako</strong></td>
+<td>Sept sous-marins</td>
+<td>1re</td>
+<td><strong>Encre</strong></td>
+</tr>
+<tr>
+<td><strong>Niveau 1</strong></td>
+<td>Dix sous-marins</td>
+<td>2e</td>
+<td><strong>Bombe T/S</strong></td>
+</tr>
+<tr>
+<td><strong>Niveau 2</strong></td>
+<td>Huit sous-marins</td>
+<td>3e</td>
+<td><strong>Dent de dragon</strong></td>
+</tr>
+<tr>
+<td><strong>Niveau 3</strong></td>
+<td>Douze sous-marins</td>
+<td>4e</td>
+<td><strong>Écailles de dragon</strong></td>
+</tr>
+<tr>
+<td><strong>Niveau 4</strong></td>
+<td>Dix sous-marins</td>
+<td>5e</td>
+<td><strong>Chaudron</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ol start="56">
+<li><strong>Jeu sur neige</strong> (disponible après le Grand Glacier) : trois courses, notées sur <strong>Technique /30</strong>, <strong>Temps /30</strong> et <strong>Ballons /40</strong>. Les <strong>29 ballons rouges</strong> valent 1 point, les <strong>3 bleus</strong> 2 points, le <strong>vert</strong> 5 points.
+<ul>
+<li><strong>Score ≥ 70</strong> : débloque la course suivante.</li>
+<li><strong>Course A, score ≥ 89</strong> : <strong>30 GP + Bit de sûreté</strong>.</li>
+<li><strong>Course B, score ≥ 89</strong> : <strong>100 GP + Tout</strong>.</li>
+<li><strong>Course C, score ≥ 89</strong> : <strong>300 GP + Bijou cristal</strong>.</li>
+<li><strong>Les lots et les GP ne s'obtiennent qu'une seule fois.</strong> Un score supérieur à 88 sur plusieurs courses te donne <strong>toutes les récompenses d'un coup</strong>.</li>
+</ul>
+</li>
+<li><strong>Le mode contre-la-montre</strong> s'ouvre avec <strong>70 points à la course C</strong> : prends le <strong>ballon jaune</strong> placé au départ. Aucun obstacle, aucun ballon, un fantôme qui rejoue ton record, et le rang Bien débloque un <strong>ballon blanc</strong> d'accélération au départ.</li>
+<li><strong>La machine à bonne aventure</strong> (50 Gils) ne rapporte rien, mais ses prédictions <strong>suivent vraiment l'avancement de ta partie</strong> — et annoncent souvent la suite à mots couverts.</li>
+</ol>
+<h3 id="la-soiree-au-gold-saucer">La soirée au Gold Saucer</h3>
+<ol start="59">
+<li>Après les combats de Dio, le tramway tombe en panne : tout le monde dort au Ghost Square, et <strong>un personnage vient frapper à ta porte</strong>.</li>
+<li>Le jeu tient des <strong>valeurs d'affection</strong> invisibles, comprises entre 0 et 255. <strong>Au départ</strong> : <strong>Aéris 50</strong>, <strong>Tifa 30</strong>, <strong>Youfie 10</strong>, <strong>Barret 0</strong>. Celui qui a la valeur la plus haute vient. <strong>En cas d'égalité</strong>, l'ordre de priorité est Aéris, Tifa, Youfie, Barret.</li>
+<li>Autant dire que <strong>Barret est le plus dur à décrocher</strong> — et que <strong>Youfie ne compte que si tu l'as recrutée</strong>.</li>
+<li><strong>Pour sortir avec Barret</strong> :
+<ul>
+<li>donne la fleur d'Aéris <strong>à Marlène</strong> ;</li>
+<li>va jusqu'au <strong>dernier wagon</strong> du train du Secteur 5 ;</li>
+<li>pousse <strong>trois mauvais tonneaux</strong> dans l'église ;</li>
+<li>fais-toi <strong>choisir par Don Cornéo</strong> ;</li>
+<li><strong>fais chuter Tifa à zéro</strong> dans la prison du Bâtiment Shinra ;</li>
+<li><strong>retiens Barret</strong> après le récit de Kalm ;</li>
+<li>parle aux habitants de <strong>Kalm et du Fort Condor avec lui dans l'équipe</strong> ;</li>
+<li>prends Nanaki pour l'accompagner chez Dayne ;</li>
+<li>parle-lui <strong>deux fois</strong> au Canyon Cosmo.</li>
+</ul>
+</li>
+<li><strong>Pour sortir avec Youfie</strong> :
+<ul>
+<li>pousse <strong>trois mauvais tonneaux</strong> dans l'église ;</li>
+<li>reviens à <strong>Kalm avec Youfie et Aéris</strong> pour faire l'éloge du Mako ;</li>
+<li><strong>refuse deux fois</strong> d'aider le Fort Condor ;</li>
+<li><strong>rate trois fois</strong> sa dernière question avant de la recruter à la quatrième tentative ;</li>
+<li>offre-lui un Calmant sur le cargo ;</li>
+<li>garde-la <strong>dans l'équipe</strong> au Gold Saucer ;</li>
+<li>prends-la pour accompagner Barret chez Dayne ;</li>
+<li>fais la <strong>quête d'Utai dès le disque 1</strong>.</li>
+</ul>
+</li>
+<li><strong>Dans les deux cas, fais baisser Aéris et Tifa</strong> aussi souvent que possible : c'est la moitié du travail.</li>
+<li><strong>La soirée</strong> se joue en deux temps : la <strong>pièce de théâtre</strong> de l'Event Square puis la <strong>nacelle</strong> du Round Square. <strong>Barret refuse la pièce</strong> : avec lui, tu passes directement à la nacelle.</li>
+<li><strong>La pièce a quatre fins.</strong> Tu parles d'abord au <strong>soldat</strong> ou au <strong>magicien</strong>, ce qui change les questions suivantes :
+<ul>
+<li><strong>Fin 1</strong> (le jeu sérieux) : « Embrasser la Princesse » ou « Chez la Princesse » ;</li>
+<li><strong>Fin 2</strong> : « Embrasser le Roi » ou « Chez le Roi » ;</li>
+<li><strong>Fin 3</strong> : « Embrasser le méchant Roi Dragon », ou nommer « Le méchant… Roi Dragon… » comme ennemi ;</li>
+<li><strong>Fin 4</strong> (la catastrophe, et la plus drôle) : « À la maison », ou désigner <strong>le Roi</strong> ou <strong>ce Soldat</strong> comme ennemi.</li>
+</ul>
+</li>
+<li><strong>Deux petites conséquences</strong> après la soirée :
+<ul>
+<li>Le <strong>troisième équipier</strong> qui accompagne Clad et Aéris au chapitre suivant est celui qui a la plus forte affection parmi Barret, Tifa et Youfie (le <strong>PHS</strong> permet d'en changer).</li>
+<li><strong>Si l'affection de Tifa est ≥ 50</strong>, la dernière scène du disque 2 gagne plusieurs répliques.</li>
+</ul>
+</li>
+</ol>
+<h2 id="quetes-et-lieux-24" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<ul>
+<li><strong>Le Gold Saucer est la seule source</strong> d'<strong class="objet">Omnislash</strong>, d'<strong class="objet">Invocation-W</strong>, de la <strong>Matéria Attaque Finale</strong>, du <strong class="objet">Parapluie</strong> et du <strong class="objet">Fouet</strong>.</li>
+<li><strong>Les courses de chocobos</strong> financent tout le reste : GP pour Super Gil et Super EXP, Gils pour les Matérias chères.</li>
+<li><strong>Le Ticket d'or à 300 GP</strong> au Wonder Square coûte dix fois moins cher que les 30 000 Gils de l'entrée : passe par là.</li>
+</ul>
+<h2 id="butin-exhaustif-24" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ticket d'or</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>30 000 Gils à l'entrée, ou <strong>300 GP</strong> au Wonder Square</td>
+<td>Accès illimité au parc</td>
+</tr>
+<tr>
+<td><strong>Baskets</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>La femme en bas des escaliers du Battle Square, après une série gagnée</td>
+<td>Confère la Hâte</td>
+</tr>
+<tr>
+<td><strong>Mouchoir</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Lot de consolation de chaque série</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Omnislash</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>51 200 BP (fin CD1) ou 32 000 BP (CD2), <strong>une seule fois</strong></td>
+<td><strong>Limite niveau 4 de Clad</strong></td>
+</tr>
+<tr>
+<td><strong>Invocation-W</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>64 000 BP, <strong>une seule fois</strong></td>
+<td>Deux invocations par tour</td>
+</tr>
+<tr>
+<td><strong>Écharpe champion</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>40 960 / 25 600 / 16 000 BP</td>
+<td>« Ceinture noire » sur PC</td>
+</tr>
+<tr>
+<td><strong>Attaque Finale</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>1re victoire au combat spécial</td>
+<td>Agit automatiquement à la mort</td>
+</tr>
+<tr>
+<td><strong>Autographe</strong>, <strong>Carnet de combat</strong>, <strong>Joueur</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Victoires suivantes au combat spécial</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Ruban</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td><strong>10e victoire</strong> au combat spécial</td>
+<td>Immunise contre presque tout</td>
+</tr>
+<tr>
+<td><strong>Chocobracelet</strong>, <strong>Montre précieuse</strong></td>
+<td><span class="badge armure">Armures</span></td>
+<td>Dix victoires A+ avec le même chocobo</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Clochette de chat</strong>, <strong>Baskets</strong></td>
+<td><span class="badge neutre">Accessoires</span></td>
+<td>Mêmes dix victoires</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Contre-attaque</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Mêmes dix victoires (« Opposition » sur PC)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Attaque Furtive</strong>, <strong>Opposition Magie</strong></td>
+<td><span class="badge neutre">Matérias</span></td>
+<td>Lots de courses en classes A et A+</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Parapluie</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Aéris</span></td>
+<td>5 000 points au Speed Square, <strong>avant le Hautvent</strong></td>
+<td><strong>Une seule fois</strong></td>
+</tr>
+<tr>
+<td><strong>Fouet</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cid</span></td>
+<td>5 000 points au Speed Square, après le Hautvent</td>
+<td><strong>Une seule fois</strong></td>
+</tr>
+<tr>
+<td><strong>Soldat 1/35</strong>, <strong>Sweeper super</strong>, <strong>Lame Masamune</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>3 000 points au Speed Square</td>
+<td>Strictement décoratifs</td>
+</tr>
+<tr>
+<td><strong>Super Gil</strong>, <strong>Super EXP</strong></td>
+<td><span class="badge neutre">Matérias</span></td>
+<td>1 000 et 2 000 GP, <strong>après le Hautvent</strong></td>
+<td>Doublent Gils et EXP</td>
+</tr>
+<tr>
+<td><strong>Noix de Caroube</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>500 GP au Wonder Square</td>
+<td>Élevage de chocobos</td>
+</tr>
+<tr>
+<td><strong>Source de rapidité</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Premier score de 10 000 au Moto-G</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Bit de sûreté</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Course A du jeu sur neige, score ≥ 89</td>
+<td>Protège de Mort et Ralentir</td>
+</tr>
+<tr>
+<td><strong>Tout</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Course B du jeu sur neige, score ≥ 89</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Bijou cristal</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Course C du jeu sur neige, score ≥ 89</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Encre</strong>, <strong>Bombe T/S</strong>, <strong>Dent de dragon</strong>, <strong>Écailles de dragon</strong>, <strong>Chaudron</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Cinq victoires au jeu du sous-marin, dans l'ordre</td>
+<td>Objets à lancer</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-24" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Le Combat 3D est la meilleure machine à GP</strong> du parc : 300 GP en se laissant battre dix fois par l'homme invisible.</li>
+<li><strong>Sors du Battle Square et tes BP disparaissent</strong> : achète tes lots avant de partir, toujours.</li>
+<li><strong>Fumigène ou Escapade au huitième combat</strong> : tous les BP, aucun risque.</li>
+<li><strong>Le Parapluie a une fenêtre</strong> : avant le Hautvent, et pas après. Fais ton score pendant le disque 1.</li>
+<li><strong>Prends les GP plutôt que les objets</strong> aux courses de chocobos : Super Gil et Super EXP valent bien plus que trois Éthers.</li>
+<li><strong>Sur PC, méfie-toi de deux bugs</strong> : les lots des paris de chocobos sortent mal, et un score supérieur à 32 767 au Speed Square t'annule ta récompense.</li>
+</ul>
+<h2 id="alertes-24" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : le <strong class="objet">Parapluie</strong>, l'arme la plus puissante d'Aéris, si tu ne fais pas 5 000 points <strong>avant d'obtenir le Hautvent</strong>.</li>
+<li class="alerte manquable">⏳ Manquable : rien d'autre n'est définitivement perdu ici, mais le parc <strong>ferme pendant l'absence de Clad</strong> au disque 2.</li>
+<li class="alerte">⚠️ <strong class="objet">Omnislash</strong> et <strong class="objet">Invocation-W</strong> : un seul exemplaire chacun, pas de seconde chance.</li>
+<li class="alerte">⚠️ Version PC : <strong>plus de 32 767 points au Speed Square = aucun lot</strong>.</li>
+</ul>
+<h2 id="check-list-24" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Ticket d'or</strong> acheté (300 GP au Wonder Square)</li>
+<li class="tache"><input type="checkbox"> Une série gagnée au Battle Square : <strong class="objet">Baskets</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Omnislash</strong> acheté et appris à Clad</li>
+<li class="tache"><input type="checkbox"> <strong>Matéria Invocation-W</strong> (64 000 BP)</li>
+<li class="tache"><input type="checkbox"> Combat spécial débloqué et remporté : <strong class="objet">Attaque Finale</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Ruban</strong> du combat spécial (dixième victoire)</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Parapluie</strong> au Speed Square, avant le Hautvent</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Fouet</strong> au Speed Square, après le Hautvent</li>
+<li class="tache"><input type="checkbox"> Dix courses A+ avec le même chocobo : les cinq lots d'Ester</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Super Gil</strong> et <strong class="objet">Super EXP</strong> échangés au Wonder Square</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Noix de Caroube</strong> achetée</li>
+<li class="tache"><input type="checkbox"> Cinq victoires au jeu du sous-marin (les cinq objets)</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bit de sûreté</strong>, <strong class="objet">Tout</strong> et <strong class="objet">Bijou cristal</strong> au jeu sur neige</li>
+<li class="tache"><input type="checkbox"> Soirée au Gold Saucer vécue au moins une fois</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="23-les-personnages-secrets-youfie-et-vincent.html" rel="prev"><small>← Partie précédente</small><b>Les personnages secrets : Youfie et Vincent</b></a><a class="suiv" href="25-lelevage-de-chocobos-et-les-grottes-a-materia.html" rel="next"><small>Partie suivante →</small><b>L&#x27;élevage de chocobos et les grottes à Matéria</b></a><a class="tout" href="final-fantasy-vii.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

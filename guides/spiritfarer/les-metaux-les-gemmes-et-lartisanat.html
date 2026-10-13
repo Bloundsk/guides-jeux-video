@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les métaux, les gemmes et l&#x27;artisanat – Guide Spiritfarer</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Spiritfarer, Les métaux, les gemmes et l&#x27;artisanat : Minage : relâche la pioche au premier clignotement. Coffres cachés des mines : suis les fils…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/les-metaux-les-gemmes-et-lartisanat.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Les métaux, les gemmes et l&#x27;artisanat · Guide Spiritfarer">
+<meta property="og:description" content="Spiritfarer, Les métaux, les gemmes et l&#x27;artisanat : Minage : relâche la pioche au premier clignotement. Coffres cachés des mines : suis les fils…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/les-metaux-les-gemmes-et-lartisanat.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Spiritfarer", "item": "https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/"}, {"@type": "ListItem", "position": 3, "name": "Les métaux, les gemmes et l'artisanat", "item": "https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/les-metaux-les-gemmes-et-lartisanat.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="spiritfarer" class="compact" data-partie="les-metaux-les-gemmes-et-lartisanat"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Spiritfarer</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Spiritfarer : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque"><em>Spiritfarer</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction-tout-ce-quil-faut-savoir-avant-dembarquer.html"><span class="num">✦</span><span class="libelle">Introduction — tout ce qu&#x27;il faut savoir avant d&#x27;embarquer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="le-seuil-eternel-et-les-premiers-pas.html"><span class="num">✦</span><span class="libelle">Le Seuil éternel et les premiers pas</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="la-region-de-hummingberg-le-printemps.html"><span class="num">✦</span><span class="libelle">La région de Hummingberg : le printemps</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="le-district-industriel.html"><span class="num">✦</span><span class="libelle">Le district industriel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="la-region-de-hummingberg-lhiver.html"><span class="num">✦</span><span class="libelle">La région de Hummingberg : l&#x27;hiver</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="la-region-de-furogawa.html"><span class="num">✦</span><span class="libelle">La région de Furogawa</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="la-region-doxbury.html"><span class="num">✦</span><span class="libelle">La région d&#x27;Oxbury</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="crows-end-le-sud-ouest.html"><span class="num">✦</span><span class="libelle">Crow&#x27;s End : le sud-ouest</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="crows-end-le-nord-est.html"><span class="num">✦</span><span class="libelle">Crow&#x27;s End : le nord-est</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="les-points-dinteret-en-mer.html"><span class="num">✦</span><span class="libelle">Les points d&#x27;intérêt en mer</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="gwen.html"><span class="num">✦</span><span class="libelle">Gwen</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="atul.html"><span class="num">✦</span><span class="libelle">Atul</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="summer.html"><span class="num">✦</span><span class="libelle">Summer</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="astrid.html"><span class="num">✦</span><span class="libelle">Astrid</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="giovanni.html"><span class="num">✦</span><span class="libelle">Giovanni</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="alice.html"><span class="num">✦</span><span class="libelle">Alice</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="gustav.html"><span class="num">✦</span><span class="libelle">Gustav</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="bruce-et-mickey.html"><span class="num">✦</span><span class="libelle">Bruce et Mickey</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="buck.html"><span class="num">✦</span><span class="libelle">Buck</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="beverly.html"><span class="num">✦</span><span class="libelle">Beverly</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="stanley.html"><span class="num">✦</span><span class="libelle">Stanley</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="elena.html"><span class="num">✦</span><span class="libelle">Elena</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="jackie-et-daria.html"><span class="num">✦</span><span class="libelle">Jackie et Daria</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="le-bateau-et-le-chantier-naval-dalbert.html"><span class="num">✦</span><span class="libelle">Le bateau et le chantier naval d&#x27;Albert</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-capacites-de-stella-et-les-sanctuaires.html"><span class="num">✦</span><span class="libelle">Les capacités de Stella et les sanctuaires</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-batiments-du-bateau.html"><span class="num">✦</span><span class="libelle">Les bâtiments du bateau</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="lagriculture-lelevage-et-les-ressources.html"><span class="num">✦</span><span class="libelle">L&#x27;agriculture, l&#x27;élevage et les ressources</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="la-cuisine-toutes-les-recettes.html"><span class="num">✦</span><span class="libelle">La cuisine — toutes les recettes</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="la-peche-tous-les-poissons.html"><span class="num">✦</span><span class="libelle">La pêche — tous les poissons</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="#les-metaux-les-gemmes-et-lartisanat"><span class="num">✦</span><span class="libelle">Les métaux, les gemmes et l&#x27;artisanat</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="les-evenements-maritimes.html"><span class="num">✦</span><span class="libelle">Les événements maritimes</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="la-fin-du-jeu-lily-et-hades.html"><span class="num">✦</span><span class="libelle">La fin du jeu — Lily et Hadès</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="les-succes-les-secrets-et-les-astuces.html"><span class="num">✦</span><span class="libelle">Les succès, les secrets et les astuces</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes-index-manquables-et-check-list-finale.html"><span class="num">✦</span><span class="libelle">Annexes — index, manquables et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-spiritfarer.html"><span class="num">✦</span><span class="libelle">Sources — Spiritfarer</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-30">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="les-metaux-les-gemmes-et-lartisanat">Les métaux, les gemmes et l&#x27;artisanat</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-30"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-30">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Minage</strong> : relâche la pioche au premier clignotement.</li>
+<li><strong>Coffres cachés des mines</strong> : suis les fils électriques et traverse le mur.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Les 7 lingots, les 8 feuilles, les 5 gemmes, et les trois bâtiments qui les fabriquent.</p>
+<p class="alerte">⚠️ C'est la chaîne la plus longue du jeu : une feuille d'acier demande du minerai de fer, du charbon, une fonderie, un concasseur et une forge. Et c'est elle qui bloque les améliorations du bateau <em>(partie <strong>23</strong>)</em>.</p>
+<p>Bonne nouvelle : tous les noms de cette partie sont confirmés en français par le guide Steam français.</p>
+<h2 id="itineraire-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Le minage</strong>, et la règle de la pioche.</li>
+<li><strong>Les 5 roches et les 7 minerais.</strong></li>
+<li><strong>Le concasseur.</strong></li>
+<li><strong>La fonderie.</strong></li>
+<li><strong>La forge.</strong></li>
+<li><strong>Les 5 gemmes.</strong></li>
+<li><strong>Les 4 matériaux d'événement.</strong></li>
+</ol>
+<h2 id="deroule-pas-a-pas-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="le-minage">Le minage</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La marche à suivre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Place-toi à côté du gisement</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Maintiens la touche d'interaction — la <strong>Lanternelle</strong> devient une <strong>pioche</strong> qui se charge <em>(partie <strong>24</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Relâche juste avant la surcharge</strong>, ou juste au moment où la pioche commence à clignoter</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Certains gisements demandent plusieurs coups</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et voici l'erreur que tout le monde fait une fois.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le piège</th>
+<th>Ce qui se passe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Charger trop longtemps</strong></td>
+<td><strong>La Lanternelle tombe derrière Stella</strong>, <strong>et il faut attendre qu'elle la ramasse</strong></td>
+</tr>
+<tr>
+<td><strong>Le bon réflexe</strong></td>
+<td>Relâche au premier clignotement</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte manquable">⏳ Ce n'est pas puni sévèrement — <strong>juste quelques secondes perdues</strong>. Mais sur 200 gisements, ça compte.</p>
+<p>Et les coffres cachés des mines se traversent.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Plusieurs mines cachent des coffres</strong></td>
+<td>Accessibles seulement en marchant dans les murs</td>
+</tr>
+<tr>
+<td><strong>Comment les repérer</strong></td>
+<td>Suis les <strong>lumières</strong> et les <strong>fils électriques</strong> de la mine</td>
+</tr>
+<tr>
+<td><strong>Ce qu'il y a derrière</strong></td>
+<td>Un coffre au trésor</td>
+</tr>
+</tbody>
+</table></div>
+<p>Les fils sont la clé. Quand un fil électrique part dans un mur, le mur est faux. C'est vrai à la carrière Hoseki, au mont Toroyama et aux mines Kaltstein <em>(parties <strong>04</strong>, <strong>05</strong> et <strong>06</strong>)</em>.</p>
+<p><strong>Et une exception à retenir</strong> : aux rives de Flotsam, les passages secrets ne sont pas marqués par des fils <em>(partie <strong>03</strong>)</em>. Là-bas, il faut tâter les murs.</p>
+<h3 id="les-5-roches-et-les-7-minerais">Les 5 roches et les 7 minerais</h3>
+<p><strong>Les 5 roches</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Roche</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Charbon</strong></td>
+<td>Carrière Hoseki, mont Toroyama</td>
+</tr>
+<tr>
+<td><strong>Calcaire</strong></td>
+<td>Les mines et les îles</td>
+</tr>
+<tr>
+<td><strong>Marbre</strong></td>
+<td>Les mines et les îles</td>
+</tr>
+<tr>
+<td><strong>Quartz</strong></td>
+<td>Aucune île — les 2 dragons de quartz et les Sœurs Tortues <em>(parties <strong>05</strong> et <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Ardoise</strong></td>
+<td>Furogawa uniquement — <strong>carrière Hoseki et mont Toroyama</strong> <em>(partie <strong>05</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Le quartz et l'ardoise sont les deux goulots d'étranglement du minage.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La roche</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le quartz ne pousse sur aucune île</strong></td>
+<td><strong>Il faut les dragons de quartz (-24, 65) et (-172, 45)</strong>, <strong>ou le planter sur une sœur Tortue</strong></td>
+</tr>
+<tr>
+<td><strong>L'ardoise n'existe qu'à Furogawa</strong></td>
+<td>4 gisements, tous dans la région</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et le quartz devient de la <strong>poudre de silice</strong>, qui entre dans <strong>la forge elle-même</strong>, dans le <strong>verre clair</strong> et dans le <strong>verre cristallin</strong>. Plante du quartz sur une sœur Tortue dès que tu peux.</p>
+<p><strong>Les 7 minerais</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Minerai</th>
+<th>Où le trouver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Minerai d'aluminium</strong></td>
+<td>Le dragon d'aluminium ; <strong>les caisses de la région de Hummingberg</strong></td>
+</tr>
+<tr>
+<td><strong>Minerai de cuivre</strong></td>
+<td><strong>Baie de Greenhalten, campagne d'Iwashima, mont Toroyama</strong> ; <strong>les caisses de Furogawa</strong></td>
+</tr>
+<tr>
+<td><strong>Minerai d'or</strong></td>
+<td>Le dragon d'or ; quais de Southpoint, Crow's End inc., bosquet Caché, canopée Obscure, bois Brumeux</td>
+</tr>
+<tr>
+<td><strong>Minerai de fer</strong></td>
+<td>Carrière Hoseki, Crow's End inc., bosquet Caché, quais de Southpoint</td>
+</tr>
+<tr>
+<td><strong>Minerai de pulsar</strong></td>
+<td>L'événement des rayons pulsar de Bruce et Mickey, et rien d'autre <em>(partie <strong>17</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Minerai d'argent</strong></td>
+<td>Le dragon d'argent, et rien d'autre</td>
+</tr>
+<tr>
+<td><strong>Minerai de zinc</strong></td>
+<td>Quais de Southpoint, rives de Flotsam, bosquet Caché</td>
+</tr>
+</tbody>
+</table></div>
+<p>Deux minerais n'ont qu'une seule source, et c'est le problème de toute la fin du jeu.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le minerai</th>
+<th>Sa source unique</th>
+<th>La conséquence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pulsar</strong></td>
+<td>L'événement des rayons pulsar de Bruce et Mickey</td>
+<td>Si tu les libères trop tôt, tu n'as plus de pulsar <em>(partie <strong>17</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Argent</strong></td>
+<td>Le dragon d'argent</td>
+<td>Il faut y retourner, encore et encore</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et le pulsar est le pire des deux. Il entre dans le <strong>concasseur</strong> (7), la <strong>forge</strong> (5), l'amélioration du concasseur (5), la <strong>feuille céleste</strong>, et plusieurs améliorations du bateau <em>(parties <strong>23</strong> et <strong>25</strong>)</em>.</p>
+<p><strong>Le bon réflexe</strong> : relance l'événement des rayons pulsar à chaque fois que tu le vois sur la carte <em>(partie <strong>30</strong>)</em>, et garde Bruce et Mickey à bord longtemps.</p>
+<p><strong>Et si tu les as déjà libérés</strong> : l'événement se relance depuis la porte de leur bercail <em>(partie <strong>30</strong>)</em>.</p>
+<p><strong>Les deux autres poudres</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Poudre</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Poudre de carbone</strong></td>
+<td><strong>Charbon au concasseur</strong></td>
+</tr>
+<tr>
+<td><strong>Poudre de comète</strong></td>
+<td>Roche de comète au concasseur</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et la Roche de comète ne se mine pas : elle vient de l'événement des pluie de météores <em>(partie <strong>30</strong>)</em>. Elle ne se plante pas non plus sur les sœurs Tortues <em>(partie <strong>09</strong>)</em>.</p>
+<h3 id="le-concasseur">Le concasseur</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qui te le demande</strong></td>
+<td><strong>Bruce et Mickey</strong>, <strong>mission « Smash ! Smash ! »</strong> <em>(partie <strong>17</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Mais</strong></td>
+<td>Tu peux le construire et t'en servir avant</td>
+</tr>
+<tr>
+<td><strong>Coût du 1er</strong></td>
+<td>7 lingots de pulsar, 15 planches de frêne, 5 lingots de zinc</td>
+</tr>
+<tr>
+<td><strong>Coût des suivants</strong></td>
+<td><strong>×2, ×3, ×4</strong>, <strong>puis fixe</strong> <em>(partie <strong>25</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>nom français à vérifier en jeu</strong> : <strong>« Smash ! Smash ! »</strong>, qu'aucune source française ne traduit.</p>
+<p><strong>Comment il marche</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le fonctionnement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Interagis pour lancer un petit mini-jeu</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Jusqu'à <strong>5 fois le même objet</strong> à la fois</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Stella broie jusqu'à ce que tout soit traité, ou jusqu'à ce qu'elle parte</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Partir avant la fin laisse les objets restants dedans</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>1 entrée → 1 sortie</strong>, <strong>2 si le concasseur est amélioré</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les 9 recettes du concasseur</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Entrée</th>
+<th>Sortie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Canne à sucre</strong></td>
+<td><strong>Sucre</strong></td>
+</tr>
+<tr>
+<td><strong>Calcaire</strong></td>
+<td><strong>Poudre de chaux</strong></td>
+</tr>
+<tr>
+<td><strong>Quartz</strong></td>
+<td><strong>Poudre de silice</strong></td>
+</tr>
+<tr>
+<td><strong>Charbon</strong></td>
+<td><strong>Poudre de carbone</strong></td>
+</tr>
+<tr>
+<td><strong>Roche de comète</strong></td>
+<td><strong>Poudre de comète</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de tournesol</strong></td>
+<td><strong>Huile de tournesol</strong></td>
+</tr>
+<tr>
+<td><strong>Olive</strong></td>
+<td><strong>Huile d'olive</strong></td>
+</tr>
+<tr>
+<td><strong>Maïs</strong></td>
+<td><strong>Farine de maïs</strong> — <strong>après la quête de Stanley</strong> <em>(partie <strong>20</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Pomme, œuf ou graine de carotte</strong></td>
+<td>Expérience ratée — <strong>après la quête de Stanley</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et voilà deux informations qui changent ta routine.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>L'information</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Le sucre sort du concasseur</strong>, <strong>pas de la boutique</strong> : <strong>canne à sucre → sucre</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Le concasseur peut faire de la farine de maïs, <strong>comme le moulin à vent</strong> — <strong>après la quête de Stanley</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et les deux <strong>gras</strong> du jeu sortent d'ici : huile de tournesol et huile d'olive <em>(partie <strong>27</strong>)</em>.</p>
+<p><strong>L'amélioration du concasseur</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sa description</strong></td>
+<td>« Rapporte maintenant plus de ressources, grâce à toute cette puissance de broyage. »</td>
+</tr>
+<tr>
+<td><strong>Où</strong></td>
+<td>Complète la collection de gemmes du musée de Susan <em>(les 5)</em> <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Ce qu'elle fait</strong></td>
+<td>Double toutes les sorties</td>
+</tr>
+<tr>
+<td><strong>Son coût</strong></td>
+<td>5 lingots de pulsar, 6 poudres de comète, 6 poudres de carbone, 6 poudres de silice, <strong>585 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="la-fonderie">La fonderie</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qui te la demande</strong></td>
+<td>Astrid, <strong>mission « Lingots d'or »</strong> <em>(partie <strong>13</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Mais</strong></td>
+<td>Tu peux la construire et t'en servir avant</td>
+</tr>
+<tr>
+<td><strong>Coût de la 1re</strong></td>
+<td>10 charbons, 10 planches de chêne</td>
+</tr>
+<tr>
+<td><strong>Ce qu'il faut dedans</strong></td>
+<td><strong>Du charbon dans le four central</strong>, avant de pouvoir fondre quoi que ce soit</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le charbon est le carburant de la fonderie. Et il se <strong>cuisine</strong> : bois ou sciure au four <em>(partie <strong>27</strong>)</em>. Beaucoup de joueurs le cherchent dans les mines alors qu'ils peuvent en faire.</p>
+<p>Le mini-jeu du soufflet, et c'est le plus exigeant du jeu</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le fonctionnement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Jusqu'à 5 de chaque objet d'un coup</strong> — <strong>et tout fond en même temps</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Stella actionne le soufflet <strong>en alternance</strong> pour tenir la température</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Le thermomètre central monte ; la fonte est finie quand il est plein</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Si l'Aiguille est sous la plage</strong> : <strong>la progression ralentit, puis recule</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Si l'Aiguille reste au-dessus trop longtemps</strong> : le four Surchauffe et tout est à refaire, <strong>peu importe la progression</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Partir avant la fin remet la fonte à zéro et laisse les objets dedans</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ C'est le seul mini-jeu du jeu où on peut tout perdre. Reste devant la fonderie jusqu'à la fin.</p>
+<p>Et Astrid de bonne humeur s'en occupe toute seule : elle fond, puis t'offre les lingots <em>(partie <strong>13</strong>)</em>.</p>
+<p><strong>Les 10 recettes de la fonderie</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Entrée</th>
+<th>Sortie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Minerai d'aluminium</strong></td>
+<td><strong>Lingot d'aluminium</strong></td>
+</tr>
+<tr>
+<td><strong>Minerai de cuivre</strong></td>
+<td><strong>Lingot de cuivre</strong></td>
+</tr>
+<tr>
+<td><strong>Minerai d'or</strong></td>
+<td><strong>Lingot d'or</strong></td>
+</tr>
+<tr>
+<td><strong>Minerai de fer</strong></td>
+<td><strong>Lingot de fer</strong></td>
+</tr>
+<tr>
+<td><strong>Minerai de pulsar</strong></td>
+<td><strong>Lingot de pulsar</strong></td>
+</tr>
+<tr>
+<td><strong>Minerai d'argent</strong></td>
+<td><strong>Lingot d'argent</strong></td>
+</tr>
+<tr>
+<td><strong>Minerai de zinc</strong></td>
+<td><strong>Lingot de zinc</strong></td>
+</tr>
+<tr>
+<td><strong>Bouteille vide</strong></td>
+<td><strong>Verre</strong></td>
+</tr>
+<tr>
+<td><strong>Vieux soulier</strong></td>
+<td><strong>Colle tout usage</strong> — <strong>après la quête de Stanley</strong> <em>(partie <strong>20</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Maquereau</strong></td>
+<td>Expérience ratée — <strong>après la quête de Stanley</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Deux recettes surprenantes, et elles sont toutes les deux importantes.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La recette</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Bouteille vide → verre.</strong> Les bouteilles vides que tu pêches et que la graine étrange te donne ne sont pas des déchets <em>(partie <strong>26</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Vieux soulier → colle tout usage</strong>. <strong>Mais seulement après la quête de Stanley</strong> — et la colle sert au papier fait maison, donc aux affiches de Buck <em>(parties <strong>25</strong> et <strong>27</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et voilà une chaîne de dépendance à connaître : pour terminer la maison de Buck, il faut du papier fait maison → donc de la colle tout usage → donc avoir fait la quête d'expérimentation de Stanley → donc avoir pêché la graine mystérieuse après 4 départs <em>(parties <strong>18</strong>, <strong>20</strong> et <strong>28</strong>)</em>.</p>
+<p><strong>L'amélioration de la fonderie</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sa description</strong></td>
+<td>« Vois tes profits doubler avec tous ces lingots. »</td>
+</tr>
+<tr>
+<td><strong>Où</strong></td>
+<td>La mission « Prime perdue »</td>
+</tr>
+<tr>
+<td><strong>Ce qu'elle fait</strong></td>
+<td>Double la production pour chaque ingrédient utilisé</td>
+</tr>
+<tr>
+<td><strong>Son coût</strong></td>
+<td>12 tissus en nebula, 8 éclairs en bouteille, 7 gelées scintillantes, <strong>510 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>nom français à vérifier en jeu</strong> : <strong>« Prime perdue »</strong> <em>(« Lost Bounty »)</em>, qu'aucune source française ne traduit.</p>
+<p>Et les 12 tissus en nebula sont un problème : la fibre de nebula ne vient que de l'événement des cloportes d'ALICE <em>(partie <strong>15</strong>)</em>. <strong>Prévois-le</strong>.</p>
+<h3 id="la-forge-2">La forge</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qui te la demande</strong></td>
+<td>Gustav, <strong>mission « Le maître forgeron »</strong> <em>(partie <strong>16</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Mais</strong></td>
+<td>Tu peux la construire et t'en servir avant</td>
+</tr>
+<tr>
+<td><strong>Coût de la 1re</strong></td>
+<td>12 poudres de silice, 5 poudres de comète, 5 lingots de pulsar, 12 planches de frêne</td>
+</tr>
+<tr>
+<td><strong>Ce qu'elle fait</strong></td>
+<td>Elle transforme les lingots et les poudres en feuilles</td>
+</tr>
+<tr>
+<td><strong>Le rendement</strong></td>
+<td><strong>2 entrées → 1 feuille</strong>, <strong>2 feuilles si la forge est améliorée</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>nom français à vérifier en jeu</strong> : <strong>« Le maître forgeron »</strong> <em>(« The Master Forger »)</em>.</p>
+<p><strong>Les 8 feuilles</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Entrée 1</th>
+<th>Entrée 2</th>
+<th>Sortie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1 lingot de cuivre</strong></td>
+<td><strong>1 lingot de zinc</strong></td>
+<td><strong>Feuille de laiton</strong></td>
+</tr>
+<tr>
+<td><strong>1 lingot de cuivre</strong></td>
+<td><strong>1 lingot d'aluminium</strong></td>
+<td><strong>Feuille de bronze</strong></td>
+</tr>
+<tr>
+<td><strong>1 lingot d'or</strong></td>
+<td><strong>1 lingot d'argent</strong></td>
+<td><strong>Feuille d'électrum</strong></td>
+</tr>
+<tr>
+<td><strong>1 lingot d'or</strong></td>
+<td><strong>1 lingot de cuivre</strong></td>
+<td><strong>Feuille d'or rose</strong></td>
+</tr>
+<tr>
+<td><strong>1 lingot de fer</strong></td>
+<td><strong>1 poudre de carbone</strong></td>
+<td><strong>Feuille d'acier</strong></td>
+</tr>
+<tr>
+<td><strong>1 poudre de comète</strong></td>
+<td><strong>1 lingot de pulsar</strong></td>
+<td><strong>Feuille céleste</strong></td>
+</tr>
+<tr>
+<td><strong>1 lingot de zinc</strong></td>
+<td><strong>1 poudre de silice</strong></td>
+<td>Feuille de verre cristallin</td>
+</tr>
+<tr>
+<td><strong>1 poudre de chaux</strong></td>
+<td><strong>1 poudre de silice</strong></td>
+<td>Feuille de verre clair</td>
+</tr>
+</tbody>
+</table></div>
+<p>Les deux feuilles de verre se forgent chacune à leur rythme.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La feuille</th>
+<th>Le geste au marteau</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Feuille de verre clair</strong></td>
+<td>De longs coups : c'est plus rapide, et tu évites de briser ta Lanternelle</td>
+</tr>
+<tr>
+<td><strong>Feuille de verre cristallin</strong></td>
+<td><strong>Des coups courts et rapides</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Dans tous les cas, les deux demandent de la <strong>poudre de silice</strong>, donc du <strong>quartz</strong>.</p>
+<p><strong>L'amélioration de la forge</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sa description</strong></td>
+<td>« Comme ça, tu peux devenir maître forgeron. »</td>
+</tr>
+<tr>
+<td><strong>Où</strong></td>
+<td>La collection de métaux du musée de Susan <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Ce qu'elle fait</strong></td>
+<td>Double toutes les sorties de la forge</td>
+</tr>
+<tr>
+<td><strong>Son coût</strong></td>
+<td>1 feuille d'acier, 5 lingots d'or, 12 potions d'XP, 1 feuille céleste, <strong>890 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>à vérifier en jeu</strong> : <strong>le palier exact.</strong> **Le guide français dit <strong>10 métaux</strong> ; <strong>le wiki anglais dit <strong>9</strong>, en précisant « la troisième récompense ».</strong> *<em>Les paliers français sont 4, 7, 10 et 13, donc la troisième récompense tombe bien à <strong>10</strong></em>.</p>
+<h3 id="les-5-gemmes">Les 5 gemmes</h3>
+<p>Les gemmes sont la <strong>12e catégorie</strong> de ton inventaire. Elles ne servent presque qu'aux décorations et aux améliorations du bateau <em>(parties <strong>23</strong> et <strong>25</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Gemme</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Diamant</strong></td>
+<td>Carrière Hoseki ; <strong>miner du charbon avec les Outils améliorés</strong> ; <strong>le musée à 16 poissons</strong></td>
+</tr>
+<tr>
+<td><strong>Améthyste</strong></td>
+<td>Carrière Hoseki, mont Toroyama ; <strong>miner du calcaire avec les Outils améliorés</strong></td>
+</tr>
+<tr>
+<td><strong>Hématite</strong></td>
+<td>Mont Toroyama ; miner du minerai d'aluminium avec les Outils améliorés ; <strong>le musée à 8 ou 9 poissons</strong></td>
+</tr>
+<tr>
+<td><strong>Opale</strong></td>
+<td>Carrière Hoseki, mont Toroyama ; <strong>miner du marbre avec les Outils améliorés</strong> ; <strong>la boutique du phare Hikarishima</strong></td>
+</tr>
+<tr>
+<td><strong>Citrine</strong></td>
+<td>Mont Toroyama, <strong>toit de la maison d'ALICE</strong> <em>(il faut la clé de sa 1re quête)</em> ; <strong>miner du quartz avec les Outils améliorés</strong> ; <strong>le spot de plongée des champs Gurenu</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et les outils améliorés transforment le minage en usine à gemmes <em>(partie <strong>24</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ce que tu mines</th>
+<th>Ce que tu obtiens en plus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Charbon</strong></td>
+<td><strong>1 diamant</strong></td>
+</tr>
+<tr>
+<td><strong>Marbre</strong></td>
+<td><strong>1 opale</strong></td>
+</tr>
+<tr>
+<td><strong>Calcaire</strong></td>
+<td><strong>1 améthyste</strong></td>
+</tr>
+<tr>
+<td><strong>Quartz</strong></td>
+<td><strong>1 citrine — parfois sur un dragon de quartz</strong>, <strong>toujours sur une sœur Tortue</strong></td>
+</tr>
+<tr>
+<td><strong>Minerai d'aluminium</strong></td>
+<td><strong>1 hématite — parfois sur le dragon d'aluminium</strong>, <strong>toujours sur une sœur Tortue</strong></td>
+</tr>
+<tr>
+<td><strong>Minerai d'or du dragon d'or</strong></td>
+<td><strong>Parfois 1 opale</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Voilà donc la méthode pour farmer les gemmes sans limite <em>(le mot <strong>farm</strong> veut dire « récolter en boucle »)</em> :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La méthode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Obtiens les outils améliorés</strong> <em>(sanctuaire Perdu, 220, 167)</em> <em>(partie <strong>24</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Plante du quartz, du marbre, du calcaire et de l'ALUMINIUM sur les 3 Sœurs Tortues <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Mine-les : la gemme tombe à chaque fois sur une sœur Tortue</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Reviens quand ça a repoussé</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les 4 coffres à gemmes</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Sa gemme</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Au bout du passage secret de la carrière Hoseki</strong></td>
+<td><strong>1 améthyste + 1 diamant</strong></td>
+</tr>
+<tr>
+<td><strong>Près de la sortie des mines du mont Toroyama</strong></td>
+<td><strong>1 opale</strong></td>
+</tr>
+<tr>
+<td><strong>Sur le toit de la maison d'ALICE, au mont Toroyama</strong></td>
+<td><strong>1 citrine</strong></td>
+</tr>
+<tr>
+<td><strong>Sur le toit de l'usine de bons comptes &amp; cie</strong></td>
+<td><strong>1 améthyste</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte manquable">⏳ Et toutes les gemmes s'obtiennent aussi par une course de Francis, quand la course correspondante est débloquée <em>(partie <strong>09</strong>)</em>.</p>
+<h3 id="les-4-materiaux-devenement">Les 4 matériaux d'événement</h3>
+<p>Ils sont rangés avec les gemmes dans l'inventaire, mais ils n'ont rien à voir.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Matériau</th>
+<th>Sa source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Éclair en bouteille</strong></td>
+<td>L'événement des orages, <strong>et un événement de Buck</strong> <em>(parties <strong>18</strong> et <strong>30</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Potion d'XP</strong></td>
+<td>L'événement de Buck <em>(partie <strong>18</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Ectoplasme en bouteille</strong></td>
+<td>L'événement de Stanley, <strong>et rien d'autre</strong> <em>(partie <strong>20</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Gelée scintillante</strong></td>
+<td>L'événement des méduses <em>(partie <strong>30</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Ce sont les quatre ressources les plus difficiles du jeu, et le guide Steam français le dit explicitement pour deux d'entre elles : « ectoplasmes en bouteille : événement lié à Stanley ; bouteilles d'expérience : événement lié à Buck ».</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Pourquoi c'est un problème</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L'amélioration de la forge demande 12 Potions d'XP</strong></td>
+<td>Donc l'événement de Buck, en boucle</td>
+</tr>
+<tr>
+<td><strong>L'amélioration de la fonderie demande 8 éclairs et 7 gelées</strong></td>
+<td>Donc les orages et les méduses</td>
+</tr>
+<tr>
+<td><strong>La ruche demande 6 Potions d'XP</strong></td>
+<td><strong>Partie 26</strong></td>
+</tr>
+<tr>
+<td><strong>La cuisine demande 8 éclairs et 5 gelées</strong></td>
+<td><strong>Partie 25</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et si Buck ou Stanley sont partis, l'événement se relance depuis la porte de leur maison <em>(partie <strong>30</strong>)</em>. Ne démonte jamais leur maison.</p>
+<p><strong>Rappel utile</strong> : Buck ne peut jamais être libéré <em>(partie <strong>18</strong>)</em>. Son événement reste donc disponible toute la partie.</p>
+<h2 id="quetes-et-lieux-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-trois-missions-qui-debloquent-les-batiments">Les trois missions qui débloquent les bâtiments</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Mission</th>
+<th>Qui</th>
+<th>Ce qu'elle débloque</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>« Lingots d'or »</strong></td>
+<td>Astrid <em>(partie <strong>13</strong>)</em></td>
+<td>Le plan de la fonderie</td>
+</tr>
+<tr>
+<td><strong>« Smash ! Smash ! »</strong></td>
+<td><strong>Bruce et Mickey</strong> <em>(partie <strong>17</strong>)</em></td>
+<td>Le plan du concasseur</td>
+</tr>
+<tr>
+<td><strong>« Le maître forgeron »</strong></td>
+<td>Gustav <em>(partie <strong>16</strong>)</em></td>
+<td>Le plan de la forge</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et une précision qui fait gagner du temps : le wiki précise pour les trois bâtiments que tu peux les construire et t'en servir avant que l'esprit te le demande. La mission ne fait que te donner le plan si tu ne l'as pas déjà.</p>
+<h3 id="les-trois-ameliorations-et-dou-elles-viennent">Les trois améliorations, et d'où elles viennent</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Bâtiment</th>
+<th>L'amélioration vient de</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Concasseur</strong></td>
+<td><strong>La collection de gemmes complète</strong> <em>(les 5)</em> <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Fonderie</strong></td>
+<td>La mission « Prime perdue »</td>
+</tr>
+<tr>
+<td><strong>Forge</strong></td>
+<td><strong>La collection de métaux du musée</strong>, <strong>au 3e palier</strong> <em>(partie <strong>09</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Deux des trois viennent du musée de Susan. C'est une raison de plus de lui déposer tout ce que tu trouves <em>(partie <strong>09</strong>)</em>.</p>
+<h3 id="les-13-metaux-de-la-collection-du-musee">Les 13 métaux de la collection du musée</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Les 7 lingots</th>
+<th>Les 6 feuilles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Aluminium, cuivre, or, fer, pulsar, argent, zinc</strong></td>
+<td>Laiton, bronze, céleste, électrum, or rose, acier</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et les deux feuilles de verre n'en font pas partie. Elles ne comptent pas dans la collection de métaux, ni le <strong>verre</strong> de la bouteille vide. C'est pour ça que la collection fait 13 et non 15.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Palier</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>4 métaux</strong></td>
+<td>3 grandes bouteilles de lueurs</td>
+</tr>
+<tr>
+<td><strong>7 métaux</strong></td>
+<td>6 grandes bouteilles de lueurs</td>
+</tr>
+<tr>
+<td><strong>10 métaux</strong></td>
+<td>L'amélioration de la forge</td>
+</tr>
+<tr>
+<td><strong>13 métaux</strong></td>
+<td>La tenue du crépuscule</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-paliers-de-la-collection-de-gemmes">Les paliers de la collection de gemmes</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Palier</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1 gemme</strong></td>
+<td><strong>2 colliers de valeur</strong></td>
+</tr>
+<tr>
+<td><strong>2 gemmes</strong></td>
+<td><strong>2 vieilles peintures</strong></td>
+</tr>
+<tr>
+<td><strong>4 gemmes</strong></td>
+<td><strong>2 vieux tapis</strong></td>
+</tr>
+<tr>
+<td><strong>5 gemmes</strong></td>
+<td><strong>L'amélioration du concasseur</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lingot d'aluminium</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>Minerai d'aluminium à la fonderie</td>
+<td><strong>Feuille de bronze</strong> ; <strong>constructions</strong></td>
+</tr>
+<tr>
+<td><strong>Lingot de cuivre</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>Minerai de cuivre à la fonderie</td>
+<td><strong>Laiton, bronze, or rose</strong> ; <strong>56 pour les 5 corraux</strong> <em>(partie <strong>25</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Lingot d'or</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>Minerai d'or à la fonderie</td>
+<td><strong>Électrum, or rose</strong> ; <strong>5 pour l'amélioration de la forge</strong></td>
+</tr>
+<tr>
+<td><strong>Lingot de fer</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>Minerai de fer à la fonderie</td>
+<td><strong>Feuille d'acier</strong></td>
+</tr>
+<tr>
+<td><strong>Lingot de pulsar</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>L'événement des rayons pulsar de Bruce et Mickey, <strong>puis la fonderie</strong></td>
+<td>Feuille céleste, concasseur, forge</td>
+</tr>
+<tr>
+<td><strong>Lingot d'argent</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td><strong>Le dragon d'argent uniquement</strong>, <strong>puis la fonderie</strong></td>
+<td><strong>Feuille d'électrum</strong></td>
+</tr>
+<tr>
+<td><strong>Lingot de zinc</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>Minerai de zinc à la fonderie</td>
+<td>Laiton, verre cristallin, concasseur</td>
+</tr>
+<tr>
+<td><strong>Feuille de laiton</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>Cuivre + zinc à la forge</td>
+<td>Améliorations du bateau et décorations</td>
+</tr>
+<tr>
+<td><strong>Feuille de bronze</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>Cuivre + aluminium à la forge</td>
+<td>Améliorations du bateau et décorations</td>
+</tr>
+<tr>
+<td><strong>Feuille d'électrum</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>Or + argent à la forge</td>
+<td>Améliorations du bateau et décorations</td>
+</tr>
+<tr>
+<td><strong>Feuille d'or rose</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>Or + cuivre à la forge</td>
+<td>Améliorations du bateau et décorations</td>
+</tr>
+<tr>
+<td><strong>Feuille d'acier</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>Fer + poudre de carbone à la forge</td>
+<td>Le bateau, et l'amélioration de la forge</td>
+</tr>
+<tr>
+<td><strong>Feuille céleste</strong></td>
+<td><span class="badge neutre">Métal</span></td>
+<td>Poudre de comète + lingot de pulsar à la forge</td>
+<td>Le bateau, et l'amélioration de la forge</td>
+</tr>
+<tr>
+<td><strong>Feuille de verre clair</strong></td>
+<td><span class="badge neutre">Verre</span></td>
+<td>Poudre de chaux + poudre de silice à la forge, <strong>en longs coups</strong></td>
+<td><strong>Décorations et améliorations</strong></td>
+</tr>
+<tr>
+<td><strong>Feuille de verre cristallin</strong></td>
+<td><span class="badge neutre">Verre</span></td>
+<td>Lingot de zinc + poudre de silice à la forge, <strong>en coups courts et rapides</strong></td>
+<td><strong>Décorations et améliorations</strong></td>
+</tr>
+<tr>
+<td><strong>Verre</strong></td>
+<td><span class="badge neutre">Verre</span></td>
+<td>Bouteille vide à la fonderie</td>
+<td><strong>Décorations</strong></td>
+</tr>
+<tr>
+<td><strong>Poudre de carbone</strong></td>
+<td><span class="badge neutre">Poudre</span></td>
+<td><strong>Charbon au concasseur</strong></td>
+<td><strong>Feuille d'acier</strong></td>
+</tr>
+<tr>
+<td><strong>Poudre de silice</strong></td>
+<td><span class="badge neutre">Poudre</span></td>
+<td><strong>Quartz au concasseur</strong></td>
+<td>La forge elle-même, et les 2 feuilles de verre</td>
+</tr>
+<tr>
+<td><strong>Poudre de chaux</strong></td>
+<td><span class="badge neutre">Poudre</span></td>
+<td><strong>Calcaire au concasseur</strong></td>
+<td>Feuille de verre clair</td>
+</tr>
+<tr>
+<td><strong>Poudre de comète</strong></td>
+<td><span class="badge neutre">Poudre</span></td>
+<td><strong>Roche de comète au concasseur</strong> <em>(événement des pluie de météores)</em></td>
+<td>Feuille céleste, et la forge elle-même</td>
+</tr>
+<tr>
+<td><strong>Sucre</strong></td>
+<td><span class="badge neutre">Sucrant</span></td>
+<td>Canne à sucre au concasseur</td>
+<td><strong>Toute la catégorie sucrant</strong> <em>(partie <strong>27</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Huile d'olive</strong></td>
+<td><span class="badge neutre">Gras</span></td>
+<td><strong>Olive au concasseur</strong></td>
+<td>Toute la catégorie gras</td>
+</tr>
+<tr>
+<td><strong>Huile de tournesol</strong></td>
+<td><span class="badge neutre">Gras</span></td>
+<td>Graine de tournesol au concasseur</td>
+<td>Toute la catégorie gras</td>
+</tr>
+<tr>
+<td><strong>Colle tout usage</strong></td>
+<td><span class="badge neutre">Ressource</span></td>
+<td><strong>Vieux soulier à la fonderie</strong>, <strong>après la quête de Stanley</strong></td>
+<td>Le papier fait maison, donc les affiches de Buck</td>
+</tr>
+<tr>
+<td><strong>Diamant</strong></td>
+<td><span class="badge neutre">Gemme</span></td>
+<td><strong>Miner du charbon avec les Outils améliorés</strong> ; <strong>coffre de la carrière Hoseki</strong> ; <strong>musée à 16 poissons</strong></td>
+<td><strong>Décorations, améliorations</strong></td>
+</tr>
+<tr>
+<td><strong>Améthyste</strong></td>
+<td><span class="badge neutre">Gemme</span></td>
+<td><strong>Miner du calcaire avec les Outils améliorés</strong> ; <strong>2 coffres</strong></td>
+<td><strong>Décorations, améliorations</strong></td>
+</tr>
+<tr>
+<td><strong>Hématite</strong></td>
+<td><span class="badge neutre">Gemme</span></td>
+<td>Miner du minerai d'aluminium avec les Outils améliorés ; <strong>musée</strong></td>
+<td><strong>Décorations, améliorations</strong></td>
+</tr>
+<tr>
+<td><strong>Opale</strong></td>
+<td><span class="badge neutre">Gemme</span></td>
+<td><strong>Miner du marbre avec les Outils améliorés</strong> ; <strong>boutique du phare Hikarishima</strong></td>
+<td><strong>Décorations, améliorations</strong></td>
+</tr>
+<tr>
+<td><strong>Citrine</strong></td>
+<td><span class="badge neutre">Gemme</span></td>
+<td><strong>Miner du quartz avec les Outils améliorés</strong> ; <strong>toit de la maison d'Alice</strong> ; <strong>plongée des champs Gurenu</strong></td>
+<td>La plus rare des cinq</td>
+</tr>
+<tr>
+<td><strong>Amélioration du concasseur</strong></td>
+<td><span class="badge neutre">Amélioration</span></td>
+<td>La collection de gemmes complète</td>
+<td>Double toutes les sorties</td>
+</tr>
+<tr>
+<td><strong>Amélioration de la fonderie</strong></td>
+<td><span class="badge neutre">Amélioration</span></td>
+<td>La mission « Prime perdue »</td>
+<td><strong>Double la production</strong></td>
+</tr>
+<tr>
+<td><strong>Amélioration de la forge</strong></td>
+<td><span class="badge neutre">Amélioration</span></td>
+<td><strong>10 métaux au musée</strong></td>
+<td>Double toutes les sorties</td>
+</tr>
+<tr>
+<td><strong>Tenue du crépuscule</strong></td>
+<td><span class="badge neutre">Tenue</span></td>
+<td><strong>13 métaux au musée</strong></td>
+<td><strong>Décoratif</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="lordre-dans-lequel-monter-la-chaine">L'ordre dans lequel monter la chaîne</h3>
+<p>Ne construis pas la forge en premier. Elle demande du pulsar et de la silice.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>L'ordre qui marche</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>La fonderie <em>(10 charbons, 10 planches de chêne)</em> — la moins chère, et elle débloque tous les lingots</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Cuisine du charbon</strong> <em>(bois ou sciure au four)</em> <strong>pour l'alimenter</strong> <em>(partie <strong>27</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Fais les lingots dont tu as besoin pour le bateau <em>(partie <strong>23</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Le concasseur <em>(7 lingots de pulsar, 15 planches de frêne, 5 lingots de zinc)</em> — <strong>il faut déjà du pulsar</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>La forge <em>(12 poudres de silice, 5 poudres de comète, 5 lingots de pulsar, 12 planches de frêne)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ Et la forge demande 12 poudres de silice, <strong>donc 12 quartz</strong>, qui ne poussent sur aucune île. Plante du quartz sur une sœur Tortue avant de vouloir la forge <em>(partie <strong>09</strong>)</em>.</p>
+<h3 id="les-pieges-de-lartisanat">Les pièges de l'artisanat</h3>
+<ul>
+<li>Charger la pioche trop longtemps. La <strong>Lanternelle</strong> tombe derrière Stella. <strong>Relâche au premier clignotement.</strong></li>
+<li>Oublier de mettre du charbon dans la fonderie. Rien ne fond sans carburant.</li>
+<li>Chercher du charbon dans les mines alors qu'il se cuisine <em>(bois ou sciure au four)</em> <em>(partie <strong>27</strong>)</em>.</li>
+<li><strong>Laisser la fonderie surchauffer.</strong> <strong>tout est à refaire.</strong> Reste devant.</li>
+<li>Quitter la fonderie en cours de fonte. La fonte repart de zéro.</li>
+<li class="alerte">⚠️ Quitter le concasseur en cours. <strong>Les objets restent dedans</strong> <em>(moins grave : rien n'est perdu)</em>.</li>
+<li>Libérer Bruce et Mickey trop tôt. Le pulsar n'a pas d'autre source <em>(partie <strong>17</strong>)</em>.</li>
+<li>Démonter la maison de Buck ou de Stanley. On ne peut plus relancer leur événement <em>(partie <strong>30</strong>)</em>.</li>
+<li><strong>Jeter les bouteilles vides.</strong> Elles font du verre à la fonderie.</li>
+<li><strong>Jeter les vieux souliers.</strong> Ils font de la colle tout usage.</li>
+<li class="alerte">⚠️ Essayer de faire de la colle avant la quête de Stanley. La recette n'existe pas encore.</li>
+<li>Construire la forge sans quartz planté. 12 poudres de silice, c'est 12 quartz.</li>
+<li>Se fier aveuglément aux recettes des deux feuilles de verre. Le wiki admet lui-même ne pas savoir.</li>
+<li>Miner sans les outils améliorés en fin de partie. Tu passes à côté de toutes les gemmes.</li>
+</ul>
+<h3 id="trois-astuces-qui-changent-tout">Trois astuces qui changent tout</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>L'astuce</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Les Sœurs Tortues sont une mine infinie</strong> : plante du quartz, du marbre, du calcaire et de l'aluminium, <strong>mine avec les Outils améliorés</strong>, <strong>la gemme tombe à chaque coup</strong> <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Astrid de bonne humeur fond tes lingots</strong> : <strong>tu n'as plus qu'à lui parler</strong> <em>(partie <strong>13</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Construis, coche, démonte : démonter un bâtiment de production rend le coût de construction, <strong>mais pas les matériaux d'amélioration</strong> <em>(partie <strong>25</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ce-quil-faut-stocker-et-en-quelle-quantite">Ce qu'il faut stocker, et en quelle quantité</h3>
+<p><strong>Les besoins totaux, en gros, pour un 100 %</strong> :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La ressource</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lingots de pulsar</strong></td>
+<td>7 pour le concasseur, 5 pour la forge, 5 pour son amélioration, plus les feuilles célestes</td>
+</tr>
+<tr>
+<td><strong>Poudre de silice</strong></td>
+<td>12 pour la forge, 6 pour l'amélioration du concasseur, plus les 2 feuilles de verre</td>
+</tr>
+<tr>
+<td><strong>Potions d'XP</strong></td>
+<td>12 pour l'amélioration de la forge, 6 pour la ruche <em>(partie <strong>26</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Tissus en nebula</strong></td>
+<td>12 pour l'amélioration de la fonderie, 12 pour le Souffleur <em>(partie <strong>23</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Charbon</strong></td>
+<td>10 pour la fonderie, plus tout le carburant</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Et la conclusion pratique</strong> : l'amélioration de la fonderie et celle de la forge coûtent très cher en matériaux d'événement. Fais-les, mais tard, quand tu as déjà relancé les événements plusieurs fois <em>(partie <strong>30</strong>)</em>.</p>
+<h2 id="alertes-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ Relâche la pioche au premier clignotement. Chargée trop longtemps, la <strong>Lanternelle</strong> tombe.</li>
+<li class="alerte">⚠️ <strong>Les coffres cachés des mines se traversent</strong> : suis les <strong>fils électriques</strong> et marche dans le mur. Sauf aux rives de Flotsam, où rien n'est marqué <em>(partie <strong>03</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>Le quartz ne pousse sur aucune île</strong> : les 2 dragons de quartz, ou une sœur Tortue <em>(parties <strong>05</strong> et <strong>09</strong>)</em>. Et la forge en demande 12.</li>
+<li class="alerte">⚠️ <strong>L'ardoise n'existe qu'à Furogawa</strong> <em>(partie <strong>05</strong>)</em>.</li>
+<li class="alerte">⚠️ Le pulsar ne vient que de l'événement de Bruce et Mickey <em>(partie <strong>17</strong>)</em>. Ne les libère pas avant d'en avoir assez.</li>
+<li class="alerte">⚠️ <strong>L'argent ne vient que du dragon d'argent.</strong></li>
+<li class="alerte">⚠️ La Roche de comète ne se mine pas et ne se plante pas : c'est l'événement des pluie de météores <em>(parties <strong>09</strong> et <strong>30</strong>)</em>.</li>
+<li class="alerte">⚠️ La fonderie a besoin de charbon dans son four, et le charbon se cuisine <em>(partie <strong>27</strong>)</em>.</li>
+<li class="alerte">⚠️ Si la fonderie Surchauffe, tout est à refaire. Et quitter la fonderie en cours remet la fonte à zéro.</li>
+<li class="alerte">⚠️ <strong>Bouteille vide → verre</strong> et vieux soulier → colle tout usage, <strong>à la fonderie.</strong> La colle n'est possible qu'APRÈS la quête de Stanley <em>(partie <strong>20</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>La chaîne des affiches de Buck</strong> : papier fait maison ← colle tout usage ← quête de Stanley ← graine mystérieuse pêchée après 4 départs <em>(parties <strong>18</strong>, <strong>20</strong> et <strong>28</strong>)</em>.</li>
+<li class="alerte">⚠️ Les 13 métaux du musée sont 7 lingots + 6 feuilles. Les deux feuilles de verre et le verre n'y comptent pas.</li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : le palier exact de l'amélioration de la forge <em>(10 selon la source française, 9 selon le wiki anglais)</em> ; le palier de l'hématite au musée <em>(8 selon le wiki, 9 selon la source française)</em> ; les emplacements précis du calcaire et du marbre île par île ; si le concasseur accepte la pomme, l'œuf ou la graine de carotte <em>(la formulation du wiki est ambiguë)</em>.</li>
+<li class="alerte">⚠️ <strong>noms français à vérifier en jeu</strong> : <strong>« Smash ! Smash ! »</strong>, <strong>« Prime perdue »</strong> <em>(« Lost Bounty »)</em>, <strong>« Le maître forgeron »</strong> <em>(« The Master Forger »)</em> — aucune source française ne donne ces intitulés. Les noms de <strong>métaux</strong>, de <strong>poudres</strong> et de <strong>gemmes</strong>, eux, sont tous confirmés par le guide Steam français.</li>
+</ul>
+<h2 id="check-list-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="les-3-batiments">Les 3 bâtiments</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Fonderie construite</strong> <em>(10 charbons, 10 planches de chêne)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Concasseur construit</strong> <em>(7 lingots de pulsar, 15 planches de frêne, 5 lingots de zinc)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Forge construite</strong> <em>(12 poudres de silice, 5 poudres de comète, 5 lingots de pulsar, 12 planches de frêne)</em></li>
+</ul>
+<h3 id="les-3-ameliorations">Les 3 améliorations</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Amélioration du concasseur</strong> <em>(collection de gemmes complète)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Amélioration de la fonderie</strong> <em>(mission « Prime perdue »)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Amélioration de la forge</strong> <em>(10 métaux au musée)</em></li>
+</ul>
+<h3 id="les-7-lingots">Les 7 lingots</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Lingot d'aluminium</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Lingot de cuivre</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Lingot d'or</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Lingot de fer</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Lingot de pulsar</strong> <em>(Bruce et Mickey)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Lingot d'argent</strong> <em>(dragon d'argent)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Lingot de zinc</strong></li>
+</ul>
+<h3 id="les-8-feuilles">Les 8 feuilles</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Feuille de laiton</strong> <em>(cuivre + zinc)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Feuille de bronze</strong> <em>(cuivre + aluminium)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Feuille d'électrum</strong> <em>(or + argent)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Feuille d'or rose</strong> <em>(or + cuivre)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Feuille d'acier</strong> <em>(fer + poudre de carbone)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Feuille céleste</strong> <em>(poudre de comète + lingot de pulsar)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Feuille de verre clair</strong> <em>(poudre de chaux + poudre de silice)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Feuille de verre cristallin</strong> <em>(lingot de zinc + poudre de silice)</em></li>
+</ul>
+<h3 id="les-4-poudres-et-le-verre">Les 4 poudres et le verre</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Poudre de carbone</strong> <em>(charbon)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Poudre de silice</strong> <em>(quartz)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Poudre de chaux</strong> <em>(calcaire)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Poudre de comète</strong> <em>(roche de comète)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Verre</strong> <em>(bouteille vide à la fonderie)</em></li>
+</ul>
+<h3 id="les-5-gemmes-2">Les 5 gemmes</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Diamant</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Améthyste</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Hématite</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Opale</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Citrine</strong></li>
+<li class="tache"><input type="checkbox"> <strong>13 métaux déposés au musée</strong> → <strong>la tenue du crépuscule</strong></li>
+</ul>
+<h3 id="la-mine-infinie">La mine infinie</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Outils améliorés obtenus</strong> <em>(sanctuaire Perdu)</em></li>
+<li class="tache"><input type="checkbox"> Quartz planté sur une sœur Tortue → <strong>citrine garantie</strong></li>
+<li class="tache"><input type="checkbox"> Aluminium planté sur une sœur Tortue → <strong>hématite garantie</strong></li>
+<li class="tache"><input type="checkbox"> Marbre planté sur une sœur Tortue → <strong>opale garantie</strong></li>
+<li class="tache"><input type="checkbox"> Calcaire miné avec les Outils améliorés → <strong>améthyste</strong></li>
+<li class="tache"><input type="checkbox"> Charbon miné avec les Outils améliorés → <strong>diamant</strong></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="la-peche-tous-les-poissons.html" rel="prev"><small>← Partie précédente</small><b>La pêche — tous les poissons</b></a><a class="suiv" href="les-evenements-maritimes.html" rel="next"><small>Partie suivante →</small><b>Les événements maritimes</b></a><a class="tout" href="spiritfarer.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Spiritfarer · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

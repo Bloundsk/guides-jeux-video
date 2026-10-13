@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sources – Guide Pokémon Violet</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Pokémon Violet, Sources : Ces écarts sont des erreurs, pas des divergences de nom : j&#x27;ai retenu la version qui s&#x27;appuie sur le plus de détails vérifiables.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/sources.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Sources · Guide Pokémon Violet">
+<meta property="og:description" content="Pokémon Violet, Sources : Ces écarts sont des erreurs, pas des divergences de nom : j&#x27;ai retenu la version qui s&#x27;appuie sur le plus de détails vérifiables.">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/sources.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Pokémon Violet", "item": "https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/"}, {"@type": "ListItem", "position": 3, "name": "Sources", "item": "https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/sources.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="pokemon-violet" class="compact" data-partie="sources"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Pokémon Violet</a><span aria-hidden="true">›</span><span>Références</span></nav>
+<p class="gjv-jeu">Pokémon Violet : le guide complet en français</p>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Pokémon <em>Violet</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction-tout-comprendre-avant-de-commencer.html"><span class="num">00</span><span class="libelle">Introduction : tout comprendre avant de commencer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-le-prologue-cuchalaga-miraidon-et-lacademie-raisin.html"><span class="num">01</span><span class="libelle">Le prologue : Cuchalaga, Miraidon et l&#x27;Académie Raisin</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-sevaro-larene-insecte-et-le-dominant-roche-falaise.html"><span class="num">02</span><span class="libelle">Sevaro : l&#x27;arène Insecte et le Dominant Roche-Falaise</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-cuencia-larene-plante-et-le-dominant-vaste-ciel.html"><span class="num">03</span><span class="libelle">Cuencia : l&#x27;arène Plante et le Dominant Vaste-Ciel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-le-groupe-segin-et-larene-electrik-de-levalendura.html"><span class="num">04</span><span class="libelle">Le groupe Segin et l&#x27;arène Électrik de Levalendura</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-le-groupe-schedar-et-le-dominant-acier-tranche.html"><span class="num">05</span><span class="libelle">Le groupe Schedar et le Dominant Acier-Tranché</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-jarramanca-porto-marinada-et-le-groupe-tsih.html"><span class="num">06</span><span class="libelle">Jarramanca, Porto Marinada et le groupe Tsih</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-mezclamora-larene-normal-et-le-plat-secret.html"><span class="num">07</span><span class="libelle">Mezclamora : l&#x27;arène Normal et le plat secret</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-frigao-larene-spectre-et-le-dominant-tremble-terre.html"><span class="num">08</span><span class="libelle">Frigao : l&#x27;arène Spectre et le Dominant Tremble-Terre</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-alforneira-larene-psy.html"><span class="num">09</span><span class="libelle">Alforneira : l&#x27;arène Psy</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-le-mont-nappe-larene-glace-et-le-groupe-ruchbah.html"><span class="num">10</span><span class="libelle">Le Mont Nappé : l&#x27;arène Glace et le groupe Ruchbah</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="11-le-dominant-fourbe-dragon-et-le-groupe-caph.html"><span class="num">11</span><span class="libelle">Le Dominant Fourbe-Dragon et le groupe Caph</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-la-ligue-pokemon-lexamen-le-conseil-4-et-alisma.html"><span class="num">12</span><span class="libelle">La Ligue Pokémon : l&#x27;examen, le Conseil 4 et Alisma</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="13-les-trois-denouements-menzi-pepper-clavel-et-pania.html"><span class="num">13</span><span class="libelle">Les trois dénouements : Menzi, Pepper, Clavel et Pania</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="14-retour-aux-sources-la-zone-zero-et-le-professeur-turum.html"><span class="num">14</span><span class="libelle">Retour aux sources : la Zone Zéro et le professeur Turum</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="15-lapres-generique-revanches-tournoi-et-juge-iv.html"><span class="num">15</span><span class="libelle">L&#x27;après-générique : revanches, tournoi et Juge IV</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="16-les-zones-sud-la-route-de-cuchalaga-et-la-caverne-de-la-crique.html"><span class="num">16</span><span class="libelle">Les Zones Sud, la Route de Cuchalaga et la Caverne de la Crique</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="17-les-zones-ouest-et-le-desert-rotissable.html"><span class="num">17</span><span class="libelle">Les Zones Ouest et le Désert Rôtissable</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="18-les-zones-est-et-le-bosquet-tague.html"><span class="num">18</span><span class="libelle">Les Zones Est et le Bosquet Tagué</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="19-le-nord-zones-nord-lac-asrol-foret-toastee-et-mont-nappe.html"><span class="num">19</span><span class="libelle">Le nord : Zones Nord, Lac Asrol, Forêt Toastée et Mont Nappé</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="20-le-cratere-de-paldea-et-la-zone-zero.html"><span class="num">20</span><span class="libelle">Le Cratère de Paldea et la Zone Zéro</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="21-les-villes-de-paldea-boutiques-pnj-et-services.html"><span class="num">21</span><span class="libelle">Les villes de Paldea : boutiques, PNJ et services</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="22-les-tours-dobservation-les-grottes-et-les-spots-de-pokemon-rares.html"><span class="num">22</span><span class="libelle">Les Tours d&#x27;Observation, les grottes et les spots de Pokémon rares</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="23-les-32-pieux-et-les-quatre-tresors-du-fleau.html"><span class="num">23</span><span class="libelle">Les 32 pieux et les quatre Trésors du Fléau</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="24-les-pieces-de-mordudor-et-gromago.html"><span class="num">24</span><span class="libelle">Les pièces de Mordudor et Gromago</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="25-les-capsules-techniques-et-la-machine-a-ct.html"><span class="num">25</span><span class="libelle">Les Capsules Techniques et la Machine à CT</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="26-les-pique-niques-les-sandwichs-et-les-auras-gustatives.html"><span class="num">26</span><span class="libelle">Les pique-niques, les sandwichs et les Auras Gustatives</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="27-la-teracristallisation-et-les-raids-teracristal.html"><span class="num">27</span><span class="libelle">La Téracristallisation et les Raids Téracristal</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="28-les-pokemon-paradoxes-et-les-exclusivites-de-violet.html"><span class="num">28</span><span class="libelle">Les Pokémon paradoxes et les exclusivités de Violet</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="29-les-evolutions-speciales-lelevage-et-les-echanges.html"><span class="num">29</span><span class="libelle">Les évolutions spéciales, l&#x27;élevage et les échanges</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="30-le-combat-les-types-les-talents-et-le-choix-dequipe.html"><span class="num">30</span><span class="libelle">Le combat, les types, les talents et le choix d&#x27;équipe</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="31-largent-les-objets-les-encheres-et-les-tenues.html"><span class="num">31</span><span class="libelle">L&#x27;argent, les objets, les enchères et les tenues</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="32-lacademie-les-cours-et-le-multijoueur.html"><span class="num">32</span><span class="libelle">L&#x27;Académie, les cours et le multijoueur</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="33-le-masque-turquoise-arriver-a-septentria.html"><span class="num">33</span><span class="libelle">Le Masque Turquoise : arriver à Septentria</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="34-le-masque-turquoise-les-trois-adoramis-et-ogerpon.html"><span class="num">34</span><span class="libelle">Le Masque Turquoise : les trois Adoramis et Ogerpon</span><span class="compte"></span></a></li>
+<li data-section="section-36"><a href="35-le-masque-turquoise-les-collectibles-de-septentria.html"><span class="num">35</span><span class="libelle">Le Masque Turquoise : les collectibles de Septentria</span><span class="compte"></span></a></li>
+<li data-section="section-37"><a href="36-le-disque-indigo-linstitut-myrtille-et-le-terra-dome.html"><span class="num">36</span><span class="libelle">Le Disque Indigo : l&#x27;Institut Myrtille et le Terra-Dôme</span><span class="compte"></span></a></li>
+<li data-section="section-38"><a href="37-le-disque-indigo-la-ligue-myrtille-et-terapagos.html"><span class="num">37</span><span class="libelle">Le Disque Indigo : la Ligue Myrtille et Terapagos</span><span class="compte"></span></a></li>
+<li data-section="section-39"><a href="38-le-disque-indigo-les-quetes-myrtille-et-les-25-legendaires.html"><span class="num">38</span><span class="libelle">Le Disque Indigo : les Quêtes Myrtille et les 25 légendaires</span><span class="compte"></span></a></li>
+<li data-section="section-40"><a href="39-la-nuit-des-kibi-lepilogue-et-pechaminus.html"><span class="num">39</span><span class="libelle">La Nuit des Kibi : l&#x27;épilogue et Pêchaminus</span><span class="compte"></span></a></li>
+<li data-section="section-41"><a href="40-les-trois-pokedex-paldea-septentria-et-myrtille.html"><span class="num">40</span><span class="libelle">Les trois Pokédex : Paldea, Septentria et Myrtille</span><span class="compte"></span></a></li>
+<li data-section="section-42"><a href="99-annexes-index-manquables-et-check-list-finale.html"><span class="num">99</span><span class="libelle">Annexes : index, manquables et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-43"><a href="#sources"><span class="num">✦</span><span class="libelle">Sources</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-43">
+<header class="tete-section">
+<p class="eyebrow">Références</p>
+<h1 id="sources">Sources</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-43"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-43">
+<p>Toutes les pages ci-dessous ont été consultées pour écrire ce guide. Les noms français viennent en priorité de <strong>Poképédia</strong>, qui reprend les textes du jeu ; <strong>Pokébip</strong> sert de référence pour les équipes, les niveaux et les listes d'objets ; <strong>Millenium</strong> fournit la soluce pas à pas illustrée en français ; <strong>Breakflip</strong>, <strong>Eternia</strong> et <strong>Dexerto France</strong> servent de recoupement.</p>
+<h2 id="les-sources-principales" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Les sources principales</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Ce qu'elle apporte</th>
+<th>Adresse</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Poképédia</strong></td>
+<td>Noms français officiels, équipes complètes des personnages, structure des lieux</td>
+<td>https://www.pokepedia.fr</td>
+</tr>
+<tr>
+<td><strong>Pokébip</strong></td>
+<td>Guide des lieux : Pokémon par biome, objets, Capsules Techniques avec emplacement, équipes et revanches</td>
+<td>https://www.pokebip.com</td>
+</tr>
+<tr>
+<td><strong>Millenium</strong></td>
+<td>Soluce pas à pas : une page par arène, par Dominant et par repaire</td>
+<td>https://www.millenium.org/games/game-1183/guides/guide-1939</td>
+</tr>
+<tr>
+<td><strong>Breakflip</strong></td>
+<td>Mécaniques et épilogue</td>
+<td>https://www.breakflip.com</td>
+</tr>
+<tr>
+<td><strong>Eternia</strong></td>
+<td>Fiches par Dominant et par lieu</td>
+<td>https://www.eternia.fr</td>
+</tr>
+<tr>
+<td><strong>Dexerto France</strong></td>
+<td>Ordre de progression conseillé avec niveaux</td>
+<td>https://www.dexerto.fr</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="phase-1-identification-et-decoupage" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Phase 1 — identification et découpage</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.pokepedia.fr/Pok%C3%A9mon_%C3%89carlate_et_Violet">Pokémon Écarlate et Violet</a></td>
+<td>Académie Raisin, professeur Turum, Miraidon, les trois trames et « Retour aux sources », mises à jour jusqu'à la 4.0.0</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Paldea">Paldea</a></td>
+<td>Liste des villes, des zones numérotées, des mers et des lieux notables ; Septentria et Institut Myrtille</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeuxvideo/pokemon-ecarlate-violet/champions-d-arene">Champions d'Arène</a></td>
+<td>Les 8 champions avec ville, type, équipe et niveaux</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Ligue_Pok%C3%A9mon_(Paldea)">Ligue Pokémon (Paldea)</a></td>
+<td>Le Conseil 4, Alisma, l'examen de maîtrise, le lieu de la Ligue</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Team_Star">Team Star</a></td>
+<td>Les cinq groupes, leurs types, leurs boss, Cassiopée</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Pok%C3%A9mon_Dominant_(Paldea)">Pokémon Dominant (Paldea)</a></td>
+<td>Les cinq Dominants, leurs lieux, les cinq Épices Secrètes</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/dominants">Les Dominants</a></td>
+<td>Talents, capacités et montures débloquées, exclusivités de version</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Sanctuaire_(Paldea)">Sanctuaire (Paldea)</a></td>
+<td>Les 4 sanctuaires, leurs couleurs de pieux et leurs légendaires</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Le_Masque_Turquoise">Le Masque Turquoise</a></td>
+<td>Septentria, les personnages, les nouveaux Pokémon</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Le_Disque_Indigo">Le Disque Indigo</a></td>
+<td>Institut Myrtille, Conseil 4 de la Ligue Myrtille, Terapagos, paradoxes exclusifs</td>
+</tr>
+<tr>
+<td><a href="https://www.dexerto.fr/pokemon/guide-progression-ordre-arenes-dominants-team-star-pokemon-ecarlate-violet-1493125/">Ordre de progression</a></td>
+<td>L'ordre entrelacé des 18 étapes et les niveaux associés</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Liste_des_Pok%C3%A9mon_dans_l%27ordre_du_Pok%C3%A9dex_de_Paldea">Liste du Pokédex de Paldea</a></td>
+<td>Les 400 noms français, extraits un par un</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Liste_des_Pok%C3%A9mon_dans_l%27ordre_du_Pok%C3%A9dex_de_Septentria">Liste du Pokédex de Septentria</a></td>
+<td>Les 200 noms français</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Liste_des_Pok%C3%A9mon_dans_l%27ordre_du_Pok%C3%A9dex_Myrtille">Liste du Pokédex Myrtille</a></td>
+<td>Les 243 noms français</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-01-le-prologue" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 01 — Le prologue</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397343.html">Vos premiers pas à Paldea</a></td>
+<td>Tout le déroulé du tutoriel, les objets, les récompenses, les pièces de l'Académie</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397341.html">Choisir son Starter</a></td>
+<td>Les trois lignées, leurs types finaux et leurs talents</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Cuchalaga">Cuchalaga</a></td>
+<td>Les deux maisons, le Tapatoès Plumage Vert et la CT049 sur le toit</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397346.html">Zone Sud n° 1</a></td>
+<td>Les Pokémon par secteur, les objets, les dresseurs, Plato Real</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Pepper">Pepper</a></td>
+<td>Son Rongourmand niveau 5 au premier combat, et Dogrino comme partenaire malade</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-02-sevaro-et-roche-falaise" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 02 — Sevaro et Roche-Falaise</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397368.html">Arène Insecte de Sevaro</a></td>
+<td>L'épreuve du Roule-Olive, l'équipe d'Éra, les récompenses</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397500.html">Dominant Roche-Falaise</a></td>
+<td>L'accès, les deux phases, l'Épice Sucrée, la monture Sprint</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Sevaro">Sevaro</a></td>
+<td>Les boutiques et leurs prix, l'échange du Frissonille, la Grosse Racine, la CT037</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-sud-2">Zone Sud n° 2</a></td>
+<td>Les 17 Capsules Techniques avec emplacement, les Pokémon par biome</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-sud-3">Zone Sud n° 3</a></td>
+<td>Craparoi niveau 16, sa nature, son talent et ses capacités ; les Pokémon par biome</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-03-cuencia-et-vaste-ciel" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 03 — Cuencia et Vaste-Ciel</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397367.html">Arène Plante de Cuencia</a></td>
+<td>L'épreuve des Héliatronc, l'équipe de Colza, les récompenses</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397481.html">Dominant Vaste-Ciel</a></td>
+<td>L'accès, les rochers, les deux phases, l'Épice Amère, la monture Surf</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/cuencia">Cuencia</a></td>
+<td>Les huit objets de la ville, les boutiques et leurs prix, les deux pierres de l'épreuve</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-ouest-1">Zone Ouest n° 1</a></td>
+<td>Lestombaile et ses capacités, le Talisman Sain, les Capsules Techniques, le Sanctuaire du Froid Cruel</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-04-le-groupe-segin-et-levalendura" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 04 — Le groupe Segin et Levalendura</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397402.html">Repaire Ténèbres</a></td>
+<td>Les 30 Pokémon en 10 minutes, les trois Pokémon de tête, les récompenses</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Brome">Brome</a></td>
+<td>Son équipe exacte, les capacités de la Starmobile, son équipe de revanche</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397375.html">Arène Électrik de Levalendura</a></td>
+<td>Les trois scènes de M. Ducoin, l'équipe de Mashynn, les récompenses</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/levalendura">Levalendura</a></td>
+<td>L'échange du Spectrum, le Ruban Effort, les onze CT, les six boutiques</td>
+</tr>
+<tr>
+<td><a href="https://bulbapedia.bulbagarden.net/wiki/Obedience">Niveau d'obéissance</a></td>
+<td>Le tableau badge par badge, et la règle du niveau de capture ou d'échange</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-05-le-groupe-schedar-et-acier-tranche" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 05 — Le groupe Schedar et Acier-Tranché</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397406.html">Repaire Feu</a></td>
+<td>L'emplacement en Zone Est n° 1, le garde, l'épreuve, les récompenses</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Meloco">Meloco</a></td>
+<td>Son équipe exacte, le talent Sécheresse, la Starmobile de type Feu</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397502.html">Dominant Acier-Tranché</a></td>
+<td>La poursuite en Sprint, les deux phases, l'Épice Salée, la monture Bond</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-est-1">Zone Est n° 1</a></td>
+<td>Les 33 Capsules Techniques, les Pokémon par biome, le Dé Pipé</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-est-3">Zone Est n° 3</a></td>
+<td>Ferdeter niveau 29 avec nature, talent et capacités ; le monticule aux trois pierres</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-06-jarramanca-porto-marinada-et-le-groupe-tsih" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 06 — Jarramanca, Porto Marinada et le groupe Tsih</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397369.html">Arène Eau de Jarramanca</a></td>
+<td>Le portefeuille, les enchères et l'astuce des 35 000, l'équipe de Kombu</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397407.html">Repaire Poison</a></td>
+<td>Le garde Chester, l'épreuve, les récompenses</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Erio">Erio</a></td>
+<td>Ses quatre Pokémon, dont <strong>deux Vrombotor</strong>, et la Starmobile de type Poison</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/jarramanca">Jarramanca</a></td>
+<td>Les neuf CT de la ville, l'échange de l'Axoloto, le Ruban Affection, la CT149 Séisme</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/porto-marinada">Porto Marinada</a></td>
+<td>La CT123 Surf sur le bateau, la CT083, le dresseur Marin</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-07-mezclamora-et-larene-normal" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 07 — Mezclamora et l'arène Normal</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397371.html">Arène Normal de Mezclamora</a></td>
+<td>Les trois indices, la commande complète, l'équipe d'Okuba, les 50 Téra-Éclats</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/mezclamora">Mezclamora</a></td>
+<td>L'Œuf Chance de Jacq, la Pièce Rune, le <strong>Nettoyeur derrière le théâtre</strong> pour les 999 pièces</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-08-frigao-et-tremble-terre" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 08 — Frigao et Tremble-Terre</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397378.html">Arène Spectre de Frigao</a></td>
+<td>Le concert en trois combats doubles, l'équipe de Laïm</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397491.html">Dominant Tremble-Terre</a></td>
+<td>L'accès, les deux phases, l'Épice Acide, la monture Planer, les différences de version</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/frigao">Frigao</a></td>
+<td>La Pierre Nuit, la Cape Obscure, Salarsen de Galar niveau 42, les prix du Veinard</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/desert-rotissable">Désert Rôtissable</a></td>
+<td><strong>Roue-de-Fer niveau 45</strong> avec nature, talent et capacités ; les 17 CT ; les objets cachés</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-09-alforneira-et-larene-psy" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 09 — Alforneira et l'arène Psy</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397377.html">Arène Psy d'Alforneira</a></td>
+<td>L'épreuve de rythme, Céleste et Blaise, l'équipe de Tully</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/alforneira">Alforneira</a></td>
+<td>Les cinq CT, la Lumargile, la <strong>Baie Lansat</strong> et la <strong>Baie Frista</strong> du Fitness Émotion, la CT165</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-10-le-mont-nappe-et-le-groupe-ruchbah" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 10 — Le Mont Nappé et le groupe Ruchbah</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397379.html">Arène Glace du Mont Nappé</a></td>
+<td>La descente chronométrée, l'équipe de Grusha, le téracristal défensif de l'Altaria</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397408.html">Repaire Fée</a></td>
+<td>Le garde Harrington, l'épreuve, les récompenses</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Ortiga">Ortiga</a></td>
+<td>Son équipe exacte, Coloforce, et la <strong>Starmobile de type Fée</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/mont-nappe">Mont Nappé</a></td>
+<td>Les Pokémon par biome, la <strong>CT143 Blizzard</strong> après 10 dresseurs, les courses de glisse</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/CT124">CT124</a></td>
+<td>Le nom français <strong>Cryo-Pirouette</strong>, et la recette de la machine à CT</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-11-fourbe-dragon-et-le-groupe-caph" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 11 — Fourbe-Dragon et le groupe Caph</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397506.html">Dominant Fourbe-Dragon</a></td>
+<td>Les trois Nigirigon échoués, le rose puis l'orange, les deux phases, la monture Escalade</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397409.html">Repaire Combat</a></td>
+<td>Le garde Rose, l'épreuve la plus serrée des cinq, les récompenses</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/N%C3%A8flie">Nèflie</a></td>
+<td>Ses <strong>cinq</strong> Pokémon, et la <strong>Starmobile de type Combat</strong> avec le talent Endurance</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/lac-asrol">Lac Asrol</a></td>
+<td>Le Nigirigon de forme Courbée niveau 57, les trois Tours d'Observation, les Plumes cachées</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-12-la-ligue-pokemon" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 12 — La Ligue Pokémon</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397418.html">Examen de maîtrise</a></td>
+<td>Les dix questions et leurs réponses, et la règle de cohérence des questions 5, 6 et 7</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397420.html">Conseil 4</a></td>
+<td>Les équipes, les téracristallisations, les gains, et l'enfermement dans le bâtiment</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Ligue_Pok%C3%A9mon_(Paldea)">Ligue Pokémon (Paldea)</a></td>
+<td>Les cinq équipes complètes, dont l'<strong>Archéodong de Popi</strong> que Millenium oublie</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-13-les-trois-denouements" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 13 — Les trois dénouements</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397476.html">Combat final contre Menzi</a></td>
+<td>Le rendez-vous à Mesaledo, son équipe, et la règle du starter désavantagé</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397562.html">Combat final contre Pepper</a></td>
+<td>Le laboratoire du phare, son équipe, les 25 000 ₽</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397529.html">Battre Cassiopée</a></td>
+<td>L'identité de Clove et de Cassiopée, les équipes de Clavel et de Pania, la CT169</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Pepper">Pepper</a></td>
+<td>Le Téracristal Ténèbres de son Dogrino, et toutes ses équipes combat par combat</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-14-retour-aux-sources" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 14 — Retour aux sources</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.pokepedia.fr/Retour_aux_sources_(%C3%89carlate_et_Violet)">Retour aux sources</a></td>
+<td>Le déroulé complet, les quatre terminaux, la perte de la monture, le Programme Défense Paradis</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Turum">Turum</a></td>
+<td>Les <strong>six paradoxes de Fer</strong> avec niveaux, types et capacités, et le Miraidon niveau 72</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-zero">Zone Zéro</a></td>
+<td>Les niveaux par secteur, les quatre grottes, les quatre paradoxes disponibles avant la fin</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-15-lapres-generique" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 15 — L'après-générique</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397868.html">Rebattre toutes les arènes</a></td>
+<td>La chaîne du post-game, les huit équipes de revanche, la Roche Royale</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397870.html">Grand Tournoi de l'Académie</a></td>
+<td>Les quatre adversaires, leurs équipes, la Casquette de la Ligue, la quête de Jacq</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397799.html">Obtenir le Juge IV</a></td>
+<td>La condition de déblocage et la table des appréciations</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="erreurs-relevees-dans-les-sources" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Erreurs relevées dans les sources</span></h2>
+<p>Ces écarts sont des erreurs, pas des divergences de nom : j'ai retenu la version qui s'appuie sur le plus de détails vérifiables.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Ce qu'elle écrit</th>
+<th>Ce qui est juste</th>
+<th>Comment je l'ai établi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Millenium</strong>, repaire Feu</td>
+<td>Meloco a un Chartor <strong>niveau 21</strong> et un Vrombotor <strong>niveau 20, Acier / Poison</strong></td>
+<td>Chartor <strong>27</strong> et Vrombotor <strong>26, Feu</strong></td>
+<td>Poképédia et Dexerto concordent ; la page de Millenium recopie les valeurs du repaire Ténèbres</td>
+</tr>
+<tr>
+<td><strong>Millenium</strong>, repaire Poison</td>
+<td>Les deux Vrombotor d'Erio sont Acier / Poison</td>
+<td>Le niveau 33 est Acier / Poison, le niveau 32 est la <strong>Starmobile de type Poison</strong></td>
+<td>Poképédia distingue les deux, avec talents et capacités différents</td>
+</tr>
+<tr>
+<td><strong>Millenium</strong>, repaire Fée</td>
+<td>La Starmobile d'Ortiga est Acier / Poison</td>
+<td>Elle est de type <strong>Fée</strong>, talent Créa-Brume</td>
+<td>Poképédia</td>
+</tr>
+<tr>
+<td><strong>Millenium</strong>, Conseil 4</td>
+<td>Popi a <strong>quatre</strong> Pokémon</td>
+<td>Elle en a <strong>cinq</strong>, avec un <strong>Archéodong</strong> niveau 58</td>
+<td>Poképédia</td>
+</tr>
+<tr>
+<td><strong>Millenium</strong>, Dominant du désert</td>
+<td>Niveau conseillé <strong>25 à 30</strong></td>
+<td>Le Dominant est <strong>niveau 45</strong></td>
+<td>Pokébip donne nature, talent, capacités et IV</td>
+</tr>
+<tr>
+<td><strong>Millenium</strong>, Dominant Roche-Falaise</td>
+<td>Niveau conseillé <strong>35</strong></td>
+<td>Craparoi est <strong>niveau 16</strong></td>
+<td>Pokébip, Dexerto et Eternia concordent</td>
+</tr>
+<tr>
+<td><strong>Dexerto</strong></td>
+<td>Grusha tient l'arène de <strong>Frigao</strong></td>
+<td>Grusha tient l'arène du <strong>Mont Nappé</strong> ; Frigao est l'arène Spectre de Laïm</td>
+<td>Poképédia et Pokébip concordent</td>
+</tr>
+<tr>
+<td><strong>Dexerto</strong></td>
+<td>Les repaires Fée et Combat sont tous les deux en <strong>Zone Nord n° 3</strong></td>
+<td><strong>Ruchbah</strong> (Fée) en Zone Nord n° 3, <strong>Caph</strong> (Combat) en Zone Nord n° 2</td>
+<td>Poképédia, cohérent avec sa liste des lieux de Paldea</td>
+</tr>
+<tr>
+<td><strong>Poképédia</strong>, page du scénario</td>
+<td>Le Miraidon du Programme Défense Paradis est <strong>niveau 68</strong></td>
+<td><strong>Niveau 72</strong></td>
+<td>La page de Turum sur le même site, et la page de la Zone Zéro de Pokébip</td>
+</tr>
+<tr>
+<td><strong>Poképédia</strong> et <strong>Millenium</strong></td>
+<td>La Cléopsytra d'Alisma est niveau <strong>61</strong> ou <strong>60</strong></td>
+<td>J'ai retenu <strong>61</strong></td>
+<td>Poképédia, plus détaillé sur les équipes</td>
+</tr>
+<tr>
+<td><strong>Pokébip</strong>, Zone Est n° 3</td>
+<td>Niveau de Ferdeter : <strong>29</strong> ; Dexerto écrit <strong>28</strong></td>
+<td>J'ai retenu <strong>29</strong></td>
+<td>Pokébip donne nature, talent, capacités et IV</td>
+</tr>
+<tr>
+<td><strong>Pokébip</strong>, Lac Asrol</td>
+<td>Niveau du Nigirigon : <strong>57</strong> ; Dexerto écrit <strong>55</strong></td>
+<td>J'ai retenu <strong>57</strong></td>
+<td>Même raison</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="parties-16-a-22-les-zones-de-paldea" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Parties 16 à 22 — les zones de Paldea</span></h2>
+<p>Toutes les pages du <strong>guide des lieux de Pokébip</strong> ont été consultées une par une. Chacune donne les Pokémon par biome, les Capsules Techniques avec leur emplacement exact, les objets visibles et cachés, les points d'intérêt et les dresseurs.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/route-de-cuchalaga">Route de Cuchalaga</a></td>
+<td>Les 5 CT du secteur de départ, les deux équipes de Pepper</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/caverne-de-la-crique">Caverne de la Crique</a></td>
+<td>Les 3 espèces, la CT100 et la CT151</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-sud-4">Zone Sud n° 4</a></td>
+<td>Les 17 CT, le Casque Brut, le PP Plus, les Téra-Éclats</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-sud-5">Zone Sud n° 5</a></td>
+<td>Les 19 CT, l'Évoluroc, les Pokémon fixes dont deux Évoli</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-sud-6">Zone Sud n° 6</a></td>
+<td>Les 11 CT, les niveaux 37 à 43, les quatre évolutions d'Évoli sauvages</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-ouest-2">Zone Ouest n° 2</a></td>
+<td>Les 13 CT, la Grotte aux Colonnes, la Ceinture Force, les trois Tauros</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-ouest-3">Zone Ouest n° 3</a></td>
+<td>Les 13 CT, le Portail Zéro, Métamorph et Zorua déguisés</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-est-2">Zone Est n° 2</a></td>
+<td>Les 10 CT, les objets cachés de la plage</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/bosquet-tague">Bosquet Tagué</a></td>
+<td>Les 5 CT, les <strong>deux Pommes</strong> cachées, Quartermac exclusif à Violet</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-nord-1">Zone Nord n° 1</a></td>
+<td>Les 29 CT, dont <strong>CT153, CT154 et CT155 dans une seule grotte</strong> ; Spiritomb fixe</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-nord-2">Zone Nord n° 2</a></td>
+<td>Les 23 CT, le Sanctuaire du Feu Ravageur, la forêt de bambous</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-nord-3">Zone Nord n° 3</a></td>
+<td>Les 5 CT, dont la <strong>CT170 Métalaser</strong> de la grotte sous-marine</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/foret-toastee">Forêt Toastée</a></td>
+<td>Les 6 CT, le Sanctuaire du Sol Corrompu, Zoroark déguisé</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/tunnel-mezcla-pincho">Tunnel Mezcla-Pincho</a></td>
+<td>Les 11 CT, la Ceinture Pro, les matériaux cachés</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/mont-nappe">Mont Nappé</a></td>
+<td><strong>Les 55 CT</strong>, les Maxi Pépites, les objets cachés de la neige</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/lac-asrol">Lac Asrol</a></td>
+<td><strong>Les 28 CT</strong>, l'<strong>Orbe Vie</strong> de l'île ouest, la Maxi Pépite des ruines</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-zero">Zone Zéro</a></td>
+<td>Les 38 CT, dont la <strong>CT171 à trois endroits</strong> ; l'Énergie Booster ; les paradoxes par secteur</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/cratere-de-paldea">Cratère de Paldea</a></td>
+<td>Les cadeaux de Naire l'Influenceuse, les deux Pokémon fixes</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/mesaledo">Mesaledo</a></td>
+<td>Les 5 CT, le Grelot Zen, la Capsule d'Argent, les Insignes Maxi et Mini</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/pinchoria">Pinchoria</a></td>
+<td>Le Casque Brut, le Gant de Boxe, l'<strong>Armure de la Rancune</strong> contre 10 Fragments de Théffroi</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/plato-real">Plato Real</a></td>
+<td>Les 30 matériaux de Menzi, la CT085, les prix du Centre Pokémon</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/grotte-alforneira">Grotte d'Alforneira</a></td>
+<td>Les 5 CT, les hordes, la Pierre Ovale</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/mer-sud-paldea">Mer du Sud</a> et <a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/mer-nord-paldea">Mer du Nord</a></td>
+<td>L'îlot à la CT123, les 6 CT et les Maxi Pépites des îles du nord</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397447.html">Où trouver Spiritomb</a></td>
+<td>Le sommet de la Zone Nord n° 3, <strong>de nuit</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397388.html">Où trouver Théffroi</a></td>
+<td>Les deux emplacements, les deux formes, les deux Théières</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397401.html">La carte interactive</a></td>
+<td>Les cartes de fans à filtres, et l'absence de carte du Cratère</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="parties-23-a-32-les-systemes-et-les-collectibles" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Parties 23 à 32 — les systèmes et les collectibles</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/397515.html">Les Pokémon Fléau</a></td>
+<td>Les quatre sanctuaires, leurs couleurs de pieux, les 8 pieux par couleur</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Chongjian">Chongjian</a>, <a href="https://www.pokepedia.fr/Baojian">Baojian</a>, <a href="https://www.pokepedia.fr/Dinglu">Dinglu</a>, <a href="https://www.pokepedia.fr/Yuyu">Yuyu</a></td>
+<td>Leurs types, leurs <strong>quatre talents du Fléau</strong> et leur <strong>taux de capture de 6</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/mordudor">Mordudor</a></td>
+<td><strong>Les 25 coffres</strong> avec leurs pièces, la table de probabilité, le PNJ de Mezclamora</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/Mordudor">Mordudor</a></td>
+<td>Les deux formes, les emplacements sauvages, l'échange du Club de la Ligue</td>
+</tr>
+<tr>
+<td><strong>Les 171 fiches CT de Poképédia</strong>, de <a href="https://www.pokepedia.fr/CT001">CT001</a> à <a href="https://www.pokepedia.fr/CT171">CT171</a></td>
+<td><strong>Le nom officiel, le prix en PL, la recette et les emplacements de chaque Capsule Technique</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397629.html">Les Auras Gustatives</a></td>
+<td>Les 10 auras et leurs effets, le taux de chromatique de 1/4 096</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397708.html">La liste des ingrédients</a></td>
+<td>Les quatre boutiques, les exclusivités de la Supérette Yatou</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/sandwich-niveau-3">Les sandwichs d'aura niveau 3</a></td>
+<td>Le principe, la recette passe-partout, la combinaison à éviter</td>
+</tr>
+<tr>
+<td><a href="https://www.actugaming.net/comment-trouver-facilement-des-pokemon-shiny-pokemon-ecarlate-et-violet-534420">Les recettes type par type</a></td>
+<td><strong>Les 18 recettes de Brillance niveau 3</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/393260.html">La Téracristallisation</a></td>
+<td>L'Orbe, la recharge, le principe</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeuxvideo/pokemon-ecarlate-violet/raids-teracristal">Les Raids Téracristal</a></td>
+<td>Les six niveaux d'étoiles, les IV par étoile, <strong>le bouclier et ses trois taux</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.dexerto.fr/pokemon/comment-debloquer-raids-7-etoiles-pokemon-ecarlate-violet-1494937/">Débloquer les raids 7 étoiles</a></td>
+<td>La chaîne de déblocage, et le caractère événementiel du 7 étoiles</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397631.html">Les Pokémon Paradoxe</a></td>
+<td>Les sept paradoxes de Violet, leurs secteurs et leur rareté</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/393347.html">Quelle version choisir</a></td>
+<td><strong>Les 24 exclusivités de chaque version</strong>, et les différences de version</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397380.html">Les objets d'évolution</a></td>
+<td>Tous les objets, leurs emplacements et les paliers du Pokédex</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/nouveaux-moyens-evolution">Les nouveaux moyens d'évolution</a></td>
+<td>Les conditions des évolutions spéciales</td>
+</tr>
+<tr>
+<td><a href="https://www.pokekalos.fr/jeux/switch/pev/articles-les-evolutions-speciales-5090.html">Les évolutions spéciales</a></td>
+<td>Recoupement des conditions, et les 1 000 pas</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397740.html">La reproduction</a></td>
+<td>Le pique-nique, le Métamorph, le Nœud Destin, la Pierre Stase, la méthode Masuda</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397706.html">Le tableau des types</a></td>
+<td>La table complète des 18 types</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397576.html">Obtenir de l'argent</a></td>
+<td>La Pièce Rune, les dresseurs à bulle noire, le farm du désert</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397813.html">Les enchères</a></td>
+<td>Les trois stands, le renouvellement à minuit, les objets de forme légendaire</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397624.html">Changer de tenue</a></td>
+<td>Les dix boutiques, le salon de Mesaledo, l'uniforme obligatoire</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397736.html">Toutes les récompenses du Pokédex</a></td>
+<td><strong>Les 40 paliers de volumes</strong> et les 4 récompenses de Jacq</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397359.html">La liste des cours</a></td>
+<td>Les sept matières et <strong>les réponses aux quatorze contrôles</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/397350.html">Jouer en multijoueur</a></td>
+<td>Le Poké Portail, le <strong>Club Union</strong>, la coopération à quatre</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="parties-33-a-35-le-masque-turquoise" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Parties 33 à 35 — Le Masque Turquoise</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/406842.html">La soluce du scénario principal</a></td>
+<td>Tout le déroulé, les équipes de Roseille et de Kassis, le Fragment de Cristal</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/406916.html">Les six bijoux de Septentria</a></td>
+<td>Les six panneaux et leurs emplacements</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/406949.html">Les 5 choses à ne pas manquer</a></td>
+<td>L'œuf de Jacq, la quête de Lithia, les statues à 1 million</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/406830.html">Félicanis</a> et <a href="https://www.millenium.org/guide/406840.html">Favianos</a></td>
+<td>Leurs lieux, leurs niveaux, leurs capacités, le shiny lock</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/406854.html">Ogerpon</a></td>
+<td>Les <strong>quatre phases</strong>, les quatre masques, Force Mémorielle</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/F%C3%A9licanis">Félicanis</a>, <a href="https://www.pokepedia.fr/Fortusimia">Fortusimia</a>, <a href="https://www.pokepedia.fr/Favianos">Favianos</a>, <a href="https://www.pokepedia.fr/Ogerpon">Ogerpon</a></td>
+<td>Les types, le talent commun <strong>Chaîne Toxique</strong>, les <strong>taux de capture de 3</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/406921.html">La Chasse aux Monstres</a></td>
+<td>Les règles, les trois modes, les gloutons, le <strong>Goinfrex chromatique</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/406957.html">Les Mochi</a></td>
+<td>Les sept Mochi, et le <strong>Mochi Renouveau</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/406959.html">Le clan des Visages du Monstre</a></td>
+<td><strong>Les huit membres</strong>, leurs équipes, leurs lieux et les huit récompenses</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/406909.html">Ursaking Lune Vermeille</a></td>
+<td>La quête de Lithia, la Forêt Ternelle, sa fiche complète</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="parties-36-a-39-le-disque-indigo-et-lepilogue" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Parties 36 à 39 — Le Disque Indigo et l'épilogue</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a servi à établir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.millenium.org/guide/409411.html">La soluce de l'histoire principale</a></td>
+<td>Tout le déroulé, les quatre biomes, les quatre épreuves, l'Abîme Zéro</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/409417.html">Les Activités Myrtille</a></td>
+<td>Les trois catégories d'activités et leurs gains en PM</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/409454.html">Débloquer le Synchrotron</a></td>
+<td>Chronie, les deux expériences, la commande L puis R</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/pass-d-extension/combats-ligue-myrtille">Les combats de la Ligue Myrtille</a></td>
+<td>Les équipes du Conseil 4, leurs types et leurs biomes</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/409453.html">Kassis</a></td>
+<td>Son équipe complète, la pluie, et la <strong>Master Ball</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/409462.html">Terapagos</a></td>
+<td>Les deux combats, la barrière, ses quatre capacités</td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/pass-d-extension/legendaires">Les Pokémon légendaires</a></td>
+<td><strong>Les 25 légendaires, leurs emplacements exacts et leurs pools par version</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/pass-d-extension/combats-club-ligue">Les combats du Club de la Ligue</a></td>
+<td>La trentaine de dresseurs, les niveaux 80 à 87, les exceptions</td>
+</tr>
+<tr>
+<td><a href="https://www.millenium.org/guide/410260.html">L'épilogue</a></td>
+<td>Les prérequis, la Baie Pêcha Fabuleuse, la peluche rose</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/La_Nuit_des_Kibi">La Nuit des Kibi</a></td>
+<td><strong>Le nom français de l'épilogue</strong>, les trois prérequis, le déroulé</td>
+</tr>
+<tr>
+<td><a href="https://www.pokepedia.fr/P%C3%AAchaminus">Pêchaminus</a></td>
+<td>Niveau 88, Parc Adorami, Emprise Toxique, Chaîne Malsaine</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="erreurs-relevees-dans-les-sources-deuxieme-serie" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Erreurs relevées dans les sources, deuxième série</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Ce qu'elle écrit</th>
+<th>Ce qui est juste</th>
+<th>Comment je l'ai établi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pokébip</strong>, pages de lieux</td>
+<td>Neuf numéros de CT différents d'une page à l'autre</td>
+<td>Voir le tableau de la partie <strong>25</strong></td>
+<td>Les <strong>171 fiches CT de Poképédia</strong>, relevées une par une</td>
+</tr>
+<tr>
+<td><strong>Pokébip</strong>, Zone Est n° 2</td>
+<td>« CT098 Luminocanon »</td>
+<td><strong>CT093 Luminocanon</strong> ; la CT098 est <strong>Échange</strong></td>
+<td>Fiches CT de Poképédia</td>
+</tr>
+<tr>
+<td><strong>Pokébip</strong>, Mont Nappé</td>
+<td>« CT089 Big Splash »</td>
+<td><strong>CT089 Body Press</strong></td>
+<td>Fiches CT de Poképédia, et trois autres pages du même site</td>
+</tr>
+<tr>
+<td><strong>Poképédia</strong>, page Cuchalaga</td>
+<td>La CT du toit est présentée avec une glose anglaise erronée</td>
+<td>C'est la <strong>CT049 Zénith</strong></td>
+<td>La fiche CT049, qui liste Cuchalaga parmi ses emplacements</td>
+</tr>
+<tr>
+<td><strong>Pokébip</strong>, nouveaux moyens d'évolution</td>
+<td>Charbambin → Carmadura → Malvalame, en chaîne</td>
+<td>C'est une <strong>ramification</strong> : Carmadura <strong>ou</strong> Malvalame</td>
+<td>La page Charbambin de Poképédia, avec son modèle d'évolution branchée</td>
+</tr>
+<tr>
+<td><strong>Millenium</strong>, objets d'évolution</td>
+<td>« Pomme Acidulée : Verpom → Pomdrapi » et « Sucrée : Dratatin » — correct, mais plusieurs guides inversent</td>
+<td><strong>Acidulée → Pomdrapi</strong>, <strong>Sucrée → Dratatin</strong></td>
+<td>La page Verpom de Poképédia</td>
+</tr>
+<tr>
+<td><strong>Pokébip</strong>, Zone Ouest n° 1</td>
+<td>Appelle le légendaire du Froid Cruel « Chongjian » puis « Baojian »</td>
+<td><strong>Baojian</strong>, Ténèbres / Glace</td>
+<td>Poképédia, cohérent sur les quatre sanctuaires</td>
+</tr>
+<tr>
+<td><strong>Pokébip</strong>, Cratère de Paldea</td>
+<td>Carchacrok et Magnézone fixes au <strong>niveau 10</strong></td>
+<td><strong>Niveaux 57 et 58</strong></td>
+<td>Les relevés détaillés de la Zone Zéro ; le « 10 » est un artefact de la page. Corrigé dans la partie <strong>20</strong></td>
+</tr>
+<tr>
+<td><strong>Millenium</strong>, Masque Turquoise</td>
+<td>Appelle les Trois Loyaux « les trois Adoramis »</td>
+<td><strong>Correct</strong> : Adoramis est le nom du groupe, Félicanis, Fortusimia et Favianos ceux des individus</td>
+<td>Poképédia, qui a une page par individu</td>
+</tr>
+<tr>
+<td><strong>Breakflip</strong>, épilogue</td>
+<td>Place la peluche à « Mossui, à Kitakami »</td>
+<td><strong>Jaderaude</strong>, à <strong>Septentria</strong> — ce sont les mêmes lieux en anglais</td>
+<td>Poképédia et Millenium</td>
+</tr>
+<tr>
+<td><strong>Mon propre plan</strong></td>
+<td>Appelait l'épilogue « Mochi Mielleux »</td>
+<td><strong>La Nuit des Kibi</strong></td>
+<td>Poképédia ; « Mochi Mielleux » était une traduction de ma part, retirée du guide</td>
+</tr>
+<tr>
+<td><strong>Mon propre plan</strong></td>
+<td>Appelait les Trois Loyaux « les Trois Félons »</td>
+<td><strong>Les trois Adoramis</strong></td>
+<td>Millenium et Poképédia</td>
+</tr>
+<tr>
+<td><strong>Mon propre guide</strong>, partie <strong>27</strong></td>
+<td>Décrivait des <strong>raids de Starmobile</strong> après les cinq repaires</td>
+<td><strong>Ils n'existent pas.</strong> Les Starmobiles ne se rencontrent que dans les cinq combats de boss de la Team Star</td>
+<td>La liste complète des raids 7 étoiles parus, où aucun Vrombotor n'apparaît. La section a été réécrite</td>
+</tr>
+<tr>
+<td><strong>Millenium</strong>, commentaire de lecteur</td>
+<td>Le sandwich <strong>Dragon</strong> ne donnerait pas l'Aura Rencontre</td>
+<td>Il donne bien les <strong>trois auras</strong></td>
+<td>Recoupement avec les relevés de chasse au chromatique, qui donnent la même recette et les mêmes trois auras</td>
+</tr>
+<tr>
+<td><strong>Une source française</strong>, évolutions</td>
+<td>Dofin évoluerait au <strong>niveau 28</strong></td>
+<td><strong>Niveau 38</strong>, en étant connecté au Club Union</td>
+<td>Pokébip, Pokékalos et les relevés anglophones, unanimes</td>
+</tr>
+<tr>
+<td><strong>Mon propre guide</strong>, partie <strong>38</strong></td>
+<td>Ne couvrait pas la <strong>quête de la Team Star</strong> du Disque Indigo</td>
+<td>Elle existe : <strong>Académie Raisin</strong>, après le scénario de l'extension, <strong>Capsule d'Or</strong> à la clé</td>
+<td>Pokébip la mentionnait sans la détailler ; le déroulé complet a été reconstitué et ajouté</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="phase-5-la-reprise-des-points-ouverts" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Phase 5 — la reprise des points ouverts</span></h2>
+<p>Le guide livré portait <strong>dix-huit marques « à vérifier en jeu »</strong>, soit <strong>douze questions distinctes</strong> — plusieurs apparaissaient deux fois, une fois dans le texte et une fois dans le bloc Alertes. Chacune a été reprise avec des relevés supplémentaires, cette fois <strong>sans se limiter aux sources françaises</strong>, puisque le point bloquant était à chaque fois une donnée chiffrée ou mécanique et non un nom. <strong>Onze sont tranchées</strong>, une reste ouverte.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Partie</th>
+<th>Où la réponse a été trouvée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Le type Téracristal du Floréclat d'Alisma</td>
+<td><strong>12</strong></td>
+<td>Relevés d'équipes de la Ligue, concordants sur le téracristal <strong>Roche</strong></td>
+</tr>
+<tr>
+<td>La répétabilité du Grand Tournoi</td>
+<td><strong>15</strong></td>
+<td>Guides de farm d'argent de l'après-générique, qui le donnent comme la méthode de référence et la chiffrent</td>
+</tr>
+<tr>
+<td>Les niveaux des deux Pokémon fixes du cratère</td>
+<td><strong>20</strong></td>
+<td>Relevés détaillés de la Zone Zéro</td>
+</tr>
+<tr>
+<td>Le nombre de Tours d'Observation</td>
+<td><strong>22</strong></td>
+<td>Deux relevés anglophones qui les cartographient une par une</td>
+</tr>
+<tr>
+<td>L'Aura Rencontre du sandwich Dragon, et les quantités des dix-huit recettes</td>
+<td><strong>26</strong></td>
+<td>Relevés de chasse au chromatique, qui publient les mêmes recettes ingrédient par ingrédient</td>
+</tr>
+<tr>
+<td>Les taux de chromatique et la durée des auras</td>
+<td><strong>26</strong></td>
+<td>Mêmes relevés : <strong>1/4 096</strong>, <strong>1/2 048</strong> avec le Charme Chroma, <strong>1/1 024</strong> avec Brillance 3, <strong>1/512</strong> avec les deux ; <strong>trente minutes</strong>, perdues si le jeu est fermé</td>
+</tr>
+<tr>
+<td>Les raids de Starmobile</td>
+<td><strong>27</strong></td>
+<td>La liste complète des raids 7 étoiles parus, qui n'en compte aucun — la réponse était « ça n'existe pas »</td>
+</tr>
+<tr>
+<td>Le niveau d'évolution de Dofin</td>
+<td><strong>29</strong></td>
+<td>Fiches d'évolution, unanimes sur <strong>38</strong></td>
+</tr>
+<tr>
+<td>La réponse sur les œufs au partiel de biologie</td>
+<td><strong>32</strong></td>
+<td>La mécanique du <strong>panier de pique-nique</strong> : dix œufs maximum, aucun indicateur à l'écran</td>
+</tr>
+<tr>
+<td>L'échelle de niveau de Septentria</td>
+<td><strong>33</strong></td>
+<td>Relevés de l'extension : les sauvages suivent la progression dans l'histoire principale</td>
+</tr>
+<tr>
+<td>La quête de la Team Star du Disque Indigo</td>
+<td><strong>38</strong></td>
+<td>Reconstitution du déroulé complet à partir des relevés de contenu annexe de l'extension</td>
+</tr>
+<tr>
+<td>Le catalogue de la Boutique de l'Institut</td>
+<td><strong>38</strong></td>
+<td><strong>Rien.</strong> Le site officiel de Pokémon confirme l'usage des Points Myrtille pour des <strong>objets clés</strong> et des <strong>plats à auras</strong>, et donne les gains d'activité — <strong>20 à 40 PM</strong> en ordinaire, <strong>100 à 150 PM</strong> en bonus — mais aucune source ne publie les prix</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et deux chiffres récupérés au passage, qui manquaient au guide :</p>
+<ul>
+<li>les <strong>paliers du Pokédex Myrtille</strong> — <strong>Capsule d'Or</strong> à 210, <strong>Patch Talent</strong> à 230, <strong>Master Ball</strong> à 240, <strong>Charme Insigne</strong> auprès de Cyano au Pokédex complet — ajoutés à la partie <strong>40</strong> ;</li>
+<li>la conséquence sur la partie <strong>37</strong> : la Master Ball du Conseil 4 de Myrtille n'est donc pas la <strong>seule</strong> du jeu, mais la première des deux.</li>
+</ul>
+<p>Les noms français des objets ajoutés par cette passe ont été vérifiés sur Poképédia : <strong>Capsule d'Or</strong>, <strong>Patch Talent</strong>, <strong>Charme Insigne</strong>.</p>
+<h2 id="divergences-tranchees" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Divergences tranchées</span></h2>
+<p>Quand deux sources françaises ne disent pas la même chose, je choisis une fois et je tiens le choix dans tout le guide.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Ce que le guide écrit</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nom du boss Ténèbres</td>
+<td><strong>Brome</strong> (Poképédia, Dexerto) contre <strong>Brom</strong> (Millenium)</td>
+<td><strong>Brome</strong></td>
+<td>Poképédia reprend les textes du jeu ; Millenium abrège</td>
+</tr>
+<tr>
+<td>Nom du boss Combat</td>
+<td><strong>Nèflie</strong> (Poképédia, Dexerto) contre <strong>Neflie</strong> (Millenium)</td>
+<td><strong>Nèflie</strong></td>
+<td>Même raison, avec l'accent</td>
+</tr>
+<tr>
+<td>Nom du Dominant Acier</td>
+<td><strong>Acier-Tranché</strong> (Poképédia, Pokébip) contre <strong>Acier-Tranchée</strong> (Millenium)</td>
+<td><strong>Acier-Tranché</strong></td>
+<td>Deux sources contre une</td>
+</tr>
+<tr>
+<td>Ville de l'arène Psy</td>
+<td><strong>Alforneira</strong> (Poképédia, Pokébip) contre <strong>Alfoneira</strong> (une page de Dexerto)</td>
+<td><strong>Alforneira</strong></td>
+<td>Deux sources contre une</td>
+</tr>
+<tr>
+<td>Niveau de Lestombaile</td>
+<td><strong>19</strong> (Dexerto, Eternia) contre <strong>20</strong> (Pokébip) contre <strong>25 conseillé</strong> (Breakflip)</td>
+<td><strong>19 ou 20</strong>, signalé comme tel</td>
+<td>L'écart est réel entre sources et ne change rien à la préparation</td>
+</tr>
+<tr>
+<td>Niveau de Craparoi</td>
+<td><strong>16</strong> (Pokébip, Dexerto, Eternia) contre <strong>15</strong> (Breakflip) et <strong>35 conseillé</strong> (Millenium)</td>
+<td><strong>16</strong></td>
+<td>Trois sources concordantes, dont Pokébip qui donne aussi nature et talents</td>
+</tr>
+<tr>
+<td>Légendaire du Sanctuaire du Froid Cruel</td>
+<td><strong>Baojian</strong> (Poképédia) ; la page de la Zone Ouest n° 1 de Pokébip écrit <strong>Chongjian</strong> puis <strong>Baojian</strong> sur la même ligne</td>
+<td><strong>Baojian</strong></td>
+<td>Poképédia est cohérent, et Ténèbres / Glace correspond à Baojian</td>
+</tr>
+<tr>
+<td>Couleur des pieux du Froid Cruel</td>
+<td><strong>jaune</strong> (Poképédia) contre <strong>orange</strong> (Pokébip)</td>
+<td><strong>jaune</strong></td>
+<td>Poképédia nomme l'objet, Pokébip décrit l'aura</td>
+</tr>
+<tr>
+<td>Numérotation des Capsules Techniques</td>
+<td>Les pages de lieux de Pokébip se contredisent sur neuf numéros (CT001, CT012, CT023, CT034, CT049, CT062, CT089, CT093, CT166)</td>
+<td><strong>Les fiches par numéro de Poképédia</strong></td>
+<td>Chaque fiche donne la capacité en neuvième génération, la recette de machine à CT et les emplacements ; les 171 ont été relevées une par une et le guide a été corrigé en conséquence. Le tableau complet est dans la partie <strong>25</strong></td>
+</tr>
+<tr>
+<td>Lieu du combat final de Pepper</td>
+<td><strong>Route de Cuchalaga</strong> (Poképédia) contre <strong>Laboratoire du Phare</strong> (Dexerto)</td>
+<td><strong>Route de Cuchalaga</strong></td>
+<td>Poképédia donne l'équipe complète et le lieu ; les deux désignent le même secteur, près du phare</td>
+</tr>
+<tr>
+<td>Nom du DLC 1</td>
+<td><strong>Le Masque Turquoise</strong> (Poképédia, Millenium) contre <strong>Masque Sarcelle</strong> (presse)</td>
+<td><strong>Le Masque Turquoise</strong></td>
+<td>Nom officiel français</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="nom-francais-a-confirmer" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Nom français à confirmer</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Terme</th>
+<th>Ce que j'ai écrit</th>
+<th>Pourquoi c'est en attente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Le guichet jaune du Centre Pokémon</td>
+<td><strong>Club Union</strong></td>
+<td><strong>Tranché.</strong> Millenium est explicite : le menu s'appelle Club Union et non Cercle Union. Pokébip nomme aussi ainsi le guichet jaune</td>
+</tr>
+<tr>
+<td>L'épilogue gratuit</td>
+<td><strong>La Nuit des Kibi</strong></td>
+<td><strong>Tranché.</strong> Poképédia a une page à ce nom, et c'est le seul nom français attesté. « Mochi Mielleux » était une traduction de ma part du titre anglais, et elle a été retirée du guide</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="99-annexes-index-manquables-et-check-list-finale.html" rel="prev"><small>← Partie précédente</small><b>Annexes : index, manquables et check-list finale</b></a><a class="tout" href="pokemon-violet.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Pokémon Violet · guide complet généré le 12 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

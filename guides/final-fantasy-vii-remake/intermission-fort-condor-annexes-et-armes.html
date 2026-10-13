@@ -1,0 +1,2462 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INTERmission — Fort Condor, annexes et armes – Guide Final Fantasy VII Remake</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Remake, INTERmission — Fort Condor, annexes et armes : Fort Condor : parle deux fois à Polk ; achète le plateau de Maître dès Chadley…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/intermission-fort-condor-annexes-et-armes.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="INTERmission — Fort Condor, annexes et armes · Guide Final Fantasy VII Remake">
+<meta property="og:description" content="Final Fantasy VII Remake, INTERmission — Fort Condor, annexes et armes : Fort Condor : parle deux fois à Polk ; achète le plateau de Maître dès Chadley…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/intermission-fort-condor-annexes-et-armes.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Remake", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/"}, {"@type": "ListItem", "position": 3, "name": "INTERmission — Fort Condor, annexes et armes", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/intermission-fort-condor-annexes-et-armes.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-remake" class="compact" data-partie="intermission-fort-condor-annexes-et-armes"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Remake</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Remake : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Remake</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-sabotage-du-reacteur-mako-n1.html"><span class="num">✦</span><span class="libelle">Chapitre 1 : Sabotage du réacteur Mako n°1</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-rencontres-determinantes.html"><span class="num">✦</span><span class="libelle">Chapitre 2 : Rencontres déterminantes</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-le-septieme-ciel.html"><span class="num">✦</span><span class="libelle">Chapitre 3 : Le Septième Ciel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-viree-nocturne.html"><span class="num">✦</span><span class="libelle">Chapitre 4 : Virée nocturne</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-suivez-le-chien.html"><span class="num">✦</span><span class="libelle">Chapitre 5 : Suivez le chien</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-les-soleils-des-bidonvilles.html"><span class="num">✦</span><span class="libelle">Chapitre 6 : Les soleils des bidonvilles</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-dans-la-gueule-du-loup.html"><span class="num">✦</span><span class="libelle">Chapitre 7 : Dans la gueule du loup</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-les-fleurs-des-retrouvailles.html"><span class="num">✦</span><span class="libelle">Chapitre 8 : Les fleurs des retrouvailles</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-le-quartier-des-desirs.html"><span class="num">✦</span><span class="libelle">Chapitre 9 : Le quartier des désirs</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-dans-lobscurite-des-egouts.html"><span class="num">✦</span><span class="libelle">Chapitre 10 : Dans l&#x27;obscurité des égouts</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-despiegles-fantomes.html"><span class="num">✦</span><span class="libelle">Chapitre 11 : D&#x27;espiègles fantômes</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-la-lutte-desesperee-davalanche.html"><span class="num">✦</span><span class="libelle">Chapitre 12 : La lutte désespérée d&#x27;Avalanche</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-un-monde-en-ruine.html"><span class="num">✦</span><span class="libelle">Chapitre 13 : Un monde en ruine</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-en-quete-despoir.html"><span class="num">✦</span><span class="libelle">Chapitre 14 : En quête d&#x27;espoir</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="chapitre-15-a-la-lueur-du-coucher-de-soleil.html"><span class="num">✦</span><span class="libelle">Chapitre 15 : À la lueur du coucher de soleil</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="chapitre-16-infiltration-de-la-tour-shinra.html"><span class="num">✦</span><span class="libelle">Chapitre 16 : Infiltration de la tour Shinra</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="chapitre-17-echapper-au-chaos.html"><span class="num">✦</span><span class="libelle">Chapitre 17 : Échapper au chaos</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="chapitre-18-singularite-du-destin.html"><span class="num">✦</span><span class="libelle">Chapitre 18 : Singularité du destin</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="les-materias-2.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="les-armes-et-les-manuscrits-2.html"><span class="num">✦</span><span class="libelle">Les armes et les manuscrits</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="les-invocations-2.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-rapports-de-chadley-et-le-simulateur-shinra.html"><span class="num">✦</span><span class="libelle">Les rapports de Chadley et le simulateur Shinra</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="le-colisee-de-corneo.html"><span class="num">✦</span><span class="libelle">Le Colisée de Cornéo</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-mini-jeux.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="intermission-chapitre-1-lemissaire-de-wutai.html"><span class="num">✦</span><span class="libelle">INTERmission — Chapitre 1 : L&#x27;émissaire de Wutai</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="intermission-chapitre-2-le-vol-de-la-materia-ultime.html"><span class="num">✦</span><span class="libelle">INTERmission — Chapitre 2 : Le vol de la Matéria ultime</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="les-quetes-annexes-et-laffinite.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes et l&#x27;affinité</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="#intermission-fort-condor-annexes-et-armes"><span class="num">✦</span><span class="libelle">INTERmission — Fort Condor, annexes et armes</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-remake.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Remake</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-33">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="intermission-fort-condor-annexes-et-armes">INTERmission — Fort Condor, annexes et armes</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-33"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-33">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Fort Condor</strong> : parle deux fois à Polk ; achète le plateau de Maître dès Chadley battu.</li>
+<li><strong>Mode Difficile</strong> : les manuscrits de Ninjutsu et de Bojutsu.</li>
+<li><strong>Weiss</strong> : avec Cloud au simulateur du chapitre 17, après les deux aventures.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-33" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Tout le contenu annexe d'<strong>episode INTERmission</strong> : Fort Condor et ses 7 adversaires, les 6 prospectus de la Tortue Joyeuse, <strong>Ramuh</strong>, le Brise-boîtes Shinra et ses 6 matérias, les 6 armes de Yuffie et Sonon, et les deux boss secrets : le Prestige ver. 0.5 et Weiss.</p>
+<p>Les 9 trophées du DLC sont tous ici ou dans les parties 30 et 31 <em>(partie <strong>29</strong>)</em>.</p>
+<p class="alerte">⚠️ <strong>Et la bonne nouvelle</strong> : aucun trophée du DLC n'est manquable. Une fois le DLC terminé, tu peux recharger les deux chapitres à volonté.</p>
+<h2 id="itineraire-33" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Fort Condor</strong> — les règles et les 7 adversaires.</li>
+<li><strong>La chasse au prospectus</strong> — <strong>les 6 prospectus</strong>.</li>
+<li><strong>La requête de Chadley</strong> — <strong>Ramuh</strong>.</li>
+<li><strong>La salle mystère</strong> — le Brise-boîtes Shinra et ses 6 matérias.</li>
+<li><strong>Les 3 armes de Yuffie.</strong></li>
+<li><strong>Les 3 armes de Sonon.</strong></li>
+<li><strong>Le mode difficile d'INTERmission.</strong></li>
+<li>Yuffie &amp; Sonon contre Top Secret — <strong>le Prestige ver. 0.5</strong>.</li>
+<li><strong>Trio contre l'Immaculé</strong> — <strong>Weiss</strong>.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-33" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="fort-condor-les-regles">Fort Condor — les règles</h3>
+<p class="alerte manquable">⏳ Fort Condor est un jeu de stratégie sur plateau, hommage à la séquence du <em>Final Fantasy VII</em> de 1997. Le but : détruire la base adverse en posant les bonnes unités au bon moment.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Ce qu'il faut savoir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Comment ça s'ouvre</strong></td>
+<td><strong>Parle à Polk au QG d'Avalanche, chapitre 1</strong>, <strong>au moins deux fois</strong> <em>(partie <strong>30</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Le triangle des unités</strong></td>
+<td>Épée &gt; Arc &gt; Bouclier &gt; Épée</td>
+</tr>
+<tr>
+<td><strong>Les figurines</strong></td>
+<td>Les unités jouables, à gagner ou à acheter</td>
+</tr>
+<tr>
+<td><strong>Où les acheter</strong></td>
+<td>Chez l'Homme Tortue, <strong>contre des Jetons de Condor</strong></td>
+</tr>
+<tr>
+<td><strong>Les plateaux</strong></td>
+<td>Chaque plateau a son ATB, sa vitesse de recharge et son nombre d'unités</td>
+</tr>
+<tr>
+<td><strong>Les casernes</strong></td>
+<td>Elles génèrent des troupes tout au long de la partie — <strong>la clé des parties longues</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les trois types d'unités à retenir</strong> : <strong>les attaquants (épée)</strong>, <strong>les tireurs (arc)</strong>, <strong>les défenseurs (bouclier)</strong>. Et les unités aériennes, qui échappent à une partie des réponses au sol.</p>
+<h3 id="fort-condor-les-7-adversaires">Fort Condor — les 7 adversaires</h3>
+<p class="alerte">⚠️ Il faut battre les six premiers avant d'affronter le champion.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Adversaire</th>
+<th>Où</th>
+<th>Rang</th>
+<th>Son plateau</th>
+<th>Récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Kyrié</td>
+<td>Quartier résidentiel, <strong>non loin de la pension de Marle</strong></td>
+<td><strong>1</strong></td>
+<td><strong>Logistique 1</strong></td>
+<td><strong>Garde d'élite (Assaut)</strong>, <strong>2 Jetons de Condor</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Johnny</td>
+<td>La ruelle près du QG d'Avalanche</td>
+<td><strong>1</strong></td>
+<td><strong>Sorcellerie 2</strong></td>
+<td><strong>Garde antiémeute d'élite (Défense)</strong>, <strong>2 Jetons</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Chef de service de la Shinra</td>
+<td>Attablé devant une gargote, près du Septième Ciel, sur le chemin de la gare</td>
+<td><strong>1</strong></td>
+<td><strong>Célérité 1</strong></td>
+<td><strong>Grenadier d'élite (Balistique)</strong>, <strong>2 Jetons</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Jessie</td>
+<td>Devant le Septième Ciel, sur son perron</td>
+<td><strong>2</strong></td>
+<td><strong>Logistique 2</strong></td>
+<td><strong>Caserne de Grenadiers (Balistique)</strong>, <strong>3 Jetons</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Rochey</td>
+<td>Place du pilier, avec sa moto, près de l'accès au pilier</td>
+<td><strong>2</strong></td>
+<td><strong>Célérité 2</strong></td>
+<td><strong>Aérocombattant spécial (Assaut)</strong>, <strong>3 Jetons</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Wedge</td>
+<td><strong>Tout en bas du bidonville</strong>, <strong>le cul-de-sac empli de chats</strong></td>
+<td><strong>3</strong></td>
+<td><strong>Célérité 1</strong></td>
+<td><strong>Combattant blindé (Défense)</strong>, <strong>3 Jetons</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Chadley <em>(le champion)</em></td>
+<td>Son emplacement habituel, près du chemin de l'allée des débris, non loin du marchand d'armes</td>
+<td><strong>4</strong></td>
+<td>Maître</td>
+<td><strong>Matéria PC augmentés</strong>, <strong>10 000 gils</strong>, <strong>4 Jetons</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Chadley est le Champion de Fort Condor. Le battre donne le trophée La championne de Fort Condor, et met le plateau de Maître en vente chez l'Homme Tortue. Achète-le immédiatement : tu en auras besoin en mode difficile.</p>
+<p><strong>Les stratégies, adversaire par adversaire</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Adversaire</th>
+<th>Comment le battre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Kyrié</strong></td>
+<td>Équipe équilibrée, avec une emphase sur les défenseurs pour contrer ses attaquants ; son plateau donne plus de PV à ses créatures, <strong>donc prends quelques unités qui frappent fort</strong> ; une caserne posée tôt aide sur la durée</td>
+</tr>
+<tr>
+<td><strong>Johnny</strong></td>
+<td><strong>Il utilise beaucoup de défenseurs</strong>, <strong>mais la majorité de ses créatures coûtent 4</strong> → <strong>tu les gères facilement</strong></td>
+</tr>
+<tr>
+<td><strong>Chef de service de la Shinra</strong></td>
+<td><strong>De nombreuses unités rapides à jouer</strong>, <strong>majorité d'attaquants physiques</strong> ; <strong>ne traîne pas</strong> — <strong>il te noie sous les tireurs</strong></td>
+</tr>
+<tr>
+<td><strong>Jessie</strong></td>
+<td><strong>Beaucoup d'artilleurs et de défenseurs</strong>, <strong>plateau puissant</strong> ; <strong>prends attaquants + défenseurs</strong>, <strong>et des créatures volantes, relativement protégées</strong> ; <strong>elle place souvent ses tourelles à gauche</strong> → colle une caserne à droite pour assaillir sa tour</td>
+</tr>
+<tr>
+<td><strong>Rochey</strong></td>
+<td>Ses créatures encaissent mais sont lentes à poser → prends des créatures faciles à poser et noie-le sous le nombre</td>
+</tr>
+<tr>
+<td><strong>Wedge</strong></td>
+<td><strong>L'adversaire le plus fort hors champion</strong> ; <strong>unités très fortes mais lentes à poser</strong> ; joue fin : des Casernes qui génèrent des troupes en continu, et des unités à faible coût pour temporiser</td>
+</tr>
+<tr>
+<td><strong>Chadley</strong></td>
+<td>Voir la stratégie détaillée ci-dessous</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Battre Chadley — la stratégie détaillée</strong></p>
+<p>Chadley spamme ses petites unités très vite et te noie sous le nombre.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Étape</th>
+<th>Ce qu'il faut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le plateau</strong></td>
+<td><strong>Logistique 3</strong> — <strong>bon ATB, bonne vitesse de recharge, 8 créatures</strong></td>
+</tr>
+<tr>
+<td><strong>La composition</strong></td>
+<td>Un mélange d'unités aériennes, d'unités à faible coût, et de Casernes <em>(gardes et antiémeute)</em></td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>Pose la caserne antiémeute à gauche du plateau dès le départ</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Appuie tes troupes avec tes aérocombattants et tes petits attaquants pour <strong>le prendre de vitesse</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Utilise tes matérias pour soutenir tes troupes au contact des tours</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Balance ton poison sur la tour principale de Chadley</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Maintiens la pression avec tes troupes à bas coût</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Si tu peux, attends un peu pour lâcher un hélicoptère armé ou un combattant blindé</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ce combat est rude. Tu t'y reprendras probablement plusieurs fois.</p>
+<p>Une variante efficace rapportée par un guide français : plateau Logistique III avec Aérocombattant, Lanceur de drone, Caserne antiémeute, Chien de garde, Drone annihilateur, Aérocombattant spécial, Vigivrille et Hélicoptère armé. Et si le début de partie se passe mal, recommence tout de suite.</p>
+<h3 id="fort-condor-en-mode-difficile-la-reine-de-fort-condor">Fort Condor en mode difficile — La reine de Fort Condor</h3>
+<p>Après avoir terminé le DLC une première fois, rejoue le chapitre 1 en Difficile.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Changement</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tous les adversaires passent au rang 5</strong></td>
+<td>Et ils ont des plateaux améliorés</td>
+</tr>
+<tr>
+<td><strong>La condition de victoire change</strong></td>
+<td>Il faut démolir la tour principale adverse dans le temps imparti</td>
+</tr>
+<tr>
+<td><strong>Le temps</strong></td>
+<td>60 secondes supplémentaires en cas d'égalité à la fin du temps réglementaire</td>
+</tr>
+<tr>
+<td><strong>La récompense de chaque victoire</strong></td>
+<td><strong>Des manuscrits de Ninjutsu et de Bojutsu</strong>, qui donnent <strong>10 points de compétence</strong> à tes armes</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ce sont ces manuscrits qui font monter les armes au niveau 6. Fort Condor en difficile n'est pas un à-côté : c'est la source de PA du DLC.</p>
+<p><strong>La stratégie qui règle tout</strong></p>
+<p>Avec le plateau de Maître acheté chez l'Homme Tortue, le mode difficile devient facile.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le plateau</strong></td>
+<td>Maître — <strong>réserve d'unités et ATB limités</strong>, mais une vitesse qui te laisse poser très vite</td>
+</tr>
+<tr>
+<td><strong>Ses sorts</strong></td>
+<td>Très offensifs</td>
+</tr>
+<tr>
+<td><strong>Le sort clé</strong></td>
+<td><strong>Stop sur la tour centrale adverse</strong> quand tu l'attaques, <strong>et sur les troupes alentour</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Une composition de cinq figurines rapportée comme très efficace : Lanceur de drones, Aérocombattant spécial, Garde antiémeute E, Combattant spécial, Chien de garde.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Étape</th>
+<th>Ce qu'il faut faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Pose un lanceur de drone au milieu de ton camp pour <strong>l'occuper</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Observe de quel côté il t'attaque</strong>, et mets immédiatement un chien de garde sur le chemin libre</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Près de la base ennemie, pose un autre soldat et lance un sort de Vent</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Ignore les coups que tu prends. Sois très agressif.</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Face à la base principale, lance Stop dessus</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Attaque, attaque, attaque. <strong>Le tour est joué en une minute.</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="la-chasse-au-prospectus-les-6-prospectus">La chasse au prospectus — les 6 prospectus</h3>
+<ol>
+<li>Après avoir parlé aux membres d'Avalanche dans leur repaire, sors et parle à l'Homme Tortue.</li>
+<li>Il te demande six prospectus et te remet une liste d'indices.</li>
+<li>Chaque emplacement est signalé par un magnétophone qui joue la chanson de la Tortue Joyeuse. <strong>Tends l'oreille.</strong></li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le prospectus</th>
+<th>Où exactement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Caché par des enfants</td>
+<td>Quartier résidentiel : à droite de l'Homme Tortue, le terrain de jeu empli d'enfants ; va tout au fond et bouscule les caisses</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Qui flotte dans les airs</td>
+<td>Depuis l'Homme Tortue, pars à droite et dépasse le terrain de jeu ; <strong>une allée à droite finit en cul-de-sac</strong> ; passe par-dessus la caisse et vise le ballon en forme de Tortue au Shuriken, <strong>puis reviens le ramasser</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Affiché à la résidence d'une amie</td>
+<td><strong>La résidence de Tifa et Cloud</strong>, <strong>à l'étage</strong> ; progresse sans te faire repérer par le chien, <strong>en te cachant derrière les caisses</strong> ; le prospectus est juste à gauche du chien, sur le mur au-dessus du seau rouge</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Volé par un chat dans la rue des tuyaux</td>
+<td><strong>Contourne le Septième Ciel par la gauche</strong> → <strong>une allée couverte</strong> ; un chat s'échappe par un trou dans le mur du fond ; <strong>suis-le et attrape-le</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Placardé sur le panneau d'affichage</td>
+<td>Place du Pilier : quitte le bidonville en direction de la gare ; <strong>sur le panneau d'affichage</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Disparu près de l'usine abandonnée</td>
+<td>Usine abandonnée de Talagger : depuis la place du pilier, chemine jusqu'aux deux Venimantes ; <strong>abats-les</strong>, puis le prospectus est sur le mur du fond</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="4">
+<li><strong>Retourne voir l'Homme Tortue</strong> → <strong>matéria Aire d'effet</strong> et le trophée Chasseuse de tortues.</li>
+</ol>
+<p><strong>Et surtout</strong> : l'Homme Tortue te vend des figurines de Fort Condor, <strong>indispensables contre le champion</strong>. <strong>Passe le voir souvent.</strong></p>
+<h3 id="la-requete-de-chadley-ramuh">La requête de Chadley — Ramuh</h3>
+<ol>
+<li>Après avoir visité le QG d'Avalanche au début du chapitre 1, va voir Chadley, près du chemin menant à l'avenue des débris.</li>
+<li>Il te parle de son simulateur virtuel, dans lequel tu peux affronter Ramuh.</li>
+</ol>
+<p class="alerte manquable">⏳ <strong>Mon conseil</strong> : attends que Sonon ait rejoint l'équipe avant d'y aller. Ramuh colle de près, et à deux c'est bien plus gérable.</p>
+<p><strong>Ramuh</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sa faiblesse</strong></td>
+<td><strong>Le Vent</strong></td>
+</tr>
+<tr>
+<td><strong>La préparation</strong></td>
+<td>Matéria Vent liée à Affinité élémentaire</td>
+</tr>
+<tr>
+<td><strong>Le danger</strong></td>
+<td><strong>Les pièges électriques au sol</strong> — <strong>ils paralysent</strong>, <strong>et te laissent à sa merci</strong></td>
+</tr>
+<tr>
+<td><strong>Ses sphères</strong></td>
+<td>Élimine-les rapidement — sinon il s'en sert pour balancer des rayons en tournant sur lui-même</td>
+</tr>
+<tr>
+<td><strong>La finition</strong></td>
+<td>Ta Transcendance dès que possible</td>
+</tr>
+<tr>
+<td><strong>Sa barre de vie</strong></td>
+<td>Pas très grande ; <strong>mais il devient très agressif sous 50 %</strong></td>
+</tr>
+<tr>
+<td><strong>Les rayons tournants</strong></td>
+<td>Pare au lieu d'esquiver</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>La récompense</strong> : <strong>la matéria d'invocation Ramuh</strong> — la seule invocation du DLC. Elle n'est liée à aucun trophée, mais tu en auras besoin contre le Prestige ver. 0.5.</p>
+<h3 id="la-salle-mystere-le-brise-boites-shinra">La salle mystère — le Brise-boîtes Shinra</h3>
+<p>C'est le mini-jeu du DLC, et il porte un trophée.</p>
+<ol>
+<li>Pendant le chapitre 2, progresse jusqu'à l'étage 14 : armement (maintenance) et <strong>grimpe jusqu'au second terminal</strong>.</li>
+<li>Utilise le terminal pour ouvrir la porte → <strong>la salle d'entraînement</strong> <em>(partie <strong>31</strong>)</em>.</li>
+</ol>
+<p><strong>Les deux parcours et leurs 6 matérias</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Parcours</th>
+<th>Score</th>
+<th>Récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Entraînement de base</strong></td>
+<td><strong>5 000</strong></td>
+<td><strong>Matéria Enchaînement stimulant</strong></td>
+</tr>
+<tr>
+<td><strong>Entraînement de base</strong></td>
+<td><strong>10 000</strong></td>
+<td><strong>Matéria Turbo ATB</strong></td>
+</tr>
+<tr>
+<td><strong>Entraînement de base</strong></td>
+<td><strong>20 000</strong></td>
+<td>Matéria Avantage de Choc</td>
+</tr>
+<tr>
+<td><strong>Entraînement de soldat</strong></td>
+<td><strong>10 000</strong></td>
+<td><strong>Matéria Aire d'effet</strong></td>
+</tr>
+<tr>
+<td><strong>Entraînement de soldat</strong></td>
+<td><strong>30 000</strong></td>
+<td>Matéria Gain de Gils</td>
+</tr>
+<tr>
+<td><strong>Entraînement de soldat</strong></td>
+<td><strong>50 000</strong></td>
+<td><strong>Matéria Gain d'expérience</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Les 50 000 points du mode soldat demandent un quasi sans-faute. Ne laisse aucune caisse derrière toi.</p>
+<p><strong>Les techniques</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Type de caisse</th>
+<th>Comment la casser</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les caisses orange</strong></td>
+<td>Attaques physiques — <strong>lance le Shuriken et laisse-le tournoyer</strong></td>
+</tr>
+<tr>
+<td><strong>Les caisses violettes</strong></td>
+<td>Magie — envoie le Shuriken, puis enchaîne avec l'attaque magique</td>
+</tr>
+<tr>
+<td><strong>Les grosses caisses blanches</strong></td>
+<td><strong>Un maximum de dégâts</strong> — <strong>place le Shuriken, puis <strong>Tourbillon</strong></strong>*</td>
+</tr>
+<tr>
+<td><strong>Les petites caisses de temps</strong></td>
+<td>Vise-les en priorité — <strong>sinon tu perds vite</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les astuces de score</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Astuce</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le déplacement rapide</strong></td>
+<td>Envoie ton boomerang vers une caisse pour te rapprocher vite de ta cible — tu perds beaucoup moins de temps à naviguer</td>
+</tr>
+<tr>
+<td><strong>Les caisses à 1 500 points</strong></td>
+<td><strong>Lance le boomerang puis <strong>Tourbillon</strong></strong>*</td>
+</tr>
+<tr>
+<td><strong>La dernière salle</strong></td>
+<td>Elle contient <strong>5 caisses à 1 500 points</strong> → <strong>garde Bannissement 3 chargé pour elles</strong></td>
+</tr>
+<tr>
+<td><strong>Les caisses cachées</strong></td>
+<td>Fouille les renfoncements</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le trophée</strong> : Chasseuse de matérias — obtenir toutes les matérias du Brise-boîtes Shinra <em>(partie <strong>29</strong>)</em>.</p>
+<p>Et la matéria Gain d'expérience des 50 000 points te servira pour le mode difficile.</p>
+<h3 id="les-3-armes-de-yuffie">Les 3 armes de Yuffie</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Arme</th>
+<th>Compétence</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shuriken Juji</strong></td>
+<td>Ninjutsu élémentaire — renforce temporairement les attaques de Ninjutsu par l'élément feu, Glace, Foudre ou Vent, au choix</td>
+<td>L'arme de base, dès le départ</td>
+</tr>
+<tr>
+<td><strong>Boomerang</strong></td>
+<td>Disparition Nébuleuse — une esquive qui donne un instant d'invulnérabilité ; augmente l'ATB en cas de réussite ; utilisable en l'air</td>
+<td><strong>Coffre 04, QG d'Avalanche</strong> <em>(partie <strong>30</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Faucheur triple</strong></td>
+<td>Bannissement — gagne en puissance en dépensant des barres ATB destinées à d'autres commandes ; remplace le Ninjutsu élémentaire ; utilisable en l'air</td>
+<td><strong>Coffre 10, zone de transport intermédiaire, section 1</strong> <em>(partie <strong>30</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Le Ninjutsu élémentaire est ce qui rend Yuffie unique : à elle seule, elle couvre les quatre éléments <em>(partie <strong>19</strong>)</em>.</p>
+<p><strong>Les aptitudes à viser en priorité</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Arme</th>
+<th>Aptitude</th>
+<th>Coût</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shuriken Juji</strong></td>
+<td><strong>PC augmentés</strong></td>
+<td><strong>6 PA</strong></td>
+<td>Plus de PC sur les matérias de l'arme</td>
+</tr>
+<tr>
+<td><strong>Shuriken Juji</strong></td>
+<td>Pillage</td>
+<td><strong>6 PA</strong></td>
+<td>Plus de butin</td>
+</tr>
+<tr>
+<td><strong>Shuriken Juji</strong></td>
+<td>Garde précise : gain d'ATB</td>
+<td><strong>10 PA</strong></td>
+<td><strong>Récompense la parade</strong></td>
+</tr>
+<tr>
+<td><strong>Boomerang</strong></td>
+<td>Dégâts additionnels de la matéria Affinité élémentaire +10 %</td>
+<td><strong>16 PA</strong></td>
+<td>Le cœur du build de Yuffie</td>
+</tr>
+<tr>
+<td><strong>Boomerang</strong></td>
+<td>Frôle-la-mort</td>
+<td><strong>18 PA</strong></td>
+<td>Gros dégâts à bas PV</td>
+</tr>
+<tr>
+<td><strong>Boomerang</strong></td>
+<td>Coût en PM des sorts offensifs −20 %</td>
+<td><strong>12 PA</strong></td>
+<td>Précieux en Difficile</td>
+</tr>
+<tr>
+<td><strong>Boomerang</strong></td>
+<td>Dégâts de feu / glace / foudre / vent +5 %</td>
+<td><strong>14 PA chacun</strong></td>
+<td>Le sous-noyau 2 renforce les quatre éléments</td>
+</tr>
+<tr>
+<td><strong>Faucheur triple</strong></td>
+<td><strong>PC augmentés</strong></td>
+<td><strong>8 PA</strong></td>
+<td>C'est l'arme du farm</td>
+</tr>
+<tr>
+<td><strong>Faucheur triple</strong></td>
+<td>Coup critique des compétences d'arme +10 %</td>
+<td><strong>8 PA</strong></td>
+<td>Bannissement frappe plus fort</td>
+</tr>
+<tr>
+<td><strong>Faucheur triple</strong></td>
+<td>Choc régénérateur</td>
+<td><strong>14 PA</strong></td>
+<td>Se soigner en infligeant du Choc</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le Faucheur triple est l'arme de farm</strong> : son aptitude PC augmentés fait monter les matérias équipées dans l'arme plus vite <em>(partie <strong>29</strong>)</em>.</p>
+<h3 id="les-3-armes-de-sonon">Les 3 armes de Sonon</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Arme</th>
+<th>Compétence</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bâton long</strong></td>
+<td>Rage déferlante — de gros dégâts en une série de puissants coups de bâton</td>
+<td>L'arme de base, dès le départ</td>
+</tr>
+<tr>
+<td><strong>Bâton ferré</strong></td>
+<td>Combativité du Wutai — augmente temporairement la puissance des attaques en se concentrant sur une seule cible ; <strong>inutilisable en mode synchronisation</strong></td>
+<td><strong>Coffre 08, zone de transport, passage</strong> <em>(partie <strong>30</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Bâton du démon</strong></td>
+<td>Bravade — attire l'attention d'un ennemi jusqu'à ce que Yuffie lui inflige un certain montant de dégâts ; <strong>ne fonctionne pas sur certains ennemis puissants</strong></td>
+<td>Coffre 03, étage 14, après le soldat mako en armure <em>(partie <strong>31</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>nom français à vérifier en jeu</strong> : <strong>« Rage déferlante »</strong>, que la source orthographie « Rage déferlantde ».</p>
+<p><strong>Les aptitudes à viser en priorité</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Arme</th>
+<th>Aptitude</th>
+<th>Coût</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bâton long</strong></td>
+<td>Bravade transcendante</td>
+<td><strong>6 PA</strong></td>
+<td>Remplit la Transcendance en provoquant</td>
+</tr>
+<tr>
+<td><strong>Bâton long</strong></td>
+<td>Transcendance synchronisée</td>
+<td><strong>14 PA</strong></td>
+<td>La Transcendance en tandem</td>
+</tr>
+<tr>
+<td><strong>Bâton long</strong></td>
+<td>Remplissage de la jauge ATB +10 %</td>
+<td><strong>14 PA</strong></td>
+<td>Plus d'actions</td>
+</tr>
+<tr>
+<td><strong>Bâton ferré</strong></td>
+<td>Dégâts magiques / physiques en cas de garde −10 %</td>
+<td><strong>12 PA chacun</strong></td>
+<td>Sonon est le tank du duo</td>
+</tr>
+<tr>
+<td><strong>Bâton du démon</strong></td>
+<td><strong>Auto-remède</strong></td>
+<td><strong>12 PA</strong></td>
+<td>Il se soigne tout seul des altérations</td>
+</tr>
+<tr>
+<td><strong>Bâton du démon</strong></td>
+<td>Dégâts et défense élémentaires +5 %</td>
+<td><strong>8 PA chacun</strong></td>
+<td>Polyvalent</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le rôle de Sonon est clair</strong> : il encaisse et il provoque, pendant que Yuffie frappe à distance.</p>
+<h3 id="le-mode-difficile-dintermission">Le mode difficile d'INTERmission</h3>
+<p>Les règles sont exactement celles du jeu de base <em>(partie <strong>28</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Règle</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les objets</strong></td>
+<td>Interdits</td>
+</tr>
+<tr>
+<td><strong>Les PM</strong></td>
+<td>Ne se régénèrent plus</td>
+</tr>
+<tr>
+<td><strong>Les ennemis</strong></td>
+<td>Beaucoup plus forts</td>
+</tr>
+<tr>
+<td><strong>Ce que tu gardes</strong></td>
+<td>L'inventaire et l'expérience de Yuffie et de Sonon</td>
+</tr>
+<tr>
+<td><strong>L'équipement de Yuffie</strong></td>
+<td>Indépendant de celui de Cloud</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Deux chapitres seulement.</strong> C'est bien plus abordable que les 18 du jeu de base.</p>
+<p><strong>La préparation du mode difficile d'INTERmission</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Matéria</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Résurrection au niveau max sur Yuffie</strong></td>
+<td>Si Yuffie tombe K.O. alors que Sonon est debout, il se sacrifie pour la relever → <strong>il faut pouvoir le ressusciter aussitôt</strong></td>
+</tr>
+<tr>
+<td><strong>Soins au niveau max sur chaque personnage</strong></td>
+<td>Indispensable</td>
+</tr>
+<tr>
+<td><strong>Plusieurs PV augmentés et PM augmentés</strong></td>
+<td>Les deux</td>
+</tr>
+<tr>
+<td><strong>Foudre au niveau maximum</strong></td>
+<td>Il y a énormément d'ennemis robotiques dans le DLC</td>
+</tr>
+<tr>
+<td><strong>Glace</strong></td>
+<td>La deuxième faiblesse la plus courante</td>
+</tr>
+<tr>
+<td><strong>Garde renforcée</strong></td>
+<td>Un atout essentiel pour Yuffie</td>
+</tr>
+<tr>
+<td><strong>Ramuh</strong></td>
+<td>Invoque-le dès que possible</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>La technique de base de Yuffie</strong> : lance le Shuriken sur l'ennemi → il infliges des dégâts en continu ; pendant ce temps tu enchaînes les attaques magiques ; et dès qu'une barre d'ATB est prête, Tourbillon fait de terribles dégâts de Vent.</p>
+<p><strong>La nuance qui change tout</strong> : cette technique est puissante si le Shuriken est envoyé sur les adversaires, pas s'il est dans tes mains.</p>
+<p><strong>Le trophée</strong> : La route de la vengeance — terminer les deux chapitres d'INTERmission en mode difficile.</p>
+<h3 id="yuffie-sonon-contre-top-secret-le-prestige-ver-05">Yuffie &amp; Sonon contre Top Secret — le Prestige ver. 0.5</h3>
+<p><strong>Le défi secret du DLC.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Où</strong></td>
+<td>Le simulateur, au début du chapitre 2</td>
+</tr>
+<tr>
+<td><strong>La condition</strong></td>
+<td>Avoir déjà terminé le scénario du DLC une fois</td>
+</tr>
+<tr>
+<td><strong>La difficulté</strong></td>
+<td>Difficile uniquement → <strong>pas d'objets</strong></td>
+</tr>
+<tr>
+<td><strong>Le format</strong></td>
+<td>Trois combats d'affilée</td>
+</tr>
+<tr>
+<td><strong>Ton équipe</strong></td>
+<td>Seulement Yuffie et Sonon</td>
+</tr>
+</tbody>
+</table></div>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Round</th>
+<th>L'adversaire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Bahamut et Ifrit</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Ramuh</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Prestige ver. 0.5</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le spot de farm juste à côté</strong></p>
+<p>Dans la salle même où tu lances ce défi, il y a une méthode de farm très efficace.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Étape</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Lance en boucle « Yuffie &amp; Sonon contre les secrets de la Shinra », <strong>en difficulté facile</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Lance ton Shuriken, puis enchaîne Tourbillon</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Énormément d'expérience et de PC</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Équipe le Faucheur triple</strong> — son aptitude augmente les PC des matérias équipées dans l'arme</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Et la matéria PC augmentés double les PC d'une matéria associée <em>(partie <strong>31</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>La préparation de Yuffie</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Emplacement</th>
+<th>Quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Arme</strong></td>
+<td><strong>Faucheur triple</strong></td>
+</tr>
+<tr>
+<td><strong>Accessoire</strong></td>
+<td><strong>Bracelet démoniaque</strong></td>
+</tr>
+<tr>
+<td><strong>Accessoire</strong></td>
+<td><strong>Puce oni rouge</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria</strong></td>
+<td><strong>Garde renforcée</strong> — <strong>mieux résister aux parades</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria</strong></td>
+<td><strong>Résurrection</strong> — <strong>relever Sonon avec toute sa vie</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria</strong></td>
+<td><strong>2 PV augmentés + 1 PM augmentés</strong>, <strong>au niveau max</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria</strong></td>
+<td><strong>Enchaînement stimulant</strong> — <strong>remplit la jauge ATB plus vite</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria</strong></td>
+<td>Feu + Affinité élémentaire — obligatoire</td>
+</tr>
+<tr>
+<td><strong>Matéria</strong></td>
+<td><strong>Soins</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria</strong></td>
+<td><strong>Protection au niveau max</strong> — <strong>pour le sort Mur</strong></td>
+</tr>
+<tr>
+<td><strong>Invocation</strong></td>
+<td>Ramuh — <strong>garde-le pour le Prestige ver. 0.5</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>Pourquoi feu + Affinité élémentaire est obligatoire</strong> : toutes les attaques d'Ifrit et certaines du Prestige ver. 0.5 sont annulées, ou te rendent de la vie si l'Affinité est au niveau maximum <em>(partie <strong>20</strong>)</em>.</p>
+<p><strong>noms français à vérifier en jeu</strong> : <strong class="objet">Bracelet démoniaque</strong>, <strong class="objet">Puce oni rouge</strong>, <strong class="objet">Bracelet mystique</strong> — formes d'une seule source française.</p>
+<p><strong>La préparation de Sonon</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Emplacement</th>
+<th>Quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Arme</strong></td>
+<td><strong>Bâton ferré</strong></td>
+</tr>
+<tr>
+<td><strong>Accessoires</strong></td>
+<td><strong>Bracelet mystique</strong> et <strong>Tresse de Fraternité</strong> <em>(partie <strong>30</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Matérias essentielles</strong></td>
+<td>PV augmentés, PM augmentés et Soins au niveau max</td>
+</tr>
+<tr>
+<td><strong>Optionnel</strong></td>
+<td><strong>Chronomancie</strong> <em>(pour Hâte sur Yuffie)</em> et <strong>Prière</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Round 1 — Bahamut et Ifrit</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le compte à rebours</strong></td>
+<td>Un décompte apparaît au-dessus de la tête de Bahamut. <strong>À 0, c'est le Game Over</strong> — sauf peut-être si tu as lancé Mur avant</td>
+</tr>
+<tr>
+<td><strong>La conséquence</strong></td>
+<td>Gagne avant la fin du compte à rebours</td>
+</tr>
+<tr>
+<td><strong>L'approche</strong></td>
+<td>Sois très agressif. Il est trop rapide pour être esquivé : vaut mieux l'attaquer</td>
+</tr>
+<tr>
+<td><strong>La technique</strong></td>
+<td>Abuse du Shuriken lancé : tu restes en permanence au niveau de sa tête ; et Tourbillon dès qu'une barre d'ATB est prête</td>
+</tr>
+<tr>
+<td><strong>La fenêtre d'or</strong></td>
+<td>Quand il s'arrête pour faire avancer son décompte, <strong>mets-lui un maximum de dégâts</strong> : attaques en duo avec Sonon et <strong>Bannissement niveau 3</strong></td>
+</tr>
+<tr>
+<td><strong>Si tu fais assez de dégâts</strong></td>
+<td><strong>Il passe en état de fragilité</strong> → <strong>un petit répit</strong> ; mais quand il se remet en posture normale, il éjecte tout le monde autour de lui</td>
+</tr>
+<tr>
+<td><strong>Sous 50 % de PV</strong></td>
+<td>Il invoque Ifrit. <strong>ignore-le complètement</strong> — Yuffie est immunisée à ses attaques grâce à Feu + Affinité élémentaire</td>
+</tr>
+<tr>
+<td><strong>Le sort Mur</strong></td>
+<td>Renouvelle-le régulièrement <em>(le bonus est temporaire)</em> ; ne le lance pas sur Sonon : tu perdrais du temps et des PM</td>
+</tr>
+<tr>
+<td><strong>Pour finir</strong></td>
+<td>Une fois Bahamut vaincu, achève Ifrit tranquillement</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Round 2 — Ramuh</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sa faiblesse</strong></td>
+<td><strong>Le Vent</strong> → <strong>ta technique Tourbillon est parfaite</strong></td>
+</tr>
+<tr>
+<td><strong>Sa vie</strong></td>
+<td>Pas très grande</td>
+</tr>
+<tr>
+<td><strong>Le danger</strong></td>
+<td>Ses attaques foudroyantes paralysent</td>
+</tr>
+<tr>
+<td><strong>La technique</strong></td>
+<td>Reste à distance : lance le Shuriken, attaque pour remplir l'ATB, puis Tourbillon ; <strong>ton Shuriken revient en main → relance-le immédiatement</strong></td>
+</tr>
+<tr>
+<td><strong>Les sorts</strong></td>
+<td><strong>Pare quand tu ne peux pas esquiver</strong> ; <strong>lance Mur au besoin</strong> ; <strong>Hâte sur Yuffie si Sonon porte Chronomancie</strong></td>
+</tr>
+<tr>
+<td><strong>Sous 50 %</strong></td>
+<td>Il devient très agressif ; face aux rayons lasers tournants, pare plutôt que d'esquiver</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Round 3 — Prestige ver. 0.5</strong></p>
+<p>C'est une version améliorée du <strong>Prestige ver. 0</strong> du jeu de base <em>(partie <strong>24</strong>)</em>. Et beaucoup, beaucoup plus rapide.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La clé</strong></td>
+<td>Le mouvement. <strong>Ses attaques sont terrifiantes en dégâts</strong></td>
+</tr>
+<tr>
+<td><strong>Le placement</strong></td>
+<td><strong>Déplace-toi toujours sur sa gauche</strong> en <strong>martelant la roulade</strong></td>
+</tr>
+<tr>
+<td><strong>La distance</strong></td>
+<td>Reste proche de lui — plus tu es loin, plus ses attaques sont dures à esquiver</td>
+</tr>
+<tr>
+<td><strong>Le sort Mur</strong></td>
+<td>Lance-le dès que possible, au cas où tu prennes un coup malheureux</td>
+</tr>
+<tr>
+<td><strong>Le Shuriken</strong></td>
+<td><strong>Fais-le tourner en boucle sur lui</strong> — <strong>peu de dégâts, mais c'est toujours ça</strong></td>
+</tr>
+<tr>
+<td><strong>L'attaque fatale</strong></td>
+<td><strong>Ne prends jamais son énorme rayon laser.</strong> <strong>Même avec Mur, tu prends une dérouillée</strong></td>
+</tr>
+<tr>
+<td><strong>Sonon va mourir</strong></td>
+<td>C'est certain. Et ça remplit ta jauge d'invocation → <strong>appelle Ramuh</strong>, <strong>puis ressuscite Sonon</strong></td>
+</tr>
+<tr>
+<td><strong>Sa fragilité</strong></td>
+<td>S'il encaisse trop de dégâts d'un coup, il ralentit temporairement → <strong>donne tout</strong></td>
+</tr>
+<tr>
+<td><strong>Ta Transcendance</strong></td>
+<td>Prendre des dégâts et mourir remplit ta jauge ; <strong>et tu es invincible pendant l'animation</strong> — <strong>n'hésite jamais</strong></td>
+</tr>
+<tr>
+<td><strong>La routine</strong></td>
+<td><strong>Tourbillons et Bannissements niveau 3 dès que possible</strong> ; les sorts de Ramuh pour écouler une barre d'ATB</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le trophée</strong> : Chasseuse d'arme ultime.</p>
+<h3 id="trio-contre-limmacule-weiss">Trio contre l'Immaculé — Weiss</h3>
+<p>Le boss le plus puissant du jeu. Et il se combat avec Cloud, pas avec Yuffie.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Où</strong></td>
+<td><strong>Le simulateur de combat du chapitre 17</strong> <em>(partie <strong>24</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Le nom du défi</strong></td>
+<td><strong>« Trio contre l'Immaculé »</strong></td>
+</tr>
+<tr>
+<td><strong>Les conditions</strong></td>
+<td>Avoir terminé l'aventure de Yuffie et celle de Cloud</td>
+</tr>
+<tr>
+<td><strong>La difficulté</strong></td>
+<td>Mode Difficile obligatoire</td>
+</tr>
+<tr>
+<td><strong>Qui est Weiss</strong></td>
+<td>Weiss l'Immaculé, un Tsviet de *Dirge of Cerberus: Final Fantasy VII</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Ce qui rend Weiss unique</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Il est presque invincible à tes attaques</strong></td>
+<td>La seule façon de lui infliger de vrais dégâts, c'est de le mettre en état de fragilité</td>
+</tr>
+<tr>
+<td><strong>Le combat change de nature</strong></td>
+<td>Ça ressemble plus à un boss de *Kingdom Hearts : apprends son pattern et réagis au bon moment</td>
+</tr>
+<tr>
+<td><strong>Les outils essentiels</strong></td>
+<td>L'esquive et la parade</td>
+</tr>
+<tr>
+<td><strong>Trois phases</strong></td>
+<td>Il change de façon de se battre à chacune</td>
+</tr>
+<tr>
+<td><strong>La phase 3</strong></td>
+<td>Il se soigne et lance un coup à 9 999 de dégâts qui anéantit l'équipe</td>
+</tr>
+<tr>
+<td><strong>La conséquence</strong></td>
+<td>Il faut le tuer avant la phase 3</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>La préparation</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le personnage à contrôler</strong></td>
+<td>Tifa</td>
+</tr>
+<tr>
+<td><strong>L'accessoire clé</strong></td>
+<td><strong>Anneau de furie</strong>, <strong>en trois exemplaires</strong></td>
+</tr>
+<tr>
+<td><strong>Les matérias</strong></td>
+<td>Tout au niveau maximum ; si besoin, refais un autre défi « trio » du simulateur pour les monter <em>(partie <strong>24</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Soins</strong></td>
+<td>Avec la bonne approche, tu n'as même pas besoin de matéria de soin</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Où trouver l'Anneau de furie</strong> : c'est le <strong>coffre 16</strong> du manoir Cornéo, sous l'escalier du hall central — le guide le décrit au chapitre 9 <em>(partie <strong>09</strong>)</em>, et le manoir se revisite au chapitre 14 <em>(partie <strong>14</strong>)</em>.</p>
+<p><strong>Et comment en avoir trois</strong> : recharge le chapitre 14 avec la sélection de chapitres <em>(partie <strong>28</strong>)</em>, passe les cinématiques chez Aerith, prends un chocobo et demande à atterrir au Wall Market, ouvre le coffre, puis recommence le chapitre. <strong>Le contenu se renouvelle.</strong></p>
+<p><strong>Les deux sources concordent</strong> : le guide le décrit comme le <strong>coffre 16</strong> du manoir Cornéo, « sous l'escalier du hall central » <em>(partie <strong>09</strong>)</em>, et le guide de trophées dit « sous l'escalier de la salle principale de chez Don Cornéo ». <strong>C'est le même coffre</strong>, et il se renouvelle quand on recharge le chapitre.</p>
+<p class="alerte manquable">⏳ <strong>Et retiens la nuance importante</strong> : tous les contenus de coffres ne sont pas « consommés » définitivement. Certains objets, comme l'Anneau de furie, se reprennent à chaque passage — là où certaines matérias uniques, elles, ne reviennent pas <em>(partie <strong>28</strong>)</em>.</p>
+<p><strong>Le trophée</strong> : Vainqueur de l'Immaculé.</p>
+<h2 id="quetes-et-lieux-33" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Activité</th>
+<th>Où</th>
+<th>Trophée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fort Condor</strong></td>
+<td>Le bidonville du Secteur 7, chapitre 1</td>
+<td><strong>La championne de Fort Condor</strong> et <strong>La reine de Fort Condor</strong></td>
+</tr>
+<tr>
+<td><strong>La chasse au prospectus</strong></td>
+<td>Le bidonville du Secteur 7, chapitre 1</td>
+<td>Chasseuse de tortues</td>
+</tr>
+<tr>
+<td><strong>La requête de Chadley</strong></td>
+<td>Près du chemin de l'avenue des débris, chapitre 1</td>
+<td>Aucun <em>(mais Ramuh)</em></td>
+</tr>
+<tr>
+<td><strong>La salle mystère</strong></td>
+<td>Étage 14 : armement (maintenance), chapitre 2</td>
+<td>Chasseuse de matérias</td>
+</tr>
+<tr>
+<td><strong>Yuffie &amp; Sonon contre Top Secret</strong></td>
+<td>Le simulateur, début du chapitre 2</td>
+<td>Chasseuse d'arme ultime</td>
+</tr>
+<tr>
+<td><strong>Trio contre l'Immaculé</strong></td>
+<td>Le simulateur du chapitre 17 du jeu de base</td>
+<td>Vainqueur de l'Immaculé</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-boutiques-et-pnj">Les boutiques et PNJ</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Qui</th>
+<th>Ce qu'il propose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L'Homme Tortue</strong></td>
+<td><strong>La boutique à Jetons de Condor</strong> : <strong>des figurines</strong>, <strong>le plateau Logistique III</strong>, et le plateau de Maître après la victoire sur Chadley</td>
+</tr>
+<tr>
+<td><strong>Polk</strong></td>
+<td><strong>Le tutoriel de Fort Condor</strong>, au QG d'Avalanche</td>
+</tr>
+<tr>
+<td><strong>Chadley</strong></td>
+<td>Le simulateur portable et <strong>le champion de Fort Condor</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-33" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<h3 id="les-recompenses-de-fort-condor">Les récompenses de Fort Condor</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Garde d'élite (Assaut)</strong></td>
+<td><span class="badge neutre">Figurine</span></td>
+<td><strong>Battre Kyrié</strong></td>
+<td><strong>Une unité d'assaut</strong></td>
+</tr>
+<tr>
+<td><strong>Garde antiémeute d'élite (Défense)</strong></td>
+<td><span class="badge neutre">Figurine</span></td>
+<td><strong>Battre Johnny</strong></td>
+<td>Une unité de défense</td>
+</tr>
+<tr>
+<td><strong>Grenadier d'élite (Balistique)</strong></td>
+<td><span class="badge neutre">Figurine</span></td>
+<td>Battre le <strong>Chef de service de la Shinra</strong></td>
+<td><strong>Une unité balistique</strong></td>
+</tr>
+<tr>
+<td><strong>Caserne de Grenadiers (Balistique)</strong></td>
+<td><span class="badge neutre">Figurine</span></td>
+<td><strong>Battre Jessie</strong></td>
+<td>Une caserne : elle génère des troupes en continu</td>
+</tr>
+<tr>
+<td><strong>Aérocombattant spécial (Assaut)</strong></td>
+<td><span class="badge neutre">Figurine</span></td>
+<td><strong>Battre Rochey</strong></td>
+<td>Unité aérienne, très utile contre Chadley</td>
+</tr>
+<tr>
+<td><strong>Combattant blindé (Défense)</strong></td>
+<td><span class="badge neutre">Figurine</span></td>
+<td><strong>Battre Wedge</strong></td>
+<td>Une grosse unité de défense</td>
+</tr>
+<tr>
+<td><strong>Matéria PC augmentés</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Battre <strong>Chadley</strong>, le champion</td>
+<td>Double les PC d'une matéria</td>
+</tr>
+<tr>
+<td><strong>10 000 gils</strong></td>
+<td><span class="badge gils">Argent</span></td>
+<td><strong>Battre Chadley</strong></td>
+<td>De quoi tout acheter chez l'Homme Tortue</td>
+</tr>
+<tr>
+<td><strong>Plateau de Maître</strong></td>
+<td><span class="badge neutre">Plateau</span></td>
+<td>En vente chez l'Homme Tortue après la victoire sur Chadley</td>
+<td>La clé du mode difficile</td>
+</tr>
+<tr>
+<td><strong>Jetons de Condor</strong></td>
+<td><span class="badge neutre">Monnaie</span></td>
+<td><strong>2 à 4 par victoire</strong></td>
+<td>La monnaie de la boutique de l'Homme Tortue</td>
+</tr>
+<tr>
+<td><strong>Manuscrits de Ninjutsu et de Bojutsu</strong></td>
+<td><span class="badge neutre">Manuscrits</span></td>
+<td>Chaque victoire en mode Difficile</td>
+<td><strong>10 points de compétence chacun</strong> → <strong>le niveau 6 des armes</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-recompenses-des-histoires-annexes">Les récompenses des histoires annexes</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Matéria Aire d'effet</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Rendre les 6 prospectus à l'Homme Tortue</td>
+<td><strong>Frapper plusieurs cibles</strong> ; <strong>le pilier du farm</strong> <em>(partie <strong>29</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Ramuh</strong></td>
+<td><span class="badge neutre">Matéria rouge</span></td>
+<td>Battre Ramuh au simulateur de Chadley</td>
+<td>La seule invocation du DLC</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-6-materias-du-brise-boites-shinra">Les 6 matérias du Brise-boîtes Shinra</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enchaînement stimulant</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Entraînement de base, 5 000 points</td>
+<td>Remplit la jauge ATB plus vite</td>
+</tr>
+<tr>
+<td><strong>Turbo ATB</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Entraînement de base, 10 000 points</td>
+<td><strong>Accélère l'ATB</strong></td>
+</tr>
+<tr>
+<td><strong>Avantage de Choc</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Entraînement de base, 20 000 points</td>
+<td><strong>Renforce le Choc</strong> <em>(partie <strong>19</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Aire d'effet</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Entraînement de soldat, 10 000 points</td>
+<td><strong>Un second exemplaire</strong></td>
+</tr>
+<tr>
+<td><strong>Gain de Gils</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Entraînement de soldat, 30 000 points</td>
+<td><strong>Plus de gils</strong></td>
+</tr>
+<tr>
+<td><strong>Gain d'expérience</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Entraînement de soldat, 50 000 points</td>
+<td>Indispensable pour le mode difficile</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>nom français à vérifier en jeu</strong> : « Gain de Gils » et « Gain d'expérience » ici, là où le jeu de base donne « Gain de Gil » et « Gain d'XP » <em>(partie <strong>24</strong>)</em>. C'est probablement la même matéria.</p>
+<h3 id="les-6-armes">Les 6 armes</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shuriken Juji</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Yuffie</span></td>
+<td><strong>Dès le départ</strong></td>
+<td><strong>Ninjutsu élémentaire</strong></td>
+</tr>
+<tr>
+<td><strong>Boomerang</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Yuffie</span></td>
+<td><strong>Coffre 04, QG d'Avalanche</strong> <em>(partie <strong>30</strong>)</em></td>
+<td><strong>Disparition Nébuleuse</strong> ; <strong>Frôle-la-mort et Affinité élémentaire +10 %</strong></td>
+</tr>
+<tr>
+<td><strong>Faucheur triple</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Yuffie</span></td>
+<td><strong>Coffre 10, section 1 de la zone de transport</strong> <em>(partie <strong>30</strong>)</em></td>
+<td><strong>Bannissement</strong> ; <strong>l'arme de farm</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton long</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Sonon</span></td>
+<td><strong>Dès le départ</strong></td>
+<td><strong>Rage déferlante</strong> ; <strong>Transcendance synchronisée</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton ferré</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Sonon</span></td>
+<td><strong>Coffre 08, zone de transport</strong> <em>(partie <strong>30</strong>)</em></td>
+<td><strong>Combativité du Wutai</strong> ; <strong>Réduction des dégâts en garde</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton du démon</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Sonon</span></td>
+<td><strong>Coffre 03, étage 14</strong> <em>(partie <strong>31</strong>)</em></td>
+<td><strong>Bravade</strong> ; <strong>Auto-remède</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-accessoires-cites-pour-les-boss-secrets">Les accessoires cités pour les boss secrets</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Anneau de furie</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td><strong>Coffre 16 du manoir Cornéo</strong>, <strong>sous l'escalier du hall central</strong> <em>(partie <strong>09</strong>)</em> ; <strong>farmable en rechargeant le chapitre 14</strong></td>
+<td>Trois exemplaires pour Weiss</td>
+</tr>
+<tr>
+<td><strong>Bracelet démoniaque</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Un coffre du DLC</td>
+<td>Nom français et emplacement à vérifier en jeu</td>
+</tr>
+<tr>
+<td><strong>Puce oni rouge</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Un coffre du DLC</td>
+<td>Nom français et emplacement à vérifier en jeu</td>
+</tr>
+<tr>
+<td><strong>Bracelet mystique</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Un coffre du DLC</td>
+<td>Nom français et emplacement à vérifier en jeu</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-33" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="lordre-a-suivre-pour-les-9-trophees">L'ordre à suivre pour les 9 trophées</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Étape</th>
+<th>Ce qu'il faut faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Obtiens d'abord le platine du jeu de base. L'équipe de Cloud doit être très puissante pour Weiss</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Chapitre 1 en Normal</strong> : <strong>les 6 prospectus</strong>, <strong>les 7 adversaires de Fort Condor</strong>, Ramuh</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Achète le plateau de Maître dès que Chadley est battu</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Chapitre 2 en Normal</strong> : <strong>le Brise-boîtes Shinra, les 6 matérias</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Termine le DLC → <strong>Tirée des griffes des ténèbres</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Chapitre 1 en Difficile</strong> : <strong>La reine de Fort Condor</strong>, <strong>et les manuscrits</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td><strong>Début du chapitre 2 en Difficile</strong> : <strong>farme au simulateur</strong>, <strong>puis « Yuffie &amp; Sonon contre Top Secret »</strong></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td><strong>Finis le chapitre 2 en Difficile</strong> → <strong>La route de la vengeance</strong></td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td><strong>Retourne au chapitre 17 du jeu de base</strong> → <strong>« Trio contre l'Immaculé »</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Compte 7 heures avec les aides en jeu, 10 à 15 heures sans <em>(partie <strong>28</strong>)</em>.</p>
+<h3 id="les-pieges-5">Les pièges</h3>
+<ul>
+<li>Ne pas acheter le plateau de Maître après Chadley. Le mode difficile de Fort Condor devient pénible sans lui.</li>
+<li>Oublier les figurines en vente chez l'Homme Tortue. Elles font la différence contre le champion.</li>
+<li><strong>Aller voir Ramuh seule.</strong> Attends Sonon.</li>
+<li>Lâcher le Brise-boîtes mode soldat à 30 000. Les 50 000 donnent Gain d'expérience, et c'est elle qui te porte en Difficile.</li>
+<li>Lancer « Yuffie &amp; Sonon contre Top Secret » sans Feu + Affinité élémentaire. <strong>Ifrit devient ingérable.</strong></li>
+<li class="alerte">⚠️ <strong>Lancer Mur sur Sonon.</strong> Tu perds du temps et des PM pour rien.</li>
+<li><strong>S'acharner sur Ifrit.</strong> Yuffie est immunisée : concentre-toi sur Bahamut.</li>
+<li>Laisser le compte à rebours de Bahamut arriver à zéro. <strong>C'est un Game Over.</strong></li>
+<li><strong>S'éloigner du Prestige ver. 0.5.</strong> Plus tu es loin, plus ses attaques sont dures à esquiver.</li>
+<li>Laisser Weiss entrer en phase 3. Il se soigne et sort un coup à 9 999.</li>
+<li><strong>Contrôler Cloud contre Weiss.</strong> La méthode qui fonctionne passe par Tifa.</li>
+<li>Oublier que l'équipement de Yuffie est indépendant de celui de Cloud. Tu ne peux pas lui passer tes matérias du jeu de base.</li>
+</ul>
+<h3 id="pourquoi-yuffie-est-si-forte">Pourquoi Yuffie est si forte</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Atout</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les quatre éléments</strong></td>
+<td>Le Ninjutsu élémentaire couvre Feu, Glace, Foudre et Vent <em>(partie <strong>19</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Le combat à distance</strong></td>
+<td>Le Shuriken lancé fait des dégâts en continu pendant que tu attaques en magie</td>
+</tr>
+<tr>
+<td><strong>Tourbillon</strong></td>
+<td>De terribles dégâts de Vent pour une barre d'ATB</td>
+</tr>
+<tr>
+<td><strong>Bannissement</strong></td>
+<td>Gagne en puissance en consommant des barres d'ATB</td>
+</tr>
+<tr>
+<td><strong>Le sacrifice de Sonon</strong></td>
+<td>Si Yuffie tombe et que Sonon est debout, il se sacrifie pour la relever</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Et le corollaire</strong> : Résurrection au niveau max sur Yuffie est la matéria la plus importante du DLC.</p>
+<h2 id="alertes-33" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ <strong>Aucun trophée du DLC n'est manquable</strong> : une fois le DLC fini, tu peux recharger les deux chapitres à volonté.</li>
+<li class="alerte">⚠️ Il faut parler à Polk au moins deux fois pour ouvrir Fort Condor <em>(partie <strong>30</strong>)</em>.</li>
+<li class="alerte">⚠️ Achète le plateau de Maître chez l'Homme Tortue dès que Chadley est battu. Il est la clé de La reine de Fort Condor.</li>
+<li class="alerte">⚠️ Fort Condor en mode Difficile donne les manuscrits de Ninjutsu et de Bojutsu, <strong>10 PA chacun</strong> — c'est la seule source de PA qui permet le niveau 6 des armes du DLC.</li>
+<li class="alerte">⚠️ Les 50 000 points du Brise-boîtes mode soldat demandent un quasi sans-faute.</li>
+<li class="alerte">⚠️ « Yuffie &amp; Sonon contre Top Secret » n'est accessible qu'au début du chapitre 2, après avoir terminé le DLC une fois, et seulement en mode Difficile.</li>
+<li class="alerte">⚠️ Feu + Affinité élémentaire est obligatoire pour ce défi : sans ça, Ifrit et une partie des attaques du Prestige ver. 0.5 te démolissent.</li>
+<li class="alerte">⚠️ Le compte à rebours de Bahamut est un Game Over. <strong>Tue-le avant la fin.</strong></li>
+<li class="alerte">⚠️ Weiss se combat avec Cloud, au simulateur du chapitre 17 du jeu de base, et il faut avoir terminé les deux aventures.</li>
+<li class="alerte">⚠️ La phase 3 de Weiss le fait se soigner et sortir un coup à 9 999 de dégâts. <strong>Tue-le avant.</strong></li>
+<li class="alerte">⚠️ L'équipement, l'inventaire et l'argent de Yuffie sont indépendants de ceux de Cloud.</li>
+<li class="alerte">⚠️ <strong>L'<strong class="objet">Anneau de furie</strong> est le <strong>coffre 16</strong> du manoir Cornéo</strong>, <strong>sous l'escalier du hall central</strong> <em>(partie <strong>09</strong>)</em>. <strong>Il en faut trois pour Weiss</strong>, <strong>et le coffre se renouvelle quand on recharge le chapitre 14.</strong></li>
+<li class="alerte">⚠️ <strong>Divergence de nommage</strong> : une source française écrit « Youffie » là où le jeu et jeuxvideo.com écrivent Yuffie. <strong>Le guide retient Yuffie.</strong></li>
+<li class="alerte">⚠️ <strong>Divergence de nommage</strong> : le boss du chapitre 2 est appelé « Jument écarlate » par un guide de trophées français, là où jeuxvideo.com parle simplement de Scarlet <em>(partie <strong>31</strong>)</em>. Il s'agit probablement de la machine qu'elle pilote. ⚠️ <strong>à vérifier en jeu.</strong></li>
+<li class="alerte">⚠️ <strong>noms français à vérifier en jeu</strong> : <strong class="objet">Bracelet démoniaque</strong>, <strong class="objet">Puce oni rouge</strong>, <strong class="objet">Bracelet mystique</strong>, <strong>Garde antiémeute E</strong>, <strong>Rage déferlante</strong>, Gain de Gils / Gain d'expérience du Brise-boîtes.</li>
+</ul>
+<h2 id="check-list-33" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="fort-condor">Fort Condor</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Polk abordé deux fois</strong> → <strong>Fort Condor ouvert</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Kyrié battu</strong> → <strong>Garde d'élite (Assaut)</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Johnny battu</strong> → <strong>Garde antiémeute d'élite (Défense)</strong></li>
+<li class="tache"><input type="checkbox"> Chef de service de la Shinra battu → <strong>Grenadier d'élite (Balistique)</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Jessie battue</strong> → <strong>Caserne de Grenadiers (Balistique)</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Rochey battu</strong> → <strong>Aérocombattant spécial (Assaut)</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Wedge battu</strong> → <strong>Combattant blindé (Défense)</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Chadley battu</strong> → <strong>PC augmentés + 10 000 gils</strong> → La championne de Fort Condor</li>
+<li class="tache"><input type="checkbox"> <strong>Plateau de Maître acheté</strong></li>
+<li class="tache"><input type="checkbox"> Les 7 adversaires battus en Difficile → La reine de Fort Condor</li>
+<li class="tache"><input type="checkbox"> Les manuscrits de Ninjutsu et de Bojutsu récupérés</li>
+</ul>
+<h3 id="la-chasse-au-prospectus">La chasse au prospectus</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>1 — Caché par des enfants</strong></li>
+<li class="tache"><input type="checkbox"> <strong>2 — Qui flotte dans les airs</strong> <em>(le ballon tortue au Shuriken)</em></li>
+<li class="tache"><input type="checkbox"> <strong>3 — À la résidence d'une amie</strong> <em>(sans réveiller le chien)</em></li>
+<li class="tache"><input type="checkbox"> <strong>4 — Volé par un chat</strong> <em>(le trou dans le mur)</em></li>
+<li class="tache"><input type="checkbox"> <strong>5 — Sur le panneau d'affichage</strong></li>
+<li class="tache"><input type="checkbox"> <strong>6 — Près de l'usine abandonnée</strong> <em>(les deux Venimantes)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Rendus à l'Homme Tortue</strong> → <strong>matéria Aire d'effet</strong> → <strong>Chasseuse de tortues</strong></li>
+</ul>
+<h3 id="la-requete-de-chadley">La requête de Chadley</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Ramuh vaincu</strong> → <strong>matéria d'invocation Ramuh</strong></li>
+</ul>
+<h3 id="le-brise-boites-shinra">Le Brise-boîtes Shinra</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Base 5 000</strong> → <strong class="objet">Enchaînement stimulant</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Base 10 000</strong> → <strong class="objet">Turbo ATB</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Base 20 000</strong> → <strong class="objet">Avantage de Choc</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Soldat 10 000</strong> → <strong class="objet">Aire d'effet</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Soldat 30 000</strong> → <strong class="objet">Gain de Gils</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Soldat 50 000</strong> → <strong class="objet">Gain d'expérience</strong> → <strong>Chasseuse de matérias</strong></li>
+</ul>
+<h3 id="les-armes">Les armes</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Shuriken Juji</strong> <em>(de départ)</em></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Boomerang</strong> <em>(coffre 04)</em></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Faucheur triple</strong> <em>(coffre 10)</em></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bâton long</strong> <em>(de départ)</em></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bâton ferré</strong> <em>(coffre 08)</em></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bâton du démon</strong> <em>(coffre 03)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Niveau 6 atteint sur les 6 armes</strong></li>
+</ul>
+<h3 id="les-boss-secrets">Les boss secrets</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Les deux chapitres en Difficile → La route de la vengeance</li>
+<li class="tache"><input type="checkbox"> <strong>Bahamut et Ifrit</strong> vaincus</li>
+<li class="tache"><input type="checkbox"> <strong>Ramuh</strong> vaincu <em>(au défi)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Prestige ver. 0.5</strong> vaincu → <strong>Chasseuse d'arme ultime</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Les 3 Anneaux de furie farmés</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Weiss vaincu</strong> → <strong>Vainqueur de l'Immaculé</strong></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="les-quetes-annexes-et-laffinite.html" rel="prev"><small>← Partie précédente</small><b>Les quêtes annexes et l&#x27;affinité</b></a><a class="suiv" href="annexes.html" rel="next"><small>Partie suivante →</small><b>Annexes</b></a><a class="tout" href="final-fantasy-vii-remake.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Remake · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

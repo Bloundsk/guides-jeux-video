@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DLC : les quêtes des PNJ du Royaume des Ombres – Guide Elden Ring</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Elden Ring, DLC : les quêtes des PNJ du Royaume des Ombres : Tout converge vers l&#x27;arène de Leda, avant le boss final. Attention : « Restez triste à tout…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/elden-ring/41-dlc-les-quetes-des-pnj-du-royaume-des-ombres.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="DLC : les quêtes des PNJ du Royaume des Ombres · Guide Elden Ring">
+<meta property="og:description" content="Elden Ring, DLC : les quêtes des PNJ du Royaume des Ombres : Tout converge vers l&#x27;arène de Leda, avant le boss final. Attention : « Restez triste à tout…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/elden-ring/41-dlc-les-quetes-des-pnj-du-royaume-des-ombres.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Elden Ring", "item": "https://bloundsk.github.io/guides-jeux-video/guides/elden-ring/"}, {"@type": "ListItem", "position": 3, "name": "DLC : les quêtes des PNJ du Royaume des Ombres", "item": "https://bloundsk.github.io/guides-jeux-video/guides/elden-ring/41-dlc-les-quetes-des-pnj-du-royaume-des-ombres.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="elden-ring" class="compact" data-partie="41-dlc-les-quetes-des-pnj-du-royaume-des-ombres"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Elden Ring</a><span aria-hidden="true">›</span><span>Partie 41</span></nav>
+<p class="gjv-jeu">Elden Ring : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Elden <em>Ring</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction-bienvenue-dans-lentre-terre.html"><span class="num">00</span><span class="libelle">Introduction : bienvenue dans l&#x27;Entre-Terre</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-premiers-pas-et-necrolimbe-ouest.html"><span class="num">01</span><span class="libelle">Premiers pas et Nécrolimbe ouest</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-necrolimbe-est-lac-dagheel-et-bois-brumeux.html"><span class="num">02</span><span class="libelle">Nécrolimbe est, lac d&#x27;Agheel et Bois brumeux</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-la-peninsule-larmoyante.html"><span class="num">03</span><span class="libelle">La Péninsule larmoyante</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-chateau-de-voilorage-et-godrick-le-greffe.html"><span class="num">04</span><span class="libelle">Château de Voilorage et Godrick le greffé</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-liurnia-sud-et-ouest.html"><span class="num">05</span><span class="libelle">Liurnia sud et ouest</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-liurnia-est-grottes-cristallines-et-chaussee-martiale.html"><span class="num">06</span><span class="libelle">Liurnia est, grottes cristallines et Chaussée martiale</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-lacademie-de-raya-lucaria-et-rennala.html"><span class="num">07</span><span class="libelle">L&#x27;Académie de Raya Lucaria et Rennala</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-liurnia-nord-manoir-de-caria-et-lautel-lunaire.html"><span class="num">08</span><span class="libelle">Liurnia nord, Manoir de Caria et l&#x27;Autel lunaire</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-caelid-ouest-et-le-marais-divoine.html"><span class="num">09</span><span class="libelle">Caelid ouest et le Marais d&#x27;Ivoine</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-le-chateau-du-lion-rouge-et-radahn.html"><span class="num">10</span><span class="libelle">Le Château du Lion Rouge et Radahn</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="11-caelid-est-et-le-tertre-draconique.html"><span class="num">11</span><span class="libelle">Caelid est et le Tertre draconique</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-la-riviere-siofra-et-nokron-la-ville-eternelle.html"><span class="num">12</span><span class="libelle">La rivière Siofra et Nokron, la ville éternelle</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="13-la-riviere-ainsel-nokstella-et-le-lac-putrefie.html"><span class="num">13</span><span class="libelle">La rivière Ainsel, Nokstella et le Lac putréfié</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="14-les-profondeurs-de-fonderacine.html"><span class="num">14</span><span class="libelle">Les Profondeurs de Fonderacine</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="15-le-plateau-daltus.html"><span class="num">15</span><span class="libelle">Le Plateau d&#x27;Altus</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="16-le-mont-gelmir.html"><span class="num">16</span><span class="libelle">Le Mont Gelmir</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="17-le-manoir-du-volcan-et-rykard.html"><span class="num">17</span><span class="libelle">Le Manoir du volcan et Rykard</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="18-le-mur-exterieur-de-la-capitale.html"><span class="num">18</span><span class="libelle">Le Mur extérieur de la capitale</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="19-leyndell-capitale-royale-et-morgott.html"><span class="num">19</span><span class="libelle">Leyndell, capitale royale, et Morgott</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="20-le-palais-mohgwyn-et-mohg.html"><span class="num">20</span><span class="libelle">Le Palais Mohgwyn et Mohg</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="21-les-cimes-des-geants.html"><span class="num">21</span><span class="libelle">Les Cimes des Géants</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="22-les-champs-enneiges-consacres.html"><span class="num">22</span><span class="libelle">Les Champs enneigés consacrés</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="23-larbre-sacre-de-miquella.html"><span class="num">23</span><span class="libelle">L&#x27;Arbre-Sacré de Miquella</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="24-elphael-corset-de-larbre-sacre-et-malenia.html"><span class="num">24</span><span class="libelle">Elphael, corset de l&#x27;Arbre-Sacré, et Malenia</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="25-les-ruines-de-farum-azula.html"><span class="num">25</span><span class="libelle">Les Ruines de Farum Azula</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="26-leyndell-capitale-des-cendres.html"><span class="num">26</span><span class="libelle">Leyndell, capitale des cendres</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="27-les-fins-et-le-new-game.html"><span class="num">27</span><span class="libelle">Les fins et le New Game +</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="28-quetes-des-pnj-1-ranni-et-son-cercle.html"><span class="num">28</span><span class="libelle">Quêtes des PNJ (1) : Ranni et son cercle</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="29-quetes-des-pnj-2-toutes-les-autres.html"><span class="num">29</span><span class="libelle">Quêtes des PNJ (2) : toutes les autres</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="30-enigmes-tours-divines-tours-de-sorciers-beffrois-mausolees-et-tableaux.html"><span class="num">30</span><span class="libelle">Énigmes : tours divines, tours de sorciers, beffrois, mausolées et tableaux</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="31-collectibles-graines-larmes-cartes-memolithes-et-le-reste.html"><span class="num">31</span><span class="libelle">Collectibles : graines, larmes, cartes, mémolithes et le reste</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="32-armes-talismans-cendres-et-sorts-essentiels.html"><span class="num">32</span><span class="libelle">Armes, talismans, cendres et sorts essentiels</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="33-extension-acceder-au-royaume-des-ombres-et-comprendre-ses-regles.html"><span class="num">33</span><span class="libelle">Extension : accéder au Royaume des Ombres et comprendre ses règles</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="34-dlc-la-plaine-sepulcrale-et-belurat.html"><span class="num">34</span><span class="libelle">DLC : la Plaine sépulcrale et Belurat</span><span class="compte"></span></a></li>
+<li data-section="section-36"><a href="35-dlc-le-chateau-densis-et-la-riviere-dellac.html"><span class="num">35</span><span class="libelle">DLC : le Château d&#x27;Ensis et la Rivière d&#x27;Ellac</span><span class="compte"></span></a></li>
+<li data-section="section-37"><a href="36-dlc-laltus-occulte.html"><span class="num">36</span><span class="libelle">DLC : l&#x27;Altus occulte</span><span class="compte"></span></a></li>
+<li data-section="section-38"><a href="37-dlc-la-cote-sud-la-fosse-au-dragon-et-le-pic-dechiquete.html"><span class="num">37</span><span class="libelle">DLC : la Côte sud, la Fosse au dragon et le Pic déchiqueté</span><span class="compte"></span></a></li>
+<li data-section="section-39"><a href="38-dlc-le-chateau-noir.html"><span class="num">38</span><span class="libelle">DLC : le Château noir</span><span class="compte"></span></a></li>
+<li data-section="section-40"><a href="39-dlc-le-panorama-occulte-et-les-ruines-de-rauh.html"><span class="num">39</span><span class="libelle">DLC : le Panorama occulte et les Ruines de Rauh</span><span class="compte"></span></a></li>
+<li data-section="section-41"><a href="40-dlc-les-abysses-enir-ilim-et-le-boss-final.html"><span class="num">40</span><span class="libelle">DLC : les Abysses, Enir-Ilim et le boss final</span><span class="compte"></span></a></li>
+<li data-section="section-42"><a href="#41-dlc-les-quetes-des-pnj-du-royaume-des-ombres"><span class="num">41</span><span class="libelle">DLC : les quêtes des PNJ du Royaume des Ombres</span><span class="compte"></span></a></li>
+<li data-section="section-43"><a href="42-dlc-enigmes-collectibles-et-equipement-du-royaume-des-ombres.html"><span class="num">42</span><span class="libelle">DLC : énigmes, collectibles et équipement du Royaume des Ombres</span><span class="compte"></span></a></li>
+<li data-section="section-44"><a href="99-annexes-manquables-index-et-check-list-finale.html"><span class="num">99</span><span class="libelle">Annexes : manquables, index et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-45"><a href="sources-elden-ring.html"><span class="num">✦</span><span class="libelle">Sources — Elden Ring</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-42">
+<header class="tete-section">
+<p class="eyebrow">Partie 41</p>
+<h1 id="41-dlc-les-quetes-des-pnj-du-royaume-des-ombres">DLC : les quêtes des PNJ du Royaume des Ombres</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-42"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-42">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Tout converge</strong> vers l'arène de Leda, avant le boss final.</li>
+<li><strong>Attention</strong> : « Restez triste à tout jamais » fait partir les glaneurs ; le Parchemin de rite trop tôt met fin à la quête de Freyja.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-42" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>L'extension a une douzaine de personnages, et presque tous convergent vers le même endroit : l'arène de Leda, juste avant le boss final. Qui t'y aidera et qui te tombera dessus dépend entièrement de ce que tu fais avant. Cette partie déroule chaque quête dans l'ordre, avec les choix, les récompenses et les fenêtres à ne pas manquer.</p>
+<p><strong>À savoir avant de commencer</strong> : le DLC a un déclencheur global. À un moment, un bruit strident retentit et un message t'annonce que « la Rune majeure de Miquella et un sceau ont été brisés ». <strong>C'est LE signal</strong> : la moitié des quêtes ne bougent pas d'un pouce avant lui, et se débloquent toutes d'un coup après. La condition exacte est à vérifier en jeu — une source la relie au fait d'atteindre la partie est de l'Altus occulte, un peu avant le Géant du fourneau, et la <strong>Rune majeure de Miquella</strong> elle-même est lâchée par l'<strong>Avatar de l'Arbre-Occulte</strong> (partie 38).</p>
+<h2 id="itineraire-41" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Plaine sépulcrale</strong> : <strong>Moore</strong>, <strong>Thiollier</strong>, <strong>Sir Ansbach</strong>, <strong>le Kérastien</strong>, <strong>la Doyenne Kérastienne</strong>, <strong>Igon</strong>, <strong>Queelign</strong>.</li>
+<li><strong>Altus occulte</strong> : <strong>Dane Mortefeuille</strong>, <strong>le Comte Ymir</strong> et <strong>Jolan</strong>, <strong>Queelign</strong> (deuxième rencontre).</li>
+<li><strong>Côte sud</strong> : <strong>Igon</strong>, la Prêtresse de la communion draconique, <strong>Thiollier</strong> (suite).</li>
+<li><strong>Château noir</strong> : <strong>Sir Ansbach</strong>, <strong>Freyja</strong>, <strong>le Kérastien</strong> (choix), <strong>Queelign</strong> (fin).</li>
+<li><strong>Enir-Ilim</strong> : <strong>l'arène de Leda</strong>, où tout se conclut (partie 40).</li>
+</ol>
+<h2 id="deroule-pas-a-pas-41" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="moore-le-glaneur">Moore : le glaneur</h3>
+<ol>
+<li><strong>Où</strong> : au site de grâce devant Belurat, colonie de la tour, à l'ouest de la Plaine sépulcrale.</li>
+<li>Il ne te parlera pas tant que tu ne lui auras pas acheté la « Note : sources spirituelles scellées » — <strong>1 000 runes</strong>, et une option « parler » apparaît.</li>
+<li>Il te parle de ses compagnons de collecte, les glaneurs : on en croise un peu partout dans le Royaume des Ombres, et chacun donne un manuel de la nuée glaneuse. Il y en a cinq emplacements complets à vérifier en jeu.</li>
+<li>Achète-lui plusieurs objets, puis recharge la zone depuis un site de grâce : il te confie une <strong>liqueur noire</strong> à livrer à Thiollier. Il est possible qu'il ne la donne qu'après la brisure de la Rune majeure : si rien ne vient, avance dans l'aventure et reviens.</li>
+<li>Après la brisure de la Rune majeure, retourne le voir à l'entrée de Belurat : effondré, il te demande quoi faire. <strong>Trois réponses</strong> :
+<ul>
+<li><strong>« Je ne sais pas »</strong> : <strong>tu ne t'engages pas</strong>, la question reviendra.</li>
+<li><strong>« Tournez la page »</strong> : il part, et tu ne le revois que dans l'arène de Leda, contre toi.</li>
+<li class="alerte">⚠️ <strong>« Restez triste à tout jamais »</strong> : il abandonne la mission de Miquella et disparaît pour toujours — il ne rejoint pas Leda, mais les glaneurs quittent aussi le Royaume des Ombres.</li>
+</ul>
+</li>
+<li class="alerte manquable">⏳ Donc : récupère tous les manuels de la nuée glaneuse AVANT de répondre. C'est la seule vraie contrainte de sa quête.</li>
+<li><strong>Comment récupérer son équipement plus tôt</strong> : si tu ne lui as <strong>pas</strong> dit de rester triste, <strong>tue deux glaneurs</strong> et <strong>attends un peu</strong> : <strong>il t'envahit</strong> pour venger ses alliés. Sa défaite donne son bouclier (Pavois en vert-de-gris) et son set d'armure complet — bien plus confortable que de l'affronter dans l'arène finale.</li>
+</ol>
+<h3 id="thiollier-et-sainte-trina">Thiollier et sainte Trina</h3>
+<ol start="8">
+<li><strong>Où</strong> : tout au sud de la Plaine sépulcrale. C'est un marchand spécialisé dans les poisons : utile pour l'artisanat qui accumule le poison.</li>
+<li>Apporte-lui la liqueur noire de Moore avant son départ : il réfléchit à un présent pour Moore et te donne une <strong>potion de suicide</strong> (la « concoction » de Thiollier). Il en revend autant que tu veux tant qu'il tient boutique.</li>
+<li class="alerte manquable">⏳ Recharge la zone : il part définitivement vers <strong>la Côte céruléenne</strong>.</li>
+<li><strong>Où le retrouver</strong> : le Jardin du nymphéa pourpre, une zone souterraine à laquelle on accède par la Fissure des cercueils de pierre (partie 37).</li>
+<li>Il ne te parlera pas avant que tu aies battu le Chevalier putride. Tu peux l'invoquer pour ce combat — c'est purement optionnel, ça ne change rien à la suite.</li>
+<li><strong>Après le boss</strong>, tu rencontres <strong>sainte Trina</strong> et Thiollier t'explique son « suicide » rituel pour entendre la voix de sa sainte.</li>
+<li>Bois le nectar de sainte Trina — oui, vraiment, et plusieurs fois. Au bout d'environ cinq gorgées, tu entends ses paroles. Recommence jusqu'à ce qu'elle se répète, puis va en parler à Thiollier.</li>
+<li>Il ne te croit pas et s'énerve. <strong>Insiste</strong>, puis reviens au site de grâce du Jardin du nymphéa pourpre : <strong>il t'envahit</strong>. Sa défaite donne le talisman « Sourire de sainte Trina », spécialisé dans le sommeil.</li>
+<li>Reparle-lui après l'invasion, et dis-lui la vérité une troisième fois : il tombe à l'agonie, sans mourir.</li>
+<li><strong>Fin</strong> : il se joint à toi contre Leda ET contre Radahn. À la fin du combat final, il est mort, que tu l'aies invoqué ou non. <strong>Récupère son set d'équipement</strong>, puis <strong>va voir sainte Trina</strong> : elle te donne la <strong class="objet">Fleur de sainte Trina</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=384083">carte</a>). Cette pièce s'obtient même sans avoir suivi la quête ; le talisman, non.</li>
+</ol>
+<h3 id="sir-ansbach">Sir Ansbach</h3>
+<ol start="18">
+<li><strong>Où</strong> : à l'entrée principale de Belurat, colonie de la tour.</li>
+<li>Il te demande de le prévenir quand tu auras identifié six Croix de Miquella (partie 33 pour la liste).</li>
+<li>Après les croix et la brisure de la Rune majeure, <strong>retourne lui parler</strong> : il te fait part de ses craintes et quitte la zone.</li>
+<li><strong>Où le retrouver</strong> : au rez-de-chaussée de l'Entrepôt à semences du Château noir, première entrée à droite, après les petits escaliers.</li>
+<li><strong>Le Parchemin de rite secret</strong> : il lui faut pour avancer. Il est à l'étage inférieur du site de grâce « Entrepôt, troisième étage ».
+<ul>
+<li>En sortant de l'entrepôt, prends à gauche et monte les escaliers jusqu'à un Chevalier de Feu : <strong>élimine-le</strong>.</li>
+<li>Reprends les escaliers à gauche, descends, entre dans le bâtiment de droite.</li>
+<li>Derrière la bibliothèque de droite, face au vide : le parchemin est sur le bureau.</li>
+</ul>
+</li>
+<li class="alerte">⚠️ Ne lui donne pas le parchemin tout de suite si tu veux la quête de Freyja : <strong>parle-lui d'abord de Freyja</strong> (après l'avoir rencontrée au troisième étage), il te donne une lettre pour elle, et tu dois <strong>faire l'aller-retour complet</strong> avant de remettre le parchemin.</li>
+<li><strong>Le parchemin remis, il change de position.</strong></li>
+<li><strong>Fin</strong> : c'est un allié, il ne se dressera jamais contre toi (sauf si tu aides Leda à le tuer). Tu peux l'invoquer pour les deux combats finaux, et récupérer son set d'équipement après le combat final à Enir-Ilim. Sa Faux se ramasse sur sa dépouille.</li>
+</ol>
+<h3 id="freyja">Freyja</h3>
+<ol start="26">
+<li>Tu peux l'invoquer contre le Lion dansant de la bête divine, mais ça n'avance pas sa quête.</li>
+<li>Sa quête ne commence vraiment qu'après la brisure de la Rune majeure : libérée du charme, elle s'interroge sur Radahn, son ancien maître, et part pour l'<strong>Entrepôt à semences du Château noir</strong>.</li>
+<li><strong>Où</strong> : au sixième étage de l'Entrepôt à semences elle est assise à un site de grâce, sur le chemin de Messmer.</li>
+<li>Il lui manque les connaissances pour déchiffrer des documents sur son maître : va demander à Sir Ansbach, au rez-de-chaussée. Il te donne une lettre à lui livrer.</li>
+<li>Ravie, elle te récompense du Bouclier léonin doré et te confie <strong>une lettre de remerciement</strong> pour Ansbach.</li>
+<li><strong>Le piège</strong> : garde le Parchemin de rite pendant tout ce va-et-vient. Si tu le donnes à Ansbach trop tôt, il quitte l'Entrepôt et la quête de Freyja s'arrête net. Remets-lui le parchemin en même temps que la lettre de Freyja.</li>
+<li><strong>Fin</strong> : elle disparaît de l'entrepôt et tu ne la revois que dans l'arène de Leda, contre toi — les informations d'Ansbach n'ont fait que renforcer son attachement à Radahn.</li>
+<li><strong>Comment éviter de l'affronter</strong> : ignore complètement sa quête au Château noir. Elle reste coincée à l'Entrepôt, ne participe pas à la bataille, et son set d'armure et son arme se ramassent à son ancien emplacement après le combat d'arène. C'est la seule façon de ne pas se battre contre elle.</li>
+</ol>
+<h3 id="dane-mortefeuille">Dane Mortefeuille</h3>
+<ol start="34">
+<li>Sa quête commence avec la Missive du moine, au site de grâce à la sortie du Château d'Ensis. Au même endroit, tu ramasses l'émote « Que le meilleur l'emporte » — <strong>elle est indispensable</strong>.</li>
+<li><strong>Où</strong> : <strong>aux Ruines de Moorth</strong>, en Altus occulte.</li>
+<li class="alerte manquable">⏳ Fais l'émote devant lui pour l'inviter en duel. <strong>Aucun risque</strong> : si tu perds, il ne bouge pas et tu peux relancer le combat en refaisant l'émote.</li>
+<li class="alerte manquable">⏳ En le battant, il disparaît en laissant le Jeu de jambes de Dane (arme de <strong>combat rapproché</strong>) <strong>et son chapeau</strong>.</li>
+<li><strong>Fin</strong> : quoi que tu fasses, il sera hostile dans l'arène de Leda. Autant prendre son arme tout de suite aux Ruines de Moorth, surtout si un build poings t'intéresse.</li>
+</ol>
+<h3 id="le-kerastien">Le Kérastien</h3>
+<ol start="39">
+<li><strong>Où</strong> : au site de grâce « Croix des trois chemins », tout au début. Il te donne la carte des Croix de Miquella de la Plaine sépulcrale.</li>
+<li><strong>Après Rellana</strong>, retrouve-le à la « Croix de la Chaussée royale » : <strong>deuxième carte</strong>, celle de l'Altus occulte.</li>
+<li>Après la brisure de la Rune majeure, reviens à la Croix de la Chaussée royale : il annonce qu'il ne sera en paix qu'après <strong>avoir tué Messmer</strong>.</li>
+<li>Entre-temps, Leda te désigne le Kérastien comme le traître du groupe. Sur le rempart intérieur du Château noir, non loin de l'ascenseur de l'Entrepôt à semences, deux marques au sol :
+<ul>
+<li><strong>La marque dorée</strong> : <strong>tu aides le Kérastien</strong>. Leda ne meurt pas, elle se retire. Il te récompense de la Rune de Leda et de la cendre de guerre Taillade rapide, et tu peux ensuite l'aider contre Messmer.</li>
+<li><strong>La marque rouge</strong> : tu aides Leda à le tuer. <strong>Sa quête s'arrête là.</strong> Tu reçois le talisman Enchevêtrement de lacération (attaques en sprintant) <strong>et son set complet</strong>. Ne le confonds pas avec l'Enchevêtrement de riposte (attaques après une roulade), qui vient, lui, de l'aide apportée à Leda contre Sir Ansbach.</li>
+<li><strong>Ignorer le combat</strong> : il ne t'en veut pas, et Leda perd sa trace — elle se rabat alors sur Sir Ansbach.</li>
+</ul>
+</li>
+<li><strong>Messmer, le tournant</strong> :
+<ul>
+<li>Si tu tues Messmer sans lui, il sombre et se dresse contre toi dans l'arène de Leda.</li>
+<li>Si tu l'invoques dans l'arène de l'Empaleur, il se sent revigoré — mais pas apaisé — et part chercher une autre cible : Miquella. Il t'envahit alors dans les ruines de putréfaction écarlate des Ruines antiques de Rauh, juste avant Romina. En le battant, tu récupères son arme et son armure : c'est la fin de sa quête.</li>
+</ul>
+</li>
+</ol>
+<h3 id="la-doyenne-kerastienne">La Doyenne Kérastienne</h3>
+<ol start="44">
+<li><strong>Où</strong> : dans la Réserve de Belurat, colonie de la tour. Il te faut la Clé de la réserve.</li>
+<li><strong>Trouver la clé</strong> : depuis le site de grâce « Petit autel privé », monte les escaliers, prends le petit couloir entre les ruines sur ta droite, rejoins le bâtiment avec une échelle à l'intérieur : la clé est en haut de l'échelle.</li>
+<li><strong>Utiliser la clé</strong> : reviens au « Petit autel privé ». Dans le sas juste après la grâce, prends la porte de gauche, traverse le petit pont avec les deux mages : c'est la porte à gauche.</li>
+<li>Elle refuse de te parler. L'astuce est dans la description d'un heaume : porte la tête du Lion dansant de la bête divine — il faut te faire passer pour la bête divine — et sa quête s'active.</li>
+<li><strong>Première conversation</strong> : l'incantation <strong>Esprit vigilant</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=382164">carte</a>).</li>
+<li><strong>Recharge la zone</strong> : elle te demande <strong>de tuer Messmer</strong>, et si possible <strong>d'aider son fils</strong> (le Kérastien — aucune récompense supplémentaire pour ça). Elle te donne du Ragoût de scorpion (résistance physique temporaire + régénération de PV), et t'en redonne autant que tu veux tant que Messmer est en vie.</li>
+<li><strong>Fin</strong> : <strong>tue Messmer</strong>. Elle s'endort pour de bon, apaisée, et te laisse un ragoût plus puissant dont aucune source française ne donne le nom : à lire en jeu.</li>
+</ol>
+<h3 id="leda">Leda</h3>
+<ol start="51">
+<li><strong>Où</strong> : première rencontre devant le cocon de Miquella en Entre-Terre, puis au Royaume des Ombres à la « Croix de la Chaussée royale », à la sortie du Château d'Ensis.</li>
+<li>Sa quête ne consiste pas à l'aider, mais à choisir contre qui elle se retourne. Après la brisure de la Rune majeure, elle te demande de désigner un traître :
+<ul>
+<li><strong>Ne rien suggérer</strong> : la question reviendra.</li>
+<li><strong>Suggérer Thiollier</strong> : <strong>elle refuse l'idée</strong> et repose la question.</li>
+<li><strong>Suggérer le Kérastien</strong> : <strong>elle accepte</strong>, t'indique sa position, et tu peux l'invoquer en haut du grand escalier de la partie extérieure du Château noir pour l'aider à le tuer.</li>
+</ul>
+</li>
+<li>Après le Kérastien, elle accuse Sir Ansbach. Le combat se déclenche quand tu as donné le Parchemin de rite à Ansbach et la lettre à Freyja : retourne au dernier emplacement d'Ansbach et tu verras <strong>deux marques au sol</strong> — dorée pour Ansbach, rouge pour Leda.</li>
+<li class="alerte manquable">⏳ <strong>Ignorer le combat ou aider Ansbach</strong> : sa quête continue normalement, et tu gagnes la Rune de Leda et l'Arc long d'Ansbach. Aider Leda le tue définitivement (contre <strong>un talisman</strong>).</li>
+<li>La suivre n'a aucun bénéfice : elle s'opposera à toi dans tous les cas à la fin du DLC. Aider les autres rapporte strictement plus.</li>
+<li><strong>Fin</strong> : <strong>la grande bataille d'Enir-Ilim</strong> (partie 40). Son Épée de Leda se ramasse sur sa dépouille.</li>
+</ol>
+<h3 id="igon-et-la-pretresse-de-la-communion-draconique">Igon et la Prêtresse de la communion draconique</h3>
+<ol start="57">
+<li><strong>Où commencer</strong> : en haut de la falaise qui surplombe la Plaine sépulcrale, au-dessus de la Forge de lave en ruines. Depuis la grâce « Entrée du château » (après le Viaduc d'Ellac), suis le chemin vers le sud : au « Relais de la voie des piliers », tu l'entends hurler de douleur.</li>
+<li>Parle-lui deux fois, repose-toi au site de grâce pour charger un nouveau dialogue, écoute ses supplications, puis <strong>recharge la zone</strong> et <strong>oublie-le</strong> : la suite est dans une région de bien plus haut niveau.</li>
+<li>La suite est juste après la grâce « Pied du Pic déchiqueté », sur la Côte sud : deux dragons se battent en duel. Garde tes distances pour ne pas les provoquer tous les deux : attends que le glas sonne pour l'un d'eux et <strong>porte le coup fatal</strong> à celui qui reste (c'est un dragon banal). Igon t'acclame et te demande enfin clairement de l'invoquer contre Bayle.</li>
+<li><strong>La Prêtresse de la communion draconique</strong> est <strong>au sud de la Fosse au dragon</strong> (la région, pas le donjon), <strong>gardienne du Grand autel draconique</strong> où l'on échange des Cœurs de dragon contre les incantations du culte draconique.</li>
+<li>Sa bénédiction améliore la résistance à TOUS les types de dégâts, elle marche sur n'importe quel boss du Royaume des Ombres, et elle est infinie tant que Bayle est en vie.</li>
+<li><strong>Pour réussir la quête d'Igon</strong> : tue le dragon ancien Senessax, <strong>grimpe le Pic déchiqueté</strong>, invoque Igon dans l'arène de Bayle et gagne.</li>
+<li><strong>Après Bayle</strong>, retrouve Igon <strong>à son ancien emplacement</strong>, juste après l'arène des deux dragons : <strong>il est mort</strong>. Tu récupères :
+<ul>
+<li>son set complet ;</li>
+<li>son Arc géant d'Igon ;</li>
+<li>sa perle cinéraire, à offrir à la Carcasse des jumelles au Bastion de la Table ronde.</li>
+</ul>
+</li>
+<li><strong>Les deux fins de la Prêtresse</strong> :
+<ul>
+<li><strong>Fin simple</strong> : accepte de vaincre Bayle en prêchant la cause de Placidusax, puis <strong>laisse-la tranquille</strong>. <strong>Après Bayle</strong>, tu trouves à son emplacement le <strong>Cœur de prêtresse</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=405579">carte</a>) (qui permet de <strong>se transformer en homme-dragon</strong>) et le <strong>Marteau pétrofloral</strong>, une arme draconique unique.</li>
+<li class="alerte manquable">⏳ <strong>Fin du sommeil</strong> : il te faut la potion de suicide de Thiollier avant qu'il ne parte pour le Jardin du nymphéa pourpre, sinon c'est perdu. Reviens voir la prêtresse de nuit et donne-lui la potion de force : elle s'endort. Le lendemain, elle se réveille en estimant avoir failli, <strong>épuise ses dialogues</strong>, puis laisse-la. Elle cesse de donner des bénédictions : fais tes réserves avant. En échange, cette voie donne la cendre d'invocation « Florissax, dragon ancien » elle exclut définitivement le Cœur de prêtresse et le Marteau pétrofloral (partie 42).</li>
+</ul>
+</li>
+</ol>
+<h3 id="queelign">Queelign</h3>
+<ol start="65">
+<li>Il t'envahit une première fois à Belurat, colonie de la tour, à l'est de l'entrée, sur une petite place couverte de sépultures. Le battre donne le talisman Insigne de croisade.</li>
+<li>Il t'envahit une seconde fois à l'Église de la Croisade, à l'ouest de l'Altus occulte. Cette fois, il laisse la Clé de la salle des prières.</li>
+<li>La salle des prières est dans les quartiers est du Château noir, accessible depuis le chemin de la Cathédrale de Manus Metyr. Même avec l'eau encore haute : saute jusqu'au toit en face de toi, puis sur l'arche de l'église immergée, puis sur le toit de l'église, laisse-toi tomber sur une voûte en pierre et <strong>atterris en lieu sûr</strong>. <strong>Boussole plein nord</strong> : la salle est là.</li>
+<li class="alerte manquable">⏳ Une fois la porte ouverte, il te parle enfin sous sa forme humaine, mourant, et te laisse un choix ⚠️ <strong>définitif</strong> :
+<ul>
+<li><strong>Iris de grâce</strong> : il devient une cendre d'invocation à ton service.</li>
+<li><strong>Iris d'occultation</strong> : <strong>il sombre et meurt</strong>, et tu récupères <strong>son épée d'estoc lourde</strong> (Espadon de Queelign nom à recouper en jeu).</li>
+</ul>
+</li>
+</ol>
+<h3 id="le-comte-ymir-et-jolan">Le Comte Ymir et Jolan</h3>
+<ol start="69">
+<li><strong>Où</strong> : à la Cathédrale de Manus Metyr, en Altus occulte, assis sur son trône au fond. <strong>Pour y aller</strong> : <strong>bats Rellana</strong>, passe par la crevasse des Ruines de Moorth, et au lieu de suivre le chemin vers la sortie du Château noir, va directement au sud (partie 36).</li>
+<li>Première carte des ruines sacrées → les Ruines des Doigts de Rhia (Côte sud) : depuis la Côte céruléenne, longe par le sud, rejoins la plage, traverse là où la marée baisse et laisse apparaître des mottes de sable. Au centre du cercle de doigts, souffle dans la corne → talisman de la graine pourpre. L'ordre dans lequel tu sonnes les cornes n'a aucune importance : Ymir te signalera l'erreur, mais sans conséquence.</li>
+<li><strong>Deuxième carte → les Ruines des Doigts de Dhéo</strong> (nord-est du Royaume des Ombres) :
+<ul>
+<li>Rejoins les combles du Château noir par l'ascenseur du quartier religieux (inutile de faire baisser l'eau), <strong>trouve l'échelle au nord</strong> et suis le chemin jusqu'à un ascenseur descendant → grâce <strong>« Château noir, porte arrière »</strong>.</li>
+<li>Entre dans la pièce à droite et fais l'émote « Ô mère » (Village de Bonny, partie 36) : l'arrière-pays du Panorama occulte s'ouvre.</li>
+<li>Une Sentinelle de l'Arbre rôde : passe, prends le chemin de gauche et longe les ruines par la gauche.</li>
+<li><strong>Corne</strong> → talisman de la graine céruléenne.</li>
+</ul>
+</li>
+<li>Troisième carte → les Ruines des Doigts de Miyr, qui sont <strong>sous la cathédrale elle-même</strong>. Avec la carte, il te donne le talisman Poussière d'étoiles chérie.</li>
+<li>Épuise vraiment tous ses dialogues (Miquella, l'essence de la vie, la magie de cristal), téléporte-toi à n'importe quelle grâce, puis reviens à celle de Manus Metyr : <strong>son trône est vide</strong>. Tu le trouves à la sortie ouest de la cathédrale, enlaçant une tombe, avec une longue suite de dialogues.</li>
+<li><strong>Retourne à son trône et active-le</strong> : il se déplace et découvre une échelle. En bas, les troisièmes ruines : un long couloir, <strong>un ennemi d'élite</strong> et un boss — Métyr, mère des Doigts (partie 36).</li>
+<li>Les deux vaincus, retourne au cimetière, là où était Ymir : <strong>deux nouveaux combats t'attendent</strong> (Jolan t'envahit, puis Ymir lui-même).</li>
+<li><strong>Récompenses</strong> :
+<ul>
+<li><strong>le sort Doigts protecteurs</strong> ;</li>
+<li><strong>sa perle cinéraire</strong>, échangeable auprès des <strong>servantes des Deux Doigts</strong> au Bastion de la Table ronde (rassure-toi : tu ne perds pas ses sorts) ;</li>
+<li><strong>le Bâton maternel</strong> ;</li>
+<li>le Souvenir de la mère des doigts, échangeable contre le <strong>Bâton de l'au-delà</strong>.</li>
+</ul>
+</li>
+<li><strong>Jolan, la chevaleresse d'Ymir</strong> : après le combat, tu la retrouves agonisante sur la colonne de droite en entrant dans la cathédrale. <strong>Choix irréversible</strong> :
+<ul>
+<li><strong>Iris de grâce</strong> : tu lui offres la rédemption → <strong>sa cendre d'invocation</strong>.</li>
+<li><strong>Iris d'occultation</strong> : <strong>elle meurt</strong> → <strong>l'Épée nocturne</strong>, un katana unique qui accumule le <strong>saignement</strong>.</li>
+</ul>
+</li>
+<li><strong>Prends la cendre.</strong> Va ensuite voir le pantin d'Anna, l'épéiste qui la seconde, à l'étage caché de la Tour de Rabbath : descends rigoureusement la falaise depuis la pointe sud-est du Village des Chamans jusqu'à une petite terrasse (partie 39). La cendre devient « Jolan et Anna » — considérée comme la meilleure cendre d'invocation du DLC, voire du jeu, devant la Larme imitatrice.</li>
+<li><strong>Où trouver les iris</strong> : un iris de grâce dans la zone aux jarres du Château noir, derrière un adversaire d'élite ; un iris d'occultation sur un Esprit d'arbre ulcéreux liste complète à vérifier en jeu. <strong>Il en faut plusieurs</strong> : Queelign et Jolan en demandent chacun un.</li>
+</ol>
+<h2 id="quetes-et-lieux-41" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<ul>
+<li>Le déclencheur central du DLC est la brisure de la Rune majeure de Miquella : Moore, Ansbach, Freyja, le Kérastien et Leda attendent tous ce moment.</li>
+<li>Le Parchemin de rite secret est le nœud de deux quêtes à la fois : le donner trop tôt tue la quête de Freyja.</li>
+<li><strong>Le Kérastien et la Doyenne Kérastienne</strong> ne sont pas liés mécaniquement : aider le fils ne rapporte rien à la mère, même si elle le demande.</li>
+<li><strong>La Prêtresse de la communion draconique</strong> est le meilleur distributeur de consommables du DLC : <strong>bénédictions infinies tant que Bayle vit</strong>.</li>
+<li><strong>Les Croix de Miquella</strong> servent à deux choses : <strong>la quête d'Ansbach</strong> et <strong>les esquilles</strong> (parties 33 et 40).</li>
+<li><strong>Les cartes du Kérastien</strong> pointent les croix : prends-les dès que tu passes devant lui, elles ne coûtent rien.</li>
+<li><strong>Trois personnages t'aident vraiment jusqu'au bout</strong> : Sir Ansbach, Thiollier, <strong>le Kérastien</strong> (s'il est encore vivant).</li>
+<li>Quatre se dresseront contre toi quoi qu'il arrive : Leda, Dane Mortefeuille, et — selon tes choix — Freyja et Moore.</li>
+</ul>
+<h2 id="butin-exhaustif-41" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Note : sources spirituelles scellées</strong></td>
+<td><span class="badge neutre">Objet</span></td>
+<td><strong>Moore</strong>, 1 000 runes</td>
+<td><strong>Débloque le dialogue de Moore</strong> et explique les sources scellées</td>
+</tr>
+<tr>
+<td><strong>Manuels de la nuée glaneuse</strong></td>
+<td><span class="badge neutre">Manuels</span></td>
+<td><strong>Les glaneurs</strong>, un peu partout dans l'Ombre <strong>5 au total, emplacements à vérifier</strong></td>
+<td>Recettes d'artisanat</td>
+</tr>
+<tr>
+<td><strong>Pavois en vert-de-gris</strong> + <strong>set de Moore</strong></td>
+<td><span class="badge arme">Arme + armure</span></td>
+<td><strong>Tue deux glaneurs</strong> pour provoquer son invasion (ou dans l'arène de Leda) · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=384099">Voir sur la carte</a></td>
+<td>Force 49 · <strong>Charge de Moore</strong></td>
+</tr>
+<tr>
+<td><strong>Potion de suicide</strong> (concoction de Thiollier)</td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Thiollier</strong>, contre la <strong>liqueur noire</strong> de Moore ; <strong>rachetable chez lui</strong></td>
+<td>Fin du sommeil de la Prêtresse draconique</td>
+</tr>
+<tr>
+<td><strong>Sourire de sainte Trina</strong></td>
+<td><span class="badge neutre">Talisman</span></td>
+<td><strong>Invasion de Thiollier</strong> au Jardin du nymphéa pourpre (après lui avoir dit la vérité 2 fois) · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=381964">Voir sur la carte</a></td>
+<td>Spécialisé dans le <strong>sommeil</strong></td>
+</tr>
+<tr>
+<td><strong>Fleur de sainte Trina</strong></td>
+<td><span class="badge neutre">Équipement</span></td>
+<td><strong>Sainte Trina</strong>, après le combat final · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=384083">Voir sur la carte</a></td>
+<td>S'obtient même sans suivre la quête</td>
+</tr>
+<tr>
+<td><strong>Set de Thiollier</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td><strong>Sa dépouille</strong>, après le combat final</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Parchemin de rite secret</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td><strong>Sous « Entrepôt, troisième étage »</strong> : bureau derrière la bibliothèque de droite, face au vide · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=381721">Voir sur la carte</a></td>
+<td>Quête d'<strong>Ansbach</strong> (<strong>pas avant Freyja</strong>)</td>
+</tr>
+<tr>
+<td><strong>Arc long d'Ansbach</strong> + <strong>Rune de Leda</strong></td>
+<td><span class="badge arme">Arme + objet</span></td>
+<td><strong>Aider Sir Ansbach</strong> contre Leda · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=387462">Voir sur la carte</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Faux</strong> + <strong>set d'Ansbach</strong></td>
+<td><span class="badge arme">Arme + armure</span></td>
+<td><strong>Sa dépouille</strong>, après le combat final · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=166550">Voir sur la carte</a></td>
+<td>Force 12, Dex 25, Éso 17</td>
+</tr>
+<tr>
+<td><strong>Bouclier léonin doré</strong></td>
+<td><span class="badge neutre">Bouclier</span></td>
+<td><strong>Freyja</strong>, après lui avoir livré la lettre d'Ansbach · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=384461">Voir sur la carte</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Espadon de Freyja</strong> + <strong>son set</strong></td>
+<td><span class="badge arme">Arme + armure</span></td>
+<td><strong>Ignorer sa quête</strong> (récupérable à l'Entrepôt) ou la battre dans l'arène · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=438084">Voir sur la carte</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Missive du moine</strong> + émote <strong>« Que le meilleur l'emporte »</strong></td>
+<td><span class="badge neutre">Objet + émote</span></td>
+<td>Site de grâce à la sortie du Château d'Ensis · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=381221">Voir sur la carte</a></td>
+<td><strong>Indispensables pour Dane</strong></td>
+</tr>
+<tr>
+<td><strong>Jeu de jambes de Dane</strong> + <strong>chapeau de Dane</strong></td>
+<td><span class="badge arme">Arme + armure</span></td>
+<td><strong>Duel contre Dane</strong> aux <strong>Ruines de Moorth</strong> (fais l'émote) · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=387420">Voir sur la carte</a></td>
+<td>Arme de <strong>combat rapproché</strong></td>
+</tr>
+<tr>
+<td><strong>Cartes des Croix de Miquella</strong></td>
+<td><span class="badge neutre">Objets</span></td>
+<td><strong>Le Kérastien</strong> : « Croix des trois chemins », puis « Croix de la Chaussée royale »</td>
+<td>Repérer croix et esquilles</td>
+</tr>
+<tr>
+<td><strong>Rune de Leda</strong> + <strong>Taillade rapide</strong></td>
+<td><span class="badge neutre">Objet + cendre de guerre</span></td>
+<td><strong>Aider le Kérastien</strong> (marque dorée, rempart intérieur du Château noir) · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=387460">Voir sur la carte</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Enchevêtrement de lacération</strong> + <strong>set du Kérastien</strong></td>
+<td><span class="badge neutre">Talisman + armure</span></td>
+<td><strong>Aider Leda à tuer le Kérastien</strong> (marque rouge, rempart intérieur du Château noir) · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=386478">Voir sur la carte</a></td>
+<td>Améliore les attaques <strong>en sprintant</strong></td>
+</tr>
+<tr>
+<td><strong>Enchevêtrement de riposte</strong></td>
+<td><span class="badge neutre">Talisman</span></td>
+<td>Aider Leda à tuer Sir Ansbach</td>
+<td>Améliore les attaques <strong>après une roulade</strong></td>
+</tr>
+<tr>
+<td><strong>Arme et armure du Kérastien</strong></td>
+<td><span class="badge arme">Arme + armure</span></td>
+<td><strong>Son invasion</strong> aux ruines de putréfaction écarlate (si tu l'as aidé contre Messmer)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Clé de la réserve</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td><strong>Belurat</strong> : en haut de l'échelle du bâtiment près du « Petit autel privé » · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=380785">Voir sur la carte</a></td>
+<td>Ouvre la <strong>Réserve</strong> (Doyenne)</td>
+</tr>
+<tr>
+<td><strong>Esprit vigilant</strong></td>
+<td><span class="badge neutre">Incantation</span></td>
+<td><strong>Doyenne Kérastienne</strong>, <strong>porte la tête du Lion dansant</strong> pour qu'elle parle · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=382164">Voir sur la carte</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Ragoût de scorpion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Doyenne Kérastienne</strong>, <strong>en quantité illimitée tant que Messmer vit</strong></td>
+<td>Résistance physique + régénération de PV</td>
+</tr>
+<tr>
+<td><strong>Épée de Leda</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td><strong>Leda</strong>, arène d'Enir-Ilim · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=387422">Voir sur la carte</a></td>
+<td>Force 11, Dex 22, Foi 19 · <strong>Aiguilles perforantes</strong></td>
+</tr>
+<tr>
+<td><strong>Bénédiction de dragon ancien</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Prêtresse de la communion draconique</strong>, <strong>illimitée tant que Bayle vit</strong></td>
+<td>Réduit TOUS les types de dégâts</td>
+</tr>
+<tr>
+<td><strong>Cœur de prêtresse</strong> + <strong>Marteau pétrofloral</strong></td>
+<td><span class="badge neutre">Objet + arme</span></td>
+<td><strong>Fin « Placidusax »</strong> de la Prêtresse, après Bayle · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=405579">Voir sur la carte</a></td>
+<td>Transformation en <strong>homme-dragon</strong> ; arme draconique unique</td>
+</tr>
+<tr>
+<td><strong>Florissax, dragon ancien</strong></td>
+<td><span class="badge neutre">Cendre d&#x27;invocation</span></td>
+<td><strong>Fin « sommeil »</strong> de la Prêtresse (potion de suicide de nuit)</td>
+<td>Exclut le Cœur de prêtresse, le Marteau pétrofloral et les bénédictions</td>
+</tr>
+<tr>
+<td><strong>Arc géant d'Igon</strong> + <strong>set d'Igon</strong> + <strong>perle cinéraire</strong></td>
+<td><span class="badge arme">Armes + armure</span></td>
+<td><strong>Invoque Igon contre Bayle</strong>, puis retourne à son emplacement · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=382526">Voir sur la carte</a></td>
+<td>Perle à donner à la <strong>Carcasse des jumelles</strong></td>
+</tr>
+<tr>
+<td><strong>Insigne de croisade</strong></td>
+<td><span class="badge neutre">Talisman</span></td>
+<td><strong>Première invasion de Queelign</strong>, à Belurat</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Clé de la salle des prières</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td><strong>Deuxième invasion de Queelign</strong>, Église de la Croisade</td>
+<td>Ouvre la <strong>salle des prières</strong> du Château noir</td>
+</tr>
+<tr>
+<td><strong>Cendre d'invocation de Queelign</strong> <em>ou</em> son <strong>épée d'estoc lourde</strong></td>
+<td><span class="badge neutre">Cendre ou arme</span></td>
+<td><strong>Salle des prières</strong> : <strong>iris de grâce</strong> (cendre) ou <strong>iris d'occultation</strong> (arme)</td>
+<td><strong>Choix définitif</strong></td>
+</tr>
+<tr>
+<td><strong>Talisman de la graine pourpre</strong></td>
+<td><span class="badge neutre">Talisman</span></td>
+<td><strong>Corne des Ruines des Doigts de Rhia</strong> (1re carte d'Ymir) · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167675">Voir sur la carte</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Talisman de la graine céruléenne</strong></td>
+<td><span class="badge neutre">Talisman</span></td>
+<td><strong>Corne des Ruines des Doigts de Dhéo</strong> (2e carte d'Ymir) · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167682">Voir sur la carte</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Poussière d'étoiles chérie</strong></td>
+<td><span class="badge neutre">Talisman</span></td>
+<td><strong>Ymir</strong>, avec la troisième carte · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=382549">Voir sur la carte</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Doigts protecteurs</strong></td>
+<td><span class="badge neutre">Sorcellerie</span></td>
+<td><strong>Ymir vaincu</strong>, au cimetière ouest de la cathédrale · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=382559">Voir sur la carte</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Bâton maternel</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">bâton d&#x27;éclat</span></td>
+<td><strong>Ymir vaincu</strong> au terme de toute sa quête · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=382006">Voir sur la carte</a></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Souvenir de la mère des doigts</strong> → <strong>Bâton de l'au-delà</strong></td>
+<td><span class="badge neutre">Souvenir → arme</span></td>
+<td><strong>Métyr</strong> (partie 36), échange chez <strong>Enia</strong> · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=382003">Voir sur la carte</a></td>
+<td>Force 7, Int 25, Foi 25</td>
+</tr>
+<tr>
+<td><strong>Cendre d'invocation de Jolan</strong> <em>ou</em> <strong>Épée nocturne</strong></td>
+<td><span class="badge neutre">Cendre ou katana</span></td>
+<td><strong>Jolan agonisante</strong> : <strong>iris de grâce</strong> (cendre) ou <strong>iris d'occultation</strong> (katana)</td>
+<td><strong>Choix irréversible</strong></td>
+</tr>
+<tr>
+<td><strong>« Jolan et Anna »</strong></td>
+<td><span class="badge neutre">Cendre d&#x27;invocation</span></td>
+<td><strong>Pantin d'Anna</strong>, étage caché de la <strong>Tour de Rabbath</strong> (partie 39) · <a href="https://mapgenie.io/elden-ring/maps/the-shadow-realm?locationIds=383979">Voir sur la carte</a></td>
+<td>La meilleure cendre du jeu</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-41" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li>Ramasse tous les manuels de la nuée glaneuse avant de répondre à Moore. « Restez triste à tout jamais » fait disparaître les glaneurs de tout le Royaume des Ombres : c'est la seule perte définitive de sa quête.</li>
+<li><strong>Garde le Parchemin de rite en poche.</strong> C'est le piège numéro un du DLC : le remettre à Ansbach avant le va-et-vient des lettres coupe la quête de Freyja net.</li>
+<li>Bois le nectar de sainte Trina cinq fois. Ça a l'air d'une mauvaise idée. C'est l'inverse : c'est la clé de toute la fin de Thiollier.</li>
+<li>Fais le plein de bénédictions draconiques avant de tuer Bayle. La Prêtresse en donne à l'infini tant qu'il est vivant, et zéro après.</li>
+<li>Récupère la potion de suicide avant que Thiollier ne quitte la Plaine sépulcrale. Sans elle, la « fin du sommeil » de la Prêtresse est définitivement hors de portée.</li>
+<li><strong>Provoque Moore et Dane tôt.</strong> Ils seront hostiles de toute façon : autant prendre leur équipement dans un duel tranquille plutôt qu'au milieu d'une mêlée à six.</li>
+<li>Porte la tête du Lion dansant devant la Doyenne. Aucun dialogue ne le suggère : c'est la description du heaume qui donne l'indice.</li>
+<li><strong>N'aide pas Leda.</strong> Elle se retourne contre toi dans tous les cas, et chaque « service » rendu te coûte un allié et une poignée de récompenses.</li>
+<li><strong>Il te faut plusieurs iris.</strong> Queelign et Jolan en réclament un chacun, et les deux choix sont définitifs : décide à l'avance qui reçoit quoi.</li>
+<li><strong>Prends l'iris de grâce pour Jolan.</strong> Le katana est joli, mais la cendre se transforme en « Jolan et Anna », et là on parle de la meilleure invocation du jeu.</li>
+</ul>
+<h2 id="alertes-41" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ Tout se joue autour de la brisure de la Rune majeure de Miquella : rien n'avance avant, tout s'enchaîne après.</li>
+<li class="alerte">⚠️ « Restez triste à tout jamais » (Moore) fait partir les glaneurs pour toujours.</li>
+<li class="alerte">⚠️ Donner le Parchemin de rite trop tôt met fin à la quête de Freyja.</li>
+<li class="alerte">⚠️ Thiollier ferme boutique dès qu'il part vers le Jardin du nymphéa pourpre : plus de potion de suicide.</li>
+<li class="alerte">⚠️ La Prêtresse draconique ne donne plus de bénédictions après Bayle (et plus du tout dans la « fin du sommeil »).</li>
+<li class="alerte">⚠️ Tuer le Kérastien avec Leda met fin à sa quête et te prive de son invasion aux Ruines de Rauh.</li>
+<li class="alerte">⚠️ Tuer Messmer sans le Kérastien le retourne contre toi.</li>
+<li class="alerte">⚠️ <strong>Les choix d'iris (Queelign, Jolan) sont irréversibles.</strong></li>
+<li class="alerte">⚠️ <strong>Aider Leda contre Ansbach le tue définitivement.</strong></li>
+<li class="alerte">⚠️ L'arène d'Enir-Ilim clôt toutes ces quêtes d'un coup : finis tout avant de brûler l'arbre scellant (partie 40).</li>
+<li class="alerte manquable">⏳ <strong>Manquables</strong> : les manuels de la nuée glaneuse, le talisman Sourire de sainte Trina, le <strong>Bouclier léonin doré</strong>, le Jeu de jambes de Dane, l'<strong>Insigne de croisade</strong>, le <strong>Cœur de prêtresse</strong> et le <strong>Marteau pétrofloral</strong>, l'<strong class="objet">Arc géant d'Igon</strong>, les <strong>trois talismans d'Ymir</strong>, et la cendre <strong>« Jolan et Anna »</strong>.</li>
+</ul>
+<h2 id="check-list-41" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Note : sources spirituelles scellées</strong> achetée à <strong>Moore</strong></li>
+<li class="tache"><input type="checkbox"> Tous les manuels de la nuée glaneuse récupérés, <strong>puis</strong> réponse donnée à Moore</li>
+<li class="tache"><input type="checkbox"> <strong>Liqueur noire</strong> livrée à <strong>Thiollier</strong> et <strong>potion de suicide</strong> en poche</li>
+<li class="tache"><input type="checkbox"> <strong>Six Croix de Miquella</strong> montrées à <strong>Sir Ansbach</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Parchemin de rite secret</strong> trouvé, <strong>Freyja</strong> aidée <strong>avant</strong> de le remettre</li>
+<li class="tache"><input type="checkbox"> <strong>Bouclier léonin doré</strong> obtenu</li>
+<li class="tache"><input type="checkbox"> <strong>Duel contre Dane Mortefeuille</strong> remporté : Jeu de jambes de Dane</li>
+<li class="tache"><input type="checkbox"> <strong>Cartes des croix</strong> prises auprès du <strong>Kérastien</strong></li>
+<li class="tache"><input type="checkbox"> Choix fait aux deux marques (Kérastien, puis Ansbach)</li>
+<li class="tache"><input type="checkbox"> <strong>Kérastien invoqué contre Messmer</strong>, puis battu lors de son invasion</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Clé de la réserve</strong> trouvée et <strong>Doyenne Kérastienne</strong> débloquée (tête du Lion dansant)</li>
+<li class="tache"><input type="checkbox"> <strong>Igon invoqué contre Bayle</strong> : son <strong>Arc géant</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> <strong>Prêtresse draconique</strong> : fin choisie, <strong>Cœur de prêtresse</strong> et <strong>Marteau pétrofloral</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Queelign</strong> : les deux invasions, la <strong>salle des prières</strong>, l'iris donné</li>
+<li class="tache"><input type="checkbox"> <strong>Les trois cartes d'Ymir</strong> résolues : <strong>graine pourpre</strong>, <strong>graine céruléenne</strong>, <strong>Poussière d'étoiles chérie</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Métyr</strong> et <strong>Ymir</strong> vaincus : <strong>Doigts protecteurs</strong>, <strong class="objet">Bâton maternel</strong>, <strong class="objet">perle cinéraire</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Iris de grâce</strong> donné à <strong>Jolan</strong>, cendre transformée en <strong>« Jolan et Anna »</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Thiollier</strong> : nectar bu, invasion gagnée, <strong>Sourire de sainte Trina</strong></li>
+<li class="tache"><input type="checkbox"> Toutes les quêtes terminées avant de brûler l'arbre scellant</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="40-dlc-les-abysses-enir-ilim-et-le-boss-final.html" rel="prev"><small>← Partie précédente</small><b>DLC : les Abysses, Enir-Ilim et le boss final</b></a><a class="suiv" href="42-dlc-enigmes-collectibles-et-equipement-du-royaume-des-ombres.html" rel="next"><small>Partie suivante →</small><b>DLC : énigmes, collectibles et équipement du Royaume des Ombres</b></a><a class="tout" href="elden-ring.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Elden Ring · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

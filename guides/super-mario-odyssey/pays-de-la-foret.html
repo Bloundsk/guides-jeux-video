@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pays de la Forêt – Guide Super Mario Odyssey</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Super Mario Odyssey, Pays de la Forêt : Boss : Spewart, puis l&#x27;Aspirafleur. Secret : la forêt perdue, invisible et facultative, cache neuf lunes.…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/pays-de-la-foret.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Pays de la Forêt · Guide Super Mario Odyssey">
+<meta property="og:description" content="Super Mario Odyssey, Pays de la Forêt : Boss : Spewart, puis l&#x27;Aspirafleur. Secret : la forêt perdue, invisible et facultative, cache neuf lunes.…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/pays-de-la-foret.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Super Mario Odyssey", "item": "https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/"}, {"@type": "ListItem", "position": 3, "name": "Pays de la Forêt", "item": "https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/pays-de-la-foret.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="super-mario-odyssey" class="compact" data-partie="pays-de-la-foret"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Super Mario Odyssey</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Super Mario Odyssey : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Super Mario <em>Odyssey</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="pays-des-chapeaux.html"><span class="num">✦</span><span class="libelle">Pays des Chapeaux</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="pays-des-chutes.html"><span class="num">✦</span><span class="libelle">Pays des Chutes</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="pays-des-sables-lhistoire-et-les-quarante-premieres-lunes.html"><span class="num">✦</span><span class="libelle">Pays des Sables — l&#x27;histoire et les quarante premières lunes</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="pays-des-sables-les-lunes-41-a-89.html"><span class="num">✦</span><span class="libelle">Pays des Sables — les lunes 41 à 89</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="pays-du-lac.html"><span class="num">✦</span><span class="libelle">Pays du Lac</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="#pays-de-la-foret"><span class="num">✦</span><span class="libelle">Pays de la Forêt</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="pays-des-nuages.html"><span class="num">✦</span><span class="libelle">Pays des Nuages</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="pays-perdu.html"><span class="num">✦</span><span class="libelle">Pays Perdu</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="pays-des-gratte-ciel-lhistoire-et-les-quarante-premieres-lunes.html"><span class="num">✦</span><span class="libelle">Pays des Gratte-ciel — l&#x27;histoire et les quarante premières lunes</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="pays-des-gratte-ciel-les-lunes-41-a-81.html"><span class="num">✦</span><span class="libelle">Pays des Gratte-ciel — les lunes 41 à 81</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="pays-des-neiges.html"><span class="num">✦</span><span class="libelle">Pays des Neiges</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="pays-de-la-mer.html"><span class="num">✦</span><span class="libelle">Pays de la Mer</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="pays-de-la-cuisine.html"><span class="num">✦</span><span class="libelle">Pays de la Cuisine</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="pays-des-ruines.html"><span class="num">✦</span><span class="libelle">Pays des Ruines</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="pays-de-bowser.html"><span class="num">✦</span><span class="libelle">Pays de Bowser</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="pays-de-la-lune.html"><span class="num">✦</span><span class="libelle">Pays de la Lune</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="royaume-champignon-retour-au-chateau.html"><span class="num">✦</span><span class="libelle">Royaume Champignon — retour au château</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="royaume-champignon-les-defis-de-toadette.html"><span class="num">✦</span><span class="libelle">Royaume Champignon — les défis de Toadette</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="cote-obscur.html"><span class="num">✦</span><span class="libelle">Côté obscur</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="cote-tres-obscur.html"><span class="num">✦</span><span class="libelle">Côté très obscur</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="tous-les-mouvements-de-mario.html"><span class="num">✦</span><span class="libelle">Tous les mouvements de Mario</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="toutes-les-chapimorphoses.html"><span class="num">✦</span><span class="libelle">Toutes les chapimorphoses</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="toutes-les-tenues.html"><span class="num">✦</span><span class="libelle">Toutes les tenues</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-pieces-locales.html"><span class="num">✦</span><span class="libelle">Les pièces locales</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="tous-les-boss.html"><span class="num">✦</span><span class="libelle">Tous les boss</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="apres-le-generique-3.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="multijoueur-ballons-et-mises-a-jour.html"><span class="num">✦</span><span class="libelle">Multijoueur, ballons et mises à jour</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="astuces-avancees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces avancées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="sources-super-mario-odyssey.html"><span class="num">✦</span><span class="libelle">Sources — Super Mario Odyssey</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-7">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="pays-de-la-foret">Pays de la Forêt</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-7"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-7">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Boss</strong> : Spewart, puis l'Aspirafleur.</li>
+<li><strong>Secret</strong> : la forêt perdue, invisible et facultative, cache neuf lunes.</li>
+<li><strong>Conditions</strong> : 500 pièces pour la n° 33, la Tenue d'explorateur pour la n° 36.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p><strong>Verdure-sur-Vapeur</strong> est une immense serre-usine tenue par des robots jardiniers, les <strong>Jardiens</strong>, qui parlent par saccades et prennent leur travail très au sérieux. C'est le pays le plus <strong>vertical</strong> du jeu : on y monte sans arrêt, et sa carte est un enchevêtrement de passerelles métalliques, de champs de fleurs et de forêts.</p>
+<p><strong>76 lunes de puissance</strong>, et une chapimorphose qui change tout : le <strong>Poupousse</strong>, la créature bulbeuse dont les <strong>jambes s'étirent</strong> à l'infini. Une bonne trentaine de lunes du pays reposent uniquement sur elle.</p>
+<p>Ce qu'il faut accomplir :</p>
+<ol>
+<li>Répondre au <strong>Sphynx</strong>, traverser les flaques de poison et battre la <strong>Piranha géante</strong> au milieu de la <strong>sente de fer</strong>.</li>
+<li>Monter la <strong>tour du jardin céleste</strong> et battre <strong>Spewart</strong>.</li>
+<li>Ouvrir le <strong>passage vers la cache du clos fleuri</strong> en détruisant les symboles de Bowser.</li>
+<li>Battre l'<strong>Aspirafleur</strong> dans le clos fleuri.</li>
+<li>Réunir <strong>16 lunes</strong> pour repartir : l'histoire en donne <strong>8</strong>, il t'en faut <strong>8</strong> de plus.</li>
+</ol>
+<h2 id="itineraire-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.millenium.org/guide/279723.html">Pays de la Forêt en vidéo</a> — soluce illustrée sur Millenium, en français.</p>
+<p>🗺️ <strong>Carte interactive</strong> : <a href="https://www.ign.com/maps/super-mario-odyssey/wooded-kingdom">le Pays de la Forêt sur la carte IGN</a> (en anglais), avec chaque lune placée.</p>
+<p>Le pays s'étage du bas vers le haut :</p>
+<ol>
+<li><strong>L'aire d'atterrissage</strong>, en bas : l'Odyssée, la boutique à l'est, la zone forestière surélevée avec son cours d'eau.</li>
+<li><strong>La grotte de liaison</strong>, qui mène à la <strong>sente de fer</strong>.</li>
+<li><strong>La sente de fer</strong> : la longue passerelle métallique, avec son <strong>dédale mural rouge</strong>, sa Piranha géante et son drapeau central.</li>
+<li><strong>La station de recharge</strong> : le plateau des Jardiens, avec les <strong>Charlus</strong> — les chars à canon — et le départ des courses.</li>
+<li><strong>La tour du jardin céleste</strong>, au nord : l'arène de Spewart.</li>
+<li><strong>La Côte vers le sommet</strong>, puis le <strong>8ᵉ palier</strong>, puis le <strong>Belvédère</strong> : les trois paliers du haut du pays.</li>
+<li><strong>Le clos fleuri et sa cache</strong>, tout en haut : l'arène de l'Aspirafleur.</li>
+<li><strong>La forêt perdue</strong>, tout en bas, en se laissant tomber dans les profondeurs : une zone entière que beaucoup de joueurs ne trouvent jamais.</li>
+</ol>
+<p class="alerte manquable">⏳ <strong>La forêt perdue est la grande cachette du pays.</strong> Elle contient <strong>neuf lunes</strong> (n° 28 à 36) et on n'y accède qu'en <strong>se laissant tomber dans le vide</strong> depuis les hauteurs. Si tu trouves le pays avare, c'est probablement que tu n'y es pas encore allé.</p>
+<h2 id="deroule-pas-a-pas-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="objectif-1-sur-le-chemin-du-jardin-celeste">Objectif 1 — sur le chemin du jardin céleste</h3>
+<ol>
+<li>Va parler au Sphynx, au nord de la forêt. Sa question a une réponse simple : <strong>des fleurs</strong>.</li>
+<li>Le passage s'ouvre. Avance vers la structure en <strong>évitant les flaques de poison</strong>.</li>
+<li><strong>Nettoie ton chemin en lançant Cappy sur les flaques</strong>, en te méfiant des Piranhas.</li>
+<li><strong>Chapimorphose un Poupousse</strong> et traverse le <strong>dédale mural</strong> qui suit : tes <strong>jambes extensibles</strong> poussent les plates-formes vers le haut.</li>
+<li>Arrivé au <strong>drapeau relais du milieu de la sente de fer</strong>, ressers-toi de tes longues jambes pour <strong>sauter sur la tête de la Piranha géante</strong>.</li>
+<li>Lune <strong>Sur le chemin du jardin céleste</strong>.</li>
+</ol>
+<h3 id="objectif-2-les-voleurs-de-fleurs-et-spewart">Objectif 2 — les voleurs de fleurs et Spewart</h3>
+<ol>
+<li><strong>Marche sur les deux interrupteurs P bleus</strong> successifs : des <strong>passerelles fleuries</strong> apparaissent et te mènent dans la tour.</li>
+<li>À l'intérieur, <strong>active un troisième P</strong> et <strong>chapimorphose un Poupousse</strong> pour grimper plus haut.</li>
+<li>Tu débouches au <strong>sommet de la tour</strong>, drapeau relais compris. Le boss est là.</li>
+</ol>
+<p><strong>Spewart</strong> est le Broodal qui <strong>crache du poison</strong>. Il en projette de plus en plus loin à chaque phase, jusqu'à ne te laisser qu'un mince anneau libre sur le bord de l'arène.</p>
+<ol>
+<li><strong>Lance Cappy sur le poison</strong> pour te frayer un chemin — Cappy nettoie les flaques.</li>
+<li><strong>Touche-le au moins une fois</strong> pour faire tomber son chapeau.</li>
+<li><strong>Approche-toi et saute-lui dessus.</strong></li>
+<li>Aux phases suivantes, <strong>lance Cappy droit vers le boss</strong> : le but n'est pas de nettoyer l'arène entière, mais d'ouvrir un couloir jusqu'à lui.</li>
+</ol>
+<p>La <strong>multilune Les voleurs de fleurs du jardin céleste</strong> est à toi.</p>
+<h3 id="objectif-3-le-passage-vers-la-cache-du-clos-fleuri">Objectif 3 — le passage vers la cache du clos fleuri</h3>
+<p>Un long enchaînement, le plus structuré du pays :</p>
+<ol>
+<li>Téléporte-toi au <strong>drapeau de l'entrée de la sente de fer</strong> et <strong>chapimorphose un Charlu</strong> — le char à canon.</li>
+<li><strong>Détruis le mur de terre</strong> au canon pour révéler un passage.</li>
+<li><strong>Ramasse le gland</strong> et <strong>dépose-le dans le cercle de terreau</strong> : une <strong>liane géante</strong> pousse.</li>
+<li>Traverse la zone remplie de Goombas, prends un <strong>autre Charlu</strong> plus loin pour éliminer les suivants et <strong>détruire la roche</strong> qui bouche le passage dans la paroi.</li>
+<li>Monte jusqu'au drapeau Côte vers le sommet.</li>
+<li><strong>Lance Cappy sur une fleur au pied de la pente</strong> et sers-toi de l'impulsion pour atteindre le drapeau du <strong>8ᵉ palier</strong>. Monte la pente.</li>
+<li><strong>Chapimorphose un Charlu</strong>, élimine les deux autres, puis avance vers les <strong>symboles de Bowser au fond du champ de fleurs</strong> et <strong>détruis-les au canon</strong>.</li>
+<li>Lune <strong>Passage vers la cache du clos fleuri</strong>. Le chemin du boss s'ouvre juste après.</li>
+</ol>
+<h3 id="objectif-4-laspirafleur">Objectif 4 — l'Aspirafleur</h3>
+<p>L'<strong>Aspirafleur</strong> est une machine volante qui aspire les fleurs du clos. Tout le combat se joue <strong>en Poupousse</strong>.</p>
+<ol>
+<li><strong>Chapimorphose le Poupousse</strong> de l'arène.</li>
+<li><strong>Place-toi sous le boss et étire-toi</strong> : c'est le seul moyen de le toucher.</li>
+<li>Il se protège. Pour rouvrir son point faible, il faut <strong>détruire trois générateurs</strong> enfermés dans de la pierre : <strong>tourne en rond dans la salle</strong> pour esquiver ses projectiles et <strong>étire-toi sous chaque générateur</strong>.</li>
+<li>Les trois détruits, le boss <strong>se retourne</strong> : <strong>étire-toi sous lui</strong> à nouveau.</li>
+<li>Il envoie des <strong>ondes de choc successives</strong> : <strong>étire tes jambes pour préparer tes sauts</strong> et passe par-dessus.</li>
+<li>Répète, et la <strong>multilune Sauvetage de la cache du clos fleuri</strong> tombe.</li>
+</ol>
+<h3 id="repartir-3">Repartir</h3>
+<p><strong>16 lunes</strong> exigées, <strong>8</strong> données par l'histoire. Les huit plus rapides à ajouter : n° 7, 8, 9, 10, 19, 23, 28 et 29.</p>
+<p>Destination suivante : le <strong>pays des Nuages</strong> — mais l'Odyssée n'y va pas de son plein gré, tu verras.</p>
+<h2 id="quetes-et-lieux-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="le-bas-du-pays">Le bas du pays</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'on y trouve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L'aire d'atterrissage</strong></td>
+<td>l'Odyssée ; au nord, les rochers de la lune n° 7 ; à l'est, le lapin de la n° 8 ; au sud, la <strong>photo d'indice</strong> derrière un arbre (n° 50)</td>
+</tr>
+<tr>
+<td><strong>Le rebord derrière l'Odyssée</strong></td>
+<td>le chemin sur la tranche de la paroi qui mène à la clé de sol de la n° 67, et la route vers la zone est</td>
+</tr>
+<tr>
+<td><strong>La zone forestière surélevée de l'est</strong></td>
+<td>des Poupousse, le <strong>Toad mélomane</strong> près du cours d'eau (n° 52), et le ruisseau qui remonte vers le tunnel du <strong>Frère Pyro</strong> (n° 11, 14, 64, 68)</td>
+</tr>
+<tr>
+<td><strong>La boutique Crazy Cap</strong></td>
+<td>à l'est de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>La grotte de liaison</strong></td>
+<td>entre l'aire d'atterrissage et la sente de fer : une lune au plafond (n° 55)</td>
+</tr>
+<tr>
+<td><strong>Le point d'eau à l'ouest des flaques de poison</strong></td>
+<td>le tuyau du <strong>sous-sol inondé</strong> (n° 39 et 40)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="la-sente-de-fer-et-la-station-de-recharge">La sente de fer et la station de recharge</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'on y trouve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le début de la sente de fer</strong></td>
+<td>le hangar à la liane géante (n° 59), la noix de paroi (n° 58), le tuyau lunaire de la <strong>route en déroute</strong> (n° 75 et 76)</td>
+</tr>
+<tr>
+<td><strong>Le dédale mural rouge</strong></td>
+<td>la noix de la n° 15 et les <strong>5 éclats</strong> de la n° 66</td>
+</tr>
+<tr>
+<td><strong>Le drapeau du milieu de la sente de fer</strong></td>
+<td>l'athlétic-tac 1 (n° 37), la passerelle fleurie du volatile (n° 62) et du Chapiforme (n° 70)</td>
+</tr>
+<tr>
+<td><strong>La Piranha géante</strong></td>
+<td>l'objectif 1 ; à sa gauche, le rebord de la n° 16</td>
+</tr>
+<tr>
+<td><strong>La station de recharge</strong></td>
+<td>les deux stations des Jardiens (n° 9), l'athlétic-tac 2 (n° 38), la fusée du <strong>brouillard</strong> (n° 41 et 42), le départ des courses, et le tuyau lunaire des <strong>bergers</strong> (n° 73 et 74)</td>
+</tr>
+<tr>
+<td><strong>Au sud-est de la station</strong></td>
+<td>le mur de terre de la n° 5</td>
+</tr>
+<tr>
+<td><strong>À l'est de la station</strong></td>
+<td>les Charlus de la n° 22</td>
+</tr>
+<tr>
+<td><strong>Au sud de la station</strong></td>
+<td>les Goombas à empiler de la n° 21</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="le-haut-du-pays">Le haut du pays</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'on y trouve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La tour du jardin céleste</strong></td>
+<td>l'arène de Spewart, les noix des n° 17, 24 et 25, et plus tard l'EVNI de la n° 63</td>
+</tr>
+<tr>
+<td><strong>La Côte vers le sommet</strong></td>
+<td>les barres de la n° 12, et deux portes à chapeau : le <strong>réseau floral</strong> (n° 43, 44) et l'<strong>ascenseur assiégé</strong> (n° 45, 46)</td>
+</tr>
+<tr>
+<td><strong>Le 8ᵉ palier</strong></td>
+<td>la cour en contrebas avec son Poupousse (n° 6, 18, 61), l'athlétic-tac 3 (n° 65), et le chemin du Belvédère</td>
+</tr>
+<tr>
+<td><strong>Le Belvédère</strong></td>
+<td>le point culminant du pays : <strong>Peach</strong> (n° 54) et le <strong>Planodon</strong> qui sert à quatre lunes (n° 20, 56, 57, 60)</td>
+</tr>
+<tr>
+<td><strong>L'entrée du clos fleuri</strong></td>
+<td>le poteau jaune des n° 26 et 51, le robot distributeur de graines des n° 47 et 48, et le tuyau lunaire de la <strong>route invisible</strong> (n° 71 et 72)</td>
+</tr>
+<tr>
+<td><strong>La cache du clos fleuri</strong></td>
+<td>l'arène de l'Aspirafleur, puis les trois cercles de fleurs de la n° 27</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="la-foret-perdue">La forêt perdue</h3>
+<p>On y tombe depuis les hauteurs du pays. <strong>Neuf lunes</strong> y sont cachées, et un <strong>Tyrannosaure</strong> y rôde — il sert à casser des blocs de roche pour deux d'entre elles.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'on y trouve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le niveau le plus bas</strong></td>
+<td>le rocher de la n° 28, l'arbre au tronc gigantesque et son tuyau vert (n° 35)</td>
+</tr>
+<tr>
+<td><strong>Le point d'eau du milieu</strong></td>
+<td>l'épouvantail de la n° 29</td>
+</tr>
+<tr>
+<td><strong>Le haut de la forêt</strong></td>
+<td>le mur aux <strong>drôles de tuyaux</strong> (n° 30)</td>
+</tr>
+<tr>
+<td><strong>La pente</strong></td>
+<td>les blocs à faire casser au Tyrannosaure (n° 31 et 32), le Crapognon caché (n° 33), le sapin déplaçable (n° 34)</td>
+</tr>
+<tr>
+<td><strong>La source du cours d'eau</strong></td>
+<td>le Jardien qui n'ouvre sa porte qu'à un explorateur (n° 36)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-personnages-5">Les personnages</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Personnage</th>
+<th>Où</th>
+<th>Ce qu'il donne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le Sphynx</strong></td>
+<td>au nord de la forêt</td>
+<td>ouvre l'objectif 1 ; la réponse est <strong>des fleurs</strong></td>
+</tr>
+<tr>
+<td><strong>Spewart</strong></td>
+<td>sommet de la tour du jardin céleste</td>
+<td>la multilune de l'objectif 2</td>
+</tr>
+<tr>
+<td><strong>L'Aspirafleur</strong></td>
+<td>cache du clos fleuri</td>
+<td>la multilune de l'objectif 4</td>
+</tr>
+<tr>
+<td><strong>Capitaine Toad</strong></td>
+<td>plate-forme isolée au nord-est du Belvédère</td>
+<td>la lune n° 20, en Planodon</td>
+</tr>
+<tr>
+<td><strong>Goombette</strong></td>
+<td>au sud de la station de recharge, perchée</td>
+<td>la lune n° 21, en pile de Goombas</td>
+</tr>
+<tr>
+<td><strong>Le Toad mélomane</strong></td>
+<td>près du cours d'eau de la zone est</td>
+<td>la lune n° 52, contre le <strong>morceau 75</strong></td>
+</tr>
+<tr>
+<td><strong>Le Jardien de la source</strong></td>
+<td>forêt perdue, en remontant le cours d'eau</td>
+<td>la lune n° 36, si tu portes la <strong>Tenue d'explorateur</strong></td>
+</tr>
+<tr>
+<td><strong>Le Chapiforme de la passerelle</strong></td>
+<td>sur une structure de la sente de fer</td>
+<td>la lune n° 70, si tu te montres <strong>en Poupousse</strong></td>
+</tr>
+<tr>
+<td><strong>Perrotruc</strong></td>
+<td>au pied de la sente de fer</td>
+<td>annonce les noms de lunes ; à côté de lui, le <strong>bois à enflammer</strong> de la n° 64</td>
+</tr>
+<tr>
+<td><strong>L'EVNI</strong></td>
+<td>tour du jardin céleste, après la roche lunaire</td>
+<td>la lune n° 63</td>
+</tr>
+<tr>
+<td><strong>Peach</strong></td>
+<td>Belvédère</td>
+<td>la lune n° 54</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="la-boutique-crazy-cap-5">La boutique Crazy Cap</h3>
+<p>À l'<strong>est de l'Odyssée</strong>. Les pièces locales du pays sont <strong>en forme de noix</strong> — logique, vu le nombre de noix à casser ici — et il y en a <strong>100</strong>. Deux panoplies en vente : <strong>explorateur</strong> et <strong>savant</strong>.</p>
+<p class="alerte">⚠️ La <strong>Tenue d'explorateur</strong> n'est pas décorative : elle est <strong>obligatoire</strong> pour la lune n° 36.</p>
+<h2 id="butin-exhaustif-5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<p>Préfixes de disponibilité :</p>
+<ul>
+<li><strong>[Début]</strong> — dès l'arrivée dans le pays.</li>
+<li><strong>[Obj. 1]</strong>, <strong>[Obj. 2]</strong>, <strong>[Obj. 3]</strong>, <strong>[Obj. 4]</strong> — après l'objectif d'histoire correspondant.</li>
+<li><strong>[Autre pays]</strong> — se débloque depuis un autre pays.</li>
+<li><strong>[Bowser]</strong> — après avoir vaincu Bowser au pays de la Lune.</li>
+<li><strong>[Roche]</strong> — après avoir ouvert la <strong>roche lunaire</strong> du pays.</li>
+</ul>
+<p class="alerte manquable">⏳ Plusieurs lunes de ce pays sont <strong>atteignables plus tôt que prévu</strong> si tu maîtrises les sauts : le jeu les destine à l'après-objectif 2, mais rien ne verrouille physiquement l'accès. Elles portent la mention <strong>[Obj. 2 / tôt possible]</strong>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sur le chemin du jardin céleste</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Objectif 1 : réponds <strong>des fleurs</strong> au Sphynx, traverse les flaques de poison, franchis le dédale en <strong>Poupousse</strong>, et <strong>saute sur la tête de la Piranha géante</strong> au milieu de la sente de fer</td>
+<td>Ouvre l'objectif 2</td>
+</tr>
+<tr>
+<td><strong>Les voleurs de fleurs du jardin céleste</strong></td>
+<td><span class="badge neutre">Multilune</span> <span class="type-pour">vaut 3</span></td>
+<td><strong>[Obj. 1]</strong> Objectif 2 : bats <strong>Spewart</strong> au sommet de la tour du jardin céleste</td>
+<td>Ouvre l'objectif 3</td>
+</tr>
+<tr>
+<td><strong>Passage vers la cache du clos fleuri</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Objectif 3 : <strong>détruis les symboles de Bowser</strong> au fond du champ de fleurs, au canon, en <strong>Charlu</strong></td>
+<td>Ouvre l'objectif 4</td>
+</tr>
+<tr>
+<td><strong>Sauvetage de la cache du clos fleuri</strong></td>
+<td><span class="badge neutre">Multilune</span> <span class="type-pour">vaut 3</span></td>
+<td><strong>[Obj. 3]</strong> Objectif 4 : bats l'<strong>Aspirafleur</strong> en t'étirant sous lui en <strong>Poupousse</strong></td>
+<td>Termine l'histoire du pays</td>
+</tr>
+<tr>
+<td><strong>Derrière le mur de terre</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Au <strong>sud-est de la station de recharge</strong>, en <strong>Charlu</strong>, détruis la terre qui bouche le chemin dans la paroi — et pense à <strong>casser aussi les blocs en haut à gauche</strong>. Une fois en haut, laisse-toi tomber dans l'<strong>alcôve</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Sentier de montagne caché</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2 / tôt possible]</strong> Dans la <strong>cour en contrebas du 8ᵉ palier</strong>, chapimorphose le <strong>Poupousse</strong> et <strong>étire-toi sous les blocs du fond à droite</strong> pour révéler un passage en hauteur. Prends le <strong>tuyau 2D</strong> et termine par un <strong>saut au millimètre</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Pif-caillou dans les bois</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Au <strong>nord de l'aire d'atterrissage</strong>, frappe les rochers au sol avec Cappy jusqu'à en trouver un qui <strong>scintille</strong>, puis insiste</td>
+<td>Une des lunes les plus rapides du pays</td>
+</tr>
+<tr>
+<td><strong>Lapichou dans la forêt</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Juste à l'<strong>est de l'Odyssée</strong> : course-poursuite avec le <strong>lapin</strong>, à finir au Cappy</td>
+<td>Une des lunes les plus rapides du pays</td>
+</tr>
+<tr>
+<td><strong>Merci pour. La recharge.</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Une fois à la <strong>station de recharge</strong> — atteinte en plantant un <strong>gland dans un cercle de terreau</strong> —, fais une <strong>charge au sol sur la station de droite</strong></td>
+<td>Carburant de l'Odyssée ; le titre imite la diction hachée des Jardiens</td>
+</tr>
+<tr>
+<td><strong>Grand arbre à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Grimpe sur le <strong>rebord derrière l'Odyssée</strong>, rejoins la <strong>zone tout à l'est</strong> et chapimorphose un <strong>Poupousse</strong>. Étire-toi de plate-forme en plate-forme le long d'un arbre jusqu'à la <strong>noix</strong> du sommet</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Cachée dans le tunnel</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Depuis la <strong>zone forestière surélevée de l'est</strong>, en <strong>Poupousse</strong>, remonte le <strong>ruisseau en contrebas, au nord</strong>, en te méfiant du <strong>Frère Pyro</strong>. <strong>Étire-toi au maximum</strong> pour atteindre le rebord au-dessus du passage et <strong>casse la noix</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Au bord du gouffre</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2 / tôt possible]</strong> Au drapeau de la <strong>Côte vers le sommet</strong>, approche-toi de la <strong>barrière est</strong> et laisse-toi tomber sur l'<strong>étroit rebord en contrebas</strong> : une série de <strong>barres</strong> t'emmène à la lune</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Coin à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Après le Sphynx, va <strong>au fond à gauche derrière la barrière rouge</strong>, chapimorphose un <strong>Poupousse</strong> et atteins la <strong>noix</strong> perchée au-delà des <strong>planches qui s'écroulent</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Grimpette à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Au bout du <strong>tunnel près de la lune n° 11</strong>, lance Cappy sur le <strong>levier bleu</strong> pour ouvrir un passage, prends un <strong>Poupousse</strong> et grimpe par les rebords du <strong>sud-ouest</strong> puis par-dessus les obstacles jusqu'à la <strong>noix</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Dédale rouge à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Dans le <strong>dédale mural</strong> qu'on traverse en Poupousse, après avoir percé le premier lot de blocs, <strong>saute vers le haut à droite</strong> : la <strong>noix</strong> est là</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Impasse à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> À <strong>gauche de la Piranha géante</strong> de l'objectif 1, laisse-toi tomber sur le rebord où se trouve une <strong>barre jaune</strong>, chapimorphose le <strong>Poupousse</strong> et <strong>étire-toi au bout du chemin</strong> jusqu'à la <strong>noix</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Tour à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 1 / tôt possible]</strong> <strong>Entre les deux interrupteurs P bleus</strong> qui font apparaître les passerelles fleuries vers la tour, monte par les <strong>plates-formes qui s'écroulent</strong> jusqu'en haut de la tour : la lune est dans une <strong>noix</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Muraille de fer à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2 / tôt possible]</strong> Au <strong>8ᵉ palier</strong>, prends le <strong>Poupousse de la cour en contrebas</strong> et laisse-toi tomber vers la <strong>barre jaune de l'ouest</strong>. Franchis le parcours de plates-formes instables, <strong>étire-toi pour grimper sur la structure rouge de droite</strong>, et <strong>casse la noix</strong> de l'autre côté</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Tout feu tout flamme dans la grotte</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Face aux <strong>colonnes mobiles rouges</strong> au pied desquelles poussent les premières Plantes Piranha, prends le <strong>passage de gauche</strong> et <strong>lance Cappy sur l'épouvantail</strong> pour entrer. À l'intérieur, <strong>bats le Frère Pyro</strong></td>
+<td>Une des lunes les plus rapides du pays</td>
+</tr>
+<tr>
+<td><strong>Capitaine Toad vous dit youhou !</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Depuis le <strong>Belvédère</strong>, chapimorphose le <strong>Planodon</strong> et <strong>plane vers le nord-est</strong> : <strong>Capitaine Toad</strong> est sur une plate-forme isolée</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>L'amour dans la verdure</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Juste au <strong>sud de la station de recharge</strong>, chapimorphose un <strong>Goomba</strong> et <strong>empile-toi sur les autres</strong> jusqu'à former une colonne assez haute pour parler à la <strong>Goombette</strong> perchée sur le côté</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Dans un rocher de la forêt</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> À l'<strong>est de la station de recharge</strong>, chapimorphose un <strong>Charlu</strong> et laisse-toi tomber de la falaise en direction de l'Odyssée. Approche-toi du <strong>carré de terre à côté du vaisseau</strong> et <strong>détruis-le au canon</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Affaire en or à Verdure-sur-Vapeur</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Achète-la <strong>100 pièces d'or</strong> à la boutique, à l'est de l'Odyssée. Après Bowser, <strong>10 de plus</strong> sont mises en vente, soit <strong>11</strong> en tout</td>
+<td>Convertit tes pièces d'or en compteur</td>
+</tr>
+<tr>
+<td><strong>Renfoncement à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 1 / tôt possible]</strong> Dans la <strong>tour du jardin céleste</strong>, après le <strong>deuxième P bleu</strong> et en <strong>Poupousse</strong>, arrête-toi dans l'<strong>alcôve à mi-chemin de la passerelle fleurie</strong> et <strong>étire-toi vers la noix</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Étirement vertical</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 1 / tôt possible]</strong> Dans la tour, arrivé <strong>en haut des plates-formes en forme de Poupousse</strong>, ne sors pas : <strong>place-toi au centre</strong>, <strong>étire-toi au maximum</strong> et saute</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Trésor des plates-formes tournantes</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Grimpe au <strong>poteau jaune à droite de l'entrée du clos fleuri</strong>, laisse-toi tomber sur le <strong>rebord triangulaire</strong> puis descends par les passerelles. Saute sur les <strong>moulins métalliques</strong> en restant <strong>toujours sur le dessus</strong> pour ne pas être emporté, et casse la <strong>noix</strong> au bout du <strong>tuyau vert</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Floraison dans la cache du clos fleuri</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Redescends dans le <strong>clos fleuri</strong> de l'arène du boss et utilise l'<strong>attaque circulaire de Cappy</strong> — le lancer qui tourne autour de toi — pour faire <strong>éclore les trois cercles de fleurs</strong> rapidement</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Pif-caillou dans la forêt perdue</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Au <strong>niveau le plus bas de la forêt perdue</strong>, repère un <strong>rocher contre la barrière naturelle</strong> et frappe-le au Cappy jusqu'à ce qu'il lâche la lune</td>
+<td>Une des lunes les plus rapides du pays</td>
+</tr>
+<tr>
+<td><strong>Scintillante au fond de la forêt perdue</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Lance Cappy sur l'<strong>épouvantail près du point d'eau</strong>, au milieu de la forêt perdue, et cours <strong>entre les arbres en haut de la pente</strong> avant la fin du compte à rebours</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>De l'autre côté des drôles de tuyaux</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Tout en <strong>haut de la forêt perdue</strong>, entre dans le <strong>tuyau vert du mur</strong>, puis prends dans l'ordre : <strong>celui de gauche</strong>, <strong>celui de gauche</strong>, puis <strong>le premier sur la gauche</strong>. La lune apparaît à côté de toi</td>
+<td>Carburant de l'Odyssée ; un petit labyrinthe de tuyaux</td>
+</tr>
+<tr>
+<td><strong>Dans le murmure de la forêt perdue</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Sur la <strong>pente de la forêt perdue</strong>, à <strong>gauche du ruisseau contre la paroi</strong>, <strong>attire le Tyrannosaure</strong> pour qu'il <strong>détruise les blocs</strong> et révèle une parcelle lumineuse. <strong>Charge au sol</strong> dessus</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Dans le roc de la forêt perdue</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> <strong>Attire le Tyrannosaure vers le bas de la forêt</strong> et fais-lui casser les <strong>blocs de roche</strong>, dont un posé sur une <strong>petite butte</strong>. Une lueur apparaît au sol : <strong>charge au sol</strong> dessus</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Un trésor nourri de pièces</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Vers le <strong>milieu de la forêt perdue</strong>, en bas de la pente qui mène au tuyau vert de la paroi, chapimorphose le <strong>Crapognon</strong> — invisible tant que tu ne t'en approches pas — et va dans le <strong>petit bassin sur le côté</strong>. Il faut <strong>tirer 500 pièces</strong> sur la <strong>petite plante entourée de pièces dorées</strong> pour la faire pousser ; grimpe ensuite à l'arbre voisin pour cueillir la lune à son sommet</td>
+<td>Carburant de l'Odyssée ; prévois d'avoir <strong>500 pièces d'or</strong> sur toi</td>
+</tr>
+<tr>
+<td><strong>Au pied de l'arbre mouvant</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Dans la forêt perdue, chapimorphose le <strong>sapin en haut des marches contre le mur</strong>, <strong>déplace-le</strong>, puis fais une <strong>charge au sol sur la lueur</strong> révélée</td>
+<td>Carburant de l'Odyssée ; oui, on peut coiffer un arbre</td>
+</tr>
+<tr>
+<td><strong>Trésor piégé de la forêt perdue</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Rejoins l'<strong>arbre au tronc gigantesque</strong> en bas de la forêt perdue et entre par le <strong>tuyau vert de sa base</strong>. Ouvre les coffres <strong>dans cet ordre : milieu, gauche, droite</strong></td>
+<td>Carburant de l'Odyssée ; se tromper d'ordre relance l'énigme</td>
+</tr>
+<tr>
+<td><strong>Explorateur en quête de trésor</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Achète et enfile la <strong>Tenue d'explorateur</strong> à la boutique du pays, puis remonte le <strong>cours d'eau de la forêt perdue jusqu'à sa source</strong> et parle au <strong>Jardien</strong> : il t'ouvre la porte, et la lune est dans un <strong>coffre</strong></td>
+<td>Carburant de l'Odyssée ; <strong>impossible sans la tenue</strong></td>
+</tr>
+<tr>
+<td><strong>Pays de la Forêt : athlétic-tac 1</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Au <strong>drapeau du milieu de la sente de fer</strong>, lance Cappy sur l'<strong>épouvantail</strong> et enchaîne les <strong>barres</strong> qui apparaissent <strong>sans jamais casser la dynamique</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Pays de la Forêt : athlétic-tac 2</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> À la <strong>station de recharge</strong>, lance Cappy sur l'<strong>épouvantail</strong> et saute vite entre les <strong>deux stations</strong> pour monter sur celle de gauche, puis enchaîne les plates-formes avec un <strong>saut en longueur vers celle de droite</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Sous-sol inondé</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Prends le <strong>tuyau au fond du point d'eau à l'ouest des flaques de poison</strong> et nage jusqu'au bout en <strong>évitant les oursins</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Dans le plafond du sous-sol inondé</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Entre par le <strong>tuyau vert au fond du bassin près de l'entrée de la sente de fer</strong>. Au <strong>premier endroit à l'abri de l'eau et des oursins</strong>, fais un <strong>saut chargé</strong> pour rebondir sur les parois au-dessus de toi</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En flânant dans le brouillard</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Après avoir fait pousser le <strong>gland</strong> qui mène à la station de recharge, monte sur le <strong>pilier voisin</strong> par des <strong>blocs invisibles</strong> et prends la <strong>fusée</strong>. Réunis les <strong>5 éclats de lune</strong> — l'un exige de <strong>chapimorphoser un ennemi volant</strong> pour passer sous la structure</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Brouillard à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> À la station de recharge, lance Cappy sur la <strong>fusée surélevée</strong>. Une fois là-haut, monte sur la <strong>plus haute plate-forme</strong>, chapimorphose un <strong>Goomba volant</strong> et <strong>plane vers le bas</strong>, au niveau du rebord aux pièces : la <strong>noix</strong> est dans une alcôve</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>À toute blinde sur le réseau floral</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2 / tôt possible]</strong> Au drapeau de la <strong>Côte vers le sommet</strong>, <strong>contourne la pente par la droite</strong> pour trouver une alcôve où enchaîner des <strong>sauts muraux</strong> jusqu'à une <strong>porte à chapeau</strong>. Va au bout du parcours</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Dans les hauteurs du réseau floral</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2 / tôt possible]</strong> Même zone bonus. Après avoir lancé la <strong>piste florale</strong>, chapimorphose un <strong>Goomba</strong> et <strong>empile-toi</strong> avec les autres, puis <strong>libère-toi</strong> pour sauter jusqu'à la lune en haut du <strong>pilier rouge</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Ascenseur assiégé</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> À la <strong>Côte vers le sommet</strong>, sers-toi d'une <strong>fleur de feu</strong> pour te propulser en haut de la pente <strong>en restant à droite</strong> jusqu'à une <strong>porte à chapeau</strong>. Chapimorphose un <strong>Charlu</strong> et élimine chaque <strong>vague d'ennemis</strong> après avoir pressé l'<strong>interrupteur P</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Angle mort dans l'ascenseur</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Même zone bonus. Chapimorphose le <strong>Charlu</strong>, <strong>retourne-toi</strong> et <strong>tire vers la bande de terre en hauteur</strong> pour en déloger la lune</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Balade dans les nuages</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> À côté de l'<strong>entrée de la cache du clos fleuri</strong>, lance Cappy sur le <strong>robot distributeur de graines</strong> et porte une graine jusqu'à l'<strong>interrupteur P bleu de l'autre côté du champ de fleurs</strong>. Rejoins le <strong>Belvédère</strong> par les plates-formes créées, puis <strong>jette la graine dans le terreau au bout de la passerelle</strong> : une plante monte jusqu'aux <strong>nuages</strong>. Là-haut, chapimorphose le <strong>Poupousse</strong>, suis les <strong>plates-formes bleues</strong> et <strong>étire-toi au maximum avant que la dernière ne tombe</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Par-delà les nuages</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Même zone. Une fois sur les <strong>cubes rouges et verts</strong>, grimpe <strong>sur la gauche</strong> et <strong>étire-toi au maximum</strong> pour sauter vers la lune en hauteur</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Accès secret : Verdure-sur-Vapeur</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Autre pays]</strong> Ne s'atteint que par un <strong>tableau</strong> : depuis le <strong>pays des Neiges</strong>, le <strong>pays de la Mer</strong> ou le <strong>pays des Gratte-ciel</strong>. ⚠️ <strong>emplacement exact du tableau à vérifier en jeu</strong></td>
+<td>Carburant de l'Odyssée ; invisible depuis ce pays</td>
+</tr>
+<tr>
+<td><strong>Avec l'indice du pays de la Forêt</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> La <strong>photo d'indice</strong> est <strong>derrière un arbre juste au sud de l'Odyssée</strong>. Elle désigne le <strong>pays des Sables</strong> : va <strong>tout au nord du désert, au nord de la pyramide inverzée</strong>, et fais une <strong>charge au sol entre les deux buissons isolés</strong></td>
+<td>Carburant de l'Odyssée ; se ramasse dans un autre pays</td>
+</tr>
+<tr>
+<td><strong>Swing dans la cache du clos fleuri</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Bowser]</strong> Grimpe au <strong>poteau jaune à droite de l'entrée du clos fleuri</strong>, saute sur la <strong>structure rouge au-dessus</strong> pour rejoindre un <strong>autre poteau jaune</strong>, puis lance-toi sur les <strong>plates-formes qui s'écroulent</strong> avec un <strong>saut en longueur vers les barres fixes</strong>. Prends la <strong>clé sur les blocs de pierre</strong>, marche sur le <strong>P</strong> et suis le chemin floral</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Un bon son au pays de la Forêt</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Bowser]</strong> Trouve le <strong>Toad mélomane</strong> près du <strong>cours d'eau de la zone surélevée à l'est</strong> de l'Odyssée et fais-lui écouter le <strong>morceau 75</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Pays de la Forêt (standard)</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Bowser]</strong> Course près de la <strong>station de recharge</strong>. Les deux raccourcis : <strong>saute par-dessus la barrière de gauche</strong> avec un <strong>saut en longueur</strong> au lieu de prendre la tige géante, et, plus haut, <strong>au lieu d'entrer dans le dédale intérieur</strong>, franchis le vide vers l'arrivée par <strong>saut en longueur + lancer de Cappy + plongeon pour rebondir dessus</strong></td>
+<td>Carburant de l'Odyssée ; obligatoire avant la version experte</td>
+</tr>
+<tr>
+<td><strong>Peach au pays de la Forêt</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Bowser]</strong> Depuis le <strong>8ᵉ palier</strong>, monte au champ de fleurs, presse l'<strong>interrupteur P bleu de droite</strong> pour faire apparaître les plates-formes du <strong>Belvédère</strong>, et parle à <strong>Peach</strong> sur un rebord</td>
+<td>Une des 15 lunes « Peach »</td>
+</tr>
+<tr>
+<td><strong>Tout en haut de la grotte</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Chapimorphose un <strong>Poupousse</strong> en bas de la sente de fer, reviens dans la <strong>grotte</strong> qui relie la sente à l'aire d'atterrissage et <strong>étire-toi au maximum</strong> vers le <strong>plafond</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Égarée entre les grands arbres</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Depuis le <strong>Belvédère</strong>, en <strong>Planodon</strong>, plane vers le <strong>sud-ouest</strong> jusqu'à la <strong>caisse posée dans les branches d'un arbre</strong>. Une fois dessus, <strong>libère le Planodon</strong> pour casser la caisse, puis <strong>reprends-le</strong> pour rejoindre le <strong>poteau</strong> où se réfugie la lune</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Regarder les Goombas de haut</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Depuis le <strong>Belvédère</strong>, en <strong>Planodon</strong>, plane vers l'<strong>est</strong> jusqu'à la <strong>noix posée sur une structure métallique rouge</strong>. Atterris précisément et casse-la</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Paroi à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Au <strong>début de la sente de fer</strong>, chapimorphose un <strong>Poupousse</strong> juste avant le dédale mural et grimpe sur les blocs jusqu'à la <strong>noix</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Hangar à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> En <strong>Poupousse</strong>, avant le début de la sente de fer, entre dans le <strong>hangar</strong> où tu avais fait pousser la tige géante, <strong>retourne-toi</strong> et <strong>étire-toi pour casser la noix au-dessus de l'entrée</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Au-dessus de la sente de fer</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Depuis le <strong>Belvédère</strong>, en <strong>Planodon</strong>, plane vers le <strong>nord-ouest</strong> : la lune <strong>flotte au milieu du vide</strong> en contrebas. Il s'agit juste de passer dessus avec un vol bien dosé</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Belvédère à la noix</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Prends le <strong>Poupousse de la cour en contrebas du 8ᵉ palier</strong>, monte au <strong>champ fleuri</strong> et <strong>tourne à droite dans le cul-de-sac</strong>. <strong>Étire-toi pour révéler des blocs invisibles</strong> et grimpe jusqu'à la <strong>noix</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Volatile en vadrouille dans la forêt</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Depuis le <strong>drapeau du milieu de la sente de fer</strong>, prends la <strong>première passerelle fleurie</strong> grâce au <strong>P bleu</strong>, puis poste-toi sur la <strong>section surélevée de la plate-forme métallique</strong> et <strong>lance Cappy verticalement</strong> quand l'<strong>oiseau</strong> passe</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>L'importun du jardin céleste</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Téléporte-toi à la <strong>tour du jardin céleste</strong> : un <strong>EVNI</strong> — une soucoupe volante — s'y est installé. Pour le battre, <strong>chapimorphose les Goombas qu'il t'envoie</strong> en les <strong>empilant</strong>, puis <strong>libère-toi pour lui sauter sur la tête</strong>. <strong>Deux fois</strong></td>
+<td>Carburant de l'Odyssée ; petit combat de boss d'après-générique</td>
+</tr>
+<tr>
+<td><strong>Cuite au feu de camp</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Remonte le <strong>cours d'eau au sud</strong> jusqu'au <strong>tunnel du Frère Pyro</strong> — là où se trouve la lune n° 11 — et <strong>chapimorphose-le</strong>. Reviens auprès de <strong>Perrotruc</strong>, au pied de la sente de fer, et <strong>enflamme le bois</strong> placé en face du <strong>Frouchotte</strong>, l'habitant du pays de la Cuisine qui campe là</td>
+<td>Carburant de l'Odyssée ; ne perds pas le Frère Pyro en chemin</td>
+</tr>
+<tr>
+<td><strong>Pays de la Forêt : athlétic-tac 3</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Au drapeau du <strong>8ᵉ palier</strong>, laisse-toi tomber sur le <strong>rebord naturel au-dessus de la barrière ouest</strong>, lance Cappy sur l'<strong>épouvantail</strong> et finis vite le parcours</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Éclats de lune dans le dédale rouge</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Dans le <strong>dédale mural</strong> qui précède le drapeau du milieu de la sente de fer, réunis les <strong>5 éclats</strong> en <strong>Poupousse</strong> : la lune apparaît au bout du parcours</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Course aux notes sur le mur</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Grimpe sur le <strong>rebord derrière l'Odyssée</strong> et suis le chemin <strong>sur la tranche de la paroi</strong> jusqu'à la <strong>clé de sol</strong>. Pour les notes, il faut <strong>se rouler en boule</strong> et <strong>contrôler sa trajectoire au centimètre</strong> pour repartir en arrière sans en manquer une</td>
+<td>Carburant de l'Odyssée ; la plus exigeante des courses aux notes du pays</td>
+</tr>
+<tr>
+<td><strong>Course aux notes en s'étirant</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Au bout du <strong>tunnel près de la lune n° 11</strong>, lance Cappy sur le <strong>levier bleu</strong>, chapimorphose un <strong>Poupousse</strong> et monte par les rebords <strong>juste au sud</strong> jusqu'à la <strong>clé de sol</strong>. Les notes se ramassent facilement <strong>en s'étirant</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Pays de la Forêt (expert)</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Même course, avec le <strong>Koopa doré</strong>. Le raccourci du <strong>dédale rouge</strong> devient quasi obligatoire : <strong>saut en longueur + lancer de Cappy + rebond</strong> pour atteindre la barrière au-delà du gouffre. Entraîne-toi <strong>en dehors de la course</strong> avant de te lancer</td>
+<td>Carburant de l'Odyssée ; exige la coupe standard</td>
+</tr>
+<tr>
+<td><strong>Rencontre avec un Poupousse</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> En <strong>Poupousse</strong>, traverse le <strong>dédale rouge</strong> de la sente de fer, prends la <strong>première passerelle fleurie</strong> avec le <strong>P bleu</strong>, puis les <strong>plates-formes croulantes de droite</strong> — <strong>toujours en Poupousse</strong> — et <strong>montre-toi au Chapiforme</strong> posté sur la structure</td>
+<td>Carburant de l'Odyssée ; il faut arriver <strong>sous la forme de Poupousse</strong></td>
+</tr>
+<tr>
+<td><strong>Dans le danger de la route invisible</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> <strong>Tuyau lunaire près de l'entrée du clos fleuri</strong>. Traverse sur les <strong>plates-formes invisibles</strong> peuplées de Plantes Piranha, puis <strong>élimine les trois Piranhas géantes</strong> du bout du parcours</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Dans le secret de la route invisible</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Même tuyau lunaire. Arrivé sur la <strong>plate-forme mobile en forme de croix</strong>, regarde la <strong>paroi au loin</strong> : une ouverture paraît hors d'atteinte. <strong>Élance-toi quand même en saut en longueur</strong> : le <strong>coffre</strong> est derrière</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Berger au-dessus de la forêt</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> <strong>Tuyau lunaire au milieu des Goombas, près de la station de recharge</strong>. Mène le <strong>mouton</strong> en <strong>avançant prudemment derrière lui</strong> et en ne lui lançant Cappy <strong>qu'en cas d'absolue nécessité</strong>. Près du <strong>poteau jaune</strong>, <strong>lance-lui Cappy avant qu'il ne s'engage sur la petite avancée</strong> pour le projeter à l'étage, puis conduis-le dans l'<strong>enclos</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Berger sur le ponton métallique</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Même tuyau lunaire, après la n° 73. Passe <strong>au-dessus de la barrière à gauche de l'enclos</strong> pour trouver un <strong>tuyau vert</strong>. Il faut y mener un <strong>second mouton</strong> sur une <strong>plate-forme éphémère</strong> activée par le <strong>P bleu</strong> : <strong>place-le bien dans l'axe</strong> et <strong>cours derrière lui tout droit</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Aller-retour sur route en déroute</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> <strong>Tuyau lunaire au début de la sente de fer</strong>. Traverse le <strong>chemin de roches</strong> en esquivant les <strong>Bill Balles</strong> pour prendre la <strong>clé</strong>, puis <strong>chapimorphose le Bill Balle géant</strong> pour revenir vers l'entrée</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Sous la route en déroute</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Même tuyau lunaire. Au lieu de prendre le <strong>Bill Balle géant</strong>, <strong>laisse-toi tomber sur les blocs en contrebas</strong> et chapimorphose un <strong>Bill Balle ordinaire</strong> à ce niveau : il te ramène vers l'entrée en <strong>détruisant les blocs de l'étage inférieur</strong>, derrière lesquels la lune est cachée</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Chapeau d'explorateur</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">chapeau</span></td>
+<td>Boutique Crazy Cap, <strong>5 pièces locales</strong></td>
+<td>Ouvre les portes à tenue correspondantes</td>
+</tr>
+<tr>
+<td><strong>Tenue d'explorateur</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">costume</span></td>
+<td>Boutique Crazy Cap, <strong>10 pièces locales</strong></td>
+<td><strong>Obligatoire</strong> pour la lune <em>Explorateur en quête de trésor</em></td>
+</tr>
+<tr>
+<td><strong>Visière de savant</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">chapeau</span></td>
+<td>Boutique Crazy Cap, <strong>20 pièces locales</strong></td>
+<td>Ouvre les portes à tenue correspondantes</td>
+</tr>
+<tr>
+<td><strong>Tenue de savant</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">costume</span></td>
+<td>Boutique Crazy Cap, <strong>25 pièces locales</strong></td>
+<td>Idem</td>
+</tr>
+<tr>
+<td><strong>Fleurs de Verdure-sur-Vapeur</strong></td>
+<td><span class="badge neutre">Souvenir</span></td>
+<td>Boutique Crazy Cap, <strong>5 pièces locales</strong></td>
+<td>Décore l'intérieur de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Arrosoir jardien</strong></td>
+<td><span class="badge neutre">Souvenir</span></td>
+<td>Boutique Crazy Cap, <strong>25 pièces locales</strong></td>
+<td>Décore l'intérieur de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Vignette du pays de la Forêt</strong></td>
+<td><span class="badge neutre">Vignette</span></td>
+<td>Boutique Crazy Cap, <strong>10 pièces locales</strong></td>
+<td>Se colle sur la coque de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Casquette de mécano</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">chapeau</span></td>
+<td>Boutique Crazy Cap, <strong>50 pièces d'or</strong></td>
+<td>Ouvre les portes à tenue correspondantes</td>
+</tr>
+<tr>
+<td><strong>Tenue de mécano</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">costume</span></td>
+<td>Boutique Crazy Cap, <strong>150 pièces d'or</strong></td>
+<td>Idem</td>
+</tr>
+<tr>
+<td><strong>Cœur de soin</strong></td>
+<td><span class="badge neutre">Objet</span></td>
+<td>Boutique Crazy Cap, <strong>50 pièces d'or</strong></td>
+<td>Fait passer ta vie de 3 à 6 points jusqu'au changement de pays</td>
+</tr>
+<tr>
+<td><strong>Pièce locale du pays de la Forêt</strong></td>
+<td><span class="badge neutre">Monnaie</span></td>
+<td><strong>100</strong> dans le pays, <strong>en forme de noix</strong></td>
+<td>Le total des articles en pièces locales fait <strong>100 pile</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Le Poupousse est la vedette du pays.</strong> Ses jambes s'étirent tant qu'on maintient la touche, et elles servent à <strong>atteindre</strong>, à <strong>révéler des blocs invisibles</strong>, à <strong>pousser des plates-formes</strong> et même à <strong>esquiver des ondes de choc</strong>. Sur les 76 lunes, plus d'une vingtaine passent par lui.</li>
+<li><strong>Les noix sont des coffres.</strong> Ces grosses noix accrochées un peu partout contiennent presque toujours une lune. Il y en a <strong>quatorze</strong> dans le pays, et le mot « noix » dans un nom de lune signifie toujours « il y a une noix à casser au bout ».</li>
+<li><strong>Descends dans la forêt perdue.</strong> C'est la zone la plus facile à ne jamais voir : il faut <strong>sauter volontairement dans le vide</strong> depuis les hauteurs. Neuf lunes t'y attendent, dont une qui demande <strong>500 pièces d'or</strong>.</li>
+<li><strong>Garde 500 pièces pour la lune n° 33.</strong> Le Crapognon tire tes propres pièces. Si tu arrives à sec, tu repars bredouille.</li>
+<li><strong>Achète la Tenue d'explorateur.</strong> Comme la tenue d'homme des cavernes au pays des Chutes, elle débloque une lune que rien d'autre ne débloque.</li>
+<li><strong>Le Tyrannosaure de la forêt perdue est un outil.</strong> Tu ne le chapimorphoses pas ici : tu l'<strong>attires</strong> pour qu'il casse des blocs à ta place. Deux lunes en dépendent.</li>
+<li><strong>Cappy nettoie le poison.</strong> Contre Spewart comme dans les couloirs, le lancer de chapeau efface les flaques. Ne cherche pas à contourner : ouvre un couloir droit.</li>
+<li><strong>Le Planodon, c'est le Belvédère.</strong> Quatre lunes se prennent en planant depuis le point culminant du pays, dans quatre directions différentes : <strong>nord-est</strong> (Toad), <strong>sud-ouest</strong> (la caisse), <strong>est</strong> (la noix), <strong>nord-ouest</strong> (la lune flottante). Fais-les à la suite.</li>
+<li><strong>Certaines lunes s'attrapent plus tôt que prévu.</strong> Le jeu réserve une dizaine de lunes à l'après-Spewart, mais <strong>rien ne bloque physiquement l'accès</strong> : avec des sauts propres, tu peux les prendre dès ton arrivée. Ne sois pas surpris si une lune apparaît « trop tôt ».</li>
+<li><strong>Pour les deux bergers, la patience bat la précipitation.</strong> Les moutons fuient dans la mauvaise direction dès qu'on leur lance Cappy. Marche derrière eux, et ne les frappe qu'au moment de les projeter.</li>
+</ul>
+<h2 id="alertes-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Rien n'est définitivement manquable dans ce pays.</strong></li>
+<li class="alerte manquable">⏳ <strong>La forêt perdue est complètement optionnelle et complètement invisible.</strong> Aucun objectif d'histoire n'y mène. Neuf lunes s'y cachent.</li>
+<li class="alerte manquable">⏳ <strong>Vingt-deux lunes attendent la roche lunaire</strong> : les n° 55 à 76, dont <strong>trois tuyaux lunaires</strong> et le combat contre l'<strong>EVNI</strong>.</li>
+<li class="alerte manquable">⏳ <strong>La lune n° 49, <em>Accès secret : Verdure-sur-Vapeur</em>, ne se prend pas d'ici.</strong> Il faut un tableau du pays des Neiges, du pays de la Mer ou du pays des Gratte-ciel. ⚠️ <strong>emplacement du tableau à vérifier en jeu.</strong></li>
+<li class="alerte manquable">⏳ <strong>La lune n° 33 échoue si tu n'as pas assez de pièces.</strong> Il en faut <strong>500</strong> à tirer sur la plante.</li>
+<li class="alerte manquable">⏳ <strong>Les trois athlétic-tac et les deux courses aux notes sont chronométrés.</strong> Échouer ne coûte rien.</li>
+<li class="alerte manquable">⏳ <strong>La lune n° 36 est impossible sans la Tenue d'explorateur.</strong> Le Jardien de la source ne t'ouvre pas autrement.</li>
+</ul>
+<h2 id="check-list-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="lhistoire-4">L'histoire</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Sphynx : réponse <strong>des fleurs</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Sur le chemin du jardin céleste</strong> — Piranha géante vaincue <em>(objectif 1)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Spewart</strong> vaincu — <strong>Les voleurs de fleurs du jardin céleste</strong> <em>(objectif 2)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Passage vers la cache du clos fleuri</strong> — symboles de Bowser détruits <em>(objectif 3)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Aspirafleur</strong> vaincu — <strong>Sauvetage de la cache du clos fleuri</strong> <em>(objectif 4)</em></li>
+<li class="tache"><input type="checkbox"> <strong>16 lunes</strong> réunies, départ</li>
+</ul>
+<h3 id="les-lunes-du-pays">Les lunes du pays</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Derrière le mur de terre</li>
+<li class="tache"><input type="checkbox"> Sentier de montagne caché</li>
+<li class="tache"><input type="checkbox"> Pif-caillou dans les bois</li>
+<li class="tache"><input type="checkbox"> Lapichou dans la forêt</li>
+<li class="tache"><input type="checkbox"> Merci pour. La recharge.</li>
+<li class="tache"><input type="checkbox"> Grand arbre à la noix</li>
+<li class="tache"><input type="checkbox"> Cachée dans le tunnel</li>
+<li class="tache"><input type="checkbox"> Au bord du gouffre</li>
+<li class="tache"><input type="checkbox"> Coin à la noix</li>
+<li class="tache"><input type="checkbox"> Grimpette à la noix</li>
+<li class="tache"><input type="checkbox"> Dédale rouge à la noix</li>
+<li class="tache"><input type="checkbox"> Impasse à la noix</li>
+<li class="tache"><input type="checkbox"> Tour à la noix</li>
+<li class="tache"><input type="checkbox"> Muraille de fer à la noix</li>
+<li class="tache"><input type="checkbox"> Tout feu tout flamme dans la grotte</li>
+<li class="tache"><input type="checkbox"> Capitaine Toad vous dit youhou !</li>
+<li class="tache"><input type="checkbox"> L'amour dans la verdure</li>
+<li class="tache"><input type="checkbox"> Dans un rocher de la forêt</li>
+<li class="tache"><input type="checkbox"> Affaire en or à Verdure-sur-Vapeur</li>
+<li class="tache"><input type="checkbox"> Renfoncement à la noix</li>
+<li class="tache"><input type="checkbox"> Étirement vertical</li>
+<li class="tache"><input type="checkbox"> Trésor des plates-formes tournantes</li>
+<li class="tache"><input type="checkbox"> Floraison dans la cache du clos fleuri</li>
+<li class="tache"><input type="checkbox"> Pays de la Forêt : athlétic-tac 1</li>
+<li class="tache"><input type="checkbox"> Pays de la Forêt : athlétic-tac 2</li>
+<li class="tache"><input type="checkbox"> Sous-sol inondé</li>
+<li class="tache"><input type="checkbox"> Dans le plafond du sous-sol inondé</li>
+<li class="tache"><input type="checkbox"> En flânant dans le brouillard</li>
+<li class="tache"><input type="checkbox"> Brouillard à la noix</li>
+<li class="tache"><input type="checkbox"> À toute blinde sur le réseau floral</li>
+<li class="tache"><input type="checkbox"> Dans les hauteurs du réseau floral</li>
+<li class="tache"><input type="checkbox"> Ascenseur assiégé</li>
+<li class="tache"><input type="checkbox"> Angle mort dans l'ascenseur</li>
+<li class="tache"><input type="checkbox"> Balade dans les nuages</li>
+<li class="tache"><input type="checkbox"> Par-delà les nuages</li>
+<li class="tache"><input type="checkbox"> Avec l'indice du pays de la Forêt <em>(lune au pays des Sables)</em></li>
+</ul>
+<h3 id="la-foret-perdue-2">La forêt perdue</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Pif-caillou dans la forêt perdue</li>
+<li class="tache"><input type="checkbox"> Scintillante au fond de la forêt perdue</li>
+<li class="tache"><input type="checkbox"> De l'autre côté des drôles de tuyaux</li>
+<li class="tache"><input type="checkbox"> Dans le murmure de la forêt perdue</li>
+<li class="tache"><input type="checkbox"> Dans le roc de la forêt perdue</li>
+<li class="tache"><input type="checkbox"> Un trésor nourri de pièces — <strong>500 pièces</strong> en poche</li>
+<li class="tache"><input type="checkbox"> Au pied de l'arbre mouvant</li>
+<li class="tache"><input type="checkbox"> Trésor piégé de la forêt perdue — <strong>milieu, gauche, droite</strong></li>
+<li class="tache"><input type="checkbox"> Explorateur en quête de trésor — <strong>Tenue d'explorateur</strong></li>
+</ul>
+<h3 id="la-boutique-4">La boutique</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Les <strong>100 pièces locales</strong> ramassées</li>
+<li class="tache"><input type="checkbox"> <strong>Chapeau</strong> et <strong>Tenue d'explorateur</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Visière</strong> et <strong>Tenue de savant</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Fleurs de Verdure-sur-Vapeur</strong> et <strong>Arrosoir jardien</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Vignette du pays de la Forêt</strong></li>
+</ul>
+<h3 id="depuis-dautres-pays-3">Depuis d'autres pays</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Accès secret : Verdure-sur-Vapeur <em>(tableau des Neiges, de la Mer ou des Gratte-ciel)</em></li>
+</ul>
+<h3 id="apres-bowser-3">Après Bowser</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Swing dans la cache du clos fleuri</li>
+<li class="tache"><input type="checkbox"> Un bon son au pays de la Forêt — <strong>morceau 75</strong></li>
+<li class="tache"><input type="checkbox"> Pays de la Forêt (standard)</li>
+<li class="tache"><input type="checkbox"> Peach au pays de la Forêt</li>
+<li class="tache"><input type="checkbox"> Les <strong>10 lunes supplémentaires</strong> de la boutique</li>
+</ul>
+<h3 id="apres-la-roche-lunaire-3">Après la roche lunaire</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Tout en haut de la grotte</li>
+<li class="tache"><input type="checkbox"> Égarée entre les grands arbres</li>
+<li class="tache"><input type="checkbox"> Regarder les Goombas de haut</li>
+<li class="tache"><input type="checkbox"> Paroi à la noix</li>
+<li class="tache"><input type="checkbox"> Hangar à la noix</li>
+<li class="tache"><input type="checkbox"> Au-dessus de la sente de fer</li>
+<li class="tache"><input type="checkbox"> Belvédère à la noix</li>
+<li class="tache"><input type="checkbox"> Volatile en vadrouille dans la forêt</li>
+<li class="tache"><input type="checkbox"> L'importun du jardin céleste</li>
+<li class="tache"><input type="checkbox"> Cuite au feu de camp</li>
+<li class="tache"><input type="checkbox"> Pays de la Forêt : athlétic-tac 3</li>
+<li class="tache"><input type="checkbox"> Éclats de lune dans le dédale rouge</li>
+<li class="tache"><input type="checkbox"> Course aux notes sur le mur</li>
+<li class="tache"><input type="checkbox"> Course aux notes en s'étirant</li>
+<li class="tache"><input type="checkbox"> Pays de la Forêt (expert)</li>
+<li class="tache"><input type="checkbox"> Rencontre avec un Poupousse</li>
+<li class="tache"><input type="checkbox"> Dans le danger de la route invisible</li>
+<li class="tache"><input type="checkbox"> Dans le secret de la route invisible</li>
+<li class="tache"><input type="checkbox"> Berger au-dessus de la forêt</li>
+<li class="tache"><input type="checkbox"> Berger sur le ponton métallique</li>
+<li class="tache"><input type="checkbox"> Aller-retour sur route en déroute</li>
+<li class="tache"><input type="checkbox"> Sous la route en déroute</li>
+<li class="tache"><input type="checkbox"> <strong>76 / 76 lunes</strong> au compteur du pays</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="pays-du-lac.html" rel="prev"><small>← Partie précédente</small><b>Pays du Lac</b></a><a class="suiv" href="pays-des-nuages.html" rel="next"><small>Partie suivante →</small><b>Pays des Nuages</b></a><a class="tout" href="super-mario-odyssey.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Super Mario Odyssey · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

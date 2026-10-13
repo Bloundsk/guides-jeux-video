@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapitre 5 — Une croisière sanglante – Guide Final Fantasy VII Rebirth</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Rebirth, Chapitre 5 — Une croisière sanglante : Le pire manquable du jeu : le tournoi de Queen&#x27;s Blood ; ne le refuse pas, ne…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-5-une-croisiere-sanglante.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Chapitre 5 — Une croisière sanglante · Guide Final Fantasy VII Rebirth">
+<meta property="og:description" content="Final Fantasy VII Rebirth, Chapitre 5 — Une croisière sanglante : Le pire manquable du jeu : le tournoi de Queen&#x27;s Blood ; ne le refuse pas, ne…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-5-une-croisiere-sanglante.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Rebirth", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/"}, {"@type": "ListItem", "position": 3, "name": "Chapitre 5 — Une croisière sanglante", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-5-une-croisiere-sanglante.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-rebirth" class="compact" data-partie="chapitre-5-une-croisiere-sanglante"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Rebirth</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Rebirth : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Rebirth</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-la-chute-dun-heros.html"><span class="num">✦</span><span class="libelle">Chapitre 1 — La chute d&#x27;un héros</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-vers-de-nouveaux-horizons.html"><span class="num">✦</span><span class="libelle">Chapitre 2 — Vers de nouveaux horizons</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-sur-les-traces-des-manteaux-noirs.html"><span class="num">✦</span><span class="libelle">Chapitre 3 — Sur les traces des manteaux noirs</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-le-debut-dune-nouvelle-ere.html"><span class="num">✦</span><span class="libelle">Chapitre 4 — Le début d&#x27;une nouvelle ère</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="#chapitre-5-une-croisiere-sanglante"><span class="num">✦</span><span class="libelle">Chapitre 5 — Une croisière sanglante</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-un-paradis-ensoleille.html"><span class="num">✦</span><span class="libelle">Chapitre 6 — Un paradis ensoleillé</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-un-retour-douloureux.html"><span class="num">✦</span><span class="libelle">Chapitre 7 — Un retour douloureux</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-le-gold-saucer.html"><span class="num">✦</span><span class="libelle">Chapitre 8 — Le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-a-lecoute-de-la-planete.html"><span class="num">✦</span><span class="libelle">Chapitre 9 — À l&#x27;écoute de la planète</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-protecteur-de-la-vallee.html"><span class="num">✦</span><span class="libelle">Chapitre 10 — Protecteur de la vallée</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-un-village-natal-meconnaissable.html"><span class="num">✦</span><span class="libelle">Chapitre 11 — Un village natal méconnaissable</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-en-quete-de-la-pierre-cle.html"><span class="num">✦</span><span class="libelle">Chapitre 12 — En quête de la pierre-clé</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-le-temple-des-anciens.html"><span class="num">✦</span><span class="libelle">Chapitre 13 — Le temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-un-monde-a-lagonie.html"><span class="num">✦</span><span class="libelle">Chapitre 14 — Un monde à l&#x27;agonie</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="region-de-la-prairie.html"><span class="num">✦</span><span class="libelle">Région de la Prairie</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="region-de-junon.html"><span class="num">✦</span><span class="libelle">Région de Junon</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="region-de-corel.html"><span class="num">✦</span><span class="libelle">Région de Corel</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="region-de-gongaga.html"><span class="num">✦</span><span class="libelle">Région de Gongaga</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="region-de-cosmo.html"><span class="num">✦</span><span class="libelle">Région de Cosmo</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="region-de-nibel.html"><span class="num">✦</span><span class="libelle">Région de Nibel</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="locean-central-et-les-iles.html"><span class="num">✦</span><span class="libelle">L&#x27;Océan Central et les îles</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-materias.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-armes-et-les-codex.html"><span class="num">✦</span><span class="libelle">Les armes et les codex</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-invocations.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="laffinite-et-les-coequipiers.html"><span class="num">✦</span><span class="libelle">L&#x27;affinité et les coéquipiers</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="queens-blood.html"><span class="num">✦</span><span class="libelle">Queen&#x27;s Blood</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-mini-jeux-4.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="le-simulateur-de-combat.html"><span class="num">✦</span><span class="libelle">Le simulateur de combat</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-rebirth.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Rebirth</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-6">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="chapitre-5-une-croisiere-sanglante">Chapitre 5 — Une croisière sanglante</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-6"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-6">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Le pire manquable du jeu</strong> : le <strong>tournoi de Queen's Blood</strong> ; ne le refuse pas, ne l'abandonne pas.</li>
+<li><strong>Avant la finale</strong> contre Régina Königin : <strong>sauvegarde</strong>.</li>
+<li><strong>À ne pas rater</strong> : la matéria <strong class="objet">Renforcement défensif</strong>, sortie sud du salon royal.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Traverser la mer à bord du <strong>Shinra-Huit</strong>, le paquebot qui mène à <strong>Costa del Sol</strong> — et accessoirement gagner le <strong>tournoi de Queen's Blood</strong> organisé à bord.</p>
+<p>C'est un chapitre court, entièrement fermé, sans monde ouvert. Il est construit autour de deux choses très différentes : <strong>un tournoi de cartes intégralement facultatif</strong>, et <strong>une nuit de cauchemar</strong> qui se termine par le boss <strong>Jénova-NAISSANCE</strong>.</p>
+<p class="alerte">⚠️ Le tournoi est le plus gros piège de manquable de tout le jeu. Si tu le refuses ou si tu le laisses filer, tu ne pourras plus le retenter avant d'avoir terminé le jeu et débloqué la sélection de chapitres. Lis la section Alertes avant de parler au réceptionniste.</p>
+<h2 id="itineraire-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.actugaming.net/solution-chapitre-5-final-fantasy-vii-rebirth-624090/">Chapitre 5</a> — soluce illustrée sur ActuGaming, en français.</p>
+<ol>
+<li><strong>Couloir des cabines de 2e classe</strong> — deux coffres à antidotes.</li>
+<li><strong>Le salon royal</strong> — annonce du tournoi par le <strong>capitaine Titov</strong>, et la matéria <strong class="objet">Renforcement défensif</strong> juste à côté.</li>
+<li><strong>Le tournoi de Queen's Blood</strong> — cinq tours plus un match bonus.</li>
+<li><strong>Retour aux cabines</strong> — la cabine d'Aerith, désormais déverrouillée.</li>
+<li><strong>L'alerte de nuit</strong> : le pont, puis le salon royal, puis les cabines.</li>
+<li><strong>Les entrailles du navire</strong> avec <strong>Cloud, Barret et Tifa</strong>.</li>
+<li><strong>La grande salle</strong> et le boss <strong>Jénova-NAISSANCE</strong>.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="les-cabines-de-2e-classe">Les cabines de 2e classe</h3>
+<p>Tu embarques sur le Shinra-Huit. Prends tes aises, tu commences par longer les <strong>cabines de 2e classe</strong>.</p>
+<ul>
+<li><strong>Deuxième cabine sur la gauche</strong> : un coffre au fond de la pièce avec <strong>2 antidotes</strong>.</li>
+<li>Dernière cabine de droite avant le salon royal : un coffre juste à gauche en entrant, avec <strong>2 antidotes</strong> également.</li>
+</ul>
+<h3 id="le-salon-royal">Le salon royal</h3>
+<p>Monte au <strong>salon royal</strong>. Le <strong>capitaine Titov</strong> annonce qu'un <strong>tournoi de Queen's Blood</strong> va se tenir à bord, avec un trophée et de belles récompenses. Une <strong>rivale</strong> te croise avec un air de défi appuyé — retiens son visage.</p>
+<p>De retour aux commandes de Cloud : fais face au comptoir du salon royal et sors par l'ouverture sur ta droite (côté sud sur la carte). Tu tombes sur une matéria <strong class="objet">Renforcement défensif</strong>.</p>
+<p>Ensuite, parle à tes amis, puis au <strong>réceptionniste</strong> pour démarrer le tournoi.</p>
+<h3 id="avant-de-jouer-trois-choses-a-savoir">Avant de jouer : trois choses à savoir</h3>
+<p>Un. Le tournoi est facultatif — et c'est un piège. À la fin de la conversation avec le réceptionniste, tu peux t'adresser à la <strong>réceptionniste de droite</strong> pour y mettre fin à tout moment. Mais si tu changes d'avis après coup, tu ne pourras retenter le tournoi qu'une fois le jeu terminé, quand la <strong>sélection de chapitres</strong> devient disponible.</p>
+<p><strong>Deux. Tu peux acheter trois boosters</strong> au <strong>comptoir de gauche</strong> si ton deck est encore rudimentaire. Vu le niveau de certains adversaires, ce n'est pas du luxe. Un <strong>booster</strong> est un paquet de cartes aléatoires.</p>
+<p><strong>Trois. Aucune élimination définitive jusqu'à la finale.</strong> Tu peux réaffronter chaque adversaire autant de fois que tu veux — et <strong>recommencer en pleine partie</strong> si tu vois que ça part mal. N'hésite jamais : une manche de Queen's Blood dure quelques minutes, et une mauvaise main se voit dès les premiers tours.</p>
+<h3 id="la-tactique-generale">La tactique générale</h3>
+<p>Le principe qui marche presque toujours : <strong>étouffer l'adversaire</strong> en l'empêchant de dérouler la stratégie de son deck. Concrètement, un mélange de :</p>
+<ul>
+<li><strong>cartes d'occupation</strong>, qui prennent de la place sur le plateau ;</li>
+<li><strong>quelques cartes à forte valeur</strong> pour faire les points.</li>
+</ul>
+<p>Et un réflexe à prendre : <strong>observe le jeu de ton adversaire</strong>, perds une manche s'il faut, puis <strong>adapte ton deck et ta stratégie</strong> avant de recommencer. C'est du jeu de cartes : l'information vaut autant que la puissance.</p>
+<p>Cela dit, il faut être honnête : <strong>tu restes tributaire du hasard</strong> de la distribution et des choix de l'adversaire. Une même partie peut se dérouler tranquillement ou devenir un enfer. Et si tu as négligé le Queen's Blood depuis Kalm, tu vas le sentir.</p>
+<p>Les règles complètes du jeu sont dans la partie <strong>27</strong>.</p>
+<h3 id="le-tournoi-tour-par-tour">Le tournoi, tour par tour</h3>
+<p><strong>Premier tour — niveau 1.</strong> Deux adversaires au choix : le <strong>robot sur le pont</strong> ou le <strong>joueur au 1er étage du salon royal</strong>. Rien de particulier à signaler, c'est l'échauffement. Victoire acquise, retourne voir le <strong>réceptionniste</strong>.</p>
+<p><strong>Deuxième tour — niveau 2.</strong> Trois adversaires : <strong>Barret</strong>, <strong>Tifa</strong> et <strong>Aerith</strong>. Le niveau monte d'un cran sans rien d'insurmontable.</p>
+<p>À noter : <strong>Tifa</strong> joue un deck clairement axé sur le <strong>renforcement des cartes</strong>. Elle possède <strong>Chocobo &amp; mog</strong>, qui gagne de la valeur à chaque carte améliorée sur le plateau, et des Claquoirs de mer qui <strong>améliorent de 2 la carte située au-dessus</strong>. Un seul adversaire à battre pour passer.</p>
+<p><strong>Troisième tour — niveau 3.</strong> Deux visages connus de Midgar : Andi et Madame M.</p>
+<p><strong>Andi</strong> dispose d'une <strong>grosse carte de puissance 8</strong> capable de faire basculer une ligne d'un coup, avec une belle marge de points à la clé. Il joue aussi des cartes qui <strong>réduisent la puissance des cartes adjacentes</strong> — même effet de bascule, dans l'autre sens. Un seul des deux suffit.</p>
+<p><strong>Quatrième tour — niveau 4.</strong> Un seul adversaire : Chadley. Ça devient épicé.</p>
+<p>Comme Tifa, mais un cran au-dessus, le scientifique mise tout sur le <strong>renforcement des cartes</strong> : <strong>Chocobo &amp; mog</strong>, Eskuriax, Pampa, Claquoir de mer… quasiment aucune de ses cartes n'est dépourvue d'un effet d'amélioration. Le battre ouvre la finale.</p>
+<p class="alerte">⚠️ <strong>Sauvegarde avant la finale</strong> : tu y es conduit directement, sans pause.</p>
+<p><strong>Finale — niveau 5.</strong> <strong>Régina Königin</strong>, dite <strong>l'Imbattable</strong>. Le surnom n'est pas usurpé.</p>
+<p>Elle joue aussi le <strong>renforcement à outrance</strong>, mais avec en plus des <strong>cartes rares puissantes</strong> — de valeur <strong>5</strong> ou <strong>7</strong> — qui peuvent donc grimper à des valeurs franchement déraisonnables. Contre elle : <strong>occupe un maximum de terrain</strong>, et sors les cartes qui <strong>réduisent la puissance adverse</strong>, les <strong>grenadiers</strong> par exemple. Et <strong>recommence sans état d'âme</strong> dès que la partie tourne mal.</p>
+<p><strong>Match amical exceptionnel.</strong> Régina battue, tu es grand vainqueur… presque. <strong>Red XIII</strong> tenait absolument à s'essayer au Queen's Blood, et il sort le grand jeu : déguisement et démarche assortis.</p>
+<p>Et il se défend très bien : <strong>deck d'occupation redoutable</strong>, couplé à des cartes qui <strong>réduisent la puissance des cartes adjacentes adverses</strong> et à de <strong>grosses valeurs</strong> comme le Midgarsormr.</p>
+<p>Au bout de cette dernière partie, Cloud remporte :</p>
+<ul>
+<li>le trophée du tournoi de Shinra-Huit ;</li>
+<li>les cartes légendaires Ifrit et Terreur des abysses ;</li>
+<li>un <strong>pendantéria Analyse</strong>.</li>
+</ul>
+<h3 id="la-nuit">La nuit</h3>
+<p>Le groupe va se reposer du côté des <strong>cabines de 2e classe</strong>. Avant d'entrer dans la tienne, passe dans celle d'Aerith, jusque-là verrouillée : un <strong>coffre</strong> contient une <strong>boisson de vitesse</strong>.</p>
+<p>Puis, en pleine nuit, <strong>le capitaine Titov donne l'alerte</strong> et demande au groupe de monter sur le pont. Fonce, par le couloir des cabines de 1re classe.</p>
+<h3 id="le-nettoyage-du-navire">Le nettoyage du navire</h3>
+<p><strong>Sur le pont, trois vagues :</strong></p>
+<ol>
+<li><strong>Deux Œil veilleur.</strong> Vulnérables à la Foudre, et — détail important — insensibles aux attaques quand ils sont en état de veille.</li>
+<li><strong>Deux Vagidopollis expérimental.</strong> Ils lancent un <strong>compte à rebours</strong> au bout duquel ils déclenchent un Cri assourdissant qui <strong>empêche la mise en état de Fragilité</strong>. Tue-les vite, c'est tout l'enjeu.</li>
+<li>Un Œil veilleur accompagné de trois Vagidopollis expérimental.</li>
+</ol>
+<p>Le pont nettoyé, un membre d'équipage est attaqué dans le salon royal et Cloud y va <strong>seul</strong>. <strong>Repose-toi sur le banc</strong> si besoin, puis règle son compte aux <strong>deux Œil veilleur</strong>.</p>
+<p>Le matelot sauvé t'indique que les créatures sont parties <strong>vers les cabines</strong>. Passe dans l'ouverture et <strong>rejoins Tifa</strong> en bas des escaliers, contre <strong>deux Vagidopollis expérimental</strong>.</p>
+<h3 id="les-entites-necrotiques">Les entités nécrotiques</h3>
+<p>En te rapprochant des cabines, <strong>deux Vagidopollis fusionnent avec deux manteaux noirs</strong>. De ce mélange naissent des <strong>entités nécrotiques</strong>.</p>
+<p>Bonne nouvelle : il y a trois façons de les fragiliser.</p>
+<ol>
+<li>Leur infliger des dégâts pendant un sort.</li>
+<li>Leur infliger des dégâts pendant leur attaque Griffes noires.</li>
+<li><strong>Esquiver leur Lacération ténébreuse</strong>.</li>
+</ol>
+<p>Ensuite, favorise les compétences à fort potentiel de Choc et ça passe sans histoire.</p>
+<p>Après le combat, tu apprends que <strong>le professeur Hojo</strong> est à l'origine de ce chaos.</p>
+<h3 id="les-entrailles-du-navire">Les entrailles du navire</h3>
+<p>Soigne-toi et <strong>faufile-toi à travers l'ouverture</strong>. Tu entends <strong>Barret</strong> : il faut le rejoindre.</p>
+<ul>
+<li><strong>Descends les escaliers</strong> : une <strong>entité nécrotique</strong> accompagnée d'un Dæmonas. Ce dernier n'est pas redoutable — <strong>vulnérable à la Glace</strong>, il se fragilise facilement.</li>
+<li>Après le combat, monte les petites marches à gauche du marin adossé à une barrière : un <strong>coffre violet</strong> contient les <strong>poings de kaiser</strong>, une arme pour <strong>Tifa</strong>.</li>
+<li>Suis le seul chemin possible : <strong>deux autres Dæmonas</strong>. Continue, brise quelques caisses, faufile-toi dans le <strong>petit passage</strong>.</li>
+<li class="alerte manquable">⏳ Avant de prendre à droite, monte les escaliers de gauche : un <strong>coffre</strong> avec une <strong>méga-potion</strong>.</li>
+<li><strong>Descends les escaliers</strong> : une <strong>entité nécrotique</strong> et un Mhadomhanju. Ce colosse <strong>fait tournoyer sa masse</strong> — <strong>une garde devant lui interrompt l'attaque</strong> et t'ouvre une fenêtre de dégâts.</li>
+<li>Suis le chemin jusqu'à une <strong>salle de repos</strong>. <strong>Fais le plein.</strong></li>
+</ul>
+<p class="alerte">⚠️ Avant d'entrer dans la grande salle suivante, vérifie l'équipement et les matérias de Tifa et Barret : ce seront tes compagnons jusqu'à la fin du chapitre, boss compris, et tu n'auras plus l'occasion d'y toucher.</p>
+<h3 id="boss-jenova-naissance">Boss : Jénova-NAISSANCE</h3>
+<p>Tu retrouves Barret — et tout un groupe de <strong>manteaux noirs</strong>. Le <strong>capitaine Titov</strong> commence à les éliminer et <strong>manque de peu Yuffie</strong>, déguisée en manteau noir. Les autres se jettent alors sur l'un des leurs. Cloud aperçoit Séphiroth, et le boss apparaît.</p>
+<p>Stratégie détaillée dans Conseils et pièges. Équipe obligatoire : Cloud, Barret et Tifa.</p>
+<p>Vaincue, Jénova disparaît et ne laisse que les cadavres des manteaux noirs. Le calme revient sur le navire, et le chapitre se termine.</p>
+<h2 id="quetes-et-lieux-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<p>Le chapitre se passe intégralement à bord du Shinra-Huit : ni boutique de ville, ni quête annexe, ni PNJ de service. Les lieux sont les ponts du paquebot.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>À faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cabines de 2e classe</strong></td>
+<td>Coffre <strong>2 antidotes</strong> dans la 2e cabine de gauche ; coffre <strong>2 antidotes</strong> dans la dernière cabine de droite</td>
+</tr>
+<tr>
+<td><strong>Salon royal</strong></td>
+<td>Annonce du tournoi par Titov ; <strong>réceptionniste</strong> pour lancer et enchaîner les tours ; <strong>réceptionniste de droite</strong> pour abandonner ; <strong>comptoir de gauche</strong> pour acheter <strong>3 boosters</strong></td>
+</tr>
+<tr>
+<td><strong>Sortie sud du salon royal</strong></td>
+<td>Matéria <strong>Renforcement défensif</strong>, en sortant par l'ouverture à droite du comptoir</td>
+</tr>
+<tr>
+<td><strong>Pont</strong></td>
+<td>Adversaire du 1er tour <em>(le robot)</em> ; trois vagues d'ennemis pendant l'alerte</td>
+</tr>
+<tr>
+<td><strong>1er étage du salon royal</strong></td>
+<td>Adversaire du 1er tour <em>(le joueur)</em></td>
+</tr>
+<tr>
+<td><strong>Cabine d'Aerith</strong></td>
+<td>Déverrouillée après le tournoi : coffre <strong>boisson de vitesse</strong></td>
+</tr>
+<tr>
+<td><strong>Couloir des cabines de 1re classe</strong></td>
+<td>Chemin vers le pont pendant l'alerte</td>
+</tr>
+<tr>
+<td><strong>Coursive après le premier Dæmonas</strong></td>
+<td>Coffre violet <strong>poings de kaiser</strong> (Tifa), en montant les marches à gauche du marin</td>
+</tr>
+<tr>
+<td><strong>Escaliers avant le virage à droite</strong></td>
+<td>Coffre <strong>méga-potion</strong>, en montant à gauche</td>
+</tr>
+<tr>
+<td><strong>Salle de repos finale</strong></td>
+<td>Plein de PV/PM et <strong>dernière occasion de régler matérias et équipement</strong> de Tifa et Barret</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="le-tournoi-adversaire-par-adversaire">Le tournoi, adversaire par adversaire</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Tour</th>
+<th>Adversaire</th>
+<th>Niveau</th>
+<th>Où / particularité du deck</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Le robot</td>
+<td>1</td>
+<td>Sur le <strong>pont</strong></td>
+</tr>
+<tr>
+<td>1</td>
+<td>Le joueur du salon</td>
+<td>1</td>
+<td>1er étage du salon royal</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Barret</strong></td>
+<td>2</td>
+<td>—</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Tifa</strong></td>
+<td>2</td>
+<td>Deck de <strong>renforcement</strong> : <strong>Chocobo &amp; mog</strong>, Claquoir de mer</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Aerith</strong></td>
+<td>2</td>
+<td>—</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Andi</td>
+<td>3</td>
+<td>Carte de <strong>puissance 8</strong> ; cartes qui <strong>réduisent la puissance des cartes adjacentes</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Madame M</td>
+<td>3</td>
+<td>—</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Chadley</td>
+<td>4</td>
+<td>Renforcement poussé à l'extrême : Chocobo &amp; mog, Eskuriax, Pampa, Claquoir de mer</td>
+</tr>
+<tr>
+<td>Finale</td>
+<td><strong>Régina Königin</strong>, l'Imbattable</td>
+<td>5</td>
+<td>Renforcement <strong>plus</strong> cartes rares de valeur <strong>5</strong> et <strong>7</strong></td>
+</tr>
+<tr>
+<td>Bonus</td>
+<td><strong>Red XIII</strong></td>
+<td>—</td>
+<td>Deck d'<strong>occupation</strong> + réduction de puissance adjacente + Midgarsormr</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Antidote</strong> ×2</td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre au fond de la <strong>2e cabine de gauche</strong>, cabines de 2e classe</td>
+<td>Soigne le <strong>Poison</strong></td>
+</tr>
+<tr>
+<td><strong>Antidote</strong> ×2</td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre à gauche en entrant dans la <strong>dernière cabine de droite</strong> avant le salon royal</td>
+<td>Soigne le <strong>Poison</strong></td>
+</tr>
+<tr>
+<td><strong>Renforcement défensif</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td><strong>Sortie sud du salon royal</strong> : face au comptoir, prendre l'ouverture à droite</td>
+<td>Renforce la défense</td>
+</tr>
+<tr>
+<td><strong>Trophée du tournoi de Shinra-Huit</strong></td>
+<td><span class="badge neutre">Objet</span></td>
+<td>Gagner le <strong>tournoi de Queen's Blood</strong>, match de Red XIII compris</td>
+<td>Objet de collection</td>
+</tr>
+<tr>
+<td><strong>Carte Ifrit</strong></td>
+<td><span class="badge neutre">Carte légendaire</span></td>
+<td>Récompense du tournoi</td>
+<td>Carte de Queen's Blood de haut niveau</td>
+</tr>
+<tr>
+<td><strong>Carte Terreur des abysses</strong></td>
+<td><span class="badge neutre">Carte légendaire</span></td>
+<td>Récompense du tournoi</td>
+<td>Carte de Queen's Blood de haut niveau</td>
+</tr>
+<tr>
+<td><strong>Pendantéria Analyse</strong></td>
+<td><span class="badge neutre">Accessoire à matéria</span></td>
+<td>Récompense du tournoi</td>
+<td>Accessoire avec emplacement, fourni avec <strong>Analyse</strong></td>
+</tr>
+<tr>
+<td><strong>Boosters</strong> ×3</td>
+<td><span class="badge neutre">Paquets de cartes</span></td>
+<td>Achetables au <strong>comptoir de gauche</strong> du salon royal</td>
+<td>Étoffer le deck avant le tournoi</td>
+</tr>
+<tr>
+<td><strong>Boisson de vitesse</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre dans la <strong>cabine d'Aerith</strong>, déverrouillée après le tournoi</td>
+<td>Augmente la vitesse</td>
+</tr>
+<tr>
+<td><strong>Poings de kaiser</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Tifa</span></td>
+<td>Coffre violet, en montant les marches à gauche du marin adossé à la barrière</td>
+<td>Nouvelle arme, compétence et emplacements pour Tifa</td>
+</tr>
+<tr>
+<td><strong>Méga-potion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre en haut des escaliers de <strong>gauche</strong>, avant de prendre à droite</td>
+<td>Restaure beaucoup de PV</td>
+</tr>
+</tbody>
+</table></div>
+<p>Les <strong>caisses</strong> des coursives lâchent des <strong>matériaux</strong> variables : casse tout au passage, mais il n'y a pas de liste fixe à cocher.</p>
+<h2 id="conseils-et-pieges-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="les-ennemis-du-navire">Les ennemis du navire</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ennemi</th>
+<th>Point faible</th>
+<th>À savoir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Œil veilleur</strong></td>
+<td>Foudre</td>
+<td><strong>Insensible aux attaques en état de veille</strong> : attends qu'il s'active</td>
+</tr>
+<tr>
+<td><strong>Vagidopollis expérimental</strong></td>
+<td>—</td>
+<td>Lance un <strong>compte à rebours</strong> puis un Cri assourdissant qui <strong>empêche la Fragilité</strong>. À tuer vite</td>
+</tr>
+<tr>
+<td><strong>Entité nécrotique</strong></td>
+<td>—</td>
+<td><strong>Trois façons de la fragiliser</strong> : la frapper pendant un <strong>sort</strong>, la frapper pendant Griffes noires, ou <strong>esquiver Lacération ténébreuse</strong>. Ensuite, compétences à fort potentiel de Choc</td>
+</tr>
+<tr>
+<td><strong>Dæmonas</strong></td>
+<td>Glace</td>
+<td>Se fragilise facilement, peu dangereux</td>
+</tr>
+<tr>
+<td><strong>Mhadomhanju</strong></td>
+<td>—</td>
+<td>Fais tournoyer sa masse : <strong>garde devant lui</strong> pour l'interrompre et ouvrir une fenêtre de dégâts</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="boss-jenova-naissance-2">Boss : Jénova-NAISSANCE</h3>
+<p><strong>Équipe obligatoire : Cloud, Barret et Tifa.</strong> Un banc juste avant permet de faire le plein.</p>
+<p><strong>Aucune faiblesse élémentaire.</strong> Oublie les sorts comme moteur principal : ce combat se gagne aux <strong>attaques physiques</strong>, aux <strong>compétences</strong> et aux <strong>compétences synchronisées</strong>.</p>
+<p><strong>Phase 1 — accroché au plafond.</strong></p>
+<ul>
+<li>Fragilise-le aux attaques physiques et aux compétences. Une fois <strong>fragilisé</strong>, des <strong>parties du corps</strong> deviennent attaquables : les détruire fait grimper la jauge de Choc en flèche.</li>
+<li>La première partie à détruire est la tête — mais attention, il peut la faire repousser avec Régénération.</li>
+<li><strong>Rayon de colère</strong> : gros dégâts, <strong>impossible à contrer</strong>. <strong>Esquive plusieurs fois</strong> pour éviter le rayon violet.</li>
+<li><strong>Pestilence</strong> : attaque de zone qui lance des <strong>orbes</strong>. S'ils touchent tes alliés, ils infligent Poison violent, Silence, Étourdissement ou Lenteur. <strong>Éloigne-toi</strong>, c'est le plus simple.</li>
+</ul>
+<p><strong>Phase 2 — au sol.</strong> Elle commence après le premier <strong>état de Choc</strong> : il <strong>tombe du plafond</strong> et de <strong>nombreux bras et yeux</strong> poussent sur son corps.</p>
+<ul>
+<li><strong>Tourment tentaculaire</strong> est à éviter <strong>à tout prix</strong> : l'attaque <strong>immobilise</strong> le personnage et inflige de <strong>sérieux dégâts</strong>.</li>
+<li><strong>Ne traîne pas dans ses pattes</strong> quand il se déplace : il t'écrase sans effort.</li>
+<li>Évite ses rayons violets en arc de cercle.</li>
+<li>Deux cibles quand il est fragilisé cette fois : la tête et l'épaule gauche. Détruis-les <strong>à plusieurs reprises</strong> pour maximiser les dégâts.</li>
+<li>Les deux attaques de la phase 1 gagnent des <strong>variantes</strong> : Dissémination pestilentielle diffuse les mêmes malus <strong>tout autour de lui</strong>, Extermination balaie la zone avec le rayon, et Exaltation propage <strong>une multitude de lasers</strong> sur une large zone.</li>
+</ul>
+<p><strong>Phase 3 — au dernier quart de vie environ.</strong></p>
+<ul>
+<li>Il fait <strong>pousser des tentacules violets</strong> partout sur le terrain. Ils ont <strong>très peu de PV</strong> : détruis-les vite, <strong>Barret</strong> est parfait pour les atteindre directement, et tu évites au passage la Propagation tentaculaire.</li>
+<li>Il faut ensuite éliminer les tentacules en tandem avec la tête et l'épaule gauche pour lui infliger des dégâts — même logique que Jénova-PULSATION dans <em>Final Fantasy VII Remake Intergrade</em>.</li>
+<li>C'est le moment d'invoquer un Esper pour finir tranquillement, et de sortir <strong>compétences synchronisées</strong> et Techniques de Transcendance.</li>
+</ul>
+<h3 id="le-queens-blood-lessentiel">Le Queen's Blood — l'essentiel</h3>
+<ul>
+<li><strong>Fais le tournoi.</strong> C'est le conseil le plus important du chapitre. Le refuser te coûte une partie entière du jeu jusqu'à la fin de l'histoire.</li>
+<li><strong>Achète les trois boosters</strong> si ton deck sort tout juste de Kalm. Quinze minutes de gagnées sur Chadley et Régina.</li>
+<li><strong>Recommence sans scrupule.</strong> Aucune élimination définitive avant la finale, et même en pleine partie tu peux repartir de zéro.</li>
+<li>Le fil rouge des decks adverses est le renforcement. Tifa, Chadley et Régina jouent tous sur l'amélioration de leurs propres cartes. La contre-mesure existe : les cartes qui <strong>réduisent la puissance adverse</strong> — les <strong>grenadiers</strong> en tête — et l'<strong>occupation brute du terrain</strong>, qui les prive d'espace pour empiler leurs bonus.</li>
+</ul>
+<h3 id="le-reste-4">Le reste</h3>
+<ul>
+<li>Règle tes matérias à la salle de repos. Cloud, Barret et Tifa pour le boss, et pas de faiblesse élémentaire à exploiter : mise sur les <strong>compétences</strong> et les PV, pas sur les sorts offensifs.</li>
+<li><strong>La Foudre reste utile</strong> pour les Œil veilleur, et la Glace pour les Dæmonas. Un jeu de matérias polyvalent passe mieux ici qu'un build mono-élément.</li>
+<li>Les trois coffres du milieu de chapitre sont tous en hauteur ou de côté. Dans les coursives du navire, prends le réflexe de regarder les escaliers que le jeu ne te demande pas de monter.</li>
+</ul>
+<h2 id="alertes-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Manquable définitif, le plus grave du jeu</strong> : si tu refuses ou abandonnes le tournoi de Queen's Blood, tu ne pourras le retenter qu'après avoir terminé le jeu, via la sélection de chapitres. Le <strong>trophée</strong>, les cartes légendaires Ifrit et Terreur des abysses et le <strong>pendantéria Analyse</strong> partent avec.</li>
+<li class="alerte">⚠️ <strong>Sauvegarde avant la finale</strong> contre <strong>Régina Königin</strong> : tu y es conduit directement après Chadley, sans pause.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : la matéria <strong class="objet">Renforcement défensif</strong>, dans la sortie sud du salon royal. Rien ne t'y envoie.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : la <strong>boisson de vitesse</strong> dans la <strong>cabine d'Aerith</strong>, qui ne se déverrouille qu'après le tournoi et juste avant que tu n'entres dans la tienne.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : les <strong>poings de kaiser</strong> de Tifa, en haut des petites marches à gauche du marin adossé à la barrière.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : la <strong>méga-potion</strong>, en haut des escaliers de gauche avant le virage à droite.</li>
+<li class="alerte">⚠️ <strong>Dernier réglage</strong> : à la <strong>salle de repos</strong> avant la grande salle, l'équipe est verrouillée sur <strong>Cloud, Barret et Tifa</strong> jusqu'à la fin du chapitre. C'est ta dernière chance de toucher à leurs matérias.</li>
+<li class="alerte">⚠️ <strong>Nom à vérifier en jeu</strong> : la source française écrit <strong>Midgarsormr</strong> pour la carte de Queen's Blood, là où le boss du chapitre 2 est le <strong>Midgardsormr</strong>. Le guide garde les deux graphies telles quelles, faute de pouvoir trancher.</li>
+</ul>
+<h2 id="check-list-6" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Coffre <strong>2 antidotes</strong> de la 2e cabine de gauche ouvert</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>2 antidotes</strong> de la dernière cabine de droite ouvert</li>
+<li class="tache"><input type="checkbox"> Matéria <strong class="objet">Renforcement défensif</strong> récupérée au sud du salon royal</li>
+<li class="tache"><input type="checkbox"> <strong>3 boosters</strong> achetés au comptoir de gauche (si le deck est faible)</li>
+<li class="tache"><input type="checkbox"> Tournoi <strong>lancé</strong> auprès du réceptionniste</li>
+<li class="tache"><input type="checkbox"> <strong>1er tour</strong> gagné (robot du pont ou joueur du salon)</li>
+<li class="tache"><input type="checkbox"> <strong>2e tour</strong> gagné (Barret, Tifa ou Aerith)</li>
+<li class="tache"><input type="checkbox"> <strong>3e tour</strong> gagné (Andi ou Madame M)</li>
+<li class="tache"><input type="checkbox"> <strong>4e tour</strong> gagné contre <strong>Chadley</strong></li>
+<li class="tache"><input type="checkbox"> Sauvegarde faite avant la finale</li>
+<li class="tache"><input type="checkbox"> <strong>Finale</strong> gagnée contre <strong>Régina Königin</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Match amical</strong> gagné contre <strong>Red XIII</strong></li>
+<li class="tache"><input type="checkbox"> Trophée du tournoi de Shinra-Huit obtenu</li>
+<li class="tache"><input type="checkbox"> Cartes légendaires <strong>Ifrit</strong> et <strong>Terreur des abysses</strong> obtenues</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Pendantéria Analyse</strong> obtenu</li>
+<li class="tache"><input type="checkbox"> <strong>Boisson de vitesse</strong> récupérée dans la cabine d'Aerith</li>
+<li class="tache"><input type="checkbox"> Trois vagues du pont nettoyées</li>
+<li class="tache"><input type="checkbox"> Matelot du salon royal sauvé</li>
+<li class="tache"><input type="checkbox"> Tifa rejointe en bas des escaliers</li>
+<li class="tache"><input type="checkbox"> <strong>Entités nécrotiques</strong> vaincues</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Poings de kaiser</strong> récupérés (Tifa)</li>
+<li class="tache"><input type="checkbox"> <strong>Méga-potion</strong> récupérée en haut des escaliers de gauche</li>
+<li class="tache"><input type="checkbox"> <strong>Mhadomhanju</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> Matérias et équipement de <strong>Tifa et Barret</strong> vérifiés à la salle de repos</li>
+<li class="tache"><input type="checkbox"> <strong>Jénova-NAISSANCE</strong> vaincue</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="chapitre-4-le-debut-dune-nouvelle-ere.html" rel="prev"><small>← Partie précédente</small><b>Chapitre 4 — Le début d&#x27;une nouvelle ère</b></a><a class="suiv" href="chapitre-6-un-paradis-ensoleille.html" rel="next"><small>Partie suivante →</small><b>Chapitre 6 — Un paradis ensoleillé</b></a><a class="tout" href="final-fantasy-vii-rebirth.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Rebirth · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

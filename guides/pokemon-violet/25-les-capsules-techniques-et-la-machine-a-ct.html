@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les Capsules Techniques et la Machine à CT – Guide Pokémon Violet</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Pokémon Violet, Les Capsules Techniques et la Machine à CT : Ce qu&#x27;il y a ici : les 171 Capsules Techniques du jeu, avec leur nom exact, leurs…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/25-les-capsules-techniques-et-la-machine-a-ct.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Les Capsules Techniques et la Machine à CT · Guide Pokémon Violet">
+<meta property="og:description" content="Pokémon Violet, Les Capsules Techniques et la Machine à CT : Ce qu&#x27;il y a ici : les 171 Capsules Techniques du jeu, avec leur nom exact, leurs…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/25-les-capsules-techniques-et-la-machine-a-ct.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Pokémon Violet", "item": "https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/"}, {"@type": "ListItem", "position": 3, "name": "Les Capsules Techniques et la Machine à CT", "item": "https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/25-les-capsules-techniques-et-la-machine-a-ct.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="pokemon-violet" class="compact" data-partie="25-les-capsules-techniques-et-la-machine-a-ct"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Pokémon Violet</a><span aria-hidden="true">›</span><span>Partie 25</span></nav>
+<p class="gjv-jeu">Pokémon Violet : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Pokémon <em>Violet</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction-tout-comprendre-avant-de-commencer.html"><span class="num">00</span><span class="libelle">Introduction : tout comprendre avant de commencer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-le-prologue-cuchalaga-miraidon-et-lacademie-raisin.html"><span class="num">01</span><span class="libelle">Le prologue : Cuchalaga, Miraidon et l&#x27;Académie Raisin</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-sevaro-larene-insecte-et-le-dominant-roche-falaise.html"><span class="num">02</span><span class="libelle">Sevaro : l&#x27;arène Insecte et le Dominant Roche-Falaise</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-cuencia-larene-plante-et-le-dominant-vaste-ciel.html"><span class="num">03</span><span class="libelle">Cuencia : l&#x27;arène Plante et le Dominant Vaste-Ciel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-le-groupe-segin-et-larene-electrik-de-levalendura.html"><span class="num">04</span><span class="libelle">Le groupe Segin et l&#x27;arène Électrik de Levalendura</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-le-groupe-schedar-et-le-dominant-acier-tranche.html"><span class="num">05</span><span class="libelle">Le groupe Schedar et le Dominant Acier-Tranché</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-jarramanca-porto-marinada-et-le-groupe-tsih.html"><span class="num">06</span><span class="libelle">Jarramanca, Porto Marinada et le groupe Tsih</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-mezclamora-larene-normal-et-le-plat-secret.html"><span class="num">07</span><span class="libelle">Mezclamora : l&#x27;arène Normal et le plat secret</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-frigao-larene-spectre-et-le-dominant-tremble-terre.html"><span class="num">08</span><span class="libelle">Frigao : l&#x27;arène Spectre et le Dominant Tremble-Terre</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-alforneira-larene-psy.html"><span class="num">09</span><span class="libelle">Alforneira : l&#x27;arène Psy</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-le-mont-nappe-larene-glace-et-le-groupe-ruchbah.html"><span class="num">10</span><span class="libelle">Le Mont Nappé : l&#x27;arène Glace et le groupe Ruchbah</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="11-le-dominant-fourbe-dragon-et-le-groupe-caph.html"><span class="num">11</span><span class="libelle">Le Dominant Fourbe-Dragon et le groupe Caph</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-la-ligue-pokemon-lexamen-le-conseil-4-et-alisma.html"><span class="num">12</span><span class="libelle">La Ligue Pokémon : l&#x27;examen, le Conseil 4 et Alisma</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="13-les-trois-denouements-menzi-pepper-clavel-et-pania.html"><span class="num">13</span><span class="libelle">Les trois dénouements : Menzi, Pepper, Clavel et Pania</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="14-retour-aux-sources-la-zone-zero-et-le-professeur-turum.html"><span class="num">14</span><span class="libelle">Retour aux sources : la Zone Zéro et le professeur Turum</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="15-lapres-generique-revanches-tournoi-et-juge-iv.html"><span class="num">15</span><span class="libelle">L&#x27;après-générique : revanches, tournoi et Juge IV</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="16-les-zones-sud-la-route-de-cuchalaga-et-la-caverne-de-la-crique.html"><span class="num">16</span><span class="libelle">Les Zones Sud, la Route de Cuchalaga et la Caverne de la Crique</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="17-les-zones-ouest-et-le-desert-rotissable.html"><span class="num">17</span><span class="libelle">Les Zones Ouest et le Désert Rôtissable</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="18-les-zones-est-et-le-bosquet-tague.html"><span class="num">18</span><span class="libelle">Les Zones Est et le Bosquet Tagué</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="19-le-nord-zones-nord-lac-asrol-foret-toastee-et-mont-nappe.html"><span class="num">19</span><span class="libelle">Le nord : Zones Nord, Lac Asrol, Forêt Toastée et Mont Nappé</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="20-le-cratere-de-paldea-et-la-zone-zero.html"><span class="num">20</span><span class="libelle">Le Cratère de Paldea et la Zone Zéro</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="21-les-villes-de-paldea-boutiques-pnj-et-services.html"><span class="num">21</span><span class="libelle">Les villes de Paldea : boutiques, PNJ et services</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="22-les-tours-dobservation-les-grottes-et-les-spots-de-pokemon-rares.html"><span class="num">22</span><span class="libelle">Les Tours d&#x27;Observation, les grottes et les spots de Pokémon rares</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="23-les-32-pieux-et-les-quatre-tresors-du-fleau.html"><span class="num">23</span><span class="libelle">Les 32 pieux et les quatre Trésors du Fléau</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="24-les-pieces-de-mordudor-et-gromago.html"><span class="num">24</span><span class="libelle">Les pièces de Mordudor et Gromago</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="#25-les-capsules-techniques-et-la-machine-a-ct"><span class="num">25</span><span class="libelle">Les Capsules Techniques et la Machine à CT</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="26-les-pique-niques-les-sandwichs-et-les-auras-gustatives.html"><span class="num">26</span><span class="libelle">Les pique-niques, les sandwichs et les Auras Gustatives</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="27-la-teracristallisation-et-les-raids-teracristal.html"><span class="num">27</span><span class="libelle">La Téracristallisation et les Raids Téracristal</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="28-les-pokemon-paradoxes-et-les-exclusivites-de-violet.html"><span class="num">28</span><span class="libelle">Les Pokémon paradoxes et les exclusivités de Violet</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="29-les-evolutions-speciales-lelevage-et-les-echanges.html"><span class="num">29</span><span class="libelle">Les évolutions spéciales, l&#x27;élevage et les échanges</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="30-le-combat-les-types-les-talents-et-le-choix-dequipe.html"><span class="num">30</span><span class="libelle">Le combat, les types, les talents et le choix d&#x27;équipe</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="31-largent-les-objets-les-encheres-et-les-tenues.html"><span class="num">31</span><span class="libelle">L&#x27;argent, les objets, les enchères et les tenues</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="32-lacademie-les-cours-et-le-multijoueur.html"><span class="num">32</span><span class="libelle">L&#x27;Académie, les cours et le multijoueur</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="33-le-masque-turquoise-arriver-a-septentria.html"><span class="num">33</span><span class="libelle">Le Masque Turquoise : arriver à Septentria</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="34-le-masque-turquoise-les-trois-adoramis-et-ogerpon.html"><span class="num">34</span><span class="libelle">Le Masque Turquoise : les trois Adoramis et Ogerpon</span><span class="compte"></span></a></li>
+<li data-section="section-36"><a href="35-le-masque-turquoise-les-collectibles-de-septentria.html"><span class="num">35</span><span class="libelle">Le Masque Turquoise : les collectibles de Septentria</span><span class="compte"></span></a></li>
+<li data-section="section-37"><a href="36-le-disque-indigo-linstitut-myrtille-et-le-terra-dome.html"><span class="num">36</span><span class="libelle">Le Disque Indigo : l&#x27;Institut Myrtille et le Terra-Dôme</span><span class="compte"></span></a></li>
+<li data-section="section-38"><a href="37-le-disque-indigo-la-ligue-myrtille-et-terapagos.html"><span class="num">37</span><span class="libelle">Le Disque Indigo : la Ligue Myrtille et Terapagos</span><span class="compte"></span></a></li>
+<li data-section="section-39"><a href="38-le-disque-indigo-les-quetes-myrtille-et-les-25-legendaires.html"><span class="num">38</span><span class="libelle">Le Disque Indigo : les Quêtes Myrtille et les 25 légendaires</span><span class="compte"></span></a></li>
+<li data-section="section-40"><a href="39-la-nuit-des-kibi-lepilogue-et-pechaminus.html"><span class="num">39</span><span class="libelle">La Nuit des Kibi : l&#x27;épilogue et Pêchaminus</span><span class="compte"></span></a></li>
+<li data-section="section-41"><a href="40-les-trois-pokedex-paldea-septentria-et-myrtille.html"><span class="num">40</span><span class="libelle">Les trois Pokédex : Paldea, Septentria et Myrtille</span><span class="compte"></span></a></li>
+<li data-section="section-42"><a href="99-annexes-index-manquables-et-check-list-finale.html"><span class="num">99</span><span class="libelle">Annexes : index, manquables et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-43"><a href="sources.html"><span class="num">✦</span><span class="libelle">Sources</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-26">
+<header class="tete-section">
+<p class="eyebrow">Partie 25</p>
+<h1 id="25-les-capsules-techniques-et-la-machine-a-ct">Les Capsules Techniques et la Machine à CT</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-26"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-26">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Ce qu'il y a ici</strong> : les <strong>171 Capsules Techniques</strong> du jeu, avec leur nom exact, leurs emplacements au sol, leur prix en points de ligue et leurs matériaux.</li>
+<li><strong>Le système</strong> : une Capsule Technique est <strong>consommée</strong> à l'usage, mais elle se <strong>refabrique</strong> à l'infini à la machine à CT.</li>
+<li><strong>À ne pas rater</strong> : relâcher tes doublons dans la nature, c'est la seule source de <strong>points de ligue</strong>.</li>
+<li><strong>Le piège</strong> : les prix vont de <strong>200 à 14 000 PL</strong>. Les meilleures attaques du jeu coûtent cher.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Comprendre le système de Capsules Techniques de Pokémon Violet, qui est très différent des jeux précédents, et avoir sous la main la liste complète des <strong>171 CT</strong> — numéro, capacité, où la ramasser, combien elle coûte à fabriquer, et avec quoi.</p>
+<p>C'est le tableau le plus utile du guide : la plupart du temps, tu n'as pas besoin d'aller chercher une CT au bout de Paldea, tu peux la <strong>fabriquer</strong>.</p>
+<h2 id="itineraire-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ul>
+<li>📍 <strong>La référence en images</strong> : les fiches CT de <a href="https://www.pokepedia.fr/CT124">Poképédia</a>, une page par numéro, avec les emplacements et les recettes exactes ; les pages de lieux de <a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/zone-sud-2">Pokébip</a> pour les emplacements précis.</li>
+</ul>
+<ol>
+<li><strong>La machine à CT</strong> est le <strong>guichet vert</strong> de chaque Centre Pokémon.</li>
+<li><strong>Les points de ligue</strong> s'affichent dans ton sac, à côté des Pokédollars.</li>
+<li><strong>Les matériaux</strong> s'accumulent dans la section « matériaux » du sac.</li>
+<li><strong>Les CT au sol</strong> sont réparties dans toute Paldea, et leurs emplacements sont dans les parties <strong>16</strong> à <strong>22</strong>.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="comprendre-le-systeme-en-cinq-points">Comprendre le système en cinq points</h3>
+<ol>
+<li><strong>Une Capsule Technique est consommable.</strong> Tu l'utilises, elle disparaît. C'est le grand changement par rapport aux jeux précédents, où une CT s'utilisait indéfiniment.</li>
+<li><strong>Mais elle se refabrique.</strong> La <strong>machine à CT</strong> permet d'en produire autant que tu veux, à condition d'avoir la recette débloquée, les points de ligue et les matériaux.</li>
+<li><strong>La recette se débloque en ramassant la CT une fois.</strong> Tant que tu n'as jamais vu une CT, elle n'apparaît pas à la machine. C'est pour ça que ratisser Paldea sert à quelque chose, même si tu ne te sers pas de l'attaque tout de suite.</li>
+<li><strong>Les points de ligue viennent des Pokémon relâchés.</strong> Tu ouvres tes boîtes, tu relâches un doublon dans la nature, tu gagnes des PL. C'est <strong>la seule source régulière</strong>, avec les cadeaux de Cassiopée après chaque repaire de la Team Star.</li>
+<li><strong>Les matériaux viennent des Pokémon battus ou capturés.</strong> Chaque espèce donne son matériau : des Poils de Gourmelet, du Fil de Tissenboule, de la Griffe de Teddiursa. Et les <strong>objets cachés</strong> des zones en contiennent beaucoup.</li>
+</ol>
+<h3 id="se-faire-une-reserve-de-points-de-ligue">Se faire une réserve de points de ligue</h3>
+<ol start="6">
+<li><strong>Relâche systématiquement tes doublons.</strong> Un Pokémon de plus dans une boîte ne sert à rien ; relâché, il devient des points de ligue.</li>
+<li><strong>Encaisse les cadeaux de Cassiopée.</strong> Les cinq repaires de la Team Star donnent <strong>5 000</strong>, puis un montant croissant, jusqu'à <strong>20 000 PL</strong> pour le dernier. Soit plus de <strong>42 000 PL</strong> rien qu'avec l'Opération Stardust.</li>
+<li><strong>Note le taux de change.</strong> <strong>1 PL vaut 1 Pokédollar</strong> à la boutique du Centre Pokémon, mais les PL servent surtout à la machine à CT : garde-les pour ça.</li>
+</ol>
+<h3 id="fabriquer-intelligemment">Fabriquer intelligemment</h3>
+<ol start="9">
+<li><strong>Regarde les paliers de prix avant de dépenser.</strong> Les 171 CT se répartissent en <strong>dix paliers</strong>, de 200 à 14 000 PL.</li>
+<li><strong>Commence par les CT à 400 et 800 PL.</strong> Ce sont <strong>trente-huit</strong> attaques de début et milieu de partie, et elles ne coûtent presque rien.</li>
+<li><strong>Garde tes PL pour les sept CT à 14 000.</strong> Ce sont les attaques les plus puissantes du jeu, et elles valent chacune autant que trente-cinq CT bon marché.</li>
+<li><strong>Repasse à la machine après chaque repaire de la Team Star.</strong> Pania envoie des matériaux à chaque fois, et la liste des recettes disponibles s'allonge nettement.</li>
+</ol>
+<h3 id="les-quatre-ct-a-aller-chercher-a-la-main">Les quatre CT à aller chercher à la main</h3>
+<p>Quatre attaques majeures sont posées au sol à des endroits qu'on ne trouve pas par hasard, et elles valent le détour avant même d'avoir les PL pour les fabriquer.</p>
+<ol start="13">
+<li><strong>CT153 Rafale Feu</strong>, <strong>CT154 Hydroblast</strong> et <strong>CT155 Végé-Attaque</strong> : toutes les trois dans <strong>une seule grotte</strong> de la Zone Nord n° 1, au bout du chemin vert qui longe la zone neigeuse. Partie <strong>19</strong>.</li>
+<li><strong>CT171 Téra Explosion</strong> : posée à <strong>trois endroits</strong> dans les souterrains de la Zone Zéro. Partie <strong>20</strong>.</li>
+<li><strong>CT170 Métalaser</strong> : dans la grotte sous-marine du nord-ouest de la Zone Nord n° 3, accessible en Surf. Partie <strong>22</strong>.</li>
+</ol>
+<h3 id="les-ct-quon-recoit-sans-les-chercher">Les CT qu'on reçoit sans les chercher</h3>
+<ol start="16">
+<li><strong>Les huit champions d'arène</strong> en donnent une chacun :</li>
+</ol>
+<ul>
+<li><strong>CT021 Bond</strong> ;</li>
+<li><strong>CT020 Désherbaffe</strong> ;</li>
+<li><strong>CT048 Change-Éclair</strong> ;</li>
+<li><strong>CT022 Douche Froide</strong> ;</li>
+<li><strong>CT025 Façade</strong> ;</li>
+<li><strong>CT114 Ball'Ombre</strong> ;</li>
+<li><strong>CT120 Psyko</strong> ;</li>
+<li><strong>CT124 Cryo-Pirouette</strong>.</li>
+</ul>
+<ol start="17">
+<li><strong>Les cinq boss de la Team Star</strong> en donnent une chacun :</li>
+</ol>
+<ul>
+<li><strong>CT062 Tricherie</strong> ;</li>
+<li><strong>CT038 Nitrocharge</strong> ;</li>
+<li><strong>CT102 Détricanon</strong> ;</li>
+<li><strong>CT079 Éclat Magique</strong> ;</li>
+<li><strong>CT167 Close Combat</strong>.</li>
+</ul>
+<ol start="18">
+<li><strong>Pania</strong> donne la <strong>CT169 Draco-Météore</strong> à la fin de l'Opération Stardust.</li>
+<li><strong>Les représentants de la Ligue</strong> en donnent une par zone, contre quelques dresseurs battus. Les cinq meilleures sont dans le nord :</li>
+</ol>
+<ul>
+<li><strong>CT143 Blizzard</strong> ;</li>
+<li><strong>CT142 Hydrocanon</strong> ;</li>
+<li><strong>CT150 Lame de Roc</strong> ;</li>
+<li><strong>CT156 Colère</strong> ;</li>
+<li><strong>CT159 Tempête Verte</strong>. Partie <strong>19</strong>.</li>
+</ul>
+<h2 id="quetes-et-lieux-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-dix-paliers-de-prix">Les dix paliers de prix</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Coût en points de ligue</th>
+<th>Nombre de Capsules Techniques</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>200 PL</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>400 PL</strong></td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>800 PL</strong></td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>1 500 PL</strong></td>
+<td>9</td>
+</tr>
+<tr>
+<td><strong>3 000 PL</strong></td>
+<td>34</td>
+</tr>
+<tr>
+<td><strong>5 000 PL</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>8 000 PL</strong></td>
+<td>23</td>
+</tr>
+<tr>
+<td><strong>10 000 PL</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>12 000 PL</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>14 000 PL</strong></td>
+<td>7</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-quatre-guichets-du-centre-pokemon">Les quatre guichets du Centre Pokémon</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Guichet</th>
+<th>Couleur</th>
+<th>Ce qu'il fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Soins</strong></td>
+<td>rouge</td>
+<td>Soigne l'équipe et recharge l'Orbe Téracristal</td>
+</tr>
+<tr>
+<td><strong>Boutique</strong></td>
+<td>bleu</td>
+<td>Achats en Pokédollars ou en points de ligue</td>
+</tr>
+<tr>
+<td><strong>Machine à CT</strong></td>
+<td>vert</td>
+<td>Fabrique les Capsules Techniques</td>
+</tr>
+<tr>
+<td><strong>Club Union</strong></td>
+<td>jaune</td>
+<td>Jeu à plusieurs</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ou-trouver-les-materiaux">Où trouver les matériaux</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Matériau</th>
+<th>Comment l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Matériaux de Pokémon</strong></td>
+<td>Battre ou capturer l'espèce correspondante</td>
+</tr>
+<tr>
+<td><strong>Les mêmes, en objets cachés</strong></td>
+<td>Les objets cachés des zones en contiennent beaucoup, et ils réapparaissent</td>
+</tr>
+<tr>
+<td><strong>Les cadeaux de départ</strong></td>
+<td>Menzi donne <strong>10 Poils de Férosinge</strong>, <strong>10 Babioles de Tarsal</strong> et <strong>10 Mucus d'Axoloto</strong> au Centre Pokémon de Plato Real</td>
+</tr>
+<tr>
+<td><strong>Les envois de Pania</strong></td>
+<td>Après chaque repaire de la Team Star, un lot de matériaux variés</td>
+</tr>
+<tr>
+<td><strong>L'Activité Myrtille</strong></td>
+<td>Certaines recettes du <strong>Disque Indigo</strong> se paient en points d'activité, partie <strong>38</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<p>Voici les <strong>171 Capsules Techniques</strong> du jeu, dans l'ordre. La colonne « Où la trouver au sol » liste les lieux où un exemplaire est posé — l'emplacement précis est dans la partie de la zone correspondante. La colonne « PL » donne le prix de fabrication à la machine à CT.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>№</th>
+<th>Capacité</th>
+<th>Où la trouver au sol</th>
+<th>PL</th>
+<th>Matériaux de la machine à CT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>001</strong></td>
+<td><strong>Bélier</strong></td>
+<td>Zone Est n° 3, Zone Sud n° 5, Zone Ouest n° 1</td>
+<td>400</td>
+<td>Poils de Gourmelet ×3, Poils de Manglouton ×3</td>
+</tr>
+<tr>
+<td><strong>002</strong></td>
+<td><strong>Charme</strong></td>
+<td>Lac Asrol, Zone Ouest n° 1, 10 Activité Myrtille</td>
+<td>400</td>
+<td>Poils d'Azurill ×3, Griffe de Teddiursa ×3</td>
+</tr>
+<tr>
+<td><strong>003</strong></td>
+<td><strong>Croco Larme</strong></td>
+<td>Zone Est n° 1, Mont Nappé, Zone Sud n° 2, Zone Sud n° 5</td>
+<td>400</td>
+<td>Larme de Manzaï ×3, Griffe de Teddiursa ×3</td>
+</tr>
+<tr>
+<td><strong>004</strong></td>
+<td><strong>Hâte</strong></td>
+<td>Zone Sud n° 2, Zone Sud n° 3, Zone Ouest n° 1, Zone Ouest n° 3</td>
+<td>400</td>
+<td>Plume de Passerouge ×3, Plume de Plumeline ×3</td>
+</tr>
+<tr>
+<td><strong>005</strong></td>
+<td><strong>Coud'Boue</strong></td>
+<td>Zone Sud n° 2, Zone Sud n° 3, Zone Ouest n° 1</td>
+<td>400</td>
+<td>Mucus d'Axoloto ×3</td>
+</tr>
+<tr>
+<td><strong>006</strong></td>
+<td><strong>Grimace</strong></td>
+<td>Tunnel Mezcla-Pincho, Zone Sud n° 3, Zone Sud n° 5, Zone Ouest n° 1</td>
+<td>400</td>
+<td>Poils de Cerfrousse ×3, Griffe de Mascaïman ×3</td>
+</tr>
+<tr>
+<td><strong>007</strong></td>
+<td><strong>Abri</strong></td>
+<td>Grotte d'Alforneira, Zone Sud n° 1, Zone Sud n° 2, Zone Sud n° 4, 10 Activité Myrtille</td>
+<td>400</td>
+<td>Poils de Gourmelet ×3, Poudre de Lépidonille ×3</td>
+</tr>
+<tr>
+<td><strong>008</strong></td>
+<td><strong>Crocs Feu</strong></td>
+<td>Repaire du Groupe Schedar, Zone Ouest n° 1</td>
+<td>800</td>
+<td>Croc de Malosse ×3</td>
+</tr>
+<tr>
+<td><strong>009</strong></td>
+<td><strong>Crocs Éclair</strong></td>
+<td>Zone Est n° 3, Zone Sud n° 5, Zone Ouest n° 3.</td>
+<td>800</td>
+<td>Croc de Lixy ×3</td>
+</tr>
+<tr>
+<td><strong>010</strong></td>
+<td><strong>Crocs Givre</strong></td>
+<td>Mesaledo, Zone Sud n° 4, Zone Ouest n° 1</td>
+<td>800</td>
+<td>Poils de Polarhume ×3</td>
+</tr>
+<tr>
+<td><strong>011</strong></td>
+<td><strong>Vibraqua</strong></td>
+<td>Jarramanca, Forêt Toastée, Zone Sud n° 3, Zone Sud n° 5, Zone Ouest n° 3</td>
+<td>1 500</td>
+<td>Poils de Mustébouée ×3, Écaille de Magicarpe ×3</td>
+</tr>
+<tr>
+<td><strong>012</strong></td>
+<td><strong>Balayage</strong></td>
+<td>Zone Sud n° 2, Zone Ouest n° 3, machine à CT</td>
+<td>400</td>
+<td>Poils de Férosinge ×3</td>
+</tr>
+<tr>
+<td><strong>013</strong></td>
+<td><strong>Bombe Acide</strong></td>
+<td>Désert Rôtissable, Zone Nord n° 1, Zone Sud n° 1, Zone Sud n° 2</td>
+<td>800</td>
+<td>Électricité de Toxizap ×3, Mucus d'Axoloto ×3</td>
+</tr>
+<tr>
+<td><strong>014</strong></td>
+<td><strong>Acrobatie</strong></td>
+<td>Lac Asrol, Zone Est n° 3, Zone Sud n° 3, Zone Ouest n° 1</td>
+<td>3 000</td>
+<td>Plume de Zapétrel ×3, Plume de Lestombaile ×3</td>
+</tr>
+<tr>
+<td><strong>015</strong></td>
+<td><strong>Survinsecte</strong></td>
+<td>Zone Sud n° 1</td>
+<td>400</td>
+<td>Fil de Tissenboule ×3</td>
+</tr>
+<tr>
+<td><strong>016</strong></td>
+<td><strong>Rafale Psy</strong></td>
+<td>Zone Est n° 3, Zone Sud n° 1, Zone Ouest n° 1</td>
+<td>800</td>
+<td>Duvet de Psykokwak ×3</td>
+</tr>
+<tr>
+<td><strong>017</strong></td>
+<td><strong>Onde Folie</strong></td>
+<td>Désert Rôtissable, Tunnel Mezcla-Pincho, Zone Sud n° 1, Zone Sud n° 3</td>
+<td>400</td>
+<td>Gaz de Fantominus ×3, Laine de Wattouat ×3</td>
+</tr>
+<tr>
+<td><strong>018</strong></td>
+<td><strong>Larcin</strong></td>
+<td>Mont Nappé, Zone Sud n° 2, Zone Ouest n° 1</td>
+<td>3 000</td>
+<td>Croc de Malosse ×3, Encre de Gribouraigne ×3</td>
+</tr>
+<tr>
+<td><strong>019</strong></td>
+<td><strong>Voix Enjôleuse</strong></td>
+<td>Mesaledo, Zone Sud n° 2</td>
+<td>200</td>
+<td>Babiole de Tarsal ×3</td>
+</tr>
+<tr>
+<td><strong>020</strong></td>
+<td><strong>Désherbaffe</strong></td>
+<td>Donné par Colza après l'avoir vaincu</td>
+<td>800</td>
+<td>Feuille de Chlorobule ×3, Feuille de Granivol ×3</td>
+</tr>
+<tr>
+<td><strong>021</strong></td>
+<td><strong>Bond</strong></td>
+<td>Donnée par Éra après l'avoir vaincue</td>
+<td>3 000</td>
+<td>Griffe de Lilliterelle ×3, Fil de Tissenboule ×3</td>
+</tr>
+<tr>
+<td><strong>022</strong></td>
+<td><strong>Douche Froide</strong></td>
+<td>Donnée par Kombu après l'avoir vaincu, Zone Ouest n° 3</td>
+<td>800</td>
+<td>Duvet de Psykokwak ×3, Nectar d'Arakdo ×3</td>
+</tr>
+<tr>
+<td><strong>023</strong></td>
+<td><strong>Rayon Chargé</strong></td>
+<td>Zone Est n° 2, Zone Ouest n° 1</td>
+<td>800</td>
+<td>Laine de Wattouat ×3, Poils de Dedenne ×3</td>
+</tr>
+<tr>
+<td><strong>024</strong></td>
+<td><strong>Danse Flammes</strong></td>
+<td>Désert Rôtissable, Mont Nappé, Zone Est n° 3, Zone Sud n° 3, Zone Sud n° 4</td>
+<td>5 000</td>
+<td>Poils de Caninos ×3, Charbon de Chartor ×3</td>
+</tr>
+<tr>
+<td><strong>025</strong></td>
+<td><strong>Façade</strong></td>
+<td>Donnée par Okuba après l'avoir vaincu, machine à CT</td>
+<td>800</td>
+<td>Griffe de Dodoala ×3, Poils de Forgerette ×3, Poils de Cerfrousse ×3</td>
+</tr>
+<tr>
+<td><strong>026</strong></td>
+<td><strong>Queue-Poison</strong></td>
+<td>Cuencia, Mont Nappé, Zone Est n° 1</td>
+<td>800</td>
+<td>Croc de Séviper ×3, Encre de Gribouraigne ×3</td>
+</tr>
+<tr>
+<td><strong>027</strong></td>
+<td><strong>Aéropique</strong></td>
+<td>Sevaro, Zone Zéro</td>
+<td>1 500</td>
+<td>Plume d'Étourmi ×3, Plume de Passerouge ×3</td>
+</tr>
+<tr>
+<td><strong>028</strong></td>
+<td><strong>Piétisol</strong></td>
+<td>Forêt Toastée, Zone Ouest n° 1, Zone Nord n° 3</td>
+<td>1 500</td>
+<td>Boue de Tiboudet ×3, Charbon de Bacabouh ×3</td>
+</tr>
+<tr>
+<td><strong>029</strong></td>
+<td><strong>Châtiment</strong></td>
+<td>Mer de l'Ouest de Paldea, Zone Est n° 3, Zone Nord n° 2, Zone Ouest n° 1</td>
+<td>3 000</td>
+<td>Tissu de Mimiqui ×3, Cire de Toutombe ×3</td>
+</tr>
+<tr>
+<td><strong>030</strong></td>
+<td><strong>Aboiement</strong></td>
+<td>Désert Rôtissable, Zone Est n° 1, Zone Sud n° 3, Zone Ouest n° 1</td>
+<td>800</td>
+<td>Croc de Grondogue ×3, Plume de Tapatoès ×3</td>
+</tr>
+<tr>
+<td><strong>031</strong></td>
+<td><strong>Griffe Acier</strong></td>
+<td>Tunnel Mezcla-Pincho, Zone Sud n° 1, Zone Sud n° 3, Zone Ouest n° 1</td>
+<td>400</td>
+<td>Griffe de Teddiursa ×3</td>
+</tr>
+<tr>
+<td><strong>032</strong></td>
+<td><strong>Météores</strong></td>
+<td>Route de Cuchalaga, Zone Est n° 1, Zone Est n° 3, Zone Sud n° 1, Zone Sud n° 5</td>
+<td>200</td>
+<td>Plume de Passerouge ×3</td>
+</tr>
+<tr>
+<td><strong>033</strong></td>
+<td><strong>Feuille Magik</strong></td>
+<td>Zone Sud n° 4, Zone Sud n° 6, Zone Ouest n° 2</td>
+<td>1 500</td>
+<td>Huile d'Olivini ×3, Feuille de Chlorobule ×3</td>
+</tr>
+<tr>
+<td><strong>034</strong></td>
+<td><strong>Vent Glace</strong></td>
+<td>Lac Asrol, Zone Est n° 2, Zone Sud n° 6, Zone Sud n° 3</td>
+<td>800</td>
+<td>Fil de Frissonille ×3, Baie de Blizzi ×3</td>
+</tr>
+<tr>
+<td><strong>035</strong></td>
+<td><strong>Tir de Boue</strong></td>
+<td>Zone Est n° 2, Zone Est n° 3, Zone Sud n° 5, Zone Ouest n° 1</td>
+<td>800</td>
+<td>Griffe de Mascaïman ×3, Mucus d'Axoloto ×3</td>
+</tr>
+<tr>
+<td><strong>036</strong></td>
+<td><strong>Tomberoche</strong></td>
+<td>Grotte d'Alforneira, Zone Sud n° 4</td>
+<td>1 500</td>
+<td>Roche de Rocabot ×3, Griffe de Craparoi ×3</td>
+</tr>
+<tr>
+<td><strong>037</strong></td>
+<td><strong>Vampibaiser</strong></td>
+<td>Sevaro, Mont Nappé, Zone Est n° 1</td>
+<td>800</td>
+<td>Plume de Passerouge ×3, Charbon de Chartor ×3</td>
+</tr>
+<tr>
+<td><strong>038</strong></td>
+<td><strong>Nitrocharge</strong></td>
+<td>Donnée par Meloco après l'avoir vaincue, Zone Zéro</td>
+<td>800</td>
+<td>Croc de Grondogue ×3, Plume de Tapatoès ×3</td>
+</tr>
+<tr>
+<td><strong>039</strong></td>
+<td><strong>Balayette</strong></td>
+<td>Mont Nappé, Zone Ouest n° 1</td>
+<td>3 000</td>
+<td>Poison de Cradopaud ×3, Poils de Férosinge ×3</td>
+</tr>
+<tr>
+<td><strong>040</strong></td>
+<td><strong>Tranch'Air</strong></td>
+<td>Repaire du Groupe Tsih, Zone Est n° 1, Zone Sud n° 2, Zone Sud n° 5, Zone Ouest n° 1</td>
+<td>400</td>
+<td>Miel d'Apitrini ×3</td>
+</tr>
+<tr>
+<td><strong>041</strong></td>
+<td><strong>Force Ajoutée</strong></td>
+<td>Lac Asrol, Mer du Nord de Paldea, Zone Est n° 1, Zone Sud n° 1, Zone Sud n° 2, Zone Ouest n° 2</td>
+<td>800</td>
+<td>Cils de Scrutella ×3, Babiole de Tarsal ×3</td>
+</tr>
+<tr>
+<td><strong>042</strong></td>
+<td><strong>Ombre Nocturne</strong></td>
+<td>Désert Rôtissable, Repaire du Groupe Tsih, Zone Sud n° 2, Zone Sud n° 4</td>
+<td>400</td>
+<td>Gaz de Fantominus ×3, Trésor de Cornèbre ×3</td>
+</tr>
+<tr>
+<td><strong>043</strong></td>
+<td><strong>Dégommage</strong></td>
+<td>Cuencia, Repaire du Groupe Caph, Zone Nord n° 1, Zone Sud n° 3</td>
+<td>3 000</td>
+<td>Griffe de Farfuret ×3, Babiole de Ptiravi ×3</td>
+</tr>
+<tr>
+<td><strong>044</strong></td>
+<td><strong>Draco-Queue</strong></td>
+<td>Zone Est n° 3, Zone Nord n° 1, Zone Ouest n° 1</td>
+<td>1 500</td>
+<td>Écaille de Minidraco ×3, Griffe de Mascaïman ×3</td>
+</tr>
+<tr>
+<td><strong>045</strong></td>
+<td><strong>Choc Venin</strong></td>
+<td>Zone Sud n° 2, Zone Est n° 3</td>
+<td>3 000</td>
+<td>Électricité de Toxizap ×3, Gaz de Tritox ×3</td>
+</tr>
+<tr>
+<td><strong>046</strong></td>
+<td><strong>Avalanche</strong></td>
+<td>Bosquet Tagué</td>
+<td>1 500</td>
+<td>Glace de Grelaçon ×3, Poils de Stalgamin ×3</td>
+</tr>
+<tr>
+<td><strong>047</strong></td>
+<td><strong>Ténacité</strong></td>
+<td>Zone Nord n° 1, Zone Sud n° 1, Zone Ouest n° 1</td>
+<td>200</td>
+<td>Poudre de Lépidonille ×3</td>
+</tr>
+<tr>
+<td><strong>048</strong></td>
+<td><strong>Change-Éclair</strong></td>
+<td>Donnée par Mashynn après l'avoir vaincue</td>
+<td>3 000</td>
+<td>Poils de Dedenne ×3, Croc de Lixy ×3</td>
+</tr>
+<tr>
+<td><strong>049</strong></td>
+<td><strong>Zénith</strong></td>
+<td>Cuchalaga, Zone Est n° 1, Zone Ouest n° 1</td>
+<td>3 000</td>
+<td>Feuille de Tournegrin ×3, Charbon de Chartor ×3, Crinière d'Hélionceau ×3</td>
+</tr>
+<tr>
+<td><strong>050</strong></td>
+<td><strong>Danse Pluie</strong></td>
+<td>Désert Rôtissable, Zone Est n° 1, Zone Sud n° 5</td>
+<td>3 000</td>
+<td>Mucus de Sancoki ×3, Poils d'Azurill ×3, Plume de Zapétrel ×3</td>
+</tr>
+<tr>
+<td><strong>051</strong></td>
+<td><strong>Tempête de Sable</strong></td>
+<td>Désert Rôtissable, Zone Est n° 3, Zone Sud n° 5</td>
+<td>3 000</td>
+<td>Sable d'Hippopotas ×3, Sable de Dunaja ×3, Sable de Bacabouh ×3</td>
+</tr>
+<tr>
+<td><strong>052</strong></td>
+<td><strong>Chute de Neige</strong></td>
+<td>Mont Nappé, Zone Ouest n° 1, Zone Ouest n° 3</td>
+<td>3 000</td>
+<td>Baie de Blizzi ×3, Provisions de Cadoizo ×3, Fil de Frissonille ×3</td>
+</tr>
+<tr>
+<td><strong>053</strong></td>
+<td><strong>Estocorne</strong></td>
+<td>Jarramanca, Zone Nord n° 1</td>
+<td>3 000</td>
+<td>Griffe de Khélocrok ×3, Griffe de Scarhino ×3</td>
+</tr>
+<tr>
+<td><strong>054</strong></td>
+<td><strong>Choc Psy</strong></td>
+<td>Jarramanca, Lac Asrol</td>
+<td>5 000</td>
+<td>Sueur de Méditikka ×3, Perle de Spoink ×3, Poils de Soporifik</td>
+</tr>
+<tr>
+<td><strong>055</strong></td>
+<td><strong>Tunnel</strong></td>
+<td>Zone Sud n° 3, Zone Ouest n° 1</td>
+<td>5 000</td>
+<td>Terre de Taupiqueur ×3, Cire de Toutombe ×3, Rouille de Ferdeter</td>
+</tr>
+<tr>
+<td><strong>056</strong></td>
+<td><strong>Balle Graine</strong></td>
+<td>Désert Rôtissable, Lac Asrol, Tunnel Mezcla-Pincho, Zone Sud n° 3, Zone Ouest n° 1, Zone Ouest n° 2</td>
+<td>3 000</td>
+<td>Feuille de Tournegrin ×3, Feuille de Granivol ×3</td>
+</tr>
+<tr>
+<td><strong>057</strong></td>
+<td><strong>Faux-Chage</strong></td>
+<td>Donnée par Jacq si le Pokédex contient plus de 30 Pokémon (créature)</td>
+<td>400</td>
+<td>Mue de Crikzik ×3, Griffe de Khélocrok ×3</td>
+</tr>
+<tr>
+<td><strong>058</strong></td>
+<td><strong>Casse-Brique</strong></td>
+<td>Désert Rôtissable, Lac Asrol, Mer du Nord de Paldea, Zone Est n° 3</td>
+<td>5 000</td>
+<td>Sueur de Makuhita ×3, Duvet de Brutalibré ×3, Carapace de Crabagarre ×3</td>
+</tr>
+<tr>
+<td><strong>059</strong></td>
+<td><strong>Psykoud'Boul</strong></td>
+<td>Zone Ouest n° 2</td>
+<td>5 000</td>
+<td>Chair de Délestin ×3, Poils de Girafarig ×3, Écaille d'Insolourdo ×3</td>
+</tr>
+<tr>
+<td><strong>060</strong></td>
+<td><strong>Demi-Tour</strong></td>
+<td>Lac Asrol, Mont Nappé, Zone Est n° 2, Zone Ouest n° 1</td>
+<td>3 000</td>
+<td>Griffe de Lilliterelle ×3, Griffe d'Insécateur ×3</td>
+</tr>
+<tr>
+<td><strong>061</strong></td>
+<td><strong>Griffe Ombre</strong></td>
+<td>Zone Nord n° 1, Zone Ouest n° 1</td>
+<td>3 000</td>
+<td>Tissu de Mimiqui ×3, Griffe de Dodoala ×3</td>
+</tr>
+<tr>
+<td><strong>062</strong></td>
+<td><strong>Tricherie</strong></td>
+<td>Donnée par Brome après l'avoir vaincu</td>
+<td>3 000</td>
+<td>Trésor de Cornèbre ×3, Griffe de Mascaïman ×3</td>
+</tr>
+<tr>
+<td><strong>063</strong></td>
+<td><strong>Psycho-Croc</strong></td>
+<td>Levalendura, Mont Nappé, Zone Nord n° 1, Zone Ouest n° 1</td>
+<td>10 000</td>
+<td>Dent de Denticrisse ×5, Croc de Bargantua ×3, Chair de Délestin ×3</td>
+</tr>
+<tr>
+<td><strong>064</strong></td>
+<td><strong>Gonflette</strong></td>
+<td>Alforneira, Désert Rôtissable, Repaire du Groupe Caph, Zone Sud n° 2</td>
+<td>3 000</td>
+<td>Sueur de Makuhita ×3, Écaille de Coupenotte ×3</td>
+</tr>
+<tr>
+<td><strong>065</strong></td>
+<td><strong>Lame d'Air</strong></td>
+<td>Mer du Nord de Paldea, Zone Est n° 1, Zone Sud n° 1</td>
+<td>5 000</td>
+<td>Poils de Sonistrelle ×3, Plume de Goélise ×3, Duvet de Flamenroule ×3</td>
+</tr>
+<tr>
+<td><strong>066</strong></td>
+<td><strong>Plaquage</strong></td>
+<td>Désert Rôtissable, Zone Ouest n° 3</td>
+<td>5 000</td>
+<td>Poils de Rongourmand ×3, Mucus de Mamanbo ×3, Griffe de Khélocrok ×3</td>
+</tr>
+<tr>
+<td><strong>067</strong></td>
+<td><strong>Poing Feu</strong></td>
+<td>—</td>
+<td>5 000</td>
+<td>Sueur de Méditikka ×3, Suie de Charbambin ×3</td>
+</tr>
+<tr>
+<td><strong>068</strong></td>
+<td><strong>Poing Éclair</strong></td>
+<td>—</td>
+<td>5 000</td>
+<td>Électricité de Toxizap ×3, Sueur de Méditikka ×3</td>
+</tr>
+<tr>
+<td><strong>069</strong></td>
+<td><strong>Poing Glace</strong></td>
+<td>—</td>
+<td>5 000</td>
+<td>Poils de Polarhume ×3, Sueur de Méditikka ×3</td>
+</tr>
+<tr>
+<td><strong>070</strong></td>
+<td><strong>Blabla Dodo</strong></td>
+<td>Jarramanca, Repaire du Groupe Segin, Lac Asrol</td>
+<td>400</td>
+<td>Sable d'Hippopotas ×3, Griffe de Ramoloss ×3</td>
+</tr>
+<tr>
+<td><strong>071</strong></td>
+<td><strong>Canon Graine</strong></td>
+<td>Forêt Toastée, Zone Est n° 1, Zone Nord n° 1, Zone Nord n° 2</td>
+<td>8 000</td>
+<td>Spores de Balignon ×5, Branche de Virovent ×3, Huile d'Olivini ×3</td>
+</tr>
+<tr>
+<td><strong>072</strong></td>
+<td><strong>Boule Élek</strong></td>
+<td>Mesaledo, Tunnel Mezcla-Pincho, Zone Sud n° 2, Zone Ouest n° 1, Zone Ouest n° 3</td>
+<td>5 000</td>
+<td>Poils de Pachirisu ×3, Électricité de Voltorbe ×3, Mucus de Têtampoule ×3</td>
+</tr>
+<tr>
+<td><strong>073</strong></td>
+<td><strong>Vampi-Poing</strong></td>
+<td>Au nord de la Zone Est n° 2, sur l'île ; Zone Sud n° 5</td>
+<td>8 000</td>
+<td>Poison de Cradopaud ×5, Poils de Férosinge ×3, Carapace de Crabagarre ×3</td>
+</tr>
+<tr>
+<td><strong>074</strong></td>
+<td><strong>Protection</strong></td>
+<td>Levalendura, Zone Est n° 3, Zone Sud n° 3, Poste Central</td>
+<td>800</td>
+<td>Poils de Soporifik ×3, Duvet de Flotillon ×3</td>
+</tr>
+<tr>
+<td><strong>075</strong></td>
+<td><strong>Mur Lumière</strong></td>
+<td>Levalendura, Désert Rôtissable, Zone Est n° 1, Zone Est n° 2</td>
+<td>800</td>
+<td>Vis de Magnéti ×3, Électricité de Voltorbe ×3</td>
+</tr>
+<tr>
+<td><strong>076</strong></td>
+<td><strong>Boule Roc</strong></td>
+<td>Lac Asrol, Zone Sud n° 1</td>
+<td>3 000</td>
+<td>Sel de Selutin ×3, Griffe de Khélocrok ×3</td>
+</tr>
+<tr>
+<td><strong>077</strong></td>
+<td><strong>Cascade</strong></td>
+<td>Lac Asrol, Zone Nord n° 2</td>
+<td>8 000</td>
+<td>Écaille de Magicarpe ×5, Croc de Bargantua ×3, Écaille d'Embrochet ×3</td>
+</tr>
+<tr>
+<td><strong>078</strong></td>
+<td><strong>Draco-Griffe</strong></td>
+<td>Zone Zéro, Lac Asrol, Zone Est n° 1, Zone Sud n° 4</td>
+<td>8 000</td>
+<td>Écaille de Coupenotte ×5, Poils de Sonistrelle ×3, Écaille de Griknot ×3</td>
+</tr>
+<tr>
+<td><strong>079</strong></td>
+<td><strong>Éclat Magique</strong></td>
+<td>Donnée par Ortiga après l'avoir vaincue, Zone Zéro</td>
+<td>8 000</td>
+<td>Babiole de Bibichut ×3, Plume de Tylton ×3, Poils de Pâtachiot ×3</td>
+</tr>
+<tr>
+<td><strong>080</strong></td>
+<td><strong>Métronome</strong></td>
+<td>Mont Nappé, Zone Sud n° 3, Zone Ouest n° 2</td>
+<td>400</td>
+<td>Poils de Toudoudou ×3, Babiole de Ptiravi ×3</td>
+</tr>
+<tr>
+<td><strong>081</strong></td>
+<td><strong>Nœud Herbe</strong></td>
+<td>Mesaledo, Mont Nappé, Route de Cuchalaga, Bosquet Tagué, Zone Ouest n° 1</td>
+<td>3 000</td>
+<td>Épine de Cacnea ×3, Spores de Balignon ×3</td>
+</tr>
+<tr>
+<td><strong>082</strong></td>
+<td><strong>Cage Éclair</strong></td>
+<td>Zone Sud n° 1</td>
+<td>400</td>
+<td>Laine de Wattouat ×3, Poils de Pohm ×3</td>
+</tr>
+<tr>
+<td><strong>083</strong></td>
+<td><strong>Direct Toxik</strong></td>
+<td>Mont Nappé, Zone Nord n° 1</td>
+<td>5 000</td>
+<td>Encre de Gribouraigne ×3, Croc de Séviper ×3, Épine de Vorastérie ×3</td>
+</tr>
+<tr>
+<td><strong>084</strong></td>
+<td><strong>Trépignement</strong></td>
+<td>Levalendura, Zone Zéro</td>
+<td>5 000</td>
+<td>Boue de Tiboudet ×3, Ongle de Phanpy ×3</td>
+</tr>
+<tr>
+<td><strong>085</strong></td>
+<td><strong>Repos</strong></td>
+<td>Plato Real, Zone Est n° 1, Zone Sud n° 5, Zone Ouest n° 2</td>
+<td>400</td>
+<td>Poils de Soporifik ×3</td>
+</tr>
+<tr>
+<td><strong>086</strong></td>
+<td><strong>Éboulement</strong></td>
+<td>Zone Est n° 3, Zone Nord n° 2</td>
+<td>5 000</td>
+<td>Sel de Selutin ×3, Roche de Rocabot ×3, Larme de Manzaï ×3</td>
+</tr>
+<tr>
+<td><strong>087</strong></td>
+<td><strong>Provoc</strong></td>
+<td>Désert Rôtissable, Lac Asrol, Forêt Toastée, Zone Sud n° 1</td>
+<td>3 000</td>
+<td>Poils de Miaouss ×3, Joyau de Ténéfix ×3, Griffe de Farfuret ×3</td>
+</tr>
+<tr>
+<td><strong>088</strong></td>
+<td><strong>Danse Lames</strong></td>
+<td>Lac Asrol, Zone Ouest n° 1, Zone Nord n° 1, Zone Nord n° 2</td>
+<td>5 000</td>
+<td>Griffe de Mangriff ×3, Écaille de Griknot ×3, Griffe d'Insécateur ×3</td>
+</tr>
+<tr>
+<td><strong>089</strong></td>
+<td><strong>Big Splash</strong></td>
+<td>Mont Nappé, Zone Est n° 3, Zone Nord n° 3, Zone Sud n° 4</td>
+<td>8 000</td>
+<td>Graisse de Piétacé ×5, Duvet de Brutalibré ×3, Lame de Scalpion ×3</td>
+</tr>
+<tr>
+<td><strong>090</strong></td>
+<td><strong>Picots</strong></td>
+<td>Désert Rôtissable, Zone Est n° 3, Zone Ouest n° 1</td>
+<td>3 000</td>
+<td>Épine de Wattapik ×3, Épine de Qwilfish ×3</td>
+</tr>
+<tr>
+<td><strong>091</strong></td>
+<td><strong>Pics Toxik</strong></td>
+<td>Bosquet Tagué, Zone Est n° 2</td>
+<td>3 000</td>
+<td>Épine de Vorastérie ×3, Écorce de Pomdepik ×3</td>
+</tr>
+<tr>
+<td><strong>092</strong></td>
+<td><strong>Possessif</strong></td>
+<td>Alforneira, Repaire du Groupe Tsih, Zone Nord n° 2</td>
+<td>3 000</td>
+<td>Fragment d'Archéomire ×3, Poils de Zorua ×3</td>
+</tr>
+<tr>
+<td><strong>093</strong></td>
+<td><strong>Luminocanon</strong></td>
+<td>Zone Zéro, Mer du Nord de Paldea, Zone Est n° 2, Zone Sud n° 3</td>
+<td>8 000</td>
+<td>Gaz de Vrombi ×3, Clé de Trousselin ×3, Poils de Forgerette ×3</td>
+</tr>
+<tr>
+<td><strong>094</strong></td>
+<td><strong>Vibrobscur</strong></td>
+<td>Mont Nappé, Zone Est n° 3, Zone Nord n° 2</td>
+<td>8 000</td>
+<td>Poils de Zorua ×3, Poils de Grimalin ×3, Fragment de Spiritomb ×3</td>
+</tr>
+<tr>
+<td><strong>095</strong></td>
+<td><strong>Vampirisme</strong></td>
+<td>Frigao, Bosquet Tagué, Zone Nord n° 1, Zone Ouest n° 1</td>
+<td>8 000</td>
+<td>Nectar d'Arakdo ×3, Croc de Mimitoss ×3, Mue de Crikzik ×3</td>
+</tr>
+<tr>
+<td><strong>096</strong></td>
+<td><strong>Ondes Étranges</strong></td>
+<td>Route de Cuchalaga, Zone Ouest n° 3</td>
+<td>400</td>
+<td>Étincelle de Voltorbe ×3, Croc de Lixy ×3, Épine de Vorastérie ×3</td>
+</tr>
+<tr>
+<td><strong>097</strong></td>
+<td><strong>Vol</strong></td>
+<td>Zone Zéro, Zone Est n° 1, Zone Ouest n° 1, Zone Ouest n° 2</td>
+<td>5 000</td>
+<td>Plume de Tapatoès ×3, Plume de Lestombaile ×3, Plume de Furaiglon ×3</td>
+</tr>
+<tr>
+<td><strong>098</strong></td>
+<td><strong>Échange</strong></td>
+<td>Alforneira, Cuencia, Lac Asrol</td>
+<td>3 000</td>
+<td>Poils de Girafarig ×3, Duvet de Flotillon ×3</td>
+</tr>
+<tr>
+<td><strong>099</strong></td>
+<td><strong>Tête de Fer</strong></td>
+<td>Levalendura, Lac Asrol, Zone Ouest n° 1</td>
+<td>8 000</td>
+<td>Rouille de Charibari ×5, Lame de Scalpion ×3, Plume de Minisange ×3</td>
+</tr>
+<tr>
+<td><strong>100</strong></td>
+<td><strong>Danse Draco</strong></td>
+<td>Zone Zéro, Caverne de la Crique, Zone Ouest n° 1, Zone Nord n° 2</td>
+<td>5 000</td>
+<td>Écaille de Nigirigon ×3, Écaille de Griknot ×3, Poils de Sonistrelle ×3</td>
+</tr>
+<tr>
+<td><strong>101</strong></td>
+<td><strong>Rayon Gemme</strong></td>
+<td>Zone Zéro, Tunnel Mezcla-Pincho, Zone Est n° 3, Zone Sud n° 3</td>
+<td>8 000</td>
+<td>Perle de Spoink ×3, Joyau de Ténéfix ×3, Laine de Wattouat ×3</td>
+</tr>
+<tr>
+<td><strong>102</strong></td>
+<td><strong>Détricanon</strong></td>
+<td>Donnée par Erio après l'avoir vaincu</td>
+<td>5 000</td>
+<td>Poison de Tadmorv ×3, Poison de Cradopaud ×3, Gaz de Vrombi ×3</td>
+</tr>
+<tr>
+<td><strong>103</strong></td>
+<td><strong>Clonage</strong></td>
+<td>Derrière le hangar d'Alforneira, Ouest de la Route de Cuchalaga, Zone Est n° 1</td>
+<td>5 000</td>
+<td>Tissu de Mimiqui ×3, Poils d'Azurill ×3, Sueur d'Hexadron ×3</td>
+</tr>
+<tr>
+<td><strong>104</strong></td>
+<td><strong>Mur de Fer</strong></td>
+<td>Zone Est n° 1, Zone Est n° 3, Zone Nord n° 1, Zone Sud n° 5</td>
+<td>1 500</td>
+<td>Fragment d'Archéomire ×3, Écorce de Pomdepik ×3</td>
+</tr>
+<tr>
+<td><strong>105</strong></td>
+<td><strong>Plaie Croix</strong></td>
+<td>Tunnel Mezcla-Pincho, Bosquet Tagué, Zone Est n° 1, Zone Ouest n° 3</td>
+<td>5 000</td>
+<td>Feuille de Mimantis ×3, Fil de Tissenboule ×3, Mue de Crikzik ×3</td>
+</tr>
+<tr>
+<td><strong>106</strong></td>
+<td><strong>Tunnelier</strong></td>
+<td>Tunnel Mezcla-Pincho, Zone Est n° 3, Zone Sud n° 2</td>
+<td>8 000</td>
+<td>Écorce de Pomdepik ×5, Écaille d'Insolourdo ×3, Écaille d'Embrochet ×3</td>
+</tr>
+<tr>
+<td><strong>107</strong></td>
+<td><strong>Feu Follet</strong></td>
+<td>Mer de l'Ouest de Paldea, Zone Nord n° 2</td>
+<td>3 000</td>
+<td>Gaz de Tritox ×3, Tissu de Polichombr ×3</td>
+</tr>
+<tr>
+<td><strong>108</strong></td>
+<td><strong>Mâchouille</strong></td>
+<td>Mer du Nord de Paldea, Zone Est n° 3</td>
+<td>8 000</td>
+<td>Croc de Grondogue ×5, Dent de Denticrisse ×3, Poils de Manglouton ×3</td>
+</tr>
+<tr>
+<td><strong>109</strong></td>
+<td><strong>Tour de Magie</strong></td>
+<td>Extrémité ouest de la Zone Ouest n° 1 près d'une éolienne, Mezclamora, Mer du Nord de Paldea</td>
+<td>5 000</td>
+<td>Tissu de Polichombr ×3, Joyau de Ténéfix ×3, Fragment de Théffroi ×3</td>
+</tr>
+<tr>
+<td><strong>110</strong></td>
+<td><strong>Aqua-Brèche</strong></td>
+<td>Mont Nappé, Zone Nord n° 1, Zone Sud n° 3, Zone Sud n° 6</td>
+<td>10 000</td>
+<td>Écaille d'Embrochet ×5, Sable de Taupikeau ×3, Poils de Mustébouée ×3</td>
+</tr>
+<tr>
+<td><strong>111</strong></td>
+<td><strong>Giga-Sangsue</strong></td>
+<td>Zone Zéro, Lac Asrol, Zone Est n° 1, Zone Ouest n° 3</td>
+<td>8 000</td>
+<td>Graine de Pimito ×5, Feuille de Granivol ×3, Feuille de Cabriolaine ×3</td>
+</tr>
+<tr>
+<td><strong>112</strong></td>
+<td><strong>Aurasphère</strong></td>
+<td>A l'ouest de la Zone Sud n° 4, Tunnel Mezcla-Pincho, Mont Nappé, Zone Nord n° 2</td>
+<td>8 000</td>
+<td>Babiole de Tarsal ×5, Poils de Riolu ×3, Suie de Charbambin ×3</td>
+</tr>
+<tr>
+<td><strong>113</strong></td>
+<td><strong>Vent Arrière</strong></td>
+<td>Au sommet de l'éolienne avec escaliers la plus à l'est de la Zone Ouest n° 1, Levalendura, Route de Cuchalaga, Zone Est n° 1</td>
+<td>5 000</td>
+<td>Plume de Furaiglon ×3, Plume de Minisange ×3, Plume de Lestombaile ×3</td>
+</tr>
+<tr>
+<td><strong>114</strong></td>
+<td><strong>Ball'Ombre</strong></td>
+<td>Donnée par Laïm après l'avoir vaincue, Zone Zéro</td>
+<td>8 000</td>
+<td>Gaz de Fantominus ×5, Sable de Bacabouh ×3, Fragment de Théffroi ×3</td>
+</tr>
+<tr>
+<td><strong>115</strong></td>
+<td><strong>Draco-Choc</strong></td>
+<td>Tunnel Mezcla-Pincho, Zone Nord n° 1, Zone Nord n° 2</td>
+<td>8 000</td>
+<td>Mucus de Mucuscule ×5, Plume de Tylton ×3, Écaille de Nigirigon ×3</td>
+</tr>
+<tr>
+<td><strong>116</strong></td>
+<td><strong>Piège de Roc</strong></td>
+<td>Zone Sud n° 2, Zone Sud n° 5, Zone Ouest n° 2</td>
+<td>5 000</td>
+<td>Charbon de Charbi ×3, Roche de Rocabot ×3</td>
+</tr>
+<tr>
+<td><strong>117</strong></td>
+<td><strong>Mégaphone</strong></td>
+<td>Zone Sud n° 6</td>
+<td>8 000</td>
+<td>Crinière d'Hélionceau ×5, Poils de Compagnol ×3, Poils de Rongourmand ×3</td>
+</tr>
+<tr>
+<td><strong>118</strong></td>
+<td><strong>Canicule</strong></td>
+<td>Désert Rôtissable, Mer de l'Ouest de Paldea, Zone Ouest n° 2</td>
+<td>10 000</td>
+<td>Poils de Caninos ×5, Charbon de Chartor ×3, Poils de Pyronille ×3</td>
+</tr>
+<tr>
+<td><strong>119</strong></td>
+<td><strong>Éco-Sphère</strong></td>
+<td>Repaire du Groupe Ruchbah, Zone Nord n° 1, Zone Ouest n° 1</td>
+<td>10 000</td>
+<td>Poils de Vivaldaim ×5, Jus de Verpom ×3, Branche de Virovent ×3</td>
+</tr>
+<tr>
+<td><strong>120</strong></td>
+<td><strong>Psyko</strong></td>
+<td>Donnée par Tully après l'avoir vaincue</td>
+<td>10 000</td>
+<td>Boue de Léboulérou ×5, Poils de Wimessir ×3, Babiole de Tarsal ×3</td>
+</tr>
+<tr>
+<td><strong>121</strong></td>
+<td><strong>Tacle Lourd</strong></td>
+<td>Mont Nappé, Zone Sud n° 3, Zone Ouest n° 1</td>
+<td>5 000</td>
+<td>Rouille de Charibari ×3, Fragment d'Archéomire ×3, Barbillon d'Oyacata ×3</td>
+</tr>
+<tr>
+<td><strong>122</strong></td>
+<td><strong>Encore</strong></td>
+<td>Levalendura, Lac Asrol, Repaire du Groupe Segin, Zone Nord n° 3, Zone Sud n° 4</td>
+<td>3 000</td>
+<td>Duvet de Brutalibré ×3, Poils de Parecool ×3</td>
+</tr>
+<tr>
+<td><strong>123</strong></td>
+<td><strong>Surf</strong></td>
+<td>Levalendura, Mer du Sud de Paldea</td>
+<td>10 000</td>
+<td>Écaille d'Écayon ×5, Mucus de Dofin ×3, Sable de Taupikeau ×3</td>
+</tr>
+<tr>
+<td><strong>124</strong></td>
+<td><strong>Cryo-Pirouette</strong></td>
+<td>Donnée par Grusha après l'avoir vaincu</td>
+<td>8 000</td>
+<td>Graisse de Piétacé ×5, Glace de Grelaçon ×3, Écaille de Frigodo ×3</td>
+</tr>
+<tr>
+<td><strong>125</strong></td>
+<td><strong>Lance-Flammes</strong></td>
+<td>Au sud du chemin entre Mezclamora et le Tunnel Mezcla-Pincho</td>
+<td>10 000</td>
+<td>Crinière d'Hélionceau ×5, Croc de Malosse ×3, Lave de Chamallot ×3</td>
+</tr>
+<tr>
+<td><strong>126</strong></td>
+<td><strong>Tonnerre</strong></td>
+<td>Repaire du Groupe Caph, Mont Nappé, Zone Est n° 3, Zone Ouest n° 2</td>
+<td>10 000</td>
+<td>Poils de Pachirisu ×5, Mucus de Têtampoule ×3, Poils de Pichu ×3</td>
+</tr>
+<tr>
+<td><strong>127</strong></td>
+<td><strong>Câlinerie</strong></td>
+<td>Zone Est n° 1, Zone Sud n° 1, Zone Sud n° 6</td>
+<td>10 000</td>
+<td>Poils de Pâtachiot ×5, Poils de Compagnol ×3, Poils de Forgerette ×3</td>
+</tr>
+<tr>
+<td><strong>128</strong></td>
+<td><strong>Amnésie</strong></td>
+<td>Mesaledo, Zone Est n° 3, Zone Nord n° 2, Zone Sud n° 2</td>
+<td>1 500</td>
+<td>Griffe de Ramoloss ×3, Poils de Parecool ×3</td>
+</tr>
+<tr>
+<td><strong>129</strong></td>
+<td><strong>Plénitude</strong></td>
+<td>Zone Nord n° 2, Zone Sud n° 1, Zone Sud n° 5</td>
+<td>3 000</td>
+<td>Poils de Cerfrousse ×3, Poils de Wimessir ×3</td>
+</tr>
+<tr>
+<td><strong>130</strong></td>
+<td><strong>Coup d'Main</strong></td>
+<td>Repaire du Groupe Segin, Mer du Nord de Paldea, Zone Sud n° 3, Zone Ouest n° 1</td>
+<td>400</td>
+<td>Poils d'Évoli ×1</td>
+</tr>
+<tr>
+<td><strong>131</strong></td>
+<td><strong>Boule Pollen</strong></td>
+<td>Zone Nord n° 1, Mont Nappé, Zone Ouest n° 3</td>
+<td>10 000</td>
+<td>Boue de Léboulérou ×5, Feuille de Chlorobule ×3, Mue de Crikzik ×3</td>
+</tr>
+<tr>
+<td><strong>132</strong></td>
+<td><strong>Relais</strong></td>
+<td>Désert Rôtissable, Mont Nappé</td>
+<td>3 000</td>
+<td>Poils de Girafarig ×3, Poils d'Évoli ×3</td>
+</tr>
+<tr>
+<td><strong>133</strong></td>
+<td><strong>Telluriforce</strong></td>
+<td>Zone Sud n° 6, à l'est</td>
+<td>10 000</td>
+<td>Sable de Dunaja ×5, Mucus de Sancoki ×3, Mue de Barloche ×3</td>
+</tr>
+<tr>
+<td><strong>134</strong></td>
+<td><strong>Contre</strong></td>
+<td>Lac Asrol, Zone Est n° 1</td>
+<td>3 000</td>
+<td>Sueur d'Hexadron ×3, Griffe de Scarhino ×3, Poils de Férosinge ×3</td>
+</tr>
+<tr>
+<td><strong>135</strong></td>
+<td><strong>Laser Glace</strong></td>
+<td>Forêt Toastée, Mont Nappé, Zone Est n° 1, Zone Nord n° 1, Zone Ouest n° 1, Zone Ouest n° 3</td>
+<td>10 000</td>
+<td>Glace d'Hexagel ×5, Perle de Kokiyas ×3, Provisions de Cadoizo ×3</td>
+</tr>
+<tr>
+<td><strong>136</strong></td>
+<td><strong>Champ Électrifié</strong></td>
+<td>Levalendura, Mont Nappé, Zone Sud n° 3</td>
+<td>3 000</td>
+<td>Épine de Wattapik ×3, Mucus de Têtampoule ×3, Poils de Pohm ×3</td>
+</tr>
+<tr>
+<td><strong>137</strong></td>
+<td><strong>Champ Herbu</strong></td>
+<td>Zone Zéro, Zone Est n° 1, Zone Est n° 3, Zone Sud n° 2, Zone Ouest n° 1, Zone Ouest n° 2</td>
+<td>3 000</td>
+<td>Pollen de Flabébé ×3, Feuille de Tournegrin ×3, Feuille de Mimantis ×3</td>
+</tr>
+<tr>
+<td><strong>138</strong></td>
+<td><strong>Champ Psychique</strong></td>
+<td>Zone Zéro, Zone Est n° 2, Zone Sud n° 4, Zone Ouest n° 1, Plaine des Glycines</td>
+<td>3 000</td>
+<td>Griffe de Ramoloss ×3, Poils de Wimessir ×3, Poils de Soporifik ×3</td>
+</tr>
+<tr>
+<td><strong>139</strong></td>
+<td><strong>Champ Brumeux</strong></td>
+<td>Bosquet Tagué, Zone Nord n° 2, Zone Sud n° 4</td>
+<td>3 000</td>
+<td>Clé de Trousselin ×3, Poils de Toudoudou ×3, Pollen de Flabébé ×3</td>
+</tr>
+<tr>
+<td><strong>140</strong></td>
+<td><strong>Machination</strong></td>
+<td>Académie de Paldea, offerte par Mora après avoir terminé tous ses cours et lui avoir montré les quatre trésors du fléau.</td>
+<td>5 000</td>
+<td>Poils de Miaouss ×3, Fragment de Spiritomb ×3, Écaille de Nigirigon ×3</td>
+</tr>
+<tr>
+<td><strong>141</strong></td>
+<td><strong>Déflagration</strong></td>
+<td>Au nord-ouest du Lac Asrol, entre trois piliers situés à côté de ruines.</td>
+<td>12 000</td>
+<td>Lave de Chamallot ×5, Poils de Pyronille ×3, Charbon de Chartor ×3</td>
+</tr>
+<tr>
+<td><strong>142</strong></td>
+<td><strong>Hydrocanon</strong></td>
+<td>Zone Zéro, Lac Asrol</td>
+<td>12 000</td>
+<td>Mucus de Dofin ×5, Écaille d'Écayon ×3, Écaille de Lovdisc ×3</td>
+</tr>
+<tr>
+<td><strong>143</strong></td>
+<td><strong>Blizzard</strong></td>
+<td>Zone Zéro, Mont Nappé</td>
+<td>12 000</td>
+<td>Poils de Stalgamin ×5, Baie de Blizzi ×3, Glace d'Hexagel ×3</td>
+</tr>
+<tr>
+<td><strong>144</strong></td>
+<td><strong>Aire de Feu</strong></td>
+<td>Mer de l'Est de Paldea</td>
+<td>8 000</td>
+<td>Gaz de Tritox ×3, Lave de Chamallot ×3, Graine de Pimito ×3</td>
+</tr>
+<tr>
+<td><strong>145</strong></td>
+<td><strong>Aire d'Eau</strong></td>
+<td>Mer de l'Est de Paldea</td>
+<td>8 000</td>
+<td>Écaille de Lovdisc ×3, Mucus de Mamanbo ×3, Perle de Kokiyas ×3</td>
+</tr>
+<tr>
+<td><strong>146</strong></td>
+<td><strong>Aire d'Herbe</strong></td>
+<td>Mer de l'Est de Paldea</td>
+<td>8 000</td>
+<td>Jus de Verpom ×3, Membrane de Terracool ×3, Poils de Vivaldaim ×3</td>
+</tr>
+<tr>
+<td><strong>147</strong></td>
+<td><strong>Éclair Fou</strong></td>
+<td>Zone Nord n° 2</td>
+<td>10 000</td>
+<td>Croc de Lixy ×5, Poils de Pichu ×3, Mucus d'Anchwatt ×3</td>
+</tr>
+<tr>
+<td><strong>148</strong></td>
+<td><strong>Bombe Beurk</strong></td>
+<td>Zone Nord n° 2, Zone Sud n° 6</td>
+<td>10 000</td>
+<td>Poison de Cradopaud ×5, Poison de Tadmorv ×3, Spores de Trompignon ×3</td>
+</tr>
+<tr>
+<td><strong>149</strong></td>
+<td><strong>Séisme</strong></td>
+<td>Jarramanca, Zone Zéro</td>
+<td>12 000</td>
+<td>Ongle de Phanpy ×5, Terre de Taupiqueur ×3, Mue de Barloche ×3</td>
+</tr>
+<tr>
+<td><strong>150</strong></td>
+<td><strong>Lame de Roc</strong></td>
+<td>Zone Nord n° 1, Zone Zéro</td>
+<td>12 000</td>
+<td>Charbon de Charbi ×5, Roche de Rocabot ×3, Pince de Craparoi ×3</td>
+</tr>
+<tr>
+<td><strong>151</strong></td>
+<td><strong>Hantise</strong></td>
+<td>Caverne de la Crique, Mer de l'Ouest de Paldea</td>
+<td>10 000</td>
+<td>Fragment de Théffroi ×5, Tissu de Polichombr ×3, Cire de Toutombe ×3</td>
+</tr>
+<tr>
+<td><strong>152</strong></td>
+<td><strong>Giga Impact</strong></td>
+<td>Grotte d'Alforneira, Zone Zéro, Mer de l'Est de Paldea, Zone Nord n° 2, Zone Sud n° 6</td>
+<td>14 000</td>
+<td>Poils de Tauros ×8, Griffe de Mangriff ×5, Poils de Parecool ×3</td>
+</tr>
+<tr>
+<td><strong>153</strong></td>
+<td><strong>Rafale Feu</strong></td>
+<td>Zone Nord n° 1</td>
+<td>14 000</td>
+<td>Croc de Malosse ×8, Suie de Charbambin ×5, Poils de Caninos ×3</td>
+</tr>
+<tr>
+<td><strong>154</strong></td>
+<td><strong>Hydroblast</strong></td>
+<td>Zone Nord n° 1</td>
+<td>14 000</td>
+<td>Épine de Qwilfish ×8, Barbillon d'Oyacata ×5, Écaille de Lovdisc ×3</td>
+</tr>
+<tr>
+<td><strong>155</strong></td>
+<td><strong>Végé-Attaque</strong></td>
+<td>Zone Nord n° 1</td>
+<td>14 000</td>
+<td>Feuille de Tropius ×8, Feuille de Cabriolaine ×5, Épine de Cacnea ×3</td>
+</tr>
+<tr>
+<td><strong>156</strong></td>
+<td><strong>Colère</strong></td>
+<td>Zone Nord n° 2, Zone Zéro</td>
+<td>12 000</td>
+<td>Écaille de Coupenotte ×5, Écaille de Minidraco ×3, Écaille de Frigodo ×3</td>
+</tr>
+<tr>
+<td><strong>157</strong></td>
+<td><strong>Surchauffe</strong></td>
+<td>Grotte d'Alforneira, Mont Nappé</td>
+<td>12 000</td>
+<td>Crinière d'Hélionceau ×5, Lave de Chamallot ×3, Graine de Pimito ×3</td>
+</tr>
+<tr>
+<td><strong>158</strong></td>
+<td><strong>Exploforce</strong></td>
+<td>Alforneira, Grotte d'Alforneira, Zone Zéro, Zone Ouest n° 1</td>
+<td>12 000</td>
+<td>Duvet de Flamenroule ×5, Sueur de Méditikka ×3, Poils de Grimalin ×3</td>
+</tr>
+<tr>
+<td><strong>159</strong></td>
+<td><strong>Tempête Verte</strong></td>
+<td>Zone Nord n° 3, Zone Zéro</td>
+<td>12 000</td>
+<td>Sueur de Croquine ×5, Feuille de Tropius ×3, Membrane de Terracool ×3</td>
+</tr>
+<tr>
+<td><strong>160</strong></td>
+<td><strong>Vent Violent</strong></td>
+<td>Lac Asrol, Zone Nord n° 1, Zone Sud n° 6</td>
+<td>12 000</td>
+<td>Plume de Tylton ×5, Plume de Plumeline ×3, Plume de Goélise ×3</td>
+</tr>
+<tr>
+<td><strong>161</strong></td>
+<td><strong>Distorsion</strong></td>
+<td>Levalendura, Zone Ouest n° 1, Zone Zéro</td>
+<td>5 000</td>
+<td>Babiole de Bibichut ×3, Fragment d'Archéomire ×3, Cils de Scrutella ×3</td>
+</tr>
+<tr>
+<td><strong>162</strong></td>
+<td><strong>Bourdon</strong></td>
+<td>Lac Asrol, Zone Nord n° 2, Zone Sud n° 4</td>
+<td>10 000</td>
+<td>Mue de Crikzik ×5, Nectar d'Apitrini ×3, Croc de Mimitoss ×3</td>
+</tr>
+<tr>
+<td><strong>163</strong></td>
+<td><strong>Ultralaser</strong></td>
+<td>Mer de l'Est de Paldea, Mont Nappé, Zone Zéro, Zone Nord n° 2, Zone Ouest n° 2</td>
+<td>14 000</td>
+<td>Écaille de Minidraco ×8, Mucus de Mucuscule ×5, Poils de Tauros ×3</td>
+</tr>
+<tr>
+<td><strong>164</strong></td>
+<td><strong>Rapace</strong></td>
+<td>Lac Asrol, Zone Nord n° 1, Zone Sud n° 4</td>
+<td>12 000</td>
+<td>Plume d'Étourmi ×5, Plume de Furaiglon ×3, Plume de Minisange ×3</td>
+</tr>
+<tr>
+<td><strong>165</strong></td>
+<td><strong>Boutefeu</strong></td>
+<td>Alforneira, Zone Zéro</td>
+<td>12 000</td>
+<td>Poils de Caninos ×5, Plume de Passerouge ×3, Suie de Charbambin ×3</td>
+</tr>
+<tr>
+<td><strong>166</strong></td>
+<td><strong>Fatal-Foudre</strong></td>
+<td>Lac Asrol, Zone Sud n° 3, Zone Sud n° 6</td>
+<td>12 000</td>
+<td>Poils de Dedenne ×5, Poils de Pichu ×3, Mucus d'Anchwatt ×3</td>
+</tr>
+<tr>
+<td><strong>167</strong></td>
+<td><strong>Close Combat</strong></td>
+<td>Donnée par Nèflie après l'avoir vaincue</td>
+<td>12 000</td>
+<td>Poils de Riolu ×5, Carapace de Crabagarre ×3, Sueur de Makuhita ×3</td>
+</tr>
+<tr>
+<td><strong>168</strong></td>
+<td><strong>Lance-Soleil</strong></td>
+<td>Lac Asrol, Zone Est n° 3, Zone Nord n° 1</td>
+<td>12 000</td>
+<td>Sueur de Croquine ×5, Feuille de Tropius ×3, Spores de Trompignon ×3</td>
+</tr>
+<tr>
+<td><strong>169</strong></td>
+<td><strong>Draco-Météore</strong></td>
+<td>Donnée par Cassiopée après l'avoir vaincue à la fin de l'Opération Stardust, Zone Zéro</td>
+<td>14 000</td>
+<td>Mucus de Mucuscule ×8, Écaille de Frigodo ×5, Jus de Verpom ×3</td>
+</tr>
+<tr>
+<td><strong>170</strong></td>
+<td><strong>Métalaser</strong></td>
+<td>Zone Nord n° 3, Zone Zéro</td>
+<td>14 000</td>
+<td>Vis de Magnéti ×8, Rouille de Ferdeter ×5, Rouille de Charibari ×3</td>
+</tr>
+<tr>
+<td><strong>171</strong></td>
+<td><strong>Téra Explosion</strong></td>
+<td>Donnée par Alisma après avoir vaincu Menzi après le 5<sup>e</sup> Badge, Zone Zéro</td>
+<td>8 000</td>
+<td>Cristal de Germéclat ×8</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="relacher-cest-la-seule-vraie-source-de-points-de-ligue">Relâcher, c'est la seule vraie source de points de ligue</h3>
+<p>Les <strong>points de ligue</strong> sont la monnaie de la machine à CT, et le jeu explique très mal d'où ils viennent. La réponse : <strong>tu relâches un Pokémon dans la nature, tu gagnes des PL</strong>.</p>
+<p>Concrètement, ça change la façon de jouer. Pendant que tu ratisses Paldea pour le Pokédex, tu captures beaucoup de doublons. Ne les laisse pas dormir dans les boîtes : ouvre le PC, sélectionne, relâche. Une boîte de trente doublons, c'est de quoi fabriquer plusieurs attaques de milieu de partie.</p>
+<p>Les autres sources sont ponctuelles : les <strong>cadeaux de Cassiopée</strong> après les cinq repaires — plus de <strong>42 000 PL</strong> au total — et quelques PNJ.</p>
+<h3 id="fabriquer-coute-moins-cher-que-chercher">Fabriquer coûte moins cher que chercher</h3>
+<p>Une fois la recette débloquée, fabriquer une CT à 400 ou 800 PL est presque gratuit. Et <strong>trente-huit</strong> des 171 CT sont dans ces deux paliers.</p>
+<p>Le bon réflexe, donc : quand tu veux une attaque courante, ne traverse pas la carte. Va au Centre Pokémon le plus proche et regarde si tu peux la fabriquer. Tu n'as besoin d'aller chercher une CT au sol que pour <strong>débloquer sa recette</strong> la première fois.</p>
+<h3 id="les-sept-ct-a-14-000-points-de-ligue">Les sept CT à 14 000 points de ligue</h3>
+<p>Ce sont les plus chères du jeu, et elles méritent qu'on économise. À 14 000 PL chacune, elles coûtent trente-cinq fois le prix d'une CT à 400.</p>
+<p>Avant de dépenser, pose-toi la question : est-ce que l'attaque est posée au sol quelque part ? Pour les plus puissantes, la réponse est souvent oui — <strong>CT153</strong>, <strong>CT154</strong>, <strong>CT155</strong>, <strong>CT170</strong> et <strong>CT171</strong> se ramassent, et la <strong>CT171 Téra Explosion</strong> se ramasse même <strong>trois fois</strong>.</p>
+<h3 id="la-ct171-tera-explosion-le-meilleur-rapport-du-jeu">La CT171 Téra Explosion, le meilleur rapport du jeu</h3>
+<p><strong>Téra Explosion</strong> prend le <strong>type Téracristal</strong> du Pokémon qui l'utilise. Avec un <strong>Téra-Éclat</strong> du type que tu veux, n'importe quel Pokémon devient capable de frapper très fort dans n'importe quel type.</p>
+<p>Et elle est posée <strong>trois fois</strong> dans les souterrains de la Zone Zéro, donc tu peux équiper trois Pokémon sans dépenser un seul point de ligue. C'est la pièce centrale des stratégies de raid de la partie <strong>27</strong>.</p>
+<h3 id="attention-aux-attaques-oubliees">Attention aux attaques oubliées</h3>
+<p>Une CT remplace une attaque, et l'ancienne est <strong>perdue</strong> — sauf si tu as une <strong>Capsule d'Argent</strong>, qui permet de réapprendre une attaque oubliée. Il y en a une posée au sol à Mesaledo, et elle s'achète ensuite.</p>
+<p>Avant d'apprendre une CT, regarde donc les quatre attaques du Pokémon. Si l'une d'elles est une attaque de niveau qu'il n'apprendra plus jamais, note-la.</p>
+<h3 id="les-contradictions-de-numerotation-reglees">Les contradictions de numérotation, réglées</h3>
+<p>Les pages de lieux de Pokébip numérotent plusieurs Capsules Techniques différemment d'une page à l'autre, et c'est la source d'erreur la plus fréquente dans les guides français. J'ai tranché avec les <strong>fiches par numéro de Poképédia</strong>, qui donnent pour chaque CT sa capacité en neuvième génération, sa recette et ses emplacements.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Numéro</th>
+<th>Ce que certaines pages écrivent</th>
+<th>Le nom officiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CT001</strong></td>
+<td>Plaquage</td>
+<td>Bélier — Plaquage est la CT066</td>
+</tr>
+<tr>
+<td><strong>CT012</strong></td>
+<td>Balayette</td>
+<td>Balayage</td>
+</tr>
+<tr>
+<td><strong>CT023</strong></td>
+<td>Queue-Poison</td>
+<td>Rayon Chargé — Queue-Poison est la CT026</td>
+</tr>
+<tr>
+<td><strong>CT034</strong></td>
+<td>Chute de Neige</td>
+<td><strong>Vent Glace</strong> — Chute de Neige est la CT052</td>
+</tr>
+<tr>
+<td><strong>CT049</strong></td>
+<td>Rebond</td>
+<td>Zénith</td>
+</tr>
+<tr>
+<td><strong>CT062</strong></td>
+<td>Griffe Ombre</td>
+<td>Tricherie — Griffe Ombre est la CT061</td>
+</tr>
+<tr>
+<td><strong>CT089</strong></td>
+<td>Big Splash</td>
+<td>Body Press</td>
+</tr>
+<tr>
+<td><strong>CT093</strong></td>
+<td>Luminocanon</td>
+<td>Luminocanon, correct ; c'est la page de la Zone Est n° 2 qui la numérote 098 par erreur</td>
+</tr>
+<tr>
+<td><strong>CT166</strong></td>
+<td>Tonnerre</td>
+<td>Fatal-Foudre — Tonnerre est la CT126</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="alertes-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ <strong>Une recette ne se débloque qu'en ayant ramassé la CT une fois.</strong> Tant que tu n'as jamais vu une Capsule Technique, elle n'apparaît pas à la machine, même avec tous les points de ligue du monde.</li>
+<li class="alerte manquable">⏳ <strong>Les attaques remplacées sont perdues</strong> sans <strong>Capsule d'Argent</strong>. Il y en a une au sol à Mesaledo.</li>
+<li class="alerte manquable">⏳ <strong>Les cadeaux de points de ligue de Cassiopée</strong> dépendent de ton avancement dans l'Opération Stardust : plus tu fais de repaires, plus le montant monte. Faire les cinq rapporte plus de <strong>42 000 PL</strong>.</li>
+</ul>
+<h2 id="check-list-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Système de la machine à CT compris : recette, points de ligue, matériaux</li>
+<li class="tache"><input type="checkbox"> Doublons relâchés régulièrement pour les points de ligue</li>
+<li class="tache"><input type="checkbox"> Les 30 matériaux de Menzi récupérés à Plato Real</li>
+<li class="tache"><input type="checkbox"> Les cinq lots de matériaux de Pania récupérés après les repaires</li>
+<li class="tache"><input type="checkbox"> Les huit CT des champions d'arène obtenues</li>
+<li class="tache"><input type="checkbox"> Les cinq CT des boss de la Team Star obtenues</li>
+<li class="tache"><input type="checkbox"> CT169 Draco-Météore obtenue auprès de Pania</li>
+<li class="tache"><input type="checkbox"> Les CT des représentants de la Ligue obtenues, zone par zone</li>
+<li class="tache"><input type="checkbox"> CT153, CT154 et CT155 récupérées dans la grotte de la Zone Nord n° 1</li>
+<li class="tache"><input type="checkbox"> CT170 Métalaser récupérée dans la grotte sous-marine de la Zone Nord n° 3</li>
+<li class="tache"><input type="checkbox"> Les trois exemplaires de la CT171 Téra Explosion récupérés</li>
+<li class="tache"><input type="checkbox"> Capsule d'Argent récupérée à Mesaledo</li>
+<li class="tache"><input type="checkbox"> Les 171 recettes débloquées à la machine à CT</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="24-les-pieces-de-mordudor-et-gromago.html" rel="prev"><small>← Partie précédente</small><b>Les pièces de Mordudor et Gromago</b></a><a class="suiv" href="26-les-pique-niques-les-sandwichs-et-les-auras-gustatives.html" rel="next"><small>Partie suivante →</small><b>Les pique-niques, les sandwichs et les Auras Gustatives</b></a><a class="tout" href="pokemon-violet.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Pokémon Violet · guide complet généré le 12 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

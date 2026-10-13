@@ -1,0 +1,3177 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Annexes – Guide Final Fantasy VII Remake</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Remake, Annexes : Les trois outils de fin de guide : l&#x27;index alphabétique des objets uniques, le récapitulatif complet des manquables et…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/annexes.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Annexes · Guide Final Fantasy VII Remake">
+<meta property="og:description" content="Final Fantasy VII Remake, Annexes : Les trois outils de fin de guide : l&#x27;index alphabétique des objets uniques, le récapitulatif complet des manquables et…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/annexes.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Remake", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/"}, {"@type": "ListItem", "position": 3, "name": "Annexes", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/annexes.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-remake" class="compact" data-partie="annexes"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Remake</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Remake : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Remake</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-sabotage-du-reacteur-mako-n1.html"><span class="num">✦</span><span class="libelle">Chapitre 1 : Sabotage du réacteur Mako n°1</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-rencontres-determinantes.html"><span class="num">✦</span><span class="libelle">Chapitre 2 : Rencontres déterminantes</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-le-septieme-ciel.html"><span class="num">✦</span><span class="libelle">Chapitre 3 : Le Septième Ciel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-viree-nocturne.html"><span class="num">✦</span><span class="libelle">Chapitre 4 : Virée nocturne</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-suivez-le-chien.html"><span class="num">✦</span><span class="libelle">Chapitre 5 : Suivez le chien</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-les-soleils-des-bidonvilles.html"><span class="num">✦</span><span class="libelle">Chapitre 6 : Les soleils des bidonvilles</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-dans-la-gueule-du-loup.html"><span class="num">✦</span><span class="libelle">Chapitre 7 : Dans la gueule du loup</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-les-fleurs-des-retrouvailles.html"><span class="num">✦</span><span class="libelle">Chapitre 8 : Les fleurs des retrouvailles</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-le-quartier-des-desirs.html"><span class="num">✦</span><span class="libelle">Chapitre 9 : Le quartier des désirs</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-dans-lobscurite-des-egouts.html"><span class="num">✦</span><span class="libelle">Chapitre 10 : Dans l&#x27;obscurité des égouts</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-despiegles-fantomes.html"><span class="num">✦</span><span class="libelle">Chapitre 11 : D&#x27;espiègles fantômes</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-la-lutte-desesperee-davalanche.html"><span class="num">✦</span><span class="libelle">Chapitre 12 : La lutte désespérée d&#x27;Avalanche</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-un-monde-en-ruine.html"><span class="num">✦</span><span class="libelle">Chapitre 13 : Un monde en ruine</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-en-quete-despoir.html"><span class="num">✦</span><span class="libelle">Chapitre 14 : En quête d&#x27;espoir</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="chapitre-15-a-la-lueur-du-coucher-de-soleil.html"><span class="num">✦</span><span class="libelle">Chapitre 15 : À la lueur du coucher de soleil</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="chapitre-16-infiltration-de-la-tour-shinra.html"><span class="num">✦</span><span class="libelle">Chapitre 16 : Infiltration de la tour Shinra</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="chapitre-17-echapper-au-chaos.html"><span class="num">✦</span><span class="libelle">Chapitre 17 : Échapper au chaos</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="chapitre-18-singularite-du-destin.html"><span class="num">✦</span><span class="libelle">Chapitre 18 : Singularité du destin</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="les-materias-2.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="les-armes-et-les-manuscrits-2.html"><span class="num">✦</span><span class="libelle">Les armes et les manuscrits</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="les-invocations-2.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-rapports-de-chadley-et-le-simulateur-shinra.html"><span class="num">✦</span><span class="libelle">Les rapports de Chadley et le simulateur Shinra</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="le-colisee-de-corneo.html"><span class="num">✦</span><span class="libelle">Le Colisée de Cornéo</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-mini-jeux.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="intermission-chapitre-1-lemissaire-de-wutai.html"><span class="num">✦</span><span class="libelle">INTERmission — Chapitre 1 : L&#x27;émissaire de Wutai</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="intermission-chapitre-2-le-vol-de-la-materia-ultime.html"><span class="num">✦</span><span class="libelle">INTERmission — Chapitre 2 : Le vol de la Matéria ultime</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="les-quetes-annexes-et-laffinite.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes et l&#x27;affinité</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="intermission-fort-condor-annexes-et-armes.html"><span class="num">✦</span><span class="libelle">INTERmission — Fort Condor, annexes et armes</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="#annexes"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-remake.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Remake</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-34">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="annexes">Annexes</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-34"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-34">
+<h2 id="objectif-34" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Les trois outils de fin de guide : l'index alphabétique des objets uniques, le récapitulatif complet des manquables et des points de non-retour, la liste de tout ce qui reste « à vérifier en jeu », et <strong>la check-list finale du 100 %</strong>.</p>
+<p>Cette partie ne se lit pas : elle se consulte.</p>
+<h2 id="itineraire-34" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>La check-list finale du 100 %</strong> — <strong>commence par là</strong>.</li>
+<li><strong>Les chiffres du jeu</strong>, en un tableau.</li>
+<li class="alerte">⚠️ <strong>Les 20 manquables les plus graves.</strong></li>
+<li class="alerte">⚠️ Le récapitulatif complet des manquables, partie par partie.</li>
+<li class="alerte manquable">⏳ <strong>Les points de non-retour, partie par partie.</strong></li>
+<li><strong>L'index alphabétique des objets uniques.</strong></li>
+<li>Tout ce qui reste « à vérifier en jeu ».</li>
+</ol>
+<h2 id="deroule-pas-a-pas-34" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="la-check-list-finale-du-100">La check-list finale du 100 %</h3>
+<p>Les huit blocs à cocher pour le platine.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le bloc</th>
+<th>Combien</th>
+<th>Partie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>L'histoire</td>
+<td><strong>18 chapitres</strong></td>
+<td><strong>01</strong> à <strong>18</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Les quêtes</td>
+<td><strong>26 missions annexes</strong> + <strong>7 histoires annexes</strong></td>
+<td><strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Les armes</td>
+<td><strong>24 armes</strong>, <strong>8 Transcendances</strong>, <strong>56 manuscrits</strong>, <strong>356 PA</strong></td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Les matérias</td>
+<td><strong>41 matérias</strong>, <strong>4 techniques ennemies</strong>, <strong>9 invocations</strong></td>
+<td><strong>20</strong>, <strong>22</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Les défis</td>
+<td><strong>20 rapports de Chadley</strong>, <strong>10 combats du Colisée</strong>, <strong>13 combats du simulateur</strong></td>
+<td><strong>24</strong>, <strong>25</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Les collectibles et mini-jeux</td>
+<td><strong>31 disques</strong>, <strong>6 mini-jeux</strong>, <strong>9 robes d'audition</strong></td>
+<td><strong>26</strong>, <strong>27</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Le post-générique</td>
+<td><strong>18 chapitres en Difficile</strong>, <strong>3 passages par les chapitres 3, 8 et 9</strong></td>
+<td><strong>28</strong></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Episode INTERmission</td>
+<td><strong>2 chapitres</strong>, <strong>7 adversaires de Fort Condor</strong>, <strong>6 prospectus</strong>, <strong>9 trophées</strong></td>
+<td><strong>30</strong> à <strong>32</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-chiffres-du-jeu">Les chiffres du jeu</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Élément</th>
+<th>Nombre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Chapitres</strong></td>
+<td><strong>18</strong> <em>(+2 pour INTERmission)</em></td>
+</tr>
+<tr>
+<td><strong>Personnages jouables</strong></td>
+<td><strong>4</strong> <em>(+2 pour INTERmission)</em></td>
+</tr>
+<tr>
+<td><strong>Missions annexes</strong></td>
+<td><strong>26</strong></td>
+</tr>
+<tr>
+<td><strong>Histoires annexes</strong></td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td><strong>Armes</strong></td>
+<td><strong>24</strong> <em>(+6 pour INTERmission)</em></td>
+</tr>
+<tr>
+<td><strong>Transcendances</strong></td>
+<td><strong>8</strong> <em>(2 par personnage)</em></td>
+</tr>
+<tr>
+<td><strong>Manuscrits</strong></td>
+<td><strong>56</strong></td>
+</tr>
+<tr>
+<td><strong>PA nécessaires pour tout maximiser</strong></td>
+<td><strong>356</strong></td>
+</tr>
+<tr>
+<td><strong>PA disponibles en une partie</strong></td>
+<td><strong>246</strong></td>
+</tr>
+<tr>
+<td><strong>Matérias</strong></td>
+<td><strong>41</strong></td>
+</tr>
+<tr>
+<td><strong>Techniques ennemies</strong></td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td><strong>Invocations</strong></td>
+<td><strong>9</strong></td>
+</tr>
+<tr>
+<td><strong>Rapports de combat de Chadley</strong></td>
+<td><strong>20</strong></td>
+</tr>
+<tr>
+<td><strong>Combats du Colisée de Cornéo</strong></td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Combats du simulateur Shinra</strong></td>
+<td><strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>Mini-jeux</strong></td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>Disques de musique</strong></td>
+<td><strong>31</strong></td>
+</tr>
+<tr>
+<td><strong>Robes d'audition</strong></td>
+<td><strong>9</strong></td>
+</tr>
+<tr>
+<td><strong>Médailles Mog nécessaires</strong></td>
+<td><strong>au moins 31</strong></td>
+</tr>
+<tr>
+<td><strong>Niveau maximum</strong></td>
+<td><strong>50</strong></td>
+</tr>
+<tr>
+<td><strong>Niveau d'arme maximum</strong></td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>Trophées</strong></td>
+<td><strong>63</strong> <em>(54 + 9)</em></td>
+</tr>
+<tr>
+<td><strong>Passages minimum par les chapitres 3, 8 et 9</strong></td>
+<td><strong>3</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-20-manquables-les-plus-graves">Les 20 manquables les plus graves</h3>
+<p class="alerte manquable">⏳ Si tu ne retiens qu'une liste de tout ce guide, c'est celle-ci.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce que tu peux perdre</th>
+<th>Où</th>
+<th>Partie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Le Bâton de frappe</strong> <em>(arme d'Aerith)</em></td>
+<td>À voler à Éligor avec la matéria Voler</td>
+<td><strong>11</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>La matéria Chocobo et Mog</td>
+<td>Le défi d'une minute du chapitre 6</td>
+<td><strong>06</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Les 6 missions annexes du chapitre 3</td>
+<td>Elles disparaissent à la fin du chapitre</td>
+<td><strong>03</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Les 6 missions annexes du chapitre 8</td>
+<td>Idem</td>
+<td><strong>08</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Les 9 missions annexes du chapitre 14</td>
+<td>Idem</td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Trois des cinq missions du chapitre 9</td>
+<td>Les quêtes de Madame M et de Chocobo Sam s'EXCLUENT</td>
+<td><strong>09</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Six des neuf robes d'audition</td>
+<td>Un passage ne donne qu'une robe par personnage</td>
+<td><strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Les 6 cartes d'accès du chapitre 7</td>
+<td>Chaque salle se referme derrière toi</td>
+<td><strong>07</strong></td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td><strong>La matéria Affinité élémentaire</strong> <em>(chapitre 6)</em></td>
+<td>L'histoire annexe de la passerelle</td>
+<td><strong>06</strong></td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Les Gants majestueux et le Pulsateur</td>
+<td>10 000 gils à Hart, chapitre 16</td>
+<td><strong>16</strong></td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td><strong>Le Gros canon</strong> <em>(arme de Barret)</em></td>
+<td>Le Parc vert, chapitre 13</td>
+<td><strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>Le Bâton en métal renforcé et la Lame jumelée</td>
+<td>Coffres 01 et 06 du chapitre 17</td>
+<td><strong>17</strong></td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td>Les 10 disques de musique faciles à rater</td>
+<td>Surtout aux chapitres 8, 9 et 14</td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td><strong>Les 4 secondes Transcendances</strong></td>
+<td>Colisée de Cornéo, 100 gils chacune</td>
+<td><strong>25</strong></td>
+</tr>
+<tr>
+<td><strong>15</strong></td>
+<td><strong>Les Médailles Mog</strong></td>
+<td>Brise-boîtes est la seule source</td>
+<td><strong>26</strong></td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td>Le Protège-bras Cétra <em>(chapitre 13)</em></td>
+<td>Un coffre du chapitre</td>
+<td><strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>17</strong></td>
+<td>Les 110 PA du mode Difficile</td>
+<td>40 manuscrits qui n'existent qu'en Difficile</td>
+<td><strong>21</strong>, <strong>28</strong></td>
+</tr>
+<tr>
+<td><strong>18</strong></td>
+<td>Les matérias uniques en double</td>
+<td>Rejouer un chapitre ne les redonne pas</td>
+<td><strong>28</strong></td>
+</tr>
+<tr>
+<td><strong>19</strong></td>
+<td>La matéria Affinité élémentaire d'INTERmission</td>
+<td>La plateforme centrale de la section 1</td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>20</strong></td>
+<td><strong>Le Ruban d'INTERmission</strong></td>
+<td>Il faut retourner au terminal et grimper</td>
+<td><strong>31</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-trois-verrous-du-100-qui-ne-se-contournent-pas">Les trois verrous du 100 % qui ne se contournent pas</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le verrou</th>
+<th>Ce qu'il faut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le rapport 18 de Chadley</strong></td>
+<td><strong>12 matérias au niveau maximum</strong> — et il verrouille à lui seul Bahamut, « Trio contre Top Secret » et le Götterdämmerung <em>(partie <strong>24</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Les 9 robes et les 26 quêtes</strong></td>
+<td><strong>Trois passages complets par les chapitres 3, 8 et 9</strong> <em>(partie <strong>28</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Les 356 PA</strong></td>
+<td><strong>Les 18 chapitres en mode Difficile</strong> <em>(partie <strong>21</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="le-recapitulatif-complet-des-manquables-partie-par-partie">Le récapitulatif complet des manquables, partie par partie</h3>
+<p><strong>Partie 00 — Introduction</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Toutes les missions annexes sont manquables</strong> dès que le chapitre est quitté <em>(partie <strong>23</strong>)</em>.</li>
+</ul>
+<p><strong>Partie 01 — Chapitre 1 : Sabotage du réacteur Mako n°1</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>les dix coffres du chapitre</strong>. <strong>Le réacteur Mako n°1 n'est pas revisitable</strong> : ce qui n'est pas ramassé est perdu pour cette partie.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>les caisses Shinra</strong> et leurs <strong>Médailles Mog</strong>. <strong>Elles ne réapparaissent pas.</strong></li>
+</ul>
+<p><strong>Partie 02 — Chapitre 2 : Rencontres déterminantes</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les douze coffres et les deux matérias du chapitre. Le Secteur 8 n'est jamais revisitable — c'est la zone la plus définitivement perdue du jeu.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Esquive offensive</strong>. Elle est au sol, avant l'arche de la place de la fontaine, et rien ne la signale.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria PV augmentés</strong>, qui demande de <strong>revenir en arrière</strong> sur le chemin de gauche de la rue Loveless.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Poignet de force</strong> et <strong>le Bracelet en fer</strong> — <strong>tes deux premiers équipements</strong>, tous les deux hors du chemin direct.</li>
+</ul>
+<p><strong>Partie 03 — Chapitre 3 : Le Septième Ciel</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : l'histoire annexe « Un moment à deux » et son <strong>Croissant de Lune porte-bonheur</strong>. Elle exige les six missions annexes du chapitre.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : la matéria Feu de l'usine abandonnée, accessible <strong>uniquement</strong> pendant « Les lézards volants ».</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>les coffres 07 et 08</strong>, dans l'usine, accessibles <strong>uniquement</strong> pendant la même mission.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Bracelet astral</strong>, récompense du <strong>Dynneglaugh</strong>, qui exige d'avoir fait « Les lézards volants » avant.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les huit coffres et les deux matérias du chapitre. Le bidonville du Secteur 7 est revisitable aux chapitres 4 et 7, mais il disparaît définitivement après le chapitre 12 : ne compte pas sur un retour tardif.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les trois disques de musique du chapitre.</li>
+</ul>
+<p><strong>Partie 04 — Chapitre 4 : Virée nocturne</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Résurrection</strong>. Au sol, à gauche, à l'extrémité du plateau, avant de descendre — et rien ne la signale.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Protection</strong>, qui demande de <strong>retourner chez Jessie</strong> de ta propre initiative.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Chance augmentée</strong>, qui exige d'avoir battu le meilleur score aux fléchettes.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le coffre 01 de l'annexe 7-6</strong> — le seul coffre du chapitre.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Disque 4 « Barret's Theme »</strong>.</li>
+</ul>
+<p><strong>Partie 05 — Chapitre 5 : Suivez le chien</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les huit coffres et les deux matérias du chapitre. Le tunnel Spirale n'est jamais revisitable.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Soins du train</strong>, dans un wagon que tu traverses une seule fois.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la Protection en cuir</strong> <em>(coffre 08)</em>, derrière une porte du mur de droite <strong>avant</strong> la bifurcation vers le dépôt.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Pendentif étoilé</strong> <em>(coffre 03)</em>, sur une plateforme latérale <strong>gardée par des Rats-Garous</strong>.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Disque 24 « Stamp »</strong>, au distributeur de la salle de pause.</li>
+</ul>
+<p><strong>Partie 06 — Chapitre 6 : Les soleils des bidonvilles</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : la matéria d'invocation Chocobo et Mog. Elle exige de ne pas prendre l'ascenseur, de prendre la nacelle de droite, et de réussir un défi d'une minute.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Affinité élémentaire</strong> et <strong>la matéria PM augmentés</strong> de l'histoire annexe.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les onze coffres du chapitre. L'intérieur du plateau du Secteur 4 n'est jamais revisitable.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Disque 18 « Electric de Chocobo »</strong>, au distributeur de la salle de ventilation.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>les deux Médailles Mog</strong> des coffres 08 et 11.</li>
+</ul>
+<p><strong>Partie 07 — Chapitre 7 : Dans la gueule du loup</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les six coffres et les deux matérias du chapitre. Le réacteur Mako n°5 n'est jamais revisitable.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Foudre de l'entrepôt du niveau -7</strong>, dans le coin immédiatement à droite de l'entrée.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Magie augmentée</strong> et tout le butin du rebut, qui dépendent de l'histoire annexe <strong>« La collecte des rebuts »</strong>.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la Paire de Poings Supersoniques</strong> <em>(coffre 05)</em>, l'arme de Tifa.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Disque 2 « Bombing Mission »</strong>.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : <strong>les six cartes d'accès</strong>. Chacune non ramassée est une arme que l'Aerodestructeur gardera, et un lot de butin que « La collecte des rebuts » ne pourra pas te rendre.</li>
+</ul>
+<p><strong>Partie 08 — Chapitre 8 : Les fleurs des retrouvailles</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : la matéria Chakra de l'église. Il faut y retourner de sa propre initiative, pendant la partie « Le mercenaire itinérant ».</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria PM augmentés</strong>, tout au fond du jardin d'Aerith.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Shiva</strong>, qui s'obtient uniquement au simulateur de combat de Chadley.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la Batte cloutée</strong>, récompense de <strong>« Les enfants en patrouille »</strong>.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Bâton en argent</strong>, 2 Médailles Mog à la boutique Mog — une des six armes d'Aerith, introuvable ailleurs <em>(partie <strong>21</strong>)</em>.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : les treize coffres du chapitre. Le bidonville du Secteur 5 est revisitable plus tard dans le jeu, mais l'église, les toits, la gare et la Vallée du Crépuscule se referment au fil du chapitre.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : le coffre 12 de la salle de classe, qui n'est ouvert qu'après avoir sauvé les enfants.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Bracelet en mithril</strong> du chemin de la gare, même condition.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : les quatre disques de musique et <strong>les deux histoires annexes</strong>.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable facile</strong> : le Disque 19 « Costa del Sol », à acheter au marchand de matérias — aucune soluce de chapitre ne le signale <em>(partie <strong>27</strong>)</em>.</li>
+</ul>
+<p><strong>Partie 09 — Chapitre 9 : Le quartier des désirs</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Aire d'effet</strong>, qui exige de manipuler les containers dans le bon ordre.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Contrainte</strong>, même mécanique, au second bras-grue.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Protection</strong>, dans la ruelle à gauche du Honeybee Inn.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Bâton magique</strong>, récompense de <strong>« Un corps explosif »</strong> — et cette quête dépend du groupe A de choix.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : le Disque 26 « Let the Battles Begin! -REMAKE- », qui dépend du score au mini-jeu de danse.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la Ceinture de Champion</strong> et <strong>la matéria Chance augmentée</strong>, qui dépendent du niveau atteint au mini-jeu des squats.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le coffre 12</strong>, accessible uniquement pendant « La nuit est à nous ».</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : <strong>les seize coffres</strong> et les sept disques du chapitre.</li>
+</ul>
+<p><strong>Partie 10 — Chapitre 10 : Dans l'obscurité des égouts</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les six coffres et les deux matérias du chapitre. Les égouts ne sont jamais revisitables.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Vénéfice</strong>, sur la plateforme qui surplombe l'écluse du canal principal.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Résistance aux altérations</strong> et <strong>la Boucle spiritiste</strong>, dans la partie ouest du canal n°1 du Secteur 7.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : la Paire de gants à plume <em>(coffre 03)</em>, l'arme de Tifa.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Disque 9 « The Oppressed »</strong>.</li>
+</ul>
+<p><strong>Partie 11 — Chapitre 11 : D'espiègles fantômes</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les dix coffres et la matéria du chapitre. Le cimetière des trains n'est jamais revisitable.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Bâton Mithril</strong> <em>(coffre 01)</em>, l'autre arme d'Aerith du chapitre.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Bracelet gothique</strong> <em>(coffre 03)</em>, hors du chemin indiqué.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria PV augmentés</strong>, dans un cul-de-sac latéral.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : le Disque 6 « Let the Battles Begin! ».</li>
+</ul>
+<p><strong>Partie 12 — Chapitre 12 : La lutte désespérée d'Avalanche</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les trois coffres du chapitre. Le pilier du Secteur 7 n'est jamais revisitable — <strong>et pour cause</strong>.</li>
+</ul>
+<p><strong>Partie 13 — Chapitre 13 : Un monde en ruine</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les dix coffres et les deux matérias du chapitre. Le site d'expérimentation souterrain n'est jamais revisitable.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Glace</strong> et la matéria Résistance aux altérations des cages du niveau -2.</li>
+<li class="tache"><input type="checkbox"> <strong>À prendre dès maintenant si tu veux</strong> : <strong>l'Amulette d'invocateur</strong> de la chambre de Marlène. Les sources la classent dans le chapitre 14, où le jeu te ramène chez Aerith ; elle n'est donc pas manquable ici.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la Gros canon</strong>, <strong>à acheter</strong> au marchand d'armes du Parc vert.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : les deux disques de musique du chapitre.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : les caisses Shinra derrière les murs, qui ne réapparaissent pas.</li>
+</ul>
+<p><strong>Partie 14 — Chapitre 14 : En quête d'espoir</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Chronomancie</strong>, qui exige « Les enfants en patrouille » du chapitre 8.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : la Lettre de l'Ange gardien et <strong>la matéria Affinité élémentaire</strong>, qui exigent toutes les quêtes annexes du Wall Market.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : <strong>la matéria Chakra</strong> <em>(libérer Kotch)</em> et <strong>le Cristal mystérieux</strong> <em>(coffre 22)</em>, deux détours du manoir que rien ne signale.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : les onze coffres et la matéria Prière des trois portes de Cornéo, qui exigent <strong>« La garçonne voleuse »</strong> puis <strong>« Les trésors de Cornéo »</strong>.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : la troisième porte de Cornéo, dans les égouts, qui demande d'appuyer sur un interrupteur au lieu de remonter l'échelle.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : <strong>les quatre manuscrits III</strong>, un par personnage, chacun lié à une mission annexe précise de ce chapitre.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : les vingt-deux coffres, les quatre matérias et les sept disques du chapitre.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable facile</strong> : le Disque 23 « Descendant of Shinobi », sur une petite place juste avant la gare du Secteur 5 — qu'aucune soluce de chapitre ne mentionne <em>(partie <strong>27</strong>)</em>.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le coffre de 3 Médailles Mog</strong> à la sortie des égouts.</li>
+</ul>
+<p>Partie 15 — Chapitre 15 : À la lueur du coucher de soleil</p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les neuf coffres du chapitre. Le plateau effondré du Secteur 7 n'est jamais revisitable.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la Bague magique</strong>, qui demande de lever la tête et d'utiliser le grappin à la tour centrale.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : le Disque 5 « Lucking in the Darkness ».</li>
+</ul>
+<p><strong>Partie 16 — Chapitre 16 : Infiltration de la tour Shinra</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria PV augmentés</strong> des conduits d'aération.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : les onze coffres du chapitre. La tour Shinra reste accessible au chapitre 17, mais les étages inférieurs ne sont jamais revisités.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Disque 31 « Scarlet's Theme »</strong>, au jukebox du 63e étage.</li>
+</ul>
+<p><strong>Partie 17 — Chapitre 17 : Échapper au chaos</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : <strong>la matéria Vénéfice</strong> <em>(niveau 1)</em> et <strong>la matéria Chronomancie</strong> <em>(terminal central)</em>.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquables</strong> : les dix-huit coffres du chapitre. Le Barillet n'est jamais revisitable, et chaque groupe ne repasse pas par les zones de l'autre.</li>
+</ul>
+<p><strong>Partie 22 — Les invocations</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable définitif</strong> : <strong>Chocobo et Mog</strong>. Elle demande de ne pas prendre l'ascenseur au chapitre 6 et de réussir un défi d'une minute <em>(partie <strong>06</strong>)</em>.</li>
+</ul>
+<p><strong>Partie 30 — INTERmission — Chapitre 1 : L'émissaire de Wutai</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : le coffre 01 et la matéria PV augmentés de l'entrepôt abandonné, si tu sors sans faire descendre l'ascenseur au Shuriken.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Affinité élémentaire</strong> de la plateforme centrale de la section 1 de l'entrepôt.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Prière</strong>, dans la partie opposée au tapis roulant de la section 3.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>les deux matérias Chakra</strong> <em>(pension de Marle et usine de Talagger)</em>.</li>
+</ul>
+<p>Partie 31 — INTERmission — Chapitre 2 : Le vol de la Matéria ultime</p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>le Ruban</strong> <em>(coffre 01)</em>, qui demande de retourner au terminal et de grimper par les tuyaux du côté gauche.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : les trois matérias de la section du compresseur <em>(Boulet de canon Shinobi, Garde renforcée, Expertise technique)</em>, si tu n'actives pas le terminal.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria Chronomancie</strong>, en hauteur à gauche de la colonne du terminal central.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : <strong>la matéria PC augmentés</strong> de la salle de culture des Matérias.</li>
+<li class="tache"><input type="checkbox"> <strong>Manquable</strong> : l'histoire annexe « La salle mystère », derrière la porte qu'ouvre le terminal central <em>(partie <strong>32</strong>)</em>.</li>
+</ul>
+<p><strong>Partie 32 — INTERmission — Fort Condor, annexes et armes</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Aucun trophée du DLC n'est manquable</strong> : une fois le DLC fini, tu peux recharger les deux chapitres à volonté.</li>
+</ul>
+<h3 id="les-points-de-non-retour-partie-par-partie">Les points de non-retour, partie par partie</h3>
+<p class="alerte manquable">⏳ Un « point de non-retour » est un passage après lequel on ne peut plus revenir en arrière dans le chapitre. Dans ce jeu, presque chaque zone se referme derrière toi — mais la sélection de chapitres permet toujours de refaire un chapitre entier <em>(partie <strong>28</strong>)</em>.</p>
+<p><strong>Partie 01 — Chapitre 1 : Sabotage du réacteur Mako n°1</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Pas de point de non-retour interne</strong> : tout le chapitre est linéaire et la fuite emprunte le même chemin.</li>
+</ul>
+<p><strong>Partie 02 — Chapitre 2 : Rencontres déterminantes</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Pas de point de non-retour interne</strong> : le chapitre est linéaire, mais <strong>chaque zone se referme derrière toi</strong> dès que tu passes aux toits ou au train.</li>
+</ul>
+<p><strong>Partie 04 — Chapitre 4 : Virée nocturne</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais l'annexe 7-6 et le quartier résidentiel Shinra ne sont plus jamais accessibles après ce chapitre.</li>
+</ul>
+<p><strong>Partie 05 — Chapitre 5 : Suivez le chien</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais le chapitre est à sens unique du train jusqu'au monte-charge.</li>
+</ul>
+<p><strong>Partie 06 — Chapitre 6 : Les soleils des bidonvilles</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais prendre l'ascenseur principal ferme l'accès à tout le reste du chapitre.</li>
+</ul>
+<p><strong>Partie 07 — Chapitre 7 : Dans la gueule du loup</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais chaque salle de terminaux se referme derrière toi : une carte oubliée est perdue.</li>
+</ul>
+<p><strong>Partie 08 — Chapitre 8 : Les fleurs des retrouvailles</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Pas de point de non-retour interne</strong>, mais <strong>la fuite nocturne clôt le chapitre</strong> : tout ce qui n'est pas fait avant est reporté.</li>
+</ul>
+<p><strong>Partie 09 — Chapitre 9 : Le quartier des désirs</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais l'audition de Cornéo clôt le chapitre.</li>
+</ul>
+<p><strong>Partie 10 — Chapitre 10 : Dans l'obscurité des égouts</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais le chapitre est à sens unique : chaque écluse franchie se referme.</li>
+</ul>
+<p><strong>Partie 11 — Chapitre 11 : D'espiègles fantômes</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais chaque zone du cimetière se referme derrière toi.</li>
+</ul>
+<p><strong>Partie 12 — Chapitre 12 : La lutte désespérée d'Avalanche</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais le chapitre est intégralement à sens unique : chaque palier du pilier se referme.</li>
+</ul>
+<p><strong>Partie 13 — Chapitre 13 : Un monde en ruine</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais la chute dans le trou coupe définitivement l'accès à la surface : fais tes achats au Parc vert avant d'y descendre.</li>
+</ul>
+<p><strong>Partie 14 — Chapitre 14 : En quête d'espoir</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais le mur de la zone de développement urbain est le vrai point de non-retour du contenu annexe du jeu.</li>
+</ul>
+<p>Partie 15 — Chapitre 15 : À la lueur du coucher de soleil</p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais l'ascension est intégralement à sens unique.</li>
+</ul>
+<p><strong>Partie 16 — Chapitre 16 : Infiltration de la tour Shinra</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais chaque étage se referme une fois monté : fais tout avant de prendre les escaliers suivants.</li>
+</ul>
+<p><strong>Partie 17 — Chapitre 17 : Échapper au chaos</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour interne, mais l'alternance entre les deux groupes est à sens unique : une zone quittée ne se revisite pas.</li>
+</ul>
+<p><strong>Partie 18 — Chapitre 18 : Singularité du destin</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Pas de point de non-retour à proprement parler : une fois le jeu terminé, la sélection de chapitres permet de refaire n'importe quel chapitre <em>(partie <strong>28</strong>)</em>.</li>
+</ul>
+<p><strong>Partie 30 — INTERmission — Chapitre 1 : L'émissaire de Wutai</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Point de non-retour</strong> : partir pour la gare termine le chapitre 1. Fais toutes les activités annexes avant.</li>
+</ul>
+<p>Partie 31 — INTERmission — Chapitre 2 : Le vol de la Matéria ultime</p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Point de non-retour</strong> : franchir la porte de l'« Affrontement fatidique » enchaîne Scarlet, le Projecteur et Nero. <strong>Prépare-toi avant.</strong></li>
+</ul>
+<h3 id="tout-ce-qui-reste-a-verifier-en-jeu">Tout ce qui reste « à vérifier en jeu »</h3>
+<p class="alerte manquable">⏳ Voici les <strong>106</strong> points que je n'ai pas pu recouper par la recherche web. Ils sont rapportés fidèlement dans le guide, mais une seule source les donne, ou aucune ne les donne tout à fait. Coche-les au fil de ta partie : ce sont les seuls endroits où ce guide peut se tromper.</p>
+<p><strong>Partie 00 — Introduction</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Toutes les informations marquées « <span class="a-verifier">⚠️ à vérifier en jeu</span> » sont rassemblées dans la partie <strong>99</strong>.</li>
+</ul>
+<p><strong>Partie 01 — Chapitre 1 : Sabotage du réacteur Mako n°1</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le libellé « <strong>état de Lésion</strong> » employé par jeuxvideo.com pour l'état provoqué en frappant les pattes du Scorpion gardien.</li>
+</ul>
+<p><strong>Partie 02 — Chapitre 2 : Rencontres déterminantes</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : l'<strong>effet exact du Poignet de force</strong>, que les sources citent sans détailler son bonus.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la graphie <strong>Super Potion</strong> contre <strong>Super-Potion</strong>, les deux formes apparaissant sur la même page de jeuxvideo.com.</li>
+</ul>
+<p><strong>Partie 03 — Chapitre 3 : Le Septième Ciel</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les récompenses des missions « Les rats géants », <strong>« Les trois chats perdus »</strong> et <strong>« Le chien de garde »</strong>, que les sources ne détaillent pas.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les lots des trois paliers de Katie <em>(10, 20 et 50 monstres)</em>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong>Bracelet astral</strong>, du <strong>Croissant de Lune porte-bonheur</strong> et de la <strong>matéria Auto-Soin</strong>.</li>
+<li class="tache"><input type="checkbox"> <strong>Nom de zone à vérifier en jeu</strong> : « <strong>avenue des Débris</strong> » <em>(nom de zone chez jeuxvideo.com)</em> contre « <strong>allée des débris</strong> » <em>(déroulé de jeuxvideo.com et FFRing)</em>.</li>
+</ul>
+<p><strong>Partie 04 — Chapitre 4 : Virée nocturne</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le chapitre exact où compte la tentative aux fléchettes — jeuxvideo.com dit <strong>chapitre 3</strong>, FFRing propose de tenter <strong>au chapitre 4</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le libellé « <strong>mode Bravoure</strong> » pour la posture offensive de Cloud.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> des matérias <strong>Protection</strong> et <strong>Chance augmentée</strong>.</li>
+</ul>
+<p><strong>Partie 05 — Chapitre 5 : Suivez le chien</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le nom de l'équipement du coffre 08. jeuxvideo.com écrit « Protection en cuir » sur sa page de coffres et « Protection de Cuir » dans son déroulé ; FFRing écrit « Bracelet en Cuir ». Le guide retient Protection en cuir.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le nom des insectes du passage de liaison. jeuxvideo.com écrit « Scorpimante » et « Scorpimante Reine » ; FFRing écrit « Scorpiomantes ». <strong>Le guide retient Scorpimante.</strong></li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> de la <strong>Protection en cuir</strong> et du <strong>Pendentif étoilé</strong>.</li>
+</ul>
+<p><strong>Partie 06 — Chapitre 6 : Les soleils des bidonvilles</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la position du <strong>coffre 01</strong> — « à gauche » dans le déroulé de jeuxvideo.com, « à droite » sur sa page de coffres et chez FFRing. <strong>Le guide retient la droite.</strong></li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong>Bracelet de magie</strong> et du <strong>Produit toxique</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le nom des insectes, <strong>Scorpimante</strong> <em>(jeuxvideo.com)</em> contre <strong>Scorpiomante</strong> <em>(FFRing)</em> — même arbitrage qu'au chapitre 5.</li>
+</ul>
+<p><strong>Partie 07 — Chapitre 7 : Dans la gueule du loup</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la liste exacte de ce que contient la salle du rebut — les sources citent <strong>Cœurs d'IA</strong>, <strong>Gigabombes</strong> et « autres éléments », sans inventaire complet.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong>Gilet pare-balle</strong> et de l'<strong>Écran d'écho</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la liste complète des armes de l'Aerodestructeur qu'on peut saboter — les sources nomment <strong>l'unité M</strong>, <strong>les Cœurs d'IA</strong> et <strong>les Gigabombes</strong>, et mentionnent d'autres choix sans les détailler.</li>
+</ul>
+<p><strong>Partie 08 — Chapitre 8 : Les fleurs des retrouvailles</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>récompenses de « Machines déréglées »</strong>, <strong>« Une preuve de bravoure »</strong>, <strong>« L'ange gardien »</strong> et « Contre un instant de recueillement », que les sources ne détaillent pas.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong>Talisman</strong>, du <strong>Bracelet ténébreux</strong>, du <strong>Collier fait main</strong>, du <strong>Bracelet en mithril</strong>, de la <strong>Boisson de vitesse</strong> et de la <strong>matéria Chakra</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la position exacte de l'échelle qui termine <strong>« La porte bloquée »</strong> — jeuxvideo.com dit « tout droit en face de vous » aux Collines des Boulons et des Écrous, FFRing dit « au nord-ouest de la Zone Abandonnée – Rue de derrière ».</li>
+</ul>
+<p><strong>Partie 09 — Chapitre 9 : Le quartier des désirs</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la quatrième couleur de fenêtre de la Maison Infernale — FFRing dit « bleu pour la Foudre », jeuxvideo.com énumère « rouge, blanc, vert et jaune ».</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la <strong>position du coffre 04</strong> — jeuxvideo.com dit « à droite de la zone » dans son déroulé et « sur la gauche de la seconde grue-robot » sur sa page de coffres.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les récompenses de « Le prix du vol » et <strong>« Contre-attaque »</strong>. Celle de « Un corps explosif » est le Bâton magique <em>(partie <strong>21</strong>)</em>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong>Pendentif étoilé</strong>, du <strong>Bandeau</strong>, de l'<strong class="objet">Anneau de furie</strong>, de la <strong>Ceinture de Champion</strong>, de la <strong>Pièce de Chocobo Sam</strong> et des matérias <strong>Contrainte</strong> et <strong>Chance augmentée</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : l'effet de la boisson suspecte de Johnny au Colisée — les sources l'ont bue sans constater d'effet.</li>
+</ul>
+<p><strong>Partie 10 — Chapitre 10 : Dans l'obscurité des égouts</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les points cardinaux des deux opérations de la galerie — jeuxvideo.com parle de « l'interrupteur sur la droite » puis de « l'autre salle » ; FFRing précise « côté Ouest » pour les 800 gils et « côté Est » pour la clé.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le <strong>nom de la matéria</strong> — jeuxvideo.com écrit « Résistance aux Altération » au singulier dans son déroulé et « Résistance aux Altérations » sur sa page de coffres. Le guide retient le pluriel.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> de la <strong>Boucle spiritiste</strong>, de la <strong>Sphère de gravité</strong> et de la <strong>matéria Vénéfice</strong>.</li>
+</ul>
+<p><strong>Partie 11 — Chapitre 11 : D'espiègles fantômes</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le nom de l'arme du coffre 01 — jeuxvideo.com écrit « Bâton Mithril » sur sa page de coffres et « Bâton en Mithril » dans son déroulé ; FFRing écrit « Baton de Mithril ». Le guide retient Bâton Mithril.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le nom de la compétence d'Aerith qui permet de lancer deux fois un sort de suite. FFRing l'appelle « Sceau Sacré », jeuxvideo.com « le Sceau d'Aerith ». <strong>Le guide retient Sceau Sacré partout.</strong></li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : l'effet exact du Bracelet gothique.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les faiblesses des Fantômes, des Rats-Garous et du Lézard volant, que les sources ne détaillent pas.</li>
+</ul>
+<p><strong>Partie 12 — Chapitre 12 : La lutte désespérée d'Avalanche</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Divergence de source</strong> : FFRing documente un coffre au niveau 4 (1 Éther) que la page de coffres de jeuxvideo.com ne liste pas ; jeuxvideo.com n'en compte que deux pour tout le chapitre. ⚠️ <strong>à vérifier en jeu.</strong></li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la faiblesse exacte des Créatures du Néant et des Créatures inconnues, que les sources ne détaillent pas pour ce chapitre.</li>
+</ul>
+<p><strong>Partie 13 — Chapitre 13 : Un monde en ruine</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> Divergence de source sur les cages du niveau -2 : jeuxvideo.com place la matéria Glace dans la cage de droite et le Turbo Éther dans celle de gauche ; FFRing dit l'inverse. <strong>Ouvre les deux.</strong> ⚠️ <strong>à vérifier en jeu.</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Divergence de nommage</strong> : FFRing écrit « Matéria Association Élémentaire » dans ce chapitre et « Matéria Affinité Élémentaire » au chapitre 6. Le guide retient Affinité élémentaire partout. ⚠️ <strong>à vérifier en jeu.</strong></li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> de l'<strong>Amulette d'invocateur</strong>, du <strong>Bracelet bouclier</strong> et du <strong>Ras-de-cou de soigneur</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la <strong>faiblesse du Dogue sanglant</strong>.</li>
+</ul>
+<p><strong>Partie 14 — Chapitre 14 : En quête d'espoir</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le <strong>nom du coffre 02</strong> — jeuxvideo.com écrit « Bracelet de Sorcier », FFRing « Bracelet d'Invocateur ».</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le <strong>nom du Béhémoth</strong> — jeuxvideo.com écrit « Behemot Type Zéro » sur sa page des armes, FFRing « Béhémoth de Type-0 » et « Béhémoth de Type Zéro ».</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les faiblesses du Tomberry, du Béhémoth de Type-0, de la Wyverne tigrée, des Trypapollis et des Princes Sahuagin, que les sources ne détaillent pas.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> de la <strong>matéria Marcheur invétéré</strong>, de la <strong>matéria Chronomancie</strong>, de la <strong>matéria Prière</strong>, de l'<strong>Amulette d'invocateur</strong>, du <strong>Diadème</strong>, de la <strong>Bague batracienne</strong>, de la <strong>Paire de bottes protectrices</strong>, du <strong>Cristal mystérieux</strong> et de la <strong>Lettre de l'Ange gardien</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : quel personnage t'attend sur la petite colline au début du chapitre — cela dépend de tous tes choix de dialogues depuis le début de l'aventure.</li>
+</ul>
+<p>Partie 15 — Chapitre 15 : À la lueur du coucher de soleil</p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Divergence de source</strong> : FFRing documente la Bague magique, que la page de coffres de jeuxvideo.com ne liste pas ; jeuxvideo.com n'en compte que huit pour le chapitre. ⚠️ <strong>à vérifier en jeu.</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Divergence de nommage</strong> : la page de boss de jeuxvideo.com s'intitule « Gyrocanonnier » mais parle d'« Hélimitrailleuse » dans son texte <em>(url <code>helimitrailleuse</code>)</em> ; FFRing écrit « Gyrocannonnier » et « Gyrocanonnier ». <strong>Le guide retient Gyrocanonnier</strong>, et marque le nom « à vérifier en jeu ».</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong>Bracelet de magicien</strong> et de la <strong>Bague magique</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la <strong>faiblesse de l'Aérocombattant spécial</strong>.</li>
+</ul>
+<p><strong>Partie 16 — Chapitre 16 : Infiltration de la tour Shinra</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Erreur de numérotation de source</strong> : la page de coffres de jeuxvideo.com numérote deux coffres « 09 » au 65e étage, ce qui fait qu'elle annonce onze coffres mais en décrit douze lignes. Le guide les distingue explicitement. ⚠️ <strong>à vérifier en jeu.</strong></li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong>Bracelet en métal lourd</strong> et de la <strong>Boisson de vitesse</strong>.</li>
+</ul>
+<p><strong>Partie 17 — Chapitre 17 : Échapper au chaos</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong>Bracelet de puissance</strong>, du <strong>Bracelet mystique</strong>, du <strong>Bracelet connectif</strong> et de la <strong>Bague batracienne</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les faiblesses du Zenene, du Lacérateur et de la Capsule cérébrale.</li>
+<li class="tache"><input type="checkbox"> <strong>Divergence de nommage</strong> : jeuxvideo.com écrit « Tenebro » sans accent. <strong>Le guide retient Ténébro</strong>, et marque le nom « à vérifier en jeu ».</li>
+</ul>
+<p><strong>Partie 18 — Chapitre 18 : Singularité du destin</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le nom de la matéria qui donne Hâte — <strong>jeuxvideo.com écrit « Chronomancie »</strong>, <strong>FFRing « Matéria Temps »</strong>. <strong>Le guide retient Chronomancie.</strong></li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le nom exact du gigantesque véhicule de la fin de l'autoroute, que ni jeuxvideo.com ni FFRing ne nomment.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la graphie du nom du dernier boss — jeuxvideo.com écrit « Sephiroth », FFRing « Séphiroth ». <strong>Le guide retient Séphiroth</strong>, forme accentuée française.</li>
+</ul>
+<p><strong>Partie 19 — Le combat</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Divergence de nom majeure</strong> : l'état intermédiaire s'appelle « Lésion » chez jeuxvideo.com et « Fragilité » chez ActuGaming. <strong>Le guide retient Lésion</strong> et emploie cette forme partout. ⚠️ <strong>à vérifier en jeu.</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Divergence de nom</strong> : la posture offensive de Cloud s'appelle « Bravoure du soldat » chez ActuGaming et sur le forum de jeuxvideo.com, <strong>« mode Bravoure » chez FFRing</strong>. Le guide retient Bravoure du soldat. ⚠️ <strong>à vérifier en jeu.</strong></li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le bonus de dégâts exact de l'état de Choc. Millenium annonce +160 %, mais d'après la démo du jeu.</li>
+</ul>
+<p><strong>Partie 20 — Les matérias</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la couleur exacte de chaque matéria. La source consultée les classe par fonction, pas par couleur ; le guide reprend les couleurs mentionnées dans les chapitres quand elles le sont <em>(Analyse jaune, Soins verte, Affinité élémentaire bleue, PV augmentés violette)</em>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le niveau 4 de Magie augmentée, que la source indique à « 35000 PC » là où les autres paliers suivent la progression <strong>500 / 1 000 / 3 500 / 5 000</strong>. C'est très probablement une coquille pour 3 500 PC.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le nom « Avantage de Choc ». Le guide de <em>Final Fantasy VII Rebirth</em> du même dossier emploie « Avantage Choc » — deux jeux différents, deux libellés possibles.</li>
+</ul>
+<p><strong>Partie 21 — Les armes et les manuscrits</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : <strong>les compétences d'armes d'Aerith</strong>, qu'aucune source consultée ne nomme.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la compétence de base d'Aerith, non documentée.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la numérotation des manuscrits d'Aerith. La source place le manuscrit du simulateur en XI pour elle et en XIII pour les trois autres.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : l'existence et l'emplacement du Lamipède, qui donne le <strong>Grimoire XII</strong> au chapitre 17 en Difficile, et qu'aucune partie du guide n'a croisé.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les liaisons exactes des 4 emplacements du Pulsateur, que la source note simplement « (4) ».</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : à quel chapitre chaque combat « contre les animaux sauvages » du Colisée devient disponible. La source situe celui de Cloud au chapitre 9 et ceux de Barret et Tifa au chapitre 14.</li>
+</ul>
+<p><strong>Partie 22 — Les invocations</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : l'emplacement du Module de Transfert, recommandé contre Leviathan et contre Bahamut, et qu'aucune source consultée ne situe.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : l'effet et le coût de l'attaque Impact de Stalagmite de Shiva, et les deux attaques de Bahamut, de <strong>Carbuncle</strong> et du <strong>Poussin Chocobo</strong>.</li>
+<li class="tache"><input type="checkbox"> <strong>Divergence de source</strong> : la page des rapports de Chadley dit que le rapport 18 demande « 12 Matérias au niveau maximum » ; la page de Bahamut précise « les 12 matérias vertes ». ⚠️ <strong>à vérifier en jeu.</strong></li>
+</ul>
+<p><strong>Partie 23 — Les quêtes annexes et l'affinité</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le fonctionnement complet du système d'affinité. Les sources françaises consultées ne documentent que le fait que les choix comptent, pas le barème ni la liste des dialogues concernés.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : quel personnage t'attend sur la colline au début du chapitre 14, et quels dialogues le déterminent.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les récompenses de sept missions annexes, qu'aucune source consultée ne donne.</li>
+</ul>
+<p>Partie 24 — Les rapports de Chadley et le simulateur Shinra</p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong>Bracelet engrenage</strong>, du <strong>Bracelet Suprême</strong>, du <strong>Bracelet Runique</strong>, du <strong>Bracelet Géométrique</strong>, de la <strong>matéria Gain de Gil</strong>, de la <strong>matéria Gain d'XP</strong> et du <strong class="objet">Götterdämmerung</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le nombre de participants de « Duo contre des Duos Coriaces », que la source annonce à 3 malgré son nom.</li>
+</ul>
+<p><strong>Partie 25 — Le Colisée de Cornéo</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong>Pendentif de bonne vision</strong>, du <strong>Jeu de tarot</strong> et de l'<strong>Amulette Mog</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : à partir de quel chapitre chaque combat devient disponible. RPG Soluce situe la Transcendance de Cloud au chapitre 9 et celles de Barret et Tifa au chapitre 14 <em>(partie <strong>21</strong>)</em>, alors que jeuxvideo.com liste les dix combats sans préciser de chapitre.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la <strong>faiblesse du Lézard Volant</strong>, du round 5 des combats une étoile.</li>
+<li class="tache"><input type="checkbox"> Divergences de nommage relevées dans la page du Colisée : <strong>« Tétarosor Roi »</strong> <em>(combat quatre étoiles)</em> contre <strong>« Tetarosaur »</strong> <em>(combat une étoile)</em> et <strong>« Tetarosor Roi »</strong> <em>(FFRing, chapitre 8)</em> ; <strong>« Dynnelaugh »</strong> contre <strong>« Dynneglaugh »</strong> <em>(partie <strong>03</strong>)</em> ; <strong>« Crisphée »</strong> contre <strong>« Cripshé »</strong> <em>(partie <strong>11</strong>)</em> ; <strong>« Frappe de Dauphin »</strong> contre <strong>« Frappe de Dauphin »</strong> <em>(page des armes de Tifa)</em>. <strong>Toutes à vérifier en jeu.</strong></li>
+</ul>
+<p><strong>Partie 26 — Les mini-jeux</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le nom français de l'objet du palier 30 000 points de Brise-boîtes, que les sources anglaises appellent « Spectral Cogwheel » et qu'aucune source française ne nomme.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les paliers du mode difficile de Brise-boîtes.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le nombre de duels de tractions et leurs paliers.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la condition exacte du trophée « Danseur étoile ».</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le prix du Mortier Mog à la boutique Mog <em>(partie <strong>14</strong>)</em>.</li>
+</ul>
+<p><strong>Partie 27 — Les objets à collectionner</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : la condition exacte du n°26. La page des morceaux dit « après vous être entraîné à la danse » ; FFRing parle d'un bon score à la performance <em>(partie <strong>09</strong>)</em>. <strong>Fais les deux.</strong></li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le numéro du disque « Stamp ». La page des morceaux dit n°28, FFRing n°24 — et le n°24 est « Wutai » selon la même page. <strong>Le guide retient 28.</strong></li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le titre du disque n°05. « Lurking in the Darkness » (page des morceaux) contre « Lucking in the Darkness » (FFRing).</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le chapitre du disque n°04. jeuxvideo.com le classe au chapitre 3, FFRing au chapitre 4. C'est la même échoppe de la gare du Secteur 7.</li>
+</ul>
+<p><strong>Partie 28 — Après le générique</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : si la sélection de chapitres permet de changer la difficulté chapitre par chapitre, ou s'il faut refaire toute la partie en Difficile.</li>
+</ul>
+<p><strong>Partie 29 — Astuces, trophées et secrets</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : si « Meilleur pote de Johnny » dépend des choix de quêtes du chapitre 9, <strong>où les quêtes s'excluent</strong>.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : le fonctionnement exact de PC augmentés — elle ne double les PC que d'une seule matéria, et le mécanisme de l'emplacement lié reste à confirmer.</li>
+</ul>
+<p><strong>Partie 30 — INTERmission — Chapitre 1 : L'émissaire de Wutai</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>noms français à vérifier en jeu</strong> : <strong>Caserne Anti-émeute (Défense)</strong>, <strong>Nettoyeur (Balistique)</strong>, <strong>Attaque Anticipée</strong>, <strong>Plateau de célérité 3</strong>, <strong>Tresse de Fraternité</strong> — formes données par jeuxvideo.com, non recoupées.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les effets exacts de la Tresse de Fraternité et du Plateau de célérité 3.</li>
+</ul>
+<p>Partie 31 — INTERmission — Chapitre 2 : Le vol de la Matéria ultime</p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Divergence de nommage</strong> : le combat contre Scarlet est appelé « <strong>Jument écarlate</strong> » par un guide de trophées français <em>(partie <strong>32</strong>)</em>. ⚠️ <strong>à vérifier en jeu.</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Divergence relevée</strong> : les numéros d'étage de la page des coffres se contredisent <em>(« Étage 14 » annoncé, « étage 15 » décrit)</em>. Fie-toi aux noms de salles. ⚠️ <strong>à vérifier en jeu.</strong></li>
+<li class="tache"><input type="checkbox"> <strong>noms français à vérifier en jeu</strong> : <strong>Boulet de canon Shinobi</strong>, <strong>Expertise technique</strong>, <strong>Bracelet de croissance magique</strong>, Ras de cou de soigneur, <strong>le Projecteur</strong>, <strong>l'Abomination</strong>, <strong>Vigivrilles</strong> — formes données par jeuxvideo.com, non recoupées.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : les intitulés des choix d'ennemis du monte-charge.</li>
+<li class="tache"><input type="checkbox"> ⚠️ <strong>à vérifier en jeu</strong> : l'effet exact du Ruban, du Bracelet de croissance magique, du Ras de cou de soigneur et du Boulet de canon Shinobi.</li>
+</ul>
+<p><strong>Partie 32 — INTERmission — Fort Condor, annexes et armes</strong></p>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Divergence de nommage</strong> : le boss du chapitre 2 est appelé « Jument écarlate » par un guide de trophées français, là où jeuxvideo.com parle simplement de Scarlet <em>(partie <strong>31</strong>)</em>. Il s'agit probablement de la machine qu'elle pilote. ⚠️ <strong>à vérifier en jeu.</strong></li>
+<li class="tache"><input type="checkbox"> <strong>noms français à vérifier en jeu</strong> : <strong>Bracelet démoniaque</strong>, <strong>Puce oni rouge</strong>, <strong>Bracelet mystique</strong>, <strong>Garde antiémeute E</strong>, <strong>Rage déferlante</strong>, Gain de Gils / Gain d'expérience du Brise-boîtes.</li>
+</ul>
+<h2 id="quetes-et-lieux-34" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="ou-se-trouve-quoi-en-un-tableau">Où se trouve quoi, en un tableau</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'il contient</th>
+<th>Chapitres</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Réacteur Mako n°1</strong></td>
+<td><strong>10 coffres</strong>, <strong>le Scorpion gardien</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Secteur 8 et les toits</strong></td>
+<td><strong>12 coffres</strong>, <strong>2 matérias</strong>, <strong>le Capitaine Konrad</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>Bidonville du Secteur 7</strong></td>
+<td><strong>6 missions annexes</strong>, <strong>le jukebox</strong>, <strong>les fléchettes</strong>, <strong>3 disques</strong></td>
+<td><strong>3</strong>, <strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>Quartier résidentiel Shinra et l'annexe 7-6</strong></td>
+<td>Plus jamais accessibles après le chapitre 4</td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td><strong>Tunnel Spirale</strong></td>
+<td><strong>8 coffres</strong>, <strong>le Scarabombardier</strong></td>
+<td><strong>5</strong></td>
+</tr>
+<tr>
+<td><strong>Plateau du Secteur 6</strong></td>
+<td><strong>La matéria Chocobo et Mog</strong>, <strong>Affinité élémentaire</strong>, <strong>PM augmentés</strong></td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>Réacteur Mako n°5</strong></td>
+<td><strong>Les 6 cartes d'accès</strong>, <strong>l'Aerodestructeur</strong></td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td><strong>Bidonville du Secteur 5</strong></td>
+<td><strong>6 missions + 2 histoires annexes</strong>, Shiva, <strong>l'église</strong></td>
+<td><strong>8</strong>, <strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Wall Market</strong></td>
+<td>Le Colisée de Cornéo, <strong>le Honeybee Inn</strong>, Brise-boîtes, <strong>7 disques</strong></td>
+<td><strong>9</strong>, <strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Égouts</strong></td>
+<td>Apsu, <strong>le Raz d'Égout</strong></td>
+<td><strong>10</strong>, <strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Cimetière de trains</strong></td>
+<td>Éligor et le Bâton de frappe</td>
+<td><strong>11</strong></td>
+</tr>
+<tr>
+<td><strong>Pilier du Secteur 7</strong></td>
+<td>Reno et Rude</td>
+<td><strong>12</strong></td>
+</tr>
+<tr>
+<td><strong>Secteur 7 détruit et le Parc vert</strong></td>
+<td><strong>Le Gros canon</strong></td>
+<td><strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>Le manoir Cornéo</strong></td>
+<td><strong>L'Anneau de furie</strong> <em>(coffre 16)</em>, <strong>les 3 portes des trésors</strong></td>
+<td><strong>9</strong>, <strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Plaque du Secteur 6</strong></td>
+<td>Le Gyrocanonnier</td>
+<td><strong>15</strong></td>
+</tr>
+<tr>
+<td><strong>Tour Shinra, étages bas</strong></td>
+<td><strong>Hart, les Gants majestueux et le Pulsateur</strong> ; <strong>le simulateur</strong></td>
+<td><strong>16</strong></td>
+</tr>
+<tr>
+<td><strong>Tour Shinra, laboratoires</strong></td>
+<td>Le second simulateur, <strong>18 coffres</strong>, <strong>3 boss</strong></td>
+<td><strong>17</strong></td>
+</tr>
+<tr>
+<td><strong>L'autoroute et au-delà</strong></td>
+<td>Le Fileur Héraut et Séphiroth</td>
+<td><strong>18</strong></td>
+</tr>
+<tr>
+<td><strong>Bidonville du Secteur 7 (Yuffie)</strong></td>
+<td>Fort Condor, <strong>les 6 prospectus</strong>, Ramuh</td>
+<td><strong>INTERmission 1</strong></td>
+</tr>
+<tr>
+<td><strong>Département de l'Armement</strong></td>
+<td>Le Brise-boîtes Shinra, <strong>le Ruban</strong>, <strong>3 boss</strong></td>
+<td><strong>INTERmission 2</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-pnj-qui-donnent-quelque-chose">Les PNJ qui donnent quelque chose</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Qui</th>
+<th>Ce qu'il donne</th>
+<th>Partie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Chadley</strong></td>
+<td><strong>Les 20 rapports et leurs matérias</strong>, <strong>le simulateur</strong> ; et le champion de Fort Condor dans le DLC</td>
+<td><strong>24</strong>, <strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Hart</strong></td>
+<td><strong>Les Gants majestueux et le Pulsateur</strong> contre <strong>10 000 gils</strong></td>
+<td><strong>16</strong></td>
+</tr>
+<tr>
+<td><strong>Madame M</strong></td>
+<td><strong>« Le prix du vol » et « Contre-attaque »</strong> → <strong>la robe blanche</strong></td>
+<td><strong>09</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Chocobo Sam</strong></td>
+<td>« La nuit est à nous » et « Un corps explosif » → <strong>la robe bleue</strong></td>
+<td><strong>09</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Johnny</strong></td>
+<td>Un trophée dépend de toutes ses apparitions</td>
+<td><strong>29</strong></td>
+</tr>
+<tr>
+<td><strong>Kotch</strong></td>
+<td><strong>Une matéria Chakra</strong></td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Polk</strong></td>
+<td>Fort Condor</td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>L'Homme Tortue</strong></td>
+<td>La boutique à Jetons de Condor et le plateau de Maître</td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>La garçonne voleuse</strong></td>
+<td>La Note sur les Caches et la Clé des Salles aux Trésors de Cornéo</td>
+<td><strong>14</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-34" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<h3 id="les-objets-quon-ne-peut-obtenir-quune-seule-fois-et-nulle-part-ailleurs">Les objets qu'on ne peut obtenir qu'une seule fois, et nulle part ailleurs</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bâton de frappe</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Aerith</span></td>
+<td>À voler à Éligor avec la matéria Voler, chapitre 11</td>
+<td><strong>Aucune autre source dans le jeu</strong> <em>(partie <strong>11</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Matéria Chocobo et Mog</strong></td>
+<td><span class="badge neutre">Matéria rouge</span></td>
+<td>Défi d'une minute du chapitre 6</td>
+<td><strong>Une invocation définitivement manquable</strong> <em>(partie <strong>06</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Gants majestueux</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Tifa</span></td>
+<td><strong>Hart, chapitre 16, 10 000 gils</strong></td>
+<td>⏳ <strong>Manquable si tu ne paies pas</strong> <em>(partie <strong>16</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Pulsateur</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td><strong>Hart, chapitre 16, 10 000 gils</strong></td>
+<td><strong>Idem</strong> <em>(partie <strong>16</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Gros canon</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Barret</span></td>
+<td>Le Parc vert, chapitre 13</td>
+<td>⏳ <strong>Manquable</strong> <em>(partie <strong>13</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Bâton en métal renforcé</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td><strong>Coffre 01 du chapitre 17</strong></td>
+<td>⏳ <strong>Manquable</strong> <em>(partie <strong>17</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Lame jumelée</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cloud</span></td>
+<td><strong>Coffre 06 du chapitre 17</strong></td>
+<td>⏳ <strong>Manquable</strong> <em>(partie <strong>17</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Anneau de furie</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td><strong>Coffre 16 du manoir Cornéo</strong>, <strong>sous l'escalier du hall central</strong></td>
+<td><strong>Il en faut trois pour Weiss</strong> ; le coffre se renouvelle en rechargeant le chapitre <em>(parties <strong>09</strong> et <strong>32</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Götterdämmerung</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td><strong>« Trio contre Top Secret »</strong>, mode Difficile</td>
+<td>Jauge de Transcendance pleine en début de combat <em>(partie <strong>24</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Bahamut</strong></td>
+<td><span class="badge neutre">Matéria rouge</span></td>
+<td><strong>Rapport 20 de Chadley</strong></td>
+<td><strong>La dernière invocation</strong> <em>(partie <strong>22</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Matéria PC augmentés</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td><strong>Marcheur invétéré après 5 000 pas</strong> ; <strong>aussi dans INTERmission</strong></td>
+<td><strong>Double les PC d'une matéria</strong> <em>(parties <strong>20</strong> et <strong>31</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Technique ennemie « Mauvaise haleine »</strong></td>
+<td><span class="badge invoc">Technique</span></td>
+<td><strong>Le Morbol</strong>, simulateur, mode Difficile</td>
+<td><strong>La 4e des 4 techniques</strong> <em>(partie <strong>20</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Ruban</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td><strong>Coffre 01 d'INTERmission, chapitre 2</strong></td>
+<td><strong>L'accessoire légendaire de la série</strong> <em>(partie <strong>31</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Ramuh</strong></td>
+<td><span class="badge neutre">Matéria rouge</span></td>
+<td>Le simulateur de Chadley, INTERmission</td>
+<td><strong>La seule invocation du DLC</strong> <em>(partie <strong>32</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="lindex-alphabetique-des-objets-uniques">L'index alphabétique des objets uniques</h3>
+<p>Armes, armures, accessoires, matérias, objets clés, techniques et aptitudes, avec la ou les parties où ils sont décrits. Les consommables et l'argent ne sont pas repris.</p>
+<p>Quand un objet apparaît dans deux parties, c'est soit qu'il est décrit dans son chapitre et dans la partie thématique, soit qu'il existe en deux exemplaires. Les deux cas sont précisés dans la partie concernée.</p>
+<h3 id="a">A</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Aérocombattant spécial</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Affinité élémentaire</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Aire d'effet</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Amulette d'invocateur</strong></td>
+<td><strong>13</strong>, <strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Amulette Mog</strong></td>
+<td><strong>25</strong></td>
+</tr>
+<tr>
+<td><strong>Anneau de furie</strong></td>
+<td><strong>09</strong>, <strong>29</strong>, <strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Aptitude Frôle-la-mort</strong></td>
+<td><strong>29</strong></td>
+</tr>
+<tr>
+<td><strong>Attaque Anticipée</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Avantage de Choc</strong></td>
+<td><strong>32</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="b">B</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Badge du père de Jessie</strong></td>
+<td><strong>04</strong></td>
+</tr>
+<tr>
+<td><strong>Bague batracienne</strong></td>
+<td><strong>14</strong>, <strong>17</strong></td>
+</tr>
+<tr>
+<td><strong>Bague magique</strong></td>
+<td><strong>15</strong></td>
+</tr>
+<tr>
+<td><strong>Bandeau</strong></td>
+<td><strong>09</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton de défense</strong></td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton de frappe</strong></td>
+<td><strong>11</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton du démon</strong></td>
+<td><strong>31</strong>, <strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton en argent</strong></td>
+<td><strong>08</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton en métal renforcé</strong></td>
+<td><strong>17</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton en mithril</strong></td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton ferré</strong></td>
+<td><strong>30</strong>, <strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton long</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton magique</strong></td>
+<td><strong>09</strong>, <strong>21</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Bâton Mithril</strong></td>
+<td><strong>11</strong></td>
+</tr>
+<tr>
+<td><strong>Batte cloutée</strong></td>
+<td><strong>08</strong>, <strong>21</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Boomerang</strong></td>
+<td><strong>30</strong>, <strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Boucle spiritiste</strong></td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Boucles d'oreilles d'Andi</strong></td>
+<td><strong>29</strong></td>
+</tr>
+<tr>
+<td><strong>Boulet de canon</strong></td>
+<td><strong>14</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Boulet de canon Shinobi</strong></td>
+<td><strong>31</strong></td>
+</tr>
+<tr>
+<td><strong>Bracelet de croissance magique</strong></td>
+<td><strong>31</strong></td>
+</tr>
+<tr>
+<td><strong>Bracelet démoniaque</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Bracelet mystique</strong></td>
+<td><strong>32</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="c">C</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Carte de Membre</strong></td>
+<td><strong>08</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Carte de Membre VIP</strong></td>
+<td><strong>09</strong></td>
+</tr>
+<tr>
+<td><strong>Caserne Anti-émeute</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Caserne de Grenadiers</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Ceinture de Champion</strong></td>
+<td><strong>09</strong>, <strong>26</strong></td>
+</tr>
+<tr>
+<td><strong>Chakra</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Chronomancie</strong></td>
+<td><strong>31</strong></td>
+</tr>
+<tr>
+<td><strong>Cisaille atomique</strong></td>
+<td><strong>14</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Clé de l'usine</strong></td>
+<td><strong>03</strong></td>
+</tr>
+<tr>
+<td><strong>Clé du Cimetière</strong></td>
+<td><strong>08</strong></td>
+</tr>
+<tr>
+<td><strong>Clé du Grand Canal</strong></td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Collier fait main</strong></td>
+<td><strong>08</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Combattant blindé</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Compétence Choc transperçant</strong></td>
+<td><strong>01</strong></td>
+</tr>
+<tr>
+<td><strong>Compétence Grosse décharge</strong></td>
+<td><strong>01</strong></td>
+</tr>
+<tr>
+<td><strong>Corne de Béhémoth et Boulet de canon</strong></td>
+<td><strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Cristal mystérieux</strong></td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Croissant de Lune porte-bonheur</strong></td>
+<td><strong>03</strong>, <strong>23</strong>, <strong>26</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="d">D</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Diadème</strong></td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 01 « The Prelude »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 02 « Bombing Mission »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 03 « Tifa's Theme »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 04 « Barret's Theme »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 05 « Lurking in the Darkness »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 06 « Let the Battles Begin »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 07 « Turk's Theme »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 08 « Under the Rotting Pizza »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 09 « The Oppressed »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 1 « The Prelude »</strong></td>
+<td><strong>03</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 10 « Honeybee Inn »</strong></td>
+<td><strong>09</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 11 « Don of the Slums »</strong></td>
+<td><strong>09</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 12 « Fight On! »</strong></td>
+<td><strong>14</strong>, <strong>25</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 13 « The Chase »</strong></td>
+<td><strong>14</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 14 « Main Theme of FFVII »</strong></td>
+<td><strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 14 « Main Theme of Final Fantasy VII »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 15 « On Our Way »</strong></td>
+<td><strong>13</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 16 « Good Night, Until Tomorrow »</strong></td>
+<td><strong>14</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 17 « Farm Boy »</strong></td>
+<td><strong>09</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 18 « Electric Chocobo »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 18 « Electric de Chocobo »</strong></td>
+<td><strong>06</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 19 « Costa del Sol »</strong></td>
+<td><strong>08</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 2 « Bombing Mission »</strong></td>
+<td><strong>07</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 20 « Gold Saucer »</strong></td>
+<td><strong>08</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 21 « Cait Sith Theme »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 21 « Cait Sith's Theme »</strong></td>
+<td><strong>08</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 22 « Cosmo Canyon »</strong></td>
+<td><strong>09</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 23 « Descendant of Shinobi »</strong></td>
+<td><strong>14</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 24 « Stamp »</strong></td>
+<td><strong>05</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 24 « Wutai »</strong></td>
+<td><strong>14</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 25 « Tango of Tears »</strong></td>
+<td><strong>08</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 26 « Let the Battle Begin! – Remake – »</strong></td>
+<td><strong>26</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 26 « Let the Battles Begin! -REMAKE- »</strong></td>
+<td><strong>09</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 27 « Hip Hop de Chocobo »</strong></td>
+<td><strong>03</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 28 « Stamp »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 29 « Midgar Blues »</strong></td>
+<td><strong>09</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 29 « The Midgard Blues »</strong></td>
+<td><strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 3 « Tifa's Theme »</strong></td>
+<td><strong>03</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 30 « Stand Up »</strong></td>
+<td><strong>14</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 31 « Scarlet's Theme »</strong></td>
+<td><strong>16</strong>, <strong>27</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 4 « Barret's Theme »</strong></td>
+<td><strong>04</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 5 « Lucking in the Darkness »</strong></td>
+<td><strong>15</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 6 « Let the Battles Begin! »</strong></td>
+<td><strong>11</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 7 « Turk's Theme »</strong></td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 8 « Under The Rotting Pizza »</strong></td>
+<td><strong>09</strong></td>
+</tr>
+<tr>
+<td><strong>Disque 9 « The Oppressed »</strong></td>
+<td><strong>10</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="e">E</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Enchaînement stimulant</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Épée broyeuse</strong></td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Épée Broyeuse améliorée</strong></td>
+<td><strong>03</strong></td>
+</tr>
+<tr>
+<td><strong>Épée brute</strong></td>
+<td><strong>09</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Expertise technique</strong></td>
+<td><strong>31</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="f">F</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Faucheur triple</strong></td>
+<td><strong>30</strong>, <strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Foudre</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Fusil d'assaut</strong></td>
+<td><strong>06</strong>, <strong>21</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="g">G</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Gain d'expérience</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Gain de Gils</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Gants à plume</strong></td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Gants de cuir</strong></td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Gants majestueux</strong></td>
+<td><strong>16</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Gants renforcés</strong></td>
+<td><strong>05</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Garde antiémeute d'élite</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Garde d'élite</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Garde renforcée</strong></td>
+<td><strong>31</strong></td>
+</tr>
+<tr>
+<td><strong>Götterdämmerung</strong></td>
+<td><strong>00</strong>, <strong>24</strong>, <strong>28</strong>, <strong>29</strong></td>
+</tr>
+<tr>
+<td><strong>Grenadier d'élite</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Griffes en mithril</strong></td>
+<td><strong>13</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Grimoire des secrets de la planète II</strong></td>
+<td><strong>25</strong></td>
+</tr>
+<tr>
+<td><strong>Grimoire des secrets de la planète III</strong></td>
+<td><strong>14</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Gros canon</strong></td>
+<td><strong>13</strong>, <strong>21</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="j">J</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jeu de tarot</strong></td>
+<td><strong>25</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="l">L</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La technique ennemie « Mauvaise haleine »</strong></td>
+<td><strong>28</strong></td>
+</tr>
+<tr>
+<td><strong>Lame d'acier</strong></td>
+<td><strong>03</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Lame jumelée</strong></td>
+<td><strong>17</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Les 4 manuscrits XIII</strong></td>
+<td><strong>24</strong>, <strong>28</strong></td>
+</tr>
+<tr>
+<td><strong>Les 4 secondes Transcendances</strong></td>
+<td><strong>00</strong></td>
+</tr>
+<tr>
+<td><strong>Les 40 manuscrits du mode Difficile</strong></td>
+<td><strong>28</strong></td>
+</tr>
+<tr>
+<td><strong>Les 9 robes d'audition</strong></td>
+<td><strong>28</strong></td>
+</tr>
+<tr>
+<td><strong>Les identifiants</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Lettre de l'Ange gardien</strong></td>
+<td><strong>29</strong></td>
+</tr>
+<tr>
+<td><strong>Lettre de l'Ange gardien et  matéria Affinité élémentaire</strong></td>
+<td><strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Livre de combat à l'épée II</strong></td>
+<td><strong>25</strong></td>
+</tr>
+<tr>
+<td><strong>Livre de combat à l'épée III</strong></td>
+<td><strong>14</strong>, <strong>23</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="m">M</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Magie augmentée</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Manuel de combat à l'arme à feu II</strong></td>
+<td><strong>25</strong></td>
+</tr>
+<tr>
+<td><strong>Manuel de combat à l'arme à feu III</strong></td>
+<td><strong>14</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Manuscrit de technique d'arts martiaux III</strong></td>
+<td><strong>14</strong>, <strong>23</strong>, <strong>26</strong></td>
+</tr>
+<tr>
+<td><strong>Manuscrit de techniques d'arts martiaux II</strong></td>
+<td><strong>25</strong></td>
+</tr>
+<tr>
+<td><strong>Manuscrits de Ninjutsu et de Bojutsu</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Manuscrits obtenus en mode Difficile</strong></td>
+<td><strong>18</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Absorption de PM</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Absorption de PV</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Affinité élémentaire</strong></td>
+<td><strong>00</strong>, <strong>06</strong>, <strong>14</strong>, <strong>19</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Aire d'effet</strong></td>
+<td><strong>09</strong>, <strong>19</strong>, <strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Analyse</strong></td>
+<td><strong>00</strong>, <strong>03</strong>, <strong>19</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Attaque anticipée</strong></td>
+<td><strong>19</strong>, <strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Auto-Soin</strong></td>
+<td><strong>03</strong>, <strong>23</strong>, <strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Avantage de Choc</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Chakra</strong></td>
+<td><strong>08</strong>, <strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Chance augmentée</strong></td>
+<td><strong>04</strong>, <strong>09</strong>, <strong>26</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Chocobo et Mog</strong></td>
+<td><strong>00</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Chronomancie</strong></td>
+<td><strong>14</strong>, <strong>17</strong>, <strong>19</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Contrainte</strong></td>
+<td><strong>09</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Bahamut</strong></td>
+<td><strong>00</strong>, <strong>22</strong>, <strong>24</strong>, <strong>28</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Carbuncle</strong></td>
+<td><strong>22</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Chocobo et Mog</strong></td>
+<td><strong>06</strong>, <strong>22</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Gros Chocobo</strong></td>
+<td><strong>22</strong>, <strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Ifrit</strong></td>
+<td><strong>22</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Leviathan</strong></td>
+<td><strong>22</strong>, <strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Pampa</strong></td>
+<td><strong>22</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Poussin Chocobo</strong></td>
+<td><strong>22</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Ramuh</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria d'invocation Shiva</strong></td>
+<td><strong>22</strong>, <strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Enchaînement magique</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Enchaînement stimulant</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Esquive offensive</strong></td>
+<td><strong>02</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Expertise des objets</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Expertise technique</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Feu</strong></td>
+<td><strong>03</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Foudre</strong></td>
+<td><strong>01</strong>, <strong>05</strong>, <strong>07</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Gain d'XP</strong></td>
+<td><strong>24</strong>, <strong>29</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Gain d'XP et Gain de Gil</strong></td>
+<td><strong>00</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Gain de Gil</strong></td>
+<td><strong>24</strong>, <strong>29</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Garde renforcée</strong></td>
+<td><strong>00</strong>, <strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Glace</strong></td>
+<td><strong>03</strong>, <strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Ifrit</strong></td>
+<td><strong>03</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Magie augmentée</strong></td>
+<td><strong>07</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Marcheur invétéré</strong></td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Parade</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria PC augmentés</strong></td>
+<td><strong>00</strong>, <strong>29</strong>, <strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria PM augmentés</strong></td>
+<td><strong>06</strong>, <strong>08</strong>, <strong>23</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Prière</strong></td>
+<td><strong>00</strong>, <strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Protection</strong></td>
+<td><strong>04</strong>, <strong>09</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Provocation</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria PV augmentés</strong></td>
+<td><strong>02</strong>, <strong>11</strong>, <strong>16</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Résistance aux altérations</strong></td>
+<td><strong>10</strong>, <strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Résurrection</strong></td>
+<td><strong>04</strong>, <strong>19</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Shiva</strong></td>
+<td><strong>08</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Soins</strong></td>
+<td><strong>02</strong>, <strong>05</strong>, <strong>19</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Techniques ennemies</strong></td>
+<td><strong>19</strong>, <strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Turbo ATB</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Vénéfice</strong></td>
+<td><strong>10</strong>, <strong>14</strong>, <strong>17</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Vent</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Vision</strong></td>
+<td><strong>24</strong>, <strong>28</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Vol</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Voler</strong></td>
+<td><strong>19</strong></td>
+</tr>
+<tr>
+<td><strong>Mitrailleuse rotative</strong></td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Module de Transfert</strong></td>
+<td><strong>22</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="n">N</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nettoyeur</strong></td>
+<td><strong>30</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="o">O</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Objet clé Fleur jaune</strong></td>
+<td><strong>02</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="p">P</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Paire de bottes protectrices</strong></td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Paire de gants à plume</strong></td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Paire de Poings Supersoniques</strong></td>
+<td><strong>07</strong></td>
+</tr>
+<tr>
+<td><strong>PC augmentés</strong></td>
+<td><strong>31</strong></td>
+</tr>
+<tr>
+<td><strong>Pendentif de bonne vision</strong></td>
+<td><strong>25</strong>, <strong>29</strong></td>
+</tr>
+<tr>
+<td><strong>Pendentif étoilé</strong></td>
+<td><strong>05</strong>, <strong>09</strong></td>
+</tr>
+<tr>
+<td><strong>Pistolet grappin</strong></td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Plateau de célérité 3</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Plateau de Maître</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>PM augmentés</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Poignet de force</strong></td>
+<td><strong>02</strong>, <strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Poings supersoniques</strong></td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Prière</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Puce oni rouge</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Pulsateur</strong></td>
+<td><strong>16</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>PV augmentés</strong></td>
+<td><strong>30</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="r">R</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ras de cou de soigneur</strong></td>
+<td><strong>31</strong></td>
+</tr>
+<tr>
+<td><strong>Ras-de-cou de soigneur</strong></td>
+<td><strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>Résistance aux Altérations</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Ruban</strong></td>
+<td><strong>31</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="s">S</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sabre de mithril</strong></td>
+<td><strong>14</strong>, <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Shuriken Juji</strong></td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Spectral Cogwheel</strong></td>
+<td><strong>26</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="t">T</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Talisman</strong></td>
+<td><strong>08</strong></td>
+</tr>
+<tr>
+<td><strong>Technique ennemie « Mauvaise haleine »</strong></td>
+<td><strong>29</strong></td>
+</tr>
+<tr>
+<td><strong>Tiare en diamant</strong></td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Tiare en émeraude</strong></td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Tiare en rubis</strong></td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Tresse de Fraternité</strong></td>
+<td><strong>30</strong></td>
+</tr>
+<tr>
+<td><strong>Turbo ATB</strong></td>
+<td><strong>32</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="v">V</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vent</strong></td>
+<td><strong>30</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-34" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="les-erreurs-qui-coutent-le-plus-cher-dans-lordre">Les erreurs qui coûtent le plus cher, dans l'ordre</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>L'erreur</th>
+<th>Le coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Monter ses matérias avant la fin de l'histoire</td>
+<td><strong>Trois fois plus de temps de farm</strong> <em>(partie <strong>29</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Tuer Éligor sans lui voler le Bâton de frappe</td>
+<td><strong>Une arme perdue pour la partie</strong> <em>(partie <strong>11</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Rater le défi d'une minute du chapitre 6</td>
+<td>Une invocation perdue <em>(partie <strong>06</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Quitter un chapitre sans ses missions annexes</td>
+<td><strong>Un passage supplémentaire à refaire</strong> <em>(partie <strong>23</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Croire que le 100 % tient en une partie</td>
+<td><strong>Trois passages par les chapitres 3, 8 et 9</strong>, <strong>plus le mode Difficile</strong> <em>(partie <strong>28</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Négliger le Colisée de Cornéo</td>
+<td>Les 4 secondes Transcendances et « Trio contre Top Secret » <em>(partie <strong>25</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Oublier le second simulateur du chapitre 17</td>
+<td><strong>Tous les combats du mode Difficile</strong> <em>(partie <strong>24</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Disperser ses PA</td>
+<td>Il n'y en a pas assez pour tout <em>(partie <strong>21</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Ignorer Brise-boîtes</td>
+<td><strong>Plus de Médailles Mog</strong> <em>(partie <strong>26</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Oublier les disques de musique en boutique</td>
+<td><strong>10 des 31 se ratent</strong> <em>(partie <strong>27</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="comment-utiliser-ces-annexes">Comment utiliser ces annexes</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Où regarder</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>« Où est tel objet ? »</strong></td>
+<td>L'index alphabétique</td>
+</tr>
+<tr>
+<td><strong>« Qu'est-ce que je vais rater ici ? »</strong></td>
+<td>Le récapitulatif des manquables, à la partie du chapitre</td>
+</tr>
+<tr>
+<td><strong>« Puis-je encore revenir ? »</strong></td>
+<td>Les points de non-retour</td>
+</tr>
+<tr>
+<td><strong>« Est-ce que cette info est sûre ? »</strong></td>
+<td>La liste des « à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>« Où en suis-je du 100 % ? »</strong></td>
+<td>La check-list finale</td>
+</tr>
+<tr>
+<td><strong>« D'où vient cette information ? »</strong></td>
+<td>Le fichier <code>sources.md</code>, <strong>organisé partie par partie</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="ce-que-ce-guide-ne-pretend-pas-savoir">Ce que ce guide ne prétend pas savoir</h3>
+<p><strong>Je préfère te le dire franchement.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Domaine</th>
+<th>Ce qui reste incertain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les effets exacts des accessoires</strong></td>
+<td>Beaucoup ne sont documentés par aucune source française ; ils sont marqués « effet exact à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>Certains noms français</strong></td>
+<td>Quand une seule source les donne, ils portent « nom français à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>Les Aides de jeu</strong></td>
+<td>Seule l'option des <strong>matérias au niveau maximum</strong> bloque un trophée <em>(partie <strong>28</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Les divergences entre sources</strong></td>
+<td><strong>Chaque arbitrage est noté dans <code>sources.md</code></strong>, <strong>avec un tableau de divergences par partie</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Et la règle que j'ai suivie partout</strong> : jamais de nom inventé, jamais de traduction maison. Si une source ne donnait qu'un nom anglais, il est écrit tel quel et signalé.</p>
+<h2 id="alertes-34" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ Le 100 % demande trois passages complets par les chapitres 3, 8 et 9, plus les 18 chapitres en mode Difficile <em>(partie <strong>28</strong>)</em>.</li>
+<li class="alerte">⚠️ 356 PA sont nécessaires pour tout maximiser ; une seule partie n'en donne que 246. Les 110 manquants viennent des 40 manuscrits du mode Difficile <em>(partie <strong>21</strong>)</em>.</li>
+<li class="alerte">⚠️ Le rapport 18 de Chadley demande 12 matérias au niveau maximum et verrouille à lui seul Bahamut, « Trio contre Top Secret » et le Götterdämmerung <em>(parties <strong>22</strong> et <strong>24</strong>)</em>.</li>
+<li class="alerte">⚠️ La sélection de chapitres double l'expérience et triple les PC. Ne monte pas tes matérias avant la fin de l'histoire <em>(partie <strong>29</strong>)</em>.</li>
+<li class="alerte">⚠️ Le Bâton de frappe doit être volé à Éligor avec la matéria Voler <em>(partie <strong>11</strong>)</em>.</li>
+<li class="alerte">⚠️ Une matéria unique déjà ramassée ne revient pas quand on rejoue le chapitre ; mais certains accessoires, comme l'Anneau de furie, se reprennent <em>(partie <strong>28</strong>)</em>.</li>
+<li class="alerte">⚠️ Toutes les informations marquées « à vérifier en jeu » sont listées ci-dessus, <strong>partie par partie.</strong> Elles sont rapportées fidèlement, mais elles ne sont pas recoupées.</li>
+<li class="alerte manquable">⏳ Les divergences de nommage entre sources françaises sont toutes arbitrées et consignées dans <code>sources.md</code>.</li>
+</ul>
+<h2 id="check-list-34" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="lhistoire">L'histoire</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 18 chapitres terminés</strong> <em>(parties <strong>01</strong> à <strong>18</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 18 chapitres terminés en mode Difficile</strong> <em>(partie <strong>28</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 3 passages par les chapitres 3, 8 et 9</strong> <em>(partie <strong>23</strong>)</em></li>
+</ul>
+<h3 id="les-quetes">Les quêtes</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 26 missions annexes</strong> <em>(partie <strong>23</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 7 histoires annexes</strong> <em>(partie <strong>23</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 9 robes d'audition</strong> <em>(partie <strong>23</strong>)</em></li>
+</ul>
+<h3 id="les-armes-2">Les armes</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 24 armes récupérées</strong> <em>(partie <strong>21</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 24 compétences d'armes maîtrisées</strong> <em>(partie <strong>21</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 8 Transcendances</strong> <em>(parties <strong>21</strong> et <strong>25</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 56 manuscrits</strong> <em>(partie <strong>21</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Le niveau 6 sur toutes les armes</strong> <em>(356 PA)</em></li>
+</ul>
+<h3 id="les-materias-3">Les matérias</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 41 matérias</strong> <em>(partie <strong>20</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 4 techniques ennemies</strong> <em>(partie <strong>20</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 9 invocations</strong> <em>(partie <strong>22</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>12 matérias au niveau maximum</strong> <em>(rapport 18)</em></li>
+</ul>
+<h3 id="les-defis">Les défis</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 20 rapports de Chadley</strong> <em>(partie <strong>24</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 10 combats du Colisée de Cornéo</strong> <em>(partie <strong>25</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 13 combats du simulateur Shinra</strong> <em>(partie <strong>24</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>« Trio contre Top Secret »</strong> → <strong class="objet">Götterdämmerung</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Le Morbol analysé</strong> → <strong>Mauvaise haleine</strong></li>
+</ul>
+<h3 id="les-collectibles-et-mini-jeux">Les collectibles et mini-jeux</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 31 disques de musique</strong> <em>(partie <strong>27</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 6 mini-jeux</strong>, <strong>modes difficiles compris</strong> <em>(partie <strong>26</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Le niveau 50</strong> <em>(partie <strong>29</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>300 % de bonus de Choc</strong> <em>(partie <strong>29</strong>)</em></li>
+</ul>
+<h3 id="episode-intermission">episode INTERmission</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 2 chapitres</strong> <em>(parties <strong>30</strong> et <strong>31</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 2 chapitres en mode difficile</strong> <em>(partie <strong>32</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 7 adversaires de Fort Condor</strong> <em>(partie <strong>32</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 7 adversaires de Fort Condor en difficile</strong> <em>(partie <strong>32</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 6 prospectus de la Tortue Joyeuse</strong> <em>(partie <strong>32</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Ramuh</strong> <em>(partie <strong>32</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 6 matérias du Brise-boîtes Shinra</strong> <em>(partie <strong>32</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Le Prestige ver. 0.5</strong> <em>(partie <strong>32</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Weiss</strong> <em>(partie <strong>32</strong>)</em></li>
+</ul>
+<h3 id="le-platine-2">Le platine</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 63 trophées</strong> → <strong>Maître du destin</strong> <em>(partie <strong>29</strong>)</em></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="intermission-fort-condor-annexes-et-armes.html" rel="prev"><small>← Partie précédente</small><b>INTERmission — Fort Condor, annexes et armes</b></a><a class="suiv" href="sources-final-fantasy-vii-remake.html" rel="next"><small>Partie suivante →</small><b>Sources — Final Fantasy VII Remake</b></a><a class="tout" href="final-fantasy-vii-remake.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Remake · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

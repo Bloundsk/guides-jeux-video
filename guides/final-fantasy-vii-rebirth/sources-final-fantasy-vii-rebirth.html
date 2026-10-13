@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sources — Final Fantasy VII Rebirth – Guide Final Fantasy VII Rebirth</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Rebirth, Sources — Final Fantasy VII Rebirth : Quand deux sources françaises divergent, le choix est tranché une fois et tenu dans tout…">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/sources-final-fantasy-vii-rebirth.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Sources — Final Fantasy VII Rebirth · Guide Final Fantasy VII Rebirth">
+<meta property="og:description" content="Final Fantasy VII Rebirth, Sources — Final Fantasy VII Rebirth : Quand deux sources françaises divergent, le choix est tranché une fois et tenu dans tout…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/sources-final-fantasy-vii-rebirth.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Rebirth", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/"}, {"@type": "ListItem", "position": 3, "name": "Sources — Final Fantasy VII Rebirth", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/sources-final-fantasy-vii-rebirth.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-rebirth" class="compact" data-partie="sources-final-fantasy-vii-rebirth"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Rebirth</a><span aria-hidden="true">›</span><span>Références</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Rebirth : le guide complet en français</p>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Rebirth</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-la-chute-dun-heros.html"><span class="num">✦</span><span class="libelle">Chapitre 1 — La chute d&#x27;un héros</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-vers-de-nouveaux-horizons.html"><span class="num">✦</span><span class="libelle">Chapitre 2 — Vers de nouveaux horizons</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-sur-les-traces-des-manteaux-noirs.html"><span class="num">✦</span><span class="libelle">Chapitre 3 — Sur les traces des manteaux noirs</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-le-debut-dune-nouvelle-ere.html"><span class="num">✦</span><span class="libelle">Chapitre 4 — Le début d&#x27;une nouvelle ère</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-une-croisiere-sanglante.html"><span class="num">✦</span><span class="libelle">Chapitre 5 — Une croisière sanglante</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-un-paradis-ensoleille.html"><span class="num">✦</span><span class="libelle">Chapitre 6 — Un paradis ensoleillé</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-un-retour-douloureux.html"><span class="num">✦</span><span class="libelle">Chapitre 7 — Un retour douloureux</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-le-gold-saucer.html"><span class="num">✦</span><span class="libelle">Chapitre 8 — Le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-a-lecoute-de-la-planete.html"><span class="num">✦</span><span class="libelle">Chapitre 9 — À l&#x27;écoute de la planète</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-protecteur-de-la-vallee.html"><span class="num">✦</span><span class="libelle">Chapitre 10 — Protecteur de la vallée</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-un-village-natal-meconnaissable.html"><span class="num">✦</span><span class="libelle">Chapitre 11 — Un village natal méconnaissable</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-en-quete-de-la-pierre-cle.html"><span class="num">✦</span><span class="libelle">Chapitre 12 — En quête de la pierre-clé</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-le-temple-des-anciens.html"><span class="num">✦</span><span class="libelle">Chapitre 13 — Le temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-un-monde-a-lagonie.html"><span class="num">✦</span><span class="libelle">Chapitre 14 — Un monde à l&#x27;agonie</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="region-de-la-prairie.html"><span class="num">✦</span><span class="libelle">Région de la Prairie</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="region-de-junon.html"><span class="num">✦</span><span class="libelle">Région de Junon</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="region-de-corel.html"><span class="num">✦</span><span class="libelle">Région de Corel</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="region-de-gongaga.html"><span class="num">✦</span><span class="libelle">Région de Gongaga</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="region-de-cosmo.html"><span class="num">✦</span><span class="libelle">Région de Cosmo</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="region-de-nibel.html"><span class="num">✦</span><span class="libelle">Région de Nibel</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="locean-central-et-les-iles.html"><span class="num">✦</span><span class="libelle">L&#x27;Océan Central et les îles</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-materias.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-armes-et-les-codex.html"><span class="num">✦</span><span class="libelle">Les armes et les codex</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-invocations.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="laffinite-et-les-coequipiers.html"><span class="num">✦</span><span class="libelle">L&#x27;affinité et les coéquipiers</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="queens-blood.html"><span class="num">✦</span><span class="libelle">Queen&#x27;s Blood</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-mini-jeux-4.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="le-simulateur-de-combat.html"><span class="num">✦</span><span class="libelle">Le simulateur de combat</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="#sources-final-fantasy-vii-rebirth"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Rebirth</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-35">
+<header class="tete-section">
+<p class="eyebrow">Références</p>
+<h1 id="sources-final-fantasy-vii-rebirth">Sources — Final Fantasy VII Rebirth</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-35"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-35">
+<h2 id="decisions-de-nommage" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Décisions de nommage</span></h2>
+<p>Quand deux sources françaises divergent, le choix est tranché <strong>une fois</strong> et tenu dans tout le guide.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Terme retenu</th>
+<th>Variante rencontrée</th>
+<th>Source du choix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rapports de Chadley</strong></td>
+<td>« World Intel », « reconnaissance régionale »</td>
+<td>nom français du système, employé par jeuxvideo.com et par le jeu</td>
+</tr>
+<tr>
+<td><strong>Puits de vie</strong></td>
+<td>« Lifespring »</td>
+<td>nom français officiel</td>
+</tr>
+<tr>
+<td><strong>Terrain de chasse</strong></td>
+<td>« fiend intel », « rapport de chasse »</td>
+<td>le <strong>rapport</strong> est l'objectif de Chadley, le <strong>terrain</strong> est le lieu ; les deux mots sont utilisés à bon escient</td>
+</tr>
+<tr>
+<td><strong>Protorelique</strong></td>
+<td>« Protorelic »</td>
+<td>nom français officiel</td>
+</tr>
+<tr>
+<td><strong>Cache aux trésors</strong></td>
+<td>« treasure trove »</td>
+<td>nom français officiel</td>
+</tr>
+<tr>
+<td><strong>Maison de mogs</strong></td>
+<td>« moogle house », « boutique mog »</td>
+<td>jeuxvideo.com emploie les deux ; <strong>maison de mogs</strong> est la forme du jeu</td>
+</tr>
+<tr>
+<td><strong>Autel d'Esper</strong></td>
+<td>« summon shrine », « cristal d'Esper »</td>
+<td>les trois autels d'une région affaiblissent son Esper dans le simulateur</td>
+</tr>
+<tr>
+<td><strong>Esper</strong> / <strong>matéria d'invocation</strong></td>
+<td>« invocation » seul</td>
+<td>le jeu distingue la <strong>créature</strong> <em>(Esper)</em> de l'<strong>objet</strong> <em>(matéria d'invocation)</em></td>
+</tr>
+<tr>
+<td><strong>État de Choc</strong></td>
+<td>« stagger »</td>
+<td>nom français de l'état qui ouvre le multiplicateur de dégâts</td>
+</tr>
+<tr>
+<td><strong>Technique de Transcendance</strong></td>
+<td>« Limit Break »</td>
+<td>nom français officiel ; le terme anglais sert de repère entre parenthèses à la première occurrence</td>
+</tr>
+<tr>
+<td><strong>Compétence synchronisée</strong></td>
+<td>« capacité de synergie », « compétence de synergie »</td>
+<td>l'attaque en tandem <strong>qui consomme des barres</strong> : il faut avoir utilisé plusieurs compétences avant de pouvoir la déclencher. Forme employée par jeuxvideo.com <em>(« la compétence synchronisée Spirale croisée, qui demande à chaque personnage d'avoir utilisé au moins 3 compétences »)</em> et par ActuGaming <em>(« faire monter les barres d'une compétence synchronisée »)</em></td>
+</tr>
+<tr>
+<td><strong>Action synchronisée</strong></td>
+<td>« attaque de synergie », « attaque synchronisée », « action de synergie »</td>
+<td>l'attaque en tandem <strong>gratuite</strong>, accessible <strong>à tout moment avec R1</strong> puis une touche. ✅ <strong>Tranché définitivement</strong> par le guide de combat de jeuxvideo.com, qui oppose explicitement les deux mécaniques <em>(voir ci-dessous)</em></td>
+</tr>
+<tr>
+<td><strong>Codex</strong></td>
+<td>« Folio », « arbre de compétences »</td>
+<td>le nom <strong>français</strong> de l'arbre de progression, où l'on dépense des <strong>PA</strong>. Il se consulte dans les <strong>librairies et kiosques Maghnata</strong>. « Folio » est le nom <strong>anglais</strong> : plusieurs sites francophones le reprennent tel quel en traduisant leurs sources</td>
+</tr>
+<tr>
+<td><strong>PA</strong></td>
+<td>« SP », « points de compétence »</td>
+<td>la monnaie du codex et des améliorations d'armes</td>
+</tr>
+<tr>
+<td><strong>Librairie Maghnata</strong> / <strong>kiosque Maghnata</strong></td>
+<td>—</td>
+<td>les lieux où l'on ouvre le codex</td>
+</tr>
+<tr>
+<td><strong>Analyse</strong></td>
+<td>« Assess »</td>
+<td>nom français de la compétence de matéria</td>
+</tr>
+<tr>
+<td><strong>Queen's Blood</strong></td>
+<td>—</td>
+<td>le nom du jeu de cartes <strong>reste en anglais</strong> dans la version française</td>
+</tr>
+<tr>
+<td><strong>Gold Saucer</strong></td>
+<td>—</td>
+<td>le nom du parc <strong>reste en anglais</strong> dans la version française</td>
+</tr>
+<tr>
+<td><strong>Séphiroth</strong>, <strong>Réno</strong>, <strong>Jénova</strong></td>
+<td>« Sephiroth », « Reno », « Jenova »</td>
+<td>graphies <strong>accentuées</strong> de la version française, confirmées par les titres de pages de jeuxvideo.com</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="reserves-sur-les-sources" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Réserves sur les sources</span></h2>
+<ul>
+<li>
+<p><strong>jeuxvideo.com</strong> : la couverture la plus complète en français sur les <strong>boss</strong> <em>(une page par combat, trente et un au total)</em>, les <strong>six régions</strong>, les <strong>huit types de Rapports de Chadley</strong> et les <strong>systèmes</strong>. En revanche, <strong>aucune soluce chapitre par chapitre</strong> : le sommaire n'associe aux quatorze chapitres que leurs pages de boss.</p>
+</li>
+<li>
+<p><strong>ActuGaming</strong> et <strong>Millenium</strong> : c'est chez eux que se trouve le <strong>cheminement narratif</strong> chapitre par chapitre. Les deux sont recoupés l'un par l'autre.</p>
+</li>
+<li>
+<p>Les deux attaques en tandem sont confondues par toutes les sources françaises consultées. Le jeu en propose deux, dont le <strong>fonctionnement</strong> ne fait aucun doute :</p>
+<ul>
+<li>la <strong>gratuite</strong> : garde maintenue + une touche, disponible dès que deux personnages sont en vie ;</li>
+<li>celle <strong>qui consomme des barres</strong> : chaque personnage doit avoir utilisé plusieurs compétences avant qu'elle ne s'allume, et elle se débloque dans le <strong>codex</strong>.</li>
+</ul>
+<p>Les <strong>noms</strong>, en revanche, flottent. jeuxvideo.com écrit « compétence synchronisée » pour la seconde <em>(la Spirale croisée du premier boss, « qui demande à chaque personnage d'avoir utilisé au moins 3 compétences »)</em> mais « attaque de synergie » pour la première ; ActuGaming écrit aussi « faire monter les barres d'une compétence synchronisée » ; d'autres sites traduisent de l'anglais et écrivent « capacité de synergie ». Le guide retient donc <strong>attaque synchronisée</strong> pour la gratuite et <strong>compétence synchronisée</strong> pour celle qui consomme des barres, et <strong>décrit toujours la mécanique</strong> en plus du nom, pour que le joueur reconnaisse la bonne commande même si le menu emploie un autre mot.</p>
+<p>les libellés exacts du menu restent à vérifier en jeu.</p>
+</li>
+<li>
+<p>Les sources <strong>anglophones</strong> ne sont utilisées que pour les <strong>chiffres</strong> et jamais pour les noms.</p>
+</li>
+</ul>
+<h2 id="sources-generales" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Sources générales</span></h2>
+<ul>
+<li>Sommaire de la soluce française : https://www.jeuxvideo.com/wikis-soluce-astuces/1853718/soluce-de-final-fantasy-vii-rebirth.htm</li>
+<li>jeuxvideo.com, « 7 conseils pour bien débuter » : https://www.jeuxvideo.com/news/1858655/final-fantasy-7-rebirth-7-conseils-pour-bien-debuter-la-suite-de-ff7-remake.htm</li>
+<li>jeuxvideo.com, guide de combat : https://www.jeuxvideo.com/news/1860508/guide-de-combat-ff7-rebirth-nos-7-conseils-pour-rouler-sur-vos-ennemis-avec-le-nouveau-systeme-de-combat.htm</li>
+<li>jeuxvideo.com, les invocations : https://www.jeuxvideo.com/news/1867676/invocations-ff7-rebirth-la-liste-complete-et-comment-toutes-les-obtenir.htm</li>
+<li>jeuxvideo.com, les matérias : https://www.jeuxvideo.com/news/1860753/materias-ff7-rebirth-ou-les-trouver-et-comment-les-gerer-du-mieux-possible.htm</li>
+<li>ActuGaming, solution de l'histoire principale : https://www.actugaming.net/solution-histoire-principale-final-fantasy-vii-rebirth-621395/</li>
+<li>ActuGaming, sommaire du guide : https://www.actugaming.net/guide-final-fantasy-7-rebirth-soluce-620891/</li>
+<li>Millenium, sommaire du guide : https://www.millenium.org/games/game-1220/guides/guide-2026</li>
+<li>Square Enix, annonce de la sortie PC du 23 janvier 2025 : https://press.na.square-enix.com/USA-TODAYS-GAME-OF-THE-YEAR-FINAL-FANTASY-VII-REBIRTH-COMING-TO-PC-ON-</li>
+</ul>
+<h3 id="chiffres-de-reference-retenus">Chiffres de référence retenus</h3>
+<ul>
+<li><strong>14 chapitres</strong>, d'une heure à une dizaine d'heures chacun ; environ <strong>50 heures</strong> en ligne droite.</li>
+<li><strong>6 régions</strong> de reconnaissance — Prairie, Junon, Corel, Gongaga, Cosmo, Nibel — plus l'<strong>Océan Central</strong> et ses îles.</li>
+<li><strong>8 types de Rapports de Chadley</strong> : puits de vie, rapports de chasse, rapports d'enquête <em>(qui mènent aux protoreliques)</em>, rapports d'excavation, rapports Esper, rapports mog, rapports secrets, rapports chocobo.</li>
+<li><strong>31 combats de boss</strong> dans l'histoire principale, plus les <strong>boss secrets</strong> des rapports secrets et les <strong>Espers</strong> du simulateur.</li>
+<li><strong>7 personnages jouables</strong> : Cloud, Barret, Tifa, Aerith, Red XIII, Yuffie, Cait Sith.</li>
+<li><strong>5 couleurs de matérias</strong> : vertes <em>(magie)</em>, bleues <em>(soutien)</em>, jaunes <em>(compétence)</em>, violettes <em>(indépendantes)</em>, rouges <em>(invocation)</em>.</li>
+<li><strong>14 matérias d'invocation</strong> : 3 de départ <em>(Chocobo &amp; Mog, Shiva, Ifrit)</em>, 7 à débloquer <em>(Titan, Phénix, Alexandre, Kujata, Néo-Bahamut, Odin, Gilgamesh)</em>, 4 en bonus <em>(Léviathan, Ramuh, Trio de Mogs, Pot magique)</em>.</li>
+<li><strong>3 équipes prédéfinies</strong> de <strong>3 personnages</strong>, configurables dans les <strong>Réglages de combat</strong>.</li>
+</ul>
+<p>Les Espers par région : <strong>Titan</strong> <em>(Prairie)</em>, <strong>Phénix</strong> <em>(Junon)</em>, <strong>Alexandre</strong> <em>(Corel)</em>, <strong>Kujata</strong> <em>(Gongaga)</em>, <strong>Néo-Bahamut</strong> <em>(Cosmo)</em>, <strong>Odin</strong> <em>(Nibel)</em>, <strong>Gilgamesh</strong> <em>(Océan Central, en terminant tous les rapports d'enquête)</em>.</p>
+<p>Les boss secrets par région : <strong>Quetzalcoatl</strong> <em>(Prairie)</em>, <strong>Flagelleur mental</strong> <em>(Junon)</em>, <strong>Roi Tomberry</strong> <em>(Corel)</em>, <strong>Grand Morbol</strong> <em>(Gongaga)</em>, <strong>Dragon diabolique</strong> <em>(Cosmo)</em>, <strong>Roi Zu</strong> <em>(Nibel)</em>.</p>
+<p>Les <strong>quatre matérias d'invocation bonus</strong> <em>(Léviathan, Ramuh, Trio de Mogs, Pot magique)</em> dépendent d'une sauvegarde de <em>Final Fantasy VII Remake</em>, d'une sauvegarde de l'épisode <em>INTERmission</em>, d'une précommande numérique ou de l'édition Numérique Deluxe. Elles <strong>ne sont pas nécessaires</strong> au trophée <strong>Bretteur légendaire</strong>, et le guide le précise là où c'est utile.</p>
+<h2 id="sources-par-partie" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Sources par partie</span></h2>
+<h3 id="02-chapitre-2-vers-de-nouveaux-horizons">02 — Chapitre 2 : Vers de nouveaux horizons</h3>
+<ul>
+<li>ActuGaming, chapitre 2 : https://www.actugaming.net/solution-chapitre-2-final-fantasy-vii-rebirth-621398/</li>
+<li>jeuxvideo.com, boss Midgardsormr : https://www.jeuxvideo.com/wikis-soluce-astuces/1859451/midgardsormr-ff7-rebirth-comment-battre-ce-boss.htm</li>
+<li>jeuxvideo.com, les matérias <em>(types et couleurs)</em> : https://www.jeuxvideo.com/news/1860753/materias-ff7-rebirth-ou-les-trouver-et-comment-les-gerer-du-mieux-possible.htm</li>
+</ul>
+<p><strong>Recoupements</strong> : le <strong>Midgardsormr</strong> est donné <em>sensible à la Glace</em> et <em>très résistant au Feu</em> par les deux sources ; la <strong>Carapace crânienne</strong> comme cible prioritaire et la phase où il s'enroule autour d'un arbre ne viennent que d'ActuGaming, le nombre de phases <em>(trois)</em> et la comparaison de PV avec Quetzalcoatl que de jeuxvideo.com.</p>
+<p><strong>Décision retenue</strong> : le système d'arbre de progression est appelé <strong>codex</strong> par ActuGaming <em>(« faire un tour à la librairie Maghnata pour votre codex »)</em> et le mot est confirmé par jeuxvideo.com. « Folio » est le nom <strong>anglais</strong> ; le guide dit <strong>codex</strong> partout, et <strong>librairies et kiosques Maghnata</strong> pour les lieux où on l'ouvre.</p>
+<h3 id="03-chapitre-3-sur-les-traces-des-manteaux-noirs">03 — Chapitre 3 : Sur les traces des manteaux noirs</h3>
+<ul>
+<li>ActuGaming, chapitre 3 : https://www.actugaming.net/solution-chapitre-3-final-fantasy-vii-rebirth-622328/</li>
+<li>jeuxvideo.com, boss Elena et Rude : https://www.jeuxvideo.com/wikis-soluce-astuces/1859479/elena-et-rude-ff7-rebirth-comment-battre-ces-boss.htm</li>
+<li>jeuxvideo.com, boss Golem de mithril : https://www.jeuxvideo.com/wikis-soluce-astuces/1859495/golem-de-mithril-ff7-rebirth-comment-battre-ce-boss.htm</li>
+</ul>
+<p><strong>Recoupements</strong> : <strong>Rude vulnérable au Vent</strong> et <strong>Elena sensible à la Foudre</strong> sont confirmés par les deux sources, ainsi que la fragilisation des deux TURKs quand on interrompt leur attaque en tandem. Les noms d'attaques <em>(<strong>Frappe tellurique</strong>, <strong>Frappe titanesque</strong>, <strong>Colonnes d'énergie</strong>, <strong>Éruption d'énergie</strong>, <strong>Grenades étourdissantes</strong>, <strong>Posture protectrice</strong>, <strong>Déchaînement total</strong>)</em> sont pris là où chaque source les donne, sans contradiction entre les deux. Le <strong>Golem de mithril</strong> est donné <em>sensible à la Foudre</em> et <em>à frapper à la tête</em> par les deux ; la reconstruction du <strong>bras droit</strong> et le passage de cible au <strong>dos</strong> viennent d'ActuGaming, l'usage d'une <strong>Technique de Transcendance</strong> pour empêcher la seconde reconstruction de jeuxvideo.com.</p>
+<p><strong>Divergence tranchée</strong> : la compétence donnée par les <strong>gants sylphide</strong> de Tifa est appelée <strong>Tornade renversante</strong> par ActuGaming et <strong>Tornade aérienne</strong> par jeuxvideo.com. Le guide retient <strong>Tornade renversante</strong>, la forme donnée par la source qui décrit l'arme dont elle provient. <strong>nom à vérifier en jeu.</strong></p>
+<p><strong>Vérification de nom</strong> : la matéria <strong>PC augmentés</strong> semblait suspecte <em>(on attendait « PV augmentés »)</em>. La page matérias de jeuxvideo.com liste bien <strong>PC augmentés</strong> parmi les <strong>matérias bleues</strong> <em>(soutien)</em>, à côté d'Aire d'effet et de Résistance aux altérations, et <strong>PV augmentés</strong> parmi les <strong>violettes</strong> <em>(indépendantes)</em>. Les deux noms existent, ce sont deux matérias différentes.</p>
+<h3 id="04-chapitre-4-le-debut-dune-nouvelle-ere">04 — Chapitre 4 : Le début d'une nouvelle ère</h3>
+<ul>
+<li>ActuGaming, chapitre 4 : https://www.actugaming.net/solution-chapitre-4-final-fantasy-vii-rebirth-622331/</li>
+<li>jeuxvideo.com, boss Terreur des abysses : https://www.jeuxvideo.com/wikis-soluce-astuces/1859509/terreur-des-abysses-ff7-rebirth-comment-battre-ce-boss.htm</li>
+<li>jeuxvideo.com, boss Rochey : https://www.jeuxvideo.com/wikis-soluce-astuces/1859511/rochey-ff7-rebirth-comment-battre-ce-boss.htm</li>
+</ul>
+<p><strong>Recoupements</strong> : la <strong>Terreur des abysses</strong> est donnée <em>sensible à la Foudre</em> par les deux sources, avec la même structure en deux temps <em>(en vol, puis sous l'eau après la tornade centrale)</em> et le même traitement des <strong>Sphères aqueuses</strong>. jeuxvideo.com ajoute seul la <strong>liste des immunités</strong> <em>(Furie, Lenteur, Pierre, Silence, Sommeil, Transmutation, plus résistance à la Pétrification et à Stop)</em>, la <strong>résistance au Feu et à la Glace</strong>, et l'astuce de <strong>Vénéfice</strong> — le boss n'étant pas immunisé au Poison. <strong>Rochey</strong> est donné <em>sensible au Feu</em> par les deux ; <strong>Extra-Feu</strong>, <strong>Bravoure du soldat</strong> et la garde maintenue sur <strong>R1</strong> viennent de jeuxvideo.com, les récompenses <em>(porte-clés Rochey, élixir, peluche de Stamp)</em> d'ActuGaming.</p>
+<p><strong>Noms de lieux laissés en anglais</strong> : les enseignes de Junon-Ville — <strong>The Glabrescent Bar</strong>, <strong>Full Arsenal</strong>, <strong>Cecilia's</strong>, <strong>Centre Commercial Folios</strong> — sont données ainsi par la source <strong>française</strong>, comme <strong>Le Sourire</strong> pour le dernier bar. Ce sont donc les noms de la version française et ils ne sont pas traduits. ⚠️ <strong>à vérifier en jeu.</strong></p>
+<p><strong>Carte des url</strong> : les <strong>32 pages de boss</strong> de jeuxvideo.com ont été relevées depuis le sommaire de la soluce, soit <strong>31 combats distincts</strong> — <strong>Rochey</strong> et <strong>Elena et Rude</strong> ont chacun deux pages, pour leurs deux affrontements. Ce total confirme le chiffre de référence de 31 boss retenu en phase 1.</p>
+<h3 id="05-chapitre-5-une-croisiere-sanglante">05 — Chapitre 5 : Une croisière sanglante</h3>
+<ul>
+<li>ActuGaming, chapitre 5 : https://www.actugaming.net/solution-chapitre-5-final-fantasy-vii-rebirth-624090/</li>
+<li>jeuxvideo.com, boss Jénova-NAISSANCE : https://www.jeuxvideo.com/wikis-soluce-astuces/1859528/jenova-naissance-ff7-rebirth-comment-battre-ce-boss.htm</li>
+</ul>
+<p><strong>Recoupements</strong> : les deux sources donnent la même structure en <strong>trois phases</strong> et la même <strong>équipe imposée</strong> <em>(Cloud, Barret, Tifa)</em>. jeuxvideo.com apporte seul l'<strong>absence totale de faiblesse élémentaire</strong>, la <strong>tête comme première partie à détruire</strong> avec sa <strong>Régénération</strong>, les cibles <strong>tête + épaule gauche</strong> en phase 2 et le <strong>Tourment tentaculaire</strong> ; ActuGaming apporte seul les variantes <strong>Dissémination pestilentielle</strong>, <strong>Extermination</strong>, <strong>Exaltation</strong> et <strong>Propagation tentaculaire</strong>. Aucune contradiction entre les deux.</p>
+<p><strong>Chapitre des boss confirmé</strong> : les pages jeuxvideo.com précisent explicitement leur chapitre. <strong>E.S.C. Cargo</strong> est au <strong>chapitre 6</strong> <em>(et non 5)</em> et le <strong>Gyrocanonnier modifié</strong> au <strong>chapitre 7</strong>, ce qui cadre avec le découpage d'ActuGaming. Le chapitre 5 n'a donc <strong>qu'un seul boss</strong>.</p>
+<p><strong>Incohérence de la source</strong> : ActuGaming écrit « Jénova-NAISSANCE » en titre mais « Jénova-RENAISSANCE » dans la dernière phrase de la section. Le guide retient <strong>Jénova-NAISSANCE</strong>, la forme du titre et celle de jeuxvideo.com.</p>
+<p>La carte de Queen's Blood du deck de Red XIII est écrite <strong>Midgarsormr</strong> par ActuGaming, là où le boss du chapitre 2 est le <strong>Midgardsormr</strong>. Les deux graphies sont conservées telles quelles faute de pouvoir trancher ; <strong>à vérifier en jeu</strong>.</p>
+<h3 id="06-chapitre-6-un-paradis-ensoleille">06 — Chapitre 6 : Un paradis ensoleillé</h3>
+<ul>
+<li>ActuGaming, chapitre 6 : https://www.actugaming.net/solution-chapitre-6-final-fantasy-vii-rebirth-624680/</li>
+<li>jeuxvideo.com, boss E.S.C. Cargo : https://www.jeuxvideo.com/wikis-soluce-astuces/1859548/e-s-c-cargo-ff7-rebirth-comment-battre-ce-boss.htm</li>
+</ul>
+<p><strong>Recoupements</strong> : les deux sources donnent l'<strong>E.S.C. Cargo</strong> <em>vulnérable à la Foudre</em>, fragilisé par les <strong>compétences synchronisées</strong>, avec la <strong>capture des alliés un par un</strong>, le <strong>Dérapage dévastateur</strong> incontrable suivi de la <strong>Surchauffe</strong>, et le <strong>canon</strong> interruptible par un état de Choc en fin de vie. jeuxvideo.com confirme seul que l'équipe du boss dépend du choix fait sur la plage <em>(Red XIII et Tifa, ou Aerith et Barret)</em>, et apporte les <strong>Cylindres</strong> à viser, la <strong>Capture téléguidée</strong>, le <strong>nuage violet</strong> <em>(poison, s'éloigner)</em> et le <strong>nuage rose</strong> <em>(étourdissement, se tenir derrière)</em>.</p>
+<p><strong>Solutions du Carnaval des cartes</strong> : les trois défis sont donnés <strong>coup par coup</strong> par ActuGaming, avec une grille lue comme un touché-coulé <em>(lignes A-B-C de haut en bas, colonnes 1 à 5 de gauche à droite)</em>. Cette convention de lecture est reprise telle quelle dans le guide, faute de système de coordonnées affiché en jeu. ⚠️ <strong>à vérifier en jeu.</strong></p>
+<p><strong>Graphie du nom</strong> : ActuGaming écrit <strong>Hôjô</strong> ; la version française du jeu écrit <strong>Hojo</strong>. Le guide retient <strong>Hojo</strong> partout.</p>
+<h3 id="07-chapitre-7-un-retour-douloureux">07 — Chapitre 7 : Un retour douloureux</h3>
+<ul>
+<li>ActuGaming, chapitre 7 : https://www.actugaming.net/solution-chapitre-7-final-fantasy-vii-rebirth-625218/</li>
+<li>jeuxvideo.com, boss Gyrocanonnier modifié : https://www.jeuxvideo.com/wikis-soluce-astuces/1859581/gyrocanonnier-modifie-ff7-rebirth-comment-battre-ce-boss.htm</li>
+<li>jeuxvideo.com, boss Gigatrix : https://www.jeuxvideo.com/wikis-soluce-astuces/1859601/gigatrix-final-fantasy-vii-rebirth-comment-battre-ce-boss.htm</li>
+</ul>
+<p><strong>Recoupements</strong> : le <strong>Gyrocanonnier modifié</strong> est donné <em>sensible à la Foudre</em> par les deux sources, avec le même enchaînement <strong>Rotation enflammée → Système de refroidissement</strong> comme fenêtre de fragilisation. jeuxvideo.com ajoute seul la <strong>sensibilité au Vent</strong>, les <strong>flammes laissées au sol</strong> qui coûtent des PV, les <strong>Grenades à gaz antipersonnel</strong> <em>(Sommeil, Magie en baisse)</em>, le détail du <strong>canon ionique</strong> et le <strong>Rayon à particules type-100</strong>, plus la précision qu'<strong>il ne refroidit pas une seconde fois</strong> après la dernière Rotation enflammée. ActuGaming apporte seul le fait que la <strong>Décharge ionique revient trois fois</strong>, le <strong>troisième coup étant dévastateur</strong>.</p>
+<p>Le <strong>Gigatrix</strong> est donné <em>vulnérable au Feu et au Poison</em> par les deux. jeuxvideo.com apporte l'<strong>ouverture à Toxine / Extra-Toxine</strong> pour une fragilisation instantanée, les noms d'attaques <em>(<strong>Giga-choc</strong>, <strong>Lacération</strong>, <strong>Double lacération</strong>, <strong>Tournoiement caudal</strong>, <strong>Cyclones cocatriciens</strong>, <strong>Ouragan de poussière</strong>)</em> et le fait que <strong>Souffle pétrifiant se crache en ligne droite</strong>. ActuGaming apporte la combinaison <strong>Choc combustible</strong> <em>(Barret)</em> → <strong>Enseignements secrets</strong> <em>(Tifa)</em> → <strong>attaque spéciale de Tifa</strong> pour gonfler le multiplicateur.</p>
+<p><strong>Divergence tranchée</strong> : sur les cyclones, ActuGaming dit de lancer « un sort <strong>autre que Vent</strong> » et jeuxvideo.com précise « un sort de <strong>Feu</strong> ». Les deux sont compatibles ; le guide retient le <strong>Feu</strong>, la réponse la plus précise.</p>
+<p><strong>Troisième variante de nom relevée</strong> : ActuGaming parle d'une « <strong>action synchronisée</strong> Cloud/Aerith <strong>Tranchant magique</strong> », après « compétence synchronisée » ailleurs et « attaque de synergie » chez jeuxvideo.com. C'est la <strong>troisième</strong> formulation rencontrée pour les attaques en tandem, ce qui confirme la réserve générale notée plus haut : le guide <strong>décrit la mécanique</strong> en plus de nommer la commande.</p>
+<h3 id="08-chapitre-8-le-gold-saucer">08 — Chapitre 8 : Le Gold Saucer</h3>
+<ul>
+<li>ActuGaming, chapitre 8 : https://www.actugaming.net/solution-chapitre-8-final-fantasy-vii-rebirth-627810/</li>
+<li>jeuxvideo.com, boss Dyne : https://www.jeuxvideo.com/wikis-soluce-astuces/1859613/dyne-final-fantasy-vii-rebirth-comment-battre-ce-boss.htm</li>
+<li>jeuxvideo.com, boss Batrachar d'assaut <em>(Palmer)</em> : https://www.jeuxvideo.com/wikis-soluce-astuces/1859669/batrachar-d-assaut-ff7-rebirth-comment-battre-palmer.htm</li>
+</ul>
+<p><strong>Recoupements</strong> : <strong>Dyne</strong> est donné <em>sensible au Feu</em>, <strong>combattu par Barret seul</strong>, avec deux phases séparées par la <strong>fabrication du bras métallique</strong> à mi-vie, par les deux sources. jeuxvideo.com apporte la liste complète des attaques <em>(<strong>Munitions explosives</strong>, <strong>Tir paralysant</strong>, <strong>Mines détectrices</strong> et leurs <strong>dômes orange</strong>, <strong>Repentance</strong> qui finit par détruire les débris, <strong>Explosion à bout portant</strong>, <strong>Fouettement métallique</strong>, <strong>Rayon fantôme</strong>, <strong>Onde paralysante</strong>, <strong>Tentacules barbelés</strong>, <strong>Martèlement métallique</strong>, <strong>Fureur maximale</strong>, <strong>Cocktail Molotov</strong> au dernier tiers)</em> et la règle décisive : en phase 2, le seul moyen de le fragiliser est d'interrompre ses attaques et de détruire son bras. ActuGaming apporte le blocage <strong>R1</strong> comme source d'ATB et les compétences de Barret à employer <em>(<strong>Grosse colère</strong>, <strong>Colère maximale</strong>, <strong>Bombe grenade</strong>)</em>.</p>
+<p><strong>Confirmation du vocabulaire</strong> : la liste des lots des guichets de Points Gold Saucer donnée par ActuGaming cite explicitement des « <strong>Codex</strong> », ce qui <strong>confirme une troisième fois</strong> que <em>codex</em> est bien le terme français du système de progression, et non « Folio ».</p>
+<p><strong>Table du Séminaire de l'arnaque</strong> : les cinq personnages et leurs affirmations vraies et fausses sont donnés intégralement par ActuGaming. Le guide les reproduit sous forme de tableau en précisant que la personne qui dit vrai change d'une partie à l'autre : seul le <strong>sujet</strong> de chacun est fixe.</p>
+<p><strong>Divergence interne à la source</strong> : l'attaque de charge du <strong>Bagnadrana</strong> est appelée <strong>Charge rapace</strong> au chapitre 7 et <strong>Charge vorace</strong> au chapitre 8 par ActuGaming. Le guide signale les deux et marque <strong><span class="a-verifier">⚠️ à vérifier en jeu</span></strong>.</p>
+<h3 id="09-chapitre-9-a-lecoute-de-la-planete">09 — Chapitre 9 : À l'écoute de la planète</h3>
+<ul>
+<li>ActuGaming, chapitre 9 : https://www.actugaming.net/solution-chapitre-9-final-fantasy-vii-rebirth-628561/</li>
+<li>jeuxvideo.com, boss Spécimen H1024 : https://www.jeuxvideo.com/wikis-soluce-astuces/1859700/specimen-h1024-ff7-rebirth-comment-battre-ce-boss.htm</li>
+<li>jeuxvideo.com, boss Jument Écarlate II : https://www.jeuxvideo.com/wikis-soluce-astuces/1859709/jument-ecarlate-ii-ff7-rebirth-comment-battre-scarlet.htm</li>
+</ul>
+<p><strong>Recoupements</strong> : le <strong>Spécimen H1024</strong> est donné <em>sensible à la Glace</em> par les deux sources, avec la même mécanique centrale — <strong>interrompre l'Ingestion de mako</strong> — et la même phase 2 marquée par <strong>Overdose de mako</strong> et l'auto-Poison. jeuxvideo.com confirme seul l'équipe limitée à Barret, Cait Sith, Cloud et Red XIII, et apporte les matérias à prévoir <em>(<strong>Annihilation</strong> et <strong>Protection</strong>)</em>, la préférence pour l'<strong>équipement à défense magique élevée</strong>, la liste des sorts <em>(Extra-Feu, Méga-Feu, Extra-Foudre, Méga-Foudre)</em>, <strong>Dévorement de mako</strong>, <strong>Tape terrible</strong>, <strong>Grosse gifle</strong> et <strong>Rage incontrôlable</strong>.</p>
+<p>La <strong>Jument Écarlate II</strong> est donnée <em>sensible à la Foudre</em> par les deux, avec les <strong>trois paires de bras successives</strong> <em>(sabres, canons magitech, gantelets)</em> et Scarlet à frapper quand elle sort du cockpit. jeuxvideo.com confirme l'<strong>équipe obligatoire Aerith, Tifa, Yuffie</strong>, recommande le <strong>Ninjutsu de Foudre de Yuffie</strong>, et apporte une information décisive qu'ActuGaming omet : les gantelets ne sont pas sensibles à la Foudre et résistent énormément au physique — d'où le conseil de n'en traiter qu'un à la fois.</p>
+<p><strong>Confirmation importante</strong> : la page du Spécimen H1024 établit que <strong>Cait Sith est jouable dès le chapitre 9</strong>, ce qui recoupe les <strong>deux armes de Cait Sith</strong> trouvées dans ce chapitre.</p>
+<p><strong>Divergence interne à la source</strong> : la compétence de Tifa est appelée <strong>Enseignements secrets</strong> au chapitre 7 et <strong>Enseignements sacrés</strong> au chapitre 9 par ActuGaming. Le guide retient <strong>Enseignements secrets</strong> <em>(forme la plus fréquente)</em> et signale l'autre. <strong>À vérifier en jeu.</strong></p>
+<h3 id="10-chapitre-10-protecteur-de-la-vallee">10 — Chapitre 10 : Protecteur de la vallée</h3>
+<ul>
+<li>ActuGaming, chapitre 10 : https://www.actugaming.net/solution-chapitre-10-final-fantasy-vii-rebirth-629786/</li>
+<li>jeuxvideo.com, boss Gi Nattak : https://www.jeuxvideo.com/wikis-soluce-astuces/1862274/gi-nattak-ff7-rebirth-comment-battre-ce-boss.htm</li>
+</ul>
+<p><strong>Recoupements</strong> : <strong>Gi Nattak</strong> est donné <strong>sans faiblesse élémentaire</strong>, <strong>combattu par Barret et Red XIII seulement</strong>, avec les <strong>Flammes d'âme</strong> et la <strong>Malédiction des Gi</strong> comme tournant, et <strong>Glas</strong> au dernier quart de vie, par les deux sources. jeuxvideo.com apporte la <strong>liste exacte des quatre malédictions</strong> <em>(PV réduits de moitié, PM réduits de moitié, diminution de l'ATB, zone réduite)</em>, le fait qu'il <strong>se déplace majoritairement dans les airs</strong> — d'où la priorité à <strong>Barret</strong> et à <strong>Grosse décharge</strong> — , <strong>Agrippement spirituel</strong>, et l'intérêt de la <strong>garde double avec R1</strong>. ActuGaming apporte <strong>Lance du chagrin</strong>, <strong>Lance de l'indignation</strong>, <strong>Flammes spectrales</strong>, et l'astuce décisive : infliger un Choc annule les malus déjà reçus.</p>
+<p><strong>Divergence mineure</strong> : ActuGaming place l'apparition des <strong>Flammes d'âme</strong> à <strong>un quart de PV retirés</strong>, jeuxvideo.com <strong>après le premier état de Choc</strong>. Les deux descriptions sont compatibles dans la pratique ; le guide les donne ensemble.</p>
+<p><strong>Noms de salles</strong> : les salles de la caverne — <strong>Salle de la Trahison</strong>, <strong>Salle de la Divagation</strong>, <strong>Salle du Sacrifice</strong> — ne sont données que par ActuGaming ; jeuxvideo.com parle de « <strong>Grotte des Gi</strong> ». Le guide retient les noms de salles, plus utiles au joueur.</p>
+<h3 id="11-chapitre-11-un-village-natal-meconnaissable">11 — Chapitre 11 : Un village natal méconnaissable</h3>
+<ul>
+<li>ActuGaming, chapitre 11 : https://www.actugaming.net/solution-chapitre-11-final-fantasy-vii-rebirth-631595/</li>
+<li>jeuxvideo.com, boss Variant diabolique, Yin &amp; Yang, Spécimen oublié, Bête galienne, Rochey <em>(chapitre 11)</em> : pages 1865046, 1865047, 1865048, 1865049 et 1865050 du wiki.</li>
+</ul>
+<p><strong>Cinq boss dans un seul chapitre</strong>, ce qui en fait le plus chargé du jeu avant le chapitre 13. Le code du coffre de la salle des chariots — <strong>36 10 59 97</strong> — est donné explicitement par ActuGaming, ainsi que son emplacement <em>(le mur caché par les chariots)</em>. Le contenu du coffre n'est donné par aucune source : marqué <strong>à vérifier en jeu</strong>.</p>
+<p><strong>Point de vocabulaire</strong> : ActuGaming qualifie la mécanique de <strong>lancer de caisses du gros mog</strong> de « feature la moins inspirée » du jeu, et signale que <strong>passer du pavé tactile au joystick gauche</strong> améliore la visée. Ce genre de conseil de confort n'apparaît nulle part ailleurs et a été conservé.</p>
+<p><strong>Vincent Valentine</strong> rejoint le groupe à la fin du chapitre <strong>sur le plan narratif seulement</strong> : il <strong>n'est pas jouable</strong> dans <em>Rebirth</em>. Le guide le précise, car la formulation « un nouveau se joint à vous » peut induire en erreur.</p>
+<h3 id="12-chapitre-12-en-quete-de-la-pierre-cle">12 — Chapitre 12 : En quête de la pierre-clé</h3>
+<ul>
+<li>ActuGaming, chapitre 12 : https://www.actugaming.net/solution-chapitre-12-final-fantasy-vii-rebirth-633274/</li>
+<li>jeuxvideo.com, boss Apsu, Elena et Rude <em>(chapitre 12)</em>, Rufus Shinra : pages 1865226, 1865227 et 1865228 du wiki.</li>
+</ul>
+<p><strong>Le chapitre d'ouverture du jeu</strong> : c'est ici que le <strong>déplacement rapide sur toute la carte</strong> se débloque et que <strong>six quêtes annexes</strong> apparaissent, une par région. La liste nominative des six quêtes et des nouveaux défis de mini-jeux vient d'ActuGaming.</p>
+<p><strong>Deux avertissements de préparation</strong> repris tels quels, parce qu'ils conditionnent la réussite du chapitre : <strong>équiper une protection contre Mort Subite</strong> <em>(matéria <strong>Annihilation</strong> côté équipement, ou accessoire du type <strong>Écharpe de rancune</strong>)</em> <strong>avant la Grande bataille</strong>, à cause des coups de couteau des <strong>Tomberrys</strong> ; et garder la Transcendance chargée pour la phase 2 de Rufus, quand <strong>Ténébro</strong> arrive.</p>
+<p><strong>Divergence interne à la source</strong> : la compétence de Cloud est appelée <strong>Âme brave</strong> au chapitre 9 et <strong>Âme de bravoure</strong> au chapitre 12 ; de même, <strong>Bravoure de soldat</strong> apparaît aussi sous la forme « Bravoure du soldat ». Le guide tient <strong>Âme brave</strong> et <strong>Bravoure de soldat</strong> partout, et le signale.</p>
+<h3 id="13-chapitre-13-le-temple-des-anciens">13 — Chapitre 13 : Le temple des Anciens</h3>
+<ul>
+<li>ActuGaming, chapitre 13 : https://www.actugaming.net/solution-chapitre-13-final-fantasy-vii-rebirth-634007/</li>
+<li>jeuxvideo.com, boss Dragon rouge, Titan d'acier, Réno et Rude, Elena et Tseng, Porte démoniaque : pages 1866988, 1866989, 1866990, 1866991 et 1866992 du wiki.</li>
+</ul>
+<p><strong>Le chapitre le plus long du jeu</strong>, et celui qui contient le <strong>point de non-retour</strong> : <strong>s'amarrer au port de Northwood</strong> ferme le monde ouvert jusqu'à la fin du jeu et la <strong>sélection de chapitres</strong>. Cette information est donnée explicitement par ActuGaming et occupe une section à part dans le guide.</p>
+<p><strong>Cinq boss</strong>, <strong>cinq engrenages gravitationnels</strong> <em>(Astre rubis, émeraude, saphir, topaze, améthyste)</em> et <strong>sept armes</strong>. <strong>Trois matérias de niveau max</strong> — <strong>Chakra</strong>, <strong>Garde renforcée</strong>, <strong>Annihilation</strong> — plus <strong>PC augmentés</strong> et <strong>Gain d'expérience</strong>, toutes <strong>hors du chemin principal</strong>. Le guide signale pour chaque engrenage qu'il faut faire le détour avant de prendre la position utile à la progression, car plusieurs coffres ne sont accessibles que dans une position intermédiaire.</p>
+<p><strong>Mécanique propre à Aerith</strong> : le système d'<strong>énergie</strong> et de <strong>vaisseaux</strong>, avec le détail des <strong>bonus de combat</strong> <em>(Foi, Récupération, et Mur aux trois quarts du cercle)</em> conservés <strong>tant que l'énergie n'est pas transférée</strong>. Information donnée par ActuGaming seul, et stratégiquement importante.</p>
+<h3 id="14-chapitre-14-un-monde-a-lagonie">14 — Chapitre 14 : Un monde à l'agonie</h3>
+<ul>
+<li>ActuGaming, chapitre 14 : https://www.actugaming.net/soluce-chapitre-14-final-fantasy-vii-rebirth-634011/</li>
+<li>jeuxvideo.com, boss Jénova-VIE, Séphiroth, Séphiroth réincarné : pages 1867154, 1867155 et 1867156 du wiki.</li>
+</ul>
+<p><strong>Trois pages de boss pour quatre affrontements</strong> : <strong>Séphiroth</strong> est combattu <strong>deux fois</strong> — avec <strong>Zack</strong>, puis avec <strong>Aerith</strong> — et les deux relèvent de la même page.</p>
+<p class="alerte">⚠️ Le conseil structurant du chapitre, donné par ActuGaming et repris en tête de section dans le guide : tous les combattants sauf Cloud commencent Jénova-VIE avec leur Transcendance chargée à fond, mais la vie de Jénova reste bloquée à un tiers jusqu'à la séparation en duos — il faut donc garder les Transcendances pour les ailes, en phase de duos.</p>
+<p><strong>Honnêteté sur le rêve d'ouverture</strong> : les <strong>trois choix du Secteur 5</strong> <em>(le cadeau, la friandise, la pose du photographe)</em> <strong>n'ont aucune incidence</strong>, et la source le dit explicitement. Le guide le reprend plutôt que de laisser le joueur chercher une « bonne » réponse.</p>
+<p><strong>Divergence interne à la source</strong> : la compétence d'Aerith est écrite <strong>Rayon de jugement</strong> au chapitre 13 et <strong>Rayon du jugement</strong> au chapitre 14. <strong>À vérifier en jeu.</strong></p>
+<h2 id="bilan-des-divergences-de-noms-relevees" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Bilan des divergences de noms relevées</span></h2>
+<p>Le tableau ci-dessous rassemble les <strong>flottements de nommage</strong> rencontrés dans les sources françaises, tous marqués <strong><span class="a-verifier">⚠️ à vérifier en jeu</span></strong> dans le guide. Dans chaque cas, le guide <strong>tranche une fois</strong> et <strong>tient le choix partout</strong>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Forme retenue</th>
+<th>Autre forme rencontrée</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Codex</strong></td>
+<td>« Folio »</td>
+<td>arbre de progression ; <strong>codex</strong> confirmé trois fois <em>(ActuGaming ch. 2, jeuxvideo.com, lots PGS ch. 8)</em></td>
+</tr>
+<tr>
+<td><strong>Compétence synchronisée</strong> / <strong>attaque synchronisée</strong></td>
+<td>« capacité de synergie », « attaque de synergie », « action synchronisée »</td>
+<td>partout ; <strong>quatre formulations différentes relevées</strong></td>
+</tr>
+<tr>
+<td><strong>Tornade renversante</strong></td>
+<td>« Tornade aérienne »</td>
+<td>compétence des gants sylphide, ch. 3</td>
+</tr>
+<tr>
+<td><strong>Enseignements secrets</strong></td>
+<td>« Enseignements sacrés »</td>
+<td>compétence de Tifa, ch. 7 et ch. 9</td>
+</tr>
+<tr>
+<td><strong>Âme brave</strong></td>
+<td>« Âme de bravoure »</td>
+<td>compétence de Cloud, ch. 9 et ch. 12</td>
+</tr>
+<tr>
+<td><strong>Bravoure de soldat</strong></td>
+<td>« Bravoure du soldat »</td>
+<td>posture de Cloud, ch. 4, 11 et 12</td>
+</tr>
+<tr>
+<td><strong>Rayon du jugement</strong></td>
+<td>« Rayon de jugement »</td>
+<td>compétence d'Aerith, ch. 13 et ch. 14</td>
+</tr>
+<tr>
+<td><strong>Charge rapace</strong></td>
+<td>« Charge vorace »</td>
+<td>attaque du Bagnadrana, ch. 7 et ch. 8</td>
+</tr>
+<tr>
+<td><strong>Hojo</strong></td>
+<td>« Hôjô »</td>
+<td>nom du professeur</td>
+</tr>
+<tr>
+<td><strong>Midgardsormr</strong></td>
+<td>« Midgarsormr »</td>
+<td>boss du ch. 2 et carte de Queen's Blood du ch. 5</td>
+</tr>
+<tr>
+<td><strong>Jénova-NAISSANCE</strong></td>
+<td>« Jénova-RENAISSANCE »</td>
+<td>boss du ch. 5</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="sources-des-parties-de-region-15-a-21" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Sources des parties de région (15 à 21)</span></h2>
+<p>Les six régions et l'Océan Central reposent <strong>entièrement sur jeuxvideo.com</strong>, qui est la seule source française à couvrir les huit types de rapports de Chadley page par page. Chaque région a mobilisé <strong>7 à 9 pages distinctes</strong> : puits de vie, rapports de chasse, rapports d'enquête, rapports d'excavation, rapports Esper, rapport mog, rapport secret, rapport chocobo le cas échéant, et la page des quêtes annexes. La <strong>carte complète des url</strong> est reportée dans les notes de travail de la session.</p>
+<p><strong>Pourquoi une seule source ici</strong> : ActuGaming et Millenium couvrent le <strong>cheminement narratif</strong>, pas le détail exhaustif des rapports. Pour les régions, jeuxvideo.com donne les <strong>emplacements exacts</strong>, les <strong>niveaux recommandés</strong>, les <strong>objectifs de chaque chasse</strong>, les <strong>recettes de chaque excavation</strong>, le <strong>contenu complet de chaque Boutique mog</strong> et les <strong>récompenses de chaque quête</strong> — rien d'équivalent en français. Les chiffres ont donc été <strong>recoupés en interne</strong> : total des rapports par type, cohérence des niveaux, et surtout les <strong>dépendances croisées entre régions</strong>, qui sont le vrai apport du travail de synthèse.</p>
+<h3 id="les-dependances-croisees-relevees">Les dépendances croisées relevées</h3>
+<p>C'est l'information la plus utile de ce bloc, et <strong>aucune page source ne la présente d'ensemble</strong> — elle a été reconstituée en croisant les pages de quatre régions.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ce qu'il faut</th>
+<th>Où l'obtenir</th>
+<th>Pour quoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Puce de l'engrenage d'éolienne</strong></td>
+<td>Rapport d'excavation 1 de la <strong>Prairie</strong></td>
+<td>Quête <strong>Là où souffle le vent</strong> <em>(Prairie)</em></td>
+</tr>
+<tr>
+<td><strong>Serre de Quetzalcoatl</strong></td>
+<td>Rapport secret de la <strong>Prairie</strong></td>
+<td>Quête <strong>Là où souffle le vent</strong> <em>(Prairie)</em></td>
+</tr>
+<tr>
+<td><strong>Belle</strong> <em>(chocobo noir)</em></td>
+<td>Rapport chocobo de <strong>Junon</strong></td>
+<td>3 puits de vie, 2 chasses, 2 autels de <strong>Junon</strong></td>
+</tr>
+<tr>
+<td><strong>Puce de valve de chaudière</strong></td>
+<td>Rapport d'excavation 1 de <strong>Corel</strong></td>
+<td>Quête <strong>La rénovation du gîte de Johnny</strong> <em>(Corel)</em></td>
+</tr>
+<tr>
+<td><strong>Couronne du Roi tomberry</strong></td>
+<td>Rapport secret de <strong>Corel</strong>, <strong>volée avec Vol en état de Choc</strong></td>
+<td>Quête <strong>La rénovation du gîte de Johnny</strong> <em>(Corel)</em></td>
+</tr>
+<tr>
+<td><strong>Puce de piège à oiseaux</strong></td>
+<td>Rapport d'excavation 2 de <strong>Corel</strong></td>
+<td>Quête <strong>Le petit Piou-piou perdu</strong> <em>(Corel)</em></td>
+</tr>
+<tr>
+<td><strong>Sarment du grand morbol</strong></td>
+<td>Rapport secret de <strong>Gongaga</strong></td>
+<td><strong>Orbe senteur de morbol</strong> <em>(Gongaga)</em> <strong>et</strong> quête <strong>Les démons surgis des flots</strong> <em>(Corel)</em></td>
+</tr>
+<tr>
+<td><strong>Corne de jabberwocky</strong></td>
+<td>Rapport secret de <strong>Cosmo</strong></td>
+<td><strong>Bague du dragon maléfique</strong> <em>(Cosmo)</em> <strong>et</strong> quête <strong>Les démons surgis des flots</strong> <em>(Corel)</em></td>
+</tr>
+<tr>
+<td><strong>Détecteur de vibrations</strong></td>
+<td><strong>Boutique mog de rang 4 ou plus</strong> <em>(Corel)</em>, 3 médailles</td>
+<td>Quête <strong>Menace sous les dunes</strong> <em>(Cosmo)</em></td>
+</tr>
+<tr>
+<td><strong>Aponi</strong> <em>(chocobo céleste)</em></td>
+<td>Rapport chocobo de <strong>Cosmo</strong></td>
+<td>2 puits de vie, 1 autel, plusieurs accès de <strong>Cosmo</strong></td>
+</tr>
+<tr>
+<td><strong>Sirèna</strong> <em>(chocobo marin)</em></td>
+<td>Rapport chocobo de <strong>Nibel</strong></td>
+<td>3 puits de vie, 2 autels, le rapport mog, 2 chasses et 2 rapports d'enquête de <strong>Nibel</strong></td>
+</tr>
+<tr>
+<td><strong>Protorelique de Gob le Kid</strong></td>
+<td>Rapport d'enquête 4 de <strong>Corel</strong></td>
+<td>Débloque l'<strong>Île de Gilgamesh</strong> et les rapports de l'<strong>Océan Central</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>Deux pièges définitifs</strong> ressortent de ce tableau et sont signalés en tête des parties concernées :</p>
+<ol>
+<li>la couronne du Roi tomberry doit être volée avec la compétence Vol pendant son état de Choc — le tuer sans la voler oblige à refaire le combat ;</li>
+<li>le Sarment du grand morbol et la Corne de jabberwocky ne doivent pas être consommés en accessoires, sous peine de devoir refaire les rapports secrets de Gongaga et de Cosmo.</li>
+</ol>
+<h3 id="progression-des-boutiques-mog">Progression des Boutiques mog</h3>
+<p>Le rang de la Boutique mog est global et cumulatif, pas régional. Reconstitué page par page :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Rang</th>
+<th>Obtenu à</th>
+<th>Nouveautés notables</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Prairie</strong></td>
+<td>Éther, Rubis, Émeraudes, 1 pendantéria, 2 codex</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Junon</strong></td>
+<td>Pendantéria Garde précise renforcée</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Corel</strong> <em>(rapport mog 1)</em></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Corel</strong> <em>(rapport mog 2)</em></td>
+<td><strong>Pendantéria Soins</strong>, <strong>Pendantéria Feu</strong>, <strong>Détecteur de vibrations</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Gongaga</strong></td>
+<td><strong>Saphirs</strong>, <strong>matéria Élévation de matéria</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Cosmo</strong></td>
+<td><strong>Élixirs</strong>, <strong>Pendantéria Renforcement offensif</strong>, <strong>3 Élévation de matéria</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong> <em>(maximum)</em></td>
+<td><strong>Nibel</strong></td>
+<td><strong>Amulette mog</strong>, <strong>codex Combat à l'arme à feu IV</strong>, <strong>codex Techniques de ninjutsu V</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Corel est la seule région à avoir deux rapports mog, ce qui explique le saut du rang 3 au rang 4.</p>
+<h3 id="erreurs-de-la-source-relevees">Erreurs de la source relevées</h3>
+<p>Trois <strong>erreurs de titrage ou de comptage</strong> chez jeuxvideo.com, signalées dans les parties concernées :</p>
+<ol>
+<li>la page du <strong>rapport mog de Junon</strong> est titrée <strong>« Région de la Prairie »</strong> — son contenu décrit bien Junon ;</li>
+<li>la page du <strong>rapport chocobo de Cosmo</strong> est titrée <strong>« Région de Nibel »</strong> dans son corps de texte et <strong>« Région de Corel »</strong> dans son chapeau — son contenu décrit bien Cosmo <em>(Aponi, ranch de Kamaria)</em> ;</li>
+<li>la page des <strong>quêtes de Cosmo</strong> annonce <strong>4 quêtes</strong> mais <strong>en détaille 5</strong> ; le guide retient <strong>5</strong>.</li>
+</ol>
+<p>Et une <strong>duplication de titre</strong> : la page de l'<strong>Océan Central</strong> donne deux fois le titre <strong>« Kujata et Phénix »</strong> pour les rapports d'enquête 3 et 4 ; le rapport 4 est en réalité Alexandre et Odin, comme son contenu l'établit.</p>
+<h3 id="totaux-reconstitues">Totaux reconstitués</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Type de rapport</th>
+<th>Prairie</th>
+<th>Junon</th>
+<th>Corel</th>
+<th>Gongaga</th>
+<th>Cosmo</th>
+<th>Nibel</th>
+<th>Océan</th>
+<th><strong>Total</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Puits de vie</strong></td>
+<td>6</td>
+<td>4</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>4</td>
+<td>—</td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Chasse</strong></td>
+<td>6</td>
+<td>4</td>
+<td>6</td>
+<td>6</td>
+<td>6</td>
+<td>4</td>
+<td>—</td>
+<td><strong>32</strong></td>
+</tr>
+<tr>
+<td><strong>Enquête</strong></td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td>4</td>
+<td><strong>28</strong></td>
+</tr>
+<tr>
+<td><strong>Excavation</strong></td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>—</td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Esper</strong></td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>—</td>
+<td><strong>18</strong></td>
+</tr>
+<tr>
+<td><strong>Mog</strong></td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>—</td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td><strong>Secret</strong></td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>—</td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>Chocobo</strong></td>
+<td>—</td>
+<td>1</td>
+<td>—</td>
+<td>—</td>
+<td>1</td>
+<td>1</td>
+<td>—</td>
+<td><strong>3</strong></td>
+</tr>
+<tr>
+<td><strong>Quêtes annexes</strong></td>
+<td>6</td>
+<td>7</td>
+<td>9</td>
+<td>6</td>
+<td>5</td>
+<td>3</td>
+<td>—</td>
+<td><strong>36</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Trois rapports chocobo seulement</strong> : <strong>Piko</strong> <em>(Prairie)</em> se capture dans le <strong>chapitre 2</strong> et <strong>Fango</strong> <em>(Gongaga)</em> est <strong>confié par Cissnei au chapitre 9</strong> — ni l'un ni l'autre ne passe par un rapport de Chadley. Les <strong>trois rapports chocobo</strong> concernent donc <strong>Belle</strong> <em>(Junon)</em>, <strong>Aponi</strong> <em>(Cosmo)</em> et <strong>Sirèna</strong> <em>(Nibel)</em>.</p>
+<p class="alerte">⚠️ Ces totaux sont reconstitués par addition des pages de jeuxvideo.com, et non repris d'un décompte officiel. Ils sont cohérents avec les six protoreliques régionales plus celle de Gob le Kid, soit les <strong>sept protoreliques</strong> annoncées en phase 1, et avec les <strong>sept Espers</strong> à débloquer <em>(six régionaux plus Gilgamesh)</em>.</p>
+<h2 id="resolution-definitive-actions-et-competences-synchronisees" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>✅ Résolution définitive : actions et compétences synchronisées</span></h2>
+<p>Après quatre formulations différentes relevées au fil des chapitres, le guide de combat de jeuxvideo.com tranche la question sans ambiguïté en décrivant les deux mécaniques côte à côte, dans la même section :</p>
+<blockquote>
+<p><em>« Dans ff7 Rebirth, vous avez accès à de nouveaux types de capacités : <strong>les actions et compétences synchronisées</strong>. »</em></p>
+</blockquote>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Terme officiel</th>
+<th>Comment ça marche</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Action synchronisée</strong></td>
+<td>Accessible <strong>à tout moment en appuyant sur R1</strong> en combat, puis <strong>la touche associée</strong>. <strong>Offensives</strong> sur <strong>Carré</strong> et <strong>Triangle</strong>, <strong>défensives</strong> sur <strong>Croix</strong> et <strong>Rond</strong>. Le détail se consulte <strong>en appuyant sur le pad</strong></td>
+<td><strong>Gratuite</strong></td>
+</tr>
+<tr>
+<td><strong>Compétence synchronisée</strong></td>
+<td><strong>Débloquée dans le codex</strong>, via une <strong>Librairie</strong> ou un <strong>point de vente Maghnata</strong>. Il faut avoir effectué un nombre de compétences correspondant aux petites barres à droite — et <strong>seules certaines compétences comptent</strong> : le sigle des barres s'affiche en bas à gauche quand la compétence est sélectionnée</td>
+<td><strong>Consomme les barres</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le guide a donc été corrigé rétroactivement</strong> : les parties <strong>01</strong>, <strong>03</strong> et <strong>07</strong> employaient « attaque synchronisée » pour la version gratuite ; elles disent maintenant <strong>action synchronisée</strong>. Les parties <strong>02</strong> à <strong>21</strong> étaient déjà correctes, puisqu'elles n'employaient « compétence synchronisée » que pour la version à barres.</p>
+<p>Et une information que seule cette page donne : les actions comme les compétences synchronisées font monter l'affinité avec le personnage concerné, mais uniquement la première fois que vous les utilisez. C'est reporté dans la partie <strong>26</strong>.</p>
+<h2 id="partie-32-astuces-trophees-et-secrets" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 32 — Astuces, trophées et secrets</span></h2>
+<ul>
+<li>ActuGaming, « Guide ff7 Rebirth : comment gagner de l'Exp, des PC et des gils rapidement » — https://www.actugaming.net/guide-gagner-exp-pc-gils-rapidement-final-fantasy-vii-rebirth-640733/
+<ul>
+<li>Le ×3 sur l'Exp et les PC après le générique, les prérequis du farm, les 5 emplacements de <strong>PC augmentés</strong>, <strong>Gain de gils</strong> (3 000 PGS, point de vente du Chocobo Square), <strong>Gain d'expérience</strong> (chapitre 13, Fontaine de la Repentance, Salle du Labyrinthe (Terre) – 1er niveau), le <strong>Bracelet chocobo</strong> (quête « Les arcanes du dressage »), le calcul ×6, les deux méthodes de farm (Rapport de chasse 2 de Corel avec <strong>Choc Mental</strong> ; « Défi à deux : Hors-la-loi décalés » avec <strong>Enchaînement rapide</strong>), ainsi que les passages sur la synthèse et sur l'économie.</li>
+</ul>
+</li>
+<li>ActuGaming, « Tous les trophées et succès de Final Fantasy VII Rebirth » — https://www.actugaming.net/trophees-succes-final-fantasy-vii-rebirth-643406/
+<ul>
+<li>La liste complète des trophées et leurs conditions d'obtention. Confirme indépendamment <strong>action synchronisée</strong> (trophée « Premiers pas synchronisés ») et <strong>compétence synchronisée</strong> (trophée « Synchronisateur compétent »), ainsi que le <strong>mode difficile</strong> (trophée « Autant se compliquer la tâche »).</li>
+</ul>
+</li>
+</ul>
+<h3 id="divergences-et-incertitudes-relevees-pour-la-partie-32">Divergences et incertitudes relevées pour la partie 32</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Ce que disent les sources</th>
+<th>Choix du guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rang du trophée « Gîte balnéaire 7 étoiles »</td>
+<td>La source le place juste après le platine sans préciser son rang</td>
+<td>Classé en <strong>or</strong>, marqué « <span class="a-verifier">⚠️ à vérifier en jeu</span> »</td>
+</tr>
+<tr>
+<td>Nom du paquebot du chapitre 5</td>
+<td>ActuGaming écrit « Shinra-Huit » dans la soluce, le libellé du trophée « Génie du Queen's Blood » dit « Shinra-8 »</td>
+<td>Les deux formes sont citées, la divergence est signalée</td>
+</tr>
+<tr>
+<td>Emplacement du <strong>Protège-bras de Cétra</strong> et de l'<strong>Amulette d'Hadès</strong></td>
+<td>Cités pour leurs emplacements de matérias, sans localisation précise</td>
+<td>Signalés « emplacement non documenté »</td>
+</tr>
+<tr>
+<td>Clins d'œil au jeu de 1997</td>
+<td>Aucune source ne les recense de façon exhaustive</td>
+<td>Seuls les clins d'œil explicitement signalés par les sources sont listés, avec une note qui le précise</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="annexes.html" rel="prev"><small>← Partie précédente</small><b>Annexes</b></a><a class="tout" href="final-fantasy-vii-rebirth.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Rebirth · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

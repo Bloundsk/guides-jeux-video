@@ -1,0 +1,2987 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La cuisine — toutes les recettes – Guide Spiritfarer</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Spiritfarer, La cuisine — toutes les recettes : D&#x27;abord : le grand fourneau d&#x27;Atul, pour 78 des 106 plats. Attention : un plat oublié au four brûle.">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/la-cuisine-toutes-les-recettes.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="La cuisine — toutes les recettes · Guide Spiritfarer">
+<meta property="og:description" content="Spiritfarer, La cuisine — toutes les recettes : D&#x27;abord : le grand fourneau d&#x27;Atul, pour 78 des 106 plats. Attention : un plat oublié au four brûle.">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/la-cuisine-toutes-les-recettes.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Spiritfarer", "item": "https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/"}, {"@type": "ListItem", "position": 3, "name": "La cuisine — toutes les recettes", "item": "https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/la-cuisine-toutes-les-recettes.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="spiritfarer" class="compact" data-partie="la-cuisine-toutes-les-recettes"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Spiritfarer</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Spiritfarer : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque"><em>Spiritfarer</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction-tout-ce-quil-faut-savoir-avant-dembarquer.html"><span class="num">✦</span><span class="libelle">Introduction — tout ce qu&#x27;il faut savoir avant d&#x27;embarquer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="le-seuil-eternel-et-les-premiers-pas.html"><span class="num">✦</span><span class="libelle">Le Seuil éternel et les premiers pas</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="la-region-de-hummingberg-le-printemps.html"><span class="num">✦</span><span class="libelle">La région de Hummingberg : le printemps</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="le-district-industriel.html"><span class="num">✦</span><span class="libelle">Le district industriel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="la-region-de-hummingberg-lhiver.html"><span class="num">✦</span><span class="libelle">La région de Hummingberg : l&#x27;hiver</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="la-region-de-furogawa.html"><span class="num">✦</span><span class="libelle">La région de Furogawa</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="la-region-doxbury.html"><span class="num">✦</span><span class="libelle">La région d&#x27;Oxbury</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="crows-end-le-sud-ouest.html"><span class="num">✦</span><span class="libelle">Crow&#x27;s End : le sud-ouest</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="crows-end-le-nord-est.html"><span class="num">✦</span><span class="libelle">Crow&#x27;s End : le nord-est</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="les-points-dinteret-en-mer.html"><span class="num">✦</span><span class="libelle">Les points d&#x27;intérêt en mer</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="gwen.html"><span class="num">✦</span><span class="libelle">Gwen</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="atul.html"><span class="num">✦</span><span class="libelle">Atul</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="summer.html"><span class="num">✦</span><span class="libelle">Summer</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="astrid.html"><span class="num">✦</span><span class="libelle">Astrid</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="giovanni.html"><span class="num">✦</span><span class="libelle">Giovanni</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="alice.html"><span class="num">✦</span><span class="libelle">Alice</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="gustav.html"><span class="num">✦</span><span class="libelle">Gustav</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="bruce-et-mickey.html"><span class="num">✦</span><span class="libelle">Bruce et Mickey</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="buck.html"><span class="num">✦</span><span class="libelle">Buck</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="beverly.html"><span class="num">✦</span><span class="libelle">Beverly</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="stanley.html"><span class="num">✦</span><span class="libelle">Stanley</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="elena.html"><span class="num">✦</span><span class="libelle">Elena</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="jackie-et-daria.html"><span class="num">✦</span><span class="libelle">Jackie et Daria</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="le-bateau-et-le-chantier-naval-dalbert.html"><span class="num">✦</span><span class="libelle">Le bateau et le chantier naval d&#x27;Albert</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-capacites-de-stella-et-les-sanctuaires.html"><span class="num">✦</span><span class="libelle">Les capacités de Stella et les sanctuaires</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-batiments-du-bateau.html"><span class="num">✦</span><span class="libelle">Les bâtiments du bateau</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="lagriculture-lelevage-et-les-ressources.html"><span class="num">✦</span><span class="libelle">L&#x27;agriculture, l&#x27;élevage et les ressources</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="#la-cuisine-toutes-les-recettes"><span class="num">✦</span><span class="libelle">La cuisine — toutes les recettes</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="la-peche-tous-les-poissons.html"><span class="num">✦</span><span class="libelle">La pêche — tous les poissons</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-metaux-les-gemmes-et-lartisanat.html"><span class="num">✦</span><span class="libelle">Les métaux, les gemmes et l&#x27;artisanat</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="les-evenements-maritimes.html"><span class="num">✦</span><span class="libelle">Les événements maritimes</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="la-fin-du-jeu-lily-et-hades.html"><span class="num">✦</span><span class="libelle">La fin du jeu — Lily et Hadès</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="les-succes-les-secrets-et-les-astuces.html"><span class="num">✦</span><span class="libelle">Les succès, les secrets et les astuces</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes-index-manquables-et-check-list-finale.html"><span class="num">✦</span><span class="libelle">Annexes — index, manquables et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-spiritfarer.html"><span class="num">✦</span><span class="libelle">Sources — Spiritfarer</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-28">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="la-cuisine-toutes-les-recettes">La cuisine — toutes les recettes</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-28"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-28">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>D'abord</strong> : le grand fourneau d'Atul, pour 78 des 106 plats.</li>
+<li><strong>Attention</strong> : un plat oublié au four brûle.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-28" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Les 106 plats du jeu, nommés, avec leurs ingrédients, leur type, leur taille et leur prix de vente.</p>
+<p>C'est la partie la plus utile du guide pour deux choses : nourrir treize esprits qui ont chacun des goûts précis, et remplir la collection du musée de Susan <em>(partie <strong>09</strong>)</em>.</p>
+<p>Et une bonne nouvelle, pour une fois. Deux sources françaises donnent les intitulés affichés à l'écran : le <strong>wiki français</strong> du jeu, et le <strong>guide Steam français</strong>, qui est à jour. Résultat : les 106 plats ont tous un nom français confirmé. C'est la seule partie du guide dans ce cas.</p>
+<p>Quand les deux sources divergent, le guide suit le <strong>guide Steam</strong>, qui est postérieur aux mises à jour : mollusques vapeur, ragoût de mollusques, salade de grains, gâteau de crabe, chaudrée de palourdes.</p>
+<h2 id="itineraire-28" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Comment on cuisine</strong>, et les deux règles du four.</li>
+<li><strong>Les 15 types de plats</strong>, <strong>en français.</strong></li>
+<li><strong>La liste des 106 plats.</strong></li>
+<li><strong>Les 13 plats préférés.</strong></li>
+<li><strong>Les catégories « cachées ».</strong></li>
+<li><strong>Les plats qui rapportent.</strong></li>
+<li><strong>Les 13 recettes absentes des sources françaises.</strong></li>
+</ol>
+<h2 id="deroule-pas-a-pas-28" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="comment-on-cuisine">Comment on cuisine</h3>
+<p>La cuisine est le premier bâtiment de production du jeu, et le plus important. Son plan vient de la quête d'ATUL <em>(partie <strong>11</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>L'enchaînement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Pêche ton premier poisson</strong> <em>(partie <strong>28</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Atul, affamé, te demande de le cuisiner</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Approche-toi du four et <strong>interagis</strong> avec un ingrédient de l'inventaire pour le mettre dedans</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>« Interagir » ajoute une unité</strong>, <strong>« Annuler » en retire une</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>« Confirmer » lance la cuisson</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Surveille le minuteur</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>La <strong>Lanternelle</strong> devient une paire de <strong>gants de cuisine</strong> pour sortir les plats <em>(partie <strong>24</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les deux règles du four.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La règle</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Un plat laissé trop longtemps brûle</strong></td>
+<td>Il est perdu — une notification en forme de casserole te suit sur le bateau quand c'est prêt</td>
+</tr>
+<tr>
+<td><strong>La cuisine de base ne prend qu'un ingrédient</strong></td>
+<td>L'amélioration de la cuisine débloque les plats à deux ingrédients</td>
+</tr>
+</tbody>
+</table></div>
+<p>L'amélioration de la cuisine est la plus importante du jeu.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>D'où elle vient</strong></td>
+<td><strong>La quête Grand fourneau d'ATUL</strong> <em>(partie <strong>11</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Ce qu'elle coûte</strong></td>
+<td>5 gelées scintillantes, 8 éclairs en bouteille, 12 tissus en lin, <strong>0 lueur</strong></td>
+</tr>
+<tr>
+<td><strong>Ce qu'elle débloque</strong></td>
+<td><strong>78 des 106 plats</strong> — <strong>tous ceux à deux ingrédients</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Autrement dit : avant cette amélioration, tu n'as accès qu'à <strong>26 recettes sur 106</strong>. Fais la quête d'Atul tôt.</p>
+<p>Et voici la mécanique qui rend la cuisine amusante : tu peux choisir une recette connue dans le livre, ou jeter deux ingrédients au hasard dans le four pour découvrir une recette.</p>
+<p>Le livre de recettes s'ouvre en sélectionnant le four.</p>
+<p>Et une combinaison qui ne marche pas donne un repas douteux : <strong>type Dégoûtant, 10 lueurs</strong>. Ce n'est pas une perte sèche — c'est une entrée du musée <em>(partie <strong>09</strong>)</em>.</p>
+<h3 id="les-15-types-de-plats">Les 15 types de plats</h3>
+<p>Chaque esprit aime certains types et déteste d'autres. C'est le levier principal de l'humeur <em>(parties <strong>10</strong> à <strong>22</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Type français</th>
+<th>Nombre de plats</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dessert</strong></td>
+<td><strong>16</strong></td>
+</tr>
+<tr>
+<td><strong>Exotique</strong></td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Réconfortant</strong></td>
+<td><strong>12</strong></td>
+</tr>
+<tr>
+<td><strong>Petit-déjeuner</strong></td>
+<td><strong>12</strong></td>
+</tr>
+<tr>
+<td><strong>À l'ancienne</strong></td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Stimulant</strong></td>
+<td><strong>9</strong></td>
+</tr>
+<tr>
+<td><strong>Cuisine du bistrot</strong></td>
+<td><strong>9</strong></td>
+</tr>
+<tr>
+<td><strong>Cuisine raffinée</strong></td>
+<td><strong>8</strong></td>
+</tr>
+<tr>
+<td><strong>Simple</strong></td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>Soupe</strong></td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>Santé</strong></td>
+<td><strong>5</strong></td>
+</tr>
+<tr>
+<td><strong>Salade</strong></td>
+<td><strong>5</strong></td>
+</tr>
+<tr>
+<td><strong>Goût à apprivoiser</strong></td>
+<td><strong>4</strong></td>
+</tr>
+<tr>
+<td><strong>Dégoûtant</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Incroyable</strong></td>
+<td><strong>0</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Le total dépasse 106 parce que 13 plats portent deux types, et parce que le papier fait maison et le charbon n’en portent aucun.</p>
+<p><strong>Et le type « incroyable » est une curiosité</strong> : le wiki français le liste parmi les 15 types, mais aucune recette ne le porte. ⚠️ <strong>à vérifier en jeu</strong> : <strong>à quoi il sert.</strong> Probablement une catégorie interne du jeu.</p>
+<p><strong>Et beaucoup de plats portent deux types</strong> : la bouillabaisse est Cuisine raffinée et Soupe, la frittata est Exotique et Petit-déjeuner. C'est pratique : un seul plat peut faire plaisir à deux esprits aux goûts opposés.</p>
+<p>Et deux pièges de type signalés par le wiki français :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le piège</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Certains plats comptent dans un type sans qu'il soit affiché</strong></td>
+<td>La soupe won-ton compte comme Soupe sans que ce soit indiqué</td>
+</tr>
+<tr>
+<td><strong>Il existe des catégories non listées</strong></td>
+<td>Voir la section « les catégories cachées » plus bas</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-106-plats-du-jeu">Les 106 plats du jeu</h3>
+<p><strong>Lis le tableau comme ceci</strong> :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Colonne</th>
+<th>Ce qu'elle veut dire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No</strong></td>
+<td>Le numéro dans le livre de recettes</td>
+</tr>
+<tr>
+<td><strong>Musée</strong></td>
+<td>Le numéro dans la collection du musée de Susan — « — » veut dire que le plat n'y compte pas</td>
+</tr>
+<tr>
+<td><strong>Ingrédients</strong></td>
+<td>Un seul si la cuisine n'est pas améliorée, <strong>deux sinon</strong></td>
+</tr>
+<tr>
+<td><strong>Prix</strong></td>
+<td>Le prix de vente en lueurs</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ Et la liste est classée par prix Croissant, <strong>comme dans le jeu.</strong> C'est aussi, en gros, l'ordre dans lequel tu les débloqueras.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>No</th>
+<th>Musée</th>
+<th>Plat</th>
+<th>Ingrédients</th>
+<th>Type</th>
+<th>Taille</th>
+<th>Prix</th>
+<th>Préféré de</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01</td>
+<td>01</td>
+<td>Poisson grillé</td>
+<td>Poisson/Céphalopode</td>
+<td><span class="badge neutre">Simple</span></td>
+<td>Petit</td>
+<td>35</td>
+<td></td>
+</tr>
+<tr>
+<td>02</td>
+<td>02</td>
+<td>Mollusques vapeur</td>
+<td>Mollusque</td>
+<td><span class="badge neutre">Goût à apprivoiser</span></td>
+<td>Petit</td>
+<td>40</td>
+<td></td>
+</tr>
+<tr>
+<td>03</td>
+<td>03</td>
+<td>Popcorn</td>
+<td>Maïs</td>
+<td><span class="badge neutre">Réconfortant</span></td>
+<td>Collation</td>
+<td>45</td>
+<td></td>
+</tr>
+<tr>
+<td>04</td>
+<td>04</td>
+<td>Fruit poché</td>
+<td>Fruit</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Petit</td>
+<td>50</td>
+<td></td>
+</tr>
+<tr>
+<td>05</td>
+<td>05</td>
+<td>Paella</td>
+<td>Mollusque + Grain</td>
+<td><span class="badge neutre">Exotique</span></td>
+<td>Régulier</td>
+<td>60</td>
+<td></td>
+</tr>
+<tr>
+<td>06</td>
+<td>06</td>
+<td>Crabe cuit</td>
+<td>Crabe des neiges</td>
+<td><span class="badge neutre">Cuisine raffinée</span></td>
+<td>Régulier</td>
+<td>70</td>
+<td></td>
+</tr>
+<tr>
+<td>07</td>
+<td>07</td>
+<td><strong>Homard Germinal</strong></td>
+<td>Homard</td>
+<td><span class="badge neutre">Cuisine raffinée</span></td>
+<td>Régulier</td>
+<td>70</td>
+<td></td>
+</tr>
+<tr>
+<td>08</td>
+<td>08</td>
+<td>Légumes grillés</td>
+<td>Légume-racine/Légume aromatique</td>
+<td><span class="badge neutre">Santé</span></td>
+<td>Petit</td>
+<td>75</td>
+<td></td>
+</tr>
+<tr>
+<td>09</td>
+<td>09</td>
+<td>Riz simple</td>
+<td>Riz</td>
+<td><span class="badge neutre">Simple</span></td>
+<td>Petit</td>
+<td>80</td>
+<td></td>
+</tr>
+<tr>
+<td>10</td>
+<td>10</td>
+<td>Croustiflammes inferno</td>
+<td>Flamboyante</td>
+<td><span class="badge neutre">Stimulant</span></td>
+<td>Collation</td>
+<td>100</td>
+<td></td>
+</tr>
+<tr>
+<td>11</td>
+<td>11</td>
+<td>Ragoût de mollusques</td>
+<td>Mollusque + Champignon/Légume</td>
+<td><span class="badge neutre">À l&#x27;ancienne</span></td>
+<td>Régulier</td>
+<td>110</td>
+<td></td>
+</tr>
+<tr>
+<td>12</td>
+<td>12</td>
+<td><strong>Salade de grains</strong></td>
+<td>Grain + Champignon/Légume</td>
+<td><span class="badge neutre">Salade</span></td>
+<td>Régulier</td>
+<td>115</td>
+<td>Summer</td>
+</tr>
+<tr>
+<td>13</td>
+<td>13</td>
+<td>Pain</td>
+<td>Farine <em>(pas farine de riz)</em></td>
+<td><span class="badge neutre">Simple</span></td>
+<td>Petit</td>
+<td>120</td>
+<td></td>
+</tr>
+<tr>
+<td>14</td>
+<td>14</td>
+<td>Bouilli du sud</td>
+<td>Crustacé + Grain</td>
+<td><span class="badge neutre">Exotique</span></td>
+<td>Régulier</td>
+<td>120</td>
+<td></td>
+</tr>
+<tr>
+<td>15</td>
+<td>15</td>
+<td>Curry de poisson</td>
+<td>Poisson + Grain</td>
+<td><span class="badge neutre">Exotique</span></td>
+<td>Régulier</td>
+<td>120</td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td>16</td>
+<td><strong>Soupe aux nouilles</strong></td>
+<td>Farine de riz</td>
+<td><span class="badge neutre">Soupe</span></td>
+<td>Petit</td>
+<td>120</td>
+<td>Astrid</td>
+</tr>
+<tr>
+<td>17</td>
+<td>17</td>
+<td>Cake aux palourdes</td>
+<td>Palourde + Farine</td>
+<td><span class="badge neutre">Exotique</span></td>
+<td>Régulier</td>
+<td>135</td>
+<td></td>
+</tr>
+<tr>
+<td>18</td>
+<td>18</td>
+<td>Bouillabaisse</td>
+<td>Poisson + Légume/Champignon</td>
+<td><span class="badge neutre">Cuisine raffinée + Soupe</span></td>
+<td>Régulier</td>
+<td>140</td>
+<td></td>
+</tr>
+<tr>
+<td>19</td>
+<td>19</td>
+<td><strong>Champignons grillés</strong></td>
+<td>Champignon</td>
+<td><span class="badge neutre">Santé</span></td>
+<td>Petit</td>
+<td>140</td>
+<td></td>
+</tr>
+<tr>
+<td>20</td>
+<td>20</td>
+<td>Bisque</td>
+<td>Crustacé + Champignon/Légume</td>
+<td><span class="badge neutre">Cuisine raffinée + Soupe</span></td>
+<td>Régulier</td>
+<td>140</td>
+<td></td>
+</tr>
+<tr>
+<td>21</td>
+<td>21</td>
+<td><strong>Café noir</strong></td>
+<td>Grains de café</td>
+<td><span class="badge neutre">Stimulant</span></td>
+<td>Collation</td>
+<td>140</td>
+<td>Gwen</td>
+</tr>
+<tr>
+<td>22</td>
+<td>22</td>
+<td>Tarte aux pommes</td>
+<td>Pomme + Farine</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Régulier</td>
+<td>140</td>
+<td></td>
+</tr>
+<tr>
+<td>23</td>
+<td>23</td>
+<td><strong>Tarte aux baies</strong></td>
+<td>Farine + Baies</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Petit</td>
+<td>150</td>
+<td></td>
+</tr>
+<tr>
+<td>24</td>
+<td>24</td>
+<td>Tartelette aux poires</td>
+<td>Poire + Farine</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Petit</td>
+<td>150</td>
+<td></td>
+</tr>
+<tr>
+<td>25</td>
+<td>25</td>
+<td>Pâté au poisson</td>
+<td>Poisson/Céphalopode <em>(pas calmar)</em> + Farine</td>
+<td><span class="badge neutre">À l&#x27;ancienne</span></td>
+<td>Régulier</td>
+<td>150</td>
+<td></td>
+</tr>
+<tr>
+<td>26</td>
+<td>26</td>
+<td>Cobbler aux pêches</td>
+<td>Pêche + Farine</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Régulier</td>
+<td>175</td>
+<td></td>
+</tr>
+<tr>
+<td>27</td>
+<td>27</td>
+<td>Tarte aux cerises</td>
+<td>Cerise + Farine</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Régulier</td>
+<td>175</td>
+<td></td>
+</tr>
+<tr>
+<td>28</td>
+<td>28</td>
+<td>Crevette tempura</td>
+<td>Crevette + Farine</td>
+<td><span class="badge neutre">Exotique</span></td>
+<td>Petit</td>
+<td>180</td>
+<td></td>
+</tr>
+<tr>
+<td>29</td>
+<td>29</td>
+<td>Poulet grillé</td>
+<td>Poulet</td>
+<td><span class="badge neutre">Santé</span></td>
+<td>Régulier</td>
+<td>180</td>
+<td></td>
+</tr>
+<tr>
+<td>30</td>
+<td>30</td>
+<td>Gâteau de crabe</td>
+<td>Crabe des neiges + Farine</td>
+<td><span class="badge neutre">Réconfortant</span></td>
+<td>Régulier</td>
+<td>180</td>
+<td></td>
+</tr>
+<tr>
+<td>31</td>
+<td>31</td>
+<td><strong>Guédille de homard</strong></td>
+<td>Homard + Farine</td>
+<td><span class="badge neutre">Cuisine raffinée</span></td>
+<td>Régulier</td>
+<td>180</td>
+<td></td>
+</tr>
+<tr>
+<td>32</td>
+<td>32</td>
+<td><strong>Pâté aux légumes</strong></td>
+<td>Farine + Champignon/Légume</td>
+<td><span class="badge neutre">À l&#x27;ancienne</span></td>
+<td>Régulier</td>
+<td>185</td>
+<td>Alice</td>
+</tr>
+<tr>
+<td>33</td>
+<td>33</td>
+<td>Bonbons contre la toux</td>
+<td>Flamboyante + Miel</td>
+<td><span class="badge neutre">Santé + Stimulant</span></td>
+<td>Collation</td>
+<td>200</td>
+<td></td>
+</tr>
+<tr>
+<td>34</td>
+<td>34</td>
+<td>Calmars frits</td>
+<td>Calmar + Farine</td>
+<td><span class="badge neutre">Cuisine du bistrot</span></td>
+<td>Régulier</td>
+<td>200</td>
+<td></td>
+</tr>
+<tr>
+<td>35</td>
+<td>35</td>
+<td>Milquetoast</td>
+<td>Farine de maïs + Lait</td>
+<td><span class="badge neutre">Petit-déjeuner + Simple</span></td>
+<td>Collation</td>
+<td>210</td>
+<td></td>
+</tr>
+<tr>
+<td>36</td>
+<td>36</td>
+<td><strong>Lait chaud</strong></td>
+<td>Produit laitier</td>
+<td><span class="badge neutre">Petit-déjeuner</span></td>
+<td>Collation</td>
+<td>210</td>
+<td></td>
+</tr>
+<tr>
+<td>37</td>
+<td>37</td>
+<td>Tataki de thon</td>
+<td>Thon + Légume aromatique</td>
+<td><span class="badge neutre">Exotique</span></td>
+<td>Régulier</td>
+<td>210</td>
+<td></td>
+</tr>
+<tr>
+<td>38</td>
+<td>38</td>
+<td>Salade de champignon</td>
+<td>Champignon + Légume</td>
+<td><span class="badge neutre">Salade</span></td>
+<td>Régulier</td>
+<td>215</td>
+<td></td>
+</tr>
+<tr>
+<td>39</td>
+<td>39</td>
+<td><strong>Imitation de gruau</strong></td>
+<td>Sciure + Produit laitier</td>
+<td><span class="badge neutre">Goût à apprivoiser</span></td>
+<td>Collation</td>
+<td>215</td>
+<td></td>
+</tr>
+<tr>
+<td>40</td>
+<td>40</td>
+<td>Aloo gobi</td>
+<td>Flamboyante + Pomme de terre</td>
+<td><span class="badge neutre">Salade</span></td>
+<td>Régulier</td>
+<td>215</td>
+<td></td>
+</tr>
+<tr>
+<td>41</td>
+<td>41</td>
+<td>Chaudrée de palourdes</td>
+<td>Palourde/Palourde américaine + Produit laitier</td>
+<td><span class="badge neutre">Soupe</span></td>
+<td>Régulier</td>
+<td>235</td>
+<td></td>
+</tr>
+<tr>
+<td>42</td>
+<td>42</td>
+<td>Fruits de mer frits</td>
+<td>Mollusque + Gras</td>
+<td><span class="badge neutre">Cuisine du bistrot</span></td>
+<td>Régulier</td>
+<td>250</td>
+<td></td>
+</tr>
+<tr>
+<td>43</td>
+<td>43</td>
+<td>Cocktail de crevette</td>
+<td>Crevette</td>
+<td><span class="badge neutre">Cuisine raffinée</span></td>
+<td>Régulier</td>
+<td>250</td>
+<td></td>
+</tr>
+<tr>
+<td>44</td>
+<td>44</td>
+<td>Chai latte</td>
+<td>Flamboyante + Lait</td>
+<td><span class="badge neutre">Exotique + Stimulant</span></td>
+<td>Collation</td>
+<td>250</td>
+<td></td>
+</tr>
+<tr>
+<td>45</td>
+<td>45</td>
+<td>Carottes glacées</td>
+<td>Carotte + Miel</td>
+<td><span class="badge neutre">Réconfortant</span></td>
+<td>Régulier</td>
+<td>250</td>
+<td></td>
+</tr>
+<tr>
+<td>46</td>
+<td>46</td>
+<td><strong>Pieuvre grillée</strong></td>
+<td>Pieuvre</td>
+<td><span class="badge neutre">Cuisine raffinée</span></td>
+<td>Petit</td>
+<td>250</td>
+<td></td>
+</tr>
+<tr>
+<td>47</td>
+<td>47</td>
+<td><strong>Brochette de calmar</strong></td>
+<td>Calmar</td>
+<td><span class="badge neutre">Cuisine raffinée</span></td>
+<td>Régulier</td>
+<td>250</td>
+<td></td>
+</tr>
+<tr>
+<td>48</td>
+<td>48</td>
+<td>Bol de céréales</td>
+<td>Grain + Produit laitier/Sucrant</td>
+<td><span class="badge neutre">Petit-déjeuner</span></td>
+<td>Régulier</td>
+<td>260</td>
+<td></td>
+</tr>
+<tr>
+<td>49</td>
+<td>49</td>
+<td>Muesli</td>
+<td>Baies + Yogourt</td>
+<td><span class="badge neutre">Petit-déjeuner</span></td>
+<td>Régulier</td>
+<td>260</td>
+<td></td>
+</tr>
+<tr>
+<td>50</td>
+<td>50</td>
+<td>Pouding au riz</td>
+<td>Riz + Produit laitier</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Régulier</td>
+<td>265</td>
+<td></td>
+</tr>
+<tr>
+<td>51</td>
+<td>51</td>
+<td>Saumon au sirop d'érable</td>
+<td>Saumon + Sirop d'érable</td>
+<td><span class="badge neutre">À l&#x27;ancienne</span></td>
+<td>Régulier</td>
+<td>270</td>
+<td></td>
+</tr>
+<tr>
+<td>52</td>
+<td>52</td>
+<td>Œufs miroir</td>
+<td>Œuf</td>
+<td><span class="badge neutre">Petit-déjeuner</span></td>
+<td>Petit</td>
+<td>270</td>
+<td></td>
+</tr>
+<tr>
+<td>53</td>
+<td>53</td>
+<td>Bonbon aux fruits</td>
+<td>Fruit + Sucrant</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Collation</td>
+<td>270</td>
+<td></td>
+</tr>
+<tr>
+<td>54</td>
+<td>54</td>
+<td><strong>Laksa</strong></td>
+<td>Flamboyante + Farine de riz</td>
+<td><span class="badge neutre">Exotique + Soupe</span></td>
+<td>Régulier</td>
+<td>275</td>
+<td>Beverly</td>
+</tr>
+<tr>
+<td>55</td>
+<td>55</td>
+<td>Pain de maïs</td>
+<td>Farine de maïs + Gras</td>
+<td><span class="badge neutre">Réconfortant</span></td>
+<td>Régulier</td>
+<td>275</td>
+<td></td>
+</tr>
+<tr>
+<td>56</td>
+<td>56</td>
+<td>Bâtonnets de poisson</td>
+<td>Poisson + Gras</td>
+<td><span class="badge neutre">Cuisine du bistrot</span></td>
+<td>Régulier</td>
+<td>285</td>
+<td></td>
+</tr>
+<tr>
+<td>57</td>
+<td>57</td>
+<td>Sauté de légumes</td>
+<td>Gras + Légume <em>(pas légume-feuille, champignon ni pomme de terre)</em></td>
+<td><span class="badge neutre">Exotique + Santé</span></td>
+<td>Régulier</td>
+<td>290</td>
+<td></td>
+</tr>
+<tr>
+<td>58</td>
+<td>58</td>
+<td><strong>Salade verte</strong></td>
+<td>Légume-feuille + Gras</td>
+<td><span class="badge neutre">Salade</span></td>
+<td>Petit</td>
+<td>290</td>
+<td>Elena</td>
+</tr>
+<tr>
+<td>59</td>
+<td>59</td>
+<td>Latté</td>
+<td>Grains de café + Produit laitier</td>
+<td><span class="badge neutre">Stimulant</span></td>
+<td>Collation</td>
+<td>300</td>
+<td></td>
+</tr>
+<tr>
+<td>60</td>
+<td>60</td>
+<td>Riz frit</td>
+<td>Riz + Gras</td>
+<td><span class="badge neutre">Simple</span></td>
+<td>Grand</td>
+<td>300</td>
+<td></td>
+</tr>
+<tr>
+<td>61</td>
+<td>61</td>
+<td>Salade aux œufs</td>
+<td>Œuf + Légume</td>
+<td><span class="badge neutre">Salade</span></td>
+<td>Régulier</td>
+<td>310</td>
+<td></td>
+</tr>
+<tr>
+<td>62</td>
+<td>62</td>
+<td><strong>Côtelettes de porc</strong></td>
+<td>Porc</td>
+<td><span class="badge neutre">Réconfortant</span></td>
+<td>Régulier</td>
+<td>320</td>
+<td>Atul</td>
+</tr>
+<tr>
+<td>63</td>
+<td>63</td>
+<td><strong>Café sucré</strong></td>
+<td>Grains de café + Sucrant</td>
+<td><span class="badge neutre">Stimulant</span></td>
+<td>Collation</td>
+<td>320</td>
+<td></td>
+</tr>
+<tr>
+<td>64</td>
+<td>64</td>
+<td>Mijoté</td>
+<td>Grain + Viande</td>
+<td><span class="badge neutre">Réconfortant</span></td>
+<td>Régulier</td>
+<td>320</td>
+<td></td>
+</tr>
+<tr>
+<td>65</td>
+<td>65</td>
+<td>Saucisse frite sur bâtonnet</td>
+<td>Farine de maïs + Porc</td>
+<td><span class="badge neutre">Cuisine du bistrot</span></td>
+<td>Régulier</td>
+<td>325</td>
+<td></td>
+</tr>
+<tr>
+<td>66</td>
+<td>66</td>
+<td>Langoustine frite</td>
+<td>Crustacé + Gras</td>
+<td><span class="badge neutre">À l&#x27;ancienne</span></td>
+<td>Régulier</td>
+<td>335</td>
+<td></td>
+</tr>
+<tr>
+<td>67</td>
+<td>67</td>
+<td>Gâteau</td>
+<td>Farine + Sucrant <em>(pas miel)</em></td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Régulier</td>
+<td>335</td>
+<td></td>
+</tr>
+<tr>
+<td>68</td>
+<td>68</td>
+<td>Focaccia</td>
+<td>Farine de blé + Gras</td>
+<td><span class="badge neutre">Réconfortant</span></td>
+<td>Régulier</td>
+<td>335</td>
+<td></td>
+</tr>
+<tr>
+<td>69</td>
+<td>69</td>
+<td><strong>Frites</strong></td>
+<td>Pomme de terre + Gras</td>
+<td><span class="badge neutre">Cuisine du bistrot</span></td>
+<td>Régulier</td>
+<td>335</td>
+<td>Stanley</td>
+</tr>
+<tr>
+<td>70</td>
+<td>70</td>
+<td>Ragoût de viande</td>
+<td>Viande + Légume</td>
+<td><span class="badge neutre">À l&#x27;ancienne</span></td>
+<td>Grand</td>
+<td>340</td>
+<td></td>
+</tr>
+<tr>
+<td>71</td>
+<td>71</td>
+<td>Lokma</td>
+<td>Miel + Farine</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Régulier</td>
+<td>350</td>
+<td></td>
+</tr>
+<tr>
+<td>—</td>
+<td>72</td>
+<td><strong>Surströmming</strong></td>
+<td>Hareng, <strong>au cellier</strong></td>
+<td><span class="badge neutre">Goût à apprivoiser</span></td>
+<td>Grand</td>
+<td>350</td>
+<td>Gustav</td>
+</tr>
+<tr>
+<td>72</td>
+<td>73</td>
+<td>Pancakes</td>
+<td>Œuf + Farine</td>
+<td><span class="badge neutre">Petit-déjeuner</span></td>
+<td>Régulier</td>
+<td>360</td>
+<td></td>
+</tr>
+<tr>
+<td>73</td>
+<td>74</td>
+<td>Surf and Turf</td>
+<td>Crustacé + Bœuf</td>
+<td><span class="badge neutre">Cuisine du bistrot</span></td>
+<td>Grand</td>
+<td>360</td>
+<td></td>
+</tr>
+<tr>
+<td>74</td>
+<td>75</td>
+<td><strong>Champignons frits</strong></td>
+<td>Champignon + Gras</td>
+<td><span class="badge neutre">Exotique</span></td>
+<td>Régulier</td>
+<td>370</td>
+<td></td>
+</tr>
+<tr>
+<td>75</td>
+<td>76</td>
+<td>Dakgangjeong</td>
+<td>Flamboyante + Poulet</td>
+<td><span class="badge neutre">Exotique + Réconfortant</span></td>
+<td>Grand</td>
+<td>390</td>
+<td></td>
+</tr>
+<tr>
+<td>76</td>
+<td>77</td>
+<td>Poulet frit</td>
+<td>Poulet + Gras</td>
+<td><span class="badge neutre">Réconfortant</span></td>
+<td>Grand</td>
+<td>390</td>
+<td></td>
+</tr>
+<tr>
+<td>77</td>
+<td>78</td>
+<td><strong>Chilaquiles</strong></td>
+<td>Flamboyante + Farine de maïs</td>
+<td><span class="badge neutre">Exotique + Petit-déjeuner</span></td>
+<td>Grand</td>
+<td>390</td>
+<td>Jackie</td>
+</tr>
+<tr>
+<td>78</td>
+<td>79</td>
+<td>Tasse de thé</td>
+<td>Feuilles de thé</td>
+<td><span class="badge neutre">Stimulant</span></td>
+<td>Collation</td>
+<td>400</td>
+<td></td>
+</tr>
+<tr>
+<td>79</td>
+<td>80</td>
+<td>Pâté à la viande</td>
+<td>Farine de blé + Viande</td>
+<td><span class="badge neutre">À l&#x27;ancienne</span></td>
+<td>Grand</td>
+<td>400</td>
+<td></td>
+</tr>
+<tr>
+<td>80</td>
+<td>81</td>
+<td>Crêpes</td>
+<td>Farine de blé + Lait/Crème</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Régulier</td>
+<td>410</td>
+<td></td>
+</tr>
+<tr>
+<td>81</td>
+<td>82</td>
+<td>Soupe won-ton</td>
+<td>Farine de riz + Viande</td>
+<td><span class="badge neutre">Exotique + Soupe</span></td>
+<td>Régulier</td>
+<td>420</td>
+<td></td>
+</tr>
+<tr>
+<td>82</td>
+<td>83</td>
+<td><strong>Yogourt sucré</strong></td>
+<td>Yogourt + Sucrant</td>
+<td><span class="badge neutre">Dessert + Petit-déjeuner</span></td>
+<td>Collation</td>
+<td>430</td>
+<td></td>
+</tr>
+<tr>
+<td>83</td>
+<td>84</td>
+<td>Sucette</td>
+<td>Miel</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Collation</td>
+<td>450</td>
+<td></td>
+</tr>
+<tr>
+<td>84</td>
+<td>85</td>
+<td><strong>Jambon au miel</strong></td>
+<td>Porc + Miel</td>
+<td><span class="badge neutre">À l&#x27;ancienne</span></td>
+<td>Grand</td>
+<td>450</td>
+<td></td>
+</tr>
+<tr>
+<td>85</td>
+<td>86</td>
+<td>Œufs brouillés</td>
+<td>Œuf + Produit laitier</td>
+<td><span class="badge neutre">Petit-déjeuner</span></td>
+<td>Petit</td>
+<td>450</td>
+<td></td>
+</tr>
+<tr>
+<td>86</td>
+<td>87</td>
+<td>Bonbon</td>
+<td>Sucrant <em>(pas miel)</em></td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Collation</td>
+<td>450</td>
+<td></td>
+</tr>
+<tr>
+<td>87</td>
+<td>88</td>
+<td>Omelette</td>
+<td>Fromage + Œuf</td>
+<td><span class="badge neutre">Petit-déjeuner + Simple</span></td>
+<td>Grand</td>
+<td>450</td>
+<td></td>
+</tr>
+<tr>
+<td>88</td>
+<td>89</td>
+<td>Crème brûlée</td>
+<td>Œuf + Sucrant</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Régulier</td>
+<td>455</td>
+<td></td>
+</tr>
+<tr>
+<td>89</td>
+<td>90</td>
+<td>Frittata</td>
+<td>Œuf + Gras</td>
+<td><span class="badge neutre">Exotique + Petit-déjeuner</span></td>
+<td>Régulier</td>
+<td>465</td>
+<td></td>
+</tr>
+<tr>
+<td>90</td>
+<td>91</td>
+<td><strong>Pizza aux tomates</strong></td>
+<td>Farine de blé + Tomate</td>
+<td><span class="badge neutre">Réconfortant</span></td>
+<td>Régulier</td>
+<td>470</td>
+<td>Buck</td>
+</tr>
+<tr>
+<td>91</td>
+<td>92</td>
+<td>Schnitzel</td>
+<td>Gras + Porc</td>
+<td><span class="badge neutre">À l&#x27;ancienne</span></td>
+<td>Régulier</td>
+<td>490</td>
+<td></td>
+</tr>
+<tr>
+<td>92</td>
+<td>93</td>
+<td><strong>Fondue au fromage</strong></td>
+<td>Fromage</td>
+<td><span class="badge neutre">Réconfortant</span></td>
+<td>Régulier</td>
+<td>500</td>
+<td></td>
+</tr>
+<tr>
+<td>93</td>
+<td>94</td>
+<td>Œufs et bacon</td>
+<td>Œuf + Porc</td>
+<td><span class="badge neutre">Petit-déjeuner</span></td>
+<td>Grand</td>
+<td>515</td>
+<td></td>
+</tr>
+<tr>
+<td>94</td>
+<td>95</td>
+<td>Thé anglais</td>
+<td>Feuilles de thé + Produit laitier</td>
+<td><span class="badge neutre">Stimulant</span></td>
+<td>Collation</td>
+<td>525</td>
+<td></td>
+</tr>
+<tr>
+<td>95</td>
+<td>96</td>
+<td><strong>Bâtonnets de fromage</strong></td>
+<td>Fromage + Farine</td>
+<td><span class="badge neutre">Cuisine du bistrot</span></td>
+<td>Grand</td>
+<td>560</td>
+<td></td>
+</tr>
+<tr>
+<td>96</td>
+<td>97</td>
+<td><strong>Thé sucré</strong></td>
+<td>Feuilles de thé + Sucrant</td>
+<td><span class="badge neutre">Stimulant</span></td>
+<td>Collation</td>
+<td>580</td>
+<td></td>
+</tr>
+<tr>
+<td>97</td>
+<td>98</td>
+<td>Steak grillé</td>
+<td>Bœuf</td>
+<td><span class="badge neutre">Réconfortant</span></td>
+<td>Grand</td>
+<td>600</td>
+<td></td>
+</tr>
+<tr>
+<td>98</td>
+<td>99</td>
+<td><strong>Pain à l'ail</strong></td>
+<td>Farine de blé + Ail</td>
+<td><span class="badge neutre">Cuisine du bistrot</span></td>
+<td>Petit</td>
+<td>630</td>
+<td><strong>Bruce &amp; Mickey</strong></td>
+</tr>
+<tr>
+<td>99</td>
+<td>100</td>
+<td>Caramel au beurre</td>
+<td>Produit laitier + Sucrant</td>
+<td><span class="badge neutre">Dessert</span></td>
+<td>Collation</td>
+<td>680</td>
+<td></td>
+</tr>
+<tr>
+<td>100</td>
+<td>101</td>
+<td><strong>Repas de choucroute</strong></td>
+<td>Choucroute + Porc</td>
+<td><span class="badge neutre">Goût à apprivoiser</span></td>
+<td>Grand</td>
+<td>700</td>
+<td></td>
+</tr>
+<tr>
+<td>101</td>
+<td>102</td>
+<td><strong>Fondue au bœuf</strong></td>
+<td>Bœuf + Gras</td>
+<td><span class="badge neutre">À l&#x27;ancienne</span></td>
+<td>Régulier</td>
+<td>775</td>
+<td>Giovanni</td>
+</tr>
+<tr>
+<td>102</td>
+<td>103</td>
+<td><strong>Rondelles d'oignon</strong></td>
+<td>Oignon + Farine</td>
+<td><span class="badge neutre">Cuisine du bistrot</span></td>
+<td>Régulier</td>
+<td><strong>1 100</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>103</td>
+<td>—</td>
+<td><strong>Papier fait maison</strong></td>
+<td>Sciure + Colle tout usage</td>
+<td>—</td>
+<td>—</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>104</td>
+<td>—</td>
+<td><strong>Repas douteux</strong></td>
+<td>Combinaison invalide</td>
+<td><span class="badge neutre">Dégoûtant</span></td>
+<td>Collation</td>
+<td>10</td>
+<td></td>
+</tr>
+<tr>
+<td>105</td>
+<td>—</td>
+<td><strong>Charbon</strong></td>
+<td>Bois/Sciure</td>
+<td>—</td>
+<td>—</td>
+<td>30</td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p>Le décompte exact, parce qu'il sert à planifier.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le compte</th>
+<th>Combien</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Plats au total</strong></td>
+<td><strong>106</strong></td>
+</tr>
+<tr>
+<td><strong>Plats à un ingrédient</strong></td>
+<td><strong>26</strong></td>
+</tr>
+<tr>
+<td><strong>Plats à deux ingrédients</strong></td>
+<td><strong>78</strong></td>
+</tr>
+<tr>
+<td><strong>Le repas douteux</strong> <em>(une combinaison invalide)</em></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Le surströmming</strong> <em>(au cellier)</em></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Plats qui comptent pour le musée</strong></td>
+<td><strong>103</strong></td>
+</tr>
+<tr>
+<td><strong>Plats préférés d'un esprit</strong></td>
+<td><strong>13</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Trois choses à retenir de ce tableau.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce qu'il faut voir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>103 plats comptent pour le musée</strong> : le papier fait maison, le repas douteux et le charbon n'y comptent pas</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Le surströmming n'a pas de numéro de recette : il ne se cuisine pas, il fermente au cellier <em>(partie <strong>26</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Les rondelles d'oignon valent 1 100 lueurs</strong>, soit plus du double du deuxième plat le plus cher</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-13-plats-preferes">Les 13 plats préférés</h3>
+<p>Donner son plat préféré à un esprit est la façon la plus efficace de le rendre heureux <em>(parties <strong>10</strong> à <strong>22</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Esprit</th>
+<th>Son plat préféré</th>
+<th>Les ingrédients, en pratique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Gwen</strong></td>
+<td><strong>Café noir</strong></td>
+<td><strong>Graine de grains de café, au champ</strong> <em>(75 lueurs)</em></td>
+</tr>
+<tr>
+<td><strong>Atul</strong></td>
+<td><strong>Côtelettes de porc</strong></td>
+<td>Porc acheté en boutique</td>
+</tr>
+<tr>
+<td><strong>Summer</strong></td>
+<td><strong>Salade de grains</strong></td>
+<td><strong>Grain + champignon ou légume</strong> — <strong>elle est végétalienne</strong></td>
+</tr>
+<tr>
+<td><strong>Astrid</strong></td>
+<td><strong>Soupe aux nouilles</strong></td>
+<td>Farine de riz, au moulin à Vent</td>
+</tr>
+<tr>
+<td><strong>Giovanni</strong></td>
+<td><strong>Fondue au bœuf</strong></td>
+<td>Bœuf + gras</td>
+</tr>
+<tr>
+<td><strong>Alice</strong></td>
+<td><strong>Pâté aux légumes</strong></td>
+<td>Farine + champignon ou légume</td>
+</tr>
+<tr>
+<td><strong>Gustav</strong></td>
+<td><strong>Surströmming</strong></td>
+<td><strong>Hareng au cellier</strong> — <strong>le seul plat non cuisiné du jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Bruce &amp; Mickey</strong></td>
+<td><strong>Pain à l'ail</strong></td>
+<td>Ail, <strong>1 par plantation</strong> <em>(partie <strong>26</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Buck</strong></td>
+<td><strong>Pizza aux tomates</strong></td>
+<td>Tomate, <strong>aucun coffre ne la donne</strong> <em>(partie <strong>26</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Beverly</strong></td>
+<td><strong>Laksa</strong></td>
+<td><strong>Flamboyante</strong>, <strong>de l'événement de Gustav</strong> <em>(partie <strong>16</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Stanley</strong></td>
+<td><strong>Frites</strong></td>
+<td>Pomme de terre + gras</td>
+</tr>
+<tr>
+<td><strong>Elena</strong></td>
+<td><strong>Salade verte</strong></td>
+<td>Laitue ou chou + gras</td>
+</tr>
+<tr>
+<td><strong>Jackie</strong></td>
+<td><strong>Chilaquiles</strong></td>
+<td>Flamboyante + farine de maïs</td>
+</tr>
+<tr>
+<td><strong>Daria</strong></td>
+<td>Pomme</td>
+<td><strong>Ce n'est pas un plat</strong> : <strong>elle ne mange que des fruits</strong> <em>(partie <strong>22</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Trois plats préférés dépendent d'ingrédients rares.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le plat</th>
+<th>Son goulot d'étranglement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pain à l'ail</strong> <em>(Bruce &amp; Mickey)</em></td>
+<td><strong>L'ail ne donne qu'1 exemplaire par plantation</strong>, <strong>à 180 lueurs la graine</strong></td>
+</tr>
+<tr>
+<td><strong>Pizza aux tomates</strong> <em>(Buck)</em></td>
+<td>La graine de tomate ne vient d'AUCUN coffre — <strong>boutique ou course de Francis</strong></td>
+</tr>
+<tr>
+<td><strong>Laksa et Chilaquiles</strong> <em>(Beverly et Jackie)</em></td>
+<td>La flamboyante ne vient que de l'événement de Gustav</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et voilà pourquoi il faut garder Gustav longtemps : sans ses lucioles, pas de flamboyante, donc pas de plat préféré pour deux esprits <em>(partie <strong>16</strong>)</em>.</p>
+<p>Mais rassure-toi : la graine de flamboyante se replante, et elle donne 2 flamboyantes par plantation <em>(partie <strong>26</strong>)</em>.</p>
+<h3 id="les-categories-cachees">Les catégories « cachées »</h3>
+<p>Et voici la mécanique que le jeu n'explique nulle part.</p>
+<p>En plus des 15 types affichés, il existe des catégories d'INGRÉDIENTS que certains esprits adorent ou refusent. Le wiki français les liste ainsi :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Catégorie non listée</th>
+<th>Les esprits concernés</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fruits</strong></td>
+<td>Gwen, Stanley, Buck</td>
+</tr>
+<tr>
+<td><strong>Légumes</strong></td>
+<td>Stanley</td>
+</tr>
+<tr>
+<td><strong>Viande</strong></td>
+<td>Summer, Elena</td>
+</tr>
+<tr>
+<td><strong>Laitier</strong></td>
+<td>Summer, Buck</td>
+</tr>
+<tr>
+<td><strong>Œufs</strong></td>
+<td>Summer, Giovanni</td>
+</tr>
+<tr>
+<td><strong>Plats de crustacés</strong></td>
+<td><strong>Summer, Bruce &amp; Mickey</strong></td>
+</tr>
+<tr>
+<td><strong>Plats frits</strong></td>
+<td>Gustav, Elena</td>
+</tr>
+<tr>
+<td><strong>Plats de fruits de mer</strong></td>
+<td>Gwen, Summer</td>
+</tr>
+<tr>
+<td><strong>Plats sucrés</strong></td>
+<td>Astrid, Gustav, Giovanni</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>à vérifier en jeu</strong> : le wiki ne dit pas, pour chaque ligne, si l'esprit aime ou déteste la catégorie. Reporte-toi à la fiche de chaque esprit <em>(parties <strong>10</strong> à <strong>22</strong>)</em>, qui donne le signe de chaque goût.</p>
+<p><strong>Trois règles de régime, elles, sont claires.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>L'esprit</th>
+<th>Sa règle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Summer</strong></td>
+<td>Végétalienne : <strong>aucun produit d'origine animale</strong> — ni viande, ni laitier, ni œuf, ni poisson</td>
+</tr>
+<tr>
+<td><strong>Giovanni</strong></td>
+<td>Il n'aime pas les plats « riches en glucides »</td>
+</tr>
+<tr>
+<td><strong>Daria</strong></td>
+<td>Elle ne mange que des fruits</td>
+</tr>
+<tr>
+<td><strong>Jackie</strong></td>
+<td>Il aime la viande et les fritures</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Et c'est bien pratique</strong> : Jackie est l'esprit le plus facile à nourrir du jeu, Summer la plus difficile.</p>
+<h3 id="les-plats-qui-rapportent">Les plats qui rapportent</h3>
+<p>Vendre des plats n'est pas la meilleure source de lueurs du jeu — <strong>les babioles le sont</strong> <em>(partie <strong>01</strong>)</em>. Mais quand tu as un surplus, voilà quoi cuisiner.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Rang</th>
+<th>Le plat</th>
+<th>Prix</th>
+<th>Ses ingrédients</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Rondelles d'oignon</strong></td>
+<td><strong>1 100</strong></td>
+<td>Oignon + farine</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Fondue au bœuf</strong></td>
+<td><strong>775</strong></td>
+<td>Bœuf + gras</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Repas de choucroute</strong></td>
+<td><strong>700</strong></td>
+<td><strong>Choucroute + porc</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Caramel au beurre</td>
+<td><strong>680</strong></td>
+<td>Produit laitier + sucrant</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Pain à l'ail</strong></td>
+<td><strong>630</strong></td>
+<td>Farine de blé + ail</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et les rondelles d'oignon sont un cas à part : l'oignon coûte 250 lueurs la graine et n'en donne qu'un, mais la farine est gratuite si tu cultives ton blé. Soit environ <strong>850 lueurs de bénéfice</strong> par plantation d'oignon.</p>
+<p>À comparer avec une <strong>babiole</strong> de la graine étrange : 500 lueurs la graine, de 375 à 2 000 lueurs de retour <em>(partie <strong>26</strong>)</em>.</p>
+<p>Conclusion : cuisine pour les esprits et pour le musée, pas pour l'argent.</p>
+<h3 id="les-13-recettes-des-mises-a-jour">Les 13 recettes des mises à jour</h3>
+<p>Et voici une découverte qui date les sources, et qui sert à les classer.</p>
+<p>Le wiki français liste <strong>93 recettes</strong>. Le wiki anglais en liste <strong>106</strong>. Les 13 manquantes sont presque toutes à base de flamboyante ou de miel — exactement les deux ingrédients ajoutés par les mises à jour gratuites de 2021 <em>(partie <strong>00</strong>)</em>.</p>
+<p>Autrement dit : si une source française ignore ces 13 plats, elle est périmée. C'est le test que j'ai appliqué à toutes les sources de ce guide.</p>
+<p>Le guide Steam français, lui, les a toutes — <strong>avec leur nom français.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le plat</th>
+<th>Ses ingrédients</th>
+<th>Son nom français</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Croustiflammes inferno</strong></td>
+<td><strong>Flamboyante</strong></td>
+<td>Confirmé <em>(guide des trophées)</em></td>
+</tr>
+<tr>
+<td><strong>Bonbons contre la toux</strong></td>
+<td><strong>Flamboyante + miel</strong></td>
+<td>Confirmé <em>(guide des trophées)</em></td>
+</tr>
+<tr>
+<td><strong>Aloo gobi</strong></td>
+<td>Flamboyante + pomme de terre</td>
+<td>Confirmé <em>(guide des trophées)</em></td>
+</tr>
+<tr>
+<td><strong>Chai latte</strong></td>
+<td><strong>Flamboyante + lait</strong></td>
+<td>Confirmé <em>(guide des trophées)</em></td>
+</tr>
+<tr>
+<td><strong>Laksa</strong></td>
+<td>Flamboyante + farine de riz</td>
+<td>Confirmé <em>(guide des trophées)</em></td>
+</tr>
+<tr>
+<td><strong>Dakgangjeong</strong></td>
+<td><strong>Flamboyante + poulet</strong></td>
+<td>Confirmé <em>(guide des trophées)</em></td>
+</tr>
+<tr>
+<td><strong>Chilaquiles</strong></td>
+<td>Flamboyante + farine de maïs</td>
+<td>Confirmé <em>(guide des trophées)</em></td>
+</tr>
+<tr>
+<td><strong>Sucette</strong></td>
+<td><strong>Miel</strong></td>
+<td>Confirmé <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Lokma</strong></td>
+<td><strong>Miel + farine</strong></td>
+<td>Confirmé <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Jambon au miel</strong></td>
+<td><strong>Porc + miel</strong></td>
+<td>Confirmé <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Carottes glacées</strong></td>
+<td><strong>Carotte + miel</strong></td>
+<td>Confirmé <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Milquetoast</strong></td>
+<td>Farine de maïs + lait</td>
+<td>Confirmé <em>(guide Steam)</em> — <strong>le jeu français garde le mot anglais</strong></td>
+</tr>
+<tr>
+<td><strong>Surf and Turf</strong></td>
+<td>Crustacé + bœuf</td>
+<td>Confirmé <em>(guide Steam)</em> — <strong>le jeu français garde le mot anglais</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Donc les 106 plats ont tous un nom français confirmé.</p>
+<p>Deux d'entre eux gardent leur mot anglais dans la version française du jeu : <strong>milquetoast et</strong> Surf and turf. Ce n'est pas un oubli de traduction de ma part — le guide Steam français les écrit ainsi.</p>
+<p>Et le « Crab Cake », lui, a bien un nom français : <strong>gâteau de crabe</strong>. Le wiki français, périmé, le laissait en anglais.</p>
+<h2 id="quetes-et-lieux-28" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="ou-trouver-chaque-ingredient-de-base">Où trouver chaque ingrédient de base</h3>
+<p>Et voici la taxinomie exacte du jeu, telle que le guide Steam français la recopie. Elle compte, parce que les recettes raisonnent par catégorie et pas par ingrédient.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Catégorie</th>
+<th>Les ingrédients qu'elle contient</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Grain</strong></td>
+<td>Maïs, riz, blé</td>
+<td><strong>Le champ</strong> <em>(partie <strong>26</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Farine</strong></td>
+<td>Farine de maïs, farine de riz, farine de blé</td>
+<td>Le moulin à Vent <em>(partie <strong>26</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Fruit</strong></td>
+<td>Pomme, cerise, poire, pêche</td>
+<td>Le verger</td>
+</tr>
+<tr>
+<td><strong>Légume-racine</strong></td>
+<td>Carotte, poireau, pomme de terre, navet</td>
+<td><strong>Le jardin</strong></td>
+</tr>
+<tr>
+<td><strong>Légume-feuille</strong></td>
+<td>Chou, céleri, laitue</td>
+<td><strong>Le jardin</strong></td>
+</tr>
+<tr>
+<td><strong>Légume aromatique</strong></td>
+<td>Ail, Olive, oignon, tomate</td>
+<td>Le jardin, le champ et le verger</td>
+</tr>
+<tr>
+<td><strong>Baie</strong></td>
+<td>Fraise, framboise, bleuet</td>
+<td>⚠️ <strong>à vérifier en jeu</strong> — <strong>les îles</strong></td>
+</tr>
+<tr>
+<td><strong>Champignon</strong></td>
+<td><strong>Champignons</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong> — <strong>les îles</strong></td>
+</tr>
+<tr>
+<td><strong>Gras</strong></td>
+<td>Huile d'olive, huile de tournesol</td>
+<td>Le verger et le champ</td>
+</tr>
+<tr>
+<td><strong>Sucrant</strong></td>
+<td>Miel, sirop d'érable, sucre</td>
+<td>La ruche et les boutiques</td>
+</tr>
+<tr>
+<td><strong>Produit laitier</strong></td>
+<td>Lait, yogourt, fromage, crème</td>
+<td>La stalle à vaches et le cellier</td>
+</tr>
+<tr>
+<td><strong>Œuf</strong></td>
+<td><strong>Œuf</strong></td>
+<td>Le poulailler</td>
+</tr>
+<tr>
+<td><strong>Viande</strong></td>
+<td>Bœuf, poulet, porc</td>
+<td>Les boutiques Raccoon Inc.</td>
+</tr>
+<tr>
+<td><strong>Poisson</strong></td>
+<td><strong>15 espèces</strong> <em>(partie <strong>28</strong>)</em></td>
+<td><strong>La pêche</strong></td>
+</tr>
+<tr>
+<td><strong>Céphalopode</strong></td>
+<td><strong>Seiche, pieuvre, calmar</strong></td>
+<td><strong>La pêche</strong></td>
+</tr>
+<tr>
+<td><strong>Crustacé</strong></td>
+<td>Homard, crabe des neiges</td>
+<td><strong>La pêche</strong></td>
+</tr>
+<tr>
+<td><strong>Crevette</strong></td>
+<td>Crevette nordique, crevette géante tigrée</td>
+<td>Une catégorie à part du crustacé</td>
+</tr>
+<tr>
+<td><strong>Thon</strong></td>
+<td>Thon albacore, thon rouge, thon jaune</td>
+<td>Les spots à thon <em>(partie <strong>28</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Mollusque</strong></td>
+<td>Palourde, pétoncle géant, palourde américaine, moule commune, huître, pétoncle, oursin</td>
+<td><strong>La coque du bateau</strong> <em>(partie <strong>28</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Flamboyante</strong></td>
+<td><strong>Flamboyante</strong></td>
+<td>L'événement de Gustav, <strong>puis le jardin</strong></td>
+</tr>
+<tr>
+<td><strong>Bois</strong></td>
+<td>Les 4 bûches, les 4 planches et la sciure</td>
+<td>Les îles et la scierie</td>
+</tr>
+</tbody>
+</table></div>
+<p>Quatre surprises dans ce tableau, et elles coûtent des heures si on ne les connaît pas.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La surprise</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Le poireau est un légume-racine</strong>, <strong>pas un aromatique</strong> — il marche donc dans les légumes grillés et le sauté de légumes</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Le céleri est un légume-feuille</strong>, <strong>comme le chou et la laitue</strong> — <strong>il fait donc la salade verte d'ELENA</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>L'olive est un légume aromatique</strong>, <strong>pas un fruit</strong> — <strong>elle marche dans le tataki de thon</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>La crevette et le thon sont des catégories à part : une recette qui demande « crustacé » n'accepte pas de crevette</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Et les baies sont trois objets distincts</strong> : la fraise, la framboise et le bleuet. Elles servent à la tarte aux baies et au muesli. ⚠️ <strong>à vérifier en jeu</strong> : <strong>où les ramasser.</strong></p>
+<p><strong>Et le repas douteux a une recette</strong> : <strong>un légume aromatique seul</strong>, selon le guide Steam français. Pratique pour cocher l'entrée du musée sans gaspiller.</p>
+<p>Et trois ingrédients ne viennent que des boutiques : le porc, le bœuf et le poulet. Aucun élevage du jeu ne produit de viande — le poulailler ne donne que des œufs <em>(partie <strong>26</strong>)</em>.</p>
+<h3 id="les-deux-succes-de-cuisine">Les deux succès de cuisine</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Succès</th>
+<th>Ce qu'il demande</th>
+<th>Le piège</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MasterChef</strong></td>
+<td>Découvrir toutes les recettes</td>
+<td>Une découverte suffit</td>
+</tr>
+<tr>
+<td><strong>Collectionneur</strong></td>
+<td><strong>En avoir cuisiné 98</strong></td>
+<td>La collection du musée <em>(partie <strong>09</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>C'est la différence qui piège tout le monde : ton livre de recettes peut être complet pendant que la collection du musée a encore des trous. Découvrir ne suffit pas : il faut avoir <strong>cuisiné</strong> le plat au moins une fois.</p>
+<p><strong>La solution</strong> : <em><em>tiens une liste à jour, et chaque fois que tu découvres une recette, <strong>cuisine-la une fois de plus</strong></em> et dépose-la au musée</em>* <em>(partie <strong>09</strong>)</em>.</p>
+<h3 id="le-mecanisme-des-recompenses-du-musee">Le mécanisme des récompenses du musée</h3>
+<p><strong>Rappel de la partie 09</strong>, parce que c'est ici que tu vas le vivre :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Paliers de plats</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les premiers paliers</strong></td>
+<td>Des ressources et des lueurs</td>
+</tr>
+<tr>
+<td><strong>98 plats</strong></td>
+<td>La tenue de Thora</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-28" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Amélioration de la cuisine</strong></td>
+<td><span class="badge neutre">Amélioration</span></td>
+<td><strong>La quête Grand fourneau d'ATUL</strong> <em>(partie <strong>11</strong>)</em></td>
+<td>Débloque les 78 plats à deux ingrédients</td>
+</tr>
+<tr>
+<td><strong>Papier fait maison</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td>Sciure + colle tout usage</td>
+<td><strong>Les affiches de Buck</strong> <em>(partie <strong>18</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Charbon</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Bois ou sciure</strong></td>
+<td>Le combustible de la fonderie et de la forge <em>(partie <strong>29</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Repas douteux</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Une combinaison invalide</strong></td>
+<td><strong>Une entrée du musée</strong>, <strong>10 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Surströmming</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Hareng au cellier</strong> — <strong>le seul plat non cuisiné</strong></td>
+<td>Le plat préféré de Gustav</td>
+</tr>
+<tr>
+<td><strong>Imitation de gruau</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Sciure + produit laitier</strong></td>
+<td>Le seul autre usage de la sciure</td>
+</tr>
+<tr>
+<td><strong>Rondelles d'oignon</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Oignon + farine</strong></td>
+<td><strong>Le plat le plus cher du jeu</strong> : <strong>1 100 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Tenue de Thora</strong></td>
+<td><span class="badge neutre">Tenue</span></td>
+<td><strong>98 plats au musée de Susan</strong> <em>(partie <strong>09</strong>)</em></td>
+<td>Une des tenues de Stella</td>
+</tr>
+<tr>
+<td><strong>Café noir</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Grains de café</strong></td>
+<td><strong>Le plat préféré de Gwen</strong>, <strong>ta première passagère</strong></td>
+</tr>
+<tr>
+<td><strong>Soupe aux nouilles</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Farine de riz</strong></td>
+<td>Le plat préféré d'ASTRID</td>
+</tr>
+<tr>
+<td><strong>Laksa</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td>Flamboyante + farine de riz</td>
+<td>Le plat préféré de Beverly</td>
+</tr>
+<tr>
+<td><strong>Chilaquiles</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td>Flamboyante + farine de maïs</td>
+<td>Le plat préféré de Jackie</td>
+</tr>
+<tr>
+<td><strong>Pain à l'ail</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td>Farine de blé + ail</td>
+<td>Le plat préféré de Bruce &amp; Mickey</td>
+</tr>
+<tr>
+<td><strong>Pizza aux tomates</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td>Farine de blé + tomate</td>
+<td>Le plat préféré de Buck</td>
+</tr>
+<tr>
+<td><strong>Fondue au bœuf</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Bœuf + gras</strong></td>
+<td>Le plat préféré de Giovanni</td>
+</tr>
+<tr>
+<td><strong>Salade de grains</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td>Grain + champignon ou légume</td>
+<td><strong>Le plat préféré de Summer</strong>, <strong>et il est végétalien</strong></td>
+</tr>
+<tr>
+<td><strong>Salade verte</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Légume-feuille + gras</strong></td>
+<td>Le plat préféré d'ELENA</td>
+</tr>
+<tr>
+<td><strong>Pâté aux légumes</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td>Farine + champignon ou légume</td>
+<td>Le plat préféré d'ALICE</td>
+</tr>
+<tr>
+<td><strong>Côtelettes de porc</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Porc</strong></td>
+<td>Le plat préféré d'ATUL</td>
+</tr>
+<tr>
+<td><strong>Frites</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td>Pomme de terre + gras</td>
+<td>Le plat préféré de Stanley</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-28" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="la-methode-pour-decouvrir-les-106-recettes">La méthode pour découvrir les 106 recettes</h3>
+<p>Ne cherche pas au hasard. Procède par famille.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La méthode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Fais d'abord tous les plats à <strong>un</strong> ingrédient <em>(26 recettes)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Obtiens l'AMÉLIORATION de la cuisine</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Prends un ingrédient et teste-le avec <strong>farine</strong>, puis <strong>gras</strong>, puis <strong>produit laitier</strong>, puis <strong>sucrant</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Ces quatre partenaires couvrent à eux seuls la moitié du livre</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Puis teste les paires de même famille</strong> : <strong>poisson + grain, mollusque + légume, œuf + légume…</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Et garde une flamboyante de côté</strong> : <strong>elle fait 7 recettes à elle seule</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et si une paire ne donne rien, tu obtiens un <strong>repas douteux</strong> à 10 lueurs. Ce n'est pas grave : c'est aussi une entrée du musée.</p>
+<h3 id="les-pieges-de-la-cuisine">Les pièges de la cuisine</h3>
+<ul>
+<li>Laisser un plat brûler dans le four. Surveille le minuteur, ou suis la notification en forme de casserole.</li>
+<li>Croire que découvrir une recette la met au musée. <strong>Non</strong> : <strong>il faut l'avoir cuisinée.</strong></li>
+<li class="alerte">⚠️ Oublier l'amélioration de la cuisine. Sans elle, 78 recettes sur 106 sont inaccessibles.</li>
+<li>Donner de la viande, du poisson, un œuf ou un laitier à Summer. <strong>Elle est végétalienne.</strong></li>
+<li>Donner un plat « riche en glucides » à Giovanni.</li>
+<li><strong>Donner autre chose qu'un fruit à Daria.</strong></li>
+<li>Oublier de cultiver l'AIL et la tomate, les deux plats préférés les plus pénibles à produire.</li>
+<li><strong>Laisser partir Gustav trop tôt</strong> : la flamboyante vient de son événement, et deux plats préférés en dépendent.</li>
+<li>Vendre tes plats au lieu de les déposer au musée. Dépose-les d'abord, vends le surplus ensuite.</li>
+<li>Chercher de la viande dans ton élevage. Le porc, le bœuf et le poulet s'ACHÈTENT.</li>
+</ul>
+<h3 id="le-plan-de-pont-pour-la-cuisine">Le plan de pont pour la cuisine</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Regroupe</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cuisine + cellier</strong></td>
+<td>Le surströmming, la choucroute, le fromage</td>
+</tr>
+<tr>
+<td><strong>Cuisine + moulin à vent</strong></td>
+<td>Les trois farines entrent dans la moitié du livre</td>
+</tr>
+<tr>
+<td><strong>Cuisine + poulailler + stalle à vaches</strong></td>
+<td>Œufs et laitier</td>
+</tr>
+<tr>
+<td><strong>Le refuge de Gwen près de la cuisine</strong></td>
+<td><strong>« Je suis grincheuse quand j'ai faim »</strong> : <strong>+10 d'humeur</strong> <em>(partie <strong>25</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="trois-astuces-de-cuisine">Trois astuces de cuisine</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>L'astuce</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Cuisine par lots le soir</strong>, <strong>pendant que le bateau est immobilisé</strong> <em>(partie <strong>01</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Les plats « grand » nourrissent plus</strong>, mais un esprit n'a besoin que d'un repas par jour — <strong>privilégie les collations pour les plats préférés</strong>, <strong>c'est moins cher à produire</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Le charbon se cuisine</strong> : <strong>bois ou sciure au four</strong> → <strong>le combustible de la fonderie</strong> <em>(partie <strong>29</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Et cette troisième astuce est capitale</strong> : beaucoup de joueurs cherchent du charbon dans les mines. <strong>Il se cuisine.</strong></p>
+<h2 id="alertes-28" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ L'amélioration de la cuisine débloque 78 des 106 plats. Elle vient de la quête <strong>Grand fourneau</strong> d'ATUL <em>(partie <strong>11</strong>)</em>. <strong>Fais-la tôt.</strong></li>
+<li class="alerte">⚠️ Un plat laissé trop longtemps dans le four brûle et il est perdu.</li>
+<li class="alerte">⚠️ Un plat ne compte pour le musée que s'il a été cuisiné, <strong>pas seulement découvert</strong> <em>(partie <strong>09</strong>)</em>. C'est la différence entre les succès <strong>MasterChef</strong> et <strong>Collectionneur</strong>.</li>
+<li class="alerte">⚠️ <strong>103 plats sur 106 comptent pour le musée</strong> : le papier fait maison, le repas douteux et le charbon n'y comptent pas.</li>
+<li class="alerte">⚠️ <strong>Le surströmming ne se cuisine pas</strong> : il fermente au cellier à partir d'un hareng <em>(partie <strong>26</strong>)</em>. C'est le seul plat du jeu dans ce cas, et c'est le plat préféré de Gustav.</li>
+<li class="alerte">⚠️ <strong>Le charbon se cuisine</strong> : bois ou sciure au four. On ne le mine pas.</li>
+<li class="alerte">⚠️ Le porc, le bœuf et le poulet ne s'élèvent pas : ils s'achètent chez Raccoon Inc. Le poulailler ne donne que des œufs <em>(partie <strong>26</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>Summer est végétalienne</strong> : <strong>aucun produit d'origine animale.</strong> Daria ne mange que des fruits. Giovanni refuse les plats « riches en glucides ».</li>
+<li class="alerte">⚠️ La flamboyante fait 7 recettes et deux plats préférés, et elle ne vient que de l'événement de Gustav <em>(partie <strong>16</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>Le miel fait 5 recettes</strong>, et il vient de la ruche <em>(partie <strong>26</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : *<em>le type du <strong>pouding au riz</strong></em> <em>(le wiki français dit « Petit-déjeuner », le wiki anglais dit « Dessert »)</em> ; <strong>l'existence réelle du type <strong>incroyable</strong>, qu'aucune recette ne porte</strong> ; <strong>le signe de chaque catégorie cachée</strong> <em>(aimée ou détestée)</em> ; *<em>où trouver les <strong>baies</strong> et les <strong>champignons</strong></em>.</li>
+<li class="alerte manquable">⏳ Les 106 plats ont un nom français confirmé. <strong>Milquetoast</strong> et <strong>Surf and turf</strong> gardent leur mot anglais dans la version française du jeu, et le « Crab Cake » s'appelle <strong>gâteau de crabe</strong>.</li>
+<li class="alerte">⚠️ <strong>Attention à la numérotation</strong> : le wiki français donne un ordre de numéros différent de l'anglais, parce qu'il date d'avant les mises à jour. Le guide utilise la numérotation actuelle <em>(version 1.14)</em>.</li>
+</ul>
+<h2 id="check-list-28" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="la-cuisine">La cuisine</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Premier poisson pêché, premier plat cuisiné pour Atul</li>
+<li class="tache"><input type="checkbox"> <strong>Cuisine construite</strong> <em>(la quête d'Atul)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Amélioration de la cuisine obtenue</strong> <em>(Grand fourneau)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 26 recettes à un ingrédient découvertes</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Les 78 recettes à deux ingrédients découvertes</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Succès MasterChef</strong> <em>(toutes les recettes découvertes)</em></li>
+</ul>
+<h3 id="les-13-plats-preferes-2">Les 13 plats préférés</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Café noir</strong> <em>(Gwen)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Côtelettes de porc</strong> <em>(Atul)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Salade de grains</strong> <em>(Summer)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Soupe aux nouilles</strong> <em>(Astrid)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Fondue au bœuf</strong> <em>(Giovanni)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Pâté aux légumes</strong> <em>(Alice)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Surströmming</strong> <em>(Gustav, au cellier)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Pain à l'ail</strong> <em>(Bruce &amp; Mickey)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Pizza aux tomates</strong> <em>(Buck)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Laksa</strong> <em>(Beverly)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Frites</strong> <em>(Stanley)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Salade verte</strong> <em>(Elena)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Chilaquiles</strong> <em>(Jackie)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Une pomme pour Daria</strong> <em>(ce n'est pas un plat)</em></li>
+</ul>
+<h3 id="le-musee">Le musée</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Chaque recette découverte a été cuisinée au moins une fois</li>
+<li class="tache"><input type="checkbox"> <strong>Les 103 plats du musée déposés chez Susan</strong></li>
+<li class="tache"><input type="checkbox"> <strong>98 plats</strong> → <strong>la tenue de Thora</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Succès Collectionneur</strong></li>
+</ul>
+<h3 id="les-plats-hors-menu">Les plats hors menu</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Papier fait maison</strong> <em>(sciure + colle tout usage)</em> → <strong>les affiches de Buck</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Charbon</strong> <em>(bois ou sciure)</em> → la fonderie et la forge</li>
+<li class="tache"><input type="checkbox"> <strong>Repas douteux</strong> <em>(une combinaison invalide)</em></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="lagriculture-lelevage-et-les-ressources.html" rel="prev"><small>← Partie précédente</small><b>L&#x27;agriculture, l&#x27;élevage et les ressources</b></a><a class="suiv" href="la-peche-tous-les-poissons.html" rel="next"><small>Partie suivante →</small><b>La pêche — tous les poissons</b></a><a class="tout" href="spiritfarer.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Spiritfarer · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

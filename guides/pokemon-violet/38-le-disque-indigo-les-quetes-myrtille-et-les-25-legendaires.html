@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le Disque Indigo : les Quêtes Myrtille et les 25 légendaires – Guide Pokémon Violet</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Pokémon Violet, Le Disque Indigo : les Quêtes Myrtille et les 25 légendaires : Le gros morceau : 25 Pokémon légendaires invoqués par les friandises de…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/38-le-disque-indigo-les-quetes-myrtille-et-les-25-legendaires.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Le Disque Indigo : les Quêtes Myrtille et les 25 légendaires · Guide Pokémon Violet">
+<meta property="og:description" content="Pokémon Violet, Le Disque Indigo : les Quêtes Myrtille et les 25 légendaires : Le gros morceau : 25 Pokémon légendaires invoqués par les friandises de…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/38-le-disque-indigo-les-quetes-myrtille-et-les-25-legendaires.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Pokémon Violet", "item": "https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/"}, {"@type": "ListItem", "position": 3, "name": "Le Disque Indigo : les Quêtes Myrtille et les 25 légendaires", "item": "https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/38-le-disque-indigo-les-quetes-myrtille-et-les-25-legendaires.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="pokemon-violet" class="compact" data-partie="38-le-disque-indigo-les-quetes-myrtille-et-les-25-legendaires"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Pokémon Violet</a><span aria-hidden="true">›</span><span>Partie 38</span></nav>
+<p class="gjv-jeu">Pokémon Violet : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Pokémon <em>Violet</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction-tout-comprendre-avant-de-commencer.html"><span class="num">00</span><span class="libelle">Introduction : tout comprendre avant de commencer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-le-prologue-cuchalaga-miraidon-et-lacademie-raisin.html"><span class="num">01</span><span class="libelle">Le prologue : Cuchalaga, Miraidon et l&#x27;Académie Raisin</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-sevaro-larene-insecte-et-le-dominant-roche-falaise.html"><span class="num">02</span><span class="libelle">Sevaro : l&#x27;arène Insecte et le Dominant Roche-Falaise</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-cuencia-larene-plante-et-le-dominant-vaste-ciel.html"><span class="num">03</span><span class="libelle">Cuencia : l&#x27;arène Plante et le Dominant Vaste-Ciel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-le-groupe-segin-et-larene-electrik-de-levalendura.html"><span class="num">04</span><span class="libelle">Le groupe Segin et l&#x27;arène Électrik de Levalendura</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-le-groupe-schedar-et-le-dominant-acier-tranche.html"><span class="num">05</span><span class="libelle">Le groupe Schedar et le Dominant Acier-Tranché</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-jarramanca-porto-marinada-et-le-groupe-tsih.html"><span class="num">06</span><span class="libelle">Jarramanca, Porto Marinada et le groupe Tsih</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-mezclamora-larene-normal-et-le-plat-secret.html"><span class="num">07</span><span class="libelle">Mezclamora : l&#x27;arène Normal et le plat secret</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-frigao-larene-spectre-et-le-dominant-tremble-terre.html"><span class="num">08</span><span class="libelle">Frigao : l&#x27;arène Spectre et le Dominant Tremble-Terre</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-alforneira-larene-psy.html"><span class="num">09</span><span class="libelle">Alforneira : l&#x27;arène Psy</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-le-mont-nappe-larene-glace-et-le-groupe-ruchbah.html"><span class="num">10</span><span class="libelle">Le Mont Nappé : l&#x27;arène Glace et le groupe Ruchbah</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="11-le-dominant-fourbe-dragon-et-le-groupe-caph.html"><span class="num">11</span><span class="libelle">Le Dominant Fourbe-Dragon et le groupe Caph</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-la-ligue-pokemon-lexamen-le-conseil-4-et-alisma.html"><span class="num">12</span><span class="libelle">La Ligue Pokémon : l&#x27;examen, le Conseil 4 et Alisma</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="13-les-trois-denouements-menzi-pepper-clavel-et-pania.html"><span class="num">13</span><span class="libelle">Les trois dénouements : Menzi, Pepper, Clavel et Pania</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="14-retour-aux-sources-la-zone-zero-et-le-professeur-turum.html"><span class="num">14</span><span class="libelle">Retour aux sources : la Zone Zéro et le professeur Turum</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="15-lapres-generique-revanches-tournoi-et-juge-iv.html"><span class="num">15</span><span class="libelle">L&#x27;après-générique : revanches, tournoi et Juge IV</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="16-les-zones-sud-la-route-de-cuchalaga-et-la-caverne-de-la-crique.html"><span class="num">16</span><span class="libelle">Les Zones Sud, la Route de Cuchalaga et la Caverne de la Crique</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="17-les-zones-ouest-et-le-desert-rotissable.html"><span class="num">17</span><span class="libelle">Les Zones Ouest et le Désert Rôtissable</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="18-les-zones-est-et-le-bosquet-tague.html"><span class="num">18</span><span class="libelle">Les Zones Est et le Bosquet Tagué</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="19-le-nord-zones-nord-lac-asrol-foret-toastee-et-mont-nappe.html"><span class="num">19</span><span class="libelle">Le nord : Zones Nord, Lac Asrol, Forêt Toastée et Mont Nappé</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="20-le-cratere-de-paldea-et-la-zone-zero.html"><span class="num">20</span><span class="libelle">Le Cratère de Paldea et la Zone Zéro</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="21-les-villes-de-paldea-boutiques-pnj-et-services.html"><span class="num">21</span><span class="libelle">Les villes de Paldea : boutiques, PNJ et services</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="22-les-tours-dobservation-les-grottes-et-les-spots-de-pokemon-rares.html"><span class="num">22</span><span class="libelle">Les Tours d&#x27;Observation, les grottes et les spots de Pokémon rares</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="23-les-32-pieux-et-les-quatre-tresors-du-fleau.html"><span class="num">23</span><span class="libelle">Les 32 pieux et les quatre Trésors du Fléau</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="24-les-pieces-de-mordudor-et-gromago.html"><span class="num">24</span><span class="libelle">Les pièces de Mordudor et Gromago</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="25-les-capsules-techniques-et-la-machine-a-ct.html"><span class="num">25</span><span class="libelle">Les Capsules Techniques et la Machine à CT</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="26-les-pique-niques-les-sandwichs-et-les-auras-gustatives.html"><span class="num">26</span><span class="libelle">Les pique-niques, les sandwichs et les Auras Gustatives</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="27-la-teracristallisation-et-les-raids-teracristal.html"><span class="num">27</span><span class="libelle">La Téracristallisation et les Raids Téracristal</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="28-les-pokemon-paradoxes-et-les-exclusivites-de-violet.html"><span class="num">28</span><span class="libelle">Les Pokémon paradoxes et les exclusivités de Violet</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="29-les-evolutions-speciales-lelevage-et-les-echanges.html"><span class="num">29</span><span class="libelle">Les évolutions spéciales, l&#x27;élevage et les échanges</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="30-le-combat-les-types-les-talents-et-le-choix-dequipe.html"><span class="num">30</span><span class="libelle">Le combat, les types, les talents et le choix d&#x27;équipe</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="31-largent-les-objets-les-encheres-et-les-tenues.html"><span class="num">31</span><span class="libelle">L&#x27;argent, les objets, les enchères et les tenues</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="32-lacademie-les-cours-et-le-multijoueur.html"><span class="num">32</span><span class="libelle">L&#x27;Académie, les cours et le multijoueur</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="33-le-masque-turquoise-arriver-a-septentria.html"><span class="num">33</span><span class="libelle">Le Masque Turquoise : arriver à Septentria</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="34-le-masque-turquoise-les-trois-adoramis-et-ogerpon.html"><span class="num">34</span><span class="libelle">Le Masque Turquoise : les trois Adoramis et Ogerpon</span><span class="compte"></span></a></li>
+<li data-section="section-36"><a href="35-le-masque-turquoise-les-collectibles-de-septentria.html"><span class="num">35</span><span class="libelle">Le Masque Turquoise : les collectibles de Septentria</span><span class="compte"></span></a></li>
+<li data-section="section-37"><a href="36-le-disque-indigo-linstitut-myrtille-et-le-terra-dome.html"><span class="num">36</span><span class="libelle">Le Disque Indigo : l&#x27;Institut Myrtille et le Terra-Dôme</span><span class="compte"></span></a></li>
+<li data-section="section-38"><a href="37-le-disque-indigo-la-ligue-myrtille-et-terapagos.html"><span class="num">37</span><span class="libelle">Le Disque Indigo : la Ligue Myrtille et Terapagos</span><span class="compte"></span></a></li>
+<li data-section="section-39"><a href="#38-le-disque-indigo-les-quetes-myrtille-et-les-25-legendaires"><span class="num">38</span><span class="libelle">Le Disque Indigo : les Quêtes Myrtille et les 25 légendaires</span><span class="compte"></span></a></li>
+<li data-section="section-40"><a href="39-la-nuit-des-kibi-lepilogue-et-pechaminus.html"><span class="num">39</span><span class="libelle">La Nuit des Kibi : l&#x27;épilogue et Pêchaminus</span><span class="compte"></span></a></li>
+<li data-section="section-41"><a href="40-les-trois-pokedex-paldea-septentria-et-myrtille.html"><span class="num">40</span><span class="libelle">Les trois Pokédex : Paldea, Septentria et Myrtille</span><span class="compte"></span></a></li>
+<li data-section="section-42"><a href="99-annexes-index-manquables-et-check-list-finale.html"><span class="num">99</span><span class="libelle">Annexes : index, manquables et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-43"><a href="sources.html"><span class="num">✦</span><span class="libelle">Sources</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-39">
+<header class="tete-section">
+<p class="eyebrow">Partie 38</p>
+<h1 id="38-le-disque-indigo-les-quetes-myrtille-et-les-25-legendaires">Le Disque Indigo : les Quêtes Myrtille et les 25 légendaires</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-39"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-39">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Le gros morceau</strong> : <strong>25 Pokémon légendaires</strong> invoqués par les <strong>friandises de Jeffry Andise</strong>, chacun à un emplacement précis de Paldea.</li>
+<li><strong>La règle</strong> : <strong>une friandise tous les 10 Activités Myrtille solo</strong>, ou <strong>une par activité de groupe</strong>.</li>
+<li><strong>Le piège</strong> : <strong>la moitié des légendaires dépend de ta version.</strong> Neuf ne s'obtiennent en solo qu'en Violet, neuf autres seulement en groupe.</li>
+<li><strong>À ne pas rater</strong> : les <strong>Points Myrtille</strong> servent aussi à <strong>améliorer les apparitions</strong> des quatre biomes — c'est la seule façon raisonnable de finir le Pokédex Myrtille.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-39" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Le post-game du Disque Indigo, et le plus grand objectif de collecte de tout Pokémon Violet : <strong>vingt-cinq Pokémon légendaires</strong>, dont <strong>Artikodin</strong>, <strong>Rayquaza</strong>, <strong>Lugia</strong>, <strong>Kyogre</strong>, <strong>Groudon</strong>, <strong>Necrozma</strong> et <strong>Kyurem</strong>, qui réapparaissent un par un dans Paldea.</p>
+<p>Avec, autour, le système des <strong>Points Myrtille</strong>, qui est le moteur de tout ce contenu.</p>
+<h2 id="itineraire-39" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ul>
+<li>📍 <strong>Les listes en images</strong> : <a href="https://www.millenium.org/guide/409417.html">les Activités Myrtille</a> sur Millenium ; <a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/pass-d-extension/legendaires">les Pokémon légendaires</a> et <a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/pass-d-extension/combats-club-ligue">les combats du Club de la Ligue</a> sur Pokébip.</li>
+</ul>
+<ol>
+<li><strong>L'Institut Myrtille</strong> : <strong>Jeffry Andise</strong> s'y installe après le générique de l'extension.</li>
+<li><strong>Le Terra-Dôme</strong> : la flèche directionnelle droite ouvre la liste des <strong>Activités Myrtille</strong>.</li>
+<li><strong>Le Club de la Ligue</strong> : les revanches, les missions spéciales, et l'ordinateur des apparitions.</li>
+<li><strong>La Boutique de l'Institut</strong> et la <strong>Cafétéria</strong> : où dépenser les PM.</li>
+<li><strong>Toute Paldea</strong> : les vingt-cinq emplacements de légendaires.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-39" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="gagner-des-points-myrtille-efficacement">Gagner des Points Myrtille efficacement</h3>
+<ol>
+<li><strong>Ouvre la liste des activités</strong> avec la <strong>flèche directionnelle droite</strong>, dans le Terra-Dôme.</li>
+<li><strong>Fais dix activités standard</strong> pour débloquer les <strong>activités spéciales</strong>. Les standard rapportent <strong>10 à 50 PM</strong>, les spéciales <strong>150 PM</strong>.</li>
+<li><strong>Laisse Cyano débloquer les activités plus difficiles</strong> au fil de ta progression.</li>
+<li><strong>Joue en groupe quand tu peux.</strong> Les activités de Club Union rapportent <strong>400 à 600 PM</strong>, se terminent plus vite, et c'est ce qui change l'échelle.</li>
+<li><strong>Choisis les activités qui se font sans y penser</strong> : « parcourir 500 mètres », « ramasser 10 objets », « battre 10 Pokémon en combat auto ». Tu les remplis en explorant.</li>
+</ol>
+<h3 id="les-friandises-de-jeffry-andise">Les friandises de Jeffry Andise</h3>
+<ol start="6">
+<li><strong>Trouve Jeffry Andise</strong> à l'Institut Myrtille, après le générique de l'extension.</li>
+<li><strong>Comprends le rythme.</strong> Il te donne <strong>une friandise au hasard</strong> :
+<ul>
+<li><strong>toutes les 10 Activités Myrtille solo</strong> ;</li>
+<li>ou <strong>après chaque Activité Myrtille en Club Union</strong>.</li>
+</ul>
+</li>
+<li><strong>Retiens les deux chiffres</strong> : il existe <strong>13 friandises solo</strong> et <strong>12 friandises de groupe</strong>, soit <strong>25 légendaires</strong> au total.</li>
+<li><strong>Comprends la répartition par version.</strong> C'est le point crucial, et il est mal connu :</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Catégorie</th>
+<th>Nombre</th>
+<th>Comment l'obtenir en Violet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dans les deux versions, solo</strong></td>
+<td>4</td>
+<td>Activités <strong>solo</strong></td>
+</tr>
+<tr>
+<td><strong>Dans les deux versions, groupe</strong></td>
+<td>3</td>
+<td>Activités <strong>en Club Union</strong></td>
+</tr>
+<tr>
+<td><strong>Pool Écarlate solo / Violet groupe</strong></td>
+<td>9</td>
+<td>En Violet, uniquement par activités <strong>en groupe</strong></td>
+</tr>
+<tr>
+<td><strong>Pool Violet solo / Écarlate groupe</strong></td>
+<td>9</td>
+<td>En Violet, par activités <strong>solo</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ol start="10">
+<li><strong>Retiens ce que ça implique.</strong> En version Violet, <strong>douze des vingt-cinq légendaires</strong> ne s'obtiennent qu'avec des <strong>activités en Club Union</strong>, donc <strong>à plusieurs</strong>. Sans jouer avec quelqu'un, tu ne peux pas les avoir.</li>
+<li><strong>Demande un indice.</strong> Parler à nouveau à Jeffry Andise donne un <strong>indice d'emplacement</strong>. Lui <strong>montrer la friandise</strong> en donne un deuxième.</li>
+<li><strong>Va à l'emplacement</strong> et affronte le légendaire. Ils sont presque tous <strong>niveau 70</strong>.</li>
+<li><strong>Prends le Charme Stabilité.</strong> Celui d'Irido, partie <strong>36</strong>, augmente les <strong>captures critiques</strong> — et avec vingt-cinq légendaires à capturer, ça compte énormément.</li>
+<li><strong>Garde la Master Ball de Kassis</strong> pour celui qui résiste le plus.</li>
+</ol>
+<h3 id="les-vingt-cinq-emplacements">Les vingt-cinq emplacements</h3>
+<ol start="15">
+<li><strong>Fais-les par secteur.</strong> Les emplacements sont dispersés dans toute Paldea, et plusieurs sont groupés : trois autour de la Cascade Furie, deux près du Mont Nappé, deux au Lac Asrol.</li>
+<li><strong>Note les trois emplacements les plus cachés</strong> :</li>
+</ol>
+<ul>
+<li><strong>Kyurem</strong>, dans la grotte du Tunnel Mezcla-Pincho : prends la rampe au nord-ouest vers le Mont Nappé, puis <strong>saute par un trou dans le mur</strong> ;</li>
+<li><strong>Solgaleo</strong>, à la Ligue Pokémon, sur le terrain où tu as affronté Alisma — alors que l'intérieur du bâtiment est fermé depuis la partie <strong>12</strong> ;</li>
+<li><strong>Zekrom</strong>, dans une <strong>alcôve au centre du grand rocher</strong> à l'est de la Zone Sud n° 3.</li>
+</ul>
+<h3 id="depenser-ses-points-myrtille">Dépenser ses Points Myrtille</h3>
+<ol start="17">
+<li><strong>Améliore les apparitions du Terra-Dôme.</strong> C'est l'usage le plus important : les PM permettent de <strong>changer les Pokémon qui apparaissent</strong> dans les quatre biomes, et c'est la seule façon raisonnable de compléter le Pokédex Myrtille de 243 Pokémon.</li>
+<li><strong>Fais apparaître les starters sous le dôme.</strong> L'ordinateur du Club de la Ligue accepte des PM pour ça, et c'est ce qui permet d'obtenir <strong>tous les starters</strong> des générations précédentes.</li>
+<li><strong>Achète à la Boutique de l'Institut.</strong> Elle prend des PM contre des <strong>objets clés</strong>, et la <strong>Cafétéria</strong> d'à côté en prend contre des <strong>plats à auras</strong>. Aucune source, française ou anglophone, ne publie le catalogue complet avec les prix — lis les étiquettes sur place, mais garde l'essentiel de tes PM pour l'ordinateur du Club de la Ligue.</li>
+<li><strong>Fais la quète de la Team Star</strong> une fois le scénario de l'extension terminé. Elle se joue à l'<strong>Académie Raisin</strong>, pas à l'Institut, elle ne demande <strong>aucun combat</strong>, et elle rapporte une <strong>Capsule d'Or</strong>. Le détail est plus bas.</li>
+</ol>
+<h3 id="le-club-de-la-ligue-apres-le-scenario">Le Club de la Ligue après le scénario</h3>
+<ol start="21">
+<li><strong>Reviens régulièrement.</strong> Les <strong>dresseurs importants du jeu</strong> viennent au Club, et tu peux les affronter <strong>une fois par visite</strong> de chacun.</li>
+<li><strong>Sache qui vient.</strong> La liste est énorme : côté Institut Myrtille, Rubépin, Nérine, Taro, Irido, Roseille, Kassis et Cyano ; côté Paldea, les huit champions d'arène, Cayenn, Popi, Clavel, Jacq, Thaïm, Mora, Salvio, Elige, Hassa, Saguaro, Mimosa, Alisma, <strong>Menzi</strong>, <strong>Pepper</strong> et Pania.</li>
+<li><strong>Attends-toi à du niveau 80 à 87.</strong> Avec quelques exceptions : Clavel a notamment un <strong>Polthégeist niveau 65</strong>.</li>
+<li><strong>Note que les combats sont en duo</strong> pour les dresseurs de l'Institut Myrtille et pour Laïm.</li>
+<li><strong>Fais les missions spéciales du Club</strong>, débloquées après le générique de l'extension.</li>
+<li><strong>Invite des champions</strong> via Cyano, également après le générique.</li>
+</ol>
+<h3 id="ce-que-le-disque-indigo-change-au-tournoi-de-lacademie">Ce que le Disque Indigo change au Tournoi de l'Académie</h3>
+<ol start="27">
+<li><strong>Retourne au Grand Tournoi de l'Académie</strong>, partie <strong>15</strong>. Une fois le scénario du Disque Indigo terminé, <strong>les équipes sont améliorées</strong>.</li>
+<li><strong>Note l'exception</strong> : Pania, <strong>Pepper</strong> et <strong>Menzi</strong> ne voient leurs équipes améliorées qu'après avoir terminé l'<strong>épilogue Pêchaminus</strong> de la partie <strong>39</strong>.</li>
+</ol>
+<h2 id="quetes-et-lieux-39" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-25-legendaires-de-jeffry-andise">Les 25 légendaires de Jeffry Andise</h3>
+<p><strong>Les quatre disponibles en solo dans les deux versions</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Pokémon</th>
+<th>Niveau</th>
+<th>Où il apparaît</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Artikodin</strong></td>
+<td>70</td>
+<td>Mont Nappé, au bord du lac à l'ouest de Frigao</td>
+</tr>
+<tr>
+<td><strong>Électhor</strong></td>
+<td>70</td>
+<td><strong>Au sommet du phare de Cuchalaga</strong></td>
+</tr>
+<tr>
+<td><strong>Sulfura</strong></td>
+<td>70</td>
+<td>Grand rocher au <strong>nord du Désert Rôtissable</strong></td>
+</tr>
+<tr>
+<td><strong>Wushours</strong></td>
+<td><strong>30</strong></td>
+<td>Juste devant la Cascade Furie</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les trois disponibles en groupe dans les deux versions</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Pokémon</th>
+<th>Niveau</th>
+<th>Où il apparaît</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rayquaza</strong></td>
+<td>70</td>
+<td>Au sud-est du Grand Cratère de Paldea, près de la Zone Sud n° 3</td>
+</tr>
+<tr>
+<td><strong>Kyurem</strong></td>
+<td>70</td>
+<td>Grotte du Tunnel Mezcla-Pincho : rampe nord-ouest vers le Mont Nappé, puis <strong>saut par un trou dans le mur</strong></td>
+</tr>
+<tr>
+<td><strong>Necrozma</strong></td>
+<td>70</td>
+<td>Rocher du Sanctuaire du Sol Corrompu, au sud-est, près d'une cascade</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les neuf que la version Violet obtient en solo</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Pokémon</th>
+<th>Niveau</th>
+<th>Où il apparaît</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lugia</strong></td>
+<td>70</td>
+<td>Dans l'eau, près de l'<strong>île la plus au nord-est</strong> de Paldea</td>
+</tr>
+<tr>
+<td><strong>Latias</strong></td>
+<td>70</td>
+<td><strong>Plage au sud de la Zone Sud n° 4</strong></td>
+</tr>
+<tr>
+<td><strong>Kyogre</strong></td>
+<td>70</td>
+<td>Entre les <strong>trois rochers des Rocs Onaissance</strong>, au nord-ouest de Paldea</td>
+</tr>
+<tr>
+<td><strong>Cobaltium</strong></td>
+<td>70</td>
+<td>Chemin surélevé juste à l'<strong>ouest de la Cascade Furie</strong></td>
+</tr>
+<tr>
+<td><strong>Terrakium</strong></td>
+<td>70</td>
+<td>Promontoire au <strong>sud-est du repaire du groupe Segin</strong></td>
+</tr>
+<tr>
+<td><strong>Viridium</strong></td>
+<td>70</td>
+<td>Cul-de-sac au <strong>nord-est du Bosquet Tagué</strong></td>
+</tr>
+<tr>
+<td><strong>Zekrom</strong></td>
+<td>70</td>
+<td><strong>Alcôve au centre du grand rocher</strong> à l'est de la Zone Sud n° 3</td>
+</tr>
+<tr>
+<td><strong>Lunala</strong></td>
+<td>70</td>
+<td><strong>Au nord de Porto Marinada</strong>, près d'un arbre, après la rivière</td>
+</tr>
+<tr>
+<td><strong>Spectreval</strong></td>
+<td>70</td>
+<td>Devant les <strong>ruines au sud-ouest du Mont Nappé</strong>, près du Cratère de Paldea</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les neuf que la version Violet n'obtient qu'en groupe</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Pokémon</th>
+<th>Niveau</th>
+<th>Où il apparaît</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Raikou</strong></td>
+<td>70</td>
+<td><strong>Zone Ouest n° 1</strong>, au bord du lac à l'ouest des éoliennes</td>
+</tr>
+<tr>
+<td><strong>Entei</strong></td>
+<td>70</td>
+<td><strong>Nord-est de la Zone Est n° 3</strong>, au bord de la falaise</td>
+</tr>
+<tr>
+<td><strong>Suicune</strong></td>
+<td>70</td>
+<td><strong>Île la plus à l'ouest du Lac Asrol</strong></td>
+</tr>
+<tr>
+<td><strong>Ho-Oh</strong></td>
+<td>70</td>
+<td>Colline au <strong>sud des cascades de la Zone Sud n° 4</strong></td>
+</tr>
+<tr>
+<td><strong>Latios</strong></td>
+<td>70</td>
+<td>Au bord du lac, au <strong>sud-ouest de la Cascade Furie</strong></td>
+</tr>
+<tr>
+<td><strong>Groudon</strong></td>
+<td>70</td>
+<td>Cul-de-sac surélevé au <strong>nord-est de la Grotte d'Alforneira</strong></td>
+</tr>
+<tr>
+<td><strong>Reshiram</strong></td>
+<td>70</td>
+<td>Au sud de Pinchoria, près de la rivière surélevée</td>
+</tr>
+<tr>
+<td><strong>Solgaleo</strong></td>
+<td>70</td>
+<td>Ligue Pokémon, sur le terrain où tu as affronté Alisma</td>
+</tr>
+<tr>
+<td><strong>Blizzeval</strong></td>
+<td>70</td>
+<td><strong>Nord-ouest des ruines au sud du Mont Nappé</strong>, près d'un arbre</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="le-detail-du-systeme-de-friandises">Le détail du système de friandises</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qui les donne</strong></td>
+<td>Jeffry Andise, à l'Institut Myrtille, après le générique de l'extension</td>
+</tr>
+<tr>
+<td><strong>Rythme solo</strong></td>
+<td><strong>1 friandise aléatoire toutes les 10 Activités Myrtille solo</strong></td>
+</tr>
+<tr>
+<td><strong>Rythme en groupe</strong></td>
+<td><strong>1 friandise après chaque Activité Myrtille en Club Union</strong></td>
+</tr>
+<tr>
+<td><strong>Nombre de friandises solo</strong></td>
+<td><strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>Nombre de friandises de groupe</strong></td>
+<td><strong>12</strong></td>
+</tr>
+<tr>
+<td><strong>Les indices</strong></td>
+<td>Lui reparler donne un indice ; lui <strong>montrer la friandise</strong> en donne un second</td>
+</tr>
+<tr>
+<td><strong>Ce qui détermine le légendaire</strong></td>
+<td>Le type d'activité et <strong>ta version du jeu</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-activites-myrtille-et-ce-quelles-rapportent">Les Activités Myrtille, et ce qu'elles rapportent</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Catégorie</th>
+<th>Gain</th>
+<th>Déblocage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Solo standard</strong></td>
+<td><strong>10 à 50 PM</strong></td>
+<td>Dès l'arrivée</td>
+</tr>
+<tr>
+<td><strong>Solo spéciales</strong></td>
+<td><strong>150 PM</strong></td>
+<td>Après <strong>10 activités standard</strong></td>
+</tr>
+<tr>
+<td><strong>En groupe, en Club Union</strong></td>
+<td><strong>400 à 600 PM</strong></td>
+<td>Club Union, avec tous les joueurs participants</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le site officiel de Pokémon donne des fourchettes légèrement différentes — <strong>20 à 40 PM</strong> pour une activité ordinaire et <strong>100 à 150 PM</strong> pour une activité bonus. L'ordre de grandeur est le même, et la conclusion ne change pas : une activité de groupe vaut dix activités solo.</p>
+<h3 id="ou-depenser-les-points-myrtille">Où dépenser les Points Myrtille</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Où</th>
+<th>Ce que ça donne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L'ordinateur du Club de la Ligue</strong></td>
+<td>Améliore les apparitions des quatre biomes, et fait apparaître les <strong>starters</strong> sous le dôme</td>
+</tr>
+<tr>
+<td><strong>Lancelot, au Club de la Ligue</strong></td>
+<td>De nouveaux <strong>lanceurs de Poké Balls</strong></td>
+</tr>
+<tr>
+<td><strong>Les défis du Conseil 4</strong></td>
+<td><strong>50 PM</strong> par membre, partie <strong>37</strong></td>
+</tr>
+<tr>
+<td><strong>La Boutique de l'Institut</strong></td>
+<td>Des <strong>objets clés</strong> — catalogue et prix non publiés par mes sources</td>
+</tr>
+<tr>
+<td><strong>La Cafétéria</strong></td>
+<td>Des plats</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-dresseurs-du-club-de-la-ligue">Les dresseurs du Club de la Ligue</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Groupe</th>
+<th>Qui vient</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Institut Myrtille</strong></td>
+<td>Rubépin, Nérine, Taro, Irido, Roseille, Kassis, Cyano</td>
+</tr>
+<tr>
+<td><strong>Les champions de Paldea</strong></td>
+<td>Éra, Colza, Mashynn, Kombu, Okuba, Laïm, Tully, Grusha</td>
+</tr>
+<tr>
+<td><strong>Le Conseil 4 de Paldea</strong></td>
+<td>Cayenn, Popi, et Alisma</td>
+</tr>
+<tr>
+<td><strong>L'Académie</strong></td>
+<td>Clavel, Jacq, Thaïm, Mora, Salvio, Elige, Hassa, Saguaro, Mimosa</td>
+</tr>
+<tr>
+<td><strong>Tes camarades</strong></td>
+<td>Menzi, Pepper, Pania</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Niveaux</strong> : de <strong>80 à 87</strong>, avec des exceptions — Clavel a notamment un <strong>Polthégeist niveau 65</strong>. Les dresseurs de l'Institut Myrtille et Laïm se combattent <strong>en duo</strong>. Chaque dresseur se raffronte <strong>une fois par visite</strong>.</p>
+<h3 id="la-quete-de-la-team-star">La quête de la Team Star</h3>
+<p>C'est le contenu annexe le plus facile à rater de tout le pass d'extension, parce que rien ne t'y envoie et qu'il ne se déroule même pas dans l'extension : il se joue à l'<strong>Académie Raisin</strong>, à Paldea, et il ne se débloque qu'après avoir terminé le scénario du <strong>Disque Indigo</strong>.</p>
+<ul>
+<li><strong>Va dans le hall de l'Académie Raisin</strong>, côté ouest, près de Mora. <strong>Brome</strong> et <strong>Nèflie</strong> t'y attendent.</li>
+<li><strong>Suis-les en salle de classe</strong>, où la discussion commence.</li>
+<li><strong>Sors chercher l'élève aux cheveux roux</strong>, au <strong>sud-ouest de la cour</strong>, du côté du potager.</li>
+<li><strong>Reviens en classe</strong> : <strong>Ortiga</strong>, <strong>Erio</strong> et <strong>Meloco</strong> se sont joints au groupe.</li>
+<li><strong>Réponds « Absolument ! »</strong> quand on te demande si tu les aides.</li>
+</ul>
+<p>Il n'y a <strong>aucun combat</strong> dans toute la quête. Nèflie te remet une <strong>Capsule d'Or</strong>, la <strong>tenue Team Star</strong> et la réaction <strong>« ★ Hasta la Vistar ★ »</strong>.</p>
+<p>Et ça ouvre deux choses après coup :</p>
+<ul>
+<li><strong>Erio vend des vêtements rétro</strong> aux <strong>enchères de Porto Marinada</strong>, à partir de <strong>100 000 ₽</strong> la pièce — prévois un budget ;</li>
+<li>quand tu as <strong>tout acheté</strong> chez lui, il t'apprend la réaction <strong>« Danse des bâtons lumineux »</strong>.</li>
+</ul>
+<h2 id="butin-exhaustif-39" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Friandises de Jeffry Andise</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>10 activités solo, ou 1 activité de groupe</td>
+<td>Invoquent les <strong>25 légendaires</strong></td>
+</tr>
+<tr>
+<td><strong>Artikodin</strong>, <strong>Électhor</strong>, <strong>Sulfura</strong></td>
+<td><span class="badge neutre">Pokémon légendaire</span></td>
+<td>Mont Nappé, phare de Cuchalaga, nord du désert</td>
+<td>Les trois oiseaux, niveau 70</td>
+</tr>
+<tr>
+<td><strong>Wushours</strong></td>
+<td><span class="badge neutre">Pokémon légendaire</span></td>
+<td>Devant la <strong>Cascade Furie</strong></td>
+<td><strong>Niveau 30</strong>, le seul du lot</td>
+</tr>
+<tr>
+<td><strong>Rayquaza</strong></td>
+<td><span class="badge neutre">Pokémon légendaire</span></td>
+<td>Sud-est du Grand Cratère de Paldea</td>
+<td>Niveau 70, friandise de groupe</td>
+</tr>
+<tr>
+<td><strong>Kyurem</strong></td>
+<td><span class="badge neutre">Pokémon légendaire</span></td>
+<td>Grotte du Tunnel Mezcla-Pincho, par un trou dans le mur</td>
+<td>Niveau 70, friandise de groupe</td>
+</tr>
+<tr>
+<td><strong>Necrozma</strong></td>
+<td><span class="badge neutre">Pokémon légendaire</span></td>
+<td>Rocher du Sanctuaire du Sol Corrompu</td>
+<td>Niveau 70, friandise de groupe</td>
+</tr>
+<tr>
+<td><strong>Lugia</strong>, <strong>Latias</strong>, <strong>Kyogre</strong></td>
+<td><span class="badge neutre">Pokémon légendaire</span></td>
+<td>Île nord-est, plage de la Zone Sud n° 4, Rocs Onaissance</td>
+<td>Solo en version <strong>Violet</strong></td>
+</tr>
+<tr>
+<td><strong>Cobaltium</strong>, <strong>Terrakium</strong>, <strong>Viridium</strong></td>
+<td><span class="badge neutre">Pokémon légendaire</span></td>
+<td>Ouest de la Cascade Furie, sud-est du repaire Segin, nord-est du Bosquet Tagué</td>
+<td>Solo en version <strong>Violet</strong></td>
+</tr>
+<tr>
+<td><strong>Zekrom</strong>, <strong>Lunala</strong>, <strong>Spectreval</strong></td>
+<td><span class="badge neutre">Pokémon légendaire</span></td>
+<td>Grand rocher de la Zone Sud n° 3, nord de Porto Marinada, ruines du Mont Nappé</td>
+<td>Solo en version <strong>Violet</strong></td>
+</tr>
+<tr>
+<td><strong>Raikou</strong>, <strong>Entei</strong>, <strong>Suicune</strong>, <strong>Ho-Oh</strong></td>
+<td><span class="badge neutre">Pokémon légendaire</span></td>
+<td>Zone Ouest n° 1, Zone Est n° 3, Lac Asrol, Zone Sud n° 4</td>
+<td><strong>En groupe</strong> en version Violet</td>
+</tr>
+<tr>
+<td><strong>Latios</strong>, <strong>Groudon</strong>, <strong>Reshiram</strong></td>
+<td><span class="badge neutre">Pokémon légendaire</span></td>
+<td>Sud-ouest de la Cascade Furie, Grotte d'Alforneira, sud de Pinchoria</td>
+<td><strong>En groupe</strong> en version Violet</td>
+</tr>
+<tr>
+<td><strong>Solgaleo</strong>, <strong>Blizzeval</strong></td>
+<td><span class="badge neutre">Pokémon légendaire</span></td>
+<td>Terrain d'Alisma à la Ligue, ruines du Mont Nappé</td>
+<td><strong>En groupe</strong> en version Violet</td>
+</tr>
+<tr>
+<td><strong>Lanceurs de Poké Balls</strong></td>
+<td><span class="badge neutre">Fonction</span></td>
+<td>Lancelot, au Club de la Ligue, contre des PM</td>
+<td>Styles de lancer</td>
+</tr>
+<tr>
+<td><strong>Apparitions améliorées</strong></td>
+<td><span class="badge neutre">Fonction</span></td>
+<td>L'ordinateur du Club de la Ligue, contre des PM</td>
+<td>Compléter le <strong>Pokédex Myrtille</strong></td>
+</tr>
+<tr>
+<td><strong>Les starters sous le dôme</strong></td>
+<td><span class="badge neutre">Pokémon</span></td>
+<td>L'ordinateur du Club de la Ligue, contre des PM</td>
+<td>Tous les starters des générations précédentes</td>
+</tr>
+<tr>
+<td><strong>Capsule d'Or</strong></td>
+<td><span class="badge neutre">Objet</span></td>
+<td>Nèflie, à la fin de la <strong>quête de la Team Star</strong></td>
+<td>Apprend une capacité oubliée, sans condition de niveau</td>
+</tr>
+<tr>
+<td><strong>Tenue Team Star</strong></td>
+<td><span class="badge neutre">Tenue</span></td>
+<td>Nèflie, à la fin de la <strong>quête de la Team Star</strong></td>
+<td>Cosmétique</td>
+</tr>
+<tr>
+<td><strong>Réaction « ★ Hasta la Vistar ★ »</strong></td>
+<td><span class="badge neutre">Réaction</span></td>
+<td>Nèflie, à la fin de la <strong>quête de la Team Star</strong></td>
+<td>Cosmétique</td>
+</tr>
+<tr>
+<td><strong>Vêtements rétro</strong></td>
+<td><span class="badge neutre">Tenues</span></td>
+<td><strong>Erio</strong>, aux enchères de Porto Marinada, après la quête</td>
+<td>Cosmétique, à partir de <strong>100 000 ₽</strong></td>
+</tr>
+<tr>
+<td><strong>Réaction « Danse des bâtons lumineux »</strong></td>
+<td><span class="badge neutre">Réaction</span></td>
+<td><strong>Erio</strong>, quand tu as acheté tous ses vêtements rétro</td>
+<td>Cosmétique</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-39" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="le-piege-n-1-croire-quon-peut-tout-faire-en-solo">Le piège n° 1 : croire qu'on peut tout faire en solo</h3>
+<p>C'est le point le plus important de cette partie, et c'est celui que les guides mentionnent le moins.</p>
+<p>En version Violet, <strong>douze des vingt-cinq légendaires</strong> ne tombent que des friandises obtenues par des <strong>Activités Myrtille en Club Union</strong> — donc <strong>en jouant avec quelqu'un</strong>. Il s'agit de <strong>Raikou</strong>, <strong>Entei</strong>, <strong>Suicune</strong>, <strong>Ho-Oh</strong>, <strong>Latios</strong>, <strong>Groudon</strong>, <strong>Reshiram</strong>, <strong>Solgaleo</strong>, <strong>Blizzeval</strong>, plus <strong>Rayquaza</strong>, <strong>Kyurem</strong> et <strong>Necrozma</strong>.</p>
+<p>Si tu joues seul et hors ligne, tu plafonnes à <strong>treize légendaires sur vingt-cinq</strong>. Il n'y a pas de contournement : il faut un deuxième joueur, en local ou en ligne.</p>
+<p>L'inverse est vrai pour un joueur d'Écarlate, ce qui en fait le partenaire idéal : vous n'avez pas besoin des mêmes activités.</p>
+<h3 id="le-piege-n-2-les-10-activites-par-friandise">Le piège n° 2 : les 10 activités par friandise</h3>
+<p>En solo, <strong>une friandise coûte 10 Activités Myrtille</strong>. Pour les treize friandises solo, c'est <strong>130 activités</strong>.</p>
+<p>Deux façons de rendre ça supportable :</p>
+<ul>
+<li><strong>enchaîne les activités faciles</strong> : « parcourir 500 mètres », « ramasser 10 objets », « battre 10 Pokémon en combat auto ». Elles se font en explorant, sans détour.</li>
+<li><strong>passe aux spéciales dès que possible.</strong> Elles comptent aussi pour le compteur de dix, et elles rapportent trois fois plus de PM.</li>
+</ul>
+<p>En groupe, c'est <strong>une friandise par activité</strong>. Le rapport est donc de <strong>1 contre 10</strong> : jouer à deux pendant une heure vaut dix heures en solo.</p>
+<h3 id="les-trois-emplacements-quon-ne-trouve-jamais">Les trois emplacements qu'on ne trouve jamais</h3>
+<p>Vingt-deux légendaires sur vingt-cinq sont à des endroits visibles. Trois ne le sont pas :</p>
+<ul>
+<li><strong>Kyurem</strong> : dans la grotte du Tunnel Mezcla-Pincho, il faut prendre la <strong>rampe au nord-ouest</strong> vers le Mont Nappé, puis <strong>sauter par un trou dans le mur</strong>. Sans savoir que le trou existe, on ne le trouve pas.</li>
+<li><strong>Solgaleo</strong> : sur le <strong>terrain de combat d'Alisma</strong>, à la Ligue Pokémon. C'est troublant, parce que l'intérieur du bâtiment est <strong>fermé définitivement</strong> depuis la partie <strong>12</strong> — le terrain du toit, lui, reste accessible.</li>
+<li><strong>Zekrom</strong> : dans une <strong>alcôve au centre</strong> du grand rocher à l'est de la Zone Sud n° 3. Il faut tourner autour du rocher pour voir l'ouverture.</li>
+</ul>
+<h3 id="le-charme-stabilite-obligatoire-avant-les-legendaires">Le Charme Stabilité, obligatoire avant les légendaires</h3>
+<p>Le <strong>Charme Stabilité</strong> d'Irido, partie <strong>36</strong>, augmente les chances de <strong>capture critique</strong> — et une capture critique <strong>réussit du premier coup</strong>, quel que soit le taux.</p>
+<p>Avec <strong>vingt-cinq légendaires</strong> à capturer, chacun au niveau 70, c'est l'objet qui divise ton temps de jeu par deux. Récupère-le avant de parler à Jeffry Andise.</p>
+<p>Et garde la <strong>Master Ball de Kassis</strong>, partie <strong>37</strong>, pour celui qui s'acharne.</p>
+<h3 id="ameliorer-les-apparitions-et-pourquoi-cest-le-vrai-usage-des-pm">Améliorer les apparitions, et pourquoi c'est le vrai usage des PM</h3>
+<p>Le Pokédex Myrtille compte <strong>243 Pokémon</strong>, et le Terra-Dôme n'en fait apparaître qu'une fraction à la fois. L'<strong>ordinateur du Club de la Ligue</strong> permet, contre des Points Myrtille, de <strong>changer les apparitions</strong> de chaque biome.</p>
+<p>C'est la seule façon raisonnable de compléter ce Pokédex. Et c'est aussi là qu'on fait apparaître <strong>tous les starters</strong> des générations précédentes — ce qui est l'un des plus gros apports de l'extension pour qui vise le Pokédex national.</p>
+<p>Donc : ne dépense pas tous tes PM à la Boutique. Garde-en pour le dôme.</p>
+<h3 id="le-club-de-la-ligue-la-meilleure-source-dargent-du-jeu">Le Club de la Ligue, la meilleure source d'argent du jeu</h3>
+<p>Après le scénario, <strong>une trentaine de dresseurs importants</strong> viennent au Club de la Ligue, et chacun se raffronte <strong>une fois par visite</strong>. Leurs équipes sont au <strong>niveau 80 à 87</strong>.</p>
+<p>Avec la <strong>Pièce Rune</strong> de la partie <strong>31</strong>, c'est, de loin, la meilleure source d'argent de tout le jeu — bien au-delà des revanches d'arène de la partie <strong>15</strong>.</p>
+<p>C'est aussi l'endroit où affronter Cyano, qui n'apparaît nulle part ailleurs.</p>
+<h3 id="le-seul-trou-qui-reste-dans-mes-sources">Le seul trou qui reste dans mes sources</h3>
+<p>La <strong>Boutique de l'Institut</strong> et la <strong>Cafétéria</strong> prennent des Points Myrtille, ça ne fait aucun doute : le site officiel de Pokémon confirme qu'on y dépense ses PM contre des <strong>objets clés</strong> et des <strong>plats à auras</strong>. Mais personne, en français comme en anglais, ne publie le <strong>catalogue complet avec les prix</strong>. C'est le seul endroit de ce guide où je t'envoie lire les étiquettes toi-même.</p>
+<p>La bonne nouvelle, c'est que ça ne coûte rien : la vraie dépense utile de tes PM, c'est l'<strong>ordinateur du Club de la Ligue</strong>, et son fonctionnement est documenté plus haut.</p>
+<h2 id="alertes-39" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Douze des vingt-cinq légendaires exigent des activités en Club Union</strong> en version Violet, donc un deuxième joueur. En solo et hors ligne, tu plafonnes à treize.</li>
+<li class="alerte manquable">⏳ <strong>Une friandise coûte 10 Activités Myrtille en solo</strong>, contre <strong>1 activité en groupe</strong>. Le rapport est de dix contre un.</li>
+<li class="alerte manquable">⏳ <strong>Les trois emplacements de Kyurem, Solgaleo et Zekrom</strong> sont cachés : un trou dans un mur, le terrain d'Alisma, une alcôve de rocher.</li>
+<li class="alerte manquable">⏳ <strong>Les équipes de Pania, Pepper et Menzi</strong> au Grand Tournoi ne s'améliorent qu'après l'<strong>épilogue Pêchaminus</strong>, partie <strong>39</strong>.</li>
+<li class="alerte manquable">⏳ <strong>La quête de la Team Star ne s'annonce pas.</strong> Elle se débloque à l'<strong>Académie Raisin</strong> après le scénario du Disque Indigo, et rien dans le jeu ne t'y envoie : passe voir Brome et Nèflie dans le hall.</li>
+</ul>
+<h2 id="check-list-39" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Dix Activités Myrtille standard faites, activités spéciales débloquées</li>
+<li class="tache"><input type="checkbox"> Charme Stabilité récupéré auprès d'Irido</li>
+<li class="tache"><input type="checkbox"> Jeffry Andise rencontré à l'Institut Myrtille</li>
+<li class="tache"><input type="checkbox"> Les 13 friandises solo obtenues</li>
+<li class="tache"><input type="checkbox"> Un partenaire trouvé pour les activités en Club Union</li>
+<li class="tache"><input type="checkbox"> Les 12 friandises de groupe obtenues</li>
+<li class="tache"><input type="checkbox"> Artikodin, Électhor et Sulfura capturés</li>
+<li class="tache"><input type="checkbox"> Wushours capturé devant la Cascade Furie</li>
+<li class="tache"><input type="checkbox"> Rayquaza, Kyurem et Necrozma capturés</li>
+<li class="tache"><input type="checkbox"> Lugia, Latias et Kyogre capturés</li>
+<li class="tache"><input type="checkbox"> Cobaltium, Terrakium et Viridium capturés</li>
+<li class="tache"><input type="checkbox"> Zekrom, Lunala et Spectreval capturés</li>
+<li class="tache"><input type="checkbox"> Raikou, Entei, Suicune et Ho-Oh capturés</li>
+<li class="tache"><input type="checkbox"> Latios, Groudon et Reshiram capturés</li>
+<li class="tache"><input type="checkbox"> Solgaleo et Blizzeval capturés</li>
+<li class="tache"><input type="checkbox"> Quête de la Team Star faite à l'Académie Raisin, <strong>Capsule d'Or</strong> récupérée</li>
+<li class="tache"><input type="checkbox"> Vêtements rétro d'Erio achetés aux enchères, réaction apprise</li>
+<li class="tache"><input type="checkbox"> Apparitions des quatre biomes améliorées à l'ordinateur du Club</li>
+<li class="tache"><input type="checkbox"> Tous les starters fait apparaître sous le dôme</li>
+<li class="tache"><input type="checkbox"> Lanceurs de Poké Balls débloqués auprès de Lancelot</li>
+<li class="tache"><input type="checkbox"> Les dresseurs du Club de la Ligue affrontés, Cyano compris</li>
+<li class="tache"><input type="checkbox"> Grand Tournoi de l'Académie refait avec les équipes améliorées</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="37-le-disque-indigo-la-ligue-myrtille-et-terapagos.html" rel="prev"><small>← Partie précédente</small><b>Le Disque Indigo : la Ligue Myrtille et Terapagos</b></a><a class="suiv" href="39-la-nuit-des-kibi-lepilogue-et-pechaminus.html" rel="next"><small>Partie suivante →</small><b>La Nuit des Kibi : l&#x27;épilogue et Pêchaminus</b></a><a class="tout" href="pokemon-violet.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Pokémon Violet · guide complet généré le 12 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

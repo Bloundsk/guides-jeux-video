@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapitre 9 — À l&#x27;écoute de la planète – Guide Final Fantasy VII Rebirth</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Rebirth, Chapitre 9 — À l&#x27;écoute de la planète : Boss : le Spécimen H1024. À ne pas rater : le mégaphone rouge de Cait Sith (sous l&#x27;eau…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-9-a-lecoute-de-la-planete.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Chapitre 9 — À l&#x27;écoute de la planète · Guide Final Fantasy VII Rebirth">
+<meta property="og:description" content="Final Fantasy VII Rebirth, Chapitre 9 — À l&#x27;écoute de la planète : Boss : le Spécimen H1024. À ne pas rater : le mégaphone rouge de Cait Sith (sous l&#x27;eau…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-9-a-lecoute-de-la-planete.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Rebirth", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/"}, {"@type": "ListItem", "position": 3, "name": "Chapitre 9 — À l'écoute de la planète", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-9-a-lecoute-de-la-planete.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-rebirth" class="compact" data-partie="chapitre-9-a-lecoute-de-la-planete"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Rebirth</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Rebirth : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Rebirth</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-la-chute-dun-heros.html"><span class="num">✦</span><span class="libelle">Chapitre 1 — La chute d&#x27;un héros</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-vers-de-nouveaux-horizons.html"><span class="num">✦</span><span class="libelle">Chapitre 2 — Vers de nouveaux horizons</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-sur-les-traces-des-manteaux-noirs.html"><span class="num">✦</span><span class="libelle">Chapitre 3 — Sur les traces des manteaux noirs</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-le-debut-dune-nouvelle-ere.html"><span class="num">✦</span><span class="libelle">Chapitre 4 — Le début d&#x27;une nouvelle ère</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-une-croisiere-sanglante.html"><span class="num">✦</span><span class="libelle">Chapitre 5 — Une croisière sanglante</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-un-paradis-ensoleille.html"><span class="num">✦</span><span class="libelle">Chapitre 6 — Un paradis ensoleillé</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-un-retour-douloureux.html"><span class="num">✦</span><span class="libelle">Chapitre 7 — Un retour douloureux</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-le-gold-saucer.html"><span class="num">✦</span><span class="libelle">Chapitre 8 — Le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="#chapitre-9-a-lecoute-de-la-planete"><span class="num">✦</span><span class="libelle">Chapitre 9 — À l&#x27;écoute de la planète</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-protecteur-de-la-vallee.html"><span class="num">✦</span><span class="libelle">Chapitre 10 — Protecteur de la vallée</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-un-village-natal-meconnaissable.html"><span class="num">✦</span><span class="libelle">Chapitre 11 — Un village natal méconnaissable</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-en-quete-de-la-pierre-cle.html"><span class="num">✦</span><span class="libelle">Chapitre 12 — En quête de la pierre-clé</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-le-temple-des-anciens.html"><span class="num">✦</span><span class="libelle">Chapitre 13 — Le temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-un-monde-a-lagonie.html"><span class="num">✦</span><span class="libelle">Chapitre 14 — Un monde à l&#x27;agonie</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="region-de-la-prairie.html"><span class="num">✦</span><span class="libelle">Région de la Prairie</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="region-de-junon.html"><span class="num">✦</span><span class="libelle">Région de Junon</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="region-de-corel.html"><span class="num">✦</span><span class="libelle">Région de Corel</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="region-de-gongaga.html"><span class="num">✦</span><span class="libelle">Région de Gongaga</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="region-de-cosmo.html"><span class="num">✦</span><span class="libelle">Région de Cosmo</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="region-de-nibel.html"><span class="num">✦</span><span class="libelle">Région de Nibel</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="locean-central-et-les-iles.html"><span class="num">✦</span><span class="libelle">L&#x27;Océan Central et les îles</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-materias.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-armes-et-les-codex.html"><span class="num">✦</span><span class="libelle">Les armes et les codex</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-invocations.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="laffinite-et-les-coequipiers.html"><span class="num">✦</span><span class="libelle">L&#x27;affinité et les coéquipiers</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="queens-blood.html"><span class="num">✦</span><span class="libelle">Queen&#x27;s Blood</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-mini-jeux-4.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="le-simulateur-de-combat.html"><span class="num">✦</span><span class="libelle">Le simulateur de combat</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-rebirth.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Rebirth</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-10">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="chapitre-9-a-lecoute-de-la-planete">Chapitre 9 — À l&#x27;écoute de la planète</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-10"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-10">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Boss</strong> : le Spécimen H1024.</li>
+<li><strong>À ne pas rater</strong> : le <strong>mégaphone rouge</strong> de Cait Sith (sous l'eau au sud du village) et la matéria <strong>Annihilation</strong> (au bout du couloir du lieu de repos).</li>
+<li><strong>Point de non-retour</strong> : le drainage du réacteur, qui ferme sa première moitié.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Descendre vers le sud, atteindre le <strong>village de Gongaga</strong>, explorer le <strong>réacteur mako abandonné</strong> de la région — et en ressortir avec une information capitale sur la planète.</p>
+<p>Ce chapitre fait trois choses d'un coup :</p>
+<ol>
+<li>Il ouvre pleinement la région de Corel grâce au <strong>buggy de Dio</strong>.</li>
+<li>Il ouvre la région de Gongaga et te donne <strong>Fango</strong>, le <strong>chocobo forestier</strong>.</li>
+<li>Il rend <strong>Cait Sith jouable</strong> — et lui donne <strong>deux armes</strong> dans la foulée.</li>
+</ol>
+<p>Deux boss, <strong>deux équipes imposées</strong>, un <strong>point de non-retour interne au donjon</strong>, et <strong>cinq occasions d'affinité</strong> au village. C'est dense.</p>
+<h2 id="itineraire-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.actugaming.net/solution-chapitre-9-final-fantasy-vii-rebirth-628561/">Chapitre 9</a> — soluce illustrée sur ActuGaming, en français.</p>
+<ol>
+<li><strong>Le désert de Corel en buggy</strong> : la région devient entièrement accessible.</li>
+<li><strong>Direction le sud</strong> et les terres luxuriantes de <strong>Gongaga</strong>.</li>
+<li><strong>Le village de Gongaga</strong> : <strong>Cissnei</strong>, le mémorial, et la tournée d'affinité.</li>
+<li><strong>Le réacteur abandonné</strong> avec Cloud, Barret, Cait Sith et Red XIII.</li>
+<li><strong>La poursuite des fileurs</strong> à travers le réacteur, le <strong>générateur</strong> et le <strong>système de drainage</strong>. ⚠️ <strong>Point de non-retour interne.</strong></li>
+<li><strong>Le cœur du réacteur</strong> : <strong>Scarlet</strong>, puis le boss <strong>Spécimen H1024</strong>.</li>
+<li><strong>La mission de sauvetage</strong> avec <strong>Tifa, Aerith et Yuffie</strong>, à dos de <strong>chocobo forestier</strong> et au <strong>pistolet-grappin</strong>.</li>
+<li><strong>Le boss Jument Écarlate II</strong>.</li>
+<li><strong>La méga-matéria</strong>, l'Arme, et le retour au village.</li>
+<li><strong>L'aérodrome</strong> et <strong>Cid Highwind</strong>, qui t'emmène à <strong>Cosmo Canyon</strong>.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="la-liberte-retrouvee">La liberté retrouvée</h3>
+<p>Le chapitre démarre en plein désert, au volant du <strong>buggy de Dio</strong>. Et c'est le vrai cadeau du chapitre : la région de Corel devient enfin pleinement accessible, et sa seconde moitié est vaste, avec son lot de <strong>tours de transmission</strong> et d'<strong>activités annexes</strong>, toutes rejoignables en buggy.</p>
+<p><strong>C'est aussi le moment de :</strong></p>
+<ul>
+<li><strong>poursuivre et terminer</strong> la quête annexe « La rénovation du gîte de Johnny » ;</li>
+<li><strong>démarrer « Le petit Piou-piou perdu »</strong>, une histoire secondaire qui vient de s'ouvrir ;</li>
+<li>aller voir les <strong>nouveaux défis du Gold Saucer</strong>, qui se sont débloqués.</li>
+</ul>
+<p>Fais ton tour avant de partir vers le sud. Le détail de tout ce contenu est dans la partie <strong>17</strong>.</p>
+<h3 id="sur-la-route-de-gongaga">Sur la route de Gongaga</h3>
+<p>Sur place, l'ambiance change du tout au tout — et surtout, le buggy ne peut plus vraiment s'aventurer plus loin.</p>
+<p>Ton objectif est le <strong>réacteur mako abandonné</strong>, mais une escale au village est bienvenue.</p>
+<p>Entre toi et le village au sud, tu peux déjà commencer à explorer le monde ouvert de Gongaga. Deux ou trois activités annexes sont faisables sur le trajet, dont la quête <strong>« Le rêve de l'armurier »</strong>. Mais sois réaliste : sans chocobo, ta capacité de déplacement reste très limitée, et le gros de la région est au-delà du village. Tu reviendras avec Fango.</p>
+<p>En avançant vers le sud, tu arrives au <strong>village de Gongaga</strong>. Vous êtes d'abord encerclés par la <strong>brigade du village</strong>, menée par une jeune femme nommée Cissnei — puis finalement accueillis.</p>
+<p>Suis la cheffe jusqu'au <strong>mémorial</strong> : tu apprends que le réacteur local a connu le même destin que celui de Corel, avec les mêmes conséquences.</p>
+<p>Cissnei t'ouvre les portes de sa maison pour te reposer avant de partir.</p>
+<h3 id="larme-cachee-sous-leau">L'arme cachée sous l'eau</h3>
+<p class="alerte manquable">⏳ Avant la tournée d'affinité, va chercher un coffre d'arme vraiment bien planqué, en plongeant dans l'eau des gorges du village :</p>
+<ol>
+<li>Repère la maison devant laquelle se trouve le panneau d'annonce.</li>
+<li><strong>Rejoins le ponton situé derrière cette maison.</strong></li>
+<li><strong>Nage vers le sud du village.</strong></li>
+<li>Dans un coin, un <strong>coffre violet</strong> contient le <strong>mégaphone rouge</strong>, une arme pour <strong>Cait Sith</strong> — qui devient jouable dans ce chapitre.</li>
+</ol>
+<h3 id="la-tournee-daffinite-du-village">La tournée d'affinité du village</h3>
+<p>L'équipe se disperse et visite les lieux, ce qui te laisse <strong>cinq occasions de monter ton affinité</strong>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Coéquipier</th>
+<th>Où</th>
+<th>Particularité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Red XIII</strong></td>
+<td>Juste à côté du mémorial</td>
+<td>Il te demande d'<strong>identifier un bolet-gonga</strong> parmi trois types de champignons. <strong>Ce sont ceux de droite.</strong></td>
+</tr>
+<tr>
+<td><strong>Tifa</strong></td>
+<td>À côté de la maison où l'on peut jouer du piano</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Barret</strong></td>
+<td>Devant le potager, près de la maison de Cissnei</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Yuffie</strong></td>
+<td>À l'intérieur de la maison de Cissnei</td>
+<td>Un <strong>coffre violet</strong> y contient aussi l'<strong>aigle chasseur</strong>, une arme pour <strong>Yuffie</strong></td>
+</tr>
+<tr>
+<td><strong>Aerith</strong></td>
+<td>Maison au sud-est du village</td>
+<td>Tu l'aperçois y entrer : <strong>rejoins-la</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pour Aerith</strong>, le détail compte : la maison au sud-est est celle des <strong>parents de Zack</strong>, qui n'ont plus de nouvelles de lui depuis un moment. Après la conversation, <strong>parle à Aerith dehors</strong> : une question te donne une occasion d'affinité supplémentaire.</p>
+<p><strong>Tifa</strong> arrive ensuite, et Cloud finit par vouloir se reposer. <strong>Va te coucher quand tu es prêt</strong> — mais pas avant d'avoir fait les cinq.</p>
+<h3 id="linvitation-des-fileurs">L'invitation des fileurs</h3>
+<p>Réveillé <strong>trois heures plus tard</strong> par un cri inquiétant, Cloud suit <strong>Yuffie</strong> jusqu'à la colline. Sans surprise : c'est <strong>une Arme</strong>.</p>
+<p>Sauf que Cissnei t'informe que des <strong>créatures étranges</strong> lui avaient barré la route pendant une enquête — et sa description correspond à celle des <strong>fileurs</strong>. Le mystère s'épaissit.</p>
+<p><strong>Répartition des équipes</strong> : Barret, Cait Sith et Red XIII accompagnent Cloud pour l'inspection du réacteur. Yuffie, Aerith et Tifa restent protéger le village.</p>
+<p>Sors par la <strong>porte sud</strong> et fraie-toi un chemin dans la nature luxuriante jusqu'au réacteur. <strong>Des cordes sur la route</strong> te permettent de descendre jusqu'au niveau de la rivière, puis <strong>nage entre les débris du réacteur</strong>.</p>
+<p><strong>Passe par la petite ouverture</strong> et fais connaissance avec les « nouveaux » fileurs — qui s'engouffrent dans le réacteur comme pour t'inviter à les suivre.</p>
+<p>Pendant ce temps, Scarlet prépare un mauvais coup et se dirige elle aussi vers le réacteur.</p>
+<h3 id="le-reacteur-premiere-partie">Le réacteur, première partie</h3>
+<p><strong>Repose-toi si besoin</strong> et entre par l'escalier. Détruis quelques caisses, puis première salle : une Tige vorace et quelques Romamphibiens.</p>
+<p><strong>Astuce qui vaut pour tout le donjon</strong> : ces créatures ont <strong>peu de PV</strong>, et les compétences élémentaires qui ne consomment pas de PM — comme Enchaînement ou Impulsion — les expédient sans vider tes ressources. Garde tes PM pour les boss.</p>
+<ul>
+<li>Les Tiges voraces se fragilisent <strong>au Feu</strong>, et il faut les tuer vite : elles poussent et deviennent nettement plus coriaces.</li>
+<li>Les Romamphibiens sont aussi sensibles aux attaques élémentaires, mais <strong>c'est la Glace qui marche sur eux</strong>.</li>
+</ul>
+<p>Après le combat, saute par-dessus le rebord au sud-est : un <strong>coffre violet</strong> contient l'<strong>épée de cristal</strong> pour <strong>Cloud</strong>.</p>
+<p>Reviens dans la salle précédente et passe par <strong>l'ouverture au sud-ouest</strong>. Descends les escaliers — et bien que les fileurs partent à gauche, faufile-toi sur la droite.</p>
+<p>Tu y rencontres les Grangalan, des sortes de poupées russes mortelles. Pas de réelle difficulté : <strong>s'acharner dessus finit par les fragiliser</strong>. Il leur arrive de faire apparaître des <strong>petits-grangalans</strong>, mais tu ne seras jamais en grand danger.</p>
+<p>Passe sous un mur au nord-est pour un <strong>coffre</strong> avec un <strong>morceau de saphir</strong>. Sors par le trou dans le mur juste à côté et monte les escaliers vers les fileurs.</p>
+<h3 id="la-salle-inondee-et-le-generateur">La salle inondée et le générateur</h3>
+<p>Nouvelle salle, <strong>légèrement inondée</strong>. Descends les escaliers, nage un court instant, et tombe sur <strong>trois Romamphibiens</strong>. Puis refais trempette jusqu'à une <strong>grande porte</strong>.</p>
+<p><strong>Pour l'ouvrir</strong> : saisis le câble à gauche du générateur en panne et <strong>branche-le au générateur</strong>. Casse les deux ou trois caisses à côté au passage.</p>
+<p>De l'autre côté, suis les fileurs par l'ouverture sur ta gauche. Un Mimétichymæra et un Gagighandi t'accueillent.</p>
+<ul>
+<li>Le Mimétichymæra est un cadeau : il se fragilise à la moindre compétence offensive. Cloud a largement de quoi faire.</li>
+<li>Le Gagighandi tombe vite aussi, à condition de lui coller une grosse compétence offensive — Âme brave marche très bien — dès qu'il se met en Embuscade. Il est alors fragilisé et le reste se passe tranquillement. <strong>Attention quand même à son Souffle pétrifiant.</strong></li>
+</ul>
+<p><strong>Passe par-dessus le débris</strong> : deux chemins. <strong>Va d'abord au nord-est</strong> pour un <strong>coffre</strong> avec <strong>3 produits toxiques</strong>, puis reviens prendre l'autre.</p>
+<h3 id="gestion-du-refroidissement">Gestion du refroidissement</h3>
+<p>Tu arrives dans la salle inondée de Gestion du refroidissement.</p>
+<p>Saute dans l'eau et fais le tour de la salle par la droite. <strong>Au fond à gauche</strong>, une <strong>petite plateforme</strong> porte un <strong>coffre</strong> : un <strong>bracelet de sage</strong>.</p>
+<p>Retourne brièvement dans l'eau, <strong>grimpe à l'échelle</strong> près de toi. Casse quelques caisses et <strong>monte l'escalier de gauche</strong> : deux Bicornes géants.</p>
+<p><strong>Les Bicornes géants</strong> sont <strong>vulnérables au Feu</strong>, mais le vrai levier est ailleurs : ils se fragilisent surtout si tu déclenches une puissante compétence au moment où ils se mettent en garde — et ils adoptent cette posture au bout de quelques attaques physiques encaissées. Autrement dit, tu peux provoquer la fenêtre en les frappant physiquement un moment. Éloigne-toi au maximum pendant leurs Explosions sismiques et leurs Frappes telluriques.</p>
+<h3 id="la-salle-de-controle">La salle de contrôle</h3>
+<p>Continue pour apercevoir à nouveau les fileurs. <strong>Saute dans l'eau</strong> et monte à l'échelle dans le coin de la pièce. En haut, brise des caisses et monte les escaliers. <strong>Trois Romamphibiens</strong> avant la <strong>salle de contrôle</strong>.</p>
+<p>Tu aperçois d'ici un <strong>coffre violet</strong> — pas de panique, <strong>l'accès est juste après</strong>. Passe par la petite ouverture et <strong>va sur ta gauche</strong>.</p>
+<p>Tire le chariot jusqu'au bout des rails. Ça fait deux choses à la fois :</p>
+<ol>
+<li>ça <strong>débloque le câble</strong> nécessaire à l'alimentation du générateur ;</li>
+<li>ça te fait un <strong>marchepied pour accéder aux containers</strong>.</li>
+</ol>
+<p><strong>Monte dessus</strong>, brise quelques caisses et <strong>passe à travers le conduit</strong> : tu atterris tout près du <strong>coffre violet</strong> contenant le <strong>collier en or</strong> pour <strong>Red XIII</strong>.</p>
+<p>Refais le chemin pour revenir à la salle de contrôle, <strong>branche le câble au générateur</strong>, puis active le système de drainage via le PC.</p>
+<p class="alerte">⚠️ <strong>Point de non-retour interne</strong> : en activant le drainage, tu ne pourras plus revenir en arrière dans le réacteur pour l'instant. Assure-toi d'avoir ramassé l'<strong>épée de cristal</strong>, le <strong>morceau de saphir</strong>, les <strong>3 produits toxiques</strong>, le <strong>bracelet de sage</strong> et le <strong>collier en or</strong> avant d'appuyer.</p>
+<h3 id="vers-le-cœur">Vers le cœur</h3>
+<p>Ressors et <strong>retourne dans l'eau en contrebas</strong> : <strong>le niveau d'eau a monté</strong>, et tu peux désormais aller <strong>en face</strong>. Brise quelques caisses avant de passer la porte.</p>
+<p>Continue jusqu'à repérer un petit passage sur la droite : deux Grangalans t'y attendent, et un <strong>coffre</strong> avec un <strong>remède</strong>.</p>
+<p>Reprends le chemin principal jusqu'à un <strong>lieu de repos</strong>. Prends la matéria Annihilation au bout du couloir — ce n'est pas un bonus, c'est <strong>l'outil du prochain boss</strong> — et <strong>repose-toi</strong> : le combat qui vient est âpre.</p>
+<p>Suis la lumière au bout du couloir : tu arrives au <strong>cœur du réacteur</strong>.</p>
+<p>Au milieu d'un <strong>tourbillon de fileurs</strong>, un <strong>transporteur de la Shinra</strong> débarque. <strong>Scarlet</strong>, à la tête de l'escouade larguée, t'envoie des Créatures inconnues.</p>
+<p>Elles sont peu résistantes et vulnérables au Feu — et surtout, <strong>elles ressuscitent</strong>. Le Feu est ce qui les en empêche : mets-leur systématiquement le feu aux fesses. Une fois celles-là battues, trois autres t'attendent après un petit saut en face.</p>
+<p>Scarlet en a assez et te largue <strong>une immonde expérience de Hojo</strong>.</p>
+<h3 id="boss-specimen-h1024">Boss : Spécimen H1024</h3>
+<p>Stratégie détaillée dans Conseils et pièges. Équipe limitée à Barret, Cait Sith, Cloud et Red XIII.</p>
+<p>Vaincu, un fileur se rue sur Cloud et lui donne une nouvelle vision de Séphiroth.</p>
+<p>Pendant ce temps, <strong>Scarlet prend les choses en main</strong> avec son propre mécha et <strong>cible Barret d'un tir surpuissant</strong> — dont on ne connaîtra pas tout de suite l'issue.</p>
+<h3 id="la-mission-de-sauvetage">La mission de sauvetage</h3>
+<p>Alertées par un bruit lourd, <strong>Tifa, Aerith et Yuffie</strong> quittent le village. <strong>Réorganise équipement et matérias</strong> : c'est ton trio jusqu'au deuxième boss.</p>
+<p>À la sortie, Cissnei te fournit des chocobos et un pistolet-grappin.</p>
+<p><strong>Deux nouvelles mécaniques d'un coup :</strong></p>
+<ul>
+<li><strong>Le chocobo forestier</strong> franchit de grandes distances rapidement et atteint des endroits inaccessibles autrement grâce aux champignons géants. Utilise-les pour rejoindre le réacteur en quelques secondes.</li>
+<li><strong>Le pistolet-grappin</strong> t'accroche à des points d'ancrage marqués à l'écran, y compris <strong>à travers un plafond</strong>.</li>
+</ul>
+<p>Sur place, les <strong>gardes de la Shinra</strong> défendent l'entrée. Ils ont <strong>peu de PV</strong>, ne sont pas dangereux et sont <strong>vulnérables au Feu</strong>. Les <strong>gardes antiémeutes</strong> demandent de les <strong>attaquer dans le dos</strong> ou d'utiliser <strong>sorts et compétences magiques</strong>.</p>
+<p><strong>Sors ton pistolet-grappin</strong> et <strong>descends par l'échelle</strong>.</p>
+<h3 id="le-reacteur-seconde-traversee">Le réacteur, seconde traversée</h3>
+<p>Entre <strong>par le même endroit qu'avec Cloud</strong>. Dans la première salle, <strong>tu dois nager</strong> cette fois — le niveau d'eau a monté. Au bout, <strong>quatre Romamphibiens</strong>.</p>
+<p>Suis le chemin jusqu'à une <strong>grande salle inondée</strong>. <strong>Nage vers le fond</strong>, hisse-toi, détruis quelques caisses, <strong>tourne-toi vers le sud-ouest</strong> et franchis le plafond au pistolet-grappin.</p>
+<p>Tu te retrouves à un <strong>étage rempli de points d'accroche</strong>.</p>
+<p>Tourne-toi vers le nord et grappine-toi au rebord : un <strong>coffre violet</strong> contient les <strong>crocs de tigre</strong> pour <strong>Tifa</strong>.</p>
+<p>Redescends et va <strong>au fond de la pièce</strong> : trois Mimétichymæra.</p>
+<p>Grappine-toi ensuite au point d'accroche de l'autre côté du grillage — ou celui du dessus — et <strong>laisse-toi tomber</strong> : un <strong>coffre</strong> avec <strong>2 méga-potions</strong>, plus des objets dans les caisses.</p>
+<p>Remonte, continue un peu, puis <strong>laisse-toi tomber à nouveau</strong> dans une petite salle avec un <strong>coffre</strong>, un Grangalan et deux Romamphibiens. Après le combat, le coffre contient un <strong>super-éther</strong>.</p>
+<p>Lève la tête et repère la lumière qui sort du plafond. <strong>Grappine-toi</strong> : nouvel étage, avec deux Gagighandis et un Bicorne géant.</p>
+<p>Le calme revenu :</p>
+<ul>
+<li>Grimpe à l'échelle au fond de la pièce et laisse-toi tomber du côté d'un <strong>coffre</strong> : <strong>3 produits toxiques</strong>.</li>
+<li><strong>Reviens en arrière</strong> : un <strong>coffre côté sud-est</strong> contient un <strong>morceau de saphir</strong>.</li>
+</ul>
+<p>De retour face au générateur, inutile de chercher le câble sur place : il faut le tirer depuis un peu plus haut.</p>
+<ol>
+<li>Au grappin, hisse-toi côté sud-est et suis le chemin : <strong>quatre Romamphibiens</strong>.</li>
+<li><strong>Progresse vers les hauteurs</strong>, brise des caisses, jusqu'au chariot d'où sort le câble.</li>
+<li><strong>Pousse-le à fond</strong>, redescends au niveau du générateur et <strong>branche le câble</strong>.</li>
+</ol>
+<h3 id="la-remontee">La remontée</h3>
+<p><strong>Passe la porte</strong>, <strong>grappine-toi au point d'accroche</strong> pour te retrouver à l'extérieur, et combats les <strong>gardes de la Shinra</strong> postés.</p>
+<p>Puis continue plein est via un point d'accroche et <strong>laisse-toi tomber</strong> dans un groupe de Drones mitrailleurs : vulnérables au Vent et à la Glace, sers-t'en pour les fragiliser.</p>
+<p>Brise quelques caisses, avance jusqu'à <strong>ressortir le grappin à deux reprises</strong>. <strong>Cinq nouveaux Drones mitrailleurs</strong>, puis un <strong>repos</strong> et des caisses.</p>
+<p><strong>Continue de grimper</strong> — des hélicoptères te tirent dessus pendant l'ascension. <strong>Ne t'arrête pas</strong> : fonce et <strong>prends la tyrolienne</strong>.</p>
+<p>Les filles débarquent dans le cœur du réacteur : <strong>Barret et les autres sont en difficulté</strong>, et <strong>Cloud est diminué</strong>. Le groupe prend la fuite grâce à une <strong>diversion de Yuffie</strong> — mais l'attention de Scarlet se porte maintenant sur le trio féminin.</p>
+<h3 id="boss-jument-ecarlate-ii">Boss : Jument Écarlate II</h3>
+<p>Stratégie détaillée dans Conseils et pièges. Équipe obligatoire : Aerith, Tifa et Yuffie.</p>
+<p>Scarlet battue en retraite, <strong>l'Arme fait une apparition majestueuse</strong>. Scarlet tente de s'en emparer et sépare le groupe en deux à coups de missiles.</p>
+<h3 id="la-mega-materia">La méga-matéria</h3>
+<p>Tu reprends <strong>Tifa</strong> : <strong>utilise le pistolet-grappin à trois reprises</strong> pour arriver jusqu'à Scarlet.</p>
+<p>Tifa se retrouve en mauvaise posture, ce qui <strong>réveille Cloud</strong>. En voulant la secourir, il finit corrompu par la parole de Séphiroth et fait preuve d'une sauvagerie inquiétante face aux gardes de la Shinra.</p>
+<p>Puis Cloud devient hostile envers Tifa, au point de la faire tomber dans le réacteur.</p>
+<p>En revenant à la surface, tente de rejoindre Barret et les autres — mais l'Arme émerge, gobe Tifa et l'entraîne par le fond.</p>
+<p>Les minutes suivantes sont parmi les plus belles du jeu, et il n'y a rien de compliqué à faire : profite, interagis avec les éléments montrés à l'écran, et utilise les gâchettes quand c'est demandé.</p>
+<h3 id="le-retour-et-laerodrome">Le retour et l'aérodrome</h3>
+<p>Au réveil de Tifa au village de Gongaga, elle et Cloud profitent (presque) d'un moment d'intimité, puis le groupe fait le point sur la situation et sur ce que Tifa a appris de la planète.</p>
+<p><strong>La prochaine étape est Cosmo Canyon</strong>, berceau de la planétologie.</p>
+<p><strong>Cissnei</strong> débarque et t'informe de l'existence <strong>d'un pilote</strong> qui peut emmener l'équipe jusqu'à la <strong>région de Cosmo</strong>. Et surtout, elle te confie définitivement Fango, le chocobo forestier.</p>
+<p><strong>Toute la région de Gongaga s'ouvre ici</strong> : exploration, <strong>protorelique</strong>, et quêtes annexes comme <strong>« Mes poulettes adorées »</strong> ou <strong>« Un maître à tout prix »</strong>. Le détail est dans la partie <strong>18</strong>. Fais-en autant que tu veux maintenant.</p>
+<p>Quand tu es prêt :</p>
+<ol>
+<li>Sors par la porte sud, ouvre le portail sur ta droite et <strong>dirige-toi vers l'ouest</strong> jusqu'à l'<strong>aérodrome</strong>.</li>
+<li><strong>Sur place, va derrière la cabine</strong> : un <strong>coffre violet</strong> contient le <strong>mégaphone à échos</strong>, la seconde arme de Cait Sith du chapitre.</li>
+<li>Approche-toi de la cabine et lance un fumigène pour alerter le pilote.</li>
+</ol>
+<p>L'avion arrive. Le pilote est Cid Highwind, et <strong>contre 1 000 gils</strong> il t'emmène à Cosmo Canyon. Normalement tu as largement cette somme. Paie, et tout le monde embarque.</p>
+<p>Une cinématique du côté de Hojo montre Rochey devenir le prochain cobaye d'une énième expérience sordide. Puis, après un survol des canyons de la <strong>région de Cosmo</strong>, Cid se pose — fin du chapitre.</p>
+<h2 id="quetes-et-lieux-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-activites-qui-souvrent">Les activités qui s'ouvrent</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Quête / activité</th>
+<th>Où</th>
+<th>Quand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La rénovation du gîte de Johnny</strong></td>
+<td>Costa del Sol / région de Corel</td>
+<td>Peut être <strong>poursuivie et terminée</strong> dès le début du chapitre</td>
+</tr>
+<tr>
+<td><strong>Le petit Piou-piou perdu</strong></td>
+<td>Région de Corel</td>
+<td>Nouvellement disponible</td>
+</tr>
+<tr>
+<td><strong>Nouveaux défis du Gold Saucer</strong></td>
+<td>Gold Saucer</td>
+<td>Nouvellement disponibles</td>
+</tr>
+<tr>
+<td><strong>Le rêve de l'armurier</strong></td>
+<td>Région de Gongaga, avant le village</td>
+<td>Faisable à pied, sans chocobo</td>
+</tr>
+<tr>
+<td><strong>Mes poulettes adorées</strong></td>
+<td>Région de Gongaga</td>
+<td>Après le retour au village</td>
+</tr>
+<tr>
+<td><strong>Un maître à tout prix</strong></td>
+<td>Région de Gongaga</td>
+<td>Après le retour au village</td>
+</tr>
+<tr>
+<td><strong>Protorelique de Gongaga</strong></td>
+<td>Région de Gongaga</td>
+<td>Après le retour au village <em>(partie <strong>18</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="le-village-de-gongaga">Le village de Gongaga</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>À faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mémorial</strong></td>
+<td>Récit du sort du réacteur local ; affinité avec <strong>Red XIII</strong> juste à côté <em>(bolet-gonga : <strong>ceux de droite</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Gorges du village</strong></td>
+<td>Coffre violet <strong>mégaphone rouge</strong> (Cait Sith), sous l'eau, <strong>au sud</strong>, depuis le ponton derrière la maison au panneau d'annonce</td>
+</tr>
+<tr>
+<td><strong>Maison au piano</strong></td>
+<td>Affinité avec <strong>Tifa</strong>, à côté</td>
+</tr>
+<tr>
+<td><strong>Potager</strong></td>
+<td>Affinité avec <strong>Barret</strong></td>
+</tr>
+<tr>
+<td><strong>Maison de Cissnei</strong></td>
+<td>Affinité avec <strong>Yuffie</strong> ; coffre violet <strong>aigle chasseur</strong> (Yuffie)</td>
+</tr>
+<tr>
+<td><strong>Maison au sud-est</strong></td>
+<td>Maison des <strong>parents de Zack</strong> ; affinité avec <strong>Aerith</strong>, puis <strong>une question dehors</strong></td>
+</tr>
+<tr>
+<td><strong>Porte sud</strong></td>
+<td>Sortie vers le réacteur, puis plus tard vers l'aérodrome</td>
+</tr>
+<tr>
+<td><strong>Aérodrome</strong> <em>(à l'ouest, par le portail de droite)</em></td>
+<td>Coffre violet <strong>mégaphone à échos</strong> (Cait Sith) derrière la cabine ; <strong>fumigène</strong> ; Cid Highwind contre <strong>1 000 gils</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="le-reacteur-abandonne">Le réacteur abandonné</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>À faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Première salle</strong></td>
+<td>Coffre violet <strong>épée de cristal</strong> (Cloud), par-dessus le rebord au <strong>sud-est</strong></td>
+</tr>
+<tr>
+<td><strong>Escaliers du sud-ouest</strong></td>
+<td>Prendre à droite quand les fileurs vont à gauche : Grangalans</td>
+</tr>
+<tr>
+<td><strong>Mur du nord-est</strong></td>
+<td>Coffre <strong>morceau de saphir</strong></td>
+</tr>
+<tr>
+<td><strong>Grande porte</strong></td>
+<td>Câble à brancher au générateur en panne</td>
+</tr>
+<tr>
+<td><strong>Salle du Mimétichymæra et du Gagighandi</strong></td>
+<td>Coffre <strong>3 produits toxiques</strong> côté <strong>nord-est</strong></td>
+</tr>
+<tr>
+<td><strong>Gestion du refroidissement</strong></td>
+<td>Coffre <strong>bracelet de sage</strong>, petite plateforme au <strong>fond à gauche</strong></td>
+</tr>
+<tr>
+<td><strong>Salle de contrôle</strong></td>
+<td>Chariot à tirer <em>(débloque le câble + marchepied)</em> ; coffre violet <strong>collier en or</strong> (Red XIII) via le conduit ; <strong>PC du système de drainage</strong></td>
+</tr>
+<tr>
+<td><strong>Petit passage de droite après le drainage</strong></td>
+<td>Coffre <strong>remède</strong> + deux Grangalans</td>
+</tr>
+<tr>
+<td><strong>Couloir du lieu de repos</strong></td>
+<td>Matéria <strong>Annihilation</strong> — <strong>indispensable pour le boss</strong></td>
+</tr>
+<tr>
+<td><strong>Cœur du réacteur</strong></td>
+<td>Scarlet, Créatures inconnues, boss <strong>Spécimen H1024</strong></td>
+</tr>
+<tr>
+<td><strong>Étage aux points d'accroche</strong> <em>(2e traversée)</em></td>
+<td>Coffre violet <strong>crocs de tigre</strong> (Tifa), au <strong>nord</strong></td>
+</tr>
+<tr>
+<td><strong>De l'autre côté du grillage</strong></td>
+<td>Coffre <strong>2 méga-potions</strong></td>
+</tr>
+<tr>
+<td><strong>Petite salle en contrebas</strong></td>
+<td>Coffre <strong>super-éther</strong></td>
+</tr>
+<tr>
+<td><strong>Étage des Gagighandis</strong></td>
+<td>Coffre <strong>3 produits toxiques</strong> <em>(échelle du fond, se laisser tomber)</em> ; coffre <strong>morceau de saphir</strong> côté <strong>sud-est</strong></td>
+</tr>
+<tr>
+<td><strong>Chariot du haut</strong></td>
+<td><strong>Câble à tirer depuis en haut</strong>, puis à brancher en bas</td>
+</tr>
+<tr>
+<td><strong>Extérieur et ascension</strong></td>
+<td>Drones mitrailleurs, <strong>hélicoptères</strong> pendant la montée, <strong>tyrolienne</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mégaphone rouge</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cait Sith</span></td>
+<td>Coffre violet <strong>sous l'eau</strong>, au <strong>sud du village</strong>, depuis le ponton derrière la maison au panneau d'annonce</td>
+<td>Première arme de <strong>Cait Sith</strong>, qui devient jouable ici</td>
+</tr>
+<tr>
+<td><strong>Aigle chasseur</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Yuffie</span></td>
+<td>Coffre violet <strong>dans la maison de Cissnei</strong></td>
+<td>Nouvelle arme, compétence et emplacements pour Yuffie</td>
+</tr>
+<tr>
+<td><strong>Épée de cristal</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cloud</span></td>
+<td>Coffre violet, <strong>par-dessus le rebord au sud-est</strong> de la première salle du réacteur</td>
+<td>Nouvelle arme pour Cloud</td>
+</tr>
+<tr>
+<td><strong>Collier en or</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Red XIII</span></td>
+<td>Coffre violet, en <strong>tirant le chariot</strong> puis par le <strong>conduit</strong> des containers</td>
+<td>Nouvelle arme pour Red XIII</td>
+</tr>
+<tr>
+<td><strong>Crocs de tigre</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Tifa</span></td>
+<td>Coffre violet, <strong>étage aux points d'accroche</strong>, se grappiner <strong>au rebord nord</strong></td>
+<td>Nouvelle arme pour Tifa</td>
+</tr>
+<tr>
+<td><strong>Mégaphone à échos</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cait Sith</span></td>
+<td>Coffre violet <strong>derrière la cabine de l'aérodrome</strong></td>
+<td>Seconde arme de Cait Sith du chapitre</td>
+</tr>
+<tr>
+<td><strong>Matéria Annihilation</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Au bout du couloir du lieu de repos, avant le cœur du réacteur</td>
+<td><strong>Dissipe les barrières ennemies</strong> — l'outil du <strong>Spécimen H1024</strong></td>
+</tr>
+<tr>
+<td><strong>Bracelet de sage</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coffre sur la <strong>petite plateforme au fond à gauche</strong> de Gestion du refroidissement</td>
+<td>effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Morceau de saphir</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre <strong>sous le mur au nord-est</strong>, après les Grangalans</td>
+<td>Matériau de synthèse</td>
+</tr>
+<tr>
+<td><strong>Morceau de saphir</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre <strong>côté sud-est</strong> de l'étage des Gagighandis <em>(2e traversée)</em></td>
+<td>Matériau de synthèse</td>
+</tr>
+<tr>
+<td><strong>Produit toxique</strong> ×3</td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre <strong>côté nord-est</strong>, après le Mimétichymæra et le Gagighandi</td>
+<td>Matériau de synthèse</td>
+</tr>
+<tr>
+<td><strong>Produit toxique</strong> ×3</td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre atteint en se laissant tomber depuis l'<strong>échelle du fond</strong>, étage des Gagighandis</td>
+<td>Matériau de synthèse</td>
+</tr>
+<tr>
+<td><strong>Remède</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre du <strong>petit passage de droite</strong>, après le drainage</td>
+<td>Soigne les altérations d'état</td>
+</tr>
+<tr>
+<td><strong>Méga-potion</strong> ×2</td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre <strong>de l'autre côté du grillage</strong>, étage aux points d'accroche</td>
+<td>Restaure beaucoup de PV</td>
+</tr>
+<tr>
+<td><strong>Super-éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre de la <strong>petite salle en contrebas</strong>, avec un Grangalan et deux Romamphibiens</td>
+<td>Restaure beaucoup de PM</td>
+</tr>
+<tr>
+<td><strong>Pistolet-grappin</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Fourni par <strong>Cissnei</strong> avant la mission de sauvetage</td>
+<td>Points d'accroche, y compris <strong>à travers les plafonds</strong></td>
+</tr>
+<tr>
+<td><strong>Fango</strong></td>
+<td><span class="badge neutre">Chocobo forestier</span></td>
+<td>Prêté par <strong>Cissnei</strong>, puis <strong>confié définitivement</strong> à la fin du chapitre</td>
+<td>Monture de <strong>Gongaga</strong> ; franchit les <strong>champignons géants</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Dépense prévue</strong> : <strong>1 000 gils</strong> pour <strong>Cid Highwind</strong> à l'aérodrome. Tu devrais les avoir largement, mais ne te retrouve pas à sec juste avant.</p>
+<h2 id="conseils-et-pieges-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="les-ennemis-du-chapitre-3">Les ennemis du chapitre</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ennemi</th>
+<th>Point faible</th>
+<th>À savoir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tige vorace</strong></td>
+<td>Feu</td>
+<td>À tuer vite : elle <strong>pousse</strong> et devient nettement plus coriace</td>
+</tr>
+<tr>
+<td><strong>Romamphibien</strong></td>
+<td>Glace</td>
+<td>Peu de PV ; les <strong>compétences élémentaires sans coût de PM</strong> <em>(Enchaînement, Impulsion)</em> suffisent</td>
+</tr>
+<tr>
+<td><strong>Grangalan</strong></td>
+<td>—</td>
+<td>« Poupée russe » : <strong>s'acharner dessus finit par le fragiliser</strong>. Fait apparaître des <strong>petits-grangalans</strong>, sans réel danger</td>
+</tr>
+<tr>
+<td><strong>Mimétichymæra</strong></td>
+<td>—</td>
+<td>Se fragilise à la moindre compétence offensive</td>
+</tr>
+<tr>
+<td><strong>Gagighandi</strong></td>
+<td>—</td>
+<td>Grosse compétence offensive dès qu'il se met en Embuscade <em>(Âme brave est parfaite)</em> → fragilisé. <strong>Souffle pétrifiant</strong></td>
+</tr>
+<tr>
+<td><strong>Bicorne géant</strong></td>
+<td>Feu</td>
+<td>Se fragilise si tu déclenches une puissante compétence quand il se met en garde — et il se met en garde après quelques attaques physiques encaissées, donc tu peux <strong>provoquer la fenêtre</strong>. <strong>Explosion sismique</strong> et Frappe tellurique : éloigne-toi</td>
+</tr>
+<tr>
+<td><strong>Créature inconnue</strong></td>
+<td>Feu</td>
+<td>Elle ressuscite — <strong>le Feu l'en empêche</strong></td>
+</tr>
+<tr>
+<td><strong>Garde de la Shinra</strong></td>
+<td>Feu</td>
+<td>Peu de PV, sans danger</td>
+</tr>
+<tr>
+<td><strong>Garde antiémeutes</strong></td>
+<td>Feu <em>(magie)</em></td>
+<td>Frappe-le dans le dos ou utilise <strong>sorts et compétences magiques</strong></td>
+</tr>
+<tr>
+<td><strong>Drone mitrailleur</strong></td>
+<td><strong>Vent</strong>, Glace</td>
+<td>Fragilisé par ces deux éléments</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="boss-specimen-h1024-2">Boss : Spécimen H1024</h3>
+<p>Équipe limitée à Barret, Cait Sith, Cloud et Red XIII.</p>
+<p><strong>Élémentaire</strong> : <strong>sensible à la Glace</strong>. C'est le combat de <strong>Shiva</strong>, si tu veux une invocation — mais des sorts de Glace bien montés suffisent.</p>
+<p><strong>Prépare deux matérias avant d'entrer</strong> : <strong>Annihilation</strong> <em>(ramassée au couloir du lieu de repos)</em> pour <strong>dissiper ses barrières</strong>, et <strong>Protection</strong> pour en donner aux tiens. <strong>Privilégie aussi l'équipement à défense magique élevée</strong> : la plupart de ses attaques sont magiques.</p>
+<p>La mécanique centrale du combat : l'Ingestion de mako.</p>
+<ul>
+<li>Quand il l'utilise, <strong>il gagne en puissance</strong> — soit un <strong>boost de défense</strong>, soit un <strong>boost de magie</strong> — et finit par lancer une attaque dévastatrice.</li>
+<li>Le seul moyen d'éviter ça est de lui infliger un maximum de dégâts dès que l'Ingestion est déclenchée pour le <strong>fragiliser</strong> et l'interrompre. Les sorts de Glace et les grosses compétences pendant l'Ingestion sont ta meilleure fenêtre de fragilisation du combat.</li>
+<li><strong>Tu vois sa montée en puissance</strong> : <strong>il brille de mako</strong>.</li>
+<li><strong>S'il réussit son Ingestion</strong>, il enchaîne sur Rejet de mako : il crache du mako en tournant sur lui-même. <strong>Déguerpis.</strong></li>
+</ul>
+<p><strong>Le reste de son répertoire, phase 1 :</strong></p>
+<ul>
+<li><strong>Projectile de mako</strong> : lancé sur ton personnage. <strong>Esquive plusieurs fois, rapidement.</strong></li>
+<li>Il utilise ses <strong>membres arrière</strong> pour des attaques magiques en frappant le sol, et ses <strong>membres avant</strong> pour des attaques physiques quand tu es trop près.</li>
+<li>Il lance aussi Extra-Feu, Méga-Feu, Extra-Foudre et Méga-Foudre.</li>
+<li>Il peut se planter le bras dans le sol, ce qui déclenche une <strong>onde de choc douloureuse</strong>.</li>
+</ul>
+<p>Phase 2 — près de la moitié de sa barre de vie :</p>
+<ul>
+<li>Il augmente sa magie avec Foi.</li>
+<li>Il enchaîne Dévorement de mako puis Overdose de mako, qui le rend <strong>beaucoup plus agressif</strong> — <strong>son apparence devient violette</strong>. Bonne nouvelle : <strong>l'Overdose lui auto-inflige Poison</strong>.</li>
+<li>Il a de nouveau une <strong>barrière</strong>, un <strong>boost d'attaque physique</strong> et l'altération Furie.</li>
+<li>Il lance des <strong>magies de niveau 3 (Méga)</strong>, et Projectile de mako fait désormais des dégâts extrêmement lourds.</li>
+<li>Il passe à plus de <strong>physique</strong> : Tape terrible et Grosse gifle ne peuvent pas être parées avec R1 — <strong>il faut absolument s'écarter</strong>.</li>
+<li>Après le premier état de Choc, il peut lancer Rejet de mako immédiatement après l'ingestion, et <strong>plusieurs fois de suite</strong>.</li>
+</ul>
+<p><strong>Fin de combat</strong> : à quelques PV près, il lance Rage incontrôlable et se jette sur un de tes personnages en l'attaquant sans relâche. Profites-en pour spammer les sorts de Glace à distance — c'est le moment où il ne s'occupe plus de toi.</p>
+<h3 id="boss-jument-ecarlate-ii-2">Boss : Jument Écarlate II</h3>
+<p class="alerte">⚠️ <strong>Équipe obligatoire : Aerith, Tifa et Yuffie.</strong></p>
+<p><strong>Élémentaire</strong> : c'est une machine, donc <strong>sensible à la Foudre</strong>. <strong>Le Ninjutsu de Foudre de Yuffie</strong> te permet de rester à distance tout en faisant des dégâts — utilise-le comme colonne vertébrale du combat.</p>
+<p>Le principe est constant sur les trois phases : ce sont les bras armés qu'il faut détruire, pas le châssis. Les bras à terre, Scarlet sort la tête du cockpit — <strong>attaque-la directement</strong> et la Jument Écarlate II est fragilisée.</p>
+<p><strong>Phase 1 — les sabres.</strong></p>
+<ul>
+<li>Les bras sont des <strong>sabres</strong>, faciles à détruire avec quelques sorts de Foudre.</li>
+<li><strong>Charge vrillée</strong> : le robot te fonce dessus. <strong>Imparable</strong> — déplace-toi.</li>
+<li><strong>Taillade en croix</strong> : attaque de corps-à-corps assez puissante, <strong>à bloquer, voire à parer</strong> pour minimiser les dégâts.</li>
+<li>Les deux sabres brisés, <strong>frappe Scarlet</strong> pour la fragiliser, <strong>mets-la en état de Choc</strong>, puis enchaîne les Enseignements sacrés suivis de l'<strong>attaque spéciale (Triangle)</strong> pour <strong>faire monter le multiplicateur de Choc</strong> — et lâche tout.</li>
+</ul>
+<p><em>(ActuGaming écrit « Enseignements sacrés » ici et « Enseignements secrets » au chapitre 7 : <strong>nom à vérifier en jeu</strong>.)</em></p>
+<p><strong>Phase 2 — les canons magitech.</strong></p>
+<ul>
+<li>Elle réarme ses bras avec deux canons magitech, un peu plus résistants que les sabres — mais la Foudre en vient à bout rapidement.</li>
+<li>Ils tirent des <strong>lasers en ligne droite</strong> et des <strong>boules explosives</strong> : <strong>reste en mouvement</strong>.</li>
+<li><strong>Laser électro-magnétique rotatif</strong> : elle tourne sur elle-même en tirant des lasers de chaque bras. Très difficile à esquiver vu la portée, et <strong>ça fait extrêmement mal</strong>. <strong>Soigne-toi</strong> ou prends une barrière avec la matéria Protection avant.</li>
+</ul>
+<p><strong>Phase 3 — les gantelets-foreuses.</strong></p>
+<ul>
+<li>Elle troque ses canons contre des <strong>gantelets</strong> façon foreuses, et passe davantage au <strong>corps-à-corps</strong>.</li>
+<li>Mauvaise nouvelle : les gantelets ne sont pas sensibles à la Foudre et résistent énormément au physique. Concentre-toi sur un seul gantelet à la fois pour réduire le risque, puis <strong>va frapper Scarlet directement</strong>.</li>
+<li><strong>Poings-roquettes</strong> : les gantelets se détachent et te foncent dessus. Quand elle les détache pour se mettre à l'abri, profites-en pour faire monter tes jauges d'ATB en attendant son retour.</li>
+<li><strong>Impact explosif</strong> : attaque de zone près du robot. Fuis dès que tu la vois se déclencher.</li>
+</ul>
+<p><strong>Les deux gantelets détruits</strong>, elle est fragilisée et il ne lui reste plus beaucoup de PV avant la retraite. Le combat <strong>peut être long</strong> si tu n'as pas d'invocation utile — <strong>Ramuh</strong> est l'idéal — mais il n'y a aucun piège mortel.</p>
+<h3 id="le-reste-8">Le reste</h3>
+<ul>
+<li>Fais les cinq occasions d'affinité du village avant de dormir. Red XIII, Tifa, Barret, Yuffie, Aerith — plus la question d'Aerith dehors. Après la nuit, le village se vide de ses conversations.</li>
+<li>Le bolet-gonga de Red XIII, ce sont ceux de droite. C'est tout.</li>
+<li><strong>Ramasse tout avant d'activer le drainage.</strong> C'est le seul vrai piège structurel du chapitre : le niveau d'eau monte et la première moitié du réacteur se referme.</li>
+<li><strong>La matéria Annihilation n'est pas optionnelle.</strong> Le Spécimen H1024 se donne des barrières ; elle les dissipe. Elle est posée juste avant le combat, ce n'est pas un hasard.</li>
+<li><strong>Garde tes PM pour les boss.</strong> Enchaînement et Impulsion suffisent contre tout ce qui peuple le réacteur, et le donjon est long.</li>
+<li><strong>Six armes dans un seul chapitre</strong> — Cait Sith ×2, Yuffie, Cloud, Red XIII, Tifa. <strong>Toutes dans des coffres violets hors chemin.</strong> C'est le chapitre le plus riche en armes du jeu.</li>
+<li>N'essaie pas de finir Gongaga avant d'avoir Fango. Sans chocobo forestier, les champignons géants te sont fermés et le gros de la région est inaccessible.</li>
+</ul>
+<h2 id="alertes-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Point de non-retour interne</strong> : activer le système de drainage via le PC de la salle de contrôle ferme la première moitié du réacteur. Vérifie d'avoir l'<strong>épée de cristal</strong>, le <strong>morceau de saphir</strong> du mur nord-est, les <strong>3 produits toxiques</strong>, le <strong>bracelet de sage</strong> et le <strong>collier en or</strong>.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : le <strong>mégaphone rouge</strong> de Cait Sith, <strong>sous l'eau au sud du village</strong>. Rien n'indique qu'il y a un coffre dans les gorges.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : la matéria <strong>Annihilation</strong>, au bout du couloir du lieu de repos — et sans elle, le Spécimen H1024 garde ses barrières.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : les <strong>cinq occasions d'affinité</strong> du village <em>(Red XIII, Tifa, Barret, Yuffie, Aerith)</em> et la <strong>question d'Aerith dehors</strong>, toutes perdues dès que Cloud va dormir.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : les <strong>six armes</strong> du chapitre, dont le <strong>mégaphone à échos</strong> derrière la cabine de l'aérodrome — le dernier coffre violet, à deux pas de la fin du chapitre.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : le détour <strong>à droite</strong> quand les fileurs partent à gauche, qui donne les Grangalans et le <strong>morceau de saphir</strong>.</li>
+<li class="alerte">⚠️ <strong>Prévois 1 000 gils</strong> pour <strong>Cid Highwind</strong> à l'aérodrome.</li>
+<li class="alerte">⚠️ <strong>Pendant l'ascension finale</strong>, <strong>des hélicoptères te tirent dessus</strong> : ne t'arrête pas pour fouiller, fonce vers la tyrolienne.</li>
+<li class="alerte">⚠️ <strong>Noms à vérifier en jeu</strong> : <strong>Enseignements sacrés</strong> <em>(ici)</em> contre <strong>Enseignements secrets</strong> <em>(chapitre 7)</em>, la même source donnant les deux formes pour la compétence de Tifa ; et l'effet exact du <strong>bracelet de sage</strong>.</li>
+</ul>
+<h2 id="check-list-10" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Région de <strong>Corel</strong> explorée en buggy ; <strong>« La rénovation du gîte de Johnny »</strong> avancée ou terminée</li>
+<li class="tache"><input type="checkbox"> <strong>« Le petit Piou-piou perdu »</strong> lancée</li>
+<li class="tache"><input type="checkbox"> Nouveaux <strong>défis du Gold Saucer</strong> consultés</li>
+<li class="tache"><input type="checkbox"> <strong>« Le rêve de l'armurier »</strong> faite sur le trajet</li>
+<li class="tache"><input type="checkbox"> <strong>Village de Gongaga</strong> atteint, <strong>Cissnei</strong> rencontrée, <strong>mémorial</strong> visité</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong>mégaphone rouge</strong> récupéré sous l'eau (Cait Sith)</li>
+<li class="tache"><input type="checkbox"> Affinité <strong>Red XIII</strong> au mémorial (<strong>bolet-gonga : ceux de droite</strong>)</li>
+<li class="tache"><input type="checkbox"> Affinité <strong>Tifa</strong> près de la maison au piano</li>
+<li class="tache"><input type="checkbox"> Affinité <strong>Barret</strong> au potager</li>
+<li class="tache"><input type="checkbox"> Affinité <strong>Yuffie</strong> dans la maison de Cissnei</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong>aigle chasseur</strong> récupéré (Yuffie)</li>
+<li class="tache"><input type="checkbox"> Affinité <strong>Aerith</strong> à la maison des parents de Zack, puis <strong>question dehors</strong></li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong>épée de cristal</strong> récupéré (Cloud)</li>
+<li class="tache"><input type="checkbox"> Détour <strong>à droite</strong> pris, <strong>Grangalans</strong> vaincus</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>morceau de saphir</strong> récupéré au mur nord-est</li>
+<li class="tache"><input type="checkbox"> Câble branché, <strong>grande porte</strong> ouverte</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>3 produits toxiques</strong> récupéré au nord-est</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>bracelet de sage</strong> récupéré à Gestion du refroidissement</li>
+<li class="tache"><input type="checkbox"> <strong>Chariot tiré</strong>, coffre violet <strong>collier en or</strong> récupéré (Red XIII)</li>
+<li class="tache"><input type="checkbox"> <strong>Tout ramassé</strong> avant d'activer le <strong>système de drainage</strong></li>
+<li class="tache"><input type="checkbox"> Coffre <strong>remède</strong> récupéré dans le petit passage de droite</li>
+<li class="tache"><input type="checkbox"> Matéria <strong>Annihilation</strong> récupérée</li>
+<li class="tache"><input type="checkbox"> <strong>Créatures inconnues</strong> vaincues (au <strong>Feu</strong>, pour les empêcher de ressusciter)</li>
+<li class="tache"><input type="checkbox"> <strong>Spécimen H1024</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> Matérias et équipement réglés pour <strong>Tifa, Aerith et Yuffie</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Chocobo forestier</strong> et <strong>pistolet-grappin</strong> reçus de Cissnei</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong>crocs de tigre</strong> récupéré (Tifa)</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>2 méga-potions</strong> récupéré de l'autre côté du grillage</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>super-éther</strong> récupéré dans la petite salle</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>3 produits toxiques</strong> récupéré à l'étage des Gagighandis</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>morceau de saphir</strong> récupéré côté sud-est</li>
+<li class="tache"><input type="checkbox"> <strong>Câble du chariot du haut</strong> poussé à fond et branché</li>
+<li class="tache"><input type="checkbox"> <strong>Drones mitrailleurs</strong> vaincus (Vent et Glace)</li>
+<li class="tache"><input type="checkbox"> Ascension sous le feu des hélicoptères réussie, <strong>tyrolienne</strong> prise</li>
+<li class="tache"><input type="checkbox"> <strong>Jument Écarlate II</strong> vaincue</li>
+<li class="tache"><input type="checkbox"> Séquence de la <strong>méga-matéria</strong> et de l'<strong>Arme</strong> terminée</li>
+<li class="tache"><input type="checkbox"> <strong>Fango</strong> confié définitivement</li>
+<li class="tache"><input type="checkbox"> Région de <strong>Gongaga</strong> explorée ; <strong>« Mes poulettes adorées »</strong> et « Un maître à tout prix » lancées</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong>mégaphone à échos</strong> récupéré derrière la cabine (Cait Sith)</li>
+<li class="tache"><input type="checkbox"> <strong>Fumigène</strong> lancé, <strong>1 000 gils</strong> payés à <strong>Cid Highwind</strong></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="chapitre-8-le-gold-saucer.html" rel="prev"><small>← Partie précédente</small><b>Chapitre 8 — Le Gold Saucer</b></a><a class="suiv" href="chapitre-10-protecteur-de-la-vallee.html" rel="next"><small>Partie suivante →</small><b>Chapitre 10 — Protecteur de la vallée</b></a><a class="tout" href="final-fantasy-vii-rebirth.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Rebirth · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

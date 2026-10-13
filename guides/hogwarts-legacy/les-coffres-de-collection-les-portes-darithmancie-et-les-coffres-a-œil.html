@@ -1,0 +1,3153 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les coffres de collection, les portes d&#x27;arithmancie et les coffres à œil – Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Hogwarts Legacy : L&#x27;Héritage de Poudlard, Les coffres de collection, les portes d&#x27;arithmancie et les coffres à œil : 182 coffres : 130 dans les Highlands…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/les-coffres-de-collection-les-portes-darithmancie-et-les-coffres-a-œil.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Les coffres de collection, les portes d&#x27;arithmancie et les coffres à œil · Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard">
+<meta property="og:description" content="Hogwarts Legacy : L&#x27;Héritage de Poudlard, Les coffres de collection, les portes d&#x27;arithmancie et les coffres à œil : 182 coffres : 130 dans les Highlands…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/les-coffres-de-collection-les-portes-darithmancie-et-les-coffres-a-œil.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Hogwarts Legacy : L'Héritage de Poudlard", "item": "https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/"}, {"@type": "ListItem", "position": 3, "name": "Les coffres de collection, les portes d'arithmancie et les coffres à œil", "item": "https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/les-coffres-de-collection-les-portes-darithmancie-et-les-coffres-a-œil.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="hogwarts-legacy" class="compact" data-partie="les-coffres-de-collection-les-portes-darithmancie-et-les-coffres-a-œil"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Hogwarts Legacy : L&#x27;Héritage de Poudlard : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Hogwarts Legacy : L&#x27;Héritage de <em>Poudlard</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="le-prologue-la-repartition-et-les-premiers-pas.html"><span class="num">✦</span><span class="libelle">Le prologue, la Répartition et les premiers pas</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="les-premiers-cours-et-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les premiers cours et Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="la-reserve-la-botanique-et-les-potions.html"><span class="num">✦</span><span class="libelle">La réserve, la botanique et les potions</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="lheritage-dollivander-le-vol-et-la-salle-sur-demande.html"><span class="num">✦</span><span class="libelle">L&#x27;héritage d&#x27;Ollivander, le vol et la Salle sur Demande</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="lepreuve-de-percival-rackham-et-les-creatures-magiques.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Percival Rackham et les créatures magiques</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="lepreuve-de-charles-rookwood.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Charles Rookwood</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="lepreuve-de-niamh-fitzgerald.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Niamh Fitzgerald</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="lepreuve-de-san-bakar.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de San Bakar</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="le-dernier-depot-et-la-coupe-des-quatre-maisons.html"><span class="num">✦</span><span class="libelle">Le dernier dépôt et la Coupe des Quatre Maisons</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="poudlard-le-chateau-aile-par-aile.html"><span class="num">✦</span><span class="libelle">Poudlard : le château, aile par aile</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="pre-au-lard-2.html"><span class="num">✦</span><span class="libelle">Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="les-abords-de-poudlard-et-la-vallee-de-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les abords de Poudlard et la vallée de Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="la-vallee-de-poudlard-la-foret-interdite-et-le-marais-du-north-ford.html"><span class="num">✦</span><span class="libelle">La vallée de Poudlard, la Forêt interdite et le marais du North Ford</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="la-region-de-feldcroft-et-le-marais-de-southsea.html"><span class="num">✦</span><span class="libelle">La région de Feldcroft et le marais de Southsea</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="la-cote-du-collet-la-caverne-cotiere-et-cragcroftshire.html"><span class="num">✦</span><span class="libelle">La côte du Collet, la Caverne côtière et Cragcroftshire</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="le-lac-de-grottaleau-la-pointe-du-manoir-et-la-cote-de-salgat.html"><span class="num">✦</span><span class="libelle">Le lac de Grottaleau, la Pointe du Manoir et la côte de Salgât</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="sebastian-pallow-et-les-sorts-impardonnables.html"><span class="num">✦</span><span class="libelle">Sebastian Pallow et les Sorts Impardonnables</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="natsai-onai.html"><span class="num">✦</span><span class="libelle">Natsai Onai</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="poppy-sweeting-et-amit-thakkar.html"><span class="num">✦</span><span class="libelle">Poppy Sweeting et Amit Thakkar</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="les-12-devoirs-et-les-26-sortileges.html"><span class="num">✦</span><span class="libelle">Les 12 devoirs et les 26 sortilèges</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="les-6-cartes-au-tresor.html"><span class="num">✦</span><span class="libelle">Les 6 cartes au trésor</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat-la-magie-ancienne-et-les-enchainements.html"><span class="num">✦</span><span class="libelle">Le combat, la magie ancienne et les enchaînements</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-talents.html"><span class="num">✦</span><span class="libelle">Les talents</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="lequipement-les-attributs-et-le-metier-a-tisser.html"><span class="num">✦</span><span class="libelle">L&#x27;équipement, les attributs et le métier à tisser</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="la-salle-sur-demande-les-potions-les-plantes-et-les-creasorts.html"><span class="num">✦</span><span class="libelle">La Salle sur Demande, les potions, les plantes et les créasorts</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="le-vivarium-et-les-creatures-magiques.html"><span class="num">✦</span><span class="libelle">Le vivarium et les créatures magiques</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="les-balais-les-montures-et-les-courses.html"><span class="num">✦</span><span class="libelle">Les balais, les montures et les courses</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-95-epreuves-de-merlin.html"><span class="num">✦</span><span class="libelle">Les 95 épreuves de Merlin</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-pages-du-guide-du-sorcier.html"><span class="num">✦</span><span class="libelle">Les pages du Guide du Sorcier</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="#les-coffres-de-collection-les-portes-darithmancie-et-les-coffres-a-œil"><span class="num">✦</span><span class="libelle">Les coffres de collection, les portes d&#x27;arithmancie et les coffres à œil</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="les-statues-de-demiguise-et-les-cles-du-dedale.html"><span class="num">✦</span><span class="libelle">Les statues de Demiguise et les clés du dédale</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="les-tables-dastronomie-les-ballons-les-plateformes-et-les-sources-de-magie-ancienne.html"><span class="num">✦</span><span class="libelle">Les tables d&#x27;astronomie, les ballons, les plateformes et les sources de magie ancienne</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="les-ennemis-connus-les-arenes-et-les-campements.html"><span class="num">✦</span><span class="libelle">Les ennemis connus, les arènes et les campements</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="les-46-trophees-le-contenu-deluxe-et-la-route-du-100.html"><span class="num">✦</span><span class="libelle">Les 46 trophées, le contenu Deluxe et la route du 100 %</span><span class="compte"></span></a></li>
+<li data-section="section-36"><a href="les-quetes-annexes-de-poudlard-et-de-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes de Poudlard et de Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-37"><a href="les-quetes-annexes-des-highlands.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes des Highlands</span><span class="compte"></span></a></li>
+<li data-section="section-38"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-39"><a href="sources-hogwarts-legacy-lheritage-de-poudlard.html"><span class="num">✦</span><span class="libelle">Sources — Hogwarts Legacy : L&#x27;Héritage de Poudlard</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-31">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="les-coffres-de-collection-les-portes-darithmancie-et-les-coffres-a-œil">Les coffres de collection, les portes d&#x27;arithmancie et les coffres à œil</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-31"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-31">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>182 coffres</strong> : 130 dans les Highlands, 47 à Poudlard, 5 à Pré-au-Lard.</li>
+<li><strong>Contenu</strong> : toujours une Invocation, un Manche de baguette ou un Attribut.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-31" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Ouvrir les 182 coffres de collection du jeu — 47 à Poudlard, 5 à Pré-au-Lard, 130 dans les Highlands — et comprendre les deux énigmes qui en gardent une bonne partie.</p>
+<p>Et voici ce qu'il y a dedans, toujours : une <strong>Invocation</strong>, un <strong>Manche de baguette</strong> ou un <strong>Attribut</strong>. <strong>Jamais autre chose.</strong></p>
+<p><strong>D'où la grande découverte de cette partie</strong> : les <strong>51 attributs</strong> du métier à tisser viennent <strong>tous</strong> des coffres de collection des <strong>campements de bandits</strong> et des <strong>châteaux occupés</strong> <em>(partie <strong>26</strong>)</em>. Un attribut par camp, et il y en a exactement 50 dans les Highlands — plus <strong>Brûlure I</strong>, donnée par la quête du métier à tisser.</p>
+<h3 id="les-abreviations-de-cette-partie-2">Les abréviations de cette partie</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>L'abréviation</th>
+<th>Ce que ça veut dire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FC</strong></td>
+<td><strong>Flamme de Cheminette</strong></td>
+</tr>
+<tr>
+<td><strong>Tour dcfm</strong></td>
+<td>Tour de défense contre les forces du Mal</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="itineraire-31" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.millenium.org/guide/400502.html">Coffres à papillons</a> — soluce illustrée sur Millenium, en français.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>L'ensemble</th>
+<th>Le nombre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les Highlands</strong></td>
+<td><strong>130</strong></td>
+</tr>
+<tr>
+<td><strong>Poudlard</strong></td>
+<td><strong>47</strong></td>
+</tr>
+<tr>
+<td><strong>Pré-au-Lard</strong></td>
+<td><strong>5</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Total : 182 coffres de collection.</strong></p>
+<p>Et il y a <strong>cinq</strong> façons de les trouver.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La façon</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Vider un <strong>campement de bandits</strong></td>
+<td><strong>Les Highlands</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Suivre des papillons</strong></td>
+<td><strong>14 dans les Highlands</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Ouvrir une porte à L'<strong>Alohomora</strong></strong></td>
+<td><strong>Partout</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Résoudre une <strong>porte d'arithmancie</strong></td>
+<td><strong>Poudlard seulement</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Explorer un donjon</strong></td>
+<td>Les Highlands et le château</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Un décompte à connaître</strong> : une source française parle de <strong>« plus de 300 collectibles »</strong> pour l'onglet <strong>Collection</strong>. Ce chiffre recouvre plusieurs onglets à la fois — coffres, pages, tenues, manches de baguette, invocations, ennemis — pas seulement les coffres. Les 182 coffres de cette partie en sont une partie seulement.</p>
+<h2 id="deroule-pas-a-pas-31" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="comment-fonctionne-une-porte-darithmancie">Comment fonctionne une porte d'arithmancie</h3>
+<p>C'est l'énigme la plus intimidante du jeu, et c'est en réalité une <strong>addition à trou</strong>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La règle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Chaque symbole est un <strong>animal fantastique</strong>, et chaque animal vaut un <strong>chiffre</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>L'ordre est donné par L'<strong>arche qui entoure la porte</strong>, lue de gauche à droite</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Le premier vaut <strong>0</strong>, le deuxième <strong>1</strong>, le troisième <strong>2</strong>… Jusqu'à <strong>9</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Puis tu résous L'addition à trou** et tu mets sur chaque bouton l'animal dont la valeur complète le calcul**</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les valeurs confirmées</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>L'animal</th>
+<th>Sa valeur</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Demiguise</strong></td>
+<td><strong>0</strong></td>
+</tr>
+<tr>
+<td><strong>Licorne</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Dragon</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>Hydre</strong></td>
+<td><strong>3</strong></td>
+</tr>
+<tr>
+<td><strong>Crabe</strong></td>
+<td><strong>5</strong></td>
+</tr>
+<tr>
+<td><strong>Araignée</strong></td>
+<td><strong>8</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>à vérifier en jeu</strong> : <strong>les valeurs 4, 6, 7 et 9.</strong> La source française ne les nomme pas ; elle écrit « monstre à neuf têtes = 9 » tout en appelant <strong>hydre</strong> le symbole qui vaut <strong>3</strong>, ce qui est contradictoire. L'arche de la porte est l'autorité : lis-la de gauche à droite.</p>
+<p>Et le jeu te donne une antisèche complète.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où la trouver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Va à la FC de la Salle de Divination</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Pars vers les <strong>combles</strong> juste à côté</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>La <strong>page du Manuel d'arithmancie</strong> est dans un <strong>petit coffre bleu à côté d'un tableau</strong>, lui-même à côté d'une porte d'arithmancie</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Elle se consulte ensuite À volonté depuis l'inventaire, dans l'onglet <strong>objets de quête</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Va chercher cette page avant toute autre porte d'arithmancie. Elle donne la valeur des dix animaux, une fois pour toutes.</p>
+<p><strong>L'exemple de la porte du Hall central</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le raisonnement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Deux points d'interrogation, donc deux calculs</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Le symbole du haut est un <strong>dragon</strong>, donc <strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Il faut atteindre <strong>21</strong> ; or <strong>11 + 2 = 13</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Il manque <strong>8</strong>, donc L'<strong>araignée</strong></strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Deuxième calcul : <strong>crabe = 5</strong> et le monstre à neuf têtes = <strong>9</strong>, soit <strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Il faut atteindre <strong>17</strong>, donc <strong>3</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td><strong>Les deux points d'interrogation sont donc L'<strong>hydre</strong></strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et le piège des portes d'arithmancie n'est pas le calcul, c'est de <strong>trouver les boutons</strong>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où sont les boutons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>L'un est souvent <strong>juste à côté de la porte</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>L'autre est souvent <strong>un étage au-dessus</strong>, ou dans une <strong>pièce voisine</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Prends les escaliers si tu ne vois qu'un seul bouton</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et <strong>la quasi-totalité</strong> des portes d'arithmancie cachent au moins un coffre de collection.</p>
+<h3 id="comment-fonctionne-un-coffre-a-œil">Comment fonctionne un coffre à œil</h3>
+<p>Ce sont les coffres à <strong>œil unique</strong> qui te regardent et se referment quand ils te voient.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La méthode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Arrive déjà sous Désillusion</strong> — lancer le sort devant l'œil ne marche pas</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Si l'œil s'est refermé, <strong>sors de la pièce</strong>, relance Désillusion, et reviens</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Attends que ses paupières soient <strong>fermées</strong> pour approcher</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Et pour les salles à grille : entre d'abord <strong>une fois sans</strong> Désillusion → <strong>la grille reste ouverte derrière toi</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Chaque coffre à œil contient <strong>500 gallions</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Les coffres à œil ne sont <strong>pas</strong> des coffres de collection <em>(partie <strong>10</strong>)</em>. Ils ne remplissent aucun onglet — ils financent tes achats. Et avec 13 100 gallions de balai et d'améliorations à payer, ils ne sont pas de trop <em>(parties <strong>26</strong> et <strong>29</strong>)</em>.</p>
+<p>On en trouve aussi dans les mines de gobelins, où une porte gardée par un œil suit exactement la même règle <em>(parties <strong>07</strong> et <strong>13</strong>)</em>.</p>
+<h3 id="les-2-salles-de-lenigme-repulso">Les 2 salles de l'énigme Repulso</h3>
+<p>Deux salles cachées du château fonctionnent comme un jeu de blocs à pousser et à tirer, et chacune garde un coffre de collection.</p>
+<p>Et elles n'existent qu'après la quête annexe <strong>« le hall d'Herodiana »</strong> <em>(partie <strong>20</strong>)</em>. Avant, le bouton Repulso ne fait rien.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La salle</th>
+<th>Comment y entrer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Salle de l'énigme Repulso 1</strong> <em>(annexe de la bibliothèque)</em></td>
+<td>FC de la Cour du clocher, grande porte <strong>vers le sud-est</strong> à l'ALOHOMORA 1, puis <strong>Repulso</strong> sur le bouton au mur <strong>à gauche du grand couloir</strong></td>
+</tr>
+<tr>
+<td><strong>Salle de l'énigme Repulso 2</strong> <em>(aile du Clocher)</em></td>
+<td>FC de la Cour du clocher, escalier à gauche, porte en face, escalier en face, porte en face → <strong>Salle d'histoire de la magie</strong> ; <strong>Alohomora</strong> sur la porte du fond, puis <strong>Repulso</strong> sur le bouton au mur à droite, un peu plus loin</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ Et la règle est la même dans les deux : pour avoir le coffre de collection, il faut <strong>obligatoirement</strong> récupérer <strong>tous les coffres ordinaires</strong> de la salle — trois dans la salle 1, deux dans la salle 2.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Les outils</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Accio pour <strong>tirer</strong> un bloc vers toi</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Repulso pour le <strong>pousser</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Tu te places, tu vises, tu tires ou tu pousses : la direction dépend de <strong>où tu te tiens</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Et les blocs <strong>se collent</strong> entre eux pour former des blocs plus gros</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Enfin, tu peux <strong>réinitialiser la salle</strong> entre deux parties</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Salle Repulso 1 — partie 1</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Avant de descendre : Accio sur le bloc tout à droite</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Descends et place-toi face au <strong>premier cube du bloc central</strong>, en direction du <strong>sud</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Repulso dessus</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Sans bouger, Repulso sur celui juste à côté</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Premier coffre, puis <strong>réinitialise la salle</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Salle Repulso 1 — partie 2</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Descends et amène le premier bloc** vers le <strong>nord</strong>, puis l'<strong>ouest</strong>, puis encore le <strong>nord</strong>, puis l'<strong>est</strong> <em>(Accio et Repulso)</em>**</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Place-toi à côté de la plateforme du premier coffre, et déplace le <strong>cube le plus haut</strong> vers le <strong>nord</strong>, puis l'ouest**, puis le nord**</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Tire le <strong>bloc de deux cubes</strong> vers l'<strong>ouest</strong>, puis le bloc de <strong>trois</strong> vers l'<strong>est</strong></strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Amène le cube <strong>collé à la paroi ouest</strong> vers le <strong>nord</strong>, puis l'<strong>est</strong></strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Deuxième coffre, puis <strong>réinitialise</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Salle Repulso 1 — partie 3</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Amène le cube <strong>contre la paroi ouest</strong> vers le <strong>nord</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Lie les <strong>deux blocs juste à droite</strong> avec le troisième en les tirant vers l'<strong>ouest</strong></strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Tire ce bloc de trois vers le <strong>sud</strong>, puis l'<strong>est</strong></strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Pousse les <strong>deux cubes centraux</strong> vers le <strong>nord</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Tire le bloc de trois vers le <strong>nord</strong>, pousse-le vers l'<strong>est</strong>, puis le <strong>nord</strong>, puis l'<strong>ouest</strong></strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Va à la <strong>paroi nord</strong> et pousse le <strong>bloc isolé</strong> vers l'<strong>est</strong></strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td><strong>Tire le <strong>bloc de deux</strong> vers l'<strong>est</strong></strong></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Tire le <strong>bloc isolé</strong> vers le <strong>nord</strong> → un deuxième bloc de trois</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Tire le premier bloc de trois vers le <strong>nord</strong> pour tout rassembler, puis vers le <strong>sud</strong></td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Troisième coffre, puis reviens à l'entrée de la salle → <strong>le coffre de collection</strong> <em>(Étagère de potionniste)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Salle Repulso 2 — partie 1</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Tire le <strong>bloc en T</strong> vers l'<strong>ouest</strong></strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Descends, tourne-toi, tire le <strong>bloc isolé</strong> vers l'est**, puis le nord**</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Tourne à droite et tire le <strong>bloc de deux au sud</strong> vers le <strong>nord</strong>, puis l'est, puis encore le <strong>nord</strong> → un bloc de <strong>trois</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Tire ce bloc de trois vers l'<strong>ouest</strong></strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Grimpe dessus pour le premier coffre</strong> — <strong>et la salle change</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Salle Repulso 2 — partie 2</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Tire le <strong>bloc en T</strong> vers l'<strong>ouest</strong></strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Tire les <strong>deux blocs collés à la paroi ouest</strong> vers l'<strong>est</strong></strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Tire le bloc de deux collé à la paroi sud vers le <strong>nord</strong>, pousse-le vers l'est**, tire-le vers le nord**</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Pousse ton nouveau gros bloc vers le <strong>nord</strong>, tire-le vers l'ouest**, puis le sud**</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Tire le <strong>bloc en T</strong> vers le <strong>sud</strong>, puis l'<strong>est</strong></strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Grimpe sur le gros bloc → la <strong>troisième partie</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Salle Repulso 2 — partie 3</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le geste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Pousse la <strong>colonne de trois blocs à gauche</strong> vers le <strong>sud</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Tire le <strong>gros bloc en L</strong> vers le <strong>nord</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Pousse la <strong>ligne de quatre blocs centrale</strong> vers l'est**, puis le sud pour l'accrocher au L**</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Tire le <strong>gros bloc le plus à l'ouest</strong> vers le <strong>nord</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Tire la colonne de trois vers l'<strong>ouest</strong>, puis pousse-la vers le sud</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Tire le bloc en L vers l'<strong>ouest</strong>, puis le sud</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td><strong>Tire la <strong>colonne de trois</strong> vers l'<strong>est</strong> pour la coller au <strong>L</strong></strong></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Tire ce gros bloc vers le <strong>nord</strong>, grimpe dessus, et repousse-le vers le <strong>sud</strong></td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td><strong>Grimpe vers l'autre bout de la salle</strong> → <strong>le coffre de collection</strong> <em>(Escalier en ruine)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte manquable">⏳ Ces deux salles sont les énigmes les plus longues du jeu. Prends ton temps, et sers-toi du bouton de réinitialisation : tu ne peux pas te coincer définitivement.</p>
+<h3 id="poudlard-les-47-coffres-zone-par-zone">Poudlard — les 47 coffres, zone par zone</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La zone</th>
+<th>Le nombre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Salle sur Demande <em>(les 4 vivariums)</em></strong></td>
+<td><strong>12</strong></td>
+</tr>
+<tr>
+<td><strong>Annexe de la bibliothèque</strong></td>
+<td><strong>8</strong></td>
+</tr>
+<tr>
+<td><strong>Grand escalier</strong></td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td><strong>Aile d'astronomie</strong></td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>Aile du Clocher</strong></td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>Aile sud</strong></td>
+<td><strong>5</strong></td>
+</tr>
+<tr>
+<td><strong>Grande Salle</strong></td>
+<td><strong>3</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Aile d'astronomie</strong> <em>(6)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Porte d'arithmancie : <strong>FC de la Salle de potions, vers l'ouest, devant l'escalier du Hall central</strong> ; <strong>un bouton <strong>juste à gauche de la porte</strong>, l'autre <strong>juste au-dessus</strong> <em>(prends les escaliers)</em></strong></td>
+<td><strong>Statue de Focifère</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Dans la salle de classe du professeur Fig, <strong>coin sud-est, sur une table</strong></td>
+<td><strong>Aviaire - Beige</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Porte d'arithmancie : juste à côté de la Salle de sortilèges</td>
+<td><strong>Grand terrain naturel</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Salle de sortilèges : <strong>Alohomora 1</strong> sur le bureau du professeur, puis l'escalier en colimaçon ; dehors, le coffre est <strong>dans un coin</strong></td>
+<td><strong>Botanique - Feuille d'or</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Rez-de-chaussée de la Tour dcfm : <strong>Alohomora 2</strong> sur la porte cadenassée ; le coffre est <strong>sur la table centrale</strong></td>
+<td><strong>Colimaçon - Marron</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>FC de la Cour du clocher → la <strong>Statue de dragon endormi</strong> → tourne-lui le dos → porte en face à l'<strong>Alohomora 2</strong></strong></td>
+<td><strong>Sabre - Brun cendré</strong> <em>(Manche de baguette)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Aile du Clocher</strong> <em>(6)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>FC de la Cour du clocher, escalier de gauche, <strong>monte jusqu'à ressortir à l'extérieur</strong> <em>(par la salle de musique et les combles)</em> ; le coffre est <strong>sur la tour</strong></td>
+<td><strong>Statue de Niffleur</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>2 et 3</strong></td>
+<td>Depuis le coffre N° 1 : interagis avec la <strong>statue de grenouille</strong> pour qu'elle te <strong>gobe</strong> et t'envoie sur une autre tour ; <strong>deux coffres t'y attendent</strong></td>
+<td>Sabre - Marron <em>(Manche de baguette)</em> <strong>et Statue de Dirico</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Porte d'arithmancie : FC de la Cour du clocher, escalier de gauche, porte en bois, escalier jusqu'en haut, <strong>Alohomora 1</strong> ; la porte est <strong>au fond</strong>, ses boutons <strong>à gauche et à droite</strong></td>
+<td>Portraits encadrés <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>FC de la Sortie nord de Poudlard, reste dans l'enceinte, face au château, <strong>longe la muraille à droite</strong> jusqu'à une porte verrouillée ; <strong>Alohomora 2</strong> ; coffre <strong>sur une table</strong></td>
+<td><strong>Colonne - Bleu sarcelle et marron</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Salle de l'énigme Repulso 2</strong> <em>(voir ci-dessus)</em> — <strong>après « le hall d'Herodiana »</strong></td>
+<td>Escalier en ruine <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le grand escalier</strong> <em>(7)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Porte d'arithmancie : FC du Grand escalier, escalier est, <strong>tout de suite à droite</strong> et monte un peu ; la porte est <strong>à l'angle du mur à gauche</strong> ; un bouton <strong>juste à côté</strong>, l'autre près de la Flamme que tu viens de passer</td>
+<td>Lumières <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Porte d'arithmancie : juste à côté de la FC de la Tour de Serdaigle ; les deux boutons sont <strong>dans la même pièce</strong> : un <strong>près d'une armure</strong>, l'autre <strong>près d'un buste</strong></td>
+<td>Surfaces de sol moyennes <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Porte d'arithmancie : <strong>en grimpant le long du Grand escalier</strong> ; un bouton <strong>un peu plus haut</strong>, l'autre <strong>juste en face de la porte</strong></td>
+<td>Petits escaliers <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Porte d'arithmancie : Tour des professeurs, traverse le couloir, <strong>première porte à droite à l'Alohomora</strong>, monte l'escalier ; les boutons sont à sa gauche et sur le mur à sa droite</td>
+<td>Présentoirs décoratifs ornementés <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Dans le bureau du directeur</strong> <em>(par l'extérieur, en balai jusqu'à la plus haute tour, <strong>Alohomora 2</strong> sur la porte)</em> ; <strong>le coffre est à côté de l'entrée</strong></td>
+<td>Céleste - Gris clair <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>6 et 7</strong></td>
+<td>Dans la salle secrète à côté du bureau du directeur <em>(le secret de Poudlard, partie <strong>10</strong>)</em></td>
+<td>Sabre - Gris <em>(Manche de baguette)</em> <strong>et Énorme table décorée</strong> <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>La Grande Salle</strong> <em>(3)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Porte d'arithmancie : <strong>depuis la Grande Salle, couloir au nord-ouest</strong> ; <strong>les deux boutons sont juste à côté</strong></td>
+<td>Fauteuil <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Depuis la Grande Salle, <strong>vers le sud-est</strong>, une porte cadenassée ; <strong>Alohomora 1</strong> ; coffre <strong>sur la gauche</strong></td>
+<td>Aviaire - Marron <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>FC du Grand escalier, escalier en colimaçon jusqu'au <strong>tableau d'un plateau de fruits</strong> ; interagis → <strong>les cuisines</strong> ; <strong>vers l'est</strong>, un <strong>service à thé</strong>, le coffre à côté</td>
+<td>Coquillage - Métallique <em>(Manche de baguette)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>L'annexe de la bibliothèque</strong> <em>(8)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Porte d'arithmancie : FC de la Salle de Divination, <strong>planches de bois vers l'ouest</strong>, puis <strong>à droite dès que possible</strong> ; et c'est ici que se trouve la <strong>page du Manuel d'arithmancie</strong>, dans le petit coffre bleu à côté du tableau</td>
+<td><strong>Étagère avec crâne et bougies</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Porte d'arithmancie : depuis le coffre n° 1, continue dans le couloir → une <strong>salle secrète</strong> avec d'autres portes ; prends celle <strong>de gauche</strong></td>
+<td>Flèche de tour <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Porte d'arithmancie : la <strong>dernière porte</strong> de la même salle secrète</td>
+<td>Présentoirs décoratifs <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Réserve de la bibliothèque, descends plusieurs escaliers jusqu'au <strong>débarras sombre</strong> ; le coffre est <strong>sur une table devant une statue lugubre</strong></td>
+<td>Carreaux - Bleu <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>5 et 6</strong></td>
+<td>Le secret du pont : sur le pont entre l'annexe et la Grande Salle, allume les <strong>4 brasiers</strong> et interagis avec eux pour faire correspondre leur <strong>chiffre romain</strong> à celui de la <strong>plaque au sol</strong> ; la plaque s'ouvre et les deux coffres sont dessous <em>(partie <strong>10</strong>)</em></td>
+<td>Céleste - Gris foncé <em>(Manche de baguette)</em> <strong>et Bannières de maison sur pied</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Porte d'arithmancie : FC de la Cour du clocher <em>(aile du clocher)</em>, grande porte à l'ALOHOMORA 1, <strong>directement à droite</strong> ; les boutons sont juste à côté</td>
+<td>Petits tapis <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td><strong>Salle de l'énigme Repulso 1</strong> <em>(voir ci-dessus)</em> — <strong>après « le hall d'Herodiana »</strong></td>
+<td>Étagère de potionniste <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Aile sud</strong> <em>(5)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Tour des professeurs, en bas de l'escalier en colimaçon : <strong>interagis avec la statue de crapaud</strong> à sa base → <strong>elle te téléporte dans une salle secrète</strong></td>
+<td>Torsade - Marron <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Arresto Momentum</strong> : depuis la Cour de la tour de l'horloge, lance-le sur le pendule géant au moment où il est à l'extrême ouest → <strong>la grille de la porte est s'ouvre</strong> <em>(partie <strong>10</strong>)</em></td>
+<td>Tables de taille moyenne <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>3 et 4</strong></td>
+<td><strong>Arresto Momentum</strong> : FC de l'Infirmerie, à droite → Tour de l'horloge ; descends les escaliers en bois <strong>le plus bas possible</strong>, passe <strong>derrière les engrenages</strong>, descends encore jusqu'au <strong>pendule</strong> ; à droite, une porte à grille ; attends que le pendule s'aligne sur le <strong>même symbole que la grille</strong>, lance Arresto Momentum, et <strong>cours</strong> à la porte</td>
+<td>Miroir large <em>(Invocation)</em> <strong>et Natté - Rouge</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Alohomora 3 + Glacius</strong> : FC de la Tour des professeurs, couloir, <strong>première porte à droite</strong>, monte <strong>deux étages</strong> jusqu'à la porte verrouillée <strong>à la pile de chaudrons</strong> ; <strong>Alohomora 3</strong>, puis <strong>Glacius</strong> sur la cheminée pour l'éteindre ; passage secret derrière, coffre <strong>en haut des escaliers</strong></td>
+<td>Coquillage - Brun miel <em>(Manche de baguette)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Salle sur Demande — les 12 coffres des vivariums</strong></p>
+<p><strong>Trois par vivarium</strong> <em>(partie <strong>28</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le vivarium</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Forestier</td>
+<td>Le passage étroit sous la formation rocheuse au sud-est, dans la grotte</td>
+<td>Sol <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Forestier</td>
+<td>Grimpe aux multiples rebords du côté de la cascade au nord-ouest, tout en haut</td>
+<td>Escalier bas en pierre <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Forestier</td>
+<td>Monte la pente au sud, à droite de la grotte ; en haut, <strong>à gauche</strong>, et <strong>laisse-toi tomber deux fois</strong></td>
+<td>Muret <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Côtier</td>
+<td>Grimpe au <strong>rebord à gauche en arrivant</strong>, puis <strong>vers l'est</strong></td>
+<td>Arche basse <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Côtier</td>
+<td>Les formations rocheuses à l'est, au bout de la première plage ; grimpe, <strong>saute le précipice avec de l'élan</strong>, puis un dernier rebord</td>
+<td>Grand pilier <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Côtier</td>
+<td>Vers le <strong>nord</strong>, la deuxième plage, puis la <strong>grotte à l'ouest</strong></td>
+<td>Arche <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Marécageux</td>
+<td>Vers le <strong>nord-ouest</strong> jusqu'à avoir les genoux dans l'eau, puis <strong>à droite</strong> au bout du chemin, monte au rebord → une grotte ; <strong>brûle la toile d'araignée</strong></td>
+<td><strong>Angle de sol moyennement surélevé</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Marécageux</td>
+<td>Vers l'ouest, grimpe au rebord, puis saute avec de l'élan sur le rocher d'en face</td>
+<td>Mur bas <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Marécageux</td>
+<td>Longe le <strong>mur de gauche</strong> jusqu'à un chemin <strong>vers l'est</strong>, puis grimpe au rebord</td>
+<td>Sol peu surélevé <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Prairie</td>
+<td>Vers l'ouest, grimpe à quelques rebords, au bout du chemin</td>
+<td>Sol moyennement surélevé <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>Prairie</td>
+<td>Passe sous l'arche de pierre au sud-ouest**, au bout du chemin**</td>
+<td>Petit pilier <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>Prairie</td>
+<td>Entre dans les <strong>ruines au nord</strong> et <strong>brûle les deux toiles d'araignées successives</strong></td>
+<td>Mur <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ Les 12 coffres des vivariums ne s'ouvrent qu'au fur et à mesure que tu débloques les vivariums <em>(partie <strong>28</strong>)</em>. Les trois derniers attendent <strong>« L'envol du phénix »</strong>.</p>
+<h3 id="pre-au-lard-les-5-coffres">Pré-au-Lard — les 5 coffres</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Coffre des Trois Balais</strong></td>
+<td>La Salle privée, au <strong>troisième étage</strong> ; <strong>Alohomora 1</strong></td>
+<td><strong>Habitations</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Coffre du Repaire de Serpencendres</strong></td>
+<td>À la Tête de Sanglier, pendant « les fondements d'un chantage » <em>(partie <strong>18</strong>)</em> ; Accio maintenu jusqu'au bout sur les deux points d'accroche → porte secrète ; descends, et passe derrière les fûts à l'ouest</td>
+<td><strong>Plaques d'une ou deux règles</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Coffre du Sud de Pré-au-Lard</strong></td>
+<td>FC du Sud de Pré-au-Lard, tourne-toi, la maison <strong>juste derrière</strong> ; <strong>Alohomora 3</strong> ; coffre <strong>à l'étage, à côté du lit</strong></td>
+<td><strong>Statue d'Hippogriffe</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Coffre de la maison au sud-est</strong></td>
+<td>En sortant de la précédente, <strong>monte les petites marches</strong> et continue <strong>vers le nord-est</strong> ; <strong>Alohomora 3</strong> ; coffre <strong>juste à droite</strong></td>
+<td>Buissons <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Coffre de la maison du moulin</strong></td>
+<td>Depuis le moulin du <strong>nord-est</strong>, descends le chemin, <strong>première maison à gauche</strong> ; <strong>Alohomora 3</strong> ; coffre <strong>à droite, à côté du lit</strong></td>
+<td>Horloges sur pied <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Trois des cinq coffres de Pré-au-Lard demandent L'<strong>Alohomora niveau 3</strong></strong> <em>(partie <strong>33</strong>)</em>. <strong>Tant que tu ne l'as pas, le village reste incomplet.</strong></p>
+<h3 id="les-highlands-les-130-coffres-zone-par-zone">Les Highlands — les 130 coffres, zone par zone</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La zone</th>
+<th>Le nombre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Région de Feldcroft</strong></td>
+<td><strong>24</strong></td>
+</tr>
+<tr>
+<td><strong>Vallée de Poudlard</strong></td>
+<td><strong>18</strong></td>
+</tr>
+<tr>
+<td><strong>Lac de Grottaleau</strong></td>
+<td><strong>15</strong></td>
+</tr>
+<tr>
+<td><strong>Région sud de Poudlard</strong></td>
+<td><strong>11</strong></td>
+</tr>
+<tr>
+<td><strong>Côte du Collet</strong></td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Vallée de Pré-au-Lard</strong></td>
+<td><strong>9</strong></td>
+</tr>
+<tr>
+<td><strong>Marais du North Ford</strong></td>
+<td><strong>8</strong></td>
+</tr>
+<tr>
+<td><strong>Région nord de Poudlard</strong></td>
+<td><strong>8</strong></td>
+</tr>
+<tr>
+<td><strong>Forêt interdite</strong></td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td><strong>Pointe du Manoir</strong></td>
+<td><strong>7</strong></td>
+</tr>
+<tr>
+<td><strong>Côte de Salgât</strong></td>
+<td><strong>6</strong></td>
+</tr>
+<tr>
+<td><strong>Cragcroftshire</strong></td>
+<td><strong>5</strong></td>
+</tr>
+<tr>
+<td><strong>Marais de Southsea</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Caverne côtière</strong></td>
+<td><strong>1</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Marais du North Ford</strong> <em>(8)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Petit campement n° 1</strong></td>
+<td>À l'est de la région, près de la FC « Est du Marais du North Ford » ; coffre <strong>dans une tente à l'ouest du camp</strong></td>
+<td>Assourdissement II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 2</strong></td>
+<td>Au sud-est de la FC du Marais du North Ford ; coffre <strong>juste à l'extérieur de la tente principale</strong></td>
+<td>Botanique I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 3</strong></td>
+<td>Au sud-ouest de Pitt-upon-Ford, à la limite de la Forêt interdite ; <strong>la seule tente</strong></td>
+<td>Lacération I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Pitt-upon-Ford n° 1</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>à l'ouest</strong> du hameau ; coffre <strong>à l'étage</strong></td>
+<td>Dragon en peluche <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Pitt-upon-Ford n° 2</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>au nord</strong> ; coffre <strong>à droite en entrant</strong></td>
+<td>Natté - Bleu <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Pitt-upon-Ford n° 3</strong></td>
+<td>Dans la maison <strong>juste à droite d'Indira Wolff</strong> la marchande ; coffre <strong>à droite en entrant</strong></td>
+<td>Peintures circulaires <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Pitt-upon-Ford n° 4</strong></td>
+<td><strong>Alohomora 3</strong> sur la maison de l'autre côté du pont de pierre au sud-ouest ; coffre <strong>à l'étage</strong></td>
+<td>Natté - Noir <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons</strong></td>
+<td>Prends la <strong>route vers le nord</strong> depuis Pitt-upon-Ford</td>
+<td><strong>Peintures représentant un vivarium</strong> <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Forêt interdite</strong> <em>(7)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Caverne aux Horglups</strong></td>
+<td>Incendio sur les ronces, saute le précipice, brise les planches, laisse-toi tomber → <strong>un passage étroit juste derrière toi</strong> <em>(partie <strong>20</strong>)</em></td>
+<td><strong>Petites décorations de vivarium</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 1</strong></td>
+<td>À côté de la Caverne aux Horglups, à l'ouest de Campolard-en-Haut ; <strong>la tente délabrée</strong></td>
+<td>Lacération II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 2</strong></td>
+<td>À côté de la FC « Entrée du Marais du North » ; <strong>la petite tente à l'ouest</strong></td>
+<td>Botanique III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 3</strong></td>
+<td>À l'ouest de la <strong>Grotte du Métier à tisser</strong> et d'un repaire de Veaudelune ; <strong>la grande tente au sud</strong></td>
+<td>Manipulation II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 4</strong></td>
+<td>Au nord-ouest du précédent ; coffre <strong>à côté d'une cage à créature fantastique</strong></td>
+<td>Assourdissement I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Campement moyen</strong></td>
+<td>À côté de la FC « Ouest de la Forêt interdite » ; <strong>la grande tente à l'est</strong></td>
+<td>Explosion I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons</strong></td>
+<td>Au sud-ouest du petit campement n° 3 ; suis-les jusqu'à une <strong>maison abandonnée</strong></td>
+<td>Armures <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Vallée de Pré-au-Lard</strong> <em>(9)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Campolard-en-Haut n° 1</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>au nord-ouest du puits</strong> ; passe <strong>derrière le muret en bois</strong> en face de l'entrée</td>
+<td>Tableaux magiques <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Campolard-en-Haut n° 2</strong></td>
+<td>Tourne le dos à la Flamme et entre dans la <strong>première maison à gauche</strong> ; coffre <strong>derrière le paravent</strong></td>
+<td><strong>Colimaçon - Brun clair et brun foncé</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Campolard-en-Haut n° 3</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>à côté de Claire Beaumont</strong> ; coffre <strong>à droite en entrant</strong></td>
+<td>Armoires <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Campolard-en-Haut n° 4</strong></td>
+<td>Dans la <strong>petite cabane au sud-est</strong> ; coffre <strong>juste en face en entrant</strong></td>
+<td><strong>Impérial - Marron et or</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Campement moyen n° 1</strong></td>
+<td>Au nord-est de Campolard-en-Haut ; <strong>la tente au nord</strong></td>
+<td>Concentration Magie Ancienne III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Campement moyen n° 2</strong></td>
+<td>Juste au nord du précédent, à l'ouest de la Mine du Belvédère ; coffre derrière des caisses à côté de la tente</td>
+<td>Liaison I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Mine du Belvédère n° 1</strong></td>
+<td>Au nord-est de Campolard-en-Haut <em>(visitée pendant « Dans l'ombre de la mine », partie <strong>06</strong>)</em> ; chemin de <strong>gauche</strong>, saute le précipice, monte au rebord, <strong>glisse sur la pente</strong> ; <strong>brûle la toile d'araignée à l'est</strong></td>
+<td>Blasons <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Mine du Belvédère n° 2</strong></td>
+<td>De retour dans la zone précédente : <strong>Wingardium Leviosa</strong> sur la caisse pour escalader le <strong>rebord à l'ouest</strong> ; tout droit, <strong>glisse sur la pente</strong>, monte au <strong>rebord de gauche</strong>, <strong>Reparo</strong> sur le pont, traverse, <strong>à droite dès que possible</strong>, <strong>Lumos</strong> sur les Filets du Diable, puis <strong>le trou à droite</strong></td>
+<td>Têtes d'elfes de maison <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons</strong></td>
+<td>Au sud-ouest d'un <strong>repaire de chiens</strong>, à l'est de Pré-au-Lard ; suis-les <strong>vers le sud</strong></td>
+<td>Petites peintures encadrées <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Région nord de Poudlard</strong> <em>(8)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Petit campement n° 1</strong></td>
+<td>À l'ouest du Tombeau de Choucas, un camp tenu par des <strong>gobelins</strong> ; coffre dans une tente</td>
+<td>Brûlure III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 2</strong></td>
+<td>Au nord-ouest de la FC de la Forêt interdite ; dans une tente</td>
+<td>Manipulation III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 3</strong></td>
+<td>À l'ouest de la FC « Est de la région nord de Poudlard » ; dans la tente</td>
+<td>Lacération III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Grotte de la collectionneuse</strong></td>
+<td>Jusqu'à la salle au chariot suspendu au-dessus d'une grille ; Repulso sur les vieilles portes à droite, puis Wingardium Leviosa sur la caisse derrière pour la déplacer vers la droite ; le coffre est juste au-dessus <em>(partie <strong>05</strong>)</em></td>
+<td>Sol très surélevé <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Ruines de Korrow</strong></td>
+<td>Après Pergit : monte l'escalier vers l'ouest et va au bout du <strong>cul-de-sac</strong> ; <strong>approche-toi du mur, il s'ouvre</strong> <em>(partie <strong>20</strong>)</em></td>
+<td>Arbres <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Château occupé n° 1</strong></td>
+<td>Tout à l'ouest de la région ; élimine les gobelins, reviens à l'entrée, première structure à gauche du feu de camp, coffre <strong>sur la gauche</strong></td>
+<td>Venin I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Château occupé n° 2</strong></td>
+<td>Monte à l'échelle, puis <strong>Wingardium Leviosa</strong> <em>(ou le balai)</em> pour grimper au <strong>rebord vers l'ouest</strong> ; salle en face, coffre <strong>derrière les caisses</strong></td>
+<td>Impardonnables III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons</strong></td>
+<td>Au sud du petit campement n° 1, <strong>sur le chemin près de la rivière</strong></td>
+<td>Totems <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Région sud de Poudlard</strong> <em>(11)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cave de Mary Portman</strong></td>
+<td><strong>À Aranshire</strong> <em>(explorée pendant « Inextricable toile », partie <strong>20</strong>)</em> ; <strong>jusqu'à l'<strong>antre de L'Insatiable</strong> ; coffre <strong>au sud-est de la salle</strong></strong></td>
+<td><strong>Ruines</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Aranshire n° 1</strong></td>
+<td><strong>Confringo</strong> <strong>sur l'<strong>amas de pierre du jardin à droite de la maison de Mary Portman</strong></strong></td>
+<td><strong>Sphérique - Or</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Aranshire n° 2</strong></td>
+<td>Dans la maison <strong>voisine de celle de Mary Portman</strong> ; coffre <strong>à droite en entrant</strong></td>
+<td>Citrouilles d'Halloween <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Aranshire n° 3</strong></td>
+<td><strong>Alohomora 3</strong> sur la <strong>cabane derrière Crispin Dunne</strong> le marchand ; coffre <strong>dans un coin</strong></td>
+<td>Mannequins de sorcières <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Aranshire n° 4</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>en face d'Edgar Adley</strong> ; coffre <strong>à l'étage</strong></td>
+<td>Royal - Bleu <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Campement moyen</strong></td>
+<td>À l'est d'Aranshire ; coffre <strong>sous l'estrade qui surélève la grande tente</strong></td>
+<td>Destruction I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Campolard-en-Bas n° 1</strong></td>
+<td>Derrière le <strong>chariot renversé à l'est</strong> du hameau, <strong>dans l'eau</strong></td>
+<td><strong>Botanique - Feuille en bronze</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Campolard-en-Bas n° 2</strong></td>
+<td><strong>Derrière la maison <strong>verrouillée par une serrure de niveau 1</strong>, à côté de l'<strong>arbre aux fleurs roses</strong></strong></td>
+<td><strong>Royal - Noir</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Campolard-en-Bas n° 3</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison juste à côté du coffre précédent ; coffre <strong>à gauche en entrant</strong></td>
+<td><strong>Statue de Fléreur</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons n° 1</strong></td>
+<td>Sur la <strong>colline à l'ouest du terrain de Quidditch</strong></td>
+<td>Peintures de paysage <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons n° 2</strong></td>
+<td>Sur le <strong>chemin au sud d'Aranshire</strong> ; suis-les <strong>vers le nord-ouest</strong></td>
+<td>Canapés trois places <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Aranshire a bien <strong>quatre</strong> coffres. Le sommaire de la source française en oublie un : le coffre n° 3, celui de la cabane de Crispin Dunne <em>(partie <strong>12</strong>)</em>.</p>
+<p><strong>Vallée de Poudlard</strong> <em>(18)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bourg-Garenne n° 1</strong></td>
+<td>La maison <strong>juste au sud de la Flamme</strong> ; coffre <strong>derrière le canapé</strong></td>
+<td>Torsade - Gris foncé <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Bourg-Garenne n° 2</strong></td>
+<td>Wingardium Leviosa sur la caisse derrière la maison en face d'eddie Thistlewood pour l'amener devant la forge, puis <strong>Levioso</strong> dessus pour la surélever</td>
+<td>Sphérique - Marron <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Bourg-Garenne n° 3</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>la plus au nord-ouest</strong> ; coffre <strong>derrière le paravent à gauche</strong></td>
+<td><strong>Statue de licorne</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Bourg-Garenne n° 4</strong></td>
+<td>Tout au <strong>nord de l'étang au nord</strong></td>
+<td><strong>Statue de Veaudelune</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Tombeau de la famille Dale</strong></td>
+<td>À l'est de Bourg-Garenne <em>(« Mauvais sort végétal », partie <strong>20</strong>)</em> ; à l'intersection prends <strong>à droite</strong>, puis <strong>encore à droite</strong>, jusqu'à la salle suivante ; <strong>Confringo sur l'amas de pierres</strong></td>
+<td>Bannières de maison suspendues <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Le Perchoir doré</strong></td>
+<td>Au sud de Bourg-Garenne, accessible <strong>uniquement par « vol d'oiseaux »</strong> <em>(partie <strong>19</strong>)</em> ; chemin de gauche jusqu'à la zone éclairée, <strong>Accio</strong> puis <strong>Levioso</strong> sur la caisse en hauteur</td>
+<td>Cadre carré vide <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Pont-Désir n° 1</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>la plus à l'ouest</strong> ; coffre <strong>à droite dans la pièce principale</strong></td>
+<td>Tour <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Pont-Désir n° 2</strong></td>
+<td>Dans la cabane au sud du hameau, à côté des ruches</td>
+<td>Carreaux - Bleu sarcelle <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Pont-Désir n° 3</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>à peine sur la droite</strong>, en prenant le chemin vers le sud depuis la Flamme ; coffre <strong>à l'étage</strong></td>
+<td><strong>Botanique - Feuille en argent</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Pont-Désir n° 4</strong></td>
+<td>Vers l'ouest**, la petite cabane plus haute que large**</td>
+<td><strong>Plaques de quatre ou six règles</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 1</strong></td>
+<td>Au sud-ouest de Pont-Désir ; dans une tente</td>
+<td>Cruauté I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 2</strong></td>
+<td>L'autre camp du sud-ouest de Pont-Désir ; dans une tente</td>
+<td>Impardonnables II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Château occupé</strong></td>
+<td>À l'est de Pont-Désir ; dans les ruines, directement à gauche après l'entrée ouest</td>
+<td>Crocs I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>L'Œil de la mine n° 1</strong></td>
+<td><strong>Au sud-est de la région</strong> <em>(« Une affaire de Gobelbabil »)</em> ; allume la machine du monte-charge <strong>en brûlant les bûches</strong>, descends, <strong>chemin de droite</strong> ; <strong>Accio</strong> sur la plateforme puis encore <strong>Accio</strong> pour traverser ; <strong>Désillusion</strong> pour la <strong>porte gardée par un œil</strong> ; puis <strong>vers le sud</strong> jusqu'à la salle aux gobelins ; monte l'escalier, <strong>abats la grille d'un sort de base</strong> au bout du couloir, <strong>passage étroit</strong></td>
+<td><strong>Petites tables de jeu</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>L'Œil de la mine n° 2</strong></td>
+<td>Reviens au nord de la salle, <strong>brûle les bûches</strong>, <strong>Accio</strong> sur le point d'accroche pour ouvrir la grille ; nouveau couloir jusqu'à la salle gardée ; nettoie, porte <strong>au sud</strong> ; <strong>brûle les bûches</strong> de l'autre côté, reviens <strong>Accio</strong> à côté de la porte → un <strong>monte-charge</strong> ; à l'étage, <strong>petit tunnel</strong>, <strong>escaliers à gauche</strong>, <strong>Alohomora 2</strong></td>
+<td>Grandes tables décorées <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons n° 1</strong></td>
+<td>En bord de rivière, près du <strong>château à l'est de Pont-Désir</strong></td>
+<td>Bibliothèques <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons n° 2</strong></td>
+<td>À l'ouest des ruines**, elles-mêmes à l'ouest de Pont-Désir**</td>
+<td>Grands tapis carrés <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons n° 3</strong></td>
+<td><strong>À l'<strong>est de la FC « Centre de la Vallée de Poudlard »</strong></strong></td>
+<td><strong>Statue de Boursouf</strong> <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Région de Feldcroft</strong> <em>(24)</em></p>
+<p><strong>La zone la plus riche du jeu.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Campement moyen n° 1</strong></td>
+<td>Sur la colline au sud de la FC « Ouest de la Vallée de Poudlard » ; <strong>la grande tente au sud-est</strong></td>
+<td>Venin II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 1</strong></td>
+<td>Au nord-est de la FC « Nord de Feldcroft » ; <strong>à côté de la tente centrale</strong></td>
+<td>Botanique II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 2</strong></td>
+<td>À l'ouest de la FC « Nord de Feldcroft » ; <strong>la petite tente au sud-ouest</strong></td>
+<td>Manipulation I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 3</strong></td>
+<td>En bas de la colline du camp précédent, <strong>vers le nord</strong> ; <strong>la tente au nord-ouest</strong></td>
+<td>Crocs III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 4</strong></td>
+<td>Juste au nord du Château de Rookwood ; <strong>la tente à l'est</strong></td>
+<td>Désarmement II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Château occupé n° 1</strong></td>
+<td><strong>Tout à l'ouest de la région</strong> : <strong>la petite tente bleu pâle à l'ouest</strong></td>
+<td>Crocs II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Château occupé n° 2</strong></td>
+<td>Même château : <strong>la tente verte au nord-est</strong></td>
+<td>Application III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 5</strong></td>
+<td>Au sud de Feldcroft ; <strong>à côté de la tente</strong></td>
+<td>Cruauté III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Feldcroft n° 1</strong></td>
+<td><strong>Alohomora 2</strong> sur la maison <strong>la plus au sud-est</strong> ; coffre <strong>à l'étage</strong></td>
+<td>Décorations de taille moyenne <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Feldcroft n° 2</strong></td>
+<td>À l'extérieur de la même maison**, à côté de quelques bûches**</td>
+<td>Torsade - Lilas <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Feldcroft n° 3</strong></td>
+<td>Dans la maison <strong>derrière Bernard Ndiaye</strong> <em>(au sud)</em>, <strong>entre deux étagères</strong></td>
+<td>Mannequins de sorciers <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Feldcroft n° 4</strong></td>
+<td><strong>Alohomora 1</strong> sur la <strong>petite cabane au nord-ouest</strong>, derrière la Flamme</td>
+<td>Coquillage - Gris <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Catacombes n° 1</strong></td>
+<td>Au sud-est de Feldcroft <em>(« Dans l'ombre du temps », partie <strong>17</strong>)</em> ; première salle, deux araignées ; <strong>Confringo</strong> sur la <strong>toile en hauteur au nord-ouest</strong>, puis <strong>Wingardium Leviosa</strong> sur la caisse pour la mettre sous le passage et grimper</td>
+<td>Escalier en ruine élevé <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Catacombes n° 2</strong></td>
+<td>Le pont d'ossements : brûle la toile vers le <strong>sud-ouest</strong>, tue les araignées, <strong>passage vers l'est</strong> ; descends à l'autel aux ossements, <strong>détruis l'amas de pierres au nord</strong>, passage étroit → la salle aux Filets du Diable ; <strong>Lumos puis Incendio ou Confringo</strong> sur les brasiers du bas ; <strong>Accio</strong> sur tous les points d'accroche → <strong>deux tas d'ossements</strong> ; <strong>Wingardium Leviosa</strong> et <strong>lâche-les devant le précipice</strong>, ils s'organisent seuls ; <strong>Repulso</strong> sur les portes → salle secrète</td>
+<td><strong>Tables de taille moyenne décorées</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 6</strong></td>
+<td>Au sud-est des Catacombes, <strong>proche des ruines</strong> ; <strong>la grande tente au sud-est</strong></td>
+<td>Concentration Magie Ancienne I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Campement moyen n° 2</strong></td>
+<td><strong>Juste au sud du précédent, <strong>au pied de la falaise</strong> ; <strong>deuxième étage de la grande structure au nord-est</strong>, par l'<strong>escalier de gauche</strong></strong></td>
+<td><strong>Brûlure II</strong> <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 7</strong></td>
+<td>À l'ouest d'Irondale, <strong>sur une colline</strong> ; la seule tente</td>
+<td>Cruauté II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Jardin de pierre de lune n° 1</strong></td>
+<td>À l'ouest d'Irondale <em>(« Le centaure et la pierre », partie <strong>19</strong>)</em> ; sort explosif sur la <strong>porte en pierre de gauche</strong>, élimine le Fangieux, <strong>Accio ou Repulso</strong> sur les portes ; dans la salle aux symboles, <strong>Accio sur les bons points d'accroche</strong></td>
+<td>Assiettes félines <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Jardin de pierre de lune n° 2</strong></td>
+<td>Après le premier tourbillon : <strong>chemin de gauche</strong>, élimine les Fangieux, saute à l'eau, puis <strong>le passage vers le sud</strong></td>
+<td>Pupitre <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Irondale n° 1</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>derrière Pádraic Haggarty</strong> ; coffre <strong>à côté du lit à gauche</strong></td>
+<td><strong>Statue de Sombral</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Irondale n° 2</strong></td>
+<td>Dans la maison <strong>derrière le moulin au nord-ouest</strong> ; coffre <strong>derrière la séparation en bois à droite</strong></td>
+<td><strong>Impérial - Gris et argent</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Irondale n° 3</strong></td>
+<td>À côté de la <strong>cascade au nord-ouest</strong> du hameau ; par terre, à côté d'une lettre de gobelin</td>
+<td><strong>Impérial - Gris et bronze</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons n° 1</strong></td>
+<td>Près des ruines sur la falaise au nord du Château de Rookwood ; suis-les <strong>à travers les rochers</strong></td>
+<td><strong>Statue de Jobarbille</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons n° 2</strong></td>
+<td>Au sud-est des Catacombes, près des deux campements ; suis-les <strong>vers le haut de la colline</strong> ; prends ton balai pour ne pas les perdre</td>
+<td>Tableau <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Marais de Southsea</strong> <em>(1)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Campement moyen</strong></td>
+<td>Au sud de la région — c'est lui qui garde l'entrée de la Caverne côtière <em>(partie <strong>15</strong>)</em> ; coffre <strong>dans la tente à l'est</strong>, près de l'entrée</td>
+<td>Désarmement I <em>(Attribut)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Caverne côtière</strong> <em>(1)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tombeau de la trahison</strong></td>
+<td>Juste derrière la cascade, à l'entrée de la côte du Collet <em>(« Le trésor du tombeau maudit », partie <strong>23</strong>)</em> ; à la première intersection, <strong>continue tout droit</strong> jusqu'à pouvoir <strong>passer sur la gauche</strong></td>
+<td>Arche haute <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Côte du Collet</strong> <em>(10)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Château occupé</strong></td>
+<td>Les ruines <strong>juste au sud</strong> en arrivant de la Caverne côtière, à la FC du Château du Collet ; entre <strong>par l'est</strong> et va <strong>tout droit vers l'ouest</strong></td>
+<td>Impardonnables I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 1</strong></td>
+<td>Près des ruines au sud-ouest du Château du Collet ; <strong>la tente principale au nord-ouest</strong></td>
+<td>Assourdissement III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 2</strong></td>
+<td>Juste au sud du précédent ; <strong>la tente la plus au sud-ouest</strong></td>
+<td>Explosion II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 3</strong></td>
+<td>Au sud de la région, à côté du Pont de Grottaleau ; la tente principale</td>
+<td>Contrôle I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 4</strong></td>
+<td>Sur le chemin au <strong>nord-est du Pont de Grottaleau</strong> ; la seule tente</td>
+<td>Liaison II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 5</strong></td>
+<td>Juste à côté de la <strong>Grotte du phénix</strong> ; <strong>à côté de la tente en ruines</strong></td>
+<td>Embuscade I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Grotte du phénix n° 1</strong></td>
+<td>Avant de monter au premier rebord : brûle la toile à droite et détruis l'amas de rochers ; continue, une araignée et deux œufs, le coffre est juste derrière <em>(partie <strong>21</strong>)</em></td>
+<td>Décorations murales de taxidermie <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Grotte du phénix n° 2</strong></td>
+<td>Tout en haut de la zone, dans la Grande Salle : brûle la <strong>toile au sud-est</strong></td>
+<td>Peintures carrées <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons n° 1</strong></td>
+<td>À côté des ruines, sur le chemin <strong>en sortant de la Caverne côtière</strong></td>
+<td>Terrain naturel <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons n° 2</strong></td>
+<td>À côté du refuge de la FC « Sud de la Côte du Collet » ; suis-les vers les ruines de l'autre côté du pont</td>
+<td><strong>Présentoir du chœur des grenouilles</strong> <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Lac de Grottaleau</strong> <em>(15)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Grottaleau n° 1</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>au centre</strong> ; coffre <strong>par terre juste devant toi</strong></td>
+<td>Royal - Rose <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Grottaleau n° 2</strong></td>
+<td>Dans la <strong>cabane derrière la Flamme</strong></td>
+<td>Diagrammes magiques <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Grottaleau n° 3</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>juste en face de la Flamme</strong> ; coffre <strong>à droite en entrant</strong></td>
+<td>Grands tapis <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Grottaleau n° 4</strong></td>
+<td>Depuis la Flamme, <strong>à droite</strong>, monte les escaliers, <strong>maison à gauche à mi-hauteur</strong> ; coffre <strong>à gauche en entrant</strong></td>
+<td>Portraits flottants <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Grottaleau n° 5 et 6</strong></td>
+<td>Monte les escaliers encore plus haut, dans la maison qui domine le hameau ; un coffre à droite en entrant, l'autre derrière le rideau bleu</td>
+<td>Sphères armillaires <em>(Invocation)</em> <strong>et Colimaçon - Bleu sarcelle</strong> <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 1</strong></td>
+<td>À l'est de Grottaleau ; la seule tente</td>
+<td>Destruction III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 2</strong></td>
+<td>À l'est de la FC du Lac de Grottaleau ; la tente principale</td>
+<td>Contrôle II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 3</strong></td>
+<td>Au sud de la FC « Mine côtière » ; <strong>la tente du milieu, au sud-est</strong></td>
+<td>Embuscade III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 4</strong></td>
+<td>À l'ouest de la FC « Mine côtière », <strong>près d'un antre d'araignées</strong> ; la seule tente</td>
+<td>Embuscade II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Campement moyen</strong></td>
+<td>Sur le chemin de la montagne qui mène au Tunnel de la tour ; la seule tente, <strong>à côté d'un feu</strong></td>
+<td>Contrôle III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Tunnel de la tour n° 1</strong></td>
+<td>À l'est de la région, tout en haut de la montagne <em>(« Dans l'ombre de la montagne »)</em> ; élimine les araignées, <strong>sort explosif sur l'amas de rochers</strong>, puis <strong>chemin de gauche</strong> et <strong>monte</strong> ; coffre <strong>derrière deux toiles d'araignée</strong></td>
+<td>Arbres de Noël <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Tunnel de la tour n° 2</strong></td>
+<td>Retour à l'amas de rochers, prends le <strong>chemin de droite</strong> et descends ; monte les escaliers, <strong>brûle la toile</strong>, <strong>explose un tas de rochers</strong> ; <strong>Confringo à distance sur les œufs</strong> ; dans la Grande Salle, <strong>brûle la toile vers le nord</strong></td>
+<td>Table immense <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Mine côtière n° 1</strong></td>
+<td><strong>À l'est de la FC éponyme</strong> <em>(« La loyauté de Lodgok »)</em> ; allume la machine de gauche <strong>dès le début</strong> — c'est indispensable au second coffre <em>(partie <strong>08</strong>)</em> ; puis <strong>Accio</strong> sur la plateforme, élimine les gobelins, <strong>escaliers à l'ouest</strong>, <strong>au fond à droite</strong>, <strong>trois rebords successifs</strong> ; en haut, <strong>Wingardium Leviosa sur la plaque au sol</strong>, descends à l'échelle</td>
+<td>Grandes tables <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Mine côtière n° 2</strong></td>
+<td>Descends vers le sud par la plateforme <em>(Accio)</em>, élimine les gobelins, prends le <strong>chariot</strong> ; <strong>Accio sur le point d'accroche</strong> de la porte — elle ne s'ouvre que si tu as allumé la machine du début</td>
+<td>Bureau <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ La machine du début de la mine côtière est le piège le plus cruel du jeu <em>(partie <strong>08</strong>)</em>. Oublie-la, et le second coffre de collection devient inaccessible sans tout refaire.</p>
+<p><strong>Pointe du Manoir</strong> <em>(7)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bainbourg n° 1</strong></td>
+<td>Par terre, <strong>juste à côté d'Agnès Coffey</strong> la marchande</td>
+<td>Flèche - Marron <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Bainbourg n° 2</strong></td>
+<td><strong>Alohomora 2</strong> sur la maison <strong>en face de la Flamme</strong> ; coffre <strong>à droite en entrant</strong></td>
+<td><strong>Étagère pour équipement de Quidditch</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Bainbourg n° 3</strong></td>
+<td><strong>Alohomora 1</strong> sur la petite cabane à côté de la maison précédente</td>
+<td>Céleste - Bleu <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Bainbourg n° 4</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>la plus au sud-est</strong> ; coffre <strong>à droite en entrant</strong></td>
+<td>Globes <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement</strong></td>
+<td>Au sud de Bainbourg et <strong>à l'est du manoir</strong> ; la seule tente</td>
+<td>Explosion III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Campement moyen</strong></td>
+<td>Au sud du précédent, <strong>sur la même route</strong> ; la grande tente</td>
+<td>Liaison III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Cachette d'Henrietta</strong></td>
+<td><strong>Sur la Pointe sud de la région</strong> <em>(« À la rescousse de Rococo », partie <strong>21</strong>)</em> ; le puzzle des cubes, puis le <strong>mur disparu à gauche de l'escalier</strong> ; <strong>Accio</strong> sur le bloc derrière la grille, <strong>Wingardium Leviosa</strong> pour le faire passer par-dessus, <strong>Incendio</strong> pour l'activer</td>
+<td><strong>Statue de crapaud violet géant</strong> <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Cragcroftshire</strong> <em>(5)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cragcroft n° 1</strong></td>
+<td>En sortant de l'abri de la Flamme, <strong>longe la montagne à droite</strong> et entre dans la <strong>première maison</strong> ; coffre <strong>à droite</strong></td>
+<td><strong>Surfaces de sol de taille moyenne</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Cragcroft n° 2</strong></td>
+<td><strong>Alohomora 1</strong> sur la maison <strong>sur la colline juste en face</strong> ; coffre <strong>à l'étage</strong></td>
+<td>Colonne - Brun foncé <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Cragcroft n° 3</strong></td>
+<td><strong>Alohomora 2</strong> sur la maison <strong>à gauche en bas de la colline</strong> <em>(au sud du hameau)</em> ; coffre <strong>à l'étage</strong></td>
+<td>Flèche - Torsade rose <em>(Manche de baguette)</em></td>
+</tr>
+<tr>
+<td><strong>Cragcroft n° 4</strong></td>
+<td><strong>Alohomora 2</strong> sur la maison <strong>la plus au nord</strong> ; coffre <strong>à l'étage</strong></td>
+<td><strong>Télescope</strong> <em>(Invocation)</em></td>
+</tr>
+<tr>
+<td><strong>Campement moyen</strong></td>
+<td>Sur la <strong>plage au sud</strong> de la région ; <strong>la grande tente à l'est</strong></td>
+<td>Application II <em>(Attribut)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Côte de Salgât</strong> <em>(6)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>Où</th>
+<th>La récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Château occupé n° 1</strong></td>
+<td>Au centre de la région, à côté de la FC du Château de Salgât ; entre <strong>par le nord</strong>, les coffres sont <strong>dans les deux tentes juste en face</strong></td>
+<td>Concentration magie ancienne II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Château occupé n° 2</strong></td>
+<td>La seconde tente du même château</td>
+<td>Désarmement III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 1</strong></td>
+<td>À l'extrême ouest, de l'autre côté de l'étendue d'eau à l'est de la Cachette d'Henrietta ; coffre à l'entrée de la grotte, près du feu de camp</td>
+<td>Destruction II <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Petit campement n° 2</strong></td>
+<td>Sur une <strong>colline au nord du précédent</strong> ; la seule tente</td>
+<td>Application I <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Campement moyen</strong></td>
+<td>Sur une <strong>colline au nord-ouest</strong> de la région ; <strong>la grande tente au sud-est</strong></td>
+<td>Venin III <em>(Attribut)</em></td>
+</tr>
+<tr>
+<td><strong>Papillons</strong></td>
+<td>À peine au sud du campement moyen du nord-ouest</td>
+<td><strong>Statue de grapcorne</strong> <em>(Invocation)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-51-attributs-par-famille">Les 51 attributs, par famille</h3>
+<p>Chaque famille existe en trois niveaux — I, II et III — et les 50 niveaux qui ne sont pas <strong>Brûlure I</strong> viennent tous d'un coffre de campement ou de château <em>(partie <strong>26</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La famille</th>
+<th>Où sont ses trois niveaux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Application</td>
+<td>I : côte de Salgât ; II : Cragcroftshire ; III : château de Feldcroft</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Assourdissement</td>
+<td>I : Forêt interdite ; II : marais du North Ford ; III : côte du Collet</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Botanique</td>
+<td>I : marais du North Ford ; II : Feldcroft ; III : Forêt interdite</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Brûlure</td>
+<td><strong>I : la quête du métier à tisser</strong> <em>(partie <strong>26</strong>)</em> ; <strong>II : Feldcroft ; III : région nord de Poudlard</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Concentration Magie Ancienne</td>
+<td>I : Feldcroft ; II : côte de Salgât ; III : vallée de Pré-au-Lard</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Contrôle</td>
+<td>I : côte du Collet ; II et III : lac de Grottaleau</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Crocs</td>
+<td>I : vallée de Poudlard ; II et III : Feldcroft</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Cruauté</td>
+<td>I : vallée de Poudlard ; II et III : Feldcroft</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Désarmement</td>
+<td>I : marais de Southsea ; II : Feldcroft ; III : côte de Salgât</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Destruction</td>
+<td>I : région sud de Poudlard ; II : côte de Salgât ; III : lac de Grottaleau</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>Embuscade</td>
+<td>I : côte du Collet ; II et III : lac de Grottaleau</td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>Explosion</td>
+<td>I : Forêt interdite ; II : côte du Collet ; III : Pointe du Manoir</td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td>Impardonnables</td>
+<td>I : côte du Collet ; II : vallée de Poudlard ; III : région nord de Poudlard</td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td>Lacération</td>
+<td>I : marais du North Ford ; II : Forêt interdite ; III : région nord de Poudlard</td>
+</tr>
+<tr>
+<td><strong>15</strong></td>
+<td>Liaison</td>
+<td>I : vallée de Pré-au-Lard ; II : côte du Collet ; III : Pointe du Manoir</td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td>Manipulation</td>
+<td>I : Feldcroft ; II : Forêt interdite ; III : région nord de Poudlard</td>
+</tr>
+<tr>
+<td><strong>17</strong></td>
+<td>Venin</td>
+<td>I : région nord de Poudlard ; II : Feldcroft ; III : côte de Salgât</td>
+</tr>
+</tbody>
+</table></div>
+<p>Donc <strong>17 familles × 3 niveaux = 51 attributs</strong>, et 50 d'entre eux sont dans un coffre de campement.</p>
+<p>Et c'est la réponse à la question laissée ouverte dans la partie 26 : si tu veux un attribut précis, va vider le bon campement.</p>
+<p class="alerte">⚠️ <strong>à vérifier en jeu</strong> : <strong>l'<strong>effet</strong> exact de chaque famille d'attribut.</strong> <strong>Les sources françaises donnent leurs noms, pas leurs effets</strong> ; <strong>le menu du métier à tisser les affiche sur place.</strong></p>
+<h2 id="quetes-et-lieux-31" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-coffres-enfermes-dans-une-quete">Les coffres enfermés dans une quête</h3>
+<p>Ces coffres n'existent <strong>que</strong> pendant ou après leur quête.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le coffre</th>
+<th>La quête</th>
+<th>Partie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Repaire de Serpencendres</strong> <em>(Pré-au-Lard)</em></td>
+<td>Les fondements d'un chantage</td>
+<td><strong>18</strong></td>
+</tr>
+<tr>
+<td><strong>Le Perchoir doré</strong></td>
+<td>Vol d'oiseaux</td>
+<td><strong>19</strong></td>
+</tr>
+<tr>
+<td><strong>Jardin de pierre de lune</strong> <em>(×2)</em></td>
+<td>Le centaure et la pierre</td>
+<td><strong>19</strong></td>
+</tr>
+<tr>
+<td><strong>Grotte du phénix</strong> <em>(×2)</em></td>
+<td><strong>L'envol du phénix</strong></td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Cachette d'Henrietta</strong></td>
+<td>À la rescousse de Rococo</td>
+<td><strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Salles de l'énigme Repulso 1 et 2</strong></td>
+<td>Le hall d'Herodiana</td>
+<td><strong>20</strong></td>
+</tr>
+<tr>
+<td><strong>Les 12 coffres des vivariums</strong></td>
+<td>Les 4 quêtes de vivarium</td>
+<td><strong>26</strong>, <strong>28</strong> et <strong>21</strong></td>
+</tr>
+<tr>
+<td><strong>Les 14 coffres à papillons</strong></td>
+<td>Suivre les papillons</td>
+<td><strong>20</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ « Suivre les papillons » est le prérequis des 14 coffres à papillons. Fais-la dès que tu peux <em>(partie <strong>20</strong>)</em>.</p>
+<h3 id="les-coffres-derriere-un-alohomora">Les coffres derrière un Alohomora</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le niveau</th>
+<th>Combien, et où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Alohomora 1</strong></td>
+<td>La grande majorité des maisons des hameaux, et 7 coffres du château</td>
+</tr>
+<tr>
+<td><strong>Alohomora 2</strong></td>
+<td>Astronomie 5 et 6, L'Œil de la mine n° 2, Feldcroft n° 1, Bainbourg n° 2, Cragcroft n° 3 et 4, le bureau du directeur</td>
+</tr>
+<tr>
+<td><strong>Alohomora 3</strong></td>
+<td>Aile sud N° 5, Pitt-upon-Ford N° 4, Aranshire N° 3, et <strong>les 3 derniers coffres de Pré-au-Lard</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>Six coffres de collection demandent L'<strong>Alohomora niveau 3</strong></strong> <em>(partie <strong>33</strong>)</em>. <strong>Monte-le avant de croire ton ratissage terminé.</strong></p>
+<h3 id="les-14-coffres-a-papillons">Les 14 coffres à papillons</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La zone</th>
+<th>Combien</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vallée de Poudlard</strong></td>
+<td><strong>3</strong></td>
+</tr>
+<tr>
+<td><strong>Région sud de Poudlard</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>Région de Feldcroft</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>Côte du Collet</strong></td>
+<td><strong>2</strong></td>
+</tr>
+<tr>
+<td><strong>Marais du North Ford</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Forêt interdite</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Vallée de Pré-au-Lard</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Région nord de Poudlard</strong></td>
+<td><strong>1</strong></td>
+</tr>
+<tr>
+<td><strong>Côte de Salgât</strong></td>
+<td><strong>1</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et la carte du monde ne les affiche <strong>pas</strong> <em>(partie <strong>36</strong>)</em>. Même en dézoomant par région, les papillons restent invisibles : il faut les croiser.</p>
+<p><strong>La méthode</strong> : un petit nuage de papillons jaunes au bord d'un chemin. <strong>Approche-toi, ils s'envolent, suis-les.</strong> et prends ton balai quand ils montent une colline <em>(Feldcroft n° 2)</em>.</p>
+<h3 id="les-3-secrets-de-poudlard-et-leurs-coffres">Les 3 secrets de Poudlard et leurs coffres</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Le secret</th>
+<th>Les coffres</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le Pont</strong> <em>(4 brasiers, chiffres romains)</em></td>
+<td>Annexe de la bibliothèque N° 5 et 6</td>
+</tr>
+<tr>
+<td><strong>La Tour de l'horloge</strong> <em>(Arresto Momentum)</em></td>
+<td>Aile sud N° 2, 3 et 4</td>
+</tr>
+<tr>
+<td><strong>Le Bureau du directeur</strong> <em>(Alohomora 3, balai)</em></td>
+<td>Grand escalier N° 5, 6 et 7</td>
+</tr>
+</tbody>
+</table></div>
+<p>Les trois secrets du château sont détaillés dans la partie <strong>10</strong>. À eux trois, ils valent <strong>8 coffres de collection</strong>.</p>
+<h2 id="butin-exhaustif-31" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les 47 coffres de Poudlard</strong></td>
+<td><span class="badge neutre">Collectible</span></td>
+<td>7 zones, dont 12 dans les vivariums</td>
+<td><strong>« Collectionnite »</strong> <em>(partie <strong>36</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Les 5 coffres de Pré-au-Lard</strong></td>
+<td><span class="badge neutre">Collectible</span></td>
+<td><strong>3 demandent Alohomora 3</strong></td>
+<td><strong>« Collectionnite »</strong></td>
+</tr>
+<tr>
+<td><strong>Les 130 coffres des Highlands</strong></td>
+<td><span class="badge neutre">Collectible</span></td>
+<td>14 zones, 50 attributs, 14 coffres à papillons</td>
+<td><strong>« Collectionnite »</strong></td>
+</tr>
+<tr>
+<td><strong>Page du manuel d'arithmancie</strong></td>
+<td><span class="badge neutre">Objet de quête</span></td>
+<td>Le petit coffre bleu des combles de la Salle de Divination</td>
+<td>La valeur des 10 animaux, consultable à volonté</td>
+</tr>
+<tr>
+<td><strong>Les 51 attributs</strong></td>
+<td><span class="badge neutre">Attributs</span></td>
+<td>50 dans les coffres de campements, Brûlure I par la quête du métier à tisser</td>
+<td><strong>Le métier à tisser</strong> <em>(partie <strong>26</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Les manches de baguette</strong></td>
+<td><span class="badge neutre">Personnalisation</span></td>
+<td>Les coffres des hameaux et du château</td>
+<td><strong>« Collectionnite »</strong></td>
+</tr>
+<tr>
+<td><strong>Les invocations</strong></td>
+<td><span class="badge neutre">Créasorts</span></td>
+<td>Les coffres des donjons, des papillons et des portes d'arithmancie</td>
+<td><strong>La Salle sur Demande</strong> <em>(partie <strong>27</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Les coffres à œil</strong></td>
+<td><span class="badge neutre">Or</span></td>
+<td>Arriver déjà sous Désillusion</td>
+<td><strong>500 gallions chacun</strong> <em>(partie <strong>10</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Trophée Collectionnite</strong></td>
+<td><span class="badge neutre">Trophée</span></td>
+<td>Compléter toutes les collections</td>
+<td><strong>Partie 36</strong></td>
+</tr>
+<tr>
+<td><strong>Trophée Suivez les papillons</strong></td>
+<td><span class="badge neutre">Trophée</span></td>
+<td>Suivre les papillons jusqu'à un trésor</td>
+<td><strong>Partie 36</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-31" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="la-methode-de-ratissage-dune-zone-des-highlands">La méthode de ratissage d'une zone des Highlands</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>L'étape</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Dézoome sur la carte du monde</strong> : elle affiche ce qu'il te reste par région</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Vide tous les campements : un petit camp = 1 coffre ; un camp moyen = 1 coffre ; un château occupé = 1 ou 2</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Entre dans <strong>chaque maison</strong> du hameau, Y compris celles à L'<strong>Alohomora 3</strong></strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Fais les donjons de la zone</strong> <em>(mines, tombeaux, grottes)</em></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Et garde un œil sur les <strong>papillons</strong> au bord des chemins</td>
+</tr>
+</tbody>
+</table></div>
+<p>La règle du campement est la plus rentable du jeu : un campement vidé = un coffre de collection, un Attribut, et de quoi revendre <em>(partie <strong>26</strong>)</em>.</p>
+<h3 id="lordre-conseille-2">L'ordre conseillé</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>L'étape</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>« Suivre les papillons » dès que possible</td>
+<td>Prérequis des 14 coffres à papillons</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>La <strong>page du Manuel d'arithmancie</strong> avant toute porte</td>
+<td>La valeur des 10 animaux</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>« Le hall d'Herodiana »</strong></td>
+<td><strong>Les 2 salles Repulso</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Alohomora jusqu'au niveau 3</strong></td>
+<td><strong>6 coffres en dépendent</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td><strong>Les 4 vivariums</strong></td>
+<td><strong>12 coffres</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Puis les Highlands, <strong>zone par zone</strong></td>
+<td>Commence par Feldcroft** <em>(24)</em> et la <strong>vallée de Poudlard</strong> <em>(18)</em>**</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-pieges-11">Les pièges</h3>
+<ul>
+<li class="alerte">⚠️ Oublier d'allumer la machine du début de la mine côtière. Le second coffre devient inaccessible <em>(partie <strong>08</strong>)</em>.</li>
+<li>Entrer dans les 2 <strong>salles Repulso</strong> sans avoir fait <strong>« le hall d'Herodiana »</strong>. Le bouton ne répond pas.</li>
+<li>Dans une salle Repulso, ne prendre que le coffre de collection. Il faut <strong>tous</strong> les coffres ordinaires de la salle d'abord.</li>
+<li>Chercher les boutons d'une porte d'arithmancie <strong>devant</strong> la porte. L'un est souvent un étage au-dessus.</li>
+<li>Compter les traits des symboles d'arithmancie. Ce n'est pas la règle : c'est l'ORDRE des animaux sur l'arche**.**</li>
+<li>Lancer <strong>Désillusion</strong> devant un coffre à œil. Il faut arriver <strong>déjà</strong> camouflé.</li>
+<li>Croire Pré-au-Lard terminé sans <strong>Alohomora 3</strong>. 3 de ses 5 coffres en dépendent.</li>
+<li>Croire Aranshire terminé à 3 coffres. Il y en a <strong>quatre</strong> — le sommaire de la source en oublie un.</li>
+<li>Croire Feldcroft terminée à 22 coffres. <strong>Il y en a 24.</strong></li>
+<li class="alerte">⚠️ Perdre les papillons dans une montée. <strong>Prends ton balai.</strong></li>
+<li>Compter sur la carte pour les papillons. Elle ne les affiche <strong>pas</strong>.</li>
+<li>Oublier les 12 coffres des <strong>vivariums</strong>. Ils sont dans ta propre Salle sur Demande <em>(partie <strong>28</strong>)</em>.</li>
+</ul>
+<h2 id="alertes-31" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>182 coffres de collection</strong> : 130 dans les Highlands, 47 À Poudlard, 5 À Pré-au-Lard.</li>
+<li class="alerte">⚠️ Un coffre de collection contient <strong>toujours</strong> une <strong>Invocation</strong>, un <strong>Manche de baguette</strong> ou un <strong>Attribut</strong>.</li>
+<li class="alerte">⚠️ Les 51 attributs du métier à tisser viennent des coffres de campements et de châteaux occupés <em>(17 familles × 3 niveaux)</em> — sauf Brûlure I, donnée par la quête du métier à tisser <em>(partie <strong>26</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>Une porte d'arithmancie se résout ainsi</strong> : l'arche se lit <strong>de gauche à droite</strong>, le premier animal vaut <strong>0</strong>, puis <strong>1</strong>, <strong>2</strong>… Jusqu'à <strong>9</strong> ; ensuite c'est une <strong>addition à trou</strong>.</li>
+<li class="alerte">⚠️ La <strong>page du Manuel d'arithmancie</strong> est dans un petit coffre bleu, dans les combles de la Salle de Divination ; elle se consulte ensuite à volonté dans l'onglet <strong>objets de quête</strong>.</li>
+<li class="alerte">⚠️ Un coffre à œil demande d'arriver <strong>déjà</strong> sous Désillusion, et contient <strong>500 gallions</strong> <em>(partie <strong>10</strong>)</em>.</li>
+<li class="alerte">⚠️ Et pour les salles à grille, entre d'abord <strong>une fois sans</strong> Désillusion : <strong>la grille reste ouverte.</strong></li>
+<li class="alerte">⚠️ Les 2 salles de l'énigme Repulso n'existent qu'après <strong>« le hall d'Herodiana »</strong> <em>(partie <strong>20</strong>)</em>, et il faut prendre <strong>tous</strong> les coffres ordinaires de la salle pour avoir le coffre de collection.</li>
+<li class="alerte">⚠️ « Suivre les papillons » est le prérequis des <strong>14 coffres à papillons</strong>, et la carte ne les affiche pas.</li>
+<li class="alerte">⚠️ <strong>6 coffres de collection demandent L'<strong>Alohomora niveau 3</strong></strong> : <strong>aile sud n° 5, Pitt-upon-Ford n° 4, Aranshire n° 3, et 3 des 5 coffres de Pré-au-Lard</strong> <em>(partie <strong>33</strong>)</em>.</li>
+<li class="alerte">⚠️ Aranshire a <strong>4</strong> coffres et Feldcroft en a <strong>24</strong> — à corriger si tu te fies au sommaire de la source <em>(parties <strong>12</strong> et <strong>14</strong>)</em>.</li>
+<li class="alerte">⚠️ La machine du début de la <strong>mine côtière</strong> doit être allumée, sinon le second coffre est perdu <em>(partie <strong>08</strong>)</em>.</li>
+<li class="alerte">⚠️ La région de <strong>Feldcroft</strong> est la plus riche du jeu avec <strong>24 coffres</strong>.</li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : <strong>les valeurs <strong>4</strong>, <strong>6</strong>, <strong>7</strong> et <strong>9</strong> des symboles d'arithmancie</strong> <em>(la source est contradictoire)</em> ; <strong>l'<strong>effet</strong> de chacune des 17 familles d'attributs</strong> ; <strong>et le <strong>nombre total de coffres à œil</strong> du jeu, qu'aucune source française ne donne.</strong></li>
+</ul>
+<h2 id="check-list-31" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="les-3-grands-ensembles">Les 3 grands ensembles</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 130 coffres des Highlands</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Les 47 coffres de Poudlard</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Les 5 coffres de Pré-au-Lard</strong></li>
+</ul>
+<h3 id="poudlard-zone-par-zone">Poudlard, zone par zone</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Aile d'astronomie — 6</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Aile du Clocher — 6</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Grand escalier — 7</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Grande Salle — 3</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Annexe de la bibliothèque — 8</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Aile sud — 5</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Salle sur Demande, les 4 vivariums — 12</strong></li>
+</ul>
+<h3 id="les-highlands-zone-par-zone">Les Highlands, zone par zone</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Région de Feldcroft — 24</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Vallée de Poudlard — 18</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Lac de Grottaleau — 15</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Région sud de Poudlard — 11</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Côte du Collet — 10</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Vallée de Pré-au-Lard — 9</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Marais du North Ford — 8</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Région nord de Poudlard — 8</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Forêt interdite — 7</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Pointe du Manoir — 7</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Côte de Salgât — 6</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cragcroftshire — 5</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Marais de Southsea — 1</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Caverne côtière — 1</strong></li>
+</ul>
+<h3 id="les-prerequis">Les prérequis</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>« Suivre les papillons » faite</strong> <em>(14 coffres à papillons)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Page du manuel d'arithmancie récupérée</strong></li>
+<li class="tache"><input type="checkbox"> <strong>« Le hall d'Herodiana » faite</strong> <em>(2 salles Repulso)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Alohomora niveau 3 obtenu</strong> <em>(6 coffres)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les 4 vivariums débloqués</strong> <em>(12 coffres)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Arresto Momentum appris</strong> <em>(3 coffres de l'aile sud)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Glacius appris</strong> <em>(aile sud n° 5)</em></li>
+</ul>
+<h3 id="les-17-familles-dattributs">Les 17 familles d'attributs</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Application I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Assourdissement I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Botanique I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Brûlure I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Concentration Magie Ancienne I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Contrôle I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Crocs I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cruauté I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Désarmement I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Destruction I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Embuscade I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Explosion I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Impardonnables I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Lacération I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Liaison I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Manipulation I, II, III</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Venin I, II, III</strong></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="les-pages-du-guide-du-sorcier.html" rel="prev"><small>← Partie précédente</small><b>Les pages du Guide du Sorcier</b></a><a class="suiv" href="les-statues-de-demiguise-et-les-cles-du-dedale.html" rel="next"><small>Partie suivante →</small><b>Les statues de Demiguise et les clés du dédale</b></a><a class="tout" href="hogwarts-legacy.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Hogwarts Legacy : L&#x27;Héritage de Poudlard · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

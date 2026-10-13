@@ -1,0 +1,2792 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Annexes : points de non-retour, manquables, index et check-list finale – Guide Dark Souls III</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Dark Souls III, Annexes : points de non-retour, manquables, index et check-list finale : Te donner la carte des dangers et la liste de tout ce qu&#x27;il y a à…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/dark-souls-3/99-annexes-points-de-non-retour-manquables-index-et-check-list-finale.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Annexes : points de non-retour, manquables, index et check-list finale · Guide Dark Souls III">
+<meta property="og:description" content="Dark Souls III, Annexes : points de non-retour, manquables, index et check-list finale : Te donner la carte des dangers et la liste de tout ce qu&#x27;il y a à…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/dark-souls-3/99-annexes-points-de-non-retour-manquables-index-et-check-list-finale.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Dark Souls III", "item": "https://bloundsk.github.io/guides-jeux-video/guides/dark-souls-3/"}, {"@type": "ListItem", "position": 3, "name": "Annexes : points de non-retour, manquables, index et check-list finale", "item": "https://bloundsk.github.io/guides-jeux-video/guides/dark-souls-3/99-annexes-points-de-non-retour-manquables-index-et-check-list-finale.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="dark-souls-3" class="compact" data-partie="99-annexes-points-de-non-retour-manquables-index-et-check-list-finale"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Dark Souls III</a><span aria-hidden="true">›</span><span>Pour finir</span></nav>
+<p class="gjv-jeu">Dark Souls III : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Dark Souls <em>III</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction-tout-ce-quil-faut-savoir-avant-de-commencer.html"><span class="num">00</span><span class="libelle">Introduction : tout ce qu&#x27;il faut savoir avant de commencer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-le-cimetiere-des-cendres-et-le-sanctuaire-de-lige-feu.html"><span class="num">01</span><span class="libelle">Le Cimetière des cendres et le Sanctuaire de Lige-Feu</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-le-grand-mur-de-lothric.html"><span class="num">02</span><span class="libelle">Le Grand mur de Lothric</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-le-camp-des-mort-vivants.html"><span class="num">03</span><span class="libelle">Le Camp des mort-vivants</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-la-route-des-sacrifices.html"><span class="num">04</span><span class="libelle">La Route des sacrifices</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-la-cathedrale-des-profondeurs.html"><span class="num">05</span><span class="libelle">La Cathédrale des profondeurs</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-le-bastion-de-farron.html"><span class="num">06</span><span class="libelle">Le Bastion de Farron</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-les-catacombes-de-carthus.html"><span class="num">07</span><span class="libelle">Les Catacombes de Carthus</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-le-lac-incandescent.html"><span class="num">08</span><span class="libelle">Le Lac incandescent</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-irithyll-de-la-vallee-boreale.html"><span class="num">09</span><span class="libelle">Irithyll de la vallée boréale</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-le-donjon-dirithyll-et-la-capitale-profanee.html"><span class="num">10</span><span class="libelle">Le Donjon d&#x27;Irithyll et la Capitale profanée</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="11-anor-londo.html"><span class="num">11</span><span class="libelle">Anor Londo</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-le-chateau-de-lothric.html"><span class="num">12</span><span class="libelle">Le Château de Lothric</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="13-le-jardin-du-roi-illumine.html"><span class="num">13</span><span class="libelle">Le Jardin du Roi illuminé</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="14-les-sepultures-oubliees.html"><span class="num">14</span><span class="libelle">Les Sépultures oubliées</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="15-les-grandes-archives.html"><span class="num">15</span><span class="libelle">Les Grandes archives</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="16-le-pic-du-dragon-ancien.html"><span class="num">16</span><span class="libelle">Le Pic du Dragon ancien</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="17-le-kiln-de-la-premiere-flamme-et-les-fins.html"><span class="num">17</span><span class="libelle">Le Kiln de la Première Flamme et les fins</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="18-les-quetes-de-pnj-le-sanctuaire.html"><span class="num">18</span><span class="libelle">Les quêtes de PNJ : le Sanctuaire</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="19-les-quetes-de-pnj-les-chaines-longues.html"><span class="num">19</span><span class="libelle">Les quêtes de PNJ : les chaînes longues</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="20-les-serments.html"><span class="num">20</span><span class="libelle">Les serments</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="21-ameliorer-impregner-et-forger.html"><span class="num">21</span><span class="libelle">Améliorer, imprégner et forger</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="22-les-magies-sorcelleries-pyromancies-et-miracles.html"><span class="num">22</span><span class="libelle">Les magies : sorcelleries, pyromancies et miracles</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="23-les-collectibles.html"><span class="num">23</span><span class="libelle">Les collectibles</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="24-lequipement-essentiel.html"><span class="num">24</span><span class="libelle">L&#x27;équipement essentiel</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="25-dlc-les-cendres-dariandel-le-champ-de-neige.html"><span class="num">25</span><span class="libelle">DLC Les Cendres d&#x27;Ariandel : le Champ de neige</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="26-dlc-les-cendres-dariandel-la-passe-enneigee-les-profondeurs-et-friede.html"><span class="num">26</span><span class="libelle">DLC Les Cendres d&#x27;Ariandel : la Passe enneigée, les Profondeurs et Friede</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="27-dlc-the-ringed-city-le-capharnaum-des-confins.html"><span class="num">27</span><span class="libelle">DLC The Ringed City : le Capharnaüm des confins</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="28-dlc-the-ringed-city-la-cite-enclavee.html"><span class="num">28</span><span class="libelle">DLC The Ringed City : la Cité enclavée</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="29-dlc-the-ringed-city-filianore-midir-et-gael.html"><span class="num">29</span><span class="libelle">DLC The Ringed City : Filianore, Midir et Gael</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="#99-annexes-points-de-non-retour-manquables-index-et-check-list-finale"><span class="num">99</span><span class="libelle">Annexes : points de non-retour, manquables, index et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="sources-dark-souls-iii.html"><span class="num">✦</span><span class="libelle">Sources — Dark Souls III</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-31">
+<header class="tete-section">
+<p class="eyebrow">Pour finir</p>
+<h1 id="99-annexes-points-de-non-retour-manquables-index-et-check-list-finale">Annexes : points de non-retour, manquables, index et check-list finale</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-31"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-31">
+<h2 id="objectif-31" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Te donner <strong>la carte des dangers</strong> et la liste de tout ce qu'il y a à prendre, pour une partie à 100 % sans mauvaise surprise. Cette partie ne raconte rien : elle récapitule.</p>
+<p class="alerte manquable">⏳ <strong>Trois usages</strong> : la lire <strong>avant</strong> de lancer une partie complétiste, la garder <strong>ouverte</strong> en cours de route, et la parcourir <strong>avant le combat final</strong> pour vérifier qu'il ne manque rien.</p>
+<h2 id="les-decisions-irreversibles-dans-lordre-ou-elles-se-presentent" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Les décisions irréversibles, dans l'ordre où elles se présentent</span></h2>
+<p class="alerte">⚠️ Chacune de ces lignes ferme quelque chose définitivement pour la partie en cours. Le New Game + remet tout à zéro, mais dans une partie donnée, il n'y a pas de retour.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Moment</th>
+<th>Ce qui se ferme</th>
+<th>Partie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Donner l'Âme de la Gardienne du Feu</strong></td>
+<td><strong>Une des fins</strong> (et l'objet ne se retrouve pas)</td>
+<td>01, 17</td>
+</tr>
+<tr>
+<td><strong>Battre l'Arbre géant maudit</strong></td>
+<td><strong>Hodrick meurt</strong> : le <strong>Serment des Thanatophiles</strong> ne s'obtient plus que par <strong>Sirris</strong></td>
+<td>03, 20</td>
+</tr>
+<tr>
+<td><strong>Tuer Horace à la Route des sacrifices</strong></td>
+<td><strong>Casse la quête d'Anri</strong> et <strong>la fin cachée</strong></td>
+<td>04, 19</td>
+</tr>
+<tr>
+<td><strong>Rejoindre les Phalanges de Rosaria</strong></td>
+<td><strong>Sirris devient hostile</strong>, sa quête et <strong>les Lames de la lune noire</strong> se ferment</td>
+<td>05, 20</td>
+</tr>
+<tr>
+<td><strong>Prendre l'Orbe d'œil rouge de Leonhard</strong></td>
+<td><strong>Sirris hostile définitivement</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Ne pas tuer Horace avant Wolnir</strong></td>
+<td>La fin de l'Usurpation devient impossible</td>
+<td>08, 17, 19</td>
+</tr>
+<tr>
+<td><strong>Informer Anri sans avoir tué Horace</strong></td>
+<td><strong>Condamne Anri</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Tuer l'assassin de l'église de Yorshka</strong></td>
+<td><strong>Ferme la fin cachée</strong> (mais ouvre l'aide à Anri contre Aldrich)</td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Entrer au Donjon d'Irithyll avant le retour de Greirat</strong></td>
+<td><strong>Siegward part des cuisines</strong> et <strong>Greirat est condamné</strong></td>
+<td>10, 18</td>
+</tr>
+<tr>
+<td><strong>Allumer le premier Feu du Donjon d'Irithyll</strong></td>
+<td>Siegward quitte les cuisines</td>
+<td>10, 18</td>
+</tr>
+<tr>
+<td><strong>Vendre un tome sombre à Irina</strong></td>
+<td><strong>Change sa fin</strong> et <strong>rend Eygon hostile</strong></td>
+<td>19, 22</td>
+</tr>
+<tr>
+<td><strong>Tuer le Démon de feu seul</strong></td>
+<td>Prive du set de Catarina</td>
+<td>03, 19</td>
+</tr>
+<tr>
+<td><strong>Faire soigner les Marques sombres</strong></td>
+<td>Annule définitivement la fin de l'Usurpation</td>
+<td>17, 19</td>
+</tr>
+<tr>
+<td><strong>Utiliser le Monument purificateur du DLC</strong></td>
+<td><strong>Efface les Marques sombres</strong> : même effet</td>
+<td>28, 29</td>
+</tr>
+<tr>
+<td><strong>Tuer Yorshka</strong></td>
+<td><strong>Plus aucun interlocuteur</strong> pour les deux serments bleus</td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Tuer Emma sans lui avoir parlé</strong></td>
+<td><strong>Perd la bannière et le serment</strong>, et <strong>déclenche la Danseuse</strong> trop tôt</td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Battre les trois premiers Seigneurs des Cendres</strong></td>
+<td><strong>La Danseuse se déclenche</strong> et le Château de Lothric s'ouvre : <strong>finis les quêtes du début avant</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Imprégner une arme d'un élément</strong></td>
+<td><strong>Elle ne peut plus être renforcée</strong> par résine ni par sort</td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Forger une arme d'âme de boss</strong></td>
+<td><strong>L'âme est consommée</strong> : une seule par partie</td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Tuer un marchand de sorts</strong></td>
+<td><strong>Ses sorts sont perdus</strong> pour la partie</td>
+<td>22</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="les-manquables-partie-par-partie" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Les manquables, partie par partie</span></h2>
+<p class="alerte manquable">⏳ « Manquable » veut dire : tu peux passer devant sans le voir, et il ne reviendra pas — ou seulement au prix d'un long détour.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Partie</th>
+<th>À ne pas rater</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>01 — Cimetière des cendres</strong></td>
+<td><strong>Uchigatana</strong>, <strong>Fragment d'Estus</strong> du dragon mort, <strong>Écaille de Titanite</strong> du Lézard de cristal géant, <strong>Anneau convoiteux du serpent d'argent</strong> (mur illusoire du Sanctuaire), <strong>Clé de la tour</strong></td>
+</tr>
+<tr>
+<td><strong>02 — Grand mur de Lothric</strong></td>
+<td><strong>Claymore</strong> et <strong>Braise</strong> du dragon, <strong>Hache de guerre abyssale</strong> (Mimic), <strong>Fragment d'Estus</strong> de l'autel, <strong>Épée droite d'Astora</strong>, <strong>Rempart de l'Aigle d'argent</strong></td>
+</tr>
+<tr>
+<td><strong>03 — Camp des mort-vivants</strong></td>
+<td><strong>Serment des Thanatophiles</strong>, <strong>Fragment d'Estus</strong> du brasier, <strong>Fragment d'os de mort-vivant</strong> du saut, <strong>Anneau de Chlorantie</strong> + set de <strong>Mirrah</strong>, <strong>Épée droite d'Irithyll</strong></td>
+</tr>
+<tr>
+<td><strong>04 — Route des sacrifices</strong></td>
+<td><strong>Tome divin de Carim</strong>, <strong>Tome de pyromancie du Grand marais</strong>, <strong>Anthracite de Farron</strong>, <strong>Anneau de Sage</strong>, <strong>Fragment d'Estus</strong> de la cour</td>
+</tr>
+<tr>
+<td><strong>05 — Cathédrale des profondeurs</strong></td>
+<td><strong>Fragment d'Estus</strong> de l'obélisque, <strong>Fragment d'os de mort-vivant</strong> de la tombe suspendue, <strong>Symbole d'avarice</strong> et <strong>Tome divin des profondeurs</strong> (Mimic), <strong>Petite poupée</strong></td>
+</tr>
+<tr>
+<td><strong>06 — Bastion de Farron</strong></td>
+<td><strong>Fragment d'Estus</strong> de la tour effondrée, <strong>Fragment d'os de mort-vivant</strong> de la tour aux limaces, <strong>Anthracite de Sage</strong>, <strong>Parchemin doré</strong>, <strong>Parchemin de Sage</strong></td>
+</tr>
+<tr>
+<td><strong>07 — Catacombes de Carthus</strong></td>
+<td><strong>Tome de pyromancie de Carthus</strong> (mur illusoire), <strong>Tome de pyromancie du Gardien</strong> (<strong>avant l'apparition de Wolnir</strong>), <strong>Fragment d'os de mort-vivant</strong></td>
+</tr>
+<tr>
+<td><strong>08 — Lac incandescent</strong></td>
+<td><strong>Chevalière tachetée</strong>, <strong>deux Fragments d'os de mort-vivant</strong>, <strong>Fragment d'Estus</strong> du mur illusoire, <strong>Épée de Chevalier noir</strong>, <strong>Tomes d'Izalith et de Quelaana</strong></td>
+</tr>
+<tr>
+<td><strong>09 — Irithyll</strong></td>
+<td><strong>Fragment d'os de mort-vivant</strong> du cimetière, <strong>Lance de Yorshka</strong>, <strong>Anneau du Lion</strong>, <strong>Grand marteau de Smough</strong>, <strong>Bénédiction divine</strong></td>
+</tr>
+<tr>
+<td><strong>10 — Donjon d'Irithyll</strong></td>
+<td><strong>Clé du geôlier</strong> (<strong>donc Karla et Siegward</strong>), <strong>Anthracite profané</strong>, <strong>Bague-serre des Ténèbres</strong>, <strong>Fragment d'Estus</strong> du Mimic</td>
+</tr>
+<tr>
+<td><strong>11 — Anor Londo</strong></td>
+<td><strong>Serment des Fidèles d'Aldrich</strong>, <strong>Serment des Lames de la lune noire</strong> (chemin invisible), <strong>Grand arc de Tueur de Dragons</strong>, <strong>Set d'armure en laiton</strong></td>
+</tr>
+<tr>
+<td><strong>12 — Château de Lothric</strong></td>
+<td><strong>Fragment d'os de mort-vivant</strong> sous le pont aux dragons, <strong>Set du Chevalier ailé</strong> et <strong>Bouclier de la fleur sacrée</strong> (mur illusoire), <strong>Rapière d'Irithyll</strong>, <strong>Écusson de l'Arbre aux esprits</strong>, <strong>Épée droite Solaire</strong></td>
+</tr>
+<tr>
+<td><strong>13 — Jardin du Roi illuminé</strong></td>
+<td><strong>Fragment d'Estus</strong> du rebord, <strong>Set de l'Ombre</strong> et <strong>Griffes</strong> du bassin, <strong>Gemme des ténèbres</strong>, <strong>Anneau écaille de Dragon</strong>, <strong>émote Voie du Dragon</strong></td>
+</tr>
+<tr>
+<td><strong>14 — Sépultures oubliées</strong></td>
+<td><strong>Anneau d'Estus cendreux</strong>, <strong>Bénédiction secrète</strong>, <strong>Fauchard de Chevalier noir</strong>, <strong>Anneau du Frelon</strong>, <strong>Lame du Chaos</strong>, <strong>Fragment d'épée torsadée</strong></td>
+</tr>
+<tr>
+<td><strong>15 — Grandes archives</strong></td>
+<td><strong>Dernier Fragment d'Estus</strong>, <strong>dernier Fragment d'os de mort-vivant</strong>, <strong>Parchemin cristallin</strong>, <strong>Set du Chevalier éclaireur</strong> (mur illusoire), <strong>Avelyn</strong></td>
+</tr>
+<tr>
+<td><strong>16 — Pic du Dragon ancien</strong></td>
+<td><strong>Bague-serre de foudre</strong>, <strong>Pierre de tête de Dragon</strong> (<strong>si tu tues la vouivre normalement</strong>), <strong>Anneau de Calamité</strong>, <strong>Lance de Tueur de Dragons</strong></td>
+</tr>
+<tr>
+<td><strong>17 — Kiln de la Première Flamme</strong></td>
+<td><strong>Les deux fins alternatives</strong>, si les conditions n'ont pas été préparées avant le combat final</td>
+</tr>
+<tr>
+<td><strong>18 — PNJ du Sanctuaire</strong></td>
+<td><strong>Les huit lots de Cendres</strong>, <strong>Os de Loretta</strong>, <strong>Bouclier de Faucon-du-Breuil</strong>, <strong>Pierre de tête de Dragon scintillante</strong>, <strong>tous les sorts</strong> d'un marchand qui meurt</td>
+</tr>
+<tr>
+<td><strong>19 — Quêtes longues</strong></td>
+<td><strong>Lame de Morion</strong>, <strong>set de Catarina</strong>, <strong>Bouclier du crépuscule</strong> et <strong>Talisman de Sirris</strong>, <strong>Orbe d'œil rouge</strong>, <strong>Épée du croissant de lune</strong></td>
+</tr>
+<tr>
+<td><strong>20 — Serments</strong></td>
+<td><strong>Serment des Thanatophiles</strong>, <strong>Serment des Lames de la lune noire</strong>, les récompenses de rang de chaque serment</td>
+</tr>
+<tr>
+<td><strong>22 — Magies</strong></td>
+<td><strong>Les cinq Tomes de pyromancie</strong>, <strong>les quatre Tomes divins</strong>, <strong>les quatre Parchemins</strong> et tous les sorts qu'ils débloquent</td>
+</tr>
+<tr>
+<td><strong>23 — Collectibles</strong></td>
+<td><strong>Fragments derrière un mur illusoire</strong> (#6 et #9 d'Estus), ceux qui demandent <strong>un saut</strong> (#1 d'os), les <strong>huit lots de Cendres</strong></td>
+</tr>
+<tr>
+<td><strong>24 — Équipement</strong></td>
+<td>Toutes les armes derrière un <strong>Mimic</strong> ou un <strong>mur illusoire</strong>, le <strong>Maître des tempêtes</strong> si tu affrontes Yhorm sans le ramasser</td>
+</tr>
+<tr>
+<td><strong>25 — Ariandel (champ de neige)</strong></td>
+<td><strong>Arme gelée</strong>, <strong>3 Grands fragments</strong> du loup géant, <strong>Gemme bénite</strong> derrière la tour, <strong>Plumes de corbeau</strong>, <strong>Set de Chevalier-esclave</strong></td>
+</tr>
+<tr>
+<td><strong>26 — Ariandel (Friede)</strong></td>
+<td><strong>Rossefange</strong>, <strong>Marteau sismique</strong>, <strong>Set de Vilhelm</strong>, <strong>Gemme sanglante</strong>, <strong>Orbe du Chaos</strong>, <strong>Gelée éclair</strong>, <strong>Tablette de Titanite</strong></td>
+</tr>
+<tr>
+<td><strong>27 — Capharnaüm des confins</strong></td>
+<td><strong>Les trois anneaux +3</strong>, <strong>Faux nébuleuse</strong>, <strong>Bourdon nébuleux</strong>, <strong>Étendard de guerre de Lothric</strong>, <strong>set de pyromancien du désert</strong> complet</td>
+</tr>
+<tr>
+<td><strong>28 — Cité enclavée</strong></td>
+<td><strong>Set d'armure des ruines</strong>, <strong>Bénédiction secrète</strong>, <strong>Cloche sacrée de Filianore</strong>, <strong>Anneau du Loup +3</strong>, <strong>Set de Sorcière noire</strong></td>
+</tr>
+<tr>
+<td><strong>29 — Filianore et Gael</strong></td>
+<td><strong>Anneau de l'Œil maléfique +3</strong>, <strong>Anneau de Chlorantie +3</strong>, objets du <strong>mur illusoire des statues</strong>, <strong>Espadons appariés</strong>, <strong>Crucifix du Roi dément</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="tout-ce-qui-reste-a-verifier-en-jeu" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Tout ce qui reste « <span class="a-verifier">⚠️ à vérifier en jeu</span> »</span></h2>
+<p class="alerte manquable">⏳ Ce guide a été écrit à partir de sources françaises recoupées. Quand un nom ou une donnée n'a pas pu être confirmé, il est écrit tel quel et marqué. <strong>Voici la liste complète de ces points</strong> — rien d'autre dans le guide n'est incertain.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Où</th>
+<th>Ce qu'il faut vérifier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Classe « Déshérité »</strong></td>
+<td>Partie 00</td>
+<td>Nom français de la dixième classe à confirmer à la création du personnage</td>
+</tr>
+<tr>
+<td><strong>Marques sombres</strong></td>
+<td>Parties 17, 19</td>
+<td>Nom exact de l'objet donné par Yoel et Yuria : <strong>certaines sources françaises écrivent « Symbole noir »</strong></td>
+</tr>
+<tr>
+<td><strong>Man-grub's Staff</strong></td>
+<td>Partie 20</td>
+<td>Récompense à 30 Langues pâles chez les Phalanges de Rosaria : ma source française laisse ce nom en anglais, le nom français reste à lire en jeu</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte manquable">⏳ Rien d'autre n'est marqué douteux dans ce guide. Tous les autres noms, emplacements et effets ont été recoupés (voir <code>SOURCES.md</code>).</p>
+<h2 id="index-alphabetique-des-objets" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Index alphabétique des objets</span></h2>
+<p><strong>397 entrées</strong>, tous les objets nommés dans les tableaux de butin du guide, avec <strong>le ou les numéros de partie</strong> où les trouver. Les objets qui apparaissent dans beaucoup de parties (Braise, Os du retour, Titanite) sont des consommables courants, pas des uniques.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Partie(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Âme d'Aldrich</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme d'Oceiros l'illuminé</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme d'un Démon</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme d'un Démon errant</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme d'un Sage de cristal</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme de chevalier découragé</strong></td>
+<td>08, 11, 12, 14, 15, 16, 27, 28</td>
+</tr>
+<tr>
+<td><strong>Âme de corps abandonné</strong></td>
+<td>01, 02</td>
+</tr>
+<tr>
+<td><strong>Âme de guerrier</strong></td>
+<td>13</td>
+</tr>
+<tr>
+<td><strong>Âme de guerrier épuisé</strong></td>
+<td>09, 10, 16, 27</td>
+</tr>
+<tr>
+<td><strong>Âme de Gundyr le Champion</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme de L'Âme des Cendres</strong></td>
+<td>17</td>
+</tr>
+<tr>
+<td><strong>Âme de l'Arbre géant maudit</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme de l'Armure de Tueur de Dragons</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme de la Danseuse</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme de la Gardienne du Feu</strong></td>
+<td>01</td>
+</tr>
+<tr>
+<td><strong>Âme de Rosaria</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Âme de soldat anonyme</strong></td>
+<td>05, 07, 15, 16</td>
+</tr>
+<tr>
+<td><strong>Âme de Vordt de la Vallée boréale</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme de voyageur inconnu</strong></td>
+<td>01, 03, 04</td>
+</tr>
+<tr>
+<td><strong>Âme de Yhorm le Géant</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme des Diacres des profondeurs</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme des Princes Jumeaux</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme des Seigneurs</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme du Chef suprême Wolnir</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme du Grand maître Sulyvahn</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme du Roi sans nom</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme du Sang du Loup</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme du Vieux Roi démoniaque</strong></td>
+<td>21</td>
+</tr>
+<tr>
+<td><strong>Âme vacillante</strong></td>
+<td>04, 09</td>
+</tr>
+<tr>
+<td><strong>Âmes de chevalier découragé</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Amulette de duelliste</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Amulettes de chasseur de mort-vivants</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Amulettes de tueur de mort-vivant</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Anneau convoiteux du serpent d'argent</strong></td>
+<td>01, 23, 24</td>
+</tr>
+<tr>
+<td><strong>Anneau convoiteux du serpent d'argent +3</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Anneau convoiteux du serpent doré</strong></td>
+<td>10, 23, 24</td>
+</tr>
+<tr>
+<td><strong>Anneau convoiteux du serpent doré +3</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Anneau d'érudit</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Anneau d'Estus</strong></td>
+<td>01</td>
+</tr>
+<tr>
+<td><strong>Anneau d'Estus cendreux</strong></td>
+<td>14</td>
+</tr>
+<tr>
+<td><strong>Anneau d'Havel +3</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Anneau de Brunante</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Anneau de Calamité</strong></td>
+<td>16, 24</td>
+</tr>
+<tr>
+<td><strong>Anneau de Chasseur</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Anneau de chevalier</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Anneau de Chlorantie</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Anneau de Chlorantie +3</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Anneau de Farron</strong></td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>Anneau de Flynn</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Anneau de grâce</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Anneau de grâce +3</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Anneau de l'Aîné solaire</strong></td>
+<td>09</td>
+</tr>
+<tr>
+<td><strong>Anneau de l'Œil maléfique +3</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Anneau de Morne</strong></td>
+<td>04, 22</td>
+</tr>
+<tr>
+<td><strong>Anneau de morsure</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Anneau de morsure glaciale</strong></td>
+<td>25</td>
+</tr>
+<tr>
+<td><strong>Anneau de Pierre-larme bleue</strong></td>
+<td>02, 18</td>
+</tr>
+<tr>
+<td><strong>Anneau de Pierre-larme rouge</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Anneau de princesse solaire</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Anneau de protection d'acier</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Anneau de protection d'acier +3</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Anneau de revirement</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Anneau de Sage</strong></td>
+<td>04, 24</td>
+</tr>
+<tr>
+<td><strong>Anneau des profondeurs</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Anneau du Frelon</strong></td>
+<td>14, 24</td>
+</tr>
+<tr>
+<td><strong>Anneau du Lion</strong></td>
+<td>09</td>
+</tr>
+<tr>
+<td><strong>Anneau du Loup +3</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Anneau écaille de Dragon</strong></td>
+<td>13</td>
+</tr>
+<tr>
+<td><strong>Anneau félin d'argent</strong></td>
+<td>19, 24</td>
+</tr>
+<tr>
+<td><strong>Anneau opalin de Carthus</strong></td>
+<td>07</td>
+</tr>
+<tr>
+<td><strong>Anneau rouge de Carthus</strong></td>
+<td>07</td>
+</tr>
+<tr>
+<td><strong>Anneau sacrificiel</strong></td>
+<td>02, 04, 09</td>
+</tr>
+<tr>
+<td><strong>Anneau-épée de Lloyd</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Anthracite de Farron</strong></td>
+<td>04, 21</td>
+</tr>
+<tr>
+<td><strong>Anthracite de Farron / de Sage / profané / du Géant</strong></td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>Anthracite de Sage</strong></td>
+<td>06, 21</td>
+</tr>
+<tr>
+<td><strong>Anthracite du Géant</strong></td>
+<td>11, 21</td>
+</tr>
+<tr>
+<td><strong>Anthracite profané</strong></td>
+<td>10, 21</td>
+</tr>
+<tr>
+<td><strong>Arbalète</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Arbalète de tireur d'élite</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Arc de Monte-dragon</strong></td>
+<td>08</td>
+</tr>
+<tr>
+<td><strong>Arc en bouleau blanc</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Arc long</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Arme gelée</strong></td>
+<td>25</td>
+</tr>
+<tr>
+<td><strong>Assommoir</strong></td>
+<td>04</td>
+</tr>
+<tr>
+<td><strong>Avelyn</strong></td>
+<td>15, 24</td>
+</tr>
+<tr>
+<td><strong>Bague-serre de feu</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Bague-serre de foudre</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Bague-serre des Ténèbres</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Baies de lichen</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Bâton d'Izalith</strong></td>
+<td>08</td>
+</tr>
+<tr>
+<td><strong>Bâton de l'hérétique</strong></td>
+<td>04, 24</td>
+</tr>
+<tr>
+<td><strong>Bec de corbin</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Bénédiction divine</strong></td>
+<td>09, 27</td>
+</tr>
+<tr>
+<td><strong>Bénédiction secrète</strong></td>
+<td>14, 28</td>
+</tr>
+<tr>
+<td><strong>Bident sacré</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Bombes incendiaires</strong></td>
+<td>01, 02, 03</td>
+</tr>
+<tr>
+<td><strong>Bombes incendiaires noires</strong></td>
+<td>02, 12, 25, 27</td>
+</tr>
+<tr>
+<td><strong>Bouclier araignée</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Bouclier de Compagnon</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Bouclier de conjuration</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Bouclier de Faucon doré</strong></td>
+<td>04</td>
+</tr>
+<tr>
+<td><strong>Bouclier de Faucon-du-Breuil</strong></td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>Bouclier de la convoitise</strong></td>
+<td>08</td>
+</tr>
+<tr>
+<td><strong>Bouclier de Llewellyn</strong></td>
+<td>08</td>
+</tr>
+<tr>
+<td><strong>Bouclier des lamentations</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Bouclier du crépuscule</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Bouclier Grand-huis</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Bouclier rond au caducée</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Bouclier tête de dragon</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Bourdon nébuleux</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Braise</strong></td>
+<td>01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 15, 16, 25, 26, 27, 28, 29</td>
+</tr>
+<tr>
+<td><strong>Braises</strong></td>
+<td>06</td>
+</tr>
+<tr>
+<td><strong>Branche d'Arbre-sorcier</strong></td>
+<td>09</td>
+</tr>
+<tr>
+<td><strong>Calice de consécration</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Carreaux de foudre</strong></td>
+<td>10, 16</td>
+</tr>
+<tr>
+<td><strong>Carreaux explosifs</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Catalyseur de Logan</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Cendres couvertes d'excréments</strong></td>
+<td>09, 18, 23</td>
+</tr>
+<tr>
+<td><strong>Cendres d'un homme de l'est</strong></td>
+<td>11, 18, 23</td>
+</tr>
+<tr>
+<td><strong>Cendres d'un rêveur</strong></td>
+<td>06, 18, 23</td>
+</tr>
+<tr>
+<td><strong>Cendres d'un Traque-Dragons</strong></td>
+<td>16, 18, 23</td>
+</tr>
+<tr>
+<td><strong>Cendres de croque-mort</strong></td>
+<td>03, 18, 23</td>
+</tr>
+<tr>
+<td><strong>Cendres de la vieille femme</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Cendres de paladin</strong></td>
+<td>05, 18, 23</td>
+</tr>
+<tr>
+<td><strong>Cendres du gardien des tombes</strong></td>
+<td>07, 18, 23</td>
+</tr>
+<tr>
+<td><strong>Cendres xanthomes</strong></td>
+<td>18, 23</td>
+</tr>
+<tr>
+<td><strong>Chair d'acier</strong></td>
+<td>06</td>
+</tr>
+<tr>
+<td><strong>Chapeau de Pharis</strong></td>
+<td>06</td>
+</tr>
+<tr>
+<td><strong>Chevalière du tonnerre</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Chevalière magique</strong></td>
+<td>13</td>
+</tr>
+<tr>
+<td><strong>Chevalière tachetée</strong></td>
+<td>08</td>
+</tr>
+<tr>
+<td><strong>Chevaliers Solaires</strong></td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Claymore</strong></td>
+<td>02, 24</td>
+</tr>
+<tr>
+<td><strong>Clé de cellule</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Clé de l'évadé</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Clé de la salle de l'ascenseur</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Clé de la tombe</strong></td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>Clé de la tour</strong></td>
+<td>01</td>
+</tr>
+<tr>
+<td><strong>Clé de la vieille cellule</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Clé des Grandes archives</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Clé du geôlier</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Cloche de cristal</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Cloche sacrée de Filianore</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Clochette d'arbre sacré</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Colère des Dieux</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Costume de pyromancien du désert</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Costume simple suranné</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Couteaux de lancer</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Coutelas du Gardien d'église</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Crânes élégants</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Crucifix du Roi dément</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Dague en aigue-marine</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Dent de dragon</strong></td>
+<td>24</td>
+</tr>
+<tr>
+<td><strong>Écaille de Titanite</strong></td>
+<td>01, 08, 12, 13, 15, 16, 21, 27, 28, 29</td>
+</tr>
+<tr>
+<td><strong>Écailles de Titanite</strong></td>
+<td>10, 29</td>
+</tr>
+<tr>
+<td><strong>Éclat de Titanite</strong></td>
+<td>12, 13, 14, 15, 16, 26, 27, 28</td>
+</tr>
+<tr>
+<td><strong>Éclats de Titanite</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Écusson</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Écusson de Dragon</strong></td>
+<td>06</td>
+</tr>
+<tr>
+<td><strong>Écusson de l'Arbre aux esprits</strong></td>
+<td>12, 24</td>
+</tr>
+<tr>
+<td><strong>Eleonora</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Émote Voie du Dragon</strong></td>
+<td>13, 23</td>
+</tr>
+<tr>
+<td><strong>Épée courbe Gardien des peintures</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Épée de Chevalier noir</strong></td>
+<td>08, 24</td>
+</tr>
+<tr>
+<td><strong>Épée de Révélation</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Épée droite brisée</strong></td>
+<td>01</td>
+</tr>
+<tr>
+<td><strong>Épée droite d'Astora</strong></td>
+<td>02, 24</td>
+</tr>
+<tr>
+<td><strong>Épée droite d'Irithyll</strong></td>
+<td>03, 24</td>
+</tr>
+<tr>
+<td><strong>Épée droite de Chevalier enclavé</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Épée droite Solaire</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Épée large</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Épées de Gotthard</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Espadon</strong></td>
+<td>06</td>
+</tr>
+<tr>
+<td><strong>Espadon courbe d'Harald</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Espadon d'Astora</strong></td>
+<td>05, 24</td>
+</tr>
+<tr>
+<td><strong>Espadon de Drakesang</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Espadon du Clair de lune</strong></td>
+<td>24</td>
+</tr>
+<tr>
+<td><strong>Espadons appariés de chevalier enclavé</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Étendard de guerre de Lothric</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Éventail ardent</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Fauchard de Chevalier noir</strong></td>
+<td>14</td>
+</tr>
+<tr>
+<td><strong>Faux nébuleuse</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Fidèles d'Aldrich</strong></td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Fiole d'Estus cendreux</strong></td>
+<td>01</td>
+</tr>
+<tr>
+<td><strong>Flamme de pyromancie</strong></td>
+<td>22</td>
+</tr>
+<tr>
+<td><strong>Flamme des adieux du Pyromancien</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Flamme profanée</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Flamme sacrée</strong></td>
+<td>08</td>
+</tr>
+<tr>
+<td><strong>Flèches de foudre de Tueur de dragons</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Flèches du Clair de lune</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Flèches empoisonnées</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Fleurs vertes</strong></td>
+<td>09</td>
+</tr>
+<tr>
+<td><strong>Fleurs vertes bourgeonnantes</strong></td>
+<td>25, 29</td>
+</tr>
+<tr>
+<td><strong>Fortitude</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Fouet épineux</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Foyer de Transposition</strong></td>
+<td>18, 21</td>
+</tr>
+<tr>
+<td><strong>Fragment d'épée torsadée</strong></td>
+<td>14</td>
+</tr>
+<tr>
+<td><strong>Fragment d'Estus</strong></td>
+<td>01, 02, 03, 04, 05, 06, 08, 10, 11, 13, 15, 23</td>
+</tr>
+<tr>
+<td><strong>Fragment d'os de mort-vivant</strong></td>
+<td>03, 05, 06, 07, 08, 09, 10, 12, 15, 23</td>
+</tr>
+<tr>
+<td><strong>Fragment de lance rituelle</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Fragment de Titanite</strong></td>
+<td>01, 02, 03, 04, 05, 06, 07, 11</td>
+</tr>
+<tr>
+<td><strong>Gants</strong></td>
+<td>03, 27</td>
+</tr>
+<tr>
+<td><strong>Gelée éclair</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Gemme abyssale</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Gemme acérée</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Gemme bénite</strong></td>
+<td>05, 15, 25, 29</td>
+</tr>
+<tr>
+<td><strong>Gemme brute</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Gemme cristalline</strong></td>
+<td>04</td>
+</tr>
+<tr>
+<td><strong>Gemme de carcasse</strong></td>
+<td>15, 25, 28</td>
+</tr>
+<tr>
+<td><strong>Gemme de foudre</strong></td>
+<td>09, 16</td>
+</tr>
+<tr>
+<td><strong>Gemme des ténèbres</strong></td>
+<td>13, 28</td>
+</tr>
+<tr>
+<td><strong>Gemme du chaos</strong></td>
+<td>08</td>
+</tr>
+<tr>
+<td><strong>Gemme empoisonnée</strong></td>
+<td>06, 10, 25</td>
+</tr>
+<tr>
+<td><strong>Gemme lourde</strong></td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>Gemme raffinée</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Gemme sanglante</strong></td>
+<td>09, 26</td>
+</tr>
+<tr>
+<td><strong>Gemme simple</strong></td>
+<td>10, 25</td>
+</tr>
+<tr>
+<td><strong>Gemme tranchante</strong></td>
+<td>07</td>
+</tr>
+<tr>
+<td><strong>Gourdin renforcé</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Grand arc de Tueur de Dragons</strong></td>
+<td>11, 24</td>
+</tr>
+<tr>
+<td><strong>Grand bouclier aux Deux dragons</strong></td>
+<td>04</td>
+</tr>
+<tr>
+<td><strong>Grand bouclier de Havel</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Grand bouclier du dragon ancien</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Grand fragment de Titanite</strong></td>
+<td>05, 07, 08, 09, 10, 11, 25, 26</td>
+</tr>
+<tr>
+<td><strong>Grand marteau de Smough</strong></td>
+<td>09</td>
+</tr>
+<tr>
+<td><strong>Grande âme de chevalier découragé</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Grande âme de chevalier épuisé</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Grande âme de corps abandonné</strong></td>
+<td>02, 03</td>
+</tr>
+<tr>
+<td><strong>Grande âme de guerrier épuisé</strong></td>
+<td>10, 12, 27, 28, 29</td>
+</tr>
+<tr>
+<td><strong>Grande âme de soldat anonyme</strong></td>
+<td>06, 07, 09, 10, 12</td>
+</tr>
+<tr>
+<td><strong>Grande âme de voyageur inconnu</strong></td>
+<td>04, 05, 07, 25</td>
+</tr>
+<tr>
+<td><strong>Grande barrière magique</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Grande faux</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Grande lance</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Grandes âmes de voyageur inconnu</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Griffes</strong></td>
+<td>13</td>
+</tr>
+<tr>
+<td><strong>Guetteurs de Farron</strong></td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Hache de brigand</strong></td>
+<td>04</td>
+</tr>
+<tr>
+<td><strong>Hache de guerre abyssale</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Javelot de Compagnon</strong></td>
+<td>25</td>
+</tr>
+<tr>
+<td><strong>Jeunes branches blanches</strong></td>
+<td>03, 05, 28</td>
+</tr>
+<tr>
+<td><strong>Lame de foudre</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Lame de Morion</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Lame du Chaos</strong></td>
+<td>14</td>
+</tr>
+<tr>
+<td><strong>Lame noire</strong></td>
+<td>07, 24</td>
+</tr>
+<tr>
+<td><strong>Lames de la lune noire</strong></td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Lance de chevalier enclavé</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Lance de foudre</strong></td>
+<td>06</td>
+</tr>
+<tr>
+<td><strong>Lance de Tueur de Dragons</strong></td>
+<td>16, 24</td>
+</tr>
+<tr>
+<td><strong>Lance de Yorshka</strong></td>
+<td>09</td>
+</tr>
+<tr>
+<td><strong>Lance rituelle dorée</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Lances draconiques</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Langue pâle</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Liste des chevaliers</strong></td>
+<td>09</td>
+</tr>
+<tr>
+<td><strong>Main sombre</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Maître des tempêtes</strong></td>
+<td>10, 24</td>
+</tr>
+<tr>
+<td><strong>Marque sombre</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Marques sombres</strong></td>
+<td>17</td>
+</tr>
+<tr>
+<td><strong>Marteau de forge</strong></td>
+<td>14</td>
+</tr>
+<tr>
+<td><strong>Marteau de Ledo</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Marteau sismique</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Marteaux draconiques</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Médaille solaire</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Monument purificateur</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Murakumo</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Nuage toxique</strong></td>
+<td>08</td>
+</tr>
+<tr>
+<td><strong>Nuée vorace de Dorhys</strong></td>
+<td>09</td>
+</tr>
+<tr>
+<td><strong>Onikiri et Ubadachi</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Orbe d'œil noir</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Orbe d'œil rouge</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Orbe du Chaos</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Orbes d'œil rouges fissurés</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Ornement de Lance de Filianore</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Os de Loretta</strong></td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>Os du retour</strong></td>
+<td>01, 04, 05, 06, 08, 09, 10, 15, 16, 25, 26, 27</td>
+</tr>
+<tr>
+<td><strong>Ossements du champion</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Pagne</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Paquets de pin brûlé</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Parchemin cristallin</strong></td>
+<td>15, 22</td>
+</tr>
+<tr>
+<td><strong>Parchemin de Logan</strong></td>
+<td>10, 22</td>
+</tr>
+<tr>
+<td><strong>Parchemin de Sage</strong></td>
+<td>06, 22</td>
+</tr>
+<tr>
+<td><strong>Parchemin doré</strong></td>
+<td>06, 22</td>
+</tr>
+<tr>
+<td><strong>Parma de pierre</strong></td>
+<td>06</td>
+</tr>
+<tr>
+<td><strong>Parole d'autre-monde</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Percemaille</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Pertuisane</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Petit bouclier en cuir</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Petite bannière de l'Émissaire</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Petite bannière de Lothric</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Petite poupée</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Phalanges de Rosaria</strong></td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Pic de Heysel</strong></td>
+<td>04</td>
+</tr>
+<tr>
+<td><strong>Pièce d'or</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Pièce d'or rouillée</strong></td>
+<td>09</td>
+</tr>
+<tr>
+<td><strong>Pièce rouillée</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Pièces d'or rouillées</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Pièces rouillées</strong></td>
+<td>10, 12, 27</td>
+</tr>
+<tr>
+<td><strong>Pierre de confession</strong></td>
+<td>04, 09, 10, 14, 15, 21, 25, 28</td>
+</tr>
+<tr>
+<td><strong>Pierre de purge</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Pierre de tête de Dragon</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Pierre de tête de Dragon scintillante</strong></td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>Pierre de torse de Dragon</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Pierre de torse de Dragon scintillante</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Pierres de purge</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Pieu de foudre</strong></td>
+<td>08</td>
+</tr>
+<tr>
+<td><strong>Piliers divins luminescents</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Pilule médicinale rouge</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Pilules médicinales bleues</strong></td>
+<td>04, 09</td>
+</tr>
+<tr>
+<td><strong>Pilules médicinales jaunes</strong></td>
+<td>07, 08</td>
+</tr>
+<tr>
+<td><strong>Pilules médicinales noires</strong></td>
+<td>07</td>
+</tr>
+<tr>
+<td><strong>Pioche</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Plumes de corbeau</strong></td>
+<td>25</td>
+</tr>
+<tr>
+<td><strong>Poudres de réparation</strong></td>
+<td>05, 06</td>
+</tr>
+<tr>
+<td><strong>Preuve d'accord respecté</strong></td>
+<td>09, 11</td>
+</tr>
+<tr>
+<td><strong>Prismes</strong></td>
+<td>06, 26</td>
+</tr>
+<tr>
+<td><strong>Rafale animique</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Rapière</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Rapière d'Irithyll</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Rapière de Ricard</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Rempart de l'Aigle d'argent</strong></td>
+<td>02, 24</td>
+</tr>
+<tr>
+<td><strong>Résine de pin d'humain</strong></td>
+<td>13</td>
+</tr>
+<tr>
+<td><strong>Résines de pin brûlé</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Résines de pin d'humain</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Résines de pin doré</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Résines de pin pâle</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Résines de pin pourries</strong></td>
+<td>06</td>
+</tr>
+<tr>
+<td><strong>Restes humains</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Rossefange</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Rouges de Carthus</strong></td>
+<td>07</td>
+</tr>
+<tr>
+<td><strong>Rubis d'Aldrich</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Sabre de Compagnon</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Saignoir</strong></td>
+<td>04</td>
+</tr>
+<tr>
+<td><strong>Sang de l'Âme ténébreuse</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Saphir d'Aldrich</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Sentinelles bleues</strong></td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Serment de la Voie bleue</strong></td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Serment des Chevaliers Solaires</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Serment des Fidèles d'Aldrich</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Serment des Guetteurs de Farron</strong></td>
+<td>06</td>
+</tr>
+<tr>
+<td><strong>Serment des Lames de la lune noire</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Serment des Sentinelles bleues</strong></td>
+<td>04, 19</td>
+</tr>
+<tr>
+<td><strong>Serment des Thanatophiles</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Set complet de clerc</strong></td>
+<td>03</td>
+</tr>
+<tr>
+<td><strong>Set d'armure de Lapp</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Set d'armure des ruines</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Set d'armure en laiton</strong></td>
+<td>11</td>
+</tr>
+<tr>
+<td><strong>Set de Catarina</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Set de Chevalier-esclave</strong></td>
+<td>25</td>
+</tr>
+<tr>
+<td><strong>Set de héraut</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Set de la Demoiselle</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Set de la Gardienne du Feu</strong></td>
+<td>01</td>
+</tr>
+<tr>
+<td><strong>Set de prière</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Set de sorcier de la cour</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Set de vieux sorcier</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Set de Vilhelm</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Set du Chevalier ailé</strong></td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>Set du chevalier anonyme</strong></td>
+<td>06</td>
+</tr>
+<tr>
+<td><strong>Set du Chevalier éclaireur</strong></td>
+<td>15</td>
+</tr>
+<tr>
+<td><strong>Set du chevalier fugitif</strong></td>
+<td>04</td>
+</tr>
+<tr>
+<td><strong>Set du mercenaire</strong></td>
+<td>04</td>
+</tr>
+<tr>
+<td><strong>Set du sorcier</strong></td>
+<td>04</td>
+</tr>
+<tr>
+<td><strong>Set du Tueur de Dragons de fer</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Siegbrau</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Soin majeur</strong></td>
+<td>09</td>
+</tr>
+<tr>
+<td><strong>Stéatite de marque rouge</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Symbole d'avarice</strong></td>
+<td>05</td>
+</tr>
+<tr>
+<td><strong>Tablette de Titanite</strong></td>
+<td>10, 15, 16, 19, 21, 25, 26, 27, 29</td>
+</tr>
+<tr>
+<td><strong>Talisman</strong></td>
+<td>08</td>
+</tr>
+<tr>
+<td><strong>Tête du Prédicateur blanc</strong></td>
+<td>28</td>
+</tr>
+<tr>
+<td><strong>Thanatophiles</strong></td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Tiges embousées</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>Titanite scintillante</strong></td>
+<td>02, 12, 16, 21, 26, 27, 28</td>
+</tr>
+<tr>
+<td><strong>Titanites scintillantes</strong></td>
+<td>29</td>
+</tr>
+<tr>
+<td><strong>Tome de pyromancie d'Izalith</strong></td>
+<td>08, 22</td>
+</tr>
+<tr>
+<td><strong>Tome de pyromancie de Carthus</strong></td>
+<td>07, 22</td>
+</tr>
+<tr>
+<td><strong>Tome de pyromancie de Quelaana</strong></td>
+<td>08, 22</td>
+</tr>
+<tr>
+<td><strong>Tome de pyromancie du Gardien</strong></td>
+<td>07, 22</td>
+</tr>
+<tr>
+<td><strong>Tome de pyromancie du Grand marais</strong></td>
+<td>04, 22</td>
+</tr>
+<tr>
+<td><strong>Tome divin de Carim</strong></td>
+<td>04, 22</td>
+</tr>
+<tr>
+<td><strong>Tome divin de Londor</strong></td>
+<td>22</td>
+</tr>
+<tr>
+<td><strong>Tome divin de Lothric</strong></td>
+<td>12, 22</td>
+</tr>
+<tr>
+<td><strong>Tome divin des profondeurs</strong></td>
+<td>05, 22</td>
+</tr>
+<tr>
+<td><strong>Torche de Compagnon</strong></td>
+<td>26</td>
+</tr>
+<tr>
+<td><strong>Touffe de lichen bleu clair</strong></td>
+<td>09, 25</td>
+</tr>
+<tr>
+<td><strong>Touffes de lichen bleu clair</strong></td>
+<td>25, 26</td>
+</tr>
+<tr>
+<td><strong>Touffes de lichen fleuri</strong></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Touffes de lichen rouge</strong></td>
+<td>07</td>
+</tr>
+<tr>
+<td><strong>Touffes de lichen violet</strong></td>
+<td>06, 27</td>
+</tr>
+<tr>
+<td><strong>Trait revigorant</strong></td>
+<td>27</td>
+</tr>
+<tr>
+<td><strong>Trois Marques sombres</strong></td>
+<td>19</td>
+</tr>
+<tr>
+<td><strong>Uchigatana</strong></td>
+<td>01, 24</td>
+</tr>
+<tr>
+<td><strong>Ultra espadon de fumerolle</strong></td>
+<td>08</td>
+</tr>
+<tr>
+<td><strong>Urnes foudroyantes</strong></td>
+<td>12, 16, 27</td>
+</tr>
+<tr>
+<td><strong>Vertelame de sang de loup</strong></td>
+<td>06</td>
+</tr>
+<tr>
+<td><strong>Voie bleue</strong></td>
+<td>20</td>
+</tr>
+<tr>
+<td><strong>Yeux d'une Gardienne du Feu</strong></td>
+<td>14, 17</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="check-list-finale-de-completion" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list finale de complétion</span></h2>
+<h3 id="progression-principale">Progression principale</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Iudex Gundyr</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> Vordt de la Vallée boréale vaincu</li>
+<li class="tache"><input type="checkbox"> <strong>Arbre géant maudit</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> <strong>Sage de cristal</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> <strong>Diacres des profondeurs</strong> vaincus</li>
+<li class="tache"><input type="checkbox"> <strong>Veilleurs des Abysses</strong> vaincus <em>(Seigneur des Cendres)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Chef suprême Wolnir</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> Danseuse de la Vallée boréale vaincue</li>
+<li class="tache"><input type="checkbox"> <strong>Grand maître Sulyvahn</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> <strong>Aldrich le Dévoreur des dieux</strong> vaincu <em>(Seigneur des Cendres)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Yhorm le Géant</strong> vaincu <em>(Seigneur des Cendres)</em></li>
+<li class="tache"><input type="checkbox"> Armure de Tueur de Dragons vaincue</li>
+<li class="tache"><input type="checkbox"> Lothric Prince cadet et Lorian Prince aîné vaincus <em>(Seigneur des Cendres)</em></li>
+<li class="tache"><input type="checkbox"> <strong>L'Âme des Cendres</strong> vaincue</li>
+</ul>
+<h3 id="boss-facultatifs">Boss facultatifs</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Vieux Roi démoniaque</strong> <em>(Lac incandescent)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Vouivre ancienne</strong> <em>(Pic du Dragon ancien)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Roi sans nom</strong> <em>(Pic du Dragon ancien)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Oceiros le Roi illuminé</strong> <em>(Jardin du Roi illuminé)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Gundyr le Champion</strong> <em>(Sépultures oubliées)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Garde-stèle du Champion</strong> <em>(DLC Ariandel)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Père Ariandel et Friede</strong> <em>(DLC Ariandel)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Prince démoniaque</strong> <em>(DLC The Ringed City)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Aube Lance de l'église</strong> <em>(DLC The Ringed City)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Midir fléau des ténèbres</strong> <em>(DLC The Ringed City)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Gael le chevalier-esclave</strong> <em>(DLC The Ringed City)</em></li>
+</ul>
+<h3 id="collectibles-chiffres">Collectibles chiffrés</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>11 Fragments d'Estus</strong> trouvés</li>
+<li class="tache"><input type="checkbox"> <strong>10 Fragments d'os de mort-vivant</strong></li>
+<li class="tache"><input type="checkbox"> <strong>8 lots de Cendres</strong> remis à la Servante du Sanctuaire</li>
+<li class="tache"><input type="checkbox"> <strong>4 Tomes divins</strong> remis au bon maître</li>
+<li class="tache"><input type="checkbox"> <strong>5 Tomes de pyromancie</strong> remis au bon maître</li>
+<li class="tache"><input type="checkbox"> <strong>4 Parchemins</strong> remis à <strong>Orbeck</strong></li>
+<li class="tache"><input type="checkbox"> <strong>4 Anthracites</strong> remis à <strong>André</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Émote Voie du Dragon</strong> obtenue</li>
+</ul>
+<h3 id="serments">Serments</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Voie bleue</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Sentinelles bleues</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Guetteurs de Farron</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Chevaliers Solaires</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Thanatophiles</strong> <em>(avant l'Arbre géant maudit, ou par Sirris)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Phalanges de Rosaria</strong> <em>(incompatible avec la quête de Sirris)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Fidèles d'Aldrich</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Lames de la lune noire</strong></li>
+</ul>
+<h3 id="quetes-de-pnj-menees-au-bout">Quêtes de PNJ menées au bout</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Faucon-du-Breuil</strong> <em>(duel remporté, Bouclier récupéré)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Greirat</strong> <em>(deux expéditions, puis on le retient)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Siegward de Catarina</strong> <em>(jusqu'à Yhorm)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Anri d'Astora</strong> <em>(mariage ou aide contre Aldrich, selon la fin visée)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Sirris des Terres obscures</strong> <em>(jusqu'à Hodrick)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Yoel puis Yuria de Londor</strong> <em>(les 5 Marques sombres)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Irina de Carim</strong> <em>(sans tome sombre, pour sa bonne fin)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Orbeck de Vinheim</strong> <em>(quatre parchemins, puis son cadeau)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Cornyx du Grand marais</strong> <em>(tous ses tomes)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Karla</strong> <em>(libérée du Donjon)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Leonhard</strong> <em>(jusqu'au duel)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Ludleth de Courland</strong> <em>(toutes les transpositions utiles)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Lapp</strong> <em>(DLC, jusqu'à sa mémoire retrouvée)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Snuggly le corbeau</strong> <em>(tous les échanges)</em></li>
+</ul>
+<h3 id="les-trois-fins-2">Les trois fins</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Fin de la Fin du feu</strong> <em>(allumer le feu)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Fin de la Fin des Braises</strong> <em>(invoquer la Gardienne du Feu)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Fin de l'Usurpation du feu</strong> <em>(préparée dès les Catacombes de Carthus)</em></li>
+</ul>
+<h3 id="les-deux-dlc">Les deux DLC</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les Cendres d'Ariandel</strong> terminé <em>(parties 25 et 26)</em></li>
+<li class="tache"><input type="checkbox"> <strong>The Ringed City</strong> terminé <em>(parties 27 à 29)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Monument purificateur</strong> utilisé ou volontairement laissé <em>(incompatible avec l'Usurpation)</em></li>
+</ul>
+<h2 id="le-guide-en-une-page" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Le guide en une page</span></h2>
+<p><strong>L'ordre conseillé, si tu veux tout</strong> :</p>
+<ol>
+<li><strong>01 → 06</strong> : le Cimetière, le Grand mur, le Camp, la Route, la Cathédrale, le Bastion. C'est là que se recrutent presque tous les PNJ.</li>
+<li class="alerte">⚠️ <strong>Avant les Catacombes</strong> : règle les étapes de la fin de l'Usurpation (partie 19) et le <strong>Serment des Thanatophiles</strong> (partie 20).</li>
+<li><strong>08 avant 07</strong> : <strong>tue Horace au Lac incandescent avant Wolnir</strong> si tu veux la fin cachée.</li>
+<li><strong>07 → 11</strong> : Carthus, Irithyll, le Donjon, la Capitale, Anor Londo. <strong>Fais revenir Greirat avant le Donjon.</strong></li>
+<li><strong>13, 14, 16</strong> : les trois zones facultatives, dans cet ordre de difficulté croissante.</li>
+<li><strong>25 → 29</strong> : les deux DLC, avec un personnage autour du <strong>niveau 100</strong> minimum.</li>
+<li><strong>12 → 15 → 17</strong> : le Château, les Grandes archives, puis le Kiln. <strong>C'est la dernière ligne droite.</strong></li>
+</ol>
+<h2 id="conseils-et-pieges-31" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li>Fais un tour des parties 18, 19 et 20 avant de foncer. L'ordre des zones décide de la moitié des quêtes de ce jeu.</li>
+<li><strong>Garde une sauvegarde mentale des trois fins.</strong> Elles ne se cumulent pas dans une même partie : il faut deux passages au minimum, trois pour tout voir sans New Game +3.</li>
+<li><strong>Les DLC se jouent avant le Kiln</strong>, pas après : une fois L'Âme des Cendres battue, tu passes en New Game +.</li>
+<li>Les âmes de boss sont des objets uniques. Une âme forgée n'est plus disponible pour une autre arme : il faut le <strong>New Game +2</strong> pour tout obtenir dans une même sauvegarde.</li>
+<li><strong>Frappe les murs suspects partout.</strong> Sept objets majeurs de ce guide sont derrière un mur illusoire.</li>
+</ul>
+<h2 id="alertes-31" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ Battre L'Âme des Cendres lance le New Game + : finis tout ce qui te reste avant.</li>
+<li class="alerte">⚠️ Les trois fins sont exclusives dans une partie donnée.</li>
+<li class="alerte">⚠️ Faire soigner les Marques sombres ou utiliser le Monument purificateur annule la fin de l'Usurpation.</li>
+<li class="alerte">⚠️ Rejoindre les Phalanges de Rosaria ferme la quête de Sirris, le Serment des Thanatophiles et les Lames de la lune noire.</li>
+<li class="alerte manquable">⏳ <strong>Manquables définitifs les plus fréquents</strong> : le <strong>Tome de pyromancie du Gardien</strong> (avant Wolnir), la <strong>Clé du geôlier</strong> (Karla et Siegward), le <strong>Serment des Thanatophiles</strong> (avant l'Arbre géant maudit).</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="29-dlc-the-ringed-city-filianore-midir-et-gael.html" rel="prev"><small>← Partie précédente</small><b>DLC The Ringed City : Filianore, Midir et Gael</b></a><a class="suiv" href="sources-dark-souls-iii.html" rel="next"><small>Partie suivante →</small><b>Sources — Dark Souls III</b></a><a class="tout" href="dark-souls-3.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Dark Souls III · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

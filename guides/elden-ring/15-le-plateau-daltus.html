@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le Plateau d&#x27;Altus – Guide Elden Ring</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Elden Ring, Le Plateau d&#x27;Altus : Accès : le Grand ascenseur de Dectus (deux moitiés du Médaillon) ou les Ruines des falaises. Attention : les Catacombes…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/elden-ring/15-le-plateau-daltus.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Le Plateau d&#x27;Altus · Guide Elden Ring">
+<meta property="og:description" content="Elden Ring, Le Plateau d&#x27;Altus : Accès : le Grand ascenseur de Dectus (deux moitiés du Médaillon) ou les Ruines des falaises. Attention : les Catacombes…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/elden-ring/15-le-plateau-daltus.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Elden Ring", "item": "https://bloundsk.github.io/guides-jeux-video/guides/elden-ring/"}, {"@type": "ListItem", "position": 3, "name": "Le Plateau d'Altus", "item": "https://bloundsk.github.io/guides-jeux-video/guides/elden-ring/15-le-plateau-daltus.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="elden-ring" class="compact" data-partie="15-le-plateau-daltus"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Elden Ring</a><span aria-hidden="true">›</span><span>Partie 15</span></nav>
+<p class="gjv-jeu">Elden Ring : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Elden <em>Ring</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction-bienvenue-dans-lentre-terre.html"><span class="num">00</span><span class="libelle">Introduction : bienvenue dans l&#x27;Entre-Terre</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-premiers-pas-et-necrolimbe-ouest.html"><span class="num">01</span><span class="libelle">Premiers pas et Nécrolimbe ouest</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-necrolimbe-est-lac-dagheel-et-bois-brumeux.html"><span class="num">02</span><span class="libelle">Nécrolimbe est, lac d&#x27;Agheel et Bois brumeux</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-la-peninsule-larmoyante.html"><span class="num">03</span><span class="libelle">La Péninsule larmoyante</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-chateau-de-voilorage-et-godrick-le-greffe.html"><span class="num">04</span><span class="libelle">Château de Voilorage et Godrick le greffé</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-liurnia-sud-et-ouest.html"><span class="num">05</span><span class="libelle">Liurnia sud et ouest</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-liurnia-est-grottes-cristallines-et-chaussee-martiale.html"><span class="num">06</span><span class="libelle">Liurnia est, grottes cristallines et Chaussée martiale</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-lacademie-de-raya-lucaria-et-rennala.html"><span class="num">07</span><span class="libelle">L&#x27;Académie de Raya Lucaria et Rennala</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-liurnia-nord-manoir-de-caria-et-lautel-lunaire.html"><span class="num">08</span><span class="libelle">Liurnia nord, Manoir de Caria et l&#x27;Autel lunaire</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-caelid-ouest-et-le-marais-divoine.html"><span class="num">09</span><span class="libelle">Caelid ouest et le Marais d&#x27;Ivoine</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-le-chateau-du-lion-rouge-et-radahn.html"><span class="num">10</span><span class="libelle">Le Château du Lion Rouge et Radahn</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="11-caelid-est-et-le-tertre-draconique.html"><span class="num">11</span><span class="libelle">Caelid est et le Tertre draconique</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-la-riviere-siofra-et-nokron-la-ville-eternelle.html"><span class="num">12</span><span class="libelle">La rivière Siofra et Nokron, la ville éternelle</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="13-la-riviere-ainsel-nokstella-et-le-lac-putrefie.html"><span class="num">13</span><span class="libelle">La rivière Ainsel, Nokstella et le Lac putréfié</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="14-les-profondeurs-de-fonderacine.html"><span class="num">14</span><span class="libelle">Les Profondeurs de Fonderacine</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="#15-le-plateau-daltus"><span class="num">15</span><span class="libelle">Le Plateau d&#x27;Altus</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="16-le-mont-gelmir.html"><span class="num">16</span><span class="libelle">Le Mont Gelmir</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="17-le-manoir-du-volcan-et-rykard.html"><span class="num">17</span><span class="libelle">Le Manoir du volcan et Rykard</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="18-le-mur-exterieur-de-la-capitale.html"><span class="num">18</span><span class="libelle">Le Mur extérieur de la capitale</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="19-leyndell-capitale-royale-et-morgott.html"><span class="num">19</span><span class="libelle">Leyndell, capitale royale, et Morgott</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="20-le-palais-mohgwyn-et-mohg.html"><span class="num">20</span><span class="libelle">Le Palais Mohgwyn et Mohg</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="21-les-cimes-des-geants.html"><span class="num">21</span><span class="libelle">Les Cimes des Géants</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="22-les-champs-enneiges-consacres.html"><span class="num">22</span><span class="libelle">Les Champs enneigés consacrés</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="23-larbre-sacre-de-miquella.html"><span class="num">23</span><span class="libelle">L&#x27;Arbre-Sacré de Miquella</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="24-elphael-corset-de-larbre-sacre-et-malenia.html"><span class="num">24</span><span class="libelle">Elphael, corset de l&#x27;Arbre-Sacré, et Malenia</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="25-les-ruines-de-farum-azula.html"><span class="num">25</span><span class="libelle">Les Ruines de Farum Azula</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="26-leyndell-capitale-des-cendres.html"><span class="num">26</span><span class="libelle">Leyndell, capitale des cendres</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="27-les-fins-et-le-new-game.html"><span class="num">27</span><span class="libelle">Les fins et le New Game +</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="28-quetes-des-pnj-1-ranni-et-son-cercle.html"><span class="num">28</span><span class="libelle">Quêtes des PNJ (1) : Ranni et son cercle</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="29-quetes-des-pnj-2-toutes-les-autres.html"><span class="num">29</span><span class="libelle">Quêtes des PNJ (2) : toutes les autres</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="30-enigmes-tours-divines-tours-de-sorciers-beffrois-mausolees-et-tableaux.html"><span class="num">30</span><span class="libelle">Énigmes : tours divines, tours de sorciers, beffrois, mausolées et tableaux</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="31-collectibles-graines-larmes-cartes-memolithes-et-le-reste.html"><span class="num">31</span><span class="libelle">Collectibles : graines, larmes, cartes, mémolithes et le reste</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="32-armes-talismans-cendres-et-sorts-essentiels.html"><span class="num">32</span><span class="libelle">Armes, talismans, cendres et sorts essentiels</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="33-extension-acceder-au-royaume-des-ombres-et-comprendre-ses-regles.html"><span class="num">33</span><span class="libelle">Extension : accéder au Royaume des Ombres et comprendre ses règles</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="34-dlc-la-plaine-sepulcrale-et-belurat.html"><span class="num">34</span><span class="libelle">DLC : la Plaine sépulcrale et Belurat</span><span class="compte"></span></a></li>
+<li data-section="section-36"><a href="35-dlc-le-chateau-densis-et-la-riviere-dellac.html"><span class="num">35</span><span class="libelle">DLC : le Château d&#x27;Ensis et la Rivière d&#x27;Ellac</span><span class="compte"></span></a></li>
+<li data-section="section-37"><a href="36-dlc-laltus-occulte.html"><span class="num">36</span><span class="libelle">DLC : l&#x27;Altus occulte</span><span class="compte"></span></a></li>
+<li data-section="section-38"><a href="37-dlc-la-cote-sud-la-fosse-au-dragon-et-le-pic-dechiquete.html"><span class="num">37</span><span class="libelle">DLC : la Côte sud, la Fosse au dragon et le Pic déchiqueté</span><span class="compte"></span></a></li>
+<li data-section="section-39"><a href="38-dlc-le-chateau-noir.html"><span class="num">38</span><span class="libelle">DLC : le Château noir</span><span class="compte"></span></a></li>
+<li data-section="section-40"><a href="39-dlc-le-panorama-occulte-et-les-ruines-de-rauh.html"><span class="num">39</span><span class="libelle">DLC : le Panorama occulte et les Ruines de Rauh</span><span class="compte"></span></a></li>
+<li data-section="section-41"><a href="40-dlc-les-abysses-enir-ilim-et-le-boss-final.html"><span class="num">40</span><span class="libelle">DLC : les Abysses, Enir-Ilim et le boss final</span><span class="compte"></span></a></li>
+<li data-section="section-42"><a href="41-dlc-les-quetes-des-pnj-du-royaume-des-ombres.html"><span class="num">41</span><span class="libelle">DLC : les quêtes des PNJ du Royaume des Ombres</span><span class="compte"></span></a></li>
+<li data-section="section-43"><a href="42-dlc-enigmes-collectibles-et-equipement-du-royaume-des-ombres.html"><span class="num">42</span><span class="libelle">DLC : énigmes, collectibles et équipement du Royaume des Ombres</span><span class="compte"></span></a></li>
+<li data-section="section-44"><a href="99-annexes-manquables-index-et-check-list-finale.html"><span class="num">99</span><span class="libelle">Annexes : manquables, index et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-45"><a href="sources-elden-ring.html"><span class="num">✦</span><span class="libelle">Sources — Elden Ring</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-16">
+<header class="tete-section">
+<p class="eyebrow">Partie 15</p>
+<h1 id="15-le-plateau-daltus">Le Plateau d&#x27;Altus</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-16"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-16">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Accès</strong> : le Grand ascenseur de Dectus (deux moitiés du Médaillon) ou les Ruines des falaises.</li>
+<li><strong>Attention</strong> : les Catacombes de Wyndham enchaînent cinq pièges.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Monter sur le <strong>Plateau d'Altus</strong>, la région qui mène à la capitale. Deux routes y conduisent : le <strong>Grand ascenseur de Dectus</strong> si tu as les <strong>deux moitiés du Médaillon</strong>, ou les <strong>Ruines des falaises</strong> (partie 08). Sur place : <strong>quatre Graines dorées</strong>, la <strong>carte du Plateau d'Altus</strong>, le <strong>Bastiombre</strong> et son <strong>Élemer du Roncier</strong>, les <strong>Cavernes du sage</strong> et leurs sept murs illusoires, le <strong>Village aux moulins</strong>, et les <strong>deux Sentinelles de l'Arbre</strong> qui gardent la capitale.</p>
+<p><strong>Niveau conseillé</strong> : 60 à 75, arme <strong>+14 à +18</strong>.</p>
+<h2 id="itineraire-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.millenium.org/guide/394211.html">Plateau d'Altus</a> — soluce illustrée sur Millenium, en français.</p>
+<ol>
+<li><strong>Grand ascenseur de Dectus</strong> (Médaillon complet) ou <strong>Ruines des falaises</strong> → <strong>Cercueils abandonnés</strong>.</li>
+<li><strong>Ruines des Parfumeurs</strong>, <strong>Catacombes des aberrations</strong>.</li>
+<li><strong>Rivière des eaux ignées</strong> et le <strong>Nocher diaphane</strong> du lac.</li>
+<li><strong>Catacombes de Wyndham</strong>, puis les <strong>Cavernes du sage</strong>.</li>
+<li><strong>Colline face à l'Arbre-Monde</strong> : le camp aux balistes, la <strong>carte</strong>, la Croisée de la chaussée d'Altus.</li>
+<li><strong>Les Sentinelles de l'Arbre</strong>, à l'entrée du Mur extérieur de la capitale.</li>
+<li><strong>Village aux moulins (Dominula)</strong>, les <strong>pâturages</strong>, les <strong>Ruines Grouille-Sang</strong>, le <strong>Pont de l'Iniquité</strong>.</li>
+<li><strong>Vieille galerie d'Altus</strong>, <strong>Bastiombre</strong>, <strong>Galerie d'Altus</strong>.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="arriver-sur-le-plateau">Arriver sur le plateau</h3>
+<ol>
+<li>Le Grand ascenseur de Dectus est la route royale : il faut les deux moitiés du Médaillon de Dectus — <strong>gauche au Fort Haight</strong> (partie 02) et <strong>droite au Fort Faroth</strong> (partie 11).</li>
+<li><strong>Sans le médaillon</strong>, la seule route est les Ruines des falaises au nord de Liurnia, jusqu'au Dragon du magma Makar (partie 08). L'ascenseur d'après le boss débouche sur le plateau.</li>
+</ol>
+<h3 id="cercueils-abandonnes-et-les-ruines-des-parfumeurs">Cercueils abandonnés et les Ruines des Parfumeurs</h3>
+<ol start="3">
+<li><strong>Dans la zone des Cercueils abandonnés</strong> : le <strong>Masque de suzerain</strong>, la <strong>Robe de suzerain</strong> et <strong class="objet">5 Fulminias</strong>.</li>
+<li>À l'est, un dragon très puissant. Enlève-lui un quart de sa barre de vie et il s'enfuit : tu peux alors continuer au nord vers la grâce de la Colline face à l'Arbre-Monde.</li>
+<li>De l'autre côté, vers le lac, un scarabée lâche les Cendres de guerre : Ordre sacré.</li>
+<li><strong>Les Ruines des Parfumeurs</strong> : un Paria à deux hachoirs qui crache du feu.
+<ul>
+<li>Le battre donne <strong>son set</strong>.</li>
+<li>Puis : <strong class="objet">2 Flacons de parfum</strong>, <strong class="objet">Manuel de Parfumeur [1]</strong>, <strong>4 Mousses des cavernes bourgeonnantes</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="catacombes-des-aberrations">Catacombes des aberrations</h3>
+<ol start="7">
+<li>Une statue en face indique le chemin. <strong>2 Clé-lames de pierre</strong> pour entrer.</li>
+<li class="alerte">⚠️ Attention à l'aberration à droite dans le premier couloir. Prends les deux aberrations à la hache par derrière, puis descends.</li>
+<li>Dans la salle au muguet, un gros troll sur le côté.</li>
+<li class="alerte manquable">⏳ <strong>Le levier</strong> : reviens un peu avant et saute dans l'eau (<strong>beaucoup d'ennemis</strong>).
+<ul>
+<li>Sur un cadavre : <strong>Cendres d'aberration ailée</strong></li>
+<li><strong>Actionne le levier</strong>.</li>
+<li>Sur la gauche avant le boss : <strong>Arc runique</strong> et <strong>Caboche causante : Pardon</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167398">carte</a>)</li>
+</ul>
+</li>
+<li>Boss : Parfumeuse Tricia &amp; Chimère léonine — un des duos les plus punitifs des donjons mineurs.
+<ul>
+<li><strong>Option 1 — tuer la Parfumeuse d'abord</strong> : elle a très peu de vie, et un coup dans le dos lui enlève la moitié de sa barre. Mais la chimère te met la pression pendant ce temps : ne traîne pas.</li>
+<li><strong>Option 2 — ignorer la Parfumeuse</strong> et se concentrer sur la chimère, en sachant qu'elle sera renforcée par les parfums.</li>
+<li>Dans les deux cas, les compétences qui touchent les deux (attaques de zone) sont ce qui fait basculer le combat : la protection de la Parfumeuse se brise avant qu'elle prenne de vrais dégâts.</li>
+<li><strong>Récompense</strong> : Cendres de la Parfumeuse Tricia.</li>
+</ul>
+</li>
+</ol>
+<h3 id="le-lac-et-les-catacombes-de-wyndham">Le lac et les Catacombes de Wyndham</h3>
+<ol start="12">
+<li>Depuis la grâce de la Rivière des eaux ignées, pars au sud : <strong>5 Fragments d'os humains</strong> et une <strong>Rune d'habitant des confins [2]</strong> au milieu des ruines du lac.</li>
+<li><strong>Boss : Nocher diaphane</strong>, au centre du lac — c'est le même qu'en Nécrolimbe, mais il invoque en plus un très grand squelette qui sort de l'eau.
+<ul>
+<li><strong>Reste à cheval</strong> : la mobilité résout le combat, et tu tiens le squelette à distance.</li>
+<li><strong>Récompenses</strong> : une <strong class="objet">Mortefleur</strong> et les Cendres de Semonce des os.</li>
+</ul>
+</li>
+<li><strong>Un peu au sud, une statue</strong> indique un chemin vers le nord, en direction de la montagne : <strong class="objet">4 Plumes de faucon des tempêtes</strong> en route, et un endroit à <strong>2 Clé-lames de pierre</strong>.</li>
+<li><strong>Catacombes de Wyndham</strong>, au bout de la montée :
+<ul>
+<li><strong>Piège au sol à droite</strong> de l'entrée, puis l'ascenseur.</li>
+<li>En bas, le hachoir et deux diablotins qui envoient de la foudre dans l'eau : la combinaison tue très vite.</li>
+<li><strong>Salle suivante : regarde le plafond</strong> pour les blobs, et <strong>piège au centre</strong> — que tu peux utiliser pour tuer les zombies.</li>
+<li>Un chevalier à l'épée électrique, puis l'échelle (piège et diablotin au plafond), et un brouillard à <strong>2 Clé-lames</strong>.</li>
+<li><strong>Le piège le plus vicieux du donjon</strong> : à gauche, <strong>regarde le plafond</strong> — il y a des pics, et le sol monte pour t'y écraser, pendant que des diablotins te lancent des grenades. Traverse en courant sans t'arrêter, méfie-toi du diablotin en embuscade à droite, et <strong>fonce sur le levier</strong>.</li>
+<li>Boss : Cerbère funèbre de l'Arbre-Monde — <strong>de type électrique</strong> : adapte tes infusions.
+<ul>
+<li><strong>Ses coups sont lents et lisibles</strong> : esquive ou bouclier.</li>
+<li class="alerte">⚠️ L'enchaînement de trois attaques sautées tue en un coup et <strong>ne se bloque pas</strong> : il faut esquiver les trois.</li>
+<li><strong>Ne te soigne pas n'importe quand</strong> : il punit avec des coups à retardement et des projectiles.</li>
+<li><strong>Récompense</strong> : la Perle de cueilleur de muguet (1), à donner aux Servantes jumelles.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="cavernes-du-sage-sept-murs-illusoires">Cavernes du sage : sept murs illusoires</h3>
+<ol start="16">
+<li>Depuis les Catacombes de Wyndham, redescends au sud. L'entrée est après le marais empoisonné aux fleurs.</li>
+<li>Ce donjon est une chasse aux murs illusoires — frappe le mur à chaque fois :
+<ul>
+<li><strong>Dans le couloir</strong>, un premier mur.</li>
+<li>Au niveau de la cascade, un second : <strong>deux coffres</strong> avec des <strong>Cendres de guerre perdues</strong> et <strong>5 Boulettes revigorantes</strong>.</li>
+<li><strong>Descends pour 2 Runes dorées (5)</strong>, puis <strong>le mur en face</strong> : <strong>quatre coffres</strong> avec 5 Pattes de volaille en saumure argentée, la <strong>Capuche noire</strong>, le <strong>Bouclier du candélarbre</strong> et un Papillon naissant.</li>
+<li><strong>Salle suivante</strong>, un mur gardé par un <strong>squelette à la lance</strong> : un coffre avec une <strong>Clé-lame de pierre</strong>.</li>
+<li><strong>Continue à droite</strong> : des coffres avec <strong>4 Graisses de plaie draconique</strong>, <strong>10 Grandes flèches dorées</strong> et les <strong>Serres de rapace</strong>.</li>
+<li>Dehors, saute sur la plateforme de gauche et continue à gauche : un mur révèle l'armure des Plumes noires de rapace et le <strong>Masque squelettique</strong>.</li>
+<li><strong>En face, un dernier mur</strong> ouvre sur le boss.</li>
+</ul>
+</li>
+<li><strong>Boss : Garryth le Nécromancien</strong> — Récompense : les <strong class="objet">Têtes du clan</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=166676">carte</a>).</li>
+<li><strong>Ressors et continue de descendre</strong> pour le second boss du donjon.</li>
+<li>Boss : Assassin des couteaux noirs — regarde le sol pour suivre ses déplacements quand il est invisible. Si tu le touches, il réapparaît un instant : enchaîne pour ne pas le laisser repartir.
+<ul>
+<li><strong>Récompense</strong> : le <strong>Talisman Voile occultant</strong> — il <strong>te rend beaucoup plus difficile à repérer</strong> par les ennemis, très utile en infiltration.</li>
+</ul>
+</li>
+</ol>
+<h3 id="la-colline-face-a-larbre-monde-et-la-carte">La Colline face à l'Arbre-Monde et la carte</h3>
+<ol start="21">
+<li>Retourne à la statue et descends vers le camp : grâce de la Colline face à l'Arbre-Monde, et <strong>une Graine dorée</strong> sur place.</li>
+<li>Dans les Ruines de Lux, juste à côté : un Foie séché anti-foudre.</li>
+<li>Dès que tu entres dans le camp, tu es bombardé par des balistes. Fais le tour pour t'approcher des balistes sans être repéré, puis nettoie les soldats.
+<ul>
+<li><strong>Butin du camp</strong> : une <strong>Pierre calorifère</strong>, une Graisse électrifiée, le <strong>Talisman de pavois</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167662">carte</a>) dans le coffre de la charrue à l'entrée, et l'<strong class="objet">Espadon doré de troll</strong> dans l'autre.</li>
+</ul>
+</li>
+<li><strong>Au nord-ouest du camp</strong>, des feux de camp avec une Viande de tortue, et un peu plus loin la carte du Plateau d'Altus.</li>
+<li><strong>Redescends le chemin</strong> : <strong>une seconde Graine dorée</strong>, puis le <strong class="objet">Flacon de parfum</strong> gardé par les trolls.</li>
+<li>Grâce de la Croisée de la chaussée d'Altus, au pied du château. <strong>3 Vieux doigts</strong> juste au nord, et un <strong>Sang de bête</strong> dans le camp à droite de l'entrée.</li>
+</ol>
+<h3 id="boss-les-sentinelles-de-larbre">Boss : Les Sentinelles de l'Arbre</h3>
+<ol start="27">
+<li><strong>Deux Sentinelles de l'Arbre en même temps</strong>, avec en plus <strong>tous les chevaliers de l'escalier</strong> si tu attaques de front. C'est l'un des pires combats du jeu si on le prend de face.</li>
+<li><strong>L'astuce qui règle le combat</strong> :
+<ul>
+<li>Passe par la gauche et remonte la plaine jusqu'à la porte.</li>
+<li><strong>Place-toi dans l'encoche</strong> : tu peux verrouiller les sentinelles sans qu'elles te voient, et elles ne peuvent pas venir jusque-là.</li>
+<li>Elles vont s'acharner à essayer de passer et rester coincées dans le mur. Elles peuvent encore te toucher avec leur arme : tu n'es pas totalement à l'abri, mais elles ne peuvent pas t'attaquer toutes les deux à la fois.</li>
+<li>Avec une attaque de zone, tu les touches toutes les deux en même temps.</li>
+</ul>
+</li>
+<li><strong>Récompenses</strong> : le bouclier <strong>Pavois de l'Arbre-Monde</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=169445">carte</a>) et une <strong>Rune ancestrale [2]</strong>.</li>
+<li><strong>Le château est maintenant ouvert</strong> : c'est le Mur extérieur de la capitale (partie 18).</li>
+</ol>
+<h3 id="village-aux-moulins-et-les-paturages">Village aux moulins et les pâturages</h3>
+<ol start="31">
+<li>Depuis le Champ de bataille du mur extérieur, pars à l'ouest. À la sortie du mur : une <strong>Rune d'habitant des plaines [4]</strong>, et juste à côté un scarabée qui lâche les <strong>Cendres de guerre : Entaille foudroyante</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167995">carte</a>).</li>
+<li>La Tour de guet de la chaussée, au nord : le <strong class="objet">Grand Arc</strong> et <strong class="objet">20 Grandes flèches</strong> au sommet, plus <strong>6 Flèches dorées</strong> et <strong>10 Os imposants de bête</strong> dehors.</li>
+<li><strong>Dominula, village aux moulins</strong> : un <strong>Arc runique</strong> dans une maison près des danseuses, une <strong>Rune d'habitant des confins [4]</strong>, un Foie séché anti-sacré gardé par deux chiens, <strong class="objet">3 Plumes de faucon des tempêtes</strong> sur un balcon.</li>
+<li><strong>Boss : Apôtre sanctechair</strong>, tout en haut du village —
+<ul>
+<li><strong>Première partie classique</strong>, mais son arme a une portée énorme et il lance des boules maudites : la distance ne te protège pas.</li>
+<li class="alerte">⚠️ À un tiers de vie perdu, il devient élastique et beaucoup plus dangereux. Quand il fait tourner son sceptre, éloigne-toi : il fonce.</li>
+<li><strong>Paradoxalement, le corps-à-corps devient le bon choix</strong> en seconde phase : ses attaques longue portée sont pires.</li>
+<li><strong>Récompenses</strong> : l'<strong class="objet">Écorcheur sanctechair</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167224">carte</a>) et la sorcellerie <strong class="objet">Fouet de flammes noires</strong>.</li>
+</ul>
+</li>
+<li>Grâce des Hauteurs aux moulins, puis à l'ouest : le Pâturage du Village aux moulins (<strong class="objet">10 Ravioles de viande crue</strong>), le Pâturage oriental (<strong>set du noble</strong>), le Pâturage occidental (<strong class="objet">Cendres de rats géants</strong>).</li>
+<li><strong>Sur le pont au sud</strong> : un PNJ et une <strong>Graisse de plaie draconique</strong> en face. Le chemin sous le pont mène à la grâce du Chemin détourné de l'iniquité.</li>
+<li>Une charrette tirée par deux géants, escortée d'une Tête de citrouille : le coffre contient le <strong class="objet">Gourdin hérissé</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167657">carte</a>).</li>
+<li><strong>Les Ruines Grouille-Sang</strong>, au même endroit : une <strong>Rune d'habitant des confins [4]</strong> et un boss.</li>
+<li><strong>Boss : Noble sanglant</strong> — c'est le saignement qui tue, pas lui. Ne te laisse pas enchaîner et le combat est simple. Derrière lui : la Spirale sanglante.</li>
+<li><strong>Traverse le pont</strong> : grâce du Pont de l'Iniquité, puis le champ de bataille.</li>
+<li>Un PNJ hostile t'envahit en route. Tue les chiens juste avant, sinon c'est ingérable. Elle lâche le <strong class="objet">Couteau de boucher</strong>, et sa cabane contient Vœu de l'Arbre-Monde.</li>
+<li><strong>Sur le pont</strong> : une <strong>Clé-lame de pierre</strong>.</li>
+<li>Reviens aux deux ravisseuses et prends l'échelle contre la falaise : grâce du Premier camp du Mont Gelmir (partie 16). Une Grande pierre de forge sombre dorée un peu plus loin.</li>
+</ol>
+<h3 id="vieille-galerie-daltus-bastiombre-et-galerie-daltus">Vieille galerie d'Altus, Bastiombre et Galerie d'Altus</h3>
+<ol start="44">
+<li><strong>Vieille galerie d'Altus</strong> : sous le Pont de l'Inquisition, avec 2 Clé-lames de pierre.
+<ul>
+<li><strong>6 Amas de pierres explosives</strong> à l'entrée, puis l'ascenseur et la grâce.</li>
+<li><strong>Monte d'abord à l'échelle</strong> : les chiens de la cabane gardent le <strong>Talisman de dragon de foudre +1</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=168762">carte</a>), et une <strong>Boulette cicatrisante</strong> est juste à côté.</li>
+<li><strong>Un étage plus bas, au bout</strong> : une <strong>Rune d'habitant des plaines [1]</strong>.</li>
+<li class="alerte">⚠️ En bas, tue d'abord les deux chiens de la cabane avant de t'occuper des deux chevaliers et du soldat. <strong class="objet">Marteau de troll</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=168763">carte</a>) dans la cabane, <strong>Grande pierre de forge sombre solide</strong>, et un chemin à matériaux derrière la cabane.</li>
+<li><strong>Boss : Troll fouisseur</strong> — Récompense : le <strong class="objet">Grand gourdin</strong>.</li>
+</ul>
+</li>
+<li><strong>Bastiombre</strong> : au nord en ressortant de la Vieille galerie, grâce des Remparts du Bastiombre.
+<ul>
+<li><strong>Sur les remparts</strong> : <strong>4 Vipérias</strong>. <strong>Dans le marais extérieur</strong> : une Graisse empoisonnée et une <strong>Rune d'habitant des confins [2]</strong>. Derrière le château, près d'un vase brisé : des <strong>Éclats de lumière stellaire</strong>.</li>
+<li><strong>À l'ouest du château, un PNJ hostile</strong> : il lâche la <strong class="objet">Rapière myrmicéenne</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=166781">carte</a>), le <strong>Masque des Tourbier</strong> et la <strong class="objet">Robe des Tourbier</strong>. <strong>Bats aussi le géant</strong> et prends la <strong>Pierre de forge dorée</strong> un peu plus loin.</li>
+<li><strong>Retour sur les remparts</strong> : coup dans le dos sur le patrouilleur, puis <strong>descends par la pierre</strong> dans la petite zone au marais et aux limaces : Éclats de verre et <strong>5 Fléchettes empoisonnées</strong>. La cabane voisine contient le Tableau : Chant du champion.</li>
+<li><strong>Monte les escaliers</strong> pour une <strong>Rune d'habitant des plaines [1]</strong> (<strong>zombie en embuscade</strong>).</li>
+<li><strong>Dans le marais</strong> : une Grande pierre de forge solide dans la cabane en bois. Tout à l'est, un monstre apparaît quand tu prends l'objet, puis une Pierre de forge sombre dorée.</li>
+<li class="alerte manquable">⏳ <strong>Avant l'échelle, prends les escaliers aux basilics</strong> : <strong>2 Graisses incendiaires à cordon</strong> (<strong>basilic juste en face</strong>), une <strong>Rune d'habitant des plaines [1]</strong> et une <strong>Pierre de forge dorée</strong> — un basilic t'attend dans le marais à chaque fois.</li>
+<li><strong>Monte l'échelle</strong> : sur les remparts à l'ouest, <strong>2 Éclats de verre</strong> ; le soldat de l'entrée garde la <strong class="objet">Prothèse de Valkyrie</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=166747">carte</a>) dans un coffre. En bas dans le marais, la fleur géante garde une Pierre de forge dorée.</li>
+<li><strong>Redescends sur le toit de la maison</strong> : une <strong>Rune d'habitant des plaines [1]</strong> au pied d'une tombe, une Grande pierre de forge solide dans la cabane. <strong>Monte à l'échelle</strong> pour une <strong>Pierre de forge dorée</strong> et surtout le <strong class="objet">Flacon de parfum</strong> de l'autre côté.</li>
+<li><strong>Dans le marais, monte les escaliers</strong> : un monstre surgit devant l'objet. Puis <strong>3 Graisses putréfiées</strong>, et une <strong>Rune d'habitant des confins [3]</strong> en haut de l'échelle : grâce de la Porte intérieure du Bastiombre.</li>
+<li><strong>Dans le château</strong> : embuscade à droite en entrant. <strong>Le Manuel de Parfumeur [2]</strong> en haut de l'échelle intérieure ; <strong>4 Os imposants de bête</strong> près du chien de gauche (<strong>soldat en patrouille</strong>) ; <strong>2 Lucioles dorées</strong> dans la salle suivante (<strong>zombie derrière les statues</strong>).</li>
+<li>Dehors, tue les chiens puis le soldat Valkyrie, déploie <strong>l'échelle-raccourci</strong> en face, et prends la <strong>Pierre de forge dorée</strong> près de l'ascenseur.</li>
+<li><strong>Boss : Élemer du Roncier</strong> — <strong>c'est le combat où le bouclier gagne</strong> : ses attaques ne sont pas très puissantes, et en bloquant il te reste toujours de l'endurance pour riposter, notamment quand il lance son épée puis la rappelle.
+<ul>
+<li class="alerte">⚠️ <strong>Évite ses deux attaques chargées</strong> (bouclier et épée) : celles-là ne se bloquent pas bien.</li>
+<li><strong>Ne reste pas collé en permanence</strong> : sa <strong>prise</strong> peut te tuer d'un coup si tu es sous-équipé.</li>
+<li><strong>Récompenses</strong> : l'<strong class="objet">Épée d'exécution des Tourbier</strong> (🗺️ <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=166820">carte</a>) et le <strong class="objet">Pavois des ronces</strong>.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Galerie d'Altus</strong> : <strong>au sud de l'Arbre-Monde mineur</strong>. Depuis la grâce du Chemin détourné de l'iniquité, va <strong>tout droit au sud</strong> jusqu'aux méduses qui signalent l'entrée.
+<ul>
+<li><strong>À droite</strong> : un coffre avec un <strong>Arc runique</strong>. <strong>Deuxième à droite</strong> : <strong>8 Fléchettes de cristal</strong>. <strong>Salle suivante, en haut</strong> : <strong>2 Arterias</strong>.</li>
+<li class="alerte manquable">⏳ <strong>Avant le boss, va à droite</strong> : un Astel te bombarde depuis l'autre côté. <strong>Rune dorée (7)</strong> à droite, puis <strong>saute sur la racine</strong> ; <strong>6 Morceaux de pierre d'éclat</strong> à l'étage inférieur, et tout en haut le Talisman d'arsenal +1 (+ charge maximale).</li>
+<li>Boss : Danseur et Lancier cristalien — Récompense : la Perle de mineur de pierre sombre (2).</li>
+</ul>
+</li>
+</ol>
+<h2 id="quetes-et-lieux-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<ul>
+<li><strong>Millicent</strong> : sa quête continue sur le Plateau d'Altus, aux Ruines des Parfumeurs et au-delà (partie 29).</li>
+<li><strong>Fia</strong> : c'est <strong>une fois arrivé sur le Plateau d'Altus</strong> qu'elle te donne la Dague destinée à D (partie 14).</li>
+<li><strong>Alexander le poing d'acier</strong> : il est coincé dans un rocher au <strong>Mur extérieur de la capitale</strong> (partie 18) et poursuit sa route au Mont Gelmir (partie 16).</li>
+<li><strong>Le Tableau : Chant du champion</strong> du Bastiombre est une énigme de tableaux (partie 30).</li>
+<li><strong>Les deux perles de cueilleur de muguet</strong> (Nokron et Catacombes de Wyndham) et la <strong>Perle de mineur de pierre sombre (2)</strong> enrichissent le stock des Servantes jumelles.</li>
+<li><strong>La Tour divine d'Altus-Ouest et d'Altus-Est</strong> se visitent depuis cette région : elles restaurent les Runes majeures de <strong>Rykard</strong>, <strong>Morgott</strong> et <strong>Mohg</strong> (partie 30).</li>
+</ul>
+<h2 id="butin-exhaustif-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Médaillon de Dectus (gauche + droite)</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Fort Haight (partie 02) et Fort Faroth (partie 11)</td>
+<td>Ouvre le Grand ascenseur de Dectus</td>
+</tr>
+<tr>
+<td><strong>Masque et Robe de suzerain</strong>, <strong>5 Fulminias</strong></td>
+<td><span class="badge armure">Armure, consommables</span></td>
+<td>Zone des Cercueils abandonnés</td>
+<td>Équipement</td>
+</tr>
+<tr>
+<td><strong>Cendres de guerre : Ordre sacré</strong></td>
+<td><span class="badge neutre">Cendres de guerre</span></td>
+<td>Scarabée vers le lac · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167544">Voir sur la carte</a></td>
+<td>Compétence sacrée</td>
+</tr>
+<tr>
+<td><strong>Set de Paria</strong>, <strong>2 Flacons de parfum</strong>, <strong>Manuel de Parfumeur [1]</strong></td>
+<td><span class="badge armure">Armure, armes, manuel</span></td>
+<td>Ruines des Parfumeurs</td>
+<td>Build parfumeur</td>
+</tr>
+<tr>
+<td><strong>Cendres d'aberration ailée</strong></td>
+<td><span class="badge neutre">Cendres d&#x27;invocation</span></td>
+<td>Cadavre dans l'eau, Catacombes des aberrations</td>
+<td>Invocation volante</td>
+</tr>
+<tr>
+<td><strong>Caboche causante : Pardon</strong></td>
+<td><span class="badge neutre">Objet</span></td>
+<td>Avant le boss des Catacombes des aberrations · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167398">Voir sur la carte</a></td>
+<td>Amusement</td>
+</tr>
+<tr>
+<td><strong>Cendres de la Parfumeuse Tricia</strong></td>
+<td><span class="badge neutre">Cendres d&#x27;invocation</span></td>
+<td>Parfumeuse Tricia &amp; Chimère léonine</td>
+<td>Invocation de soutien</td>
+</tr>
+<tr>
+<td><strong>Mortefleur</strong>, <strong>Cendres de Semonce des os</strong></td>
+<td><span class="badge objet">Objet clé, cendres</span></td>
+<td><strong>Nocher diaphane</strong> du lac d'Altus</td>
+<td>Gurranq ; invocation</td>
+</tr>
+<tr>
+<td><strong>4 Plumes de faucon des tempêtes</strong>, <strong>3 Plumes de faucon des tempêtes</strong></td>
+<td><span class="badge neutre">Matériaux</span></td>
+<td>Chemin vers Wyndham ; balcon de Dominula</td>
+<td>Artisanat</td>
+</tr>
+<tr>
+<td><strong>Perle de cueilleur de muguet (1)</strong></td>
+<td><span class="badge neutre">Perle cinéraire</span></td>
+<td><strong>Cerbère funèbre de l'Arbre-Monde</strong>, Catacombes de Wyndham</td>
+<td>Stock des Servantes jumelles</td>
+</tr>
+<tr>
+<td><strong>Cendres de guerre perdues</strong>, <strong>5 Boulettes revigorantes</strong>, <strong>Capuche noire</strong>, <strong>Bouclier du candélarbre</strong>, <strong>Serres de rapace</strong>, <strong>armure des Plumes noires de rapace</strong>, <strong>Masque squelettique</strong>, <strong>10 Grandes flèches dorées</strong></td>
+<td><span class="badge neutre">Objets divers</span></td>
+<td>Les <strong>sept murs illusoires</strong> des Cavernes du sage</td>
+<td>Le donjon le plus riche du plateau</td>
+</tr>
+<tr>
+<td><strong>Têtes du clan</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td><strong>Garryth le Nécromancien</strong>, Cavernes du sage · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=166676">Voir sur la carte</a></td>
+<td>Arme d'incantation</td>
+</tr>
+<tr>
+<td><strong>Talisman Voile occultant</strong></td>
+<td><span class="badge neutre">Talisman</span></td>
+<td><strong>Assassin des couteaux noirs</strong>, Cavernes du sage</td>
+<td>Te rend difficile à repérer</td>
+</tr>
+<tr>
+<td><strong>Graine dorée</strong> ×2</td>
+<td><span class="badge objet">Objets clés</span></td>
+<td>Grâce de la Colline face à l'Arbre-Monde ; chemin en redescendant</td>
+<td>+1 fiole chacune</td>
+</tr>
+<tr>
+<td><strong>Talisman de pavois</strong></td>
+<td><span class="badge neutre">Talisman</span></td>
+<td>Coffre de la charrue, camp de la Colline · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167662">Voir sur la carte</a></td>
+<td>Blocage renforcé</td>
+</tr>
+<tr>
+<td><strong>Espadon doré de troll</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td>Autre coffre du camp</td>
+<td>Grande épée de Force</td>
+</tr>
+<tr>
+<td><strong>Carte du Plateau d'Altus</strong></td>
+<td><span class="badge neutre">Carte</span></td>
+<td>Au nord-ouest du camp, après les feux</td>
+<td>Révèle la région</td>
+</tr>
+<tr>
+<td><strong>Flacon de parfum</strong> ×2</td>
+<td><span class="badge arme">Armes</span></td>
+<td>Chemin en descendant ; Bastiombre</td>
+<td>Build parfumeur</td>
+</tr>
+<tr>
+<td><strong>Pavois de l'Arbre-Monde</strong>, <strong>Rune ancestrale [2]</strong></td>
+<td><span class="badge neutre">Bouclier, consommable</span></td>
+<td>Les Sentinelles de l'Arbre · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=169445">Voir sur la carte</a></td>
+<td>Grand bouclier sacré ; grosse rune</td>
+</tr>
+<tr>
+<td><strong>Cendres de guerre : Entaille foudroyante</strong></td>
+<td><span class="badge neutre">Cendres de guerre</span></td>
+<td>Scarabée à la sortie du mur extérieur · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167995">Voir sur la carte</a></td>
+<td>Compétence de foudre</td>
+</tr>
+<tr>
+<td><strong>Grand Arc</strong>, <strong>20 Grandes flèches</strong></td>
+<td><span class="badge arme">Arme, munitions</span></td>
+<td>Sommet de la Tour de guet de la chaussée</td>
+<td>Arc lourd</td>
+</tr>
+<tr>
+<td><strong>Écorcheur sanctechair</strong>, <strong>Fouet de flammes noires</strong></td>
+<td><span class="badge arme">Arme, sorcellerie</span></td>
+<td><strong>Apôtre sanctechair</strong>, Dominula · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167224">Voir sur la carte</a></td>
+<td>Faux ; sorcellerie de feu noir</td>
+</tr>
+<tr>
+<td><strong>Set du noble</strong>, <strong>Cendres de rats géants</strong>, <strong>10 Ravioles de viande crue</strong></td>
+<td><span class="badge armure">Armure, cendres, consommables</span></td>
+<td>Les trois pâturages</td>
+<td>Équipement</td>
+</tr>
+<tr>
+<td><strong>Gourdin hérissé</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td>Coffre de la charrette aux géants · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167657">Voir sur la carte</a></td>
+<td>Masse</td>
+</tr>
+<tr>
+<td><strong>Spirale sanglante</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td>Derrière le <strong>Noble sanglant</strong>, Ruines Grouille-Sang · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=167655">Voir sur la carte</a></td>
+<td>Arme de saignement</td>
+</tr>
+<tr>
+<td><strong>Couteau de boucher</strong>, <strong>Vœu de l'Arbre-Monde</strong></td>
+<td><span class="badge arme">Arme, incantation</span></td>
+<td>PNJ envahisseur du Pont de l'Iniquité, et sa cabane</td>
+<td>Équipement</td>
+</tr>
+<tr>
+<td><strong>Talisman de dragon de foudre +1</strong></td>
+<td><span class="badge neutre">Talisman</span></td>
+<td>Chiens de la cabane, Vieille galerie d'Altus · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=168762">Voir sur la carte</a></td>
+<td>Résistance à la foudre</td>
+</tr>
+<tr>
+<td><strong>Marteau de troll</strong>, <strong>Grand gourdin</strong></td>
+<td><span class="badge arme">Armes</span></td>
+<td>Cabane et <strong>Troll fouisseur</strong>, Vieille galerie d'Altus · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=168763">Voir sur la carte</a></td>
+<td>Armes contondantes lourdes</td>
+</tr>
+<tr>
+<td><strong>Tableau : Chant du champion</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Cabane près du marais aux limaces, Bastiombre · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=166748">Voir sur la carte</a></td>
+<td>Énigme de tableau</td>
+</tr>
+<tr>
+<td><strong>Rapière myrmicéenne</strong>, <strong>Masque</strong> et <strong>Robe des Tourbier</strong></td>
+<td><span class="badge arme">Arme, armure</span></td>
+<td>PNJ hostile à l'ouest du Bastiombre · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=166781">Voir sur la carte</a></td>
+<td>Équipement de Dextérité</td>
+</tr>
+<tr>
+<td><strong>Prothèse de Valkyrie</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td>Coffre du soldat de l'entrée, remparts ouest · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=166747">Voir sur la carte</a></td>
+<td>Bras mécanique</td>
+</tr>
+<tr>
+<td><strong>Pierres de forge dorées</strong> (×5 environ)</td>
+<td><span class="badge neutre">Matériaux</span></td>
+<td>Un peu partout au Bastiombre</td>
+<td>Forge en <strong>+15</strong></td>
+</tr>
+<tr>
+<td><strong>Manuel de Parfumeur [2]</strong></td>
+<td><span class="badge neutre">Manuel</span></td>
+<td>Haut de l'échelle intérieure du château · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=166725">Voir sur la carte</a></td>
+<td>Recettes</td>
+</tr>
+<tr>
+<td><strong>Épée d'exécution des Tourbier</strong>, <strong>Pavois des ronces</strong></td>
+<td><span class="badge arme">Arme, bouclier</span></td>
+<td><strong>Élemer du Roncier</strong> · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=166820">Voir sur la carte</a></td>
+<td>Grande épée ; bouclier de ronces</td>
+</tr>
+<tr>
+<td><strong>Talisman d'arsenal +1</strong></td>
+<td><span class="badge neutre">Talisman</span></td>
+<td>Tout en haut, dans la zone à l'Astel, Galerie d'Altus · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=168082">Voir sur la carte</a></td>
+<td><strong>+charge maximale</strong></td>
+</tr>
+<tr>
+<td><strong>Perle de mineur de pierre sombre (2)</strong></td>
+<td><span class="badge neutre">Perle cinéraire</span></td>
+<td><strong>Danseur et Lancier cristalien</strong>, Galerie d'Altus · <a href="https://mapgenie.io/elden-ring/maps/the-lands-between?locationIds=168081">Voir sur la carte</a></td>
+<td>Pierres sombres supérieures illimitées</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li>Les deux Sentinelles de l'Arbre se battent depuis l'encoche de la porte. Ce n'est pas un exploit, c'est la façon dont la plupart des joueurs passent : elles ne peuvent pas venir, et elles s'épuisent contre le mur.</li>
+<li>Les Cavernes du sage se font mur par mur. Sept murs illusoires, sept lots de coffres : c'est le donjon mineur le plus rentable de la région. Frappe systématiquement les fonds de couloir.</li>
+<li><strong>Le Talisman Voile occultant change l'exploration</strong> : beaucoup d'embuscades du jeu ne se déclenchent plus.</li>
+<li>Un bouclier pour Élemer, une arme de zone pour Tricia. Deux boss, deux outils : c'est toute la difficulté du plateau.</li>
+<li>Le Bastiombre est un labyrinthe à Pierres de forge dorées : cinq environ dans le seul château, de quoi porter deux armes en <strong>+15</strong>.</li>
+<li><strong>Attention aux basilics du Bastiombre</strong> : ils infligent la <strong>mort instantanée</strong> et sont toujours cachés dans le marais.</li>
+<li><strong>Fais fuir le dragon des Cercueils abandonnés</strong> au lieu de le tuer : un quart de sa vie suffit, et tu n'as rien à y gagner tout de suite.</li>
+<li>Ne monte pas l'escalier de la capitale avant d'avoir fini le plateau : une fois Morgott battu, Leyndell change (partie 19).</li>
+</ul>
+<h2 id="alertes-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ Le Grand ascenseur de Dectus exige les deux moitiés du Médaillon. Sans elles, passe par les <strong>Ruines des falaises</strong>.</li>
+<li class="alerte">⚠️ Le camp de la Colline face à l'Arbre-Monde est couvert par des balistes : approche-les par l'extérieur.</li>
+<li class="alerte">⚠️ <strong>Les Catacombes de Wyndham enchaînent cinq pièges</strong> : hachoir, foudre dans l'eau, blobs au plafond, piège au sol, et surtout le plafond à pics avec le sol qui monte.</li>
+<li class="alerte">⚠️ Les trois attaques sautées du Cerbère funèbre tuent en un coup et ne se bloquent pas.</li>
+<li class="alerte">⚠️ <strong>L'Apôtre sanctechair devient élastique</strong> après un tiers de vie : la distance ne protège plus.</li>
+<li class="alerte">⚠️ Un PNJ hostile t'envahit sur le Pont de l'Iniquité : tue les chiens d'abord.</li>
+<li class="alerte">⚠️ Les basilics du Bastiombre infligent la mort instantanée.</li>
+<li class="alerte">⚠️ <strong>Un Astel te bombarde</strong> dans la zone annexe de la Galerie d'Altus.</li>
+<li class="alerte manquable">⏳ <strong>Manquables</strong> : la <strong>carte du Plateau d'Altus</strong>, les <strong>deux Graines dorées</strong>, le <strong>Talisman Voile occultant</strong> et tout le contenu des <strong>sept murs illusoires</strong> des Cavernes du sage, le <strong>Talisman d'arsenal +1</strong>, le <strong>Talisman de pavois</strong>, les <strong>deux Perles</strong> (cueilleur de muguet et mineur de pierre sombre), le <strong class="objet">Tableau : Chant du champion</strong>, la <strong class="objet">Spirale sanglante</strong> et le <strong class="objet">Flacon de parfum</strong> du Bastiombre.</li>
+</ul>
+<h2 id="check-list-15" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Plateau d'Altus</strong> atteint (Médaillon de Dectus ou Ruines des falaises)</li>
+<li class="tache"><input type="checkbox"> <strong>Carte du Plateau d'Altus</strong> récupérée</li>
+<li class="tache"><input type="checkbox"> <strong>Ruines des Parfumeurs</strong> : set de Paria, <strong>Flacons de parfum</strong>, <strong class="objet">Manuel de Parfumeur [1]</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Catacombes des aberrations</strong> : <strong>Parfumeuse Tricia &amp; Chimère léonine</strong> vaincues</li>
+<li class="tache"><input type="checkbox"> <strong>Nocher diaphane</strong> du lac vaincu : <strong class="objet">Mortefleur</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Catacombes de Wyndham</strong> : <strong>Cerbère funèbre</strong> vaincu, Perle de cueilleur de muguet (1)</li>
+<li class="tache"><input type="checkbox"> <strong>Cavernes du sage</strong> : les <strong>sept murs illusoires</strong> trouvés, <strong>Garryth</strong> et l'<strong>Assassin des couteaux noirs</strong> vaincus, <strong>Talisman Voile occultant</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Les deux Graines dorées</strong> du plateau prises</li>
+<li class="tache"><input type="checkbox"> <strong>Les Sentinelles de l'Arbre</strong> vaincues : <strong>Pavois de l'Arbre-Monde</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Dominula</strong> : <strong>Apôtre sanctechair</strong> vaincu, <strong class="objet">Fouet de flammes noires</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Ruines Grouille-Sang</strong> : <strong>Noble sanglant</strong> vaincu, <strong class="objet">Spirale sanglante</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Vieille galerie d'Altus</strong> : <strong>Troll fouisseur</strong> vaincu, Talisman de dragon de foudre +1</li>
+<li class="tache"><input type="checkbox"> <strong>Bastiombre</strong> : <strong>Élemer du Roncier</strong> vaincu, <strong class="objet">Tableau : Chant du champion</strong>, les <strong class="objet">Pierres de forge dorées</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Galerie d'Altus</strong> : <strong>Talisman d'arsenal +1</strong> et Perle de mineur de pierre sombre (2)</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="14-les-profondeurs-de-fonderacine.html" rel="prev"><small>← Partie précédente</small><b>Les Profondeurs de Fonderacine</b></a><a class="suiv" href="16-le-mont-gelmir.html" rel="next"><small>Partie suivante →</small><b>Le Mont Gelmir</b></a><a class="tout" href="elden-ring.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Elden Ring · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

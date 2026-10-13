@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapitre 17 : Échapper au chaos – Guide Final Fantasy VII Remake</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Remake, Chapitre 17 : Échapper au chaos : Boss : Jenova Pulsation, Rufus et Ténébro, l&#x27;Hectocanonnier. À ne pas rater : le Bâton en…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/chapitre-17-echapper-au-chaos.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Chapitre 17 : Échapper au chaos · Guide Final Fantasy VII Remake">
+<meta property="og:description" content="Final Fantasy VII Remake, Chapitre 17 : Échapper au chaos : Boss : Jenova Pulsation, Rufus et Ténébro, l&#x27;Hectocanonnier. À ne pas rater : le Bâton en…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/chapitre-17-echapper-au-chaos.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Remake", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/"}, {"@type": "ListItem", "position": 3, "name": "Chapitre 17 : Échapper au chaos", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-remake/chapitre-17-echapper-au-chaos.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-remake" class="compact" data-partie="chapitre-17-echapper-au-chaos"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Remake</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Remake : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Remake</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-sabotage-du-reacteur-mako-n1.html"><span class="num">✦</span><span class="libelle">Chapitre 1 : Sabotage du réacteur Mako n°1</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-rencontres-determinantes.html"><span class="num">✦</span><span class="libelle">Chapitre 2 : Rencontres déterminantes</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-le-septieme-ciel.html"><span class="num">✦</span><span class="libelle">Chapitre 3 : Le Septième Ciel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-viree-nocturne.html"><span class="num">✦</span><span class="libelle">Chapitre 4 : Virée nocturne</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-suivez-le-chien.html"><span class="num">✦</span><span class="libelle">Chapitre 5 : Suivez le chien</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-les-soleils-des-bidonvilles.html"><span class="num">✦</span><span class="libelle">Chapitre 6 : Les soleils des bidonvilles</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-dans-la-gueule-du-loup.html"><span class="num">✦</span><span class="libelle">Chapitre 7 : Dans la gueule du loup</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-les-fleurs-des-retrouvailles.html"><span class="num">✦</span><span class="libelle">Chapitre 8 : Les fleurs des retrouvailles</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-le-quartier-des-desirs.html"><span class="num">✦</span><span class="libelle">Chapitre 9 : Le quartier des désirs</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-dans-lobscurite-des-egouts.html"><span class="num">✦</span><span class="libelle">Chapitre 10 : Dans l&#x27;obscurité des égouts</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-despiegles-fantomes.html"><span class="num">✦</span><span class="libelle">Chapitre 11 : D&#x27;espiègles fantômes</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-la-lutte-desesperee-davalanche.html"><span class="num">✦</span><span class="libelle">Chapitre 12 : La lutte désespérée d&#x27;Avalanche</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-un-monde-en-ruine.html"><span class="num">✦</span><span class="libelle">Chapitre 13 : Un monde en ruine</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-en-quete-despoir.html"><span class="num">✦</span><span class="libelle">Chapitre 14 : En quête d&#x27;espoir</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="chapitre-15-a-la-lueur-du-coucher-de-soleil.html"><span class="num">✦</span><span class="libelle">Chapitre 15 : À la lueur du coucher de soleil</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="chapitre-16-infiltration-de-la-tour-shinra.html"><span class="num">✦</span><span class="libelle">Chapitre 16 : Infiltration de la tour Shinra</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="#chapitre-17-echapper-au-chaos"><span class="num">✦</span><span class="libelle">Chapitre 17 : Échapper au chaos</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="chapitre-18-singularite-du-destin.html"><span class="num">✦</span><span class="libelle">Chapitre 18 : Singularité du destin</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="les-materias-2.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="les-armes-et-les-manuscrits-2.html"><span class="num">✦</span><span class="libelle">Les armes et les manuscrits</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="les-invocations-2.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-rapports-de-chadley-et-le-simulateur-shinra.html"><span class="num">✦</span><span class="libelle">Les rapports de Chadley et le simulateur Shinra</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="le-colisee-de-corneo.html"><span class="num">✦</span><span class="libelle">Le Colisée de Cornéo</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-mini-jeux.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="intermission-chapitre-1-lemissaire-de-wutai.html"><span class="num">✦</span><span class="libelle">INTERmission — Chapitre 1 : L&#x27;émissaire de Wutai</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="intermission-chapitre-2-le-vol-de-la-materia-ultime.html"><span class="num">✦</span><span class="libelle">INTERmission — Chapitre 2 : Le vol de la Matéria ultime</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="les-quetes-annexes-et-laffinite.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes et l&#x27;affinité</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="intermission-fort-condor-annexes-et-armes.html"><span class="num">✦</span><span class="libelle">INTERmission — Fort Condor, annexes et armes</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-remake.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Remake</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-18">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="chapitre-17-echapper-au-chaos">Chapitre 17 : Échapper au chaos</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-18"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-18">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Boss</strong> : Jenova Pulsation, Rufus et Ténébro, l'Hectocanonnier.</li>
+<li><strong>À ne pas rater</strong> : le <strong class="objet">Bâton en métal renforcé</strong> (coffre 01) et la <strong class="objet">Lame jumelée</strong> (coffre 06), dernières armes d'Aerith et de Cloud.</li>
+<li><strong>Avant la série de boss</strong> : le banc des quartiers du président.</li>
+<li><strong>À repérer</strong> : le second simulateur, à gauche en montant après la chambre d'Aerith.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-18" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>S'échapper du laboratoire de <strong>Hojo</strong>, traverser <strong>le Barillet</strong> du niveau 1 au niveau 8 en alternant entre <strong>deux groupes</strong>, et enchaîner <strong>trois boss</strong> : <strong>Jenova Pulsation</strong>, <strong>Rufus et Ténébro</strong>, puis <strong>l'Hectocanonnier</strong>.</p>
+<p>C'est le chapitre le plus chargé en coffres du jeu : <strong>dix-huit coffres</strong>, <strong>deux matérias au sol</strong>, et les deux dernières armes de Cloud et d'Aerith.</p>
+<p class="alerte">⚠️ <strong>Deux armes à ne surtout pas rater</strong> : le Bâton en métal renforcé est dans le premier coffre du chapitre, et la Lame jumelée dans le coffre 06. Ce sont les dernières armes d'Aerith et de Cloud.</p>
+<p>Et Rouge XIII rejoint l'aventure — <strong>en PNJ</strong>, pas en personnage jouable.</p>
+<h2 id="itineraire-18" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.actugaming.net/chapitre-17-final-fantasy-vii-remake-336509/">Chapitre 17</a> — soluce illustrée sur ActuGaming, en français.</p>
+<ol>
+<li><strong>L'internement des spécimens</strong> : <strong>quatre coffres</strong>, dont le Bâton en métal renforcé.</li>
+<li><strong>Le Barillet niveau 1</strong> : <strong>la matéria Vénéfice</strong>, puis <strong>Rouge XIII</strong>.</li>
+<li><strong>Les niveaux 2 à 4</strong> : <strong>trois coffres</strong>, dont <strong>la Lame jumelée</strong>.</li>
+<li><strong>L'alternance entre deux groupes</strong> : <strong>Tifa et Aerith</strong> d'un côté, <strong>Cloud et Barret</strong> de l'autre.</li>
+<li><strong>Le laboratoire n°3</strong> : <strong>six coffres</strong>, <strong>la matéria Chronomancie</strong>.</li>
+<li><strong>Le laboratoire n°2</strong> : <strong>deux coffres</strong>, <strong>le Lacérateur</strong>, <strong>les Marteleurs</strong>.</li>
+<li><strong>La passerelle d'observation</strong> : <strong>deux coffres</strong>, <strong>la Capsule cérébrale</strong>.</li>
+<li><strong>Le laboratoire n°4</strong> : <strong>un coffre</strong>, le monstre en deux temps.</li>
+<li><strong>Jenova Pulsation</strong>, <strong>Rufus et Ténébro</strong>, <strong>l'Hectocanonnier</strong>.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-18" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="linternement-des-specimens-quatre-coffres-en-trente-secondes">L'internement des spécimens — quatre coffres en trente secondes</h3>
+<ol>
+<li><strong>Ouvre immédiatement le coffre sur ta gauche</strong> : <strong>le coffre 01</strong> — le Bâton en métal renforcé pour Aerith.</li>
+</ol>
+<p>C'est la dernière arme d'Aerith <em>(partie <strong>21</strong>)</em>. Et elle est dans le premier coffre du chapitre, juste à côté de toi.</p>
+<ol start="2">
+<li><strong>Discute avec Aerith</strong> : <strong>cinématique</strong>. <strong>Quitte la chambre.</strong></li>
+<li>Première chambre sur la gauche : le coffre 02 — <strong>1 Bague batracienne</strong>.</li>
+<li>Seconde chambre sur la droite : le coffre 03 — <strong>1 Queue de Phénix</strong>.</li>
+<li class="alerte manquable">⏳ Juste avant de sortir de la zone d'internement : le coffre 04 — <strong>1 Éther</strong>.</li>
+<li>Rejoins le laboratoire de Hojo et <strong>utilise le terminal</strong> pour prendre l'ascenseur.</li>
+<li><strong>Occupe-toi des Sans-Nom</strong> — <strong>sensibles à la Glace</strong> <em>(partie <strong>13</strong>)</em> — et <strong>poursuis vers l'ascenseur</strong>.</li>
+<li>En haut, suis la passerelle dans le laboratoire : <strong>tu tombes sur Jenova</strong>, <strong>nouvelle vision</strong>, et Cloud est séparé du groupe.</li>
+</ol>
+<h3 id="le-second-simulateur-de-combat-shinra-a-ne-pas-manquer">Le second simulateur de combat Shinra — à ne pas manquer</h3>
+<p class="alerte">⚠️ Avant de suivre l'histoire, il y a une porte à ouvrir, et elle contient les défis les plus difficiles du jeu.</p>
+<ol>
+<li><strong>Quitte la chambre d'Aerith</strong> et <strong>grimpe à l'étage supérieur</strong> : <strong>tu croises Chadley</strong>.</li>
+<li><strong>À droite</strong> : une petite salle de repos.</li>
+<li><strong>À gauche</strong> : l'accès à une seconde version du simulateur de combat Shinra.</li>
+</ol>
+<p><strong>Pourquoi c'est important</strong> : celui-ci permet d'utiliser tous tes personnages, et il contient les défis réservés au mode Difficile — les quatre manuscrits XIII, deux matérias Vision, le Morbol, et le combat sept étoiles qui donne le Götterdämmerung <em>(partie <strong>24</strong>)</em>.</p>
+<p class="alerte manquable">⏳ Tu n'y feras rien en première partie — tout y est verrouillé derrière le mode Difficile — mais retiens où il est pour ta seconde partie <em>(partie <strong>28</strong>)</em>.</p>
+<h3 id="le-barillet-niveau-1-cloud-seul">Le Barillet niveau 1 — Cloud seul</h3>
+<ol>
+<li><strong>Avance jusqu'au précipice</strong> et utilise la manette sur le côté pour <strong>ouvrir des plateformes</strong>.</li>
+<li><strong>Traverse</strong> et suis le chemin parmi les incubateurs.</li>
+<li class="alerte">⚠️ Juste avant l'échelle qui permet de grimper, cherche un petit passage sur la droite parmi les incubateurs : la matéria Vénéfice est au bout.</li>
+<li><strong>Poursuis</strong> : Rouge XIII te rejoint — en PNJ.</li>
+</ol>
+<h3 id="les-niveaux-2-a-4-et-la-lame-jumelee">Les niveaux 2 à 4 — et la Lame jumelée</h3>
+<ol>
+<li>Grimpe vers les hauteurs du Barillet, au niveau 2.</li>
+<li class="alerte">⚠️ Avant de demander à Rouge XIII de traverser sur la gauche, va sur la droite en utilisant les incubateurs : le coffre 05 — <strong>1 Queue de Phénix</strong>.</li>
+<li>Fais-toi ouvrir le passage par Rouge XIII, <strong>traverse</strong>, et <strong>prends la porte</strong>.</li>
+<li><strong>Tu tombes sur Barret.</strong> Occupe-toi des monstres de la salle.</li>
+<li><strong>De retour dans le Barillet, au niveau 3</strong> : le coffre 06 est sur la gauche, avant les escaliers — la Lame jumelée pour Cloud.</li>
+</ol>
+<p><strong>C'est la dernière arme de Cloud</strong> <em>(partie <strong>21</strong>)</em>.</p>
+<ol start="6">
+<li><strong>Grimpe les marches</strong> et demande à Rouge XIII de t'ouvrir la voie.</li>
+<li>De l'autre côté, une petite pièce sur la droite : le coffre 07 — <strong>3 000 gils</strong>.</li>
+<li><strong>Approche-toi de l'endroit désigné par Tifa</strong> : Hojo t'interrompt.</li>
+</ol>
+<h3 id="le-systeme-des-deux-groupes">Le système des deux groupes</h3>
+<p>À partir d'ici, tu alternes entre deux équipes via les terminaux de communication :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Groupe</th>
+<th>Composition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A</strong></td>
+<td>Tifa et Aerith</td>
+</tr>
+<tr>
+<td><strong>B</strong></td>
+<td>Cloud et Barret</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte manquable">⏳ Chaque groupe débloque le passage de l'autre. Et chaque groupe a ses propres coffres — ne switche pas sans avoir fouillé.</p>
+<h3 id="le-laboratoire-n3-avec-tifa-et-aerith-puis-cloud-et-barret">Le laboratoire n°3 — avec Tifa et Aerith, puis Cloud et Barret</h3>
+<p><strong>Avec Tifa et Aerith :</strong></p>
+<ol>
+<li><strong>Quitte la salle</strong> et <strong>grimpe</strong> jusqu'au <strong>laboratoire n°3</strong>.</li>
+<li>Utilise le levier sur le bord gauche de la plateforme pour <strong>ouvrir les incubateurs</strong> : <strong>le coffre 08</strong> — <strong>1 Éther</strong>.</li>
+<li><strong>Approche-toi du terminal</strong> et <strong>switche de groupe.</strong></li>
+</ol>
+<p><strong>Avec Cloud et Barret :</strong></p>
+<ol start="4">
+<li>Traverse en utilisant les incubateurs, <strong>nettoie la plateforme</strong>, et ouvre le passage vers la colonne centrale.</li>
+<li>La matéria Chronomancie est derrière les terminaux du <strong>terminal central de contrôle</strong>.</li>
+<li><strong>Active les commandes</strong> pour <strong>ouvrir le laboratoire n°3</strong>.</li>
+<li><strong>Switche avec Tifa et Aerith</strong> au terminal de communication.</li>
+</ol>
+<p><strong>De retour avec Tifa et Aerith :</strong></p>
+<ol start="8">
+<li><strong>Suis le couloir</strong> et <strong>élimine les créatures</strong>.</li>
+<li>Dans la salle des cages, un renfoncement sur la droite : le coffre 09 — <strong>1 Méga-Potion</strong>.</li>
+<li><strong>Occupe-toi des molosses</strong> de la salle suivante, puis <strong>sors dans le couloir</strong> : le coffre 10 est sur la gauche — <strong>5 000 gils</strong>.</li>
+<li>Bats la bestiole qui barre la route, <strong>grimpe les escaliers</strong>, et <strong>passe par les tuyaux</strong> en hauteur.</li>
+<li><strong>Après la chute</strong>, <strong>occupe-toi des deux bestioles</strong>.</li>
+<li>Ouvre la grande porte sur la gauche pour atteindre le coffre 11, enfermé dans une cage — <strong>1 Bracelet de puissance</strong>.</li>
+<li>Grimpe à l'échelle et suis les canalisations : le coffre 12 — <strong>1 Méga-Potion</strong>.</li>
+<li><strong>Sors</strong> : tu retrouves le Barillet. Descends les deux étages sur la droite, au niveau 4 : le coffre 13 — <strong>1 Éther</strong>.</li>
+<li><strong>Grimpe à l'étage supérieur</strong>, <strong>file à gauche</strong>, et <strong>affronte les tourelles</strong>.</li>
+<li><strong>Prends l'échelle</strong>, <strong>utilise le levier</strong> pour ouvrir un passage vers le terminal suivant, et <strong>switche</strong>.</li>
+</ol>
+<h3 id="le-laboratoire-n2-avec-cloud-et-barret">Le laboratoire n°2 — avec Cloud et Barret</h3>
+<ol>
+<li><strong>Utilise le terminal central</strong> pour <strong>ouvrir le laboratoire n°2</strong>, et <strong>rejoins-le</strong>.</li>
+<li>Le coffre 14 est sur la plateforme qui accueille l'entrée du laboratoire — <strong>1 Méga-Potion</strong>.</li>
+<li><strong>Traverse les couloirs</strong> : Hojo te piège et t'envoie des bestioles — <strong>deux Zenene</strong>.</li>
+<li><strong>Sors par la droite</strong> : le coffre 15 est derrière des caisses, sur la droite du couloir — <strong>1 Bracelet mystique</strong>.</li>
+<li><strong>Salle suivante</strong> : un Lacérateur et des drones. <strong>Occupe-toi des drones d'abord</strong> pour te faciliter la tâche.</li>
+<li>Après le discours de Hojo, <strong>avance</strong>.</li>
+<li><strong>Nouveaux ennemis : les Marteleurs.</strong></li>
+</ol>
+<p class="alerte">⚠️ <strong>Les Marteleurs sont pénibles pour deux raisons</strong> : ils disparaissent dans le sol, et ils lancent Stop pour immobiliser tes personnages avant de leur infliger de gros dégâts. Ils sont sensibles à la Foudre.</p>
+<ol start="8">
+<li>Rejoins Rouge XIII dans la salle de contrôle pour <strong>le libérer</strong>.</li>
+</ol>
+<h3 id="la-passerelle-dobservation-et-la-capsule-cerebrale">La passerelle d'observation et la Capsule cérébrale</h3>
+<ol>
+<li>Va tout à droite, dans la salle de contrôle la plus au fond : le coffre 16 — <strong>2 Remèdes</strong>.</li>
+<li>Pars à gauche à la poursuite de Hojo : le coffre 17 est sur la droite de l'escalier — <strong>1 Bracelet connectif</strong>.</li>
+<li><strong>Monte à l'étage</strong> et <strong>suis le chemin</strong> : <strong>une Capsule cérébrale t'assaille</strong>.</li>
+</ol>
+<p><strong>La Capsule cérébrale</strong> : à mi-vie, elle t'étourdit et se clone. Dézingue tout le monde à grand renfort d'attaques rapides.</p>
+<h3 id="le-laboratoire-n4-et-le-monstre-en-deux-temps">Le laboratoire n°4 et le monstre en deux temps</h3>
+<ol>
+<li><strong>Sors</strong> : tu retrouves le Barillet. <strong>Prends les escaliers</strong> vers l'entrée du <strong>laboratoire n°4</strong>.</li>
+<li>Descends les marches sur la droite et demande à Rouge XIII d'ouvrir les incubateurs.</li>
+<li>Des Sans-Nom arrivent et Rouge XIII est envoyé à l'étage inférieur.</li>
+<li>File à la console de communication, switche vers Tifa et Aerith, et <strong>pars le secourir</strong> en affrontant les ennemis.</li>
+<li><strong>Après l'avoir sauvé</strong>, <strong>descends à l'étage inférieur</strong> et <strong>demande-lui d'ouvrir les incubateurs</strong>.</li>
+<li><strong>De l'autre côté, utilise le levier</strong> pour faire apparaître une passerelle vers le terminal central — <strong>et une poignée de drones</strong>.</li>
+<li><strong>Après les drones</strong>, <strong>active l'interrupteur n°4</strong> et switche vers Cloud et Barret.</li>
+<li>Entre dans le laboratoire n°4, <strong>monte les escaliers</strong> jusqu'à une sorte de tuyau.</li>
+<li>Va vers la gauche dans la canalisation : le coffre 18 est sur une plateforme — <strong>2 Méga-Potions</strong>.</li>
+<li><strong>File vers la droite</strong>, <strong>utilise l'interrupteur</strong> pour ouvrir la porte à côté.</li>
+<li><strong>Traverse la grande salle</strong> et <strong>grimpe de l'autre côté</strong> : <strong>un nouveau monstre arrive</strong>.</li>
+</ol>
+<p><strong>Le combat en deux temps</strong></p>
+<ul>
+<li>Il est assez imperméable aux attaques au corps à corps. Frappe-le en priorité avec Barret, s'il a une arme de tir.</li>
+<li>À mi-vie, il quitte le combat et va assaillir Tifa et Aerith, dont tu prends le contrôle.</li>
+<li class="alerte manquable">⏳ Il tourne alors autour de l'aire de combat. Fais très attention à l'attaque où il largue des sphères d'énergie.</li>
+<li>Utilise les attaques à distance et la magie avec Aerith, puis passe sur Tifa quand il est sonné au terme de son attaque tourbillonnante.</li>
+</ul>
+<ol start="12">
+<li>Après le combat, file vers l'ascenseur rejoindre l'équipe.</li>
+</ol>
+<h3 id="lorigine-du-bruit-et-la-piste-de-sang">L'origine du bruit et la piste de sang</h3>
+<ol>
+<li><strong>Reprends l'ascenseur</strong> et arrive en haut du Barillet.</li>
+<li><strong>Suis la passerelle centrale</strong> : Jenova a disparu.</li>
+<li>Suis le chemin parsemé de liquide violet jusqu'à un nouvel ascenseur.</li>
+<li>Quand Rouge XIII te le demande, grimpe dans l'ascenseur vers <strong>le toit</strong>.</li>
+<li>Suis la piste de sang jusqu'aux <strong>quartiers du président</strong>.</li>
+<li>Un banc et une machine sont sur la droite. <strong>Utilise-les : trois boss arrivent.</strong></li>
+<li><strong>Avance sur le balcon</strong> : Jenova Pulsation.</li>
+</ol>
+<h3 id="boss-1-jenova-pulsation">Boss 1 : Jenova Pulsation</h3>
+<p>Un combat de longue haleine, en quatre phases de difficulté croissante. Son point faible : ses tentacules.</p>
+<p><strong>Phase 1 — les tentacules</strong></p>
+<ul>
+<li><strong>Cible ses tentacules</strong> : elle entre en état de Lésion, et tu peux lui faire des dégâts tranquillement.</li>
+<li><strong>Elle les fait repousser régulièrement</strong> : tu peux donc répéter la manœuvre plusieurs fois.</li>
+</ul>
+<p><strong>Phase 2 — les galaxies au sol</strong></p>
+<ul>
+<li>Des « galaxies » tourbillonnent au sol et grignotent la vie de tout personnage qui s'y trouve. <strong>Esquive-les.</strong></li>
+<li><strong>Poursuis normalement.</strong></li>
+</ul>
+<p><strong>Phase 3 — l'invincibilité</strong></p>
+<ul>
+<li>Elle fait apparaître de nombreux tentacules autour d'elle et devient invincible.</li>
+<li>Concentre-toi sur les tentacules qui sortent du sol : ça fait grimper la jauge de Choc du corps principal et surtout ça brise son invincibilité.</li>
+<li>Une fois en Choc, lâche tes capacités les plus puissantes.</li>
+</ul>
+<p><strong>Phase 4 — le poison</strong></p>
+<ul>
+<li>Du liquide noir suinte du plafond et <strong>provoque le Poison</strong>. <strong>Esquive les flaques.</strong></li>
+<li><strong>Fonce sur Jenova et frappe.</strong></li>
+<li><strong>C'est le moment de tout donner</strong> : ta Transcendance et ton invocation devraient être chargées.</li>
+</ul>
+<p><strong>Après le combat</strong> : utilise le banc à l'extérieur pour faire le plein, <strong>avance vers la terrasse</strong>, <strong>grimpe à l'échelle</strong> : <strong>cinématique</strong>, puis <strong>rejoins tes alliés</strong>.</p>
+<h3 id="boss-2-rufus-et-tenebro">Boss 2 : Rufus et Ténébro</h3>
+<p>Tu ne diriges que Cloud pour toute la durée du combat. Tu es en infériorité numérique.</p>
+<p>Aucun des deux n'a de faiblesse élémentaire. Et Ténébro résiste à la Foudre — <strong>évite-la.</strong></p>
+<p><strong>Ténébro d'abord</strong></p>
+<ul>
+<li>Le molosse est vif et il t'immobilise, laissant le champ libre à Rufus pour te canarder.</li>
+<li><strong>La clé du combat</strong> : concentre tes assauts sur Ténébro pour l'ÉLOIGNER de Rufus. <strong>Ça annule leur lien</strong>, ça rend la bête vulnérable, et ça augmente beaucoup les chances de Choc.</li>
+<li>Mets-le en Choc et finis-le vite, car les attaques de Rufus deviennent plus puissantes — notamment deux tirs lasers qui te font grandement reculer.</li>
+</ul>
+<p><strong>Rufus ensuite</strong></p>
+<ul>
+<li>Il contre l'essentiel de tes attaques. C'est son seul truc, et il est agaçant.</li>
+<li><strong>La solution</strong> : reste mobile pour éviter ses attaques, et attends qu'il recharge son arme pour le frapper.</li>
+<li>Avec tes techniques, tu le fais tomber en Choc assez facilement — et là il souffre énormément.</li>
+<li><strong>Reste calme, esquive, pare.</strong></li>
+</ul>
+<h3 id="boss-3-lhectocanonnier">Boss 3 : l'Hectocanonnier</h3>
+<p><strong>Pendant la cinématique d'introduction, appuie sur carré</strong> pour accéder au menu et équiper ton équipe.</p>
+<p><strong>Et une information capitale</strong> : tu ne contrôles que Barret et Aerith. Tout se joue à distance.</p>
+<p><strong>Bonne nouvelle</strong> : le boss est faible face à tous les éléments. Ne te prive pas de magie.</p>
+<p><strong>Phase 1 — les modules défensifs</strong></p>
+<ol>
+<li>Concentre tout sur les modules défensifs. C'est indispensable pour faire baisser sa garde.</li>
+<li class="alerte">⚠️ Attention à ses lasers à tête chercheuse et aux bulles d'énergie qu'il pose à ton emplacement.</li>
+<li><strong>Quand il utilise son canon principal</strong> : planque-toi derrière les débris au sol, ou vise la bouche du canon pour interrompre l'attaque et <strong>lui faire du tort</strong>.</li>
+</ol>
+<p><strong>Phase 2 — les roues</strong></p>
+<ul>
+<li class="alerte manquable">⏳ <strong>Le dernier module détruit, attaque le corps</strong> : la protection de ses roues disparaît.</li>
+<li><strong>Cible alors les roues</strong> : <strong>état de Lésion</strong>, puis la jauge de Choc monte.</li>
+</ul>
+<p><strong>Phase 3 — le mode vigilance</strong></p>
+<ul>
+<li><strong>Il intensifie ses attaques</strong> et ajoute deux lignes de feu au sol.</li>
+<li>Quand il charge son laser, planque-toi derrière un mur.</li>
+<li>Mais pendant qu'il exécute l'attaque des lignes de feu, il est vulnérable : vise ses roues pour le mettre en Choc.</li>
+</ul>
+<p><strong>Phase 4 — l'énorme attaque</strong></p>
+<ul>
+<li><strong>Il prépare une attaque longue et dévastatrice.</strong></li>
+<li><strong>Attaque-le pendant qu'il charge</strong>, puis planque-toi derrière le pilier avant qu'il tire — sinon c'est l'anéantissement de l'équipe.</li>
+<li><strong>Ensuite, envoie-lui tout ce qui te reste.</strong></li>
+</ul>
+<p><strong>Cinématique de fin de chapitre.</strong></p>
+<h2 id="quetes-et-lieux-18" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<p><strong>Aucune mission ni histoire annexe.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'on y trouve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Étage 65 — internement des spécimens</strong></td>
+<td><strong>Coffres 01 à 04</strong>, dont <strong>le Bâton en métal renforcé</strong></td>
+</tr>
+<tr>
+<td><strong>L'étage au-dessus de la chambre d'Aerith</strong></td>
+<td>Chadley, <strong>une salle de repos à droite</strong>, et le second simulateur de combat Shinra à gauche <em>(partie <strong>24</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Le Barillet niveau 1 — incubation des échantillons</strong></td>
+<td><strong>La matéria Vénéfice</strong>, dans un passage à droite parmi les incubateurs</td>
+</tr>
+<tr>
+<td><strong>Le Barillet niveau 2 — section 1 : passage B</strong></td>
+<td><strong>Coffre 05</strong>, à droite par les incubateurs</td>
+</tr>
+<tr>
+<td><strong>Le Barillet niveau 3 — section 1 : passage C</strong></td>
+<td><strong>Coffre 06</strong> : <strong>la Lame jumelée</strong></td>
+</tr>
+<tr>
+<td><strong>Le Barillet niveau 4 — salle de monitoring</strong></td>
+<td><strong>Coffre 07</strong></td>
+</tr>
+<tr>
+<td><strong>Le Barillet niveau 4 — terminal central de contrôle</strong></td>
+<td><strong>La matéria Chronomancie</strong>, derrière les terminaux</td>
+</tr>
+<tr>
+<td><strong>Le Barillet niveau 6 — section 3 : passage F</strong></td>
+<td><strong>Coffre 08</strong>, par le levier de gauche</td>
+</tr>
+<tr>
+<td><strong>Laboratoire n°3 — dressage des spécimens</strong></td>
+<td><strong>Coffres 09 et 10</strong></td>
+</tr>
+<tr>
+<td><strong>Laboratoire n°3 — stockage de nourriture</strong></td>
+<td><strong>Coffre 11</strong>, dans une cage derrière la grande porte de gauche</td>
+</tr>
+<tr>
+<td><strong>Laboratoire n°3 — installations de tuyauterie</strong></td>
+<td><strong>Coffre 12</strong>, en suivant les canalisations</td>
+</tr>
+<tr>
+<td><strong>Le Barillet niveau 4 — section 3 : passage E</strong></td>
+<td><strong>Coffre 13</strong>, deux étages plus bas à droite</td>
+</tr>
+<tr>
+<td><strong>Le Barillet niveau 4 — section 2 : passage D</strong></td>
+<td><strong>Coffre 14</strong>, plateforme de l'entrée du laboratoire n°2</td>
+</tr>
+<tr>
+<td><strong>Laboratoire n°2 — tests biologiques</strong></td>
+<td><strong>Coffre 15</strong>, derrière des caisses à droite du couloir</td>
+</tr>
+<tr>
+<td><strong>Le Barillet niveau 5 — passerelle d'observation</strong></td>
+<td><strong>Coffres 16 et 17</strong>, et <strong>la Capsule cérébrale</strong></td>
+</tr>
+<tr>
+<td><strong>Le Barillet niveau 8 — laboratoire n°4 : canalisation 1</strong></td>
+<td><strong>Coffre 18</strong>, à gauche dans la canalisation</td>
+</tr>
+<tr>
+<td><strong>Les quartiers du président</strong></td>
+<td><strong>Un banc et une machine</strong>, puis Jenova Pulsation</td>
+</tr>
+<tr>
+<td><strong>La terrasse</strong></td>
+<td>Rufus et Ténébro, puis <strong>l'Hectocanonnier</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-18" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bâton en métal renforcé</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Aerith</span></td>
+<td><strong>Coffre 01</strong> — <strong>immédiatement à gauche, dans la chambre d'Aerith</strong>, au tout début du chapitre</td>
+<td><strong>La dernière arme d'Aerith</strong> <em>(partie <strong>21</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Lame jumelée</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cloud</span></td>
+<td><strong>Coffre 06</strong> — <strong>Barillet niveau 3, passage C</strong> : <strong>sur la gauche, avant les escaliers</strong>, juste après avoir retrouvé Barret</td>
+<td>La dernière arme de Cloud</td>
+</tr>
+<tr>
+<td><strong>Matéria Vénéfice</strong></td>
+<td><span class="badge neutre">Matéria verte</span></td>
+<td><strong>Barillet niveau 1</strong> : <strong>passage sur la droite parmi les incubateurs</strong>, <strong>juste avant l'échelle</strong></td>
+<td><strong>Empoisonne</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Chronomancie</strong></td>
+<td><span class="badge neutre">Matéria verte</span></td>
+<td><strong>Terminal central de contrôle, niveau 4</strong> : <strong>derrière les terminaux</strong>, avec <strong>Cloud et Barret</strong></td>
+<td><strong>Hâte, Lenteur, Arrêt</strong> ; <strong>effet exact à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Bracelet de puissance</strong></td>
+<td><span class="badge neutre">Bracelet</span></td>
+<td><strong>Coffre 11</strong> — <strong>laboratoire n°3, stockage de nourriture</strong> : <strong>grande porte de gauche</strong>, le coffre est <strong>enfermé dans une cage</strong></td>
+<td>Effet exact à vérifier en jeu</td>
+</tr>
+<tr>
+<td><strong>Bracelet mystique</strong></td>
+<td><span class="badge neutre">Bracelet</span></td>
+<td><strong>Coffre 15</strong> — <strong>laboratoire n°2</strong> : <strong>derrière des caisses, à droite du couloir</strong>, après les deux Zenene</td>
+<td>Effet exact à vérifier en jeu</td>
+</tr>
+<tr>
+<td><strong>Bracelet connectif</strong></td>
+<td><span class="badge neutre">Bracelet</span></td>
+<td><strong>Coffre 17</strong> — <strong>passerelle d'observation</strong> : <strong>à droite de l'escalier</strong>, en suivant Hojo</td>
+<td>Effet exact à vérifier en jeu</td>
+</tr>
+<tr>
+<td><strong>Bague batracienne</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td><strong>Coffre 02</strong> — <strong>première chambre à gauche</strong> en sortant de celle d'Aerith</td>
+<td>Effet exact à vérifier en jeu</td>
+</tr>
+<tr>
+<td><strong>Queue de Phénix</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 03</strong> — <strong>seconde chambre à droite</strong></td>
+<td>Soigne l'état K.O.</td>
+</tr>
+<tr>
+<td><strong>Éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 04</strong> — juste avant la sortie de la zone d'internement</td>
+<td>Rend des PM</td>
+</tr>
+<tr>
+<td><strong>Queue de Phénix</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 05</strong> — <strong>Barillet niveau 2</strong> : <strong>à droite par les incubateurs</strong>, avant de faire traverser Rouge XIII</td>
+<td>Soigne l'état K.O.</td>
+</tr>
+<tr>
+<td><strong>3 000 gils</strong></td>
+<td><span class="badge gils">Argent</span></td>
+<td><strong>Coffre 07</strong> — <strong>salle de monitoring, niveau 4</strong> : <strong>petite pièce à droite</strong> après le passage ouvert par Rouge XIII</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 08</strong> — <strong>niveau 6, passage F</strong> : <strong>levier tout à gauche</strong> de la plateforme du laboratoire n°3</td>
+<td>Rend des PM</td>
+</tr>
+<tr>
+<td><strong>Méga-Potion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 09</strong> — <strong>salle des cages</strong> : <strong>renfoncement à droite</strong></td>
+<td><strong>Gros soin</strong></td>
+</tr>
+<tr>
+<td><strong>5 000 gils</strong></td>
+<td><span class="badge gils">Argent</span></td>
+<td><strong>Coffre 10</strong> — <strong>couloir après les molosses</strong> : <strong>sur la gauche</strong></td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Méga-Potion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 12</strong> — <strong>installations de tuyauterie</strong> : <strong>échelle puis canalisations</strong></td>
+<td><strong>Gros soin</strong></td>
+</tr>
+<tr>
+<td><strong>Éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 13</strong> — <strong>Barillet niveau 4, passage E</strong> : <strong>descendre deux étages sur la droite</strong> en ressortant du laboratoire 3</td>
+<td>Rend des PM</td>
+</tr>
+<tr>
+<td><strong>Méga-Potion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 14</strong> — <strong>plateforme de l'entrée du laboratoire n°2</strong></td>
+<td><strong>Gros soin</strong></td>
+</tr>
+<tr>
+<td><strong>Remède ×2</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 16</strong> — <strong>passerelle d'observation</strong> : <strong>tout à droite</strong>, salle de contrôle la plus au fond</td>
+<td>Soigne toutes les altérations</td>
+</tr>
+<tr>
+<td><strong>Méga-Potion ×2</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Coffre 18</strong> — <strong>laboratoire n°4, canalisation 1</strong> : <strong>à gauche</strong> en haut des marches</td>
+<td><strong>Gros soin</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-18" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="les-deux-armes-du-chapitre-et-ou-elles-sont">Les deux armes du chapitre, et où elles sont</h3>
+<p>Ce chapitre contient les dernières armes de Cloud et d'Aerith. Avec les Gants majestueux et le Pulsateur du chapitre 16, tes quatre personnages ont alors leur arsenal complet <em>(partie <strong>21</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Arme</th>
+<th>Personnage</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bâton en métal renforcé</strong></td>
+<td>Aerith</td>
+<td><strong>Coffre 01</strong>, immédiatement à gauche au début du chapitre</td>
+</tr>
+<tr>
+<td><strong>Lame jumelée</strong></td>
+<td>Cloud</td>
+<td><strong>Coffre 06</strong>, Barillet niveau 3, à gauche avant les escaliers</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-faiblesses-du-chapitre-8">Les faiblesses du chapitre</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ennemi</th>
+<th>Faiblesse</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sans-Nom</strong></td>
+<td><strong>Glace</strong></td>
+</tr>
+<tr>
+<td><strong>Zenene</strong></td>
+<td><strong>non documentée</strong></td>
+</tr>
+<tr>
+<td><strong>Lacérateur</strong></td>
+<td><strong>non documentée</strong> ; <strong>tuer ses drones d'abord</strong></td>
+</tr>
+<tr>
+<td><strong>Marteleur</strong></td>
+<td><strong>Foudre</strong> ; il disparaît dans le sol et lance Stop</td>
+</tr>
+<tr>
+<td><strong>Capsule cérébrale</strong></td>
+<td><strong>non documentée</strong> ; <strong>elle se clone à mi-vie</strong></td>
+</tr>
+<tr>
+<td><strong>Jenova Pulsation</strong></td>
+<td><strong>aucune</strong> ; <strong>cibler les tentacules</strong></td>
+</tr>
+<tr>
+<td><strong>Ténébro</strong></td>
+<td><strong>aucune</strong> ; <strong>résiste à la Foudre</strong></td>
+</tr>
+<tr>
+<td><strong>Rufus</strong></td>
+<td><strong>aucune</strong> ; <strong>le frapper quand il recharge</strong></td>
+</tr>
+<tr>
+<td><strong>Hectocanonnier</strong></td>
+<td>Tous les éléments ; <strong>modules → corps → roues</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-trois-boss-en-un-tableau">Les trois boss, en un tableau</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th></th>
+<th>Jenova Pulsation</th>
+<th>Rufus et Ténébro</th>
+<th>Hectocanonnier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qui tu contrôles</strong></td>
+<td>L'équipe</td>
+<td>Cloud seul</td>
+<td>Barret et Aerith</td>
+</tr>
+<tr>
+<td><strong>Point faible</strong></td>
+<td>Les tentacules</td>
+<td>Ténébro d'abord</td>
+<td>Les modules, puis les roues</td>
+</tr>
+<tr>
+<td><strong>Son sale coup</strong></td>
+<td>Galaxies au sol, <strong>invincibilité</strong>, <strong>poison du plafond</strong></td>
+<td>Ténébro immobilise, Rufus contre tout</td>
+<td>Lasers à tête chercheuse, <strong>l'énorme attaque finale</strong></td>
+</tr>
+<tr>
+<td><strong>La clé</strong></td>
+<td><strong>Tentacules → Lésion → Choc</strong></td>
+<td>Éloigner Ténébro de Rufus ; <strong>frapper Rufus quand il recharge</strong></td>
+<td><strong>Se planquer derrière le pilier</strong> avant l'attaque finale</td>
+</tr>
+<tr>
+<td><strong>Préparation</strong></td>
+<td>Transcendance + invocation chargées</td>
+<td><strong>Pas de Foudre</strong></td>
+<td>Carré pendant la cinématique ; <strong>toute la magie</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-pieges-du-chapitre-17">Les pièges du chapitre</h3>
+<ul>
+<li>Partir de la chambre d'Aerith sans le coffre 01. C'est la dernière arme d'Aerith, à un mètre de toi.</li>
+<li>Monter les escaliers du niveau 3 sans regarder à gauche. La Lame jumelée est là.</li>
+<li class="alerte">⚠️ Faire traverser Rouge XIII avant d'avoir pris le coffre 05.</li>
+<li>Switcher de groupe sans avoir fouillé. Chaque groupe a ses propres coffres, et tu ne reviens pas.</li>
+<li class="alerte">⚠️ <strong>Rater la matéria Vénéfice</strong> du niveau 1, dans un passage à droite juste avant l'échelle.</li>
+<li class="alerte">⚠️ <strong>Rater la matéria Chronomancie</strong>, derrière les terminaux du terminal central.</li>
+<li>Oublier le banc des quartiers du président. <strong>Trois boss d'affilée arrivent.</strong></li>
+<li>Ne pas appuyer sur Carré pendant la cinématique de l'Hectocanonnier.</li>
+<li><strong>Lancer de la Foudre sur Ténébro.</strong></li>
+<li>Rester à découvert pendant l'attaque finale de l'Hectocanonnier. <strong>Elle anéantit l'équipe.</strong></li>
+<li><strong>Attaquer Rufus de front.</strong> Il contre tout. Attends qu'il recharge.</li>
+</ul>
+<h2 id="alertes-18" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Manquable majeur</strong> : le Bâton en métal renforcé <em>(coffre 01)</em>, <strong>la dernière arme d'Aerith</strong>.</li>
+<li class="alerte">⚠️ <strong>Manquable majeur</strong> : <strong>la Lame jumelée</strong> <em>(coffre 06)</em>, la dernière arme de Cloud.</li>
+<li class="alerte">⚠️ <strong>Manquables</strong> : <strong>la matéria Vénéfice</strong> <em>(niveau 1)</em> et <strong>la matéria Chronomancie</strong> <em>(terminal central)</em>.</li>
+<li class="alerte">⚠️ <strong>À repérer pour la seconde partie</strong> : le second simulateur de combat Shinra, à gauche en montant depuis la chambre d'Aerith. C'est le seul accès aux défis du mode Difficile, dont <strong>les quatre manuscrits XIII</strong> et <strong>le Götterdämmerung</strong> <em>(partie <strong>24</strong>)</em>.</li>
+<li class="alerte manquable">⏳ <strong>Manquables</strong> : les dix-huit coffres du chapitre. Le Barillet n'est jamais revisitable, et chaque groupe ne repasse pas par les zones de l'autre.</li>
+<li class="alerte">⚠️ <strong>Préparation obligatoire avant la série de boss</strong> : utilise le banc des quartiers du président ; assure-toi que Transcendances et invocation sont chargées.</li>
+<li class="alerte">⚠️ Appuie sur Carré pendant la cinématique de l'Hectocanonnier : c'est ta seule fenêtre de préparation.</li>
+<li class="alerte">⚠️ <strong>Compositions imposées</strong> : Cloud seul contre Rufus et Ténébro, Barret et Aerith contre l'Hectocanonnier. Équipe tout le monde correctement avant la terrasse.</li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : les <strong>effets exacts</strong> du <strong>Bracelet de puissance</strong>, du <strong>Bracelet mystique</strong>, du <strong>Bracelet connectif</strong> et de la <strong class="objet">Bague batracienne</strong>.</li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : les faiblesses du Zenene, du Lacérateur et de la Capsule cérébrale.</li>
+<li class="alerte">⚠️ <strong>Divergence de nommage</strong> : jeuxvideo.com écrit « Jenova Pulsation » ici et « Jenova Pulsation » sur sa page de boss. Le guide retient Jenova Pulsation.</li>
+<li class="alerte">⚠️ <strong>Divergence de nommage</strong> : jeuxvideo.com écrit « Tenebro » sans accent. <strong>Le guide retient Ténébro</strong>, et marque le nom « à vérifier en jeu ».</li>
+<li class="alerte">⚠️ <strong>Coquille de source</strong> : le déroulé de jeuxvideo.com écrit « laboratoire d'Hoko » et <strong>« Batôn en Métal Renforcé »</strong>. Le guide rétablit Hojo et Bâton en métal renforcé.</li>
+<li class="alerte manquable">⏳ Pas de point de non-retour interne, mais l'alternance entre les deux groupes est à sens unique : une zone quittée ne se revisite pas.</li>
+</ul>
+<h2 id="check-list-18" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="les-dix-huit-coffres">Les dix-huit coffres</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Coffre 01</strong> — <strong>le Bâton en métal renforcé</strong> <em>(chambre d'Aerith, à gauche)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 02</strong> — 1 Bague batracienne <em>(1re chambre à gauche)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 03</strong> — 1 Queue de Phénix <em>(2e chambre à droite)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 04</strong> — 1 Éther <em>(sortie de la zone d'internement)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 05</strong> — 1 Queue de Phénix <em>(niveau 2, à droite par les incubateurs)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 06</strong> — <strong>la Lame jumelée</strong> <em>(niveau 3, à gauche avant les escaliers)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 07</strong> — 3 000 gils <em>(salle de monitoring, pièce à droite)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 08</strong> — 1 Éther <em>(levier de gauche, laboratoire n°3)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 09</strong> — 1 Méga-Potion <em>(renfoncement à droite, salle des cages)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 10</strong> — 5 000 gils <em>(couloir après les molosses, à gauche)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 11</strong> — <strong>1 Bracelet de puissance</strong> <em>(cage derrière la grande porte de gauche)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 12</strong> — 1 Méga-Potion <em>(canalisations après l'échelle)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 13</strong> — 1 Éther <em>(niveau 4, deux étages plus bas à droite)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 14</strong> — 1 Méga-Potion <em>(plateforme du laboratoire n°2)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 15</strong> — <strong>1 Bracelet mystique</strong> <em>(derrière les caisses, à droite)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 16</strong> — 2 Remèdes <em>(tout à droite, salle de contrôle du fond)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 17</strong> — <strong>1 Bracelet connectif</strong> <em>(à droite de l'escalier)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Coffre 18</strong> — 2 Méga-Potions <em>(canalisation de gauche, laboratoire n°4)</em></li>
+</ul>
+<h3 id="les-deux-materias-4">Les deux matérias</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Matéria Vénéfice</strong> <em>(Barillet niveau 1, passage à droite)</em></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Matéria Chronomancie</strong> <em>(derrière les terminaux, niveau 4)</em></li>
+</ul>
+<h3 id="les-armes-equipees">Les armes équipées</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong class="objet">Bâton en métal renforcé</strong> sur Aerith</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Lame jumelée</strong> sur Cloud</li>
+<li class="tache"><input type="checkbox"> <strong>Compétences d'armes</strong> utilisées pour les acquérir</li>
+</ul>
+<h3 id="les-combats-5">Les combats</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Second simulateur de combat Shinra</strong> repéré <em>(à gauche en montant)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Sans-Nom</strong> battus</li>
+<li class="tache"><input type="checkbox"> <strong>Deux Zenene</strong> battus</li>
+<li class="tache"><input type="checkbox"> <strong>Lacérateur et ses drones</strong> battus</li>
+<li class="tache"><input type="checkbox"> <strong>Marteleurs</strong> battus <em>(Foudre)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Capsule cérébrale</strong> battue</li>
+<li class="tache"><input type="checkbox"> <strong>Le monstre du laboratoire n°4</strong> battu <em>(en deux temps)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Jenova Pulsation</strong> vaincue</li>
+<li class="tache"><input type="checkbox"> <strong>Rufus et Ténébro</strong> vaincus</li>
+<li class="tache"><input type="checkbox"> <strong>Hectocanonnier</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> <strong>Chapitre terminé</strong></li>
+</ul>
+<h3 id="pour-les-rapports-de-chadley-14">Pour les rapports de Chadley</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Zenene</strong> analysé</li>
+<li class="tache"><input type="checkbox"> <strong>Lacérateur</strong> analysé</li>
+<li class="tache"><input type="checkbox"> <strong>Marteleur</strong> analysé</li>
+<li class="tache"><input type="checkbox"> <strong>Capsule cérébrale</strong> analysée</li>
+<li class="tache"><input type="checkbox"> <strong>Jenova Pulsation</strong> analysée</li>
+<li class="tache"><input type="checkbox"> <strong>Hectocanonnier</strong> analysé</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="chapitre-16-infiltration-de-la-tour-shinra.html" rel="prev"><small>← Partie précédente</small><b>Chapitre 16 : Infiltration de la tour Shinra</b></a><a class="suiv" href="chapitre-18-singularite-du-destin.html" rel="next"><small>Partie suivante →</small><b>Chapitre 18 : Singularité du destin</b></a><a class="tout" href="final-fantasy-vii-remake.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Remake · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

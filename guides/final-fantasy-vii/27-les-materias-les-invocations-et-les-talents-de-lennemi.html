@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les Matérias, les invocations et les Talents de l&#x27;ennemi – Guide Final Fantasy VII</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII, Les Matérias, les invocations et les Talents de l&#x27;ennemi : À ne pas rater : Boîte-Pandore (une seule occasion), Trine avant Godo, Vol…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii/27-les-materias-les-invocations-et-les-talents-de-lennemi.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Les Matérias, les invocations et les Talents de l&#x27;ennemi · Guide Final Fantasy VII">
+<meta property="og:description" content="Final Fantasy VII, Les Matérias, les invocations et les Talents de l&#x27;ennemi : À ne pas rater : Boîte-Pandore (une seule occasion), Trine avant Godo, Vol…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii/27-les-materias-les-invocations-et-les-talents-de-lennemi.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii/"}, {"@type": "ListItem", "position": 3, "name": "Les Matérias, les invocations et les Talents de l'ennemi", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii/27-les-materias-les-invocations-et-les-talents-de-lennemi.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii" class="compact" data-partie="27-les-materias-les-invocations-et-les-talents-de-lennemi"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII</a><span aria-hidden="true">›</span><span>Partie 27</span></nav>
+<p class="gjv-jeu">Final Fantasy VII : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy <em>VII</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction.html"><span class="num">00</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-le-reacteur-n1-et-le-secteur-7.html"><span class="num">01</span><span class="libelle">Le réacteur n°1 et le Secteur 7</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-le-reacteur-n5-et-les-taudis-du-secteur-5.html"><span class="num">02</span><span class="libelle">Le réacteur n°5 et les taudis du Secteur 5</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-wall-market-et-le-palais-de-don-corneo.html"><span class="num">03</span><span class="libelle">Wall Market et le palais de Don Cornéo</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-les-egouts-le-cimetiere-des-trains-et-le-pilier.html"><span class="num">04</span><span class="libelle">Les égouts, le cimetière des trains et le pilier</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-le-batiment-shinra.html"><span class="num">05</span><span class="libelle">Le Bâtiment Shinra</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-kalm-et-le-passe-de-clad.html"><span class="num">06</span><span class="libelle">Kalm et le passé de Clad</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-le-marais-la-mine-de-mythril-et-junon.html"><span class="num">07</span><span class="libelle">Le marais, la Mine de Mythril et Junon</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-la-traversee-de-locean-et-costa-del-sol.html"><span class="num">08</span><span class="libelle">La traversée de l&#x27;océan et Costa del Sol</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-le-mont-corel-et-le-gold-saucer.html"><span class="num">09</span><span class="libelle">Le Mont Corel et le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-la-prison-du-desert.html"><span class="num">10</span><span class="libelle">La prison du désert</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="11-gongaga-et-le-canyon-cosmo.html"><span class="num">11</span><span class="libelle">Gongaga et le Canyon Cosmo</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-nibelheim-et-le-mont-nibel.html"><span class="num">12</span><span class="libelle">Nibelheim et le Mont Nibel</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="13-le-village-de-la-fusee-et-la-cle-de-pierre.html"><span class="num">13</span><span class="libelle">Le Village de la Fusée et la Clé de pierre</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="14-le-temple-des-anciens.html"><span class="num">14</span><span class="libelle">Le Temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="15-le-village-des-ossements-et-la-cite-des-anciens.html"><span class="num">15</span><span class="libelle">Le Village des ossements et la Cité des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="16-la-vallee-de-corral-le-village-glacon-et-le-grand-glacier.html"><span class="num">16</span><span class="libelle">La Vallée de Corral, le Village Glaçon et le Grand Glacier</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="17-la-falaise-de-gaea-et-le-labyrinthe-tornade.html"><span class="num">17</span><span class="libelle">La Falaise de Gaëa et le Labyrinthe Tornade</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="18-la-fuite-de-junon-et-mideel.html"><span class="num">18</span><span class="libelle">La fuite de Junon et Mideel</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="19-mideel-le-train-a-charbon-et-le-fort-condor.html"><span class="num">19</span><span class="libelle">Mideel, le train à charbon et le Fort Condor</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="20-le-reacteur-sous-marin-et-le-voyage-dans-lespace.html"><span class="num">20</span><span class="libelle">Le réacteur sous-marin et le voyage dans l&#x27;espace</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="21-les-souterrains-du-secteur-8.html"><span class="num">21</span><span class="libelle">Les souterrains du Secteur 8</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="22-la-grotte-nord-et-laffrontement-final.html"><span class="num">22</span><span class="libelle">La Grotte Nord et l&#x27;affrontement final</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="23-les-personnages-secrets-youfie-et-vincent.html"><span class="num">23</span><span class="libelle">Les personnages secrets : Youfie et Vincent</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="24-le-gold-saucer-et-ses-jeux.html"><span class="num">24</span><span class="libelle">Le Gold Saucer et ses jeux</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="25-lelevage-de-chocobos-et-les-grottes-a-materia.html"><span class="num">25</span><span class="libelle">L&#x27;élevage de chocobos et les grottes à Matéria</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="26-les-armes-ultimes-et-les-limites-niveau-4.html"><span class="num">26</span><span class="libelle">Les armes ultimes et les Limites niveau 4</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="#27-les-materias-les-invocations-et-les-talents-de-lennemi"><span class="num">27</span><span class="libelle">Les Matérias, les invocations et les Talents de l&#x27;ennemi</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="28-lavion-gelnika-et-les-armes.html"><span class="num">28</span><span class="libelle">L&#x27;avion Gelnika et les Armes</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="99-annexes.html"><span class="num">99</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="sources.html"><span class="num">✦</span><span class="libelle">Sources</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-28">
+<header class="tete-section">
+<p class="eyebrow">Partie 27</p>
+<h1 id="27-les-materias-les-invocations-et-les-talents-de-lennemi">Les Matérias, les invocations et les Talents de l&#x27;ennemi</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-28"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-28">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>À ne pas rater</strong> : <strong>Boîte-Pandore</strong> (une seule occasion), <strong>Trine</strong> avant Godo, <strong>Vol simultané</strong> avec les Écailles-Léviathan.</li>
+<li><strong>Attention</strong> : <strong class="objet">Kjata</strong> fuit dans la Forêt endormie, ne quitte pas la zone sans elle.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-28" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Tout savoir sur les <strong>83 Matérias</strong> jouables : où trouver chacune, lesquelles sont <strong>uniques</strong>, comment les combiner, et comment compléter les <strong>24 Talents de l'ennemi</strong>. Ce chapitre sert aussi de mémo pour la <strong>quête du voyageur de Kalm</strong> et les <strong>Méga-Matérias</strong> de Bugenhagen, qui distribuent les trois Matérias « maîtresses ».</p>
+<h2 id="itineraire-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Les bases</strong> : les cinq familles de Matérias, les AP, le niveau maître.</li>
+<li><strong>Les 17 invocations</strong>, puis les Matérias magiques, de commande, de soutien et indépendantes.</li>
+<li><strong>Les combinaisons</strong> qui valent vraiment la peine.</li>
+<li><strong>Le voyageur de Kalm</strong> et <strong>les quatre Méga-Matérias</strong>.</li>
+<li><strong>Les 24 Talents de l'ennemi</strong>.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="les-bases-2">Les bases</h3>
+<ol>
+<li><strong>Cinq familles</strong> de Matérias, reconnaissables à leur couleur :
+<ul>
+<li><strong>vertes</strong> (22 magiques) : des sorts qui coûtent des MP ;</li>
+<li><strong>jaunes</strong> (14 de commande) : de nouvelles commandes en combat, dont les Talents de l'ennemi ;</li>
+<li><strong>rouges</strong> (17 d'invocation) : des invocations utilisables une à cinq fois par combat selon leur niveau ;</li>
+<li><strong>violettes</strong> (17 indépendantes) : des bonus permanents au personnage ;</li>
+<li><strong>bleues</strong> (13 de soutien) : elles modifient la Matéria <strong>reliée</strong> sur le même <strong>double-orifice</strong>.</li>
+</ul>
+</li>
+<li><strong>Les AP</strong> (points d'aptitude) font monter les Matérias. Une arme ou une armure peut donner des AP <strong>nuls, simples, doubles ou triples</strong> : seules <strong>Apocalypse</strong> (Clad) et <strong>Cimeterre</strong> (Cid) les triplent.</li>
+<li><strong>Au niveau maître</strong>, une Matéria <strong>engendre une copie neuve</strong> au niveau 1. C'est le seul moyen de dupliquer une Matéria unique comme Bahamut ZÉRO.</li>
+<li><strong>Les invocations se revendent 1 Gil</strong>, et plusieurs Matérias magiques maîtres valent une fortune à la revente (jusqu'à <strong>1 400 000 Gils</strong> pour Tout, Super vitesse, Super magie ou Comète maître). C'est la meilleure source de Gils de fin de partie.</li>
+</ol>
+<h3 id="les-17-invocations">Les 17 invocations</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Invocation</th>
+<th>Où l'obtenir</th>
+<th>Unique ?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Choco/Mog</strong></td>
+<td>Dis « Wark » à un chocobo de l'enclos, Ferme de chocobos</td>
+<td>Non</td>
+</tr>
+<tr>
+<td><strong>Shiva</strong></td>
+<td>Priscilla te la donne à Junon après son sauvetage</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Ifrit</strong></td>
+<td>Après Jénova·NAISSANCE, dans le cargo</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Ramuh</strong></td>
+<td><strong>Salle d'attente du Chocobo Square</strong>, après la prison du désert</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Titan</strong></td>
+<td>Touche <strong>ce qui brille</strong> dans un trou du réacteur de Gongaga</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Odin</strong></td>
+<td>Après Numéro perdu, coffre-fort du manoir de Nibelheim</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Léviathan</strong></td>
+<td>Après Godo, dernier étage de la Tour pagode</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Bahamut</strong></td>
+<td>Après le Dragon rouge, Temple des Anciens</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Kjata</strong></td>
+<td>Elle <strong>roule et se téléporte</strong> dans la Forêt endormie, avant la Cité des Anciens</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Alexandre</strong></td>
+<td>Après l'ennemi Neige, dans une grotte du Grand Glacier</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Néo Bahamut</strong></td>
+<td>Au début du Labyrinthe Tornade</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Phénix</strong></td>
+<td>Après la dernière bataille du Fort Condor, disque 2</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Hadès</strong></td>
+<td>Grande salle de l'<strong>avion Gelnika</strong></td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Typoon</strong></td>
+<td>Forêt Ancienne, branchages supérieurs</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Bahamut ZÉRO</strong></td>
+<td><strong>Méga-Matéria bleue</strong>, avec Bahamut et Néo Bahamut en inventaire</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Chevaliers de la Table Ronde</strong></td>
+<td><strong>Grotte à Matéria de l'Île Ronde</strong> (chocobo doré)</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Invocation maître</strong></td>
+<td><strong>Méga-Matéria rouge</strong>, ou le voyageur de Kalm</td>
+<td>Oui</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="5">
+<li class="alerte">⚠️ <strong>Kjata ne se ramasse pas comme les autres</strong> : dans la Forêt endormie, elle file et réapparaît ailleurs. Attends qu'elle roule vers toi et valide au bon moment.</li>
+</ol>
+<h3 id="les-materias-magiques-vertes">Les Matérias magiques (vertes)</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Matéria</th>
+<th>Magies</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Glace</strong>, <strong>Foudre</strong></td>
+<td>Glace, Éclair et leurs niveaux 2 et 3</td>
+<td>Déjà équipées sur Clad ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Feu</strong></td>
+<td>Feu, Feu2, Feu3</td>
+<td>Déjà équipée sur Nanaki ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Restaurer</strong></td>
+<td>Guéri, Guéri2, Regen, Guéri3</td>
+<td>Réacteur n°1 ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Terre</strong></td>
+<td>Trembl, Trembl2, Trembl3</td>
+<td>Boutiques (Kalm, Junon)</td>
+</tr>
+<tr>
+<td><strong>Poison</strong></td>
+<td>Bio, Bio2, Bio3</td>
+<td><strong>67e étage du Bâtiment Shinra</strong> ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Guérir</strong></td>
+<td>Poisona, Esuna, Résist.</td>
+<td>Boutiques (Kalm, Junon, Gongaga)</td>
+</tr>
+<tr>
+<td><strong>Sceller</strong></td>
+<td>Slipel, Silence</td>
+<td>Boutiques (Junon, Costa del Sol)</td>
+</tr>
+<tr>
+<td><strong>Ranimer</strong></td>
+<td>Vie, Vie2</td>
+<td>Boutiques (Junon, Costa del Sol)</td>
+</tr>
+<tr>
+<td><strong>Transformation</strong></td>
+<td>Mini, Crapaud</td>
+<td>Déjà équipée sur Cait Sith ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Gravité</strong></td>
+<td>Demi, Demi2, Demi3</td>
+<td>Grotte Gi, après Gi Nattak ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Mystifier</strong></td>
+<td>Confus, Folie</td>
+<td>Boutiques (Gongaga, Canyon Cosmo)</td>
+</tr>
+<tr>
+<td><strong>Destruction</strong></td>
+<td>AntiBarr, AntiSort, Mort</td>
+<td>Séphiroth te la donne, sous-sol du manoir de Nibelheim (CD1) ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Temps</strong></td>
+<td>Hâte, Lent, Stop</td>
+<td>Boutiques (Gongaga, Village de la Fusée)</td>
+</tr>
+<tr>
+<td><strong>Barrière</strong></td>
+<td>Barrière, BarrM, Reflet, Mur</td>
+<td>Boutiques (Village de la Fusée)</td>
+</tr>
+<tr>
+<td><strong>Quitter</strong></td>
+<td>Escapade, Retrait</td>
+<td>Boutiques (Village de la Fusée)</td>
+</tr>
+<tr>
+<td><strong>Comète</strong></td>
+<td>Comète, Comète2</td>
+<td>Cité des Anciens, en haut de la grande maison en coquillage</td>
+</tr>
+<tr>
+<td><strong>Contenir</strong></td>
+<td>Gel, Rupture, Tornade, Rafale</td>
+<td>Chocobo blanc de Mideel (Légume Mimett, puis les oreilles)</td>
+</tr>
+<tr>
+<td><strong>Guérison Max</strong></td>
+<td>GuériMax</td>
+<td><strong>Arrière-boutique du magasin d'éléments, Canyon Cosmo</strong> (CD2)</td>
+</tr>
+<tr>
+<td><strong>Bouclier</strong></td>
+<td>Bouclier</td>
+<td>Grotte Nord, chemin gauche-haut</td>
+</tr>
+<tr>
+<td><strong>Ultima</strong></td>
+<td>Ultima</td>
+<td>Le garçon de Corel Nord après le train à charbon (ou 50 000 Gils)</td>
+</tr>
+<tr>
+<td><strong>Magie maîtresse</strong></td>
+<td>Toutes</td>
+<td><strong>Méga-Matéria verte</strong>, ou le voyageur de Kalm</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-materias-de-commande-jaunes">Les Matérias de commande (jaunes)</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Matéria</th>
+<th>Commande</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Voler</strong></td>
+<td>Voler, puis Assaut</td>
+<td><strong>Égouts du Secteur 7</strong>, après Wall Market ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Sentir</strong></td>
+<td>Sentir (analyse de l'ennemi)</td>
+<td><strong>Aire de jeu du Secteur 6</strong>, après le pilier ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Lancer</strong></td>
+<td>Lancer, puis Argent</td>
+<td>Déjà équipée sur Youfie ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Coup mortel</strong></td>
+<td>CoupM</td>
+<td><strong>Au bout de la jungle de Gongaga</strong> ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Trans.</strong></td>
+<td>Transforme l'ennemi en objet</td>
+<td>Temple des Anciens, salle des pierres roulantes</td>
+</tr>
+<tr>
+<td><strong>Attaque double</strong></td>
+<td>2x, puis 4x</td>
+<td>Avion Gelnika, petite salle sous la passerelle</td>
+</tr>
+<tr>
+<td><strong>FurieMax</strong></td>
+<td>Attaque de zone</td>
+<td>Forêt Ancienne, deuxième écran</td>
+</tr>
+<tr>
+<td><strong>Manipuler</strong></td>
+<td>Manip.</td>
+<td>Déjà équipée sur Cait Sith ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Mimer</strong></td>
+<td>Répète l'action précédente</td>
+<td>Grotte à Matéria d'Utai (chocobo vert)</td>
+</tr>
+<tr>
+<td><strong>Elément-W</strong></td>
+<td>Deux objets par tour</td>
+<td><strong>Tout au sud des souterrains du Secteur 8</strong> (CD2)</td>
+</tr>
+<tr>
+<td><strong>Magie-W</strong></td>
+<td>Deux magies par tour</td>
+<td>Grotte Nord, chemin gauche-haut</td>
+</tr>
+<tr>
+<td><strong>Invocation-W</strong></td>
+<td>Deux invocations par tour</td>
+<td>Battle Square, 64 000 BP (CD2)</td>
+</tr>
+<tr>
+<td><strong>Talent de l'ennemi</strong></td>
+<td>TalentE</td>
+<td><strong>68e étage du Bâtiment Shinra</strong> après Specimen H0512 ; puis trois autres exemplaires</td>
+</tr>
+<tr>
+<td><strong>Commande maître</strong></td>
+<td>Voler, Sentir, Argent, Trans., CoupM, Manip., Mimer</td>
+<td><strong>Méga-Matéria jaune</strong>, ou le voyageur de Kalm</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="6">
+<li><strong>Les quatre Matérias Talent de l'ennemi</strong> :
+<ul>
+<li><strong>Bâtiment Shinra, 68e étage</strong>, après le boss Specimen H0512 ;</li>
+<li><strong>Hall des débutants de la ville supérieure de Junon</strong> ;</li>
+<li><strong>Cité des Anciens</strong>, <strong>derrière un lit</strong> dans une maison en coquillage ;</li>
+<li><strong>le chocobo vert du Chocobo Sage</strong>, Région du Glaçon (« Qui va là ? »).</li>
+</ul>
+</li>
+</ol>
+<h3 id="les-materias-de-soutien-bleues">Les Matérias de soutien (bleues)</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Matéria</th>
+<th>Effet sur la Matéria reliée</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tout</strong></td>
+<td>Cible tout le groupe ou tous les ennemis</td>
+<td><strong>Hall des débutants du Secteur 7</strong> ; boutiques</td>
+</tr>
+<tr>
+<td><strong>El. Base</strong></td>
+<td>Élément sur l'arme ou résistance sur l'armure</td>
+<td><strong>62e étage du Bâtiment Shinra</strong> : réponds « Mako » au maire du premier coup ; piano de Tifa (CD2)</td>
+</tr>
+<tr>
+<td><strong>Effet supplémentaire</strong></td>
+<td>Statut infligé ou protection</td>
+<td>Grotte Gi, Canyon Cosmo</td>
+</tr>
+<tr>
+<td><strong>Absorption HP</strong></td>
+<td>Récupère 1/10 des dégâts en HP</td>
+<td>Maison aux chats d'Utai ; Grotte Nord</td>
+</tr>
+<tr>
+<td><strong>Absorption MP</strong></td>
+<td>Récupère 1/100 des dégâts en MP</td>
+<td>Magasin d'éléments d'Utai (volée puis rendue par Youfie)</td>
+</tr>
+<tr>
+<td><strong>Vol simultané</strong></td>
+<td>Vole en même temps que l'action</td>
+<td>Caverne du mont Da-chao, flammes éteintes</td>
+</tr>
+<tr>
+<td><strong>Coupure supplémentaire</strong></td>
+<td>Attaque physique après l'action</td>
+<td>Grand Glacier, dans la neige</td>
+</tr>
+<tr>
+<td><strong>Quadruple magie</strong></td>
+<td>Lance quatre fois</td>
+<td><strong>Grotte à Matéria de Mideel</strong></td>
+</tr>
+<tr>
+<td><strong>Turbo MP</strong></td>
+<td>Plus de puissance contre plus de MP</td>
+<td>Labyrinthe Tornade, après Jénova·MORT</td>
+</tr>
+<tr>
+<td><strong>Opposition Magie</strong></td>
+<td>Riposte avec la Matéria reliée</td>
+<td>Courses de chocobos classe A+ ; Grotte Nord, chemin gauche-bas</td>
+</tr>
+<tr>
+<td><strong>Opposition</strong></td>
+<td>Riposte avec la commande reliée</td>
+<td>Grotte Nord, salle au cœur brillant</td>
+</tr>
+<tr>
+<td><strong>Attaque Furtive</strong></td>
+<td>Agit dès le début du combat</td>
+<td>Courses de chocobos classes A et A+</td>
+</tr>
+<tr>
+<td><strong>Attaque Finale</strong></td>
+<td>Agit automatiquement à ta mort</td>
+<td><strong>Combat spécial du Battle Square</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-materias-independantes-violettes">Les Matérias indépendantes (violettes)</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Matéria</th>
+<th>Effet</th>
+<th>Où l'obtenir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Couverture</strong></td>
+<td>Protège les alliés faibles</td>
+<td><strong>Jardin près de la maison d'Aéris</strong>, Secteur 5</td>
+</tr>
+<tr>
+<td><strong>Appât-chocobo</strong></td>
+<td>Fait apparaître les chocobos</td>
+<td>Choco Billy (2 000 Gils) ; sud-est de l'enclos (CD2)</td>
+</tr>
+<tr>
+<td><strong>Longue portée</strong></td>
+<td>Toutes les commandes à distance</td>
+<td><strong>Mine de Mythril</strong>, chemin à droite de l'entrée</td>
+</tr>
+<tr>
+<td><strong>Contre-attaque</strong></td>
+<td>Riposte automatique</td>
+<td>Après le Gardien de Matéria, Mont Nibel ; courses A/A+</td>
+</tr>
+<tr>
+<td><strong>Prévention</strong></td>
+<td>Moins d'attaques-surprises</td>
+<td>Battle Square, 10 240 BP (début CD1)</td>
+</tr>
+<tr>
+<td><strong>Super chance</strong></td>
+<td>Chance +10 % à +50 %</td>
+<td>Temple des Anciens, salle du labyrinthe</td>
+</tr>
+<tr>
+<td><strong>Super vitesse</strong></td>
+<td>Dextérité +10 % à +50 %</td>
+<td>Battle Square (20 480 BP au début du CD1)</td>
+</tr>
+<tr>
+<td><strong>Super magie</strong></td>
+<td>Magie +10 % à +50 %</td>
+<td>Vallée de Corral, grotte au bas de la grande échelle</td>
+</tr>
+<tr>
+<td><strong>Super Gil</strong></td>
+<td>Gils ×2</td>
+<td>Wonder Square, <strong>1 000 GP</strong> (CD2)</td>
+</tr>
+<tr>
+<td><strong>Super EXP</strong></td>
+<td>EXP +50 % à +100 %</td>
+<td>Wonder Square, <strong>2 000 GP</strong> (CD2)</td>
+</tr>
+<tr>
+<td><strong>Super HP</strong></td>
+<td>HP max +10 % à +50 %</td>
+<td>Seconde parade de Junon, score entre 60 et 90 ; boutiques</td>
+</tr>
+<tr>
+<td><strong>Super MP</strong></td>
+<td>MP max +10 % à +50 %</td>
+<td>Boutiques</td>
+</tr>
+<tr>
+<td><strong>Appât-ennemi</strong></td>
+<td>Plus de combats</td>
+<td>Battle Square, 5 120 BP (début CD1)</td>
+</tr>
+<tr>
+<td><strong>Repousse-ennemi</strong></td>
+<td>Moins de combats</td>
+<td>Courses de chocobos, classes B, A et A+</td>
+</tr>
+<tr>
+<td><strong>HP&lt;–&gt;MP</strong></td>
+<td>Échange HP max et MP max</td>
+<td><strong>Grotte à Matéria de Corel Nord</strong> (chocobo noir)</td>
+</tr>
+<tr>
+<td><strong>Méga tous</strong></td>
+<td>Toutes les Matérias liées touchent tout le monde</td>
+<td>Grotte Nord, chemin gauche-bas</td>
+</tr>
+<tr>
+<td><strong>Sous-marin</strong></td>
+<td>Plus de limite de temps sous l'eau</td>
+<td>Le <strong>voyageur de Kalm</strong>, contre le <strong>Guide</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-combinaisons-qui-changent-une-partie">Les combinaisons qui changent une partie</h3>
+<ol start="7">
+<li><strong>Les incontournables</strong> (Matéria A + Matéria B sur un double-orifice) :
+<ul>
+<li><strong>Tout + Restaurer</strong> : soigne tout le groupe d'un coup ;</li>
+<li><strong>El. Base + Matéria élémentaire sur l'armure</strong> : résiste ou absorbe un élément ;</li>
+<li><strong>Effet supplémentaire + Odin sur l'arme</strong> : chance de tuer net à chaque coup ;</li>
+<li><strong>Absorption HP + Chevaliers de la Table Ronde</strong> : les HP remontent à fond après l'invocation ;</li>
+<li><strong>Absorption MP + Chevaliers de la Table Ronde</strong> : même chose pour les MP ;</li>
+<li><strong>Quadruple magie + Comète</strong> (niveau 2) : seize météores d'un coup ;</li>
+<li><strong>Opposition Magie + Guérison Max</strong> : soin complet à chaque coup reçu ;</li>
+<li><strong>Opposition + Mimer</strong> : répète en riposte la dernière action du groupe ;</li>
+<li><strong>Attaque Furtive + Quitter</strong> (niveau 2) : Retrait au premier tour, idéal pour capturer un chocobo ;</li>
+<li><strong>Attaque Finale + Phénix</strong> : l'équipe entière ressuscite quand ce personnage tombe ;</li>
+<li><strong>Vol simultané + Commande maître</strong> : vole après chaque commande.</li>
+</ul>
+</li>
+<li><strong>Le combo anti-Armes</strong> : <strong>Opposition Magie + Guérison Max</strong>, puis plusieurs <strong>Opposition + Mimer</strong> et <strong>Chevaliers de la Table Ronde + Absorption MP</strong>. Un personnage ainsi équipé est quasiment increvable, sauf s'il meurt d'un seul coup.</li>
+<li class="alerte">⚠️ Plafond caché : au-delà de <strong>huit Matérias à déclenchement automatique</strong> effectives (Contre-attaque, Opposition, Opposition Magie, Attaque Furtive, Attaque Finale), les suivantes <strong>ne se déclenchent plus</strong>. Les <strong>Contre-attaque passent toujours en priorité</strong>.</li>
+</ol>
+<h3 id="le-voyageur-de-kalm">Le voyageur de Kalm</h3>
+<ol start="10">
+<li>Dès le Hautvent, monte au <strong>premier étage d'une maison à l'est de Kalm</strong>. Le vieil homme cherche <strong>trois objets</strong> :</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Comment l'obtenir</th>
+<th>Récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Guide</strong></td>
+<td><strong>Tuer un Vaisseau fantôme avec Trans.</strong> — dans le tunnel de verre du complexe sous-marin de Junon (6 600 HP), ou au 8e combat du Battle Square (13 200 HP)</td>
+<td><strong>Matéria Sous-marin</strong></td>
+</tr>
+<tr>
+<td><strong>Harpe terrestre</strong></td>
+<td>Battre l'Arme d'émeraude</td>
+<td><strong>Magie maîtresse</strong>, <strong>Commande maître</strong> et <strong>Invocation maître</strong></td>
+</tr>
+<tr>
+<td><strong>Rose du désert</strong></td>
+<td>Battre l'Arme de rubis</td>
+<td>Un chocobo doré</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="11">
+<li><strong>Le Guide s'obtient autant de fois que tu veux</strong>, les deux autres une seule fois.</li>
+<li><strong>Le chocobo doré du voyageur</strong> part directement à la ferme. ⚠️ <strong>Si tes écuries sont pleines</strong>, relâche un chocobo avant de revenir le chercher.</li>
+<li><strong>Récupère la Matéria Sous-marin avant d'affronter l'Arme d'émeraude</strong> : sans elle, le combat a une limite de 20 minutes.</li>
+</ol>
+<h3 id="les-quatre-mega-materias">Les quatre Méga-Matérias</h3>
+<ol start="14">
+<li>Une fois les <strong>quatre Méga-Matérias</strong> rapportées au laboratoire de Bugenhagen (voir les chapitres 19 et 20), chacune se transforme si tu remplis sa condition :</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Méga-Matéria</th>
+<th>Condition</th>
+<th>Récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Verte</strong></td>
+<td>Les <strong>21 Matérias magiques au niveau maître</strong></td>
+<td><strong>Magie maîtresse</strong></td>
+</tr>
+<tr>
+<td><strong>Jaune</strong></td>
+<td><strong>Voler, Sentir, Lancer, Manipuler, Coup mortel, Trans. et Mimer</strong> au niveau maître</td>
+<td><strong>Commande maître</strong></td>
+</tr>
+<tr>
+<td><strong>Bleue</strong></td>
+<td><strong>Bahamut</strong> et <strong>Néo Bahamut</strong> en inventaire (pas besoin de maîtrise)</td>
+<td><strong>Bahamut ZÉRO</strong></td>
+</tr>
+<tr>
+<td><strong>Rouge</strong></td>
+<td>Les <strong>16 Matérias d'invocation au niveau maître</strong></td>
+<td><strong>Invocation maître</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ol start="15">
+<li><strong>La Harpe terrestre du voyageur de Kalm</strong> donne les trois maîtresses <strong>sans aucune maîtrise</strong> : si tu bats l'Arme d'émeraude, tu t'épargnes des centaines d'heures de farming.</li>
+</ol>
+<h3 id="les-24-talents-de-lennemi">Les 24 Talents de l'ennemi</h3>
+<ol start="16">
+<li><strong>Principe</strong> : équipe une <strong>Matéria Talent de l'ennemi</strong>, <strong>encaisse</strong> l'attaque, puis <strong>gagne le combat</strong> — fuir ou perdre annule l'apprentissage. Pour les talents défensifs, il faut souvent <strong>manipuler</strong> l'ennemi pour qu'il te les lance.</li>
+<li class="alerte">⚠️ <strong>Impossible d'en apprendre dans l'arène du Battle Square.</strong></li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Talent</th>
+<th>MP</th>
+<th>Effet</th>
+<th>Qui et où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>????</strong></td>
+<td>3</td>
+<td>Dégâts = HP max – HP actuels du lanceur</td>
+<td>Jersey (manoir de Nibelheim, 1er étage) ; Béhémoth (Secteur 8, CD2)</td>
+</tr>
+<tr>
+<td><strong>Air de crapaud</strong></td>
+<td>5</td>
+<td>Grenouille + Sommeil</td>
+<td>Touche-Moi (jungle de Gongaga) ; Grenouille toxique (Temple des Anciens) ; Christophe (Grotte Nord)</td>
+</tr>
+<tr>
+<td><strong>Bêta</strong></td>
+<td>35</td>
+<td>Feu sur tous</td>
+<td>Midgar Zolom (marais), sous 1 500 HP</td>
+</tr>
+<tr>
+<td><strong>Boîte-Pandore</strong></td>
+<td>110</td>
+<td>Dégâts sans élément sur tous</td>
+<td>Dragon Zombie (Grotte Nord) — <strong>une seule fois par partie</strong></td>
+</tr>
+<tr>
+<td><strong>Chocoboucle</strong></td>
+<td>3</td>
+<td>Dégâts = nombre de fuites</td>
+<td>Un chocobo (voir plus bas)</td>
+</tr>
+<tr>
+<td><strong>Éclat d'ombre</strong></td>
+<td>100</td>
+<td>Dégâts massifs sur un ennemi</td>
+<td><strong>Dernière arme</strong> (Canyon Cosmo), Arme de rubis, Dragon Zombie, Safer·Sephiroth</td>
+</tr>
+<tr>
+<td><strong>Force de dragon</strong></td>
+<td>19</td>
+<td>Défense et Défense magique +50 %</td>
+<td>Dragon noir (Grotte Nord) — pas le Dragon bleu</td>
+</tr>
+<tr>
+<td><strong>Force de mort</strong></td>
+<td>3</td>
+<td>Protège de Mort et Peine de mort</td>
+<td>Adamantaimai (plages d'Utai)</td>
+</tr>
+<tr>
+<td><strong>Grand garde</strong></td>
+<td>56</td>
+<td>Barrière, BarrM et Hâte sur tous</td>
+<td>Bonde de plage (plages de Corel, Gold Saucer, Gongaga)</td>
+</tr>
+<tr>
+<td><strong>Haleine aigre</strong></td>
+<td>58</td>
+<td>Six statuts sur tous</td>
+<td>Malboro (Falaise de Gaëa, Grotte Nord)</td>
+</tr>
+<tr>
+<td><strong>Lance-flammes</strong></td>
+<td>10</td>
+<td>Feu sur un ennemi</td>
+<td>Dragon voûté (Mine de Mythril) ; Dragon (Mont Nibel)</td>
+</tr>
+<tr>
+<td><strong>Laser</strong></td>
+<td>16</td>
+<td>Retire la moitié des HP</td>
+<td>Griffes de la mort (prison du désert) ; Dragon noir</td>
+</tr>
+<tr>
+<td><strong>Magique Matra</strong></td>
+<td>8</td>
+<td>Dégâts sur tous</td>
+<td>Sweeper personnalisé (Midgar) ; <strong>Moteur de taureau</strong> (prison) ; Machine de la mort (Junon)</td>
+</tr>
+<tr>
+<td><strong>Marteau magie</strong></td>
+<td>3</td>
+<td>Absorbe 100 MP</td>
+<td>Herbe rasoir (région d'Utai)</td>
+</tr>
+<tr>
+<td><strong>Mort N5</strong></td>
+<td>22</td>
+<td>Mort sur les niveaux multiples de 5</td>
+<td>Parasite (Grotte Nord)</td>
+</tr>
+<tr>
+<td><strong>Mot d'ange</strong></td>
+<td>50</td>
+<td>Soin complet et guérison</td>
+<td>Pollensalta (Grotte Nord), à manipuler</td>
+</tr>
+<tr>
+<td><strong>Peine de mort</strong></td>
+<td>10</td>
+<td>La cible meurt au bout d'un délai</td>
+<td>Marche sournoise, Spectateur Gi (Grotte Gi) ; Gros-borné (Vallée de Corral)</td>
+</tr>
+<tr>
+<td><strong>Punch-Gobelin</strong></td>
+<td>0</td>
+<td>Dégâts ×8 si même niveau</td>
+<td>Gobelin (Île de Gobelin, Île Ronde)</td>
+</tr>
+<tr>
+<td><strong>Roulette</strong></td>
+<td>6</td>
+<td>Mort sur une cible au hasard, alliés compris</td>
+<td>Dealer de la mort (Grotte Nord)</td>
+</tr>
+<tr>
+<td><strong>Scaphandre</strong></td>
+<td>34</td>
+<td>Eau sur tous</td>
+<td>Harpie (désert du Gold Saucer) ; Jénova·VIE ; Serpent (Gelnika)</td>
+</tr>
+<tr>
+<td><strong>Souffle magie</strong></td>
+<td>75</td>
+<td>Feu, Glace et Foudre sur tous</td>
+<td>Stilva (Falaise de Gaëa) ; Parasite (Grotte Nord)</td>
+</tr>
+<tr>
+<td><strong>Suicide N4</strong></td>
+<td>10</td>
+<td>Mini et 31/32 des HP sur les niveaux multiples de 4</td>
+<td>Mu (Prairies) ; Ruse (Glaçon, Vallée de Corral)</td>
+</tr>
+<tr>
+<td><strong>Trine</strong></td>
+<td>20</td>
+<td>Foudre sur tous</td>
+<td>Gardien de Matéria (Mont Nibel) ; Stilva ; Godo (Tour pagode)</td>
+</tr>
+<tr>
+<td><strong>Vent blanc</strong></td>
+<td>34</td>
+<td>Soigne tout le groupe de tes HP actuels</td>
+<td>Zemzelett (Région de Junon) ; Aile du vent, seulement sous Confusion</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="18">
+<li><strong>Chocoboucle, la méthode fiable</strong> : trouve un <strong>chocobo de niveau 16</strong> (Prairies, avec deux Lévrikon ou deux Elfadunk) ou <strong>36</strong> (Mideel). Donne-lui un Légume Mimett ou Sylkis, puis lance <strong>Suicide N4</strong> : il riposte forcément avec Chocoboucle. Termine le combat.</li>
+<li><strong>Les talents à prendre tôt</strong> : <strong>Magique Matra</strong> (dès la sortie de Midgar), <strong>Suicide N4</strong>, <strong>Vent blanc</strong>, <strong>Grand garde</strong>, <strong>Scaphandre</strong>, <strong>Trine</strong>, <strong>Souffle magie</strong> et <strong>Haleine aigre</strong> (avec un <strong>Ruban</strong> équipé !).</li>
+<li><strong>Remplir les quatre Matérias</strong> : garde la <strong>quête de la Tour pagode pour la fin</strong> si tu veux apprendre <strong>Trine</strong> sur la Matéria du Chocobo Sage — la Falaise de Gaëa n'est plus accessible à ce moment-là, et Godo devient ton seul professeur.</li>
+</ol>
+<h2 id="quetes-et-lieux-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<ul>
+<li><strong>Le voyageur de Kalm</strong> est la plus rentable des quêtes de fin de partie : trois Matérias maîtresses et un chocobo doré contre trois objets.</li>
+<li><strong>Les Méga-Matérias</strong> récompensent ceux qui maîtrisent tout, mais la Harpe terrestre fait le même travail.</li>
+<li><strong>Les Talents de l'ennemi</strong> se répartissent sur tout le jeu : plusieurs ne s'apprennent qu'à un moment précis.</li>
+</ul>
+<h2 id="butin-exhaustif-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sous-marin</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Voyageur de Kalm, contre le <strong>Guide</strong></td>
+<td>Combat de l'Arme d'émeraude sans limite</td>
+</tr>
+<tr>
+<td><strong>Magie maîtresse</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Méga-Matéria verte, ou Harpe terrestre</td>
+<td>Toutes les magies</td>
+</tr>
+<tr>
+<td><strong>Commande maître</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Méga-Matéria jaune, ou Harpe terrestre</td>
+<td>Toutes les commandes</td>
+</tr>
+<tr>
+<td><strong>Invocation maître</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Méga-Matéria rouge, ou Harpe terrestre</td>
+<td>Toutes les invocations</td>
+</tr>
+<tr>
+<td><strong>Bahamut ZÉRO</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Méga-Matéria bleue</td>
+<td>Invocation</td>
+</tr>
+<tr>
+<td><strong>Guide</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Vaisseau fantôme tué avec Trans.</td>
+<td>À échanger</td>
+</tr>
+<tr>
+<td><strong>Harpe terrestre</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Butin de l'Arme d'émeraude</td>
+<td>À échanger</td>
+</tr>
+<tr>
+<td><strong>Rose du désert</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Butin de l'Arme de rubis</td>
+<td>À échanger contre un chocobo doré</td>
+</tr>
+<tr>
+<td><strong>Choco/Mog</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>« Wark » à un chocobo de la ferme</td>
+<td>Invocation</td>
+</tr>
+<tr>
+<td><strong>Kjata</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Forêt endormie</td>
+<td>Invocation</td>
+</tr>
+<tr>
+<td><strong>Comète</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Cité des Anciens, haut de la maison en coquillage</td>
+<td>Magie</td>
+</tr>
+<tr>
+<td><strong>Longue portée</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Mine de Mythril</td>
+<td>Commandes à distance</td>
+</tr>
+<tr>
+<td><strong>Super chance</strong>, <strong>Super magie</strong></td>
+<td><span class="badge neutre">Matérias</span></td>
+<td>Temple des Anciens, Vallée de Corral</td>
+<td>Bonus de statistiques</td>
+</tr>
+<tr>
+<td><strong>El. Base</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>62e étage du Bâtiment Shinra (« Mako »)</td>
+<td>Soutien</td>
+</tr>
+<tr>
+<td><strong>Effet supplémentaire</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Grotte Gi</td>
+<td>Soutien</td>
+</tr>
+<tr>
+<td><strong>Coupure supplémentaire</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td>Grand Glacier</td>
+<td>Soutien</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Revends tes Matérias maîtres en double</strong> : c'est la meilleure mine d'or de fin de partie.</li>
+<li><strong>Garde toujours une Matéria Talent de l'ennemi équipée</strong> dans les zones de talents uniques.</li>
+<li><strong>Pense au plafond de huit déclenchements automatiques</strong> avant d'empiler les Contre-attaque.</li>
+<li><strong>Tue le Vaisseau fantôme avec Trans.</strong> dans le tunnel de Junon : c'est bien plus facile qu'au Battle Square.</li>
+<li><strong>Fais l'Arme d'émeraude pour la Harpe terrestre</strong> plutôt que de maîtriser 21 magies à la main.</li>
+</ul>
+<h2 id="alertes-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : <strong>Boîte-Pandore</strong>, lancé une seule fois dans toute la partie.</li>
+<li class="alerte manquable">⏳ Manquable : <strong>Trine</strong> sur ta quatrième Matéria Talent de l'ennemi, si tu as déjà battu Godo à la Tour pagode.</li>
+<li class="alerte manquable">⏳ Manquable : <strong>Vol simultané</strong>, sans les Écailles-Léviathan du disque 2.</li>
+<li class="alerte">⚠️ <strong class="objet">Kjata</strong> fuit dans la Forêt endormie : ne quitte pas la zone sans elle, la forêt n'est plus traversée ensuite.</li>
+</ul>
+<h2 id="check-list-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Les 17 invocations, dont <strong class="objet">Kjata</strong>, <strong>Hadès</strong>, <strong>Typoon</strong> et <strong>Chevaliers de la Table Ronde</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Comète</strong>, <strong>Contenir</strong>, <strong>Guérison Max</strong>, <strong>Bouclier</strong> et <strong>Ultima</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Trans.</strong>, <strong>Attaque double</strong>, <strong>FurieMax</strong>, <strong>Mimer</strong>, <strong>Elément-W</strong>, <strong>Magie-W</strong> et <strong>Invocation-W</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">El. Base</strong>, <strong>Vol simultané</strong>, <strong class="objet">Coupure supplémentaire</strong>, <strong>Quadruple magie</strong> et <strong>Turbo MP</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Longue portée</strong>, <strong class="objet">Super chance</strong>, <strong class="objet">Super magie</strong>, <strong>HP&lt;–&gt;MP</strong> et <strong>Méga tous</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Guide</strong> rapporté : <strong>Matéria Sous-marin</strong></li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Harpe terrestre</strong> rapportée : les trois Matérias maîtresses</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Rose du désert</strong> rapportée : chocobo doré</li>
+<li class="tache"><input type="checkbox"> Les quatre Méga-Matérias transformées</li>
+<li class="tache"><input type="checkbox"> Les <strong>24 Talents de l'ennemi</strong></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="26-les-armes-ultimes-et-les-limites-niveau-4.html" rel="prev"><small>← Partie précédente</small><b>Les armes ultimes et les Limites niveau 4</b></a><a class="suiv" href="28-lavion-gelnika-et-les-armes.html" rel="next"><small>Partie suivante →</small><b>L&#x27;avion Gelnika et les Armes</b></a><a class="tout" href="final-fantasy-vii.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

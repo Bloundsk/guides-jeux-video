@@ -265,6 +265,8 @@ footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 
   body.compact .alerte { padding: 1.6mm 3mm; }
 }
 </style>
+<meta name="description" content="Guide complet de Super Mario Odyssey en français, en une seule page. Chaque royaume, chaque lune de puissance et chaque tenue, jusqu&#x27;au compteur de 999 lunes.">
+<meta name="robots" content="noindex, follow">
 <style id="gjv-lecture">
 main { zoom: var(--gjv-t, 1); }
 main p, main li { line-height: 1.75; }
@@ -21410,7 +21412,7 @@ body.gjv-pas #gjv-boutons { display: none !important; }
   // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
   function ouvrirAncre() {
     var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
-    var b = el && el.closest(".gjv-bloc"), h = b && b.previousElementSibling;
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
     if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
   }
   addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
@@ -21438,7 +21440,7 @@ body.gjv-pas #gjv-boutons { display: none !important; }
   }
 
   // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
-  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g;
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
   var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
   bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
     '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
@@ -21488,7 +21490,9 @@ body.gjv-pas #gjv-boutons { display: none !important; }
   function noter() {
     var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
     var x = l[g] || {}; x.t = Date.now();
-    if (window.scrollY > 300) {
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
       var secs = document.querySelectorAll("section.section"), cur = null;
       for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
       var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;

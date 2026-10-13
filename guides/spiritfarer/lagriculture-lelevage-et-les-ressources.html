@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L&#x27;agriculture, l&#x27;élevage et les ressources – Guide Spiritfarer</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Spiritfarer, L&#x27;agriculture, l&#x27;élevage et les ressources : Arrose chaque matin : une goutte affichée bloque la pousse. Plus vite : Plantasia Fantastica…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/lagriculture-lelevage-et-les-ressources.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="L&#x27;agriculture, l&#x27;élevage et les ressources · Guide Spiritfarer">
+<meta property="og:description" content="Spiritfarer, L&#x27;agriculture, l&#x27;élevage et les ressources : Arrose chaque matin : une goutte affichée bloque la pousse. Plus vite : Plantasia Fantastica…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/lagriculture-lelevage-et-les-ressources.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Spiritfarer", "item": "https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/"}, {"@type": "ListItem", "position": 3, "name": "L'agriculture, l'élevage et les ressources", "item": "https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/lagriculture-lelevage-et-les-ressources.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="spiritfarer" class="compact" data-partie="lagriculture-lelevage-et-les-ressources"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Spiritfarer</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Spiritfarer : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque"><em>Spiritfarer</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction-tout-ce-quil-faut-savoir-avant-dembarquer.html"><span class="num">✦</span><span class="libelle">Introduction — tout ce qu&#x27;il faut savoir avant d&#x27;embarquer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="le-seuil-eternel-et-les-premiers-pas.html"><span class="num">✦</span><span class="libelle">Le Seuil éternel et les premiers pas</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="la-region-de-hummingberg-le-printemps.html"><span class="num">✦</span><span class="libelle">La région de Hummingberg : le printemps</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="le-district-industriel.html"><span class="num">✦</span><span class="libelle">Le district industriel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="la-region-de-hummingberg-lhiver.html"><span class="num">✦</span><span class="libelle">La région de Hummingberg : l&#x27;hiver</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="la-region-de-furogawa.html"><span class="num">✦</span><span class="libelle">La région de Furogawa</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="la-region-doxbury.html"><span class="num">✦</span><span class="libelle">La région d&#x27;Oxbury</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="crows-end-le-sud-ouest.html"><span class="num">✦</span><span class="libelle">Crow&#x27;s End : le sud-ouest</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="crows-end-le-nord-est.html"><span class="num">✦</span><span class="libelle">Crow&#x27;s End : le nord-est</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="les-points-dinteret-en-mer.html"><span class="num">✦</span><span class="libelle">Les points d&#x27;intérêt en mer</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="gwen.html"><span class="num">✦</span><span class="libelle">Gwen</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="atul.html"><span class="num">✦</span><span class="libelle">Atul</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="summer.html"><span class="num">✦</span><span class="libelle">Summer</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="astrid.html"><span class="num">✦</span><span class="libelle">Astrid</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="giovanni.html"><span class="num">✦</span><span class="libelle">Giovanni</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="alice.html"><span class="num">✦</span><span class="libelle">Alice</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="gustav.html"><span class="num">✦</span><span class="libelle">Gustav</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="bruce-et-mickey.html"><span class="num">✦</span><span class="libelle">Bruce et Mickey</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="buck.html"><span class="num">✦</span><span class="libelle">Buck</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="beverly.html"><span class="num">✦</span><span class="libelle">Beverly</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="stanley.html"><span class="num">✦</span><span class="libelle">Stanley</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="elena.html"><span class="num">✦</span><span class="libelle">Elena</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="jackie-et-daria.html"><span class="num">✦</span><span class="libelle">Jackie et Daria</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="le-bateau-et-le-chantier-naval-dalbert.html"><span class="num">✦</span><span class="libelle">Le bateau et le chantier naval d&#x27;Albert</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-capacites-de-stella-et-les-sanctuaires.html"><span class="num">✦</span><span class="libelle">Les capacités de Stella et les sanctuaires</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-batiments-du-bateau.html"><span class="num">✦</span><span class="libelle">Les bâtiments du bateau</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="#lagriculture-lelevage-et-les-ressources"><span class="num">✦</span><span class="libelle">L&#x27;agriculture, l&#x27;élevage et les ressources</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="la-cuisine-toutes-les-recettes.html"><span class="num">✦</span><span class="libelle">La cuisine — toutes les recettes</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="la-peche-tous-les-poissons.html"><span class="num">✦</span><span class="libelle">La pêche — tous les poissons</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-metaux-les-gemmes-et-lartisanat.html"><span class="num">✦</span><span class="libelle">Les métaux, les gemmes et l&#x27;artisanat</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="les-evenements-maritimes.html"><span class="num">✦</span><span class="libelle">Les événements maritimes</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="la-fin-du-jeu-lily-et-hades.html"><span class="num">✦</span><span class="libelle">La fin du jeu — Lily et Hadès</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="les-succes-les-secrets-et-les-astuces.html"><span class="num">✦</span><span class="libelle">Les succès, les secrets et les astuces</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes-index-manquables-et-check-list-finale.html"><span class="num">✦</span><span class="libelle">Annexes — index, manquables et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-spiritfarer.html"><span class="num">✦</span><span class="libelle">Sources — Spiritfarer</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-27">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="lagriculture-lelevage-et-les-ressources">L&#x27;agriculture, l&#x27;élevage et les ressources</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-27"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-27">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Arrose chaque matin</strong> : une goutte affichée bloque la pousse.</li>
+<li><strong>Plus vite</strong> : Plantasia Fantastica accélère jardin, champ et verger.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Tout ce qui pousse, tout ce qui se tond, tout ce qui se tisse. Les 28 graines avec leur rendement et leur prix, <strong>les cinq filières textiles</strong>, les moutons, les poules et les vaches.</p>
+<p><strong>Et la règle qui gouverne tout</strong> : presque rien ne se trouve, presque tout se produit. Les îles donnent des graines et du minerai brut ; le reste sort de tes bâtiments.</p>
+<h2 id="itineraire-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>Les trois cultures</strong> — <strong>jardin, champ, verger</strong>.</li>
+<li><strong>Les 28 graines</strong> — rendement, prix, où les trouver.</li>
+<li><strong>Les cinq filières textiles.</strong></li>
+<li><strong>Les moutons, les poules, les vaches.</strong></li>
+<li><strong>Le bois et la scierie.</strong></li>
+<li><strong>Le moulin à vent et les farines.</strong></li>
+<li><strong>Le cellier et les fermentations.</strong></li>
+</ol>
+<h2 id="deroule-pas-a-pas-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="les-trois-cultures-et-ce-qui-les-distingue">Les trois cultures, et ce qui les distingue</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Bâtiment</th>
+<th>Nombre de parcelles</th>
+<th>Ce qu'on y plante</th>
+<th>Arrosage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jardin</strong></td>
+<td><strong>3</strong></td>
+<td>Légumes et graines étranges</td>
+<td>Oui, en permanence</td>
+</tr>
+<tr>
+<td><strong>Champ</strong></td>
+<td><strong>3</strong></td>
+<td>Céréales et plantes à transformer</td>
+<td>Oui, en permanence</td>
+</tr>
+<tr>
+<td><strong>Verger</strong></td>
+<td><strong>2</strong></td>
+<td>Arbres fruitiers</td>
+<td>Oui, jusqu'à maturité seulement</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le verger est le plus rentable des trois, et de loin.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Pourquoi</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>On plante une seule fois</strong></td>
+<td>L'arbre reste</td>
+</tr>
+<tr>
+<td><strong>Et une fois adulte, il n'a plus besoin d'eau</strong></td>
+<td>Il produit tout seul</td>
+</tr>
+<tr>
+<td><strong>Toutes les 24 heures</strong></td>
+<td>Pomme, cerise, pêche, poire</td>
+</tr>
+<tr>
+<td><strong>Toutes les 21 heures</strong></td>
+<td>Mûrier et olivier</td>
+</tr>
+<tr>
+<td><strong>Le revers</strong></td>
+<td>On ne peut jamais retirer un arbre planté</td>
+</tr>
+</tbody>
+</table></div>
+<p>Les trois stades de croissance du jardin et du champ : planté → en pousse → en croissance.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La règle de l'arrosage</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Une goutte d'eau apparaît</strong></td>
+<td>Quand la terre est trop sèche</td>
+</tr>
+<tr>
+<td><strong>Tant que la goutte est là, la plante ne pousse plus</strong></td>
+<td>C'est le piège principal de l'agriculture</td>
+</tr>
+<tr>
+<td><strong>On peut arroser à tout moment</strong></td>
+<td>Même sans la goutte</td>
+</tr>
+<tr>
+<td><strong>La terre continue de sécher après la maturité</strong></td>
+<td>Mais il faut récolter et replanter avant de pouvoir arroser à nouveau</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ Prend l'habitude de faire le tour de tes parcelles chaque matin. Une goutte oubliée, c'est une journée de pousse perdue.</p>
+<p><strong>Et Plantasia Fantastica change tout</strong> : <strong>la chanson que Summer t'apprend accélère la pousse d'<strong>une</strong> culture</strong> <em>(partie <strong>12</strong>)</em>. <strong>Elle marche au jardin, au champ <strong>et</strong> au verger.</strong></p>
+<p><strong>Et deux passagers s'en occupent tout seuls</strong> :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Qui</th>
+<th>Quand</th>
+<th>Ce qu'il fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Summer</strong></td>
+<td>De bonne humeur</td>
+<td>Elle passe ses matinées à jouer Plantasia Fantastica, <strong>ce qui accélère une culture</strong> <em>(partie <strong>12</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Alice</strong></td>
+<td>Heureuse</td>
+<td>Elle visite le verger et récolte les fruits — <strong>parle-lui pour les récupérer</strong> <em>(partie <strong>15</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-11-graines-du-champ">Les 11 graines du champ</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Graine</th>
+<th>Rendement</th>
+<th>Prix chez Raccoon Inc.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Graine de lin</strong></td>
+<td><strong>3 fibres de lin</strong></td>
+<td><strong>70 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de maïs</strong></td>
+<td><strong>5 maïs</strong></td>
+<td><strong>60 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de grains de café</strong></td>
+<td><strong>2 grains de café</strong></td>
+<td><strong>75 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de riz</strong></td>
+<td><strong>3 riz</strong></td>
+<td><strong>70 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de thé</strong></td>
+<td><strong>2 feuilles de thé</strong></td>
+<td><strong>150 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de canne à sucre</strong></td>
+<td><strong>2 cannes à sucre</strong></td>
+<td><strong>200 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de tournesol</strong></td>
+<td><strong>4 graines de tournesol</strong></td>
+<td><strong>140 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine d'ail</strong></td>
+<td><strong>1 ail seulement</strong></td>
+<td><strong>180 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de tomate</strong></td>
+<td><strong>3 tomates</strong></td>
+<td><strong>200 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de coton</strong></td>
+<td><strong>4 fibres de coton</strong></td>
+<td><strong>75 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de blé</strong></td>
+<td><strong>3 blés</strong></td>
+<td><strong>100 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Trois choses à remarquer dans ce tableau.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce qu'il faut voir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>La graine de tournesol se reproduit</strong> : <strong>1 graine plantée donne 4 graines</strong>. Plante-en une, et tu n'en manqueras plus jamais</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>L'ail et l'OIGNON ne donnent qu'un exemplaire</strong> — et ce sont les deux ingrédients du pain à l'ail et des rondelles d'oignon</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Le lin et le coton sont des cultures de champ, <strong>pas de jardin</strong> — <strong>ils donnent de la fibre directement</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et l'ail est le goulot d'étranglement du jeu : 1 ail par plantation, à 180 lueurs la graine, et il entre dans le pain à l'ail <em>(Bruce et Mickey)</em> et dans deux courses de Francis qui en demandent 3 <em>(partie <strong>09</strong>)</em>.</p>
+<h3 id="les-11-graines-du-jardin">Les 11 graines du jardin</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Graine</th>
+<th>Rendement</th>
+<th>Prix chez Raccoon Inc.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Graine étrange</strong></td>
+<td>Un assortiment aléatoire de bouteilles vides et de babioles</td>
+<td><strong>500 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de flamboyante</strong></td>
+<td><strong>2 flamboyantes</strong></td>
+<td>Non vendue</td>
+</tr>
+<tr>
+<td><strong>Graine de carotte</strong></td>
+<td><strong>3 carottes</strong></td>
+<td><strong>45 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de navet</strong></td>
+<td><strong>3 navets</strong></td>
+<td><strong>50 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de laitue</strong></td>
+<td><strong>1 laitue seulement</strong></td>
+<td><strong>35 lueurs</strong> — <strong>la moins chère</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de céleri</strong></td>
+<td><strong>3 célerís</strong></td>
+<td><strong>150 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de chou</strong></td>
+<td><strong>1 chou seulement</strong></td>
+<td><strong>90 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de pomme de terre</strong></td>
+<td><strong>4 pommes de terre</strong></td>
+<td><strong>110 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine d'oignon</strong></td>
+<td><strong>1 oignon seulement</strong></td>
+<td><strong>250 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de poireau</strong></td>
+<td><strong>4 poireaux</strong></td>
+<td><strong>90 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Graine mystérieuse</strong></td>
+<td>Stanley</td>
+<td>Non vendue</td>
+</tr>
+</tbody>
+</table></div>
+<p>La graine étrange est une machine à lueurs.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le prix</strong></td>
+<td><strong>500 lueurs chez Francis</strong> <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Ce qu'elle donne</strong></td>
+<td>Un assortiment aléatoire de babioles</td>
+</tr>
+<tr>
+<td><strong>La valeur des babioles</strong></td>
+<td>De 375 à 2 000 lueurs chacune</td>
+</tr>
+</tbody>
+</table></div>
+<p>Autrement dit : si tu tombes sur une <strong>carte à collectionner neuve</strong>, tu quadruples ton investissement. ⚠️ <strong>à vérifier en jeu</strong> : la rentabilité réelle sur la durée. Aucune source ne donne les probabilités.</p>
+<p>Et la graine mystérieuse est Stanley <em>(partie <strong>20</strong>)</em>. Ne la confonds pas avec la graine étrange.</p>
+<p>Et la graine de flamboyante ne s'achète pas : elle ne vient que de l'événement des lucioles de Gustav <em>(partie <strong>16</strong>)</em>. Mais elle se replante, et elle donne 2 flamboyantes par plantation.</p>
+<p>La laitue, le chou et l'oignon ne donnent qu'un exemplaire chacun. Prévois plusieurs parcelles ou plusieurs jardins.</p>
+<h3 id="les-6-graines-du-verger">Les 6 graines du verger</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Graine</th>
+<th>Rendement</th>
+<th>Cadence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Graine de pomme</strong></td>
+<td><strong>4 pommes</strong></td>
+<td><strong>Toutes les 24 h</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de cerise</strong></td>
+<td><strong>7 cerises</strong></td>
+<td><strong>Toutes les 24 h</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de pêche</strong></td>
+<td><strong>4 pêches</strong></td>
+<td><strong>Toutes les 24 h</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de poire</strong></td>
+<td><strong>3 poires</strong></td>
+<td><strong>Toutes les 24 h</strong></td>
+</tr>
+<tr>
+<td><strong>Graine de mûrier</strong></td>
+<td><strong>5 fibres de soie</strong></td>
+<td><strong>Toutes les 21 h</strong></td>
+</tr>
+<tr>
+<td><strong>Graine d'olive</strong></td>
+<td><strong>7 olives</strong></td>
+<td><strong>Toutes les 21 h</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Le mûrier est la seule source de soie du jeu.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Pourquoi c'est capital</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le Chasse Brouillard demande 22 tissus en soie</strong></td>
+<td><strong>Partie 23</strong></td>
+</tr>
+<tr>
+<td><strong>Et plusieurs décorations en demandent</strong></td>
+<td><strong>Gustav, Bruce et Mickey, Buck, Jackie, Beverly</strong> <em>(partie <strong>25</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Où trouver la graine</strong></td>
+<td><strong>Le coffre 3 de Sandwich Walk</strong>, <strong>derrière Planer</strong> <em>(partie <strong>03</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Plante un mûrier dès que tu as la graine. Il produit 5 fibres toutes les 21 heures, indéfiniment.</p>
+<p><strong>Et l'olivier est la source du gras</strong> : <strong>7 olives toutes les 21 heures</strong> → <strong>huile d'olive</strong> <em>(partie <strong>27</strong>)</em>. Avec la graine de tournesol du champ, c'est toute la catégorie <strong>gras</strong> du jeu.</p>
+<p><strong>Et le cerisier donne 7 cerises</strong> : c'est le meilleur rendement du verger, et la course <strong>Avoir la pêche</strong> de Francis demande 8 cerises, 8 pommes et 8 poires <em>(partie <strong>09</strong>)</em>.</p>
+<p>Deux parcelles par verger, et deux vergers suffisent pour « Avoir la pêche » en boucle.</p>
+<h3 id="les-cinq-filieres-textiles">Les cinq filières textiles</h3>
+<p>Toute la filière textile passe par le métier à tisser, en deux étapes.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Étape</th>
+<th>Entrée</th>
+<th>Sortie</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Fibre</strong></td>
+<td><strong>1 à 3 fils</strong></td>
+<td>Métier à tisser de base</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Fil</strong></td>
+<td><strong>1 à 3 tissus</strong></td>
+<td>Métier à tisser amélioré</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>L'amélioration du métier à tisser est obligatoire</strong> : sans elle, impossible de faire un seul tissu <em>(partie <strong>02</strong>)</em>.</p>
+<p><strong>Les cinq fibres, et d'où elles viennent</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Fibre</th>
+<th>Sa source</th>
+<th>Rendement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fibre de lin</strong></td>
+<td>Graine de lin, au champ</td>
+<td><strong>3 par plantation</strong></td>
+</tr>
+<tr>
+<td><strong>Fibre de laine</strong></td>
+<td>Tondre un mouton</td>
+<td><strong>2 par tonte</strong></td>
+</tr>
+<tr>
+<td><strong>Fibre de coton</strong></td>
+<td>Graine de coton, au champ</td>
+<td><strong>4 par plantation</strong></td>
+</tr>
+<tr>
+<td><strong>Fibre de soie</strong></td>
+<td>Mûrier, au verger</td>
+<td><strong>5 toutes les 21 h</strong></td>
+</tr>
+<tr>
+<td><strong>Fibre de nebula</strong></td>
+<td><strong>L'événement des cloportes nebula d'ALICE</strong> <em>(partie <strong>15</strong>)</em></td>
+<td>La seule source</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le mini-jeu du métier à tisser détermine le rendement.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Comment ça marche</strong></td>
+<td>Touche le <strong>diamant doré</strong> au centre de la règle de mesure</td>
+</tr>
+<tr>
+<td><strong>Le résultat</strong></td>
+<td><strong>Le diamant doré donne le rendement maximum</strong> <em>(3 au lieu de 1)</em></td>
+</tr>
+<tr>
+<td><strong>Combien à la fois</strong></td>
+<td>Plus de <strong>70</strong> du même objet peuvent être sélectionnés d'un coup</td>
+</tr>
+<tr>
+<td><strong>Le piège</strong></td>
+<td>Quitter le métier avant la fin laisse les objets restants dedans</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et deux autres usages du métier à tisser, après la quête de Stanley <em>(partie <strong>20</strong>)</em> :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Entrée</th>
+<th>Sortie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Minerai de cuivre</strong></td>
+<td><strong>1 à 2 cordes métalliques</strong></td>
+</tr>
+<tr>
+<td><strong>Poireau, miel ou poudre de chaux</strong></td>
+<td>Expérience ratée</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>La corde métallique est une ressource de construction</strong>, *<em>nécessaire à la <strong>Tyrolienne</strong> et à l'<strong>amélioration du corral à moutons</strong></em> <em>(partie <strong>25</strong>)</em>. **C'est la seule façon d'en produire — <strong>les autres sources sont des coffres et une course de Francis.</strong></p>
+<p>Et Gwen s'occupe du métier à tisser quand elle est de bonne humeur : elle fait les fils et les tissus, puis te les offre <em>(partie <strong>10</strong>)</em>.</p>
+<h3 id="les-moutons-les-poules-et-les-vaches">Les moutons, les poules et les vaches</h3>
+<p><strong>Les moutons</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Il faut Alice à bord</strong></td>
+<td><strong>Sinon on ne peut pas les apprivoiser</strong> <em>(partie <strong>15</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Comment</strong></td>
+<td>Nourris le mouton sur l'île, et il te suit jusqu'au bateau</td>
+</tr>
+<tr>
+<td><strong>Un seul mouton par corral</strong></td>
+<td><strong>Il faut donc 5 corraux pour les 5 moutons</strong> <em>(partie <strong>25</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Sans corral</strong></td>
+<td>Le mouton erre librement et <strong>mange tes cultures</strong></td>
+</tr>
+<tr>
+<td><strong>La tonte</strong></td>
+<td>2 fibres de laine par tonte</td>
+</tr>
+<tr>
+<td><strong>La repousse</strong></td>
+<td>Plus rapide si le mouton est bien nourri</td>
+</tr>
+<tr>
+<td><strong>Démonter un corral</strong></td>
+<td>Ne fait pas disparaître le mouton</td>
+</tr>
+<tr>
+<td><strong>Les 2 succès</strong></td>
+<td>Gardien de moutons <em>(les 5)</em> <strong>et Nettoyeur de moutons</strong> <em>(50 tontes)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et Bruce et Mickey les libèrent quand ils sont tristes <em>(partie <strong>17</strong>)</em>. <strong>Remets-les au corral.</strong></p>
+<p><strong>Les poules</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Elles ne se trouvent pas sur les îles</strong></td>
+<td>Il faut les faire éclore</td>
+</tr>
+<tr>
+<td><strong>Comment</strong></td>
+<td>Mets <strong>un œuf</strong> dans l'incubateur du poulailler</td>
+</tr>
+<tr>
+<td><strong>D'où vient le premier œuf</strong></td>
+<td>Le marchand d'OXBURY <em>(partie <strong>06</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Comment les nourrir</strong></td>
+<td><strong>Le mangeoir à l'extérieur du poulailler</strong> ; jusqu'à 10 graines de n'importe quelle sorte d'un coup</td>
+</tr>
+<tr>
+<td><strong>Ce qu'elles donnent</strong></td>
+<td>Des œufs, en continu, si elles sont nourries</td>
+</tr>
+<tr>
+<td><strong>Ce qu'elles ne donnent pas</strong></td>
+<td>Du poulet. « Malgré qu'il abrite des poules, le poulailler ne produit pas de poulet pour la cuisine »</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>C'est une précision qui sauve du temps</strong> : le <strong>poulet</strong> de cuisine ne vient pas du poulailler. Il <strong>s'achète</strong> chez Raccoon Inc., à Nordweiler et à Oxbury (100 lueurs), et nulle part ailleurs.</p>
+<p><strong>Et les œufs sont précieux</strong> : la Liste d'épicerie du samedi soir en demande 20 <em>(partie <strong>09</strong>)</em>, et une dizaine de recettes en dépendent <em>(partie <strong>27</strong>)</em>.</p>
+<p><strong>Les vaches</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La stalle à vaches demande 1 preuve d'achat : vache</strong></td>
+<td><strong>Coffre 3 d'Edgeborough Lane, ou sa boutique</strong> <em>(partie <strong>06</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Ce qu'elle donne</strong></td>
+<td><strong>Du lait</strong></td>
+</tr>
+<tr>
+<td><strong>Comment</strong></td>
+<td>La Lanternelle devient un seau et un tabouret <em>(partie <strong>24</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Et le lait mène à</strong></td>
+<td>Le yogourt, puis le fromage, au cellier</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ Et voilà le rôle de la licence bovine <em>(partie <strong>06</strong>)</em> : ⚠️ <strong>à vérifier en jeu</strong> — elle n'apparaît pas dans le coût de la stalle à vaches <em>(partie <strong>25</strong>)</em>, donc elle sert probablement à débloquer le plan.</p>
+<h3 id="le-bois-et-la-scierie">Le bois et la scierie</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les 4 essences</strong></td>
+<td>Érable <em>(Hummingberg)</em>, <strong>chêne</strong> <em>(Furogawa)</em>, <strong>frêne</strong> <em>(Oxbury)</em>, <strong>pin</strong> <em>(Crow's End)</em></td>
+</tr>
+<tr>
+<td><strong>Rendement d'un arbre</strong></td>
+<td><strong>2 à 4 bûches</strong></td>
+</tr>
+<tr>
+<td><strong>Avec les outils améliorés</strong></td>
+<td><strong>8 à 9 bûches</strong> <em>(partie <strong>24</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>La scierie</strong></td>
+<td>1 bûche → 1 à 4 planches + 1 sciure</td>
+</tr>
+<tr>
+<td><strong>La scierie améliorée</strong></td>
+<td>1 bûche → <strong>3 à 6 planches</strong> + 1 sciure</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>La sciure est une ressource, pas un déchet</strong> : *<em>elle sert au <strong>papier fait maison</strong></em> <em>(sciure + colle tout usage)</em> <em>(partie <strong>20</strong>)</em> *<em>et à l'<strong>imitation de gruau</strong></em> <em>(sciure + produit laitier)</em> <em>(partie <strong>27</strong>)</em>.</p>
+<p>Et Atul fait des planches tout seul quand il est heureux : visite une île à arbres, puis parle-lui à la scierie <em>(partie <strong>11</strong>)</em>.</p>
+<p>Et il faut planter du bois sur les Sœurs Tortues <em>(partie <strong>09</strong>)</em>. 224 planches de chêne pour les 5 corraux, 42 fils de lin pour les affiches de Buck : les besoins sont énormes <em>(partie <strong>25</strong>)</em>.</p>
+<h3 id="le-moulin-a-vent-et-les-farines">Le moulin à vent et les farines</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Entrée</th>
+<th>Sortie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Maïs</strong></td>
+<td><strong>Farine de maïs</strong></td>
+</tr>
+<tr>
+<td><strong>Riz</strong></td>
+<td><strong>Farine de riz</strong></td>
+</tr>
+<tr>
+<td><strong>Blé</strong></td>
+<td><strong>Farine de blé</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et le moulin à Vent a une mécanique unique dans le jeu : le Vent.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Comment ça marche</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Interagis avec le bac du 3e étage pour mettre jusqu'à 5 fois le même grain</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Les grains sont traités un par un</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Le moulin tourne tout seul, à condition que l'<strong>indicateur de Vent</strong> du dernier étage soit dans la <strong>fenêtre de mouture</strong> du grain</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Et tu peux déplacer cette fenêtre, vers le haut ou vers le bas, à tout moment</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Récupère les farines dans le bac du rez-de-chaussée</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le Vent change selon trois choses</strong> :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Facteur</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le lieu</strong></td>
+<td>Variable</td>
+</tr>
+<tr>
+<td><strong>L'heure du jour</strong></td>
+<td>Variable</td>
+</tr>
+<tr>
+<td><strong>La météo</strong></td>
+<td>Le moulin tourne plus vite dans les orages</td>
+</tr>
+<tr>
+<td><strong>Le déplacement</strong></td>
+<td><strong>Plus vite pendant les longs trajets</strong>, <strong>plus lentement quand le bateau est arrêté</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le conseil qui découle de ça</strong> : lance ta mouture avant un long trajet, ou pendant un orage. Et pense à <strong>déplacer la fenêtre</strong> quand le vent change.</p>
+<p>Une notification en forme d'épi de blé te suit sur le bateau quand une mouture est finie.</p>
+<p><strong>Et l'amélioration double la production</strong> : 1 grain donne 2 farines au lieu de 1 <em>(partie <strong>25</strong>)</em>. Elle vient de la mission de Port d'Alt <em>(partie <strong>02</strong>)</em>.</p>
+<h3 id="le-cellier-et-les-fermentations">Le cellier et les fermentations</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Entrée</th>
+<th>Sortie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hareng</strong></td>
+<td><strong>Surströmming</strong> — <strong>le plat préféré de Gustav</strong> <em>(partie <strong>16</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Chou</strong></td>
+<td><strong>Choucroute</strong></td>
+</tr>
+<tr>
+<td><strong>Lait</strong></td>
+<td>Yogourt</td>
+</tr>
+<tr>
+<td><strong>Yogourt</strong></td>
+<td><strong>Fromage</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Et trois règles mécaniques à connaître.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La règle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Trois compartiments, jusqu'à 5 du même objet par compartiment</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Un minuteur indique le temps restant</strong> ; on peut retirer les objets non fermentés à tout moment</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Si tu laisses trop longtemps, le résultat devient un <strong>repas périmé</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le repas périmé est un piège</strong> : <strong>surveille le minuteur.</strong> Une notification te suit sur le bateau quand c'est prêt.</p>
+<p><strong>Et une remarque de source</strong> : « si on le laisse assez longtemps, le lait peut devenir du fromage » directement, sans passer par le yogourt. ⚠️ <strong>à vérifier en jeu.</strong></p>
+<p>Et l'amélioration double la production <em>(partie <strong>25</strong>)</em>. Elle est dans un coffre des <strong>bois Brumeux</strong>, l'île invisible <em>(partie <strong>08</strong>)</em>.</p>
+<h2 id="quetes-et-lieux-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="ou-trouver-chaque-graine-hors-boutique">Où trouver chaque graine, hors boutique</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Graine</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lin</strong></td>
+<td>Hummingberg <em>(rebord de fenêtre)</em>, Villa Maggiore <em>(jetée est)</em>, Furogawa <em>(maison)</em></td>
+</tr>
+<tr>
+<td><strong>Maïs</strong></td>
+<td>Les 5 caisses de Hummingberg</td>
+</tr>
+<tr>
+<td><strong>Carotte</strong></td>
+<td><strong>2 coffres de Hummingberg</strong>, <strong>7 à la canopée Obscure</strong>, <strong>les caisses de Hummingberg</strong></td>
+</tr>
+<tr>
+<td><strong>Navet</strong></td>
+<td><strong>2 coffres de Hummingberg</strong>, <strong>6 à Sunspring Square</strong>, <strong>les caisses</strong></td>
+</tr>
+<tr>
+<td><strong>Riz</strong></td>
+<td>Furogawa <em>(lampadaire)</em>, <strong>les 3 caisses de Furogawa</strong></td>
+</tr>
+<tr>
+<td><strong>Coton</strong></td>
+<td>Les 5 caisses du nord</td>
+</tr>
+<tr>
+<td><strong>Blé</strong></td>
+<td>Oxbury, Old-Central District, Sunspring Square, <strong>les 2 caisses d'Oxbury</strong></td>
+</tr>
+<tr>
+<td><strong>Pomme de terre</strong></td>
+<td>Oxbury <em>(toit)</em>, <strong>les 2 caisses d'Oxbury</strong></td>
+</tr>
+<tr>
+<td><strong>Canne à sucre</strong></td>
+<td>Bons comptes &amp; cie, Edgeborough Lane</td>
+</tr>
+<tr>
+<td><strong>Ail</strong></td>
+<td>Sandwich Walk</td>
+</tr>
+<tr>
+<td><strong>Olive</strong></td>
+<td>Sandwich Walk</td>
+</tr>
+<tr>
+<td><strong>Mûrier</strong></td>
+<td>Sandwich Walk <em>(coffre 3, Planer)</em> — <strong>la seule source</strong></td>
+</tr>
+<tr>
+<td><strong>Thé</strong></td>
+<td>Quai Nordsee, <strong>mont Toroyama</strong> <em>(×2)</em></td>
+</tr>
+<tr>
+<td><strong>Laitue</strong></td>
+<td>Quai Nordsee, <strong>8 à Crow's End inc.</strong></td>
+</tr>
+<tr>
+<td><strong>Poireau</strong></td>
+<td>Furogawa, Edgeborough Lane</td>
+</tr>
+<tr>
+<td><strong>Oignon</strong></td>
+<td><strong>2 à Sunspring Square</strong>, <strong>2 à Crow's End inc.</strong></td>
+</tr>
+<tr>
+<td><strong>Tournesol</strong></td>
+<td>Mines Kaltstein</td>
+</tr>
+<tr>
+<td><strong>Poire</strong></td>
+<td>Mines Kaltstein</td>
+</tr>
+<tr>
+<td><strong>Pomme</strong></td>
+<td>Nordweiler, <strong>mont Toroyama</strong></td>
+</tr>
+<tr>
+<td><strong>Cerise</strong></td>
+<td>Mont Toroyama <em>(×2)</em>, <strong>2 à la carrière Hoseki</strong></td>
+</tr>
+<tr>
+<td><strong>Pêche</strong></td>
+<td>Edgeborough Lane</td>
+</tr>
+<tr>
+<td><strong>Tomate</strong></td>
+<td>Aucun coffre — la course O Nion... Not That! de Francis uniquement <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Flamboyante</strong></td>
+<td>L'événement de Gustav uniquement <em>(partie <strong>16</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Céleri, chou</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong> — <strong>aucun coffre documenté</strong></td>
+</tr>
+<tr>
+<td><strong>Grains de café</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong> — <strong>aucun coffre documenté</strong></td>
+</tr>
+<tr>
+<td><strong>Étrange</strong></td>
+<td><strong>Francis, 500 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Mystérieuse</strong></td>
+<td><strong>À pêcher, après 4 départs</strong> <em>(partie <strong>20</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Trois graines ne se trouvent dans aucun coffre : tomate, céleri et grains de café. Elles s'achètent chez Raccoon Inc. <em>(200, 150 et 75 lueurs)</em>, ou viennent des courses de Francis.</p>
+<p>Et le café est un piège de début de partie : le <strong>café noir</strong> est le plat préféré de Gwen, ta première passagère <em>(partie <strong>10</strong>)</em>. Pense à acheter la graine tôt.</p>
+<h3 id="les-deux-assortiments-de-graines">Les deux assortiments de graines</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Assortiment</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Assortiment de graines de jardin</strong></td>
+<td>La course Low Cal, High Glims! de Francis <em>(3 oignons + 3 ails → 12 000 lueurs + l'assortiment)</em></td>
+</tr>
+<tr>
+<td><strong>Assortiment de graines de champ</strong></td>
+<td>La course The Source of Glims is Tomatoes <em>(3 tomates + 3 ails → 10 000 lueurs + l'assortiment)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Les deux courses demandent de l'AIL, qui ne pousse qu'à raison d'un par plantation. <strong>Plante-en plusieurs.</strong></p>
+<h3 id="les-ameliorations-de-culture">Les améliorations de culture</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Amélioration</th>
+<th>Effet</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jardin</strong></td>
+<td>« Laissez ces légumes respirer et se balancer ! »</td>
+<td>La maison du jardinier, à gauche de la Villa Maggiore, <strong>après avoir accompagné Gwen au Seuil éternel</strong></td>
+</tr>
+<tr>
+<td><strong>Champ</strong></td>
+<td>« Regardez vos céréales pousser plus vite. »</td>
+<td>Côté droit de la carrière Hoseki, après trois courants d'air <em>(double saut + Planer)</em></td>
+</tr>
+<tr>
+<td><strong>Terre retenant l'eau</strong></td>
+<td>« Faite avec la même technologie que les couches modernes ! »</td>
+<td>Un premier trésor — ⚠️ <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Ruche</strong></td>
+<td>« La maison que le miel a construite. Attention : son encombrement empêche de planter dans la parcelle en dessous ! »</td>
+<td>Amélioration du <strong>champ</strong> ; produit du <strong>miel</strong></td>
+</tr>
+<tr>
+<td><strong>Verger</strong></td>
+<td>« Vous allez cueillir des fruits toute la journée ! »</td>
+<td>La mission Baie bonne ! à la canopée Obscure <em>(partie <strong>08</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et voilà deux précisions importantes que j'ai pu corriger.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La précision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>L'amélioration du jardin n'est accessible qu'APRÈS le départ de Gwen : « la maison du jardinier à gauche de la Villa Maggiore, après avoir accompagné Gwen au Seuil éternel » <em>(partie <strong>02</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>La ruche est une amélioration du champ</strong>, <strong>et elle bloque une parcelle</strong> — <strong>c'est le prix du miel</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>La ruche est donc la source du miel. Et le miel entre dans la sucette, le lokma, le jambon au miel, les bonbons contre la toux et les carottes glacées <em>(partie <strong>27</strong>)</em>.</p>
+<p><strong>Son coût</strong> : 12 planches de pin, 6 potions d'XP, 4 lingots d'or, <strong>4 000 lueurs</strong> <em>(partie <strong>25</strong>)</em>. C'est la plus chère de toutes les améliorations.</p>
+<p>Le <strong>miel</strong> a trois sources : la <strong>ruche</strong>, le musée de Susan (5 au palier de 49 plats, partie <strong>09</strong>) et la course <em>Chéri, j'ai réduit les poissons</em> de Francis (5 aussi).</p>
+<h2 id="butin-exhaustif-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fibre de lin</strong></td>
+<td><span class="badge neutre">Textile</span></td>
+<td><strong>Graine de lin au champ</strong> <em>(3)</em></td>
+<td>Fil de lin, puis tissu en lin</td>
+</tr>
+<tr>
+<td><strong>Fibre de laine</strong></td>
+<td><span class="badge neutre">Textile</span></td>
+<td><strong>Tondre un mouton</strong> <em>(2)</em></td>
+<td>Fil de laine, puis tissu en laine</td>
+</tr>
+<tr>
+<td><strong>Fibre de coton</strong></td>
+<td><span class="badge neutre">Textile</span></td>
+<td><strong>Graine de coton au champ</strong> <em>(4)</em></td>
+<td>Fil de coton, puis tissu en coton</td>
+</tr>
+<tr>
+<td><strong>Fibre de soie</strong></td>
+<td><span class="badge neutre">Textile</span></td>
+<td><strong>Mûrier au verger</strong> <em>(5 toutes les 21 h)</em> — <strong>la seule source</strong></td>
+<td>22 tissus pour le Chasse Brouillard</td>
+</tr>
+<tr>
+<td><strong>Fibre de nebula</strong></td>
+<td><span class="badge neutre">Textile</span></td>
+<td><strong>L'événement d'ALICE</strong> <em>(partie <strong>15</strong>)</em></td>
+<td>12 tissus pour le souffleur</td>
+</tr>
+<tr>
+<td><strong>Corde métallique</strong></td>
+<td><span class="badge neutre">Ressource</span></td>
+<td><strong>Minerai de cuivre au métier à tisser</strong> <em>(après la quête de Stanley)</em></td>
+<td>La Tyrolienne et l'amélioration du corral</td>
+</tr>
+<tr>
+<td><strong>Sciure</strong></td>
+<td><span class="badge neutre">Ressource</span></td>
+<td><strong>1 par bûche sciée</strong></td>
+<td>Papier fait maison et imitation de gruau</td>
+</tr>
+<tr>
+<td><strong>Farine de maïs, de riz, de blé</strong></td>
+<td><span class="badge neutre">Ingrédients</span></td>
+<td>Le moulin à Vent</td>
+<td><strong>Une trentaine de recettes</strong> <em>(partie <strong>27</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Œuf</strong></td>
+<td><span class="badge neutre">Ingrédient</span></td>
+<td><strong>Le poulailler</strong> ; <strong>le marchand d'Oxbury</strong></td>
+<td>20 pour la Liste d'épicerie du samedi soir</td>
+</tr>
+<tr>
+<td><strong>Lait</strong></td>
+<td><span class="badge neutre">Ingrédient</span></td>
+<td>La stalle à vaches</td>
+<td><strong>Yogourt, puis fromage</strong></td>
+</tr>
+<tr>
+<td><strong>Fromage</strong></td>
+<td><span class="badge neutre">Ingrédient</span></td>
+<td><strong>Yogourt au cellier</strong></td>
+<td><strong>Le « fakinhage » de Stanley</strong> <em>(partie <strong>20</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Surströmming</strong></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Hareng au cellier</strong> — le seul plat du jeu qui ne se cuisine pas</td>
+<td>Le plat préféré de Gustav</td>
+</tr>
+<tr>
+<td><strong>Choucroute</strong></td>
+<td><span class="badge neutre">Ingrédient</span></td>
+<td><strong>Chou au cellier</strong></td>
+<td>Le repas de choucroute</td>
+</tr>
+<tr>
+<td><strong>Huile d'olive</strong></td>
+<td><span class="badge neutre">Gras</span></td>
+<td><strong>Olivier au verger</strong> <em>(7 olives toutes les 21 h)</em></td>
+<td>Toute la catégorie <strong>gras</strong></td>
+</tr>
+<tr>
+<td><strong>Huile de tournesol</strong></td>
+<td><span class="badge neutre">Gras</span></td>
+<td>Graine de tournesol au champ</td>
+<td>Toute la catégorie <strong>gras</strong></td>
+</tr>
+<tr>
+<td><strong>Miel</strong></td>
+<td><span class="badge neutre">Sucrant</span></td>
+<td><strong>La ruche</strong> <em>(amélioration du champ)</em> ; <strong>le musée, une course de Francis</strong></td>
+<td><strong>5 recettes</strong></td>
+</tr>
+<tr>
+<td><strong>Flamboyante</strong></td>
+<td><span class="badge neutre">Ingrédient</span></td>
+<td><strong>L'événement de Gustav</strong>, <strong>puis réplantable au jardin</strong> <em>(2 par plantation)</em></td>
+<td>7 recettes, dont 2 plats préférés</td>
+</tr>
+<tr>
+<td><strong>Babioles</strong></td>
+<td><span class="badge neutre">Babioles</span></td>
+<td><strong>Graine étrange au jardin</strong> <em>(500 lueurs chez Francis)</em></td>
+<td>De 375 à 2 000 lueurs chacune</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="la-routine-quotidienne">La routine quotidienne</h3>
+<p>Le guide des trophées français insiste là-dessus, et il a raison : « apprenez à être multitâches rapidement ».</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Chaque matin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Fais le tour des parcelles et arrose tout ce qui a une goutte</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Joue Plantasia Fantastica à une culture</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Récolte ce qui est mûr, replante aussitôt</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Nourris les moutons et les poules</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Trais la vache</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Récolte le verger <em>(il n'a pas besoin d'arrosage)</em></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Lance une mouture, une fonte, un tissage, une fermentation</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Nourris les passagers et fais un câlin à chacun</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Parle à ceux qui ont un avantage à donner</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et le soir, pendant que le bateau est immobilisé <em>(partie <strong>01</strong>)</em> : cuisine, scie, fonds, pêche, tisse. <strong>Ne dors presque jamais.</strong></p>
+<h3 id="le-plan-de-pont-recommande">Le plan de pont recommandé</h3>
+<p class="alerte manquable">⏳ Ce n'est pas obligatoire, mais ça fait gagner des heures.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Regroupe</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jardin + champ + verger côte à côte</strong></td>
+<td>Un seul passage pour arroser</td>
+</tr>
+<tr>
+<td><strong>Le chalet d'ALICE à côté du verger</strong></td>
+<td><strong>+2 d'humeur permanents</strong> <em>(partie <strong>15</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Scierie + métier à tisser + fonderie</strong></td>
+<td>La chaîne de transformation</td>
+</tr>
+<tr>
+<td><strong>Concasseur + forge</strong></td>
+<td>Les poudres et les feuilles</td>
+</tr>
+<tr>
+<td><strong>Cuisine + cellier</strong></td>
+<td>La nourriture</td>
+</tr>
+<tr>
+<td><strong>Corraux + poulailler + stalle</strong></td>
+<td>L'élevage</td>
+</tr>
+<tr>
+<td><strong>Le bercail de Bruce et Mickey à l'écart</strong></td>
+<td><strong>Mickey harcèle les voisins</strong> <em>(partie <strong>17</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>L'atelier d'ATUL loin du refuge de Gwen</strong></td>
+<td><strong>Les coups de marteau la dérangent</strong> <em>(partie <strong>10</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-pieges-de-lagriculture">Les pièges de l'agriculture</h3>
+<ul>
+<li>Laisser une goutte d'eau sur une parcelle. La plante ne pousse plus tant qu'elle est là.</li>
+<li><strong>Oublier Plantasia Fantastica.</strong> C'est gratuit, instantané, et ça divise le temps de pousse <em>(partie <strong>12</strong>)</em>.</li>
+<li>Planter un arbre au verger sans réfléchir. On ne peut jamais le retirer.</li>
+<li>Ne pas planter de mûrier. C'est la seule source de soie du jeu, et le Chasse Brouillard en demande 22 tissus <em>(partie <strong>23</strong>)</em>.</li>
+<li>Oublier un mouton sans corral. <strong>Il mange tes cultures.</strong></li>
+<li>Croire que le poulailler donne du poulet. <strong>Non</strong> : <strong>il donne des œufs.</strong></li>
+<li>Oublier de nourrir les poules. <strong>Elles arrêtent de pondre.</strong></li>
+<li>Laisser une fermentation trop longtemps au cellier. Elle devient un repas périmé.</li>
+<li class="alerte">⚠️ Quitter le métier à tisser avant la fin. <strong>Les objets restent dedans.</strong></li>
+<li class="alerte">⚠️ Rater le diamant doré du mini-jeu de tissage. Tu passes de 3 à 1 de rendement.</li>
+<li>Moudre quand le bateau est arrêté. Le moulin tourne au ralenti. Lance la mouture avant un long trajet.</li>
+<li class="alerte">⚠️ Oublier que la ruche bloque une parcelle du champ.</li>
+</ul>
+<h3 id="les-quatre-goulots-detranglement-du-jeu-2">Les quatre goulots d'étranglement du jeu</h3>
+<p><strong>Quatre ressources te manqueront toujours. Anticipe.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La ressource</th>
+<th>Pourquoi elle manque</th>
+<th>La solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L'ail</strong></td>
+<td><strong>1 par plantation, 180 lueurs la graine</strong>, <strong>et 2 courses de Francis en demandent 3</strong></td>
+<td>Plusieurs parcelles</td>
+</tr>
+<tr>
+<td><strong>Les planches de chêne</strong></td>
+<td><strong>224 pour les 5 corraux</strong>, <strong>plus les maisons</strong></td>
+<td><strong>Planter du chêne sur les sœurs Tortues</strong> <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Les tissus en soie</strong></td>
+<td>22 pour le Chasse Brouillard, plus 5 décorations</td>
+<td>Deux mûriers, et tôt</td>
+</tr>
+<tr>
+<td><strong>Les fils de lin</strong></td>
+<td>42 pour les seules affiches de Buck</td>
+<td>Plusieurs parcelles de lin</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et la cinquième, mais elle ne se cultive pas : <strong>les gemmes</strong> <em>(partie <strong>29</strong>)</em>.</p>
+<h2 id="alertes-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ Tant qu'une goutte d'eau est affichée, la plante ne pousse plus. <strong>Arrose chaque matin.</strong></li>
+<li class="alerte">⚠️ Plantasia Fantastica accélère la pousse au jardin, au champ et au verger <em>(partie <strong>12</strong>)</em>.</li>
+<li class="alerte">⚠️ On ne peut jamais retirer un arbre planté au verger. <strong>Réfléchis avant.</strong></li>
+<li class="alerte">⚠️ Le mûrier est la seule source de soie du jeu : <strong>5 fibres toutes les 21 heures.</strong> Sa graine est au coffre 3 de Sandwich Walk, derrière Planer <em>(partie <strong>03</strong>)</em>.</li>
+<li class="alerte">⚠️ L'olivier et le tournesol sont les seules sources de gras.</li>
+<li class="alerte">⚠️ <strong>Un seul mouton par corral</strong> : il faut 5 corraux, soit <strong>224 planches de chêne</strong> et <strong>56 lingots de cuivre</strong> <em>(partie <strong>25</strong>)</em>.</li>
+<li class="alerte">⚠️ Un mouton sans corral mange tes cultures, et Bruce et Mickey les libèrent quand ils sont tristes <em>(partie <strong>17</strong>)</em>.</li>
+<li class="alerte">⚠️ Le poulailler ne donne pas de poulet, <strong>seulement des œufs</strong> : le poulet <strong>s'achète</strong> chez Raccoon Inc. (Nordweiler, Oxbury).</li>
+<li class="alerte">⚠️ Les poules se font éclore en mettant <strong>1 œuf</strong> dans l'incubateur, et le premier œuf s'achète au marchand d'Oxbury <em>(partie <strong>06</strong>)</em>.</li>
+<li class="alerte">⚠️ Au cellier, une fermentation laissée trop longtemps devient un repas périmé.</li>
+<li class="alerte">⚠️ Le moulin tourne plus vite pendant les orages et les longs trajets, et plus lentement à l'arrêt. Et il faut déplacer la fenêtre de mouture quand le vent change.</li>
+<li class="alerte">⚠️ Le mini-jeu du métier à tisser détermine le rendement : touche le diamant doré au centre pour obtenir 3 au lieu de 1.</li>
+<li class="alerte">⚠️ <strong>L'amélioration du métier à tisser est obligatoire</strong> pour passer du fil au tissu <em>(partie <strong>02</strong>)</em>.</li>
+<li class="alerte">⚠️ L'amélioration du jardin n'est accessible qu'APRÈS le départ de Gwen : « la maison du jardinier à gauche de la Villa Maggiore » <em>(partie <strong>02</strong>)</em>.</li>
+<li class="alerte">⚠️ La ruche est une amélioration du champ, elle donne le miel, et elle bloque une parcelle. 4 000 lueurs, la plus chère du jeu <em>(partie <strong>25</strong>)</em>.</li>
+<li class="alerte">⚠️ La graine de tomate ne vient d'aucun coffre : la course <strong>O Nion... Not That!</strong> de Francis, ou la boutique <em>(partie <strong>09</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>Ne confonds pas la graine étrange</strong> <em>(500 lueurs, donne des babioles)</em> <strong>et la graine mystérieuse</strong> <em>(qui devient Stanley)</em> <em>(partie <strong>20</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : où trouver les graines de céleri, de chou et de grains de café hors boutique ; l'emplacement de la <strong>terre retenant l'eau</strong> et de la <strong>ruche</strong> ; si le lait peut devenir du fromage directement ; la rentabilité réelle de la graine étrange.</li>
+<li class="alerte">⚠️ <strong>noms français à vérifier en jeu</strong> : <strong>« fibre de nebula »</strong>, <strong>« corde métallique »</strong>, <strong>« expérience ratée »</strong>, <strong>« repas périmé »</strong>, <strong>« terre retenant l'eau »</strong>, <strong>« ruche »</strong>, <strong>« graine étrange »</strong>, <strong>« graine mystérieuse »</strong>, <strong>« assortiment de graines »</strong> — les noms de plantes et de fibres viennent du guide Steam français.</li>
+</ul>
+<h2 id="check-list-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="les-trois-cultures">Les trois cultures</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Jardin construit</strong> <em>(3 parcelles)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Champ construit</strong> <em>(3 parcelles)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Verger construit</strong> <em>(2 parcelles)</em> — à côté du chalet d'Alice</li>
+<li class="tache"><input type="checkbox"> <strong>Plantasia Fantastica apprise</strong> <em>(partie <strong>12</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Amélioration du jardin</strong> <em>(Villa Maggiore, après le départ de Gwen)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Amélioration du champ</strong> <em>(carrière Hoseki, Planer)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Amélioration du verger</strong> <em>(Baie bonne !, canopée Obscure)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Terre retenant l'eau</strong> <em>(un trésor)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Ruche</strong> <em>(4 000 lueurs)</em> → <strong>le miel</strong></li>
+</ul>
+<h3 id="les-cinq-filieres-textiles-2">Les cinq filières textiles</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Métier à tisser amélioré</strong> <em>(Villa Maggiore)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Lin</strong> : <strong>graine au champ</strong> → <strong>fibre → fil → tissu</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Laine</strong> : <strong>tondre un mouton</strong> → <strong>fibre → fil → tissu</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Coton</strong> : <strong>graine au champ</strong> → <strong>fibre → fil → tissu</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Soie</strong> : <strong>mûrier au verger</strong> → <strong>fibre → fil → tissu</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Nebula</strong> : <strong>l'événement d'ALICE</strong> → <strong>fibre → fil → tissu</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cordes métalliques tissées</strong> <em>(minerai de cuivre, après la quête de Stanley)</em></li>
+</ul>
+<h3 id="lelevage">L'élevage</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Alice recrutée</strong> <em>(partie <strong>15</strong>)</em></li>
+<li class="tache"><input type="checkbox"> <strong>5 corraux construits</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Les 5 moutons ramenés et enclos</strong></li>
+<li class="tache"><input type="checkbox"> <strong>50 tontes</strong> → <strong>succès « Nettoyeur de moutons »</strong></li>
+<li class="tache"><input type="checkbox"> Poulailler construit, 1 œuf acheté à Oxbury, poule éclose</li>
+<li class="tache"><input type="checkbox"> <strong>Preuve d'achat : vache obtenue</strong> <em>(Edgeborough Lane)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Stalle à vaches construite</strong> → <strong>le lait</strong></li>
+</ul>
+<h3 id="les-transformations">Les transformations</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Scierie</strong> : <strong>bûche → planches + sciure</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Moulin à vent</strong> : <strong>maïs, riz, blé → farines</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cellier</strong> : <strong>hareng → surströmming</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cellier</strong> : <strong>lait → yogourt → fromage</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cellier</strong> : <strong>chou → choucroute</strong></li>
+</ul>
+<h3 id="les-quatre-goulots-detranglement">Les quatre goulots d'étranglement</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Plusieurs parcelles d'AIL</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Du chêne planté sur les sœurs Tortues</strong> <em>(224 planches pour les corraux)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Deux mûriers plantés tôt</strong> <em>(22 tissus en soie)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Plusieurs parcelles de lin</strong> <em>(42 fils pour les affiches de Buck)</em></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="les-batiments-du-bateau.html" rel="prev"><small>← Partie précédente</small><b>Les bâtiments du bateau</b></a><a class="suiv" href="la-cuisine-toutes-les-recettes.html" rel="next"><small>Partie suivante →</small><b>La cuisine — toutes les recettes</b></a><a class="tout" href="spiritfarer.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Spiritfarer · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

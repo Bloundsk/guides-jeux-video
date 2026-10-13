@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les mini-jeux – Guide Final Fantasy X</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy X, Les mini-jeux : Enjeu : presque chaque mini-jeu cache une pièce des armes des Sept Astres. Papillons : récompenses uniques avant et juste…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-x/29-les-mini-jeux.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Les mini-jeux · Guide Final Fantasy X">
+<meta property="og:description" content="Final Fantasy X, Les mini-jeux : Enjeu : presque chaque mini-jeu cache une pièce des armes des Sept Astres. Papillons : récompenses uniques avant et juste…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-x/29-les-mini-jeux.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy X", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-x/"}, {"@type": "ListItem", "position": 3, "name": "Les mini-jeux", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-x/29-les-mini-jeux.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-x" class="compact" data-partie="29-les-mini-jeux"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy X</a><span aria-hidden="true">›</span><span>Partie 29</span></nav>
+<p class="gjv-jeu">Final Fantasy X : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy <em>X</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction-bien-demarrer-dans-final-fantasy-x.html"><span class="num">00</span><span class="libelle">Introduction : bien démarrer dans Final Fantasy X</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-prologue-zanarkand.html"><span class="num">01</span><span class="libelle">Prologue : Zanarkand</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-les-ruines-sous-marines-et-le-navire-al-bhed.html"><span class="num">02</span><span class="libelle">Les ruines sous-marines et le navire al bhed</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-lile-de-besaid.html"><span class="num">03</span><span class="libelle">L&#x27;île de Besaid</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-a-bord-du-ss-liki.html"><span class="num">04</span><span class="libelle">À bord du S.S. Liki</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-porto-kilika-la-foret-et-le-temple.html"><span class="num">05</span><span class="libelle">Porto Kilika, la forêt et le temple</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-a-bord-du-ss-winno.html"><span class="num">06</span><span class="libelle">À bord du S.S. Winno</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-luca-et-le-tournoi-de-blitzball.html"><span class="num">07</span><span class="libelle">Luca et le tournoi de blitzball</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-route-de-miihen.html"><span class="num">08</span><span class="libelle">Route de Mi&#x27;ihen</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-route-des-mycorocs-et-loperation-miihen.html"><span class="num">09</span><span class="libelle">Route des Mycorocs et l&#x27;opération Mi&#x27;ihen</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-route-et-temple-de-djose.html"><span class="num">10</span><span class="libelle">Route et temple de Djose</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="11-selenos.html"><span class="num">11</span><span class="libelle">Sélénos</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-guadosalam.html"><span class="num">12</span><span class="libelle">Guadosalam</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="13-plaine-foudroyee.html"><span class="num">13</span><span class="libelle">Plaine foudroyée</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="14-foret-de-macalania.html"><span class="num">14</span><span class="libelle">Forêt de Macalania</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="15-lac-et-temple-de-macalania.html"><span class="num">15</span><span class="libelle">Lac et temple de Macalania</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="16-desert-de-sanubia.html"><span class="num">16</span><span class="libelle">Désert de Sanubia</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="17-home-le-refuge-al-bhed.html"><span class="num">17</span><span class="libelle">Home, le refuge al bhed</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="18-le-vaisseau-et-bevelle.html"><span class="num">18</span><span class="libelle">Le vaisseau et Bevelle</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="19-plaine-felicite.html"><span class="num">19</span><span class="libelle">Plaine Félicité</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="20-mont-gagazet.html"><span class="num">20</span><span class="libelle">Mont Gagazet</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="21-ruines-de-zanarkand.html"><span class="num">21</span><span class="libelle">Ruines de Zanarkand</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="22-le-vaisseau-en-exploration-libre.html"><span class="num">22</span><span class="libelle">Le vaisseau en exploration libre</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="23-les-armes-des-sept-astres.html"><span class="num">23</span><span class="libelle">Les armes des Sept Astres</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="24-chimeres-secretes-anima-yojimbo-les-sœurs-magus.html"><span class="num">24</span><span class="libelle">Chimères secrètes : Anima, Yojimbo, les Sœurs Magus</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="25-le-centre-dentrainement-et-la-chasse-aux-monstres.html"><span class="num">25</span><span class="libelle">Le centre d&#x27;entraînement et la chasse aux monstres</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="26-les-ruines-domega.html"><span class="num">26</span><span class="libelle">Les ruines d&#x27;Oméga</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="27-les-chimeres-purgatrices-et-der-richter.html"><span class="num">27</span><span class="libelle">Les Chimères purgatrices et Der Richter</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="28-les-collections-manuels-spheres-de-jecht-tresors-des-temples-overdrives.html"><span class="num">28</span><span class="libelle">Les collections : manuels, sphères de Jecht, trésors des temples, Overdrives</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="#29-les-mini-jeux"><span class="num">29</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="30-sin-lassaut-final.html"><span class="num">30</span><span class="libelle">Sin : l&#x27;assaut final</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="99-annexes.html"><span class="num">99</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="sources.html"><span class="num">✦</span><span class="libelle">Sources</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-30">
+<header class="tete-section">
+<p class="eyebrow">Partie 29</p>
+<h1 id="29-les-mini-jeux">Les mini-jeux</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-30"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-30">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Enjeu</strong> : presque chaque mini-jeu cache une pièce des armes des Sept Astres.</li>
+<li><strong>Papillons</strong> : récompenses uniques avant et juste après Métasphère.</li>
+<li><strong>Éclairs</strong> : sauvegarde, agence de Rin ou changement de zone remettent le compteur à zéro.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-29" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Maîtriser les <strong>mini-jeux</strong> de Spira. Ils ne sont pas là que pour s'amuser : presque tous cachent une pièce des <strong>armes des Sept Astres</strong> (voir cette section), et certains comptent parmi les défis les plus exigeants du jeu. Au programme : le <strong>blitzball</strong>, les <strong>épreuves de chocobo</strong> et la <strong>course de Remiem</strong>, l'<strong>esquive des éclairs</strong>, la <strong>chasse aux papillons</strong> et le <strong>village des Pampas</strong>.</p>
+<h2 id="itineraire-29" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Mini-jeu</th>
+<th>Où</th>
+<th>Récompense phare</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blitzball</td>
+<td>N'importe quelle sphère de sauvegarde, après Luca</td>
+<td>Overdrives de Wakka, Sceau de Wakka</td>
+</tr>
+<tr>
+<td>Épreuves de chocobo</td>
+<td>Plaine Félicité, auprès de la dresseuse</td>
+<td>Sceau solaire (Tidus)</td>
+</tr>
+<tr>
+<td>Course de Remiem</td>
+<td>Temple de Remiem</td>
+<td>Miroir terni, 30 Pendules, 60 Tristella</td>
+</tr>
+<tr>
+<td>Esquive des éclairs</td>
+<td>Plaine foudroyée</td>
+<td>Sceau de Lulu</td>
+</tr>
+<tr>
+<td>Chasse aux papillons</td>
+<td>Forêt de Macalania</td>
+<td>Sceau de Kimahri</td>
+</tr>
+<tr>
+<td>Village des Pampas</td>
+<td>Désert de Sanubia (île de Bikanel)</td>
+<td>Sceau de Rikku</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ Les noms des Sceaux changent selon ta version (voir Armes des Sept Astres). Seul le nom diffère : l'objet et son usage restent les mêmes.</p>
+<h2 id="deroule-pas-a-pas-29" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="le-blitzball-2">Le blitzball</h3>
+<p><strong>Principe</strong> : deux équipes de six joueurs (cinq joueurs de champ et un gardien) s'affrontent dans une sphère d'eau, en deux mi-temps de cinq minutes. Le tutoriel de Wakka, dans le vestiaire des Aurochs à Luca, et celui des sphères de sauvegarde expliquent les bases : passe, tir, dribble et les duels quand un adversaire te barre la route.</p>
+<p><strong>Quand jouer</strong> : les matchs se lancent depuis n'importe quelle sphère de sauvegarde, après les événements de Luca. Mieux vaut attendre d'avoir le vaisseau pour s'y mettre sérieusement : les meilleurs joueurs se recrutent plus facilement à ce moment-là.</p>
+<p><strong>Recruter</strong> : de nombreux habitants de Spira sont des joueurs libres. Parle-leur et utilise la commande de recrutement pour leur proposer un contrat. Surveille surtout leur <strong>vitesse</strong> : un joueur rapide rattrape les adversaires et rejoint vite les duels.</p>
+<p><strong>L'arme secrète : le Jecht Shoot</strong>. Tidus l'apprend dans le mini-jeu du S.S. Winno (voir À bord du Winno). Ce tir écarte <strong>deux défenseurs</strong> du duel au moment du tir : si deux adversaires ou moins te barrent la route, tire directement plutôt que de tenter de les dribbler. Tu l'as raté ? Reprends le S.S. Winno une fois le vaisseau obtenu (trajet Kilika vers Luca, puis dans l'autre sens) : la balle t'attend sur le pont supérieur.</p>
+<p><strong>Les récompenses importantes</strong> : les Overdrives de Wakka et son Sceau se gagnent dans un ordre précis.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Récompense</th>
+<th>Type de compétition</th>
+<th>Condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Combos</strong> (Overdrive de Wakka)</td>
+<td>1er d'un <strong>tournoi</strong></td>
+<td>Aucune</td>
+</tr>
+<tr>
+<td><strong>Altérations</strong> (Overdrive de Wakka)</td>
+<td>1er d'une <strong>ligue</strong></td>
+<td>Avoir Combos et plus de 250 matchs disputés</td>
+</tr>
+<tr>
+<td><strong>Aurochs Special</strong> (Overdrive de Wakka)</td>
+<td>1er d'un <strong>tournoi</strong></td>
+<td>Avoir Altérations et plus de 450 matchs disputés</td>
+</tr>
+<tr>
+<td><strong>Sceau de Wakka</strong> (Jupiter ou Mercure selon la version)</td>
+<td>1er d'une <strong>ligue</strong></td>
+<td>Avoir Aurochs Special ; il n'apparaît qu'une fois sur deux dans la liste des prix</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Astuce pour le Sceau</strong> : la liste des prix se tire au début de chaque ligue. Sauvegarde avant d'en lancer une ; si le Sceau n'y figure pas, recharge et relance.</p>
+<p><strong>L'arme de Wakka</strong> (World Champion) demande aussi de finir <strong>au moins troisième d'un tournoi</strong> (voir Armes des Sept Astres).</p>
+<p>Les ligues et tournois rapportent aussi des <strong>techniques de blitzball</strong> et des objets utiles en prix courants : Mégalixirs, Tristella, Maxipotions, Œils du tigre, H-Espace, sphères diverses.</p>
+<h3 id="les-epreuves-de-chocobo-plaine-felicite">Les épreuves de chocobo (Plaine Félicité)</h3>
+<p>La <strong>dresseuse de chocobos</strong> t'attend près de l'agence de Rin si tu arrives en vaisseau, ou à gauche de l'entrée du mont Gagazet si tu arrives par le Gagazet. Elle propose <strong>quatre épreuves</strong>. Chacune donne un objet la <strong>première fois</strong> que tu la réussis, puis un autre chaque fois que tu <strong>bats ton record</strong>.</p>
+<p><strong>Conseil de départ</strong> : utilise la <strong>croix directionnelle</strong>, plus précise que le stick. Et lors de ta première réussite, ne fais pas un temps trop parfait : il te faudra le battre pour la seconde récompense.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Épreuve</th>
+<th>Ce qu'il faut faire</th>
+<th>1re réussite</th>
+<th>Record battu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dressage</strong></td>
+<td>Garder en ligne droite un chocobo qui zigzague ; arriver en 12,8 secondes ou moins</td>
+<td>Élixir</td>
+<td>Maxipotion</td>
+</tr>
+<tr>
+<td><strong>Esquive</strong></td>
+<td>Éviter les blitzballs lancés vers toi ; chaque coup reçu te ralentit</td>
+<td>Sphère Clé Niv.1</td>
+<td>Mégapotion</td>
+</tr>
+<tr>
+<td><strong>Esquive pro</strong></td>
+<td>Même chose, avec en plus des oiseaux agressifs</td>
+<td>Sphère Clé Niv.2</td>
+<td>Éther</td>
+</tr>
+<tr>
+<td><strong>Course</strong></td>
+<td>Battre la dresseuse ; chaque <strong>ballon</strong> ramassé retire 3 secondes, chaque <strong>oiseau</strong> qui te touche en ajoute 3</td>
+<td>Sphère Clé Niv.3</td>
+<td>Éther+</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Réussir le Dressage</strong> te permet aussi de monter un chocobo dans la plaine, sans combats aléatoires.</p>
+<p><strong>Le défi ultime</strong> : terminer la Course avec un temps final de <strong>0:00:0</strong>. Récompense : le <strong class="objet">Sceau solaire</strong>, pièce d'Ultima, l'arme de Tidus. Conseils :</p>
+<ul>
+<li>Le parcours et les ballons changent à chaque course. Parfois, la dresseuse part avantagée et le 0:00:0 devient impossible : recommence sans hésiter.</li>
+<li>Le <strong>premier virage</strong> est décisif : passe-le devant la dresseuse, pour ramasser les premiers ballons avant elle.</li>
+<li>Ensuite, ramasse tous les ballons possibles et évite un maximum d'oiseaux. Compte de nombreux essais.</li>
+</ul>
+<h3 id="la-course-du-temple-de-remiem">La course du temple de Remiem</h3>
+<ol>
+<li>Prends un chocobo à la Plaine Félicité et va près des ruines du vieux pont, à droite de l'entrée vers Macalania. Examine la <strong>plume jaune</strong> : ton chocobo descend au <strong>temple de Remiem</strong>.</li>
+<li>À gauche du temple, une <strong>sphère</strong> explique la course. Monte ensuite le chocobo à droite de la sauvegarde.</li>
+<li><strong>Première victoire</strong> : le <strong class="objet">Miroir terni</strong> (voir Armes des Sept Astres).</li>
+<li>En recourant, tu peux gagner des objets en <strong>ouvrant des coffres</strong> en chemin, <strong>sans toucher les perches</strong> du parcours : une seule perche touchée et tu ne reçois qu'une Potion. Chaque récompense ne s'obtient qu'une fois.</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Coffres ouverts</th>
+<th>Récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Élixir</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Mégalixir</td>
+</tr>
+<tr>
+<td>3</td>
+<td>30 Portes de l'inconnu</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>30 Pendules</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>60 Tristella</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Les Pendules donnent la compétence Lupin (30 Pendules), et les <strong>Portes de l'inconnu</strong> la compétence HP Extra (30) : deux récompenses précieuses.</p>
+<h3 id="lesquive-des-eclairs-plaine-foudroyee">L'esquive des éclairs (Plaine foudroyée)</h3>
+<p><strong>Principe</strong> : quand l'écran <strong>flashe en blanc</strong>, appuie sur la touche de validation : Tidus fait un saut en arrière et esquive l'éclair. Marteler la touche ne sert à rien. Les récompenses apparaissent dans un <strong>coffre devant l'agence de Rin</strong>, et un <strong>livre des exploits</strong>, à droite dans l'agence, indique ton record.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Éclairs esquivés d'affilée</th>
+<th>Récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>Maxipotion ×2</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Mégapotion ×2</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Sphère MP ×2</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Sphère Force ×3</td>
+</tr>
+<tr>
+<td>100</td>
+<td>Sphère HP ×3</td>
+</tr>
+<tr>
+<td>150</td>
+<td>Mégalixir ×4</td>
+</tr>
+<tr>
+<td><strong>200</strong></td>
+<td><strong>Sceau de Lulu</strong> (Vénus ou Mars selon la version)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Lots de consolation</strong> : être frappé <strong>30 fois</strong> rapporte un Éther, <strong>80 fois</strong> un Élixir.</p>
+<p><strong>Les règles à connaître</strong> :</p>
+<ul>
+<li>Les esquives doivent être <strong>consécutives</strong>. Le compteur repart à zéro si un éclair te touche, si tu touches une <strong>sphère de sauvegarde</strong>, si tu entres dans l'<strong>agence de Rin</strong> ou si tu <strong>changes de zone</strong>.</li>
+<li>Atteindre un palier donne aussi tous les paliers inférieurs d'un coup.</li>
+<li>Va un peu au-delà du palier visé (par exemple 205 pour 200), pour ne pas tomber à 199 à cause d'une erreur de compte.</li>
+</ul>
+<p><strong>La méthode</strong> :</p>
+<ol>
+<li>Équipe une armure avec Sécurité (Sel purificateur ×30), sinon les combats aléatoires te déconcentreront sans arrêt.</li>
+<li>Depuis l'agence de Rin, pars vers le sud de la plaine. Sur la gauche du chemin, un <strong>renfoncement</strong> abrite un <strong>cratère</strong>, un coffre et une pierre de pampa. Reste dans ce creux : les éclairs y tombent à un rythme régulier, ce qui rend le timing prévisible.</li>
+<li>Compte 20 à 35 minutes de concentration pour 200 esquives, sans sauvegarder ni entrer dans l'agence entre-temps.</li>
+</ol>
+<h3 id="la-chasse-aux-papillons-foret-de-macalania">La chasse aux papillons (forêt de Macalania)</h3>
+<p><strong>Principe</strong> : dans la forêt <strong>centrale</strong> et la forêt <strong>nord</strong>, touche un <strong>papillon bleu</strong> pour lancer le chrono, puis touche <strong>tous les papillons bleus</strong> avant la fin du temps imparti. Évite les <strong>papillons rouges</strong> : ils déclenchent un combat qui te fait perdre du temps. L'oiseau musicien à la harpe t'explique les règles.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Période</th>
+<th>Temps</th>
+<th>Forêt centrale</th>
+<th>Forêt nord</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avant Métasphère</td>
+<td>40 secondes</td>
+<td>Sphère MP</td>
+<td>Éther</td>
+</tr>
+<tr>
+<td>Après Métasphère</td>
+<td>30 secondes</td>
+<td>Mégalixir ×2</td>
+<td>Élixir ×2</td>
+</tr>
+<tr>
+<td>Avec le vaisseau libre</td>
+<td>30 secondes</td>
+<td>1re victoire (dans l'une ou l'autre forêt) : Sphère Succession <span class="a-verifier">⚠️ à vérifier en jeu</span> (FFFury indique Sphère Téléport) ; 2e victoire : <strong>Sceau de Kimahri</strong></td>
+<td>Idem</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Conseils</strong> :</p>
+<ul>
+<li>Équipe Sécurité : sans elle, les combats aléatoires ruinent chaque tentative.</li>
+<li>Mémorise le parcours avant de te lancer : après le vaisseau, les papillons rouges sont plus nombreux.</li>
+<li>Dans les versions récentes, un papillon supplémentaire a été ajouté dans la forêt nord : il faut revenir en arrière depuis le départ pour le prendre.</li>
+<li>Attention à ne pas <strong>sortir de la zone</strong> en touchant le dernier papillon : la victoire serait annulée. Pour recommencer, sors de la zone et reviens.</li>
+</ul>
+<h3 id="le-village-des-pampas-desert-de-sanubia">Le village des Pampas (désert de Sanubia)</h3>
+<p><strong>Accès</strong> : avec le vaisseau, va sur l'île de Bikanel, puis tout à l'ouest du désert, là où souffle une immense tempête de sable. Au nord-est de cette zone, une <strong>pierre gravée d'un pampa</strong> te donne un indice pour trouver un pampa caché.</p>
+<p><strong>Le jeu</strong> : une sorte de « 1, 2, 3, soleil ». Approche-toi du pampa quand il te tourne le dos et <strong>arrête-toi dès que la fenêtre « Pampi pampu pampa » s'ouvre</strong>, puis repars quand elle se ferme. Touche-le avant la fin du temps. Tu as <strong>trois essais</strong> : en cas de réussite, tu reçois la sphère du pampa ; après trois échecs, une Sphère du perdant. Dans les deux cas, rapporte la sphère à la pierre pour obtenir l'indice suivant.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ordre</th>
+<th>Où trouver le pampa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Oasis, près de la première sphère de sauvegarde</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Désert est, au nord de la tente de la deuxième sauvegarde, près d'un coffre</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Désert ouest : depuis la pierre, pars plein ouest jusqu'à un premier panneau, puis au nord-est jusqu'à un second panneau (celui qui promet une réduction chez Rin) ; examine-le</td>
+</tr>
+<tr>
+<td>4 et 5</td>
+<td>Désert central : à l'ouest de la troisième sauvegarde, deux pampas tournent en rond entre les ruines</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Désert est : touche la sphère de sauvegarde sous la tente pour le faire apparaître</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Désert central : enfermé dans le coffre tout à l'ouest ; depuis la troisième sauvegarde, longe la clôture vers le sud-ouest</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Désert ouest : sors de la zone de la pierre et reviens ; il se cache dans un tourbillon de sable (sauter dans le trou et avancer par-dessous facilite l'approche)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Oasis : il se téléporte sur ton vaisseau ; retrouve-le <strong>sur le pont</strong>, qui bouge pendant l'épreuve</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Il apparaît <strong>derrière toi</strong> quand tu places la neuvième sphère sur la pierre ; attention, ses signaux ne correspondent pas à ses mouvements : fie-toi uniquement à tes yeux</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le pampa n°7</strong> : sur le chemin, trois coffres contiennent un <strong>Magikoroc sacré</strong>, <strong>2 Magikorocs hyalins</strong> et <strong>2 Magikorocs noirs</strong>. Tu les gardes même si tu rates l'épreuve.</p>
+<p><strong>La récompense finale</strong> : après la dixième sphère, le sable se retire derrière la pierre et révèle deux coffres. Le premier contient le <strong class="objet">Sceau de Rikku</strong> (Mercure ou Vénus selon la version) ; il est acquis même si tu as raté des pampas. Le second dépend du nombre de pampas attrapés :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Pampas attrapés</th>
+<th>Récompense</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 ou 2</td>
+<td>Potion</td>
+</tr>
+<tr>
+<td>3 à 6</td>
+<td>Élixir</td>
+</tr>
+<tr>
+<td>7 ou 8</td>
+<td>Mégalixir</td>
+</tr>
+<tr>
+<td>9 ou 10</td>
+<td>Sphère Réunion</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-defis-de-belgemine">Les défis de Belgemine</h3>
+<p>Belgemine, l'invokeuse rencontrée sur la route de Mi'ihen et au Sélénos, t'attend au <strong>temple de Remiem</strong> pour une série de duels de chimères. Ses récompenses, dont la <strong>Tiare fleurie</strong> (Sœurs Magus) et le <strong>Sceau lunaire</strong> (Nirvana), sont détaillées dans la section Chimères secrètes.</p>
+<h2 id="quetes-et-lieux-29" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<ul>
+<li><strong>Agence de Rin, Plaine foudroyée</strong> : coffre des récompenses d'éclairs, livre des exploits, livre sur la légende des pampas (quête de Longinus).</li>
+<li><strong>Dresseuse de chocobos, Plaine Félicité</strong> : quatre épreuves et le Sceau solaire.</li>
+<li><strong>Temple de Remiem</strong> : course de chocobo, défis de Belgemine, Sœurs Magus.</li>
+<li><strong>Oiseau musicien, forêt de Macalania</strong> : règles de la chasse aux papillons.</li>
+<li><strong>Pierre du pampa, désert ouest de Sanubia</strong> : indices du village des Pampas.</li>
+</ul>
+<h2 id="butin-exhaustif-29" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Combos</strong></td>
+<td><span class="badge invoc">Overdrive</span> <span class="type-pour">Wakka</span></td>
+<td>1er d'un tournoi de blitzball</td>
+<td>Série d'attaques puissantes</td>
+</tr>
+<tr>
+<td><strong>Altérations</strong></td>
+<td><span class="badge invoc">Overdrive</span> <span class="type-pour">Wakka</span></td>
+<td>1er d'une ligue, après Combos</td>
+<td>Attaques qui infligent des altérations</td>
+</tr>
+<tr>
+<td><strong>Aurochs Special</strong></td>
+<td><span class="badge invoc">Overdrive</span> <span class="type-pour">Wakka</span></td>
+<td>1er d'un tournoi, après Altérations</td>
+<td>Meilleure Overdrive de Wakka</td>
+</tr>
+<tr>
+<td><strong>Sceau de Wakka</strong> (Jupiter ou Mercure)</td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>1er d'une ligue, après Aurochs Special</td>
+<td>Complète World Champion</td>
+</tr>
+<tr>
+<td>Élixir, puis Maxipotion</td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Épreuve Dressage (1re réussite, puis record)</td>
+<td>Soin</td>
+</tr>
+<tr>
+<td>Sphère Clé Niv.1, puis Mégapotion</td>
+<td><span class="badge neutre">Sphère, soin</span></td>
+<td>Épreuve Esquive</td>
+<td>Sphérier, soin de groupe</td>
+</tr>
+<tr>
+<td>Sphère Clé Niv.2, puis Éther</td>
+<td><span class="badge neutre">Sphère, soin</span></td>
+<td>Épreuve Esquive pro</td>
+<td>Sphérier, MP</td>
+</tr>
+<tr>
+<td>Sphère Clé Niv.3, puis Éther+</td>
+<td><span class="badge neutre">Sphère, soin</span></td>
+<td>Épreuve Course</td>
+<td>Sphérier, MP</td>
+</tr>
+<tr>
+<td><strong>Sceau solaire</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Course contre la dresseuse en 0:00:0</td>
+<td>Complète Ultima (Tidus)</td>
+</tr>
+<tr>
+<td><strong>Miroir terni</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Première victoire à la course de Remiem</td>
+<td>Devient le Miroir des 7 Astres</td>
+</tr>
+<tr>
+<td>Élixir, Mégalixir</td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Course de Remiem, 1 et 2 coffres</td>
+<td>Soin</td>
+</tr>
+<tr>
+<td><strong>Portes de l'inconnu ×30</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Course de Remiem, 3 coffres</td>
+<td>HP Extra (×30)</td>
+</tr>
+<tr>
+<td><strong>Pendule ×30</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Course de Remiem, 4 coffres</td>
+<td>Lupin (×30)</td>
+</tr>
+<tr>
+<td><strong>Tristella ×60</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Course de Remiem, 5 coffres</td>
+<td>MP Extra (×30) ou MP 1 (×20)</td>
+</tr>
+<tr>
+<td>Maxipotion ×2, Mégapotion ×2, Sphère MP ×2</td>
+<td><span class="badge neutre">Soin, sphère</span></td>
+<td>Éclairs : 5, 10 et 20 esquives</td>
+<td>Soin, Sphérier</td>
+</tr>
+<tr>
+<td>Sphère Force ×3, Sphère HP ×3</td>
+<td><span class="badge neutre">Sphères</span></td>
+<td>Éclairs : 50 et 100 esquives</td>
+<td>Cases vides en Force +4 et HP +300</td>
+</tr>
+<tr>
+<td>Mégalixir ×4</td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Éclairs : 150 esquives</td>
+<td>Soin complet du groupe</td>
+</tr>
+<tr>
+<td><strong>Sceau de Lulu</strong> (Vénus ou Mars)</td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Éclairs : 200 esquives</td>
+<td>Complète Chevalier Oignon</td>
+</tr>
+<tr>
+<td>Éther, Élixir</td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Éclairs : frappé 30 puis 80 fois</td>
+<td>Soin</td>
+</tr>
+<tr>
+<td>Sphère MP, Éther</td>
+<td><span class="badge neutre">Sphère, soin</span></td>
+<td>Papillons avant Métasphère (centre, nord)</td>
+<td>Sphérier, MP</td>
+</tr>
+<tr>
+<td>Mégalixir ×2, Élixir ×2</td>
+<td><span class="badge neutre">Soin</span></td>
+<td>Papillons après Métasphère (centre, nord)</td>
+<td>Soin</td>
+</tr>
+<tr>
+<td>Sphère Succession</td>
+<td><span class="badge neutre">Sphère</span></td>
+<td>Papillons avec le vaisseau, 1re victoire <span class="a-verifier">⚠️ à vérifier en jeu</span></td>
+<td>Déplacement sur le Sphérier</td>
+</tr>
+<tr>
+<td><strong>Sceau de Kimahri</strong> (Saturne ou Jupiter)</td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Papillons avec le vaisseau, 2e victoire</td>
+<td>Complète Longinus</td>
+</tr>
+<tr>
+<td>Magikoroc sacré, 2 Magikorocs hyalins, 2 Magikorocs noirs</td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Coffres du chemin du pampa n°7</td>
+<td>Ingrédients (Déf +20 %, Représailles…)</td>
+</tr>
+<tr>
+<td><strong>Sceau de Rikku</strong> (Mercure ou Vénus)</td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Village des Pampas, premier coffre final</td>
+<td>Complète God Hand</td>
+</tr>
+<tr>
+<td>Potion, Élixir, Mégalixir ou Sphère Réunion</td>
+<td><span class="badge neutre">Selon le score</span></td>
+<td>Village des Pampas, second coffre final</td>
+<td>Selon le nombre de pampas attrapés</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-29" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Sécurité d'abord</strong> : pour les éclairs, les papillons et les pampas, une armure avec Sécurité (99 Sels purificateurs via Fafnir au centre d'entraînement, voir cette section) change tout.</li>
+<li><strong>Le blitzball demande du temps</strong> : vise d'abord un tournoi pour Combos, qui transforme Wakka au combat.</li>
+<li><strong>Les éclairs</strong> : reste concentré sur le flash, pas sur le son. Et ne pense pas à sauvegarder en cours de série.</li>
+<li><strong>Le 0:00:0 des chocobos</strong> est connu pour être le défi le plus frustrant du jeu : prends des pauses, et recommence dès qu'un départ est raté.</li>
+<li><strong>Remiem</strong> : les coffres rendent le parcours plus long ; privilégie d'abord la victoire, puis vise les coffres un par un lors des courses suivantes.</li>
+</ul>
+<h2 id="alertes-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ Manquable : les récompenses de la chasse aux papillons <strong>avant Métasphère</strong> (Sphère MP, Éther) et <strong>juste après</strong> (Mégalixirs, Élixirs) ne s'obtiennent qu'à ces moments-là. Le Sceau, lui, reste accessible avec le vaisseau.</li>
+<li class="alerte">⚠️ Le compteur d'éclairs se remet à zéro si tu touches une sphère de sauvegarde, entres dans l'agence de Rin ou changes de zone.</li>
+<li class="alerte">⚠️ Les Pampas de la <strong>Plaine foudroyée</strong> (centre d'entraînement) n'apparaissent qu'après la quête de Longinus ; ceux du <strong>village des Pampas</strong> n'ont rien à voir avec eux.</li>
+</ul>
+<h2 id="check-list-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Jecht Shoot (S.S. Winno)</li>
+<li class="tache"><input type="checkbox"> Combos, Altérations et Aurochs Special pour Wakka</li>
+<li class="tache"><input type="checkbox"> Sceau de Wakka (ligue de blitzball)</li>
+<li class="tache"><input type="checkbox"> Quatre épreuves de chocobo réussies, records battus</li>
+<li class="tache"><input type="checkbox"> Sceau solaire (Course en 0:00:0)</li>
+<li class="tache"><input type="checkbox"> Miroir terni et les cinq récompenses de Remiem</li>
+<li class="tache"><input type="checkbox"> 200 éclairs esquivés d'affilée (Sceau de Lulu)</li>
+<li class="tache"><input type="checkbox"> Chasse aux papillons : récompenses des trois périodes et Sceau de Kimahri</li>
+<li class="tache"><input type="checkbox"> Village des Pampas : Sceau de Rikku et second coffre</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="28-les-collections-manuels-spheres-de-jecht-tresors-des-temples-overdrives.html" rel="prev"><small>← Partie précédente</small><b>Les collections : manuels, sphères de Jecht, trésors des temples, Overdrives</b></a><a class="suiv" href="30-sin-lassaut-final.html" rel="next"><small>Partie suivante →</small><b>Sin : l&#x27;assaut final</b></a><a class="tout" href="final-fantasy-x.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy X · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

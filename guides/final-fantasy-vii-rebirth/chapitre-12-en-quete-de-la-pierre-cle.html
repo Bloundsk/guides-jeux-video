@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapitre 12 — En quête de la pierre-clé – Guide Final Fantasy VII Rebirth</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Rebirth, Chapitre 12 — En quête de la pierre-clé : Objectif : la pierre-clé, contre un service à Dio. Avant l&#x27;hôtel : vérifie ton…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-12-en-quete-de-la-pierre-cle.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Chapitre 12 — En quête de la pierre-clé · Guide Final Fantasy VII Rebirth">
+<meta property="og:description" content="Final Fantasy VII Rebirth, Chapitre 12 — En quête de la pierre-clé : Objectif : la pierre-clé, contre un service à Dio. Avant l&#x27;hôtel : vérifie ton…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-12-en-quete-de-la-pierre-cle.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Rebirth", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/"}, {"@type": "ListItem", "position": 3, "name": "Chapitre 12 — En quête de la pierre-clé", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-12-en-quete-de-la-pierre-cle.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-rebirth" class="compact" data-partie="chapitre-12-en-quete-de-la-pierre-cle"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Rebirth</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Rebirth : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Rebirth</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-la-chute-dun-heros.html"><span class="num">✦</span><span class="libelle">Chapitre 1 — La chute d&#x27;un héros</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-vers-de-nouveaux-horizons.html"><span class="num">✦</span><span class="libelle">Chapitre 2 — Vers de nouveaux horizons</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-sur-les-traces-des-manteaux-noirs.html"><span class="num">✦</span><span class="libelle">Chapitre 3 — Sur les traces des manteaux noirs</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-le-debut-dune-nouvelle-ere.html"><span class="num">✦</span><span class="libelle">Chapitre 4 — Le début d&#x27;une nouvelle ère</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-une-croisiere-sanglante.html"><span class="num">✦</span><span class="libelle">Chapitre 5 — Une croisière sanglante</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-un-paradis-ensoleille.html"><span class="num">✦</span><span class="libelle">Chapitre 6 — Un paradis ensoleillé</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-un-retour-douloureux.html"><span class="num">✦</span><span class="libelle">Chapitre 7 — Un retour douloureux</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-le-gold-saucer.html"><span class="num">✦</span><span class="libelle">Chapitre 8 — Le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-a-lecoute-de-la-planete.html"><span class="num">✦</span><span class="libelle">Chapitre 9 — À l&#x27;écoute de la planète</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-protecteur-de-la-vallee.html"><span class="num">✦</span><span class="libelle">Chapitre 10 — Protecteur de la vallée</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-un-village-natal-meconnaissable.html"><span class="num">✦</span><span class="libelle">Chapitre 11 — Un village natal méconnaissable</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="#chapitre-12-en-quete-de-la-pierre-cle"><span class="num">✦</span><span class="libelle">Chapitre 12 — En quête de la pierre-clé</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-le-temple-des-anciens.html"><span class="num">✦</span><span class="libelle">Chapitre 13 — Le temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-un-monde-a-lagonie.html"><span class="num">✦</span><span class="libelle">Chapitre 14 — Un monde à l&#x27;agonie</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="region-de-la-prairie.html"><span class="num">✦</span><span class="libelle">Région de la Prairie</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="region-de-junon.html"><span class="num">✦</span><span class="libelle">Région de Junon</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="region-de-corel.html"><span class="num">✦</span><span class="libelle">Région de Corel</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="region-de-gongaga.html"><span class="num">✦</span><span class="libelle">Région de Gongaga</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="region-de-cosmo.html"><span class="num">✦</span><span class="libelle">Région de Cosmo</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="region-de-nibel.html"><span class="num">✦</span><span class="libelle">Région de Nibel</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="locean-central-et-les-iles.html"><span class="num">✦</span><span class="libelle">L&#x27;Océan Central et les îles</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-materias.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-armes-et-les-codex.html"><span class="num">✦</span><span class="libelle">Les armes et les codex</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-invocations.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="laffinite-et-les-coequipiers.html"><span class="num">✦</span><span class="libelle">L&#x27;affinité et les coéquipiers</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="queens-blood.html"><span class="num">✦</span><span class="libelle">Queen&#x27;s Blood</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-mini-jeux-4.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="le-simulateur-de-combat.html"><span class="num">✦</span><span class="libelle">Le simulateur de combat</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-rebirth.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Rebirth</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-13">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="chapitre-12-en-quete-de-la-pierre-cle">Chapitre 12 — En quête de la pierre-clé</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-13"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-13">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Objectif</strong> : la pierre-clé, contre un service à Dio.</li>
+<li><strong>Avant l'hôtel</strong> : vérifie ton affinité, le second rendez-vous se décide là.</li>
+<li><strong>Avant Loveless</strong> : sauvegarde, le rang S vaut un trophée.</li>
+<li><strong>Avant la Grande bataille</strong> : une protection contre Mort Subite.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Récupérer la <strong>pierre-clé</strong> qui ouvre le <strong>temple des Anciens</strong>. Elle est entre les mains de <strong>Dio</strong>, au <strong>Gold Saucer</strong> — et il ne te la donnera qu'en échange d'un service.</p>
+<p>C'est un chapitre charnière, et pas pour ses coffres : il ouvre le déplacement rapide sur toute la carte du monde, déverse une fournée de quêtes annexes dans les six régions, relance la plupart des mini-jeux avec de nouveaux défis, et contient <strong>deux grandes séquences d'affinité</strong> — le <strong>second rendez-vous</strong> et la <strong>grande roue</strong>.</p>
+<p>Côté combat : <strong>trois rounds d'arène</strong>, puis <strong>trois boss d'affilée</strong>. Et un <strong>mini-jeu de QTE avec un trophée</strong> à la clé.</p>
+<p class="alerte">⚠️ Deux choses à faire avant d'entrer dans l'hôtel du Ghost Square et dans le théâtre. Lis la section Alertes.</p>
+<h2 id="itineraire-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.actugaming.net/solution-chapitre-12-final-fantasy-vii-rebirth-633274/">Chapitre 12</a> — soluce illustrée sur ActuGaming, en français.</p>
+<ol>
+<li><strong>Le Tiny Bronco en hydravion</strong> : cap à l'ouest, tout le tour, jusqu'à <strong>Costa del Sol</strong>.</li>
+<li><strong>Le ponton de Costa del Sol</strong> : le coffre de la légende pirate.</li>
+<li><strong>Le Gold Saucer</strong> : <strong>Aerith</strong> au <strong>Battle Square</strong>, puis <strong>Dio</strong> dans l'arène.</li>
+<li><strong>L'hôtel du Ghost Square</strong> : <strong>vérifie ton affinité avant</strong>, le <strong>second rendez-vous</strong> se joue ici.</li>
+<li><strong>L'interlude de Zack</strong> à Midgar.</li>
+<li><strong>Le théâtre de l'Event Square</strong> : <strong>sauvegarde manuelle</strong>, puis <strong>Loveless</strong> et son mini-jeu.</li>
+<li><strong>Le Skywheel Square</strong> : la <strong>grande roue</strong> avec ton partenaire.</li>
+<li>La Grande bataille pour le nom du parc : trois rounds, puis le boss <strong>Apsu</strong>.</li>
+<li><strong>Le vol de la pierre-clé</strong> : boss <strong>Elena &amp; Rude</strong>, puis boss <strong>Rufus</strong>.</li>
+<li><strong>La traque de Cait Sith</strong> à travers le parc.</li>
+<li><strong>Retour au Tiny Bronco</strong> à Costa del Sol.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="en-avant-toute">En avant, toute !</h3>
+<p>Bloqué sur l'eau, le groupe patiente pendant que Cid répare. Il finit par redémarrer — et privé d'ailes, le Tiny Bronco se transforme en hydravion.</p>
+<p>Le but : avancer sur les eaux jusqu'à Costa del Sol. Il faut passer par l'ouest et faire tout le tour pour y arriver.</p>
+<p><strong>Garde l'œil ouvert</strong> : tu croises des <strong>caisses flottantes contenant des matériaux</strong> sur tout le trajet.</p>
+<p>À l'approche de Costa del Sol, <strong>accoste au niveau du quai</strong>.</p>
+<p>Le pied sur la terre ferme, Cid décide de rester et de t'accompagner au Gold Saucer, tandis que <strong>Vincent part déjà devant</strong>.</p>
+<h3 id="tout-souvre">Tout s'ouvre</h3>
+<p>C'est le grand moment d'ouverture du jeu. À partir d'ici :</p>
+<ul>
+<li>toute la carte du monde est accessible au déplacement rapide, <strong>depuis n'importe où</strong> — hors restrictions scénaristiques ;</li>
+<li><strong>une belle fournée de quêtes annexes</strong> devient disponible <strong>dans toutes les régions</strong>, si tu es à jour sur les précédentes ;</li>
+<li>la plupart des mini-jeux reçoivent de nouveaux défis.</li>
+</ul>
+<p><strong>Les nouvelles quêtes, région par région :</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Région</th>
+<th>Quête annexe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prairie</strong></td>
+<td>Chasseurs de têtes</td>
+</tr>
+<tr>
+<td><strong>Junon</strong></td>
+<td>La crainte du débarquement</td>
+</tr>
+<tr>
+<td><strong>Corel</strong></td>
+<td>Les démons surgis des flots</td>
+</tr>
+<tr>
+<td><strong>Gongaga</strong></td>
+<td>Le syndrome de la page blanche</td>
+</tr>
+<tr>
+<td><strong>Cosmo</strong></td>
+<td>Menace sous les dunes</td>
+</tr>
+<tr>
+<td><strong>Nibel</strong></td>
+<td>Un air mélancolique</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les nouveaux défis de mini-jeux</strong> : le Saute-grenouille à Junon, le Desert Rush à la prison de Corel, et <strong>quasiment toutes les activités du Gold Saucer</strong>.</p>
+<p class="alerte manquable">⏳ <strong>Et une nouvelle activité</strong> : <strong>sur le ponton de Costa del Sol</strong>, un <strong>type de coffre inconnu jusque-là</strong> attire ton attention. C'est le début d'une petite <strong>activité annexe autour d'une légende pirate</strong>, qui t'amènera à explorer un peu l'<strong>Océan Central</strong> <em>(partie <strong>21</strong>)</em>.</p>
+<p>Bref : tu as de quoi faire avant de poursuivre l'histoire. Profites-en, c'est le meilleur moment du jeu pour le contenu annexe.</p>
+<h3 id="des-indices-sur-la-pierre-cle">Des indices sur la pierre-clé</h3>
+<p>De retour au parc pour chercher Dio, l'équipe se sépare. <strong>Cait Sith</strong> informe Cloud d'une légende : personne ne revient du temple des Anciens après y être entré. Cloud n'y croit pas vraiment.</p>
+<p>En marge de tes recherches, va tenter les nouveaux défis des squares — et notamment un petit combat bonus en 3D avec Yuffie au Wonderment Square, qui <strong>augmente ton affinité</strong> avec elle.</p>
+<p><strong>Pour trouver Dio</strong> : va au Battle Square, où se trouve <strong>Aerith</strong>. Sur place, tu apprends qu'un <strong>combat spécial</strong> va avoir lieu entre Dio et Don Cornéo.</p>
+<p><strong>Suis Aerith dans l'arène</strong> pour apercevoir Dio, et <strong>va le voir</strong>.</p>
+<p>Il détient toujours la pierre-clé et te la donnerait volontiers — à condition que tu l'aides pour le match spécial contre Cornéo. Diminué par son combat contre les TURKs, il compte sur toi pour <strong>rester propriétaire du Gold Saucer</strong>.</p>
+<p>Le marché conclu, Dio t'invite à te reposer à l'hôtel du Ghost Square.</p>
+<h3 id="avant-daller-a-lhotel">Avant d'aller à l'hôtel</h3>
+<p>Vérifie ton affinité avec tous les membres de l'équipe. <strong>Un second rendez-vous approche</strong>, et comme celui du chapitre 8, c'est ton affinité accumulée qui détermine qui viendra.</p>
+<p>Une fois prêt, <strong>adresse-toi au réceptionniste</strong> pour monter à ta chambre. Pendant ce temps, <strong>Aerith semble écrire une chanson</strong>…</p>
+<h3 id="linterlude-de-zack">L'interlude de Zack</h3>
+<p>Pendant que Cloud se repose, l'intrigue revient à Midgar.</p>
+<ol>
+<li><strong>Monte à l'étage</strong> voir <strong>Cloud et Aerith</strong>. <strong>Marlène</strong> est présente et t'explique ce qu'elle sait du <strong>destin d'Aerith</strong>.</li>
+<li>Peu après, <strong>dans le jardin</strong>, Elmyra constate que <strong>les fleurs repoussent</strong> — ce qui peut être un bon signe pour Aerith.</li>
+<li><strong>Zack décide d'aller voir Hojo</strong> au sujet de Cloud. <strong>Quitte le jardin</strong> pour partir en moto — mais <strong>un mot de Biggs</strong> attire son attention : il compte poursuivre la mission d'Avalanche en faisant sauter un réacteur. Zack part prévenir Elmyra en urgence.</li>
+</ol>
+<h3 id="loveless">Loveless</h3>
+<p>De retour au Gold Saucer, Cloud se réveille et la personne avec qui tu entretiens la plus grande affinité vient toquer à ta porte. Elle te propose d'assister à la pièce Loveless, à l'Event Square.</p>
+<p><strong>Descends par l'ascenseur</strong> et téléporte-toi au square via un Guide mog.</p>
+<p class="alerte">⚠️ <strong>Avant d'entrer, fais une sauvegarde manuelle.</strong> Ce qui suit est un mini-jeu noté, avec un <strong>trophée</strong> à la clé.</p>
+<p>Après être entré dans le théâtre et avoir vu la <strong>superbe prestation de Loveless en VR</strong>, <strong>un mini-jeu se lance</strong> : toute l'équipe joue le spectacle, et <strong>Cloud tient le rôle du chevalier Alphreid</strong>.</p>
+<p><strong>Comment ça marche :</strong></p>
+<ul>
+<li>Tu es d'abord <strong>dans un cachot</strong>, où tu peux <strong>t'entraîner aux QTE</strong> que tu rencontreras pendant tout le spectacle.</li>
+<li><strong>Il n'y a que quatre touches</strong> : Croix, Carré, Rond et Triangle.</li>
+<li><strong>L'astuce qui change tout</strong> : la zone d'apparition des boutons à l'écran correspond plus ou moins à leur place sur la manette. <strong>Triangle apparaît vers le haut</strong>, Carré sur la gauche, et ainsi de suite. Une fois que tu as ça en tête, tu lis l'écran au lieu de lire les icônes.</li>
+<li><strong>Appuie dès l'apparition.</strong> Les <strong>enchaîner sans se tromper</strong> donne des notes <strong>« Excellent »</strong> et <strong>fait monter le combo</strong>.</li>
+<li><strong>Parfois il faut marteler la touche</strong> : c'est signalé par une <strong>double flèche</strong>.</li>
+</ul>
+<p>À chaque séquence tu es évalué, et la somme de tes prestations donne une note finale. Le rang S débloque le trophée « Standing Ovation » à la fin du spectacle.</p>
+<p><strong>Le déroulé :</strong></p>
+<ol>
+<li>Quitte ta cellule grâce à Rosa pour lancer l'Acte I. Tu affrontes <strong>soit Varvados, soit Garm</strong> — peu importe lequel. QTE au rythme assez calme.</li>
+<li><strong>Avant l'Acte II</strong>, tu dois choisir entre l'adversaire mis de côté à l'acte I et Rosa. L'acte se lance contre celui que tu choisis, avec des QTE un peu plus intenses.</li>
+<li><strong>Avant l'Acte III</strong>, choisis pour qui ton cœur bat. Le choix logique est Rosa, mais les autres donnent des réactions amusantes — à toi de voir si tu joues la note ou le gag. Dans tous les cas, Varvados lance l'Acte III, où les QTE sont les plus rythmés. Vers la fin de l'acte, prépare-toi à marteler toutes les touches pour le bouquet final.</li>
+</ol>
+<p>Puis profite de la magnifique conclusion du spectacle, chantée par Aerith.</p>
+<h3 id="la-grande-roue">La grande roue</h3>
+<p>Sitôt le spectacle terminé, <strong>rends-toi au Skywheel Square</strong> pour monter dans la grande roue avec ton partenaire du soir.</p>
+<p>Là encore, il n'y a rien à faire que <strong>profiter du moment</strong>. Au terme de la séquence, ton affinité augmente avec ton partenaire.</p>
+<h3 id="avant-la-grande-bataille">Avant la Grande bataille</h3>
+<p>Une cinématique côté TURKs montre le groupe et le président préparer quelque chose au sujet de la pierre-clé. Puis le combat spécial approche.</p>
+<p>Tu dois composer une équipe de trois, en sachant que ton partenaire du soir occupe déjà une place. <strong>Choisis librement le troisième.</strong></p>
+<p>Et surtout, équipe-toi correctement, c'est le conseil le plus important du chapitre :</p>
+<ul>
+<li>des <strong>matérias Feu</strong> sur tes combattants ;</li>
+<li>et des protections contre l'altération Mort Subite — la matéria Annihilation placée côté équipement, ou des accessoires du type Écharpe de rancune.</li>
+</ul>
+<p>Sans protection contre Mort Subite, le troisième round peut t'éliminer en un coup.</p>
+<p>Puis <strong>adresse-toi au guichet</strong> pour commencer.</p>
+<h3 id="les-trois-rounds">Les trois rounds</h3>
+<p>Round 1 — une dizaine de Sbires de Cornéo. <strong>Vulnérables au Feu</strong>, rien de spécial — sauf qu'ils s'injectent une substance qui les rend plus puissants mais qui les fragilise au bout d'un certain temps. Tu peux donc attendre, ou juste les brûler.</p>
+<p>Round 2 — les Pampas du Don. Leur particularité : ils ne peuvent pas être ciblés tant qu'ils bougent. Quand ils s'arrêtent, ils lancent Dispersion d'épines — et c'est après ça que tu peux les frapper.</p>
+<p>Round 3 — un Don Tomberry et deux Tomberrys classiques. Le round dangereux.</p>
+<ul>
+<li><strong>N'attaque jamais le Don Tomberry à distance</strong> : il répond par de <strong>puissantes contre-attaques</strong>.</li>
+<li><strong>Pour le fragiliser</strong>, il faut le forcer à donner des Coups de couteau fatals ou des Couteaux de la rancœur en étant près de lui, <strong>puis les esquiver</strong>.</li>
+<li>En cas d'échec, ce coup t'élimine instantanément si tu n'es pas immunisé à Mort Subite. Idem pour les Coups de couteau classiques des petits Tomberrys.</li>
+<li>Et tu es particulièrement vulnérable à ces attaques si tu t'es fait toucher par Malédiction, qui t'étourdit.</li>
+<li><strong>La bonne méthode</strong> : occupe-toi d'abord des petits, surtout à distance, pour être tranquille. Ensuite, gère prudemment le Don Tomberry et <strong>amène-le au Choc</strong> pour conclure.</li>
+</ul>
+<h3 id="boss-apsu">Boss : Apsu</h3>
+<p><strong>Don Cornéo</strong> finit par se montrer, sur sa fidèle bête Apsu.</p>
+<p>Stratégie détaillée dans Conseils et pièges.</p>
+<p>Apsu terrassé, Cornéo s'enfuit. Et alors que tu t'apprêtes à récupérer la pierre-clé, <strong>la lumière s'éteint</strong> : Elena puis Rude apparaissent et <strong>subtilisent la relique</strong>. Pire — ils la confient à Cait Sith, qui s'enfuit avec.</p>
+<p class="alerte manquable">⏳ Avant le combat suivant, Dio installe un lieu de repos : <strong>recharge et réorganise</strong>.</p>
+<p><strong>Rappel utile</strong> : Elena est vulnérable à la Foudre et <strong>Rude au Vent</strong>. Utilise la matéria Affinité élémentaire sur ton arme pour un bon <em>boost</em> de dégâts.</p>
+<h3 id="boss-elena-rude-3">Boss : Elena &amp; Rude</h3>
+<p>Stratégie détaillée dans Conseils et pièges.</p>
+<p>Le duo hors d'état de nuire, un nouvel ennemi surgit du centre de la scène : Rufus. Décidément.</p>
+<p>Avant que le combat ne commence, maintiens Carré pour faire apparaître le menu si tu veux réorganiser. Et il faut absolument le faire :</p>
+<ul>
+<li>le combat contre Rufus se joue uniquement avec Cloud ;</li>
+<li>équipe-le d'une matéria de soin et d'une matéria de protection ;</li>
+<li>retire la matéria Affinité élémentaire de son arme si tu l'avais mise pour Elena et Rude.</li>
+</ul>
+<h3 id="boss-rufus">Boss : Rufus</h3>
+<p>Stratégie détaillée dans Conseils et pièges.</p>
+<p>Rufus s'échappe à son tour. <strong>Le plus important maintenant : retrouver Cait Sith</strong>, qui détient la clé.</p>
+<h3 id="cait-sith-en-fuite">Cait Sith en fuite</h3>
+<p>Une petite traque en trois étapes :</p>
+<ol>
+<li>De retour dans le hall du Battle Square, va du côté du stand des peluches : le chat est assis parmi elles. Il s'enfuit vers la Place centrale.</li>
+<li>Quitte le square par l'escalator pour rejoindre la Place centrale. Cherche un banc où deux gros mogs sont assis, vers le sud-est de la place : Cait Sith est caché derrière le mog de droite. Il fuit vers les <strong>coulisses du parc</strong>.</li>
+<li><strong>Poursuis-le</strong> jusqu'à une salle où un coffre violet contient la croix de cristal pour Yuffie.</li>
+</ol>
+<p><strong>Grimpe l'escalier</strong> : tu arrives aux <strong>héliports du parc</strong>. <strong>Cait Sith donne la pierre-clé à Tseng</strong>, qui fuit avec les autres TURKs.</p>
+<p>La plupart de l'équipe se sent trahie, et <strong>Cloud exclut Cait Sith du groupe</strong>.</p>
+<p>Heureusement, Vincent sait comment retrouver la piste de l'équipe d'élite de la Shinra : la radio du Tiny Bronco.</p>
+<p class="alerte manquable">⏳ <strong>Avant de partir, deux choses se débloquent</strong> : la suite de la quête protorelique de la région de Corel, et la quête annexe « Le défi du fêtard ultime » — si toutes les autres ont été accomplies.</p>
+<p>Quand tu es prêt, téléporte-toi au Tiny Bronco à Costa del Sol et <strong>parle à Cid</strong>. Fin du chapitre.</p>
+<h2 id="quetes-et-lieux-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="ce-qui-souvre-dans-ce-chapitre">Ce qui s'ouvre dans ce chapitre</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nouveauté</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Déplacement rapide sur toute la carte</strong></td>
+<td>Partout, depuis n'importe où <em>(hors restrictions scénaristiques)</em></td>
+</tr>
+<tr>
+<td><strong>Chasseurs de têtes</strong></td>
+<td>Région de la Prairie</td>
+</tr>
+<tr>
+<td><strong>La crainte du débarquement</strong></td>
+<td>Région de Junon</td>
+</tr>
+<tr>
+<td><strong>Les démons surgis des flots</strong></td>
+<td>Région de Corel</td>
+</tr>
+<tr>
+<td><strong>Le syndrome de la page blanche</strong></td>
+<td>Région de Gongaga</td>
+</tr>
+<tr>
+<td><strong>Menace sous les dunes</strong></td>
+<td>Région de Cosmo</td>
+</tr>
+<tr>
+<td><strong>Un air mélancolique</strong></td>
+<td>Région de Nibel</td>
+</tr>
+<tr>
+<td><strong>Nouveaux défis de mini-jeux</strong></td>
+<td>Saute-grenouille <em>(Junon)</em>, Desert Rush <em>(prison de Corel)</em>, <strong>quasiment toutes les activités du Gold Saucer</strong></td>
+</tr>
+<tr>
+<td><strong>Légende pirate</strong></td>
+<td>Coffre d'un <strong>type inconnu</strong> sur le <strong>ponton de Costa del Sol</strong> → exploration de l'Océan Central</td>
+</tr>
+<tr>
+<td><strong>Combat bonus 3D avec Yuffie</strong></td>
+<td>Wonderment Square → <strong>affinité</strong></td>
+</tr>
+<tr>
+<td><strong>Suite de la protorelique de Corel</strong></td>
+<td>Région de Corel, après la fuite de Cait Sith</td>
+</tr>
+<tr>
+<td><strong>Le défi du fêtard ultime</strong></td>
+<td>Débloquée <strong>si toutes les autres quêtes sont accomplies</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="le-gold-saucer-2">Le Gold Saucer</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>À faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Battle Square</strong></td>
+<td><strong>Aerith</strong> ; annonce du <strong>combat spécial</strong> ; Dio dans l'arène ; les <strong>trois rounds</strong> et les <strong>trois boss</strong> ; <strong>stand des peluches</strong> pendant la traque</td>
+</tr>
+<tr>
+<td><strong>Wonderment Square</strong></td>
+<td><strong>Combat bonus en 3D avec Yuffie</strong> → affinité</td>
+</tr>
+<tr>
+<td><strong>Ghost Square — hôtel</strong></td>
+<td>Vérifier l'affinité avant ; <strong>second rendez-vous</strong> ; <strong>interlude de Zack</strong></td>
+</tr>
+<tr>
+<td><strong>Event Square — théâtre</strong></td>
+<td>Sauvegarde manuelle avant ; Loveless et son <strong>mini-jeu de QTE</strong> ; <strong>rang S → trophée « Standing Ovation »</strong></td>
+</tr>
+<tr>
+<td><strong>Skywheel Square</strong></td>
+<td>Grande roue avec ton partenaire → <strong>affinité</strong></td>
+</tr>
+<tr>
+<td><strong>Place centrale</strong></td>
+<td><strong>Banc aux deux gros mogs</strong>, vers le <strong>sud-est</strong> : Cait Sith <strong>derrière le mog de droite</strong></td>
+</tr>
+<tr>
+<td><strong>Coulisses du parc</strong></td>
+<td>Coffre violet <strong>croix de cristal</strong> (Yuffie)</td>
+</tr>
+<tr>
+<td><strong>Héliports</strong></td>
+<td>Tseng récupère la pierre-clé ; <strong>Cait Sith exclu</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<p>Ce chapitre est <strong>pauvre en coffres</strong> — c'est un chapitre d'histoire, d'affinité et de combats. Mais ce qu'il donne compte.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Croix de cristal</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Yuffie</span></td>
+<td><strong>Coffre violet</strong> dans les <strong>coulisses du parc</strong>, pendant la traque de Cait Sith</td>
+<td>Nouvelle arme pour Yuffie</td>
+</tr>
+<tr>
+<td><strong>Trophée « Standing Ovation »</strong></td>
+<td><span class="badge neutre">Trophée</span></td>
+<td><strong>Rang S</strong> au mini-jeu de <strong>Loveless</strong></td>
+<td>Trophée ; <strong>sauvegarde avant d'entrer dans le théâtre</strong></td>
+</tr>
+<tr>
+<td><strong>Matériaux divers</strong></td>
+<td><span class="badge neutre">Matériaux</span></td>
+<td><strong>Caisses flottantes</strong> sur le trajet en hydravion vers Costa del Sol</td>
+<td>Synthèse</td>
+</tr>
+<tr>
+<td><strong>Coffre de la légende pirate</strong></td>
+<td><span class="badge neutre">Objet de départ d&#x27;activité</span></td>
+<td>Ponton de Costa del Sol</td>
+<td>Lance l'activité annexe de l'<strong>Océan Central</strong> <em>(partie <strong>21</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Pierre-clé</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Promise par <strong>Dio</strong> contre ton aide au combat spécial</td>
+<td><strong>Volée par les TURKs</strong> à la fin du chapitre — tu ne la gardes pas</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>À équiper, pas à ramasser</strong> : pour la Grande bataille, il te faut des <strong>matérias Feu</strong> et une <strong>protection contre Mort Subite</strong> — <strong>matéria Annihilation côté équipement</strong> ou <strong>accessoire du type Écharpe de rancune</strong>. Ce sont des objets que tu possèdes déjà ; le chapitre ne te les offre pas.</p>
+<h2 id="conseils-et-pieges-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="les-ennemis-de-larene">Les ennemis de l'arène</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ennemi</th>
+<th>Point faible</th>
+<th>À savoir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sbire de Cornéo</strong></td>
+<td>Feu</td>
+<td>S'injecte une substance qui le renforce mais <strong>le fragilise au bout d'un moment</strong></td>
+</tr>
+<tr>
+<td><strong>Pampa du Don</strong></td>
+<td>—</td>
+<td>Ne peut pas être ciblé tant qu'il bouge. <strong>Il s'arrête pour lancer Dispersion d'épines</strong> — c'est là qu'on le frappe</td>
+</tr>
+<tr>
+<td><strong>Tomberry</strong></td>
+<td>—</td>
+<td>Ses Coups de couteau tuent instantanément sans immunité à Mort Subite. À tuer <strong>à distance et en premier</strong></td>
+</tr>
+<tr>
+<td><strong>Don Tomberry</strong></td>
+<td>—</td>
+<td>Jamais à distance : il <strong>contre-attaque violemment</strong>. Le fragiliser demande d'être près de lui, de le forcer à sortir Coups de couteau fatals ou Couteaux de la rancœur, et de les esquiver. <strong>Malédiction t'étourdit</strong> et te rend très vulnérable à ces coups</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="boss-apsu-2">Boss : Apsu</h3>
+<p>C'est la monture de Don Cornéo.</p>
+<p><strong>La mécanique centrale</strong> : concentre tes dégâts de Feu sur Apsu pour le brûler et le fragiliser. Une fois fragilisé, insiste encore au Feu pour faire monter la jauge de Choc plus vite.</p>
+<p>Son répertoire — il est long, mais chaque attaque a une réponse simple :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Attaque</th>
+<th>Ce qu'elle fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Frappe sismique</strong></td>
+<td>Onde de choc autour de lui</td>
+</tr>
+<tr>
+<td><strong>Torgnole</strong></td>
+<td>Un grand coup qui te <strong>plaque au sol</strong></td>
+</tr>
+<tr>
+<td><strong>Charge brusque</strong></td>
+<td>Il fonce ; si tu es touché, tu es propulsé en l'air puis achevé au sol</td>
+</tr>
+<tr>
+<td><strong>Pose défensive</strong></td>
+<td>Le toucher pendant ce laps de temps déclenche une Riposte — attends</td>
+</tr>
+<tr>
+<td><strong>Grosse excitation</strong></td>
+<td>Booste son attaque et <strong>baisse sa défense physique</strong></td>
+</tr>
+<tr>
+<td><strong>Accrochage</strong></td>
+<td>Il se rue pour t'<strong>immobiliser</strong> et te blesser. <strong>Fonce sur lui pour l'attaquer</strong> et libérer ton allié</td>
+</tr>
+<tr>
+<td><strong>Tourbillon bestial</strong></td>
+<td>T'<strong>attire vers lui</strong> et te <strong>propulse en l'air</strong>, parfois enchaîné avec le douloureux Aplatissement abdominal</td>
+</tr>
+<tr>
+<td><strong>Pluie de coups</strong></td>
+<td>Il avance vers toi en frappant le sol</td>
+</tr>
+</tbody>
+</table></div>
+<p>Vers la moitié de sa barre de vie, le Feu devient moins efficace : Cornéo éteint les flammes.</p>
+<p class="alerte manquable">⏳ <strong>L'astuce de la phase 2</strong> : laisse-le faire ses Charges répétées vers toi, <strong>positionne-toi près du mur</strong>, et esquive au dernier moment pour qu'il fonce dedans — <strong>ça le fragilise</strong>. C'est tout le combat à partir de là.</p>
+<p>Et comme toujours, <strong>compétences synchronisées et Transcendances</strong> facilitent la vie.</p>
+<h3 id="boss-elena-rude-4">Boss : Elena &amp; Rude</h3>
+<p>Le duo du chapitre 3, en version sérieuse. <strong>Ils continuent d'attaquer simultanément.</strong></p>
+<p><strong>Préparation</strong> : Elena est vulnérable à la Foudre, <strong>Rude au Vent</strong>. Mets la matéria Affinité élémentaire sur ton arme pour le <em>boost</em>.</p>
+<p><strong>Leur répertoire :</strong></p>
+<ul>
+<li><strong>Elena</strong> mise sur les <strong>armes et les grenades</strong>. Méfie-toi de Pluie de grenades, de Grenade étourdissante, et de Direct style Elena, qui propage des geysers de flammes sur l'arène.</li>
+<li><strong>Rude</strong> privilégie toujours le <strong>corps-à-corps</strong>, avec l'enchaînement redoutable Revers tornades — qui te <strong>propulse en l'air</strong> — suivi de Frappe tellurique, qui <strong>fait de lourds dégâts à l'atterrissage</strong>.</li>
+</ul>
+<p><strong>Phase 1 — Elena d'abord.</strong></p>
+<p><strong>Concentre-toi sur elle</strong> avec de <strong>puissantes compétences offensives</strong> pour la fragiliser, <strong>continue jusqu'au Choc</strong>, et amène-la au tiers de sa barre de vie.</p>
+<p><strong>Phase 2 — le regroupement.</strong></p>
+<p><strong>Le duo se regroupe</strong> : Elena envoie une multitude de grenades qui t'étourdissent si tu es touché, pendant que Rude enchaîne les Frappes telluriques.</p>
+<p>Puis ils préparent Ravage des TURKs, une attaque en tandem redoutable. <strong>Deux options</strong> : les interrompre avec tes attaques les plus puissantes si tu peux, sinon faire le dos rond et te soigner immédiatement après le combo.</p>
+<p><strong>Continue ensuite sur Elena</strong>, avec compétences synchronisées et Transcendances — <strong>ou garde-les pour Rude</strong> si tu estimes pouvoir finir Elena sans.</p>
+<p><strong>Phase 3 — Rude.</strong></p>
+<ul>
+<li>Ses enchaînements de coups de pied ne sont pas mortels mais ils <strong>t'empêchent d'agir</strong>.</li>
+<li><strong>Pour le fragiliser</strong> : envoie des compétences offensives pendant qu'il est en garde, ou <strong>pendant son Éruption d'énergie</strong>.</li>
+<li>Ensuite, multiplie les compétences à potentiel de Choc tout en jonglant avec lui grâce aux attaques en mode Bravoure de soldat de Cloud.</li>
+<li><strong>Une fois en Choc</strong>, Fin infinie de Cloud et le reste de tes grosses attaques devraient conclure.</li>
+</ul>
+<h3 id="boss-rufus-2">Boss : Rufus</h3>
+<p><strong>Cloud seul.</strong> Et Rufus est aussi agaçant que dans <em>Final Fantasy VII Remake</em>.</p>
+<p>Il fait partie des rares boss qui ne peuvent pas être frappés à tout moment. Ne te rue jamais sur lui : il contre avec son arme à feu.</p>
+<p>La seule façon de rendre ce combat court et supportable :</p>
+<p>Lance une compétence ATB — comme Âme brave — juste après une attaque de Rufus pour le fragiliser. De là, tu peux lui infliger pas mal de dégâts. L'attaquer avec des coups normaux marche aussi, mais la Fragilité reste très brève.</p>
+<p class="alerte">⚠️ <strong>Tout est dans la fenêtre</strong> : trop tôt, tu prends son coup ; trop tard, tu ne le fragilises pas — ou tu <strong>subis un contre</strong> si tu te contentes de l'attaquer.</p>
+<p><strong>Son panel, tout à base de pièces :</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Attaque</th>
+<th>Effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pièces explosives</strong></td>
+<td>Te <strong>propulse en l'air</strong> si tu es dans l'explosion</td>
+</tr>
+<tr>
+<td><strong>Crosse perçante</strong> / <strong>Crosse ascendante</strong></td>
+<td>Te <strong>fait reculer</strong> ou <strong>t'élève dans les airs</strong></td>
+</tr>
+<tr>
+<td><strong>Pièces fumigènes</strong></td>
+<td>T'<strong>étourdit</strong> si tu es dans la fumée</td>
+</tr>
+<tr>
+<td><strong>Pièces laser</strong></td>
+<td>Un laser, <strong>facilement évitable</strong></td>
+</tr>
+<tr>
+<td><strong>Pièces guidées</strong></td>
+<td>Des projectiles qui te <strong>foncent dessus</strong></td>
+</tr>
+<tr>
+<td><strong>Pièces incapacitantes</strong></td>
+<td>Un <strong>orbe violet</strong> qui inflige Lenteur — il avance lentement</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le conseil le plus important du combat</strong> : si tu as complètement chargé ta Transcendance pendant cette phase, garde-la pour la phase 2.</p>
+<p>Phase 2 — à la moitié de la vie de Rufus, son chien Ténébro rejoint le combat.</p>
+<ul>
+<li class="alerte">⚠️ Ton attention doit désormais se porter sur lui.</li>
+<li><strong>Tu le fragilises</strong> en lui infligeant assez de dégâts, ou en interrompant la compétence Maître et chien.</li>
+<li>Dès qu'il est fragilisé, mets-le vite en Choc — en veillant à ce qu'il soit près de Rufus.</li>
+<li><strong>Et là, lâche ta Transcendance</strong> : tu mets le chien K.-O. <strong>et</strong> tu fais baisser drastiquement la vie de Rufus, qui passe lui aussi en Fragilité. C'est la manœuvre qui plie le combat.</li>
+</ul>
+<h3 id="les-mini-jeux-3">Les mini-jeux</h3>
+<ul>
+<li><strong>Loveless</strong> : la position des boutons à l'écran correspond à leur position sur la manette. Lis l'écran, pas les icônes. <strong>Appuie dès l'apparition</strong>, et la double flèche veut dire marteler. <strong>Sauvegarde avant d'entrer</strong>, le <strong>rang S</strong> vaut un trophée.</li>
+<li><strong>Les trois choix de Loveless</strong> n'ont pas d'incidence sur la note : Varvados ou Garm à l'acte I, <strong>l'autre ou Rosa</strong> à l'acte II, <strong>pour qui ton cœur bat</strong> à l'acte III. <strong>Rosa est le choix « logique »</strong>, les autres donnent des réactions amusantes.</li>
+<li><strong>Le combat bonus 3D de Yuffie</strong> au Wonderment Square est de l'affinité facile, et rien ne te dit qu'il existe.</li>
+</ul>
+<h3 id="le-reste-11">Le reste</h3>
+<ul>
+<li><strong>Vérifie ton affinité avant d'entrer à l'hôtel.</strong> Le second rendez-vous se décide là, et comme celui du chapitre 8, il s'appuie sur tout ce que tu as accumulé depuis Kalm. La partie <strong>26</strong> détaille le système.</li>
+<li>Profite de l'ouverture totale de la carte avant de poursuivre. C'est <strong>le</strong> moment du jeu pour boucler les régions : six nouvelles quêtes annexes, de nouveaux défis de mini-jeux, et le déplacement rapide partout.</li>
+<li>Protège-toi contre Mort Subite avant la Grande bataille. Le troisième round peut t'éliminer en un coup. <strong>Annihilation côté équipement</strong> ou Écharpe de rancune : c'est le seul vrai piège mortel du chapitre.</li>
+<li><strong>Trois boss d'affilée, trois équipements différents.</strong> Feu + anti-Mort Subite pour l'arène et Apsu, <strong>Affinité élémentaire</strong> pour Elena et Rude, puis <strong>soin + protection et Affinité élémentaire retirée</strong> pour Rufus, en solo. Le lieu de repos installé par Dio existe exactement pour ça.</li>
+<li><strong>Garde ta Transcendance pour Ténébro.</strong> La séquence « chien en Choc près de Rufus + Transcendance » économise plusieurs minutes de combat pénible.</li>
+<li><strong>Ramasse les caisses flottantes</strong> pendant le trajet en hydravion : c'est du matériau gratuit sur un trajet obligatoire.</li>
+</ul>
+<h2 id="alertes-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ Vérifie ton affinité avant de parler au réceptionniste de l'hôtel du Ghost Square. Le <strong>second rendez-vous</strong> se détermine à ce moment, sur la base de toute ton affinité accumulée.</li>
+<li class="alerte">⚠️ Sauvegarde manuellement avant d'entrer dans le théâtre de l'Event Square. Le mini-jeu de <strong>Loveless</strong> est noté, et le <strong>rang S</strong> vaut le trophée <strong>« Standing Ovation »</strong>.</li>
+<li class="alerte">⚠️ Équipe une protection contre Mort Subite avant la Grande bataille — <strong>Annihilation côté équipement</strong> ou <strong>Écharpe de rancune</strong>. Au <strong>round 3</strong>, les coups de couteau des <strong>Tomberrys</strong> et du <strong>Don Tomberry</strong> <strong>tuent instantanément</strong> sans elle.</li>
+<li class="alerte">⚠️ <strong>N'attaque jamais le Don Tomberry à distance</strong> : contre-attaques violentes.</li>
+<li class="alerte">⚠️ Retire la matéria Affinité élémentaire avant Rufus, et équipe Cloud d'une matéria de soin et d'une matéria de protection : <strong>il se bat seul</strong>.</li>
+<li class="alerte">⚠️ Garde ta Transcendance chargée pour la phase 2 de Rufus, quand <strong>Ténébro</strong> arrive.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : le combat bonus en 3D avec Yuffie au <strong>Wonderment Square</strong>, et son affinité.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : la <strong>croix de cristal</strong> de Yuffie, dans les coulisses du parc pendant la traque.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : le <strong>coffre de la légende pirate</strong> sur le <strong>ponton de Costa del Sol</strong>, qui lance toute une activité d'Océan Central.</li>
+<li class="alerte">⚠️ La pierre-clé t'échappe à la fin du chapitre. Ce n'est pas un échec de ta part : c'est scénarisé.</li>
+<li class="alerte">⚠️ <strong>Nom à vérifier en jeu</strong> : la compétence de Cloud est écrite <strong>Âme brave</strong> au chapitre 9 et <strong>Âme de bravoure</strong> ici par la même source ; de même, <strong>Bravoure de soldat</strong> apparaît aussi sous la forme « Bravoure du soldat ».</li>
+</ul>
+<h2 id="check-list-13" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Tiny Bronco</strong> transformé en <strong>hydravion</strong>, trajet <strong>par l'ouest</strong> jusqu'à Costa del Sol</li>
+<li class="tache"><input type="checkbox"> <strong>Caisses flottantes</strong> ramassées sur le trajet</li>
+<li class="tache"><input type="checkbox"> Coffre de la légende pirate ouvert sur le ponton de Costa del Sol</li>
+<li class="tache"><input type="checkbox"> <strong>Déplacement rapide</strong> débloqué sur toute la carte</li>
+<li class="tache"><input type="checkbox"> <strong>Chasseurs de têtes</strong> lancée (Prairie)</li>
+<li class="tache"><input type="checkbox"> <strong>La crainte du débarquement</strong> lancée (Junon)</li>
+<li class="tache"><input type="checkbox"> Les démons surgis des flots lancée (Corel)</li>
+<li class="tache"><input type="checkbox"> Le syndrome de la page blanche lancée (Gongaga)</li>
+<li class="tache"><input type="checkbox"> <strong>Menace sous les dunes</strong> lancée (Cosmo)</li>
+<li class="tache"><input type="checkbox"> <strong>Un air mélancolique</strong> lancée (Nibel)</li>
+<li class="tache"><input type="checkbox"> Nouveaux défis du <strong>Saute-grenouille</strong> et du <strong>Desert Rush</strong> tentés</li>
+<li class="tache"><input type="checkbox"> <strong>Combat bonus 3D avec Yuffie</strong> gagné au Wonderment Square (affinité)</li>
+<li class="tache"><input type="checkbox"> <strong>Dio</strong> trouvé au Battle Square, marché conclu</li>
+<li class="tache"><input type="checkbox"> <strong>Affinité vérifiée</strong> avant l'hôtel du Ghost Square</li>
+<li class="tache"><input type="checkbox"> <strong>Interlude de Zack</strong> terminé (Marlène, Elmyra, le mot de Biggs)</li>
+<li class="tache"><input type="checkbox"> <strong>Second rendez-vous</strong> vécu</li>
+<li class="tache"><input type="checkbox"> <strong>Sauvegarde manuelle</strong> faite avant le théâtre</li>
+<li class="tache"><input type="checkbox"> <strong>Loveless</strong> : entraînement du cachot fait</li>
+<li class="tache"><input type="checkbox"> <strong>Acte I</strong> terminé</li>
+<li class="tache"><input type="checkbox"> <strong>Acte II</strong> terminé</li>
+<li class="tache"><input type="checkbox"> <strong>Acte III</strong> terminé (martèlement final)</li>
+<li class="tache"><input type="checkbox"> <strong>Rang S</strong> atteint → trophée <strong>« Standing Ovation »</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Grande roue</strong> du Skywheel Square avec le partenaire (affinité)</li>
+<li class="tache"><input type="checkbox"> <strong>Matérias Feu</strong> et <strong>protection Mort Subite</strong> équipées</li>
+<li class="tache"><input type="checkbox"> <strong>Round 1</strong> gagné (Sbires de Cornéo)</li>
+<li class="tache"><input type="checkbox"> <strong>Round 2</strong> gagné (Pampas du Don)</li>
+<li class="tache"><input type="checkbox"> <strong>Round 3</strong> gagné (Don Tomberry et deux Tomberrys)</li>
+<li class="tache"><input type="checkbox"> <strong>Apsu</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> <strong>Lieu de repos</strong> de Dio utilisé, <strong>Affinité élémentaire</strong> équipée</li>
+<li class="tache"><input type="checkbox"> <strong>Elena &amp; Rude</strong> vaincus (<strong>Ravage des TURKs</strong> géré)</li>
+<li class="tache"><input type="checkbox"> Cloud équipé <strong>soin + protection</strong>, <strong>Affinité élémentaire retirée</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Rufus</strong> vaincu (<strong>Transcendance</strong> gardée pour <strong>Ténébro</strong>)</li>
+<li class="tache"><input type="checkbox"> <strong>Cait Sith</strong> repéré au <strong>stand des peluches</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cait Sith</strong> repéré derrière le <strong>mog de droite</strong>, Place centrale sud-est</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong>croix de cristal</strong> récupéré (Yuffie)</li>
+<li class="tache"><input type="checkbox"> <strong>Héliports</strong> atteints, pierre-clé remise à <strong>Tseng</strong></li>
+<li class="tache"><input type="checkbox"> Suite de la <strong>protorelique de Corel</strong> et « Le défi du fêtard ultime » débloquées</li>
+<li class="tache"><input type="checkbox"> <strong>Cid</strong> rejoint au Tiny Bronco à Costa del Sol</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="chapitre-11-un-village-natal-meconnaissable.html" rel="prev"><small>← Partie précédente</small><b>Chapitre 11 — Un village natal méconnaissable</b></a><a class="suiv" href="chapitre-13-le-temple-des-anciens.html" rel="next"><small>Partie suivante →</small><b>Chapitre 13 — Le temple des Anciens</b></a><a class="tout" href="final-fantasy-vii-rebirth.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Rebirth · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

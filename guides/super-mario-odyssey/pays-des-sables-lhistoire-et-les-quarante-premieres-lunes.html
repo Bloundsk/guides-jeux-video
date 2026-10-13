@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pays des Sables — l&#x27;histoire et les quarante premières lunes – Guide Super Mario Odyssey</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Super Mario Odyssey, Pays des Sables — l&#x27;histoire et les quarante premières lunes : Boss : Hariet, puis le Grand Caputl. À faire tôt : planter les trois…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/pays-des-sables-lhistoire-et-les-quarante-premieres-lunes.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Pays des Sables — l&#x27;histoire et les quarante premières lunes · Guide Super Mario Odyssey">
+<meta property="og:description" content="Super Mario Odyssey, Pays des Sables — l&#x27;histoire et les quarante premières lunes : Boss : Hariet, puis le Grand Caputl. À faire tôt : planter les trois…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/pays-des-sables-lhistoire-et-les-quarante-premieres-lunes.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Super Mario Odyssey", "item": "https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/"}, {"@type": "ListItem", "position": 3, "name": "Pays des Sables — l'histoire et les quarante premières lunes", "item": "https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/pays-des-sables-lhistoire-et-les-quarante-premieres-lunes.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="super-mario-odyssey" class="compact" data-partie="pays-des-sables-lhistoire-et-les-quarante-premieres-lunes"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Super Mario Odyssey</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Super Mario Odyssey : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Super Mario <em>Odyssey</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="pays-des-chapeaux.html"><span class="num">✦</span><span class="libelle">Pays des Chapeaux</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="pays-des-chutes.html"><span class="num">✦</span><span class="libelle">Pays des Chutes</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="#pays-des-sables-lhistoire-et-les-quarante-premieres-lunes"><span class="num">✦</span><span class="libelle">Pays des Sables — l&#x27;histoire et les quarante premières lunes</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="pays-des-sables-les-lunes-41-a-89.html"><span class="num">✦</span><span class="libelle">Pays des Sables — les lunes 41 à 89</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="pays-du-lac.html"><span class="num">✦</span><span class="libelle">Pays du Lac</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="pays-de-la-foret.html"><span class="num">✦</span><span class="libelle">Pays de la Forêt</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="pays-des-nuages.html"><span class="num">✦</span><span class="libelle">Pays des Nuages</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="pays-perdu.html"><span class="num">✦</span><span class="libelle">Pays Perdu</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="pays-des-gratte-ciel-lhistoire-et-les-quarante-premieres-lunes.html"><span class="num">✦</span><span class="libelle">Pays des Gratte-ciel — l&#x27;histoire et les quarante premières lunes</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="pays-des-gratte-ciel-les-lunes-41-a-81.html"><span class="num">✦</span><span class="libelle">Pays des Gratte-ciel — les lunes 41 à 81</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="pays-des-neiges.html"><span class="num">✦</span><span class="libelle">Pays des Neiges</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="pays-de-la-mer.html"><span class="num">✦</span><span class="libelle">Pays de la Mer</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="pays-de-la-cuisine.html"><span class="num">✦</span><span class="libelle">Pays de la Cuisine</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="pays-des-ruines.html"><span class="num">✦</span><span class="libelle">Pays des Ruines</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="pays-de-bowser.html"><span class="num">✦</span><span class="libelle">Pays de Bowser</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="pays-de-la-lune.html"><span class="num">✦</span><span class="libelle">Pays de la Lune</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="royaume-champignon-retour-au-chateau.html"><span class="num">✦</span><span class="libelle">Royaume Champignon — retour au château</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="royaume-champignon-les-defis-de-toadette.html"><span class="num">✦</span><span class="libelle">Royaume Champignon — les défis de Toadette</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="cote-obscur.html"><span class="num">✦</span><span class="libelle">Côté obscur</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="cote-tres-obscur.html"><span class="num">✦</span><span class="libelle">Côté très obscur</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="tous-les-mouvements-de-mario.html"><span class="num">✦</span><span class="libelle">Tous les mouvements de Mario</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="toutes-les-chapimorphoses.html"><span class="num">✦</span><span class="libelle">Toutes les chapimorphoses</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="toutes-les-tenues.html"><span class="num">✦</span><span class="libelle">Toutes les tenues</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-pieces-locales.html"><span class="num">✦</span><span class="libelle">Les pièces locales</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="tous-les-boss.html"><span class="num">✦</span><span class="libelle">Tous les boss</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="apres-le-generique-3.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="multijoueur-ballons-et-mises-a-jour.html"><span class="num">✦</span><span class="libelle">Multijoueur, ballons et mises à jour</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="astuces-avancees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces avancées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="sources-super-mario-odyssey.html"><span class="num">✦</span><span class="libelle">Sources — Super Mario Odyssey</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-4">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="pays-des-sables-lhistoire-et-les-quarante-premieres-lunes">Pays des Sables — l&#x27;histoire et les quarante premières lunes</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-4"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-4">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Boss</strong> : Hariet, puis le Grand Caputl.</li>
+<li><strong>À faire tôt</strong> : planter les trois graines, qui poussent en temps réel.</li>
+<li><strong>Normal</strong> : cinq lunes disparaissent pendant que la pyramide flotte, et reviennent après le Grand Caputl.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Le pays des Sables est le premier <strong>grand</strong> pays du jeu, et il change complètement d'échelle : <strong>89 lunes de puissance</strong>, un village entier, des ruines, une pyramide retournée dans le ciel et un temple souterrain gelé. C'est aussi le pays qui t'apprend à explorer librement au lieu de suivre un couloir.</p>
+<p>Cette partie couvre <strong>toute l'histoire</strong> du pays et ses <strong>quarante premières lunes</strong>. Les lunes 41 à 89 sont dans la partie suivante.</p>
+<p>Ce qu'il faut accomplir :</p>
+<ol>
+<li>Atteindre le <strong>sommet de la tour des ruines</strong>.</li>
+<li>Réunir les <strong>cinq éclats de lune</strong> des <strong>Ruines Ma'tuvu</strong>.</li>
+<li>Grimper dans la <strong>pyramide inverzée</strong> et battre <strong>Hariet</strong>.</li>
+<li>Descendre dans le <strong>trou du désert</strong> et battre le <strong>Grand Caputl</strong>.</li>
+<li>Réunir <strong>16 lunes</strong> pour repartir — l'histoire t'en donne <strong>8</strong>, il t'en faut donc <strong>8</strong> de plus.</li>
+</ol>
+<p class="alerte">⚠️ <strong>Le pays change deux fois d'état.</strong> Quand tu bats Hariet, la <strong>pyramide inverzée s'envole</strong> et le désert <strong>s'assombrit</strong> : plusieurs lunes deviennent temporairement inaccessibles. Quand tu bats le Grand Caputl, tout revient en place. Ce n'est jamais définitif, mais ça explique pourquoi une lune trouvée dans un guide peut « ne pas être là » au moment où tu la cherches.</p>
+<h2 id="itineraire-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.millenium.org/guide/279703.html">Pays des Sables en vidéo</a> — soluce illustrée sur Millenium, en français.</p>
+<p>🗺️ <strong>Carte interactive</strong> : <a href="https://www.ign.com/maps/super-mario-odyssey/sand-kingdom">le Pays des Sables sur la carte IGN</a> (en anglais), avec chaque lune placée.</p>
+<p>Le pays s'organise autour de quatre blocs, d'est en ouest :</p>
+<ol>
+<li><strong>Le village d'Ifézèc</strong>, au sud : l'Odyssée se pose à côté. Boutique, fontaine, trois pots de fleurs, chien, Jaxi.</li>
+<li><strong>Les ruines d'Ifézèc</strong>, au nord du village : un grand complexe avec la <strong>tour des ruines</strong>, des lance-<strong>Bill Balle</strong>, des sables mouvants et une grande arche d'entrée.</li>
+<li><strong>Les Ruines Ma'tuvu</strong>, à l'ouest, de l'autre côté d'un ravin : les golems à lunettes et un lac de poison.</li>
+<li><strong>La pyramide inverzée</strong>, plein nord : la pyramide posée la pointe en bas, et sous elle le <strong>trou du désert</strong>.</li>
+<li><strong>L'oasis</strong>, au sud-est : palmiers, point d'eau, Lakitu, oiseaux.</li>
+</ol>
+<p>Les deux raccourcis à connaître :</p>
+<ul>
+<li><strong>Les bornes gzzzt</strong> (les câbles électriques) relient les hauteurs entre elles. On s'y chapimorphose et on file d'un point à l'autre. Tu peux <strong>te libérer en cours de route</strong> pour atterrir sur quelque chose au milieu du trajet — c'est comme ça qu'on prend la lune de la grande arche.</li>
+<li><strong>Le Jaxi</strong>, le félin-taxi de pierre. Il court très vite, traverse les sables mouvants, écrase les cactus. Il y en a un à l'entrée du village et un au sommet de la pyramide.</li>
+</ul>
+<h2 id="deroule-pas-a-pas-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="objectif-1-au-sommet-de-la-tour-des-ruines">Objectif 1 — au sommet de la tour des ruines</h3>
+<ol>
+<li>Depuis l'Odyssée, remonte vers le <strong>nord</strong> jusqu'aux <strong>ruines d'Ifézèc</strong>.</li>
+<li>Au centre, tu as le choix entre les <strong>fleurs trampolines</strong> et les <strong>geysers de sable</strong> pour prendre de la hauteur. Les deux marchent.</li>
+<li>Entre dans le <strong>tuyau vert</strong> : tu passes en <strong>2D</strong> contre la façade.</li>
+<li>À la sortie, franchis les <strong>plates-formes mobiles</strong> jusqu'aux <strong>escaliers du nord-ouest</strong>.</li>
+<li>Un <strong>second tuyau vert en 2D</strong> t'amène au parcours final.</li>
+<li>Au sommet : <strong>drapeau relais</strong> et la lune <strong>Au sommet de la tour des ruines</strong>.</li>
+</ol>
+<h3 id="objectif-2-les-eclats-de-lune-dans-les-dunes">Objectif 2 — les éclats de lune dans les dunes</h3>
+<ol>
+<li>Une <strong>plate-forme</strong> apparaît au sommet de la tour. Monte dessus.</li>
+<li>Devant toi, des <strong>blocs de pierre</strong> barrent la route et des Bob-omb traînent à côté. <strong>Lance Cappy sur un Bob-omb</strong> pour le faire exploser contre les blocs — et <strong>saute au-dessus de l'explosion</strong>, elle te touche aussi.</li>
+<li>Tu arrives aux <strong>Ruines Ma'tuvu</strong>. Le gimmick du lieu : les <strong>Ma'tuvu</strong>, des golems qui portent des lunettes noires. <strong>Chapimorphose-en un</strong> et, sous ses lunettes, tu vois les <strong>plates-formes invisibles</strong> de la zone.</li>
+<li>Ramasse les <strong>cinq éclats de lune</strong> :
+<ul>
+<li>le premier <strong>en vue près d'un Ma'tuvu</strong> ;</li>
+<li>le deuxième <strong>au bout d'une passerelle invisible au-dessus du lac toxique</strong> ;</li>
+<li>le troisième <strong>sur une dune à l'ouest</strong> ;</li>
+<li>le quatrième <strong>sur le pilier sud</strong>, en passant par les passerelles invisibles en hauteur ;</li>
+<li>le cinquième <strong>entre deux cactus</strong>, au bord sud-est de la zone.</li>
+</ul>
+</li>
+<li>Les cinq éclats donnent la lune <strong>Éclats de lune dans les dunes</strong>.</li>
+</ol>
+<h3 id="objectif-3-la-pyramide-inverzee-et-hariet">Objectif 3 — la pyramide inverzée et Hariet</h3>
+<ol>
+<li>Direction la <strong>pyramide inverzée</strong>, plein nord. Entre par <strong>sa base</strong> — c'est-à-dire par sa pointe, puisqu'elle est à l'envers.</li>
+<li><strong>Lance Cappy sur un Bill Balle</strong> pour t'en chapimorphoser et <strong>traverse le gouffre</strong> en volant.</li>
+<li>Passe le <strong>passage en 2D</strong> en tenant compte de la <strong>gravité inversée</strong> : ce qui tombe monte. C'est déroutant trente secondes, puis ça devient limpide.</li>
+<li>Sur le <strong>mur extérieur</strong>, prends le <strong>tuyau vert</strong> suivant.</li>
+<li>De retour en 3D, sers-toi encore des Bill Balles : d'abord pour <strong>détruire les rochers</strong>, ensuite pour <strong>franchir le gouffre</strong>.</li>
+<li>Finis la montée avec les <strong>fleurs trampolines</strong>, en te méfiant des <strong>cactus</strong> à l'arrivée, et entre dans l'arène.</li>
+</ol>
+<p><strong>Hariet</strong> est la Broodal à la longue chevelure, celle qui se sert de ses cheveux comme d'un lance-bombes.</p>
+<ol>
+<li><strong>Attends qu'elle plante une bombe loin devant elle</strong> avec ses cheveux.</li>
+<li><strong>Frappe la bombe avec Cappy</strong> : l'explosion l'étourdit.</li>
+<li><strong>Saute-lui dessus</strong> pendant qu'elle est vulnérable.</li>
+<li><strong>Esquive le déluge de feu</strong> qu'elle déclenche ensuite — cours en cercle sur le bord de l'arène.</li>
+<li>Trois cycles, et tu empoches la <strong>multilune Baroud dans la pyramide inverzée</strong>.</li>
+</ol>
+<p class="alerte">⚠️ <strong>Ne frappe pas la bombe quand elle est près de toi.</strong> L'explosion t'atteint aussi. Laisse-la se poser loin, puis lance Cappy.</p>
+<h3 id="objectif-4-le-trou-dans-le-desert-et-le-grand-caputl">Objectif 4 — le trou dans le désert et le Grand Caputl</h3>
+<p>Après Hariet, la <strong>pyramide s'élève dans le ciel</strong> et le désert <strong>plonge dans l'obscurité</strong>. Un <strong>faisceau de lumière</strong> sort du trou laissé sous la pyramide.</p>
+<ol>
+<li><strong>Saute sur le Jaxi</strong> apparu à l'entrée d'Ifézèc. Il te permet de traverser le désert obscurci sans danger.</li>
+<li>File vers le <strong>faisceau lumineux</strong> et <strong>plonge dans le trou</strong>.</li>
+<li>Tu es dans le <strong>temple souterrain</strong>, gelé et glissant :
+<ul>
+<li><strong>lance Cappy sur les Bob-omb</strong> pour que leur onde de choc casse les <strong>blocs de pierre</strong> ;</li>
+<li><strong>chapimorphose un Goomba</strong> pour <strong>ne plus glisser</strong> sur la glace ;</li>
+<li>traverse sur les <strong>plates-formes mobiles</strong>.</li>
+</ul>
+</li>
+<li>Plus loin, <strong>chapimorphose un Bill Balle</strong> en l'attirant sur le côté pour qu'il <strong>évite la Bob-omb</strong>, puis traverse le dédale jusqu'à une <strong>plate-forme de glace</strong>.</li>
+<li>Prends un <strong>autre Bill Balle</strong> pour finir la traversée.</li>
+<li>Dans la salle suivante, <strong>encore un Bill Balle</strong> t'amène à l'arène du boss.</li>
+</ol>
+<p><strong>Le Grand Caputl</strong> est le gardien du temple : une tête de pierre géante avec deux <strong>poings</strong> flottants.</p>
+<ol>
+<li><strong>Attire un de ses poings au-dessus des plaques de glace.</strong> Quand il frappe la glace, il s'y <strong>coince</strong> un instant.</li>
+<li><strong>Lance Cappy sur ce poing</strong> pour le chapimorphoser.</li>
+<li><strong>Propulse le poing dans son visage.</strong> Contourne ses projectiles <strong>par le côté où il lui manque une main</strong> — c'est toujours le côté libre qui est sûr.</li>
+<li>Il enchaîne avec un <strong>balayage glacial</strong> : décale-toi sur le côté.</li>
+<li>Puis il essaie de t'<strong>aplatir entre ses deux mains</strong> : fais des allers-retours d'avant en arrière.</li>
+<li>Trois fois la même manœuvre, et tu empoches la <strong>multilune Un trou dans le désert</strong>.</li>
+</ol>
+<p>Après ce combat, la <strong>pyramide se repose</strong> et le pays retrouve son état normal. C'est le moment où le gros du contenu s'ouvre : une bonne moitié des lunes du pays ne devient accessible qu'ici.</p>
+<h3 id="repartir">Repartir</h3>
+<p>Il te faut <strong>16 lunes</strong>. L'histoire en donne <strong>8</strong> (une pour l'objectif 1, une pour l'objectif 2, trois pour chaque multilune). Les <strong>8 manquantes</strong> se ramassent en une demi-heure : les lunes n° 5, 15, 16, 17, 24, 25, 31 et 36 sont parmi les plus rapides du pays.</p>
+<p>Destination suivante : le <strong>pays du Lac</strong>.</p>
+<h2 id="quetes-et-lieux-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="le-village-difezec">Le village d'Ifézèc</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'on y trouve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La place et ses trois pots</strong></td>
+<td>les <strong>graines</strong> à planter, qui donnent les lunes n° 25, 26 et 27</td>
+</tr>
+<tr>
+<td><strong>La fontaine</strong></td>
+<td>à coiffer de Cappy pour la lune n° 15</td>
+</tr>
+<tr>
+<td><strong>Le bâtiment nord-ouest</strong></td>
+<td>une petite rotonde au sommet, lune n° 5</td>
+</tr>
+<tr>
+<td><strong>L'entrée du village</strong></td>
+<td>le <strong>chien</strong> qui te mène à la lune n° 31, et le Jaxi de l'histoire</td>
+</tr>
+<tr>
+<td><strong>La boutique Crazy Cap</strong></td>
+<td>deux panoplies complètes, deux souvenirs, une vignette</td>
+</tr>
+<tr>
+<td><strong>Le comptoir de la boutique</strong></td>
+<td>la lune n° 43, <em>Derrière le comptoir</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-ruines-difezec">Les ruines d'Ifézèc</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'on y trouve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La tour des ruines</strong></td>
+<td>l'objectif 1, le passage en 2D, la borne gzzzt du sommet</td>
+</tr>
+<tr>
+<td><strong>La grande arche</strong></td>
+<td>à l'entrée des ruines : lune n° 11, en se libérant de la borne gzzzt à mi-parcours</td>
+</tr>
+<tr>
+<td><strong>Les sables mouvants du nord</strong></td>
+<td>un passage dissimulé contre le mur de gauche, lune n° 8</td>
+</tr>
+<tr>
+<td><strong>Les lance-Bill Balle</strong></td>
+<td>à l'est et au sud-est : servent aux lunes n° 7, 12, 19 et 20</td>
+</tr>
+<tr>
+<td><strong>Le mur en dentelle de l'ouest</strong></td>
+<td>une brèche à traverser en Bill Balle, lune n° 19</td>
+</tr>
+<tr>
+<td><strong>La spirale de sable du nord-est</strong></td>
+<td>mène à une <strong>grotte de glace</strong> souterraine et à son coffre, lune n° 24</td>
+</tr>
+<tr>
+<td><strong>L'enclos à moutons du nord-ouest</strong></td>
+<td>le berger Zuituzèc de la lune n° 33</td>
+</tr>
+<tr>
+<td><strong>Le pilier penché de l'est</strong></td>
+<td>lune n° 7</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-ruines-matuvu">Les Ruines Ma'tuvu</h3>
+<p>L'objectif 2, mais aussi un athlétic-tac (n° 29) et une graine (n° 27). Le lac de poison est mortel : les <strong>Ma'tuvu</strong> et leurs lunettes sont le seul moyen de voir les passerelles qui le franchissent.</p>
+<h3 id="la-pyramide-inverzee">La pyramide inverzée</h3>
+<p>Le donjon de l'objectif 3. Son sommet — la face plate, en haut — porte quatre <strong>statues de jaxi</strong> dans les coins, et il en manque une au sud : c'est la lune n° 39. On y trouve aussi la queue de statue de la lune n° 14 et la bosse mouvante de la lune n° 23.</p>
+<h3 id="loasis-du-sud-est">L'oasis du sud-est</h3>
+<p>Point d'eau, palmiers, oiseaux. Trois lunes de pêche et de musique s'y cachent (n° 32, 34, 37), plus deux oiseaux voyageurs (n° 16, 21).</p>
+<h3 id="les-personnages-3">Les personnages</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Personnage</th>
+<th>Où</th>
+<th>Ce qu'il donne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hariet</strong></td>
+<td>arène de la pyramide inverzée</td>
+<td>la multilune de l'objectif 3</td>
+</tr>
+<tr>
+<td><strong>Grand Caputl</strong></td>
+<td>fond du temple souterrain</td>
+<td>la multilune de l'objectif 4</td>
+</tr>
+<tr>
+<td><strong>Capitaine Toad</strong></td>
+<td>enfoui dans le sable, au nord de l'oasis</td>
+<td>la lune n° 37, à « pêcher » au Lakitu</td>
+</tr>
+<tr>
+<td><strong>Le berger Zuituzèc</strong></td>
+<td>nord-ouest des ruines</td>
+<td>la lune n° 33, s'il récupère ses <strong>3 moutons</strong></td>
+</tr>
+<tr>
+<td><strong>Goombette</strong></td>
+<td>sur une hauteur à l'est des ruines</td>
+<td>la lune n° 35, si tu viens la voir <strong>en Goomba</strong></td>
+</tr>
+<tr>
+<td><strong>Le chien d'Ifézèc</strong></td>
+<td>entrée du village</td>
+<td>te guide vers la lune n° 31</td>
+</tr>
+<tr>
+<td><strong>Les deux jaxis séparés</strong></td>
+<td>Ifézèc et nord de l'oasis</td>
+<td>la lune n° 38, en amenant l'un devant la statue de l'autre</td>
+</tr>
+<tr>
+<td><strong>Les oiseaux voyageurs</strong></td>
+<td>l'un dans le désert, l'autre sur le marais</td>
+<td>les lunes n° 21 et 22</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="la-boutique-crazy-cap-3">La boutique Crazy Cap</h3>
+<p>Les pièces locales du pays sont <strong>pyramidales</strong>, à l'image de la pyramide inverzée, et il y en a <strong>100</strong>. La boutique d'ici vend <strong>deux panoplies</strong> au lieu d'une : le <strong>Sombrero</strong> avec le <strong>Poncho</strong>, et le <strong>Chapeau de cow-boy</strong> avec la <strong>Tenue de cow-boy</strong>, plus chers.</p>
+<h2 id="butin-exhaustif-lunes-1-a-40-et-articles-de-boutique" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif — lunes 1 à 40 et articles de boutique</span></h2>
+<p>Préfixes de disponibilité :</p>
+<ul>
+<li><strong>[Début]</strong> — dès l'arrivée dans le pays.</li>
+<li><strong>[Obj. 1]</strong>, <strong>[Obj. 2]</strong>, <strong>[Obj. 3]</strong>, <strong>[Obj. 4]</strong> — après l'objectif d'histoire correspondant.</li>
+<li><strong>[Autre pays]</strong> — se débloque depuis un autre pays.</li>
+<li><strong>[Bowser]</strong> — après avoir vaincu Bowser au pays de la Lune.</li>
+<li><strong>[Roche]</strong> — après avoir ouvert la <strong>roche lunaire</strong> du pays.</li>
+</ul>
+<p class="alerte manquable">⏳ Les lunes marquées <strong>[Début / suspendue]</strong> existent dès l'arrivée mais <strong>disparaissent pendant que la pyramide flotte</strong>, entre Hariet et le Grand Caputl. Elles reviennent après l'objectif 4.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Au sommet de la tour des ruines</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Objectif 1 : traverse les ruines au nord d'Ifézèc, prends les fleurs trampolines ou les geysers, deux passages en 2D, et monte jusqu'au sommet</td>
+<td>Ouvre l'objectif 2</td>
+</tr>
+<tr>
+<td><strong>Éclats de lune dans les dunes</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 1]</strong> Objectif 2 : aux <strong>Ruines Ma'tuvu</strong>, chapimorphose un <strong>Ma'tuvu</strong> pour voir les passerelles invisibles et réunis les <strong>5 éclats</strong></td>
+<td>Ouvre l'objectif 3</td>
+</tr>
+<tr>
+<td><strong>Baroud dans la pyramide inverzée</strong></td>
+<td><span class="badge neutre">Multilune</span> <span class="type-pour">vaut 3</span></td>
+<td><strong>[Obj. 2]</strong> Objectif 3 : bats <strong>Hariet</strong> au sommet de la pyramide inverzée</td>
+<td>Fait décoller la pyramide et ouvre l'objectif 4</td>
+</tr>
+<tr>
+<td><strong>Un trou dans le désert</strong></td>
+<td><span class="badge neutre">Multilune</span> <span class="type-pour">vaut 3</span></td>
+<td><strong>[Obj. 3]</strong> Objectif 4 : bats le <strong>Grand Caputl</strong> au fond du temple souterrain</td>
+<td>Remet le pays d'aplomb et débloque la moitié des lunes restantes</td>
+</tr>
+<tr>
+<td><strong>En surplomb de la ville des sables</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Grimpe à la <strong>petite rotonde</strong> au sommet du bâtiment nord-ouest d'Ifézèc, en passant par une <strong>fleur trampoline</strong></td>
+<td>Une des 8 lunes libres les plus rapides pour repartir</td>
+</tr>
+<tr>
+<td><strong>Dans une cavité des ruines</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Partie <strong>ouest</strong> des ruines : saute sur le sable en direction de la coulée infranchissable et <strong>bifurque à droite</strong> vers une alcôve</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Sur le pilier penché</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Partie <strong>sud-est</strong> des ruines : chapimorphose un <strong>Bill Balle</strong> près des blocs de pierre et pilote-le jusqu'au <strong>pilier penché à l'est</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Dans le secret des sables mouvants</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Dans les ruines, dépasse les colonnes de sable <strong>vers le nord</strong> et laisse-toi <strong>absorber par les sables mouvants contre le mur de gauche</strong>. Dans le passage, <strong>saute en continu</strong> pour rester juste au-dessus du niveau dangereux</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Le secret de la fresque</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> À la base de la tour des ruines, prends le <strong>passage en 2D</strong> jusqu'au bout. Au lieu de monter sur le toit, <strong>laisse-toi tomber de l'autre côté du bloc de pierre</strong> quand la plate-forme arrive à gauche, puis prends le <strong>passage caché</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Dans le secret de la muraille inversée</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2 / suspendue]</strong> Pendant le <strong>passage en 2D à l'envers</strong> sur le mur extérieur de la pyramide, au lieu d'entrer dans le tuyau vert, <strong>continue vers la droite</strong> dans le passage dissimulé : un tas de pièces et la lune</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Sur la grande arche</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Téléporte-toi au <strong>sommet de la tour des ruines</strong> et prends la <strong>borne gzzzt</strong> qui part vers Ifézèc. <strong>Libère-toi à mi-chemin</strong> pour atterrir sur l'arche d'entrée des ruines. <em>(Après l'objectif 3, une autre borne gzzzt mène aussi jusque-là.)</em></td>
+<td>Carburant de l'Odyssée ; bon exercice de libération en vol</td>
+</tr>
+<tr>
+<td><strong>Cachée dans une caisse des ruines</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Partie <strong>nord-ouest</strong> des ruines : <strong>détruis la caisse</strong> près du lance-Bill Balle, puis chapimorphose un <strong>Bill Balle</strong> pour aller chercher la lune</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Vol plané jusqu'au pilier</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Au sommet de la tour des ruines, chapimorphose le <strong>Planodon</strong> — le lézard volant — et <strong>plane vers la colonne à l'est</strong></td>
+<td>Carburant de l'Odyssée ; ta première chapimorphose de Planodon</td>
+</tr>
+<tr>
+<td><strong>La queue du jaxi</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2 / suspendue]</strong> Au sommet de la pyramide inverzée, coin <strong>nord-ouest</strong> : <strong>maintiens Cappy en rotation sur la queue de la statue de jaxi</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En chapeautant la fontaine</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Grimpe sur la <strong>fontaine d'Ifézèc</strong> et <strong>fais tourner Cappy sur son sommet</strong></td>
+<td>Une des lunes libres les plus rapides</td>
+</tr>
+<tr>
+<td><strong>Là où gazouillent les oiseaux</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> À l'<strong>oasis du sud-est</strong>, fais une <strong>charge au sol</strong> sur la bosse où se pose un groupe d'oiseaux</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Au sommet d'une dune</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Monte sur la <strong>haute dune au nord-ouest d'Ifézèc</strong> et fais une <strong>charge au sol</strong> au sommet</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Tombée du taxi</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Une fois le pays terminé, va au <strong>nord des ruines près du trou</strong>, là où stationnait un taxi et où il ne reste que des cartons en désordre : <strong>charge au sol sur la lueur</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Une percée en Bill Balle</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 3]</strong> Au cœur des ruines, chapimorphose un <strong>Bill Balle à l'est</strong> et pilote-le dans la <strong>brèche du mur en dentelle à l'ouest</strong> pour détruire la <strong>cage</strong> qui enferme la lune</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>À l'intérieur d'un bloc de roc</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Coin <strong>sud-ouest</strong> des ruines : chapimorphose un <strong>Bill Balle</strong> et détruis le <strong>bloc le plus éloigné</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Volatile en vadrouille dans le désert</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Un oiseau brillant tourne au-dessus du désert. <strong>Attends-le aux abords de l'oasis, au sud-est</strong>, et lance-lui Cappy</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Volatile en vadrouille sur le marais</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Un second oiseau vole dans le <strong>quart sud-est</strong>. Le meilleur poste d'affût est la <strong>rive est du bassin de poison</strong>, à l'est des ruines, où il passe presque au ras du sol</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Cache-cache sous les pavés</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Au sommet de la pyramide inverzée, <strong>lance Cappy sur la bosse scintillante</strong> qui se déplace sous le sol de l'arène pour l'étourdir, puis <strong>charge au sol</strong> dessus tout de suite</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Dans le coffre des ruines jaxi</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Laisse-toi tomber dans la <strong>spirale de sable</strong> du coin nord-est des ruines, traverse la <strong>zone souterraine glacée</strong> et prends le <strong>tuyau vert</strong> au bout : la lune est dans le <strong>coffre de gauche</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>La graine de la place a fleuri !</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Prends la <strong>graine posée devant les trois pots</strong> de la place d'Ifézèc, plante-la dans un pot, et <strong>reviens plus tard</strong> : un fruit doré aura poussé, avec la lune dedans</td>
+<td>Carburant de l'Odyssée ; à lancer le plus tôt possible, la pousse prend du temps réel</td>
+</tr>
+<tr>
+<td><strong>La graine des ruines a fleuri !</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> La graine est dans une <strong>alcôve du mur, côté est des ruines, à l'extérieur de l'enceinte</strong>. Rapporte-la dans un pot d'Ifézèc et reviens plus tard</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>La graine de la falaise a fleuri !</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Au <strong>sud-ouest des Ruines Ma'tuvu</strong>, de l'autre côté du ravin, laisse-toi tomber sur le rebord en contrebas. Pour remonter avec la graine : <strong>pose-la</strong>, lance Cappy sur la <strong>fleur trampoline</strong>, <strong>reprends la graine</strong>, puis monte sur la fleur. Plante-la à Ifézèc</td>
+<td>Carburant de l'Odyssée ; la plus pénible des trois graines</td>
+</tr>
+<tr>
+<td><strong>Pays des Sables : athlétic-tac 1</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Prends la <strong>borne gzzzt qui part de la pyramide inverzée</strong> pour rejoindre le <strong>toit des ruines au nord-ouest</strong>, lance Cappy sur l'<strong>épouvantail</strong>, <strong>roule</strong> dans le passage puis enchaîne les <strong>sauts muraux</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Pays des Sables : athlétic-tac 2</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Aux <strong>Ruines Ma'tuvu</strong>, marche sur l'<strong>interrupteur P bleu</strong> et franchis vite la passerelle pour prendre la <strong>clé</strong>, sans tomber dans le bassin de poison</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Pays des Sables : athlétic-tac 3</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Lance Cappy sur l'<strong>épouvantail au sud-est des ruines jaxi</strong> et cours sur les plates-formes qui apparaissent au-dessus du lac de poison, en <strong>sauts en longueur</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Trouvée par toutou dans le sable !</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Approche-toi du <strong>chien</strong> à l'entrée d'Ifézèc et <strong>suis-le</strong> dans le désert. Là où il gratte et où le sol scintille : <strong>charge au sol</strong></td>
+<td>Une des lunes libres les plus rapides</td>
+</tr>
+<tr>
+<td><strong>Course aux notes sur les palmiers</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> À l'oasis, grimpe à l'un des <strong>palmiers à l'ouest du point d'eau</strong> pour trouver la <strong>clé de sol</strong>, puis saute de palmier en palmier pour ramasser toutes les notes</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Un berger dans les dunes</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début / suspendue]</strong> Au <strong>nord-ouest des ruines</strong>, un <strong>berger Zuituzèc</strong> a perdu <strong>3 moutons</strong>. Rabats-les dans l'enclos en les <strong>poussant avec Cappy</strong> dans les lignes droites et en leur collant au train. Ils sont <strong>au nord</strong>, <strong>à l'est près du trou</strong>, et <strong>juste à l'est de l'enclos</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Partie de pêche dans l'oasis</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> À l'oasis, chapimorphose le <strong>Lakitu</strong> sur son nuage et <strong>pêche la plus grosse ombre</strong> du point d'eau</td>
+<td>Carburant de l'Odyssée ; le Lakitu sert aussi à la lune n° 37</td>
+</tr>
+<tr>
+<td><strong>L'amour au cœur du désert</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> À l'entrée des ruines, chapimorphose un <strong>Goomba</strong> et traverse les ruines en <strong>évitant les Bill Balles</strong>. Arrivé à la <strong>fleur trampoline à l'est</strong> : <strong>libère-toi</strong>, lance vite Cappy sur la fleur, <strong>reprends le Goomba</strong> et monte rejoindre <strong>Goombette</strong></td>
+<td>Carburant de l'Odyssée ; une Goombette par pays, toujours sur le même principe</td>
+</tr>
+<tr>
+<td><strong>Au milieu des cinq cactus</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Chapimorphose un <strong>jaxi</strong> et fonce <strong>tout au nord</strong> du niveau en longeant le bord du ravin. <strong>Percute la ligne de cactus</strong> qui contient un grand spécimen : le gros cactus est projeté et libère la lune</td>
+<td>Une des lunes libres les plus rapides</td>
+</tr>
+<tr>
+<td><strong>Capitaine Toad, une bien jolie prise !</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Chapimorphose le <strong>Lakitu</strong> de l'oasis, avance <strong>vers le nord</strong> et <strong>« pêche » la plus grosse ombre dans le sable</strong> : c'est <strong>Capitaine Toad</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Retrouvailles des frères jaxis</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Chapimorphose le <strong>jaxi d'Ifézèc</strong> et amène-le <strong>face à la statue de son congénère</strong>, au nord-est de l'oasis près du ravin</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Jaxi est de retour !</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Chapimorphose le <strong>jaxi du sommet de la pyramide inverzée</strong> et <strong>place-le sur le coin sud dépourvu de statue</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>La marche du cactus</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Lance Cappy sur le <strong>cactus au sud des ruines jaxi et du bassin de poison</strong> pour t'en chapimorphoser, déplace-le, puis <strong>charge au sol</strong> sur l'endroit qui scintille</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Sombrero</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">chapeau</span></td>
+<td>Boutique Crazy Cap, <strong>5 pièces locales</strong></td>
+<td>Ouvre les portes à tenue correspondantes</td>
+</tr>
+<tr>
+<td><strong>Poncho</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">costume</span></td>
+<td>Boutique Crazy Cap, <strong>10 pièces locales</strong></td>
+<td>Idem</td>
+</tr>
+<tr>
+<td><strong>Chapeau de cow-boy</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">chapeau</span></td>
+<td>Boutique Crazy Cap, <strong>20 pièces locales</strong></td>
+<td>Idem</td>
+</tr>
+<tr>
+<td><strong>Tenue de cow-boy</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">costume</span></td>
+<td>Boutique Crazy Cap, <strong>25 pièces locales</strong></td>
+<td>Idem</td>
+</tr>
+<tr>
+<td><strong>Statuette de Jaxi</strong></td>
+<td><span class="badge neutre">Souvenir</span></td>
+<td>Boutique Crazy Cap, <strong>5 pièces locales</strong></td>
+<td>Décore l'intérieur de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Maquette de pyramide inverzée</strong></td>
+<td><span class="badge neutre">Souvenir</span></td>
+<td>Boutique Crazy Cap, <strong>25 pièces locales</strong></td>
+<td>Décore l'intérieur de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Vignette du pays des Sables</strong></td>
+<td><span class="badge neutre">Vignette</span></td>
+<td>Boutique Crazy Cap, <strong>10 pièces locales</strong></td>
+<td>Se colle sur la coque de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Cœur de soin</strong></td>
+<td><span class="badge neutre">Objet</span></td>
+<td>Boutique Crazy Cap, <strong>50 pièces d'or</strong></td>
+<td>Fait passer ta vie de 3 à 6 points jusqu'au changement de pays</td>
+</tr>
+<tr>
+<td><strong>Pièce locale du pays des Sables</strong></td>
+<td><span class="badge neutre">Monnaie</span></td>
+<td><strong>100</strong> dans le pays, <strong>pyramidales</strong></td>
+<td>La monnaie des tenues, souvenirs et vignettes d'ici. Le total des articles fait <strong>100 pile</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Les trois graines d'abord.</strong> Les lunes n° 25, 26 et 27 demandent de planter une graine puis d'<strong>attendre</strong>. Plante-les dès ta première visite : quand tu repasseras, les fruits dorés seront prêts. Si tu les gardes pour la fin, tu attendras pour rien.</li>
+<li><strong>Le jaxi se conduit, il ne se pilote pas.</strong> Il accélère tout seul, il tourne mal, et il <strong>écrase les cactus</strong> au lieu de s'y blesser. Deux lunes reposent uniquement là-dessus (n° 36 et 40) et une troisième sur sa vitesse dans le désert obscurci.</li>
+<li><strong>Les bornes gzzzt se quittent en vol.</strong> C'est contre-intuitif mais c'est le cœur de la lune n° 11 : on se libère au milieu du câble pour tomber pile sur l'arche.</li>
+<li><strong>Le Ma'tuvu ne sert pas qu'aux éclats.</strong> Ses lunettes révèlent des passerelles invisibles <strong>partout</strong> dans sa zone, y compris pour des lunes qui ne font pas partie de l'objectif.</li>
+<li><strong>Le Bill Balle, c'est du jetable.</strong> Il explose au premier contact et au bout de quelques secondes. Repère ta trajectoire <strong>avant</strong> de t'y chapimorphoser, et souviens-toi qu'il y a toujours un lance-Bill Balle à proximité pour recommencer.</li>
+<li><strong>Attention aux Bob-omb.</strong> Leur explosion casse les blocs de pierre <strong>et</strong> te touche. Le réflexe : lancer Cappy, puis sauter.</li>
+<li><strong>Le lac de poison ne pardonne pas.</strong> Contrairement au smog du pays des Chapeaux, il fait mal. Aux Ruines Ma'tuvu comme à l'athlétic-tac 3, prends le temps de regarder où tu mets les pieds.</li>
+<li><strong>Ne t'inquiète pas des lunes « disparues ».</strong> Entre Hariet et le Grand Caputl, la pyramide est en l'air et cinq lunes du pays sont temporairement hors d'atteinte : n° 10, 14, 33, 45 et 46. Finis l'objectif 4 et elles reviennent.</li>
+<li><strong>Les 100 pièces locales tombent pile.</strong> Sombrero (5), Poncho (10), Chapeau de cow-boy (20), Tenue de cow-boy (25), Statuette de Jaxi (5), Maquette de pyramide inverzée (25) et Vignette (10) font <strong>exactement 100</strong>. Il faut donc ratisser le pays en entier pour tout avoir.</li>
+</ul>
+<h2 id="alertes-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Rien n'est définitivement manquable dans ce pays.</strong> Aucune lune ne se perd, aucun personnage ne s'en va.</li>
+<li class="alerte manquable">⏳ <strong>Cinq lunes sont temporairement inaccessibles</strong> pendant que la pyramide inverzée flotte, entre les objectifs 3 et 4 : n° 10, 14, 33, 45 et 46. Elles reviennent après le Grand Caputl.</li>
+<li class="alerte manquable">⏳ <strong>Les trois graines demandent du temps réel.</strong> Elles ne poussent pas instantanément : il faut quitter le pays et revenir. Plante-les tôt.</li>
+<li class="alerte manquable">⏳ <strong>Les trois athlétic-tac et les deux courses aux notes sont chronométrés.</strong> La lune s'évapore si tu es trop lent, mais le défi se relance sans pénalité.</li>
+<li class="alerte manquable">⏳ <strong>La lune n° 62, <em>Accès secret : Ifézèc</em>, ne se prend pas d'ici.</strong> Elle s'ouvre par un tableau du <strong>pays du Lac</strong> ou du <strong>pays de la Forêt</strong>. Voir la partie suivante.</li>
+<li class="alerte manquable">⏳ <strong>La lune n° 68, <em>De retour après avoir vu le monde</em>, demande d'avoir suivi le Zuituzèc voyageur</strong> jusqu'au royaume Champignon. C'est la fin de la chaîne qui commence ici.</li>
+</ul>
+<h2 id="check-list-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="lhistoire-2">L'histoire</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Au sommet de la tour des ruines</strong> <em>(objectif 1)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Éclats de lune dans les dunes</strong> — les <strong>5 éclats</strong> aux Ruines Ma'tuvu <em>(objectif 2)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Hariet</strong> vaincue, <strong>Baroud dans la pyramide inverzée</strong> <em>(objectif 3)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Grand Caputl</strong> vaincu, <strong>Un trou dans le désert</strong> <em>(objectif 4)</em></li>
+<li class="tache"><input type="checkbox"> <strong>16 lunes</strong> réunies, départ pour le <strong>pays du Lac</strong></li>
+</ul>
+<h3 id="les-lunes-5-a-40">Les lunes 5 à 40</h3>
+<ul>
+<li class="tache"><input type="checkbox"> En surplomb de la ville des sables</li>
+<li class="tache"><input type="checkbox"> Dans une cavité des ruines</li>
+<li class="tache"><input type="checkbox"> Sur le pilier penché</li>
+<li class="tache"><input type="checkbox"> Dans le secret des sables mouvants</li>
+<li class="tache"><input type="checkbox"> Le secret de la fresque</li>
+<li class="tache"><input type="checkbox"> Dans le secret de la muraille inversée</li>
+<li class="tache"><input type="checkbox"> Sur la grande arche</li>
+<li class="tache"><input type="checkbox"> Cachée dans une caisse des ruines</li>
+<li class="tache"><input type="checkbox"> Vol plané jusqu'au pilier</li>
+<li class="tache"><input type="checkbox"> La queue du jaxi</li>
+<li class="tache"><input type="checkbox"> En chapeautant la fontaine</li>
+<li class="tache"><input type="checkbox"> Là où gazouillent les oiseaux</li>
+<li class="tache"><input type="checkbox"> Au sommet d'une dune</li>
+<li class="tache"><input type="checkbox"> Tombée du taxi</li>
+<li class="tache"><input type="checkbox"> Une percée en Bill Balle</li>
+<li class="tache"><input type="checkbox"> À l'intérieur d'un bloc de roc</li>
+<li class="tache"><input type="checkbox"> Volatile en vadrouille dans le désert</li>
+<li class="tache"><input type="checkbox"> Volatile en vadrouille sur le marais</li>
+<li class="tache"><input type="checkbox"> Cache-cache sous les pavés</li>
+<li class="tache"><input type="checkbox"> Dans le coffre des ruines jaxi</li>
+<li class="tache"><input type="checkbox"> <strong>Les trois graines plantées</strong> dès le premier passage</li>
+<li class="tache"><input type="checkbox"> La graine de la place a fleuri !</li>
+<li class="tache"><input type="checkbox"> La graine des ruines a fleuri !</li>
+<li class="tache"><input type="checkbox"> La graine de la falaise a fleuri !</li>
+<li class="tache"><input type="checkbox"> Pays des Sables : athlétic-tac 1</li>
+<li class="tache"><input type="checkbox"> Pays des Sables : athlétic-tac 2</li>
+<li class="tache"><input type="checkbox"> Pays des Sables : athlétic-tac 3</li>
+<li class="tache"><input type="checkbox"> Trouvée par toutou dans le sable !</li>
+<li class="tache"><input type="checkbox"> Course aux notes sur les palmiers</li>
+<li class="tache"><input type="checkbox"> Un berger dans les dunes — les <strong>3 moutons</strong></li>
+<li class="tache"><input type="checkbox"> Partie de pêche dans l'oasis</li>
+<li class="tache"><input type="checkbox"> L'amour au cœur du désert</li>
+<li class="tache"><input type="checkbox"> Au milieu des cinq cactus</li>
+<li class="tache"><input type="checkbox"> Capitaine Toad, une bien jolie prise !</li>
+<li class="tache"><input type="checkbox"> Retrouvailles des frères jaxis</li>
+<li class="tache"><input type="checkbox"> Jaxi est de retour !</li>
+<li class="tache"><input type="checkbox"> La marche du cactus</li>
+</ul>
+<h3 id="la-boutique-2">La boutique</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Les <strong>100 pièces locales</strong> ramassées</li>
+<li class="tache"><input type="checkbox"> <strong>Sombrero</strong> et <strong>Poncho</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Chapeau de cow-boy</strong> et <strong>Tenue de cow-boy</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Statuette de Jaxi</strong> et <strong>Maquette de pyramide inverzée</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Vignette du pays des Sables</strong></li>
+</ul>
+<h3 id="et-ensuite">Et ensuite</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Les lunes <strong>41 à 89</strong> — voir la partie suivante</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="pays-des-chutes.html" rel="prev"><small>← Partie précédente</small><b>Pays des Chutes</b></a><a class="suiv" href="pays-des-sables-les-lunes-41-a-89.html" rel="next"><small>Partie suivante →</small><b>Pays des Sables — les lunes 41 à 89</b></a><a class="tout" href="super-mario-odyssey.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Super Mario Odyssey · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

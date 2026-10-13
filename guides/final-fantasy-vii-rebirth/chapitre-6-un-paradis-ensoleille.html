@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapitre 6 — Un paradis ensoleillé – Guide Final Fantasy VII Rebirth</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Rebirth, Chapitre 6 — Un paradis ensoleillé : Au programme : trois histoires annexes, le Carnage des pirates, le Carnaval des cartes…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-6-un-paradis-ensoleille.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Chapitre 6 — Un paradis ensoleillé · Guide Final Fantasy VII Rebirth">
+<meta property="og:description" content="Final Fantasy VII Rebirth, Chapitre 6 — Un paradis ensoleillé : Au programme : trois histoires annexes, le Carnage des pirates, le Carnaval des cartes…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-6-un-paradis-ensoleille.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Rebirth", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/"}, {"@type": "ListItem", "position": 3, "name": "Chapitre 6 — Un paradis ensoleillé", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-6-un-paradis-ensoleille.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-rebirth" class="compact" data-partie="chapitre-6-un-paradis-ensoleille"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Rebirth</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Rebirth : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Rebirth</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-la-chute-dun-heros.html"><span class="num">✦</span><span class="libelle">Chapitre 1 — La chute d&#x27;un héros</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-vers-de-nouveaux-horizons.html"><span class="num">✦</span><span class="libelle">Chapitre 2 — Vers de nouveaux horizons</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-sur-les-traces-des-manteaux-noirs.html"><span class="num">✦</span><span class="libelle">Chapitre 3 — Sur les traces des manteaux noirs</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-le-debut-dune-nouvelle-ere.html"><span class="num">✦</span><span class="libelle">Chapitre 4 — Le début d&#x27;une nouvelle ère</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-une-croisiere-sanglante.html"><span class="num">✦</span><span class="libelle">Chapitre 5 — Une croisière sanglante</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="#chapitre-6-un-paradis-ensoleille"><span class="num">✦</span><span class="libelle">Chapitre 6 — Un paradis ensoleillé</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-un-retour-douloureux.html"><span class="num">✦</span><span class="libelle">Chapitre 7 — Un retour douloureux</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-le-gold-saucer.html"><span class="num">✦</span><span class="libelle">Chapitre 8 — Le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-a-lecoute-de-la-planete.html"><span class="num">✦</span><span class="libelle">Chapitre 9 — À l&#x27;écoute de la planète</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-protecteur-de-la-vallee.html"><span class="num">✦</span><span class="libelle">Chapitre 10 — Protecteur de la vallée</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-un-village-natal-meconnaissable.html"><span class="num">✦</span><span class="libelle">Chapitre 11 — Un village natal méconnaissable</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-en-quete-de-la-pierre-cle.html"><span class="num">✦</span><span class="libelle">Chapitre 12 — En quête de la pierre-clé</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-le-temple-des-anciens.html"><span class="num">✦</span><span class="libelle">Chapitre 13 — Le temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-un-monde-a-lagonie.html"><span class="num">✦</span><span class="libelle">Chapitre 14 — Un monde à l&#x27;agonie</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="region-de-la-prairie.html"><span class="num">✦</span><span class="libelle">Région de la Prairie</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="region-de-junon.html"><span class="num">✦</span><span class="libelle">Région de Junon</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="region-de-corel.html"><span class="num">✦</span><span class="libelle">Région de Corel</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="region-de-gongaga.html"><span class="num">✦</span><span class="libelle">Région de Gongaga</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="region-de-cosmo.html"><span class="num">✦</span><span class="libelle">Région de Cosmo</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="region-de-nibel.html"><span class="num">✦</span><span class="libelle">Région de Nibel</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="locean-central-et-les-iles.html"><span class="num">✦</span><span class="libelle">L&#x27;Océan Central et les îles</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-materias.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-armes-et-les-codex.html"><span class="num">✦</span><span class="libelle">Les armes et les codex</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-invocations.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="laffinite-et-les-coequipiers.html"><span class="num">✦</span><span class="libelle">L&#x27;affinité et les coéquipiers</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="queens-blood.html"><span class="num">✦</span><span class="libelle">Queen&#x27;s Blood</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-mini-jeux-4.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="le-simulateur-de-combat.html"><span class="num">✦</span><span class="libelle">Le simulateur de combat</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-rebirth.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Rebirth</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-7">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="chapitre-6-un-paradis-ensoleille">Chapitre 6 — Un paradis ensoleillé</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-7"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-7">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Au programme</strong> : trois histoires annexes, le Carnage des pirates, le Carnaval des cartes (manquable).</li>
+<li><strong>Affinité</strong> : les conversations sur la plage après l'E.S.C. Cargo ; joue le jeu de Yuffie et complimente-la près du camion de glace.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Se reposer à <strong>Costa del Sol</strong>. Sur le papier, c'est l'épisode vacances. En pratique, c'est un des chapitres les plus chargés en contenu de tout le jeu : trois histoires annexes, <strong>six mini-jeux</strong>, des tenues de plage, un puzzle de Queen's Blood, un boss — et <strong>Yuffie qui rejoint officiellement l'équipe</strong>.</p>
+<p>Tu y gagnes aussi une brassée de cartes de Queen's Blood et plusieurs occasions d'affinité. Ne le traverse pas au pas de course.</p>
+<h2 id="itineraire-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.actugaming.net/solution-chapitre-6-final-fantasy-vii-rebirth-624680/">Chapitre 6</a> — soluce illustrée sur ActuGaming, en français.</p>
+<ol>
+<li><strong>Arrivée à Costa del Sol</strong>, accueil par le maire, et découverte des <strong>gyropodes</strong>.</li>
+<li><strong>Bureau d'information touristique</strong> : les histoires annexes <strong>« Office de tourisme »</strong> et <strong>« Campagne de promotion »</strong>.</li>
+<li><strong>Le camion de glace</strong> : l'histoire <strong>« Une shinobi en vacances »</strong> avec Yuffie.</li>
+<li><strong>Le Royal Crest</strong> et le <strong>Costa del Sol Resort</strong> : refusés tous les deux, puis <strong>Johnny</strong> et son hôtel.</li>
+<li><strong>Costa del Amor – Cloud</strong> : le <strong>Carnage des pirates</strong> (nord) ou le <strong>Carnaval des cartes</strong> (est).</li>
+<li><strong>Costa del Amor – Aerith et Tifa</strong> : <strong>Course Sauvage</strong> (ouest), le <strong>Défi des pampas-bonheur</strong> (est), la <strong>Gyro-promenade</strong>, le concert de piano du Royal Crest.</li>
+<li><strong>La plage</strong> et le plan de <strong>Hojo</strong>, puis le choix d'alliés et le boss <strong>E.S.C. Cargo</strong>.</li>
+<li><strong>Retour à l'hôtel de Johnny</strong> : Yuffie rejoint le groupe, et le chapitre se termine.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="larrivee">L'arrivée</h3>
+<p>Fraîchement débarqué du Shinra-Huit et accueilli par le <strong>maire</strong>, le groupe décide de se trouver un hôtel avant de profiter de la station.</p>
+<p>Au bout de quelques pas, tu découvres les <strong>gyropodes</strong>. La station est vaste ; c'est un moyen de locomotion très pratique, et il sert aussi de base à un mini-jeu et à une histoire annexe.</p>
+<h3 id="les-trois-histoires-annexes">Les trois histoires annexes</h3>
+<p>Plusieurs <strong>histoires annexes</strong> démarrent dès ton arrivée. Une <strong>histoire annexe</strong> est une quête locale, plus légère qu'une quête de région, qui se déclenche en parlant au bon PNJ.</p>
+<p><strong>« Office de tourisme »</strong> — rends-toi au Bureau d'information touristique pour chercher un hôtel. Tu pourras ensuite aller voir si le Royal Crest ou le Costa del Sol Resort ont de la place.</p>
+<p><strong>« Campagne de promotion »</strong> — toujours au Bureau d'information touristique, adresse-toi au <strong>guichet de droite</strong> pour consulter le <strong>programme de promotion sur les gyropodes</strong>. En roulant en gyropode, tu <strong>débloques des récompenses par palier</strong>. Sers-t'en dès que tu te déplaces, et <strong>repasse régulièrement toucher tes récompenses</strong> : c'est du gratuit pour du trajet que tu fais de toute façon.</p>
+<p><strong>« Une shinobi en vacances »</strong> — croise Yuffie près d'un camion de glace. Parle-lui et <strong>complimente-la</strong> pour gagner un peu d'<strong>affinité</strong>.</p>
+<h3 id="les-hotels-et-johnny">Les hôtels et Johnny</h3>
+<p>Visite si tu veux, puis entre dans les <strong>deux hôtels</strong>. Tu te fais <strong>recaler des deux</strong>. Et en sortant du Costa del Sol Resort, une vieille connaissance t'attend.</p>
+<p><strong>Johnny</strong> — le résident du secteur 7 de Midgar — a fait des affaires et possède maintenant un hôtel. Suis-le. À l'arrivée, disons que <strong>c'est loin des standards de la station</strong> : au moins, vous serez tranquilles.</p>
+<p>Aerith et Tifa vont prendre une douche, Barret part devant, Red XIII se repose. <strong>Cloud est seul.</strong> Entre dans sa chambre et <strong>pose son épée</strong>.</p>
+<h3 id="le-ticket-del-amor">Le ticket del Amor</h3>
+<p>Ressors et retourne dans Costa del Sol. Cloud remarque que les manteaux noirs se dirigent vers la plage. En voulant les suivre, il est abordé par des <strong>hôtesses</strong> qui veulent justement les faire décamper — sauf que Cloud ne peut pas aller sur la plage <strong>dans cette tenue</strong>.</p>
+<p>Elles lui donnent donc un <strong>ticket del Amor n°7</strong>, qui l'inscrit à l'événement Costa del Amor : des activités qui rapportent des <strong>cartes Amor</strong>, échangeables contre un <strong>maillot de bain</strong>.</p>
+<h3 id="costa-del-amor-cloud">Costa del Amor — Cloud</h3>
+<p><strong>Deux activités</strong> peuvent te donner une carte Amor. <strong>Une seule suffit</strong>, mais les deux valent le détour.</p>
+<h3 id="le-carnage-des-pirates">Le Carnage des pirates</h3>
+<p>Au nord de la station. C'est un <strong>jeu de carabine</strong> de fête foraine.</p>
+<p><strong>Format</strong> : <strong>4 vagues de 30 secondes</strong>, et il faut <strong>au moins 10 000 points</strong> en tirant sur des cibles statiques et mobiles.</p>
+<p><strong>Le barème</strong> : les cibles ordinaires rapportent <strong>100 ou 150 points</strong> ; les <strong>cibles résistantes ou cachées</strong> montent de <strong>300 à 600 points</strong>. Si tu es précis et vif, <strong>tu atteins le minimum dès la vague 3</strong> — la carte s'obtient donc sans grande difficulté.</p>
+<p><strong>Astuce de confort</strong> : si la <strong>gâchette adaptative</strong> te ralentit dans la cadence de tir, <strong>désactive son effet</strong> dans les options. Ce n'est pas de la triche, c'est du réglage.</p>
+<p>Une fois l'objectif atteint, libre à toi de viser le <strong>score maximal</strong>.</p>
+<h3 id="le-carnaval-des-cartes">Le Carnaval des cartes</h3>
+<p>À l'est de la station, près des pontons. Tu fais « équipe » avec <strong>Régina</strong> — symboliquement, elle ne joue pas.</p>
+<p>Ce mini-jeu reprend les bases du Queen's Blood en y ajoutant du <strong>casse-tête</strong> : les cartes adverses sont déjà toutes posées sur le plateau, et tu dois gagner en plaçant correctement <strong>une main imposée</strong>. Il n'y a donc <strong>qu'une seule bonne solution</strong> par défi.</p>
+<p>Pour donner les positions, on lit le plateau comme une grille de bataille navale : les trois lignes horizontales sont A, B, C de haut en bas, et les cinq colonnes sont 1 à 5 de gauche à droite. Les actions sont à faire <strong>dans l'ordre</strong>.</p>
+<p><strong>Défi de Costa del Amor — 1er tour</strong></p>
+<ol>
+<li>Place Mirafale en <strong>C3</strong>.</li>
+<li>Place le Zu en <strong>A1</strong>.</li>
+<li>Place le Quetzalcoatl en <strong>B2</strong>.</li>
+</ol>
+<p>→ Tu gagnes la carte Mirafale et tu débloques le deuxième tour.</p>
+<p><strong>Défi de Costa del Amor — 2e tour</strong></p>
+<ol>
+<li>Place Gros chocobo en <strong>C1</strong>.</li>
+<li>Place Chocobo chicos en <strong>C3</strong>.</li>
+<li>Place <strong>Chocobo &amp; mog</strong> en <strong>C2</strong>.</li>
+</ol>
+<p>→ Tu gagnes la carte Chocobo chicos et tu débloques le troisième tour.</p>
+<p><strong>Défi de Costa del Amor — 3e tour</strong></p>
+<ol>
+<li>Place <strong>Trio de mogs</strong> en <strong>B1</strong> — tu récupères alors <strong>Trio de mogs II</strong> et <strong>Trio de mogs III</strong> dans ta main.</li>
+<li>Place Mirafale en <strong>B2</strong>.</li>
+<li>Place <strong>Trio de mogs II</strong> en <strong>C2</strong>.</li>
+<li>Place Loup de Kalm en <strong>C1</strong>.</li>
+<li>Place <strong>Trio de mogs III</strong> en <strong>A1</strong>.</li>
+</ol>
+<p>→ Tu gagnes la carte <strong>Trio de mogs</strong> et une <strong>carte Amor</strong>.</p>
+<h3 id="la-tenue-de-cloud">La tenue de Cloud</h3>
+<p>Tu as maintenant <strong>jusqu'à deux cartes Amor</strong> à dépenser dans un <strong>point d'échange</strong>. Deux tenues au choix : <strong>Chocobo de l'océan</strong> ou <strong>Surfeur sauvage</strong>.</p>
+<p><strong>Ce choix engage les tenues des filles.</strong> Retiens-le : il détermine lesquelles s'assortissent avec la tienne.</p>
+<p>Achètes-en une, change-toi, et <strong>va sur la plage</strong>. Cloud et Barret surveillent les manteaux noirs. Il ne manque que les filles et Red XIII.</p>
+<h3 id="costa-del-amor-aerith-et-tifa">Costa del Amor — Aerith et Tifa</h3>
+<p>Après une scène autour de la <strong>matéria d'Aerith, devenue transparente</strong>, tu prends les commandes de la Cétra. Sors de ta chambre et <strong>va chercher Tifa</strong> pour qu'elles participent elles aussi.</p>
+<p>Elles sont accueillies par les hôtesses, et comme elles sont <strong>deux</strong>, il y a <strong>quatre activités</strong> et <strong>deux cartes à gagner pour chacune</strong>. <strong>Bascule entre Tifa et Aerith avec L2</strong> quand tu veux.</p>
+<p>Au programme : Course Sauvage et le <strong>Défi des pampas-bonheur</strong> pour <strong>Aerith</strong> ; la Gyro-promenade et le <strong>concert de piano</strong> pour <strong>Tifa</strong>. <strong>Une seule carte par personne suffit</strong> — voilà quand même les quatre.</p>
+<h3 id="course-sauvage">Course Sauvage</h3>
+<p>À l'ouest de la station. C'est <strong>Red XIII</strong> qui participe.</p>
+<p>Il affronte <strong>3 équipes de bêtes sauvages</strong> dans un <strong>match de football</strong> : il faut <strong>pousser le ballon dans les cages adverses</strong> pour leur faire perdre des vies. <strong>Chaque équipe démarre avec 5 vies</strong>, et c'est celle qui en a le plus au bout des <strong>3 minutes</strong> qui gagne.</p>
+<p>Pour la carte Amor, il suffit de finir 2e. Bonne nouvelle : c'est très atteignable.</p>
+<p><strong>Conseils</strong> :</p>
+<ul>
+<li>Les cages bleue et noire sont les plus faciles à viser. Le chocobo prend beaucoup de place devant sa cage jaune — ne perds pas ton temps dessus.</li>
+<li>Un deuxième ballon apparaît au bout d'une minute. Tu dois marquer <strong>et</strong> protéger ton propre but : garde un œil dessus quand tu t'éloignes.</li>
+</ul>
+<p><strong>Récompenses</strong> : une <strong>carte Amor</strong> (Aerith), un <strong>éther</strong> et une <strong>viande tropicale</strong> — sur laquelle Red XIII se jette immédiatement.</p>
+<p>Ensuite, Johnny passe devant toi à toute vitesse. Tu peux le suivre et lui parler à l'Héliport : on y apprend que quelque chose se prépare du côté de la Shinra. C'est facultatif et facile à laisser filer.</p>
+<h3 id="le-defi-des-pampas-bonheur">Le Défi des pampas-bonheur</h3>
+<p>À l'est de Costa del Sol. Le principe : photographier les quatre dessins de pampas-bonheur cachés dans la station.</p>
+<p>Devant le stand, un <strong>chef de service de la Shinra</strong> veut participer mais il faut être deux — <strong>Aerith</strong> propose son aide. Ravi, il t'attend <strong>devant les spots</strong>, que tu dois trouver toi-même. La <strong>membre du staff</strong> te remet un <strong>appareil photo-bonheur</strong> et un <strong>plan des pampas-bonheur</strong>.</p>
+<p><strong>Les quatre emplacements :</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Devant le Carnaval des cartes</strong>, au <strong>bout du ponton de gauche</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sur l'enseigne du bâtiment qui mène à la plage</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Sur la <strong>borne d'incendie la plus au sud</strong>, près de l'entrée de la station <strong>côté bateau</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Au sud de la rue</strong> dans laquelle se trouve l'activité Course Sauvage</td>
+</tr>
+</tbody>
+</table></div>
+<p>Montre les photos à la membre du staff : tu repars avec une <strong>carte Amor</strong> (Aerith), et le chef de service te remercie.</p>
+<h3 id="la-gyro-promenade">La Gyro-promenade</h3>
+<p>Direction la Gyro-promenade. <strong>Jenny</strong>, une connaissance de Johnny chargée de l'activité, <strong>démissionne sur place</strong>, jalouse devant Tifa. L'activité se transforme alors en <strong>mission de récupération des gyropodes</strong>.</p>
+<p>Il existe <strong>trois couleurs de gyropodes</strong>, et il faut ramener les véhicules manquants <strong>au parking de la bonne couleur</strong>.</p>
+<p><strong>Les trois parkings :</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Couleur</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bleu</strong></td>
+<td>À côté du <strong>bâtiment menant à la plage</strong></td>
+</tr>
+<tr>
+<td><strong>Jaune</strong></td>
+<td>Là où les hôtesses ont accueilli Cloud et les filles</td>
+</tr>
+<tr>
+<td><strong>Rouge</strong></td>
+<td>Là où <strong>la mission a commencé</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Il manque 2 gyropodes de chaque couleur :</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Où</th>
+<th>Gyropodes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Devant le Royal Crest</strong></td>
+<td>un <strong>bleu</strong> et un <strong>rouge</strong></td>
+</tr>
+<tr>
+<td><strong>Devant le Costa del Sol Resort</strong></td>
+<td>un <strong>bleu</strong> et un <strong>rouge</strong></td>
+</tr>
+<tr>
+<td><strong>Tout près du stand Course Sauvage</strong></td>
+<td>un <strong>jaune</strong></td>
+</tr>
+<tr>
+<td><strong>Quelques mètres en face de l'entrée vers l'hôtel de Johnny</strong></td>
+<td>un <strong>jaune</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Jenny t'observe pendant toute la quête et finit par s'avouer vaincue face à la gentillesse de Tifa. Elle te donne <strong>deux cartes Amor</strong> — mais <strong>Tifa lui en rend une</strong>. Net : <strong>une carte</strong>.</p>
+<h3 id="le-concert-de-piano-du-royal-crest">Le concert de piano du Royal Crest</h3>
+<p>Le pianiste prévu n'est pas disponible : <strong>c'est Tifa qui joue</strong>. <strong>Andi</strong> l'accueille, et Madame M lui offre un massage dont elle a le secret pour faire ressortir ses talents.</p>
+<p><strong>Interagis avec le piano</strong> et joue la partition <strong>Tifa's Theme</strong>. Tu peux <strong>t'entraîner</strong> ou y aller directement.</p>
+<p><strong>Comment ça marche</strong> : tu ne t'occupes que des joysticks gauche et droit. Il faut les orienter dans la direction indiquée par les ondes dorées, au moment où l'onde atteint le bout de la note si tu veux un <strong>« Excellent »</strong>.</p>
+<p>Pas besoin du rang S ni a pour valider l'objectif — respire.</p>
+<p><strong>Récompenses</strong> : une <strong>carte Amor</strong> (Tifa), une <strong>queue de phénix</strong>, un <strong>remède</strong> et un <strong>élixir</strong>.</p>
+<h3 id="les-tenues-des-filles">Les tenues des filles</h3>
+<p>Avec au moins deux cartes, tu choisis les tenues d'Aerith et Tifa — et tu peux les <strong>assortir à celle de Cloud</strong> :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Tenue de Cloud</th>
+<th>Tenues assorties</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Chocobo de l'océan</strong></td>
+<td><strong>Fleur de soleil</strong> et <strong>Gracieuse baleine</strong></td>
+</tr>
+<tr>
+<td><strong>Surfeur sauvage</strong></td>
+<td><strong>Sirène rose</strong> et <strong>Dauphin étincelant</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Une fois prêt, rejoins l'équipe sur la plage.</p>
+<h3 id="le-plan-de-hojo">Le plan de Hojo</h3>
+<p>Pendant que l'équipe se détend, Hojo débarque et se dirige vers la <strong>plage privée</strong>. Va le voir avec Cloud.</p>
+<p>Le professeur lâche une machine d'où surgissent des monstres lancés pour fusionner avec les manteaux noirs. Puis il les <strong>rapatrie pour les étudier</strong>, en laissant d'autres monstres sur la plage. L'équipe décide de sauver la côte et ses habitants.</p>
+<p>Cloud se précipite et <strong>récupère un parasol</strong> qui <strong>reprend les attributs de l'arme équipée</strong> — tu ne perds donc rien à te battre en maillot de bain.</p>
+<p><strong>Puis vient un choix</strong> : <strong>aider Barret et Aerith</strong>, ou aider Tifa et Red XIII.</p>
+<p><strong>Ce choix a une conséquence directe</strong> : les deux alliés que tu aides combattront à tes côtés contre le boss, et les deux autres seront enlevés par Hojo. Ajuste ton équipement et tes matérias avant de choisir.</p>
+<p>Tu affrontes une <strong>entité nécrotique</strong>, un Dæmonas et un Mhadomhanju. <strong>Pare la masse du Mhadomhanju</strong> pour l'interrompre, et <strong>concentre-toi sur l'entité nécrotique</strong> : c'est elle qui rend le combat pénible si tu la laisses vivre.</p>
+<p>Sitôt le combat fini, Hojo enlève les alliés que tu as laissés de côté et t'envoie sa machine.</p>
+<h3 id="boss-esc-cargo">Boss : E.S.C. Cargo</h3>
+<p>Stratégie détaillée dans Conseils et pièges.</p>
+<p>Vaincu, <strong>Yuffie et Johnny leurrent la machine</strong> pour lui porter le coup final. <strong>Hojo s'enfuit</strong> et l'équipe le laisse filer.</p>
+<p>Le calme revenu, parle à tes amis sur la plage : chaque conversation <strong>monte ton affinité</strong>. C'est une des meilleures fournées d'affinité du jeu et rien ne te signale de le faire.</p>
+<h3 id="la-fin-du-chapitre-2">La fin du chapitre</h3>
+<p>Quitte la plage pour l'<strong>hôtel de Johnny</strong>. Il t'apprend que les manteaux noirs <strong>partent vers le mont Corel</strong> : ta prochaine destination.</p>
+<p>Et le groupe s'étoffe : <strong>Yuffie rejoint officiellement l'équipe</strong>.</p>
+<p>Quand elle débarque, joue son jeu et montre que tu es content de l'avoir : tu démarres avec un <strong>petit bonus d'affinité</strong>. Son intégration clôt le chapitre.</p>
+<h2 id="quetes-et-lieux-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-histoires-annexes">Les histoires annexes</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Histoire annexe</th>
+<th>Où la lancer</th>
+<th>Ce qu'elle donne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Office de tourisme</strong></td>
+<td>Bureau d'information touristique</td>
+<td>Ouvre la recherche d'hôtel <em>(Royal Crest, Costa del Sol Resort)</em></td>
+</tr>
+<tr>
+<td><strong>Campagne de promotion</strong></td>
+<td>Guichet de droite du Bureau d'information touristique</td>
+<td>Récompenses par palier de distance en <strong>gyropode</strong> ; à repasser toucher régulièrement</td>
+</tr>
+<tr>
+<td><strong>Une shinobi en vacances</strong></td>
+<td><strong>Yuffie</strong>, près du <strong>camion de glace</strong></td>
+<td>Affinité avec Yuffie si tu la complimentes</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-lieux-de-costa-del-sol">Les lieux de Costa del Sol</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>À faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bureau d'information touristique</strong></td>
+<td>Deux histoires annexes</td>
+</tr>
+<tr>
+<td><strong>Royal Crest</strong></td>
+<td>Hôtel qui refuse le groupe ; <strong>concert de piano</strong> de Tifa ; deux <strong>gyropodes</strong> devant</td>
+</tr>
+<tr>
+<td><strong>Costa del Sol Resort</strong></td>
+<td>Hôtel qui refuse le groupe ; deux <strong>gyropodes</strong> devant</td>
+</tr>
+<tr>
+<td><strong>Hôtel de Johnny</strong></td>
+<td>Base du groupe ; chambre de Cloud <em>(poser l'épée)</em> ; fin du chapitre</td>
+</tr>
+<tr>
+<td><strong>Carnage des pirates</strong> <em>(nord)</em></td>
+<td>Mini-jeu de carabine, <strong>10 000 points</strong> pour la carte</td>
+</tr>
+<tr>
+<td><strong>Carnaval des cartes</strong> <em>(est, pontons)</em></td>
+<td>Trois défis de Queen's Blood en mode casse-tête</td>
+</tr>
+<tr>
+<td><strong>Course Sauvage</strong> <em>(ouest)</em></td>
+<td>Match de football avec <strong>Red XIII</strong>, finir <strong>2e</strong></td>
+</tr>
+<tr>
+<td><strong>Défi des pampas-bonheur</strong> <em>(est)</em></td>
+<td>Photographier <strong>4 pampas-bonheur</strong></td>
+</tr>
+<tr>
+<td><strong>Gyro-promenade</strong></td>
+<td>Ramener <strong>6 gyropodes</strong> aux <strong>3 parkings</strong></td>
+</tr>
+<tr>
+<td><strong>Héliport</strong></td>
+<td>Parler à Johnny après Course Sauvage</td>
+</tr>
+<tr>
+<td><strong>Points d'échange</strong></td>
+<td>Échanger les <strong>cartes Amor</strong> contre les tenues de plage</td>
+</tr>
+<tr>
+<td><strong>Plage / plage privée</strong></td>
+<td>Confrontation avec Hojo, choix d'alliés, boss E.S.C. Cargo, puis <strong>conversations d'affinité</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ticket del Amor n°7</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Remis par les <strong>hôtesses</strong> quand Cloud veut aller sur la plage</td>
+<td>Inscrit Cloud à <strong>Costa del Amor</strong></td>
+</tr>
+<tr>
+<td><strong>Carte Amor</strong></td>
+<td><span class="badge neutre">Objet d&#x27;échange</span></td>
+<td><strong>Carnage des pirates</strong> <em>(10 000 points)</em> ou <strong>Carnaval des cartes</strong> <em>(3e défi)</em> pour Cloud ; <strong>Course Sauvage</strong> et <strong>pampas-bonheur</strong> pour Aerith ; <strong>Gyro-promenade</strong> et <strong>piano</strong> pour Tifa</td>
+<td>S'échange contre les <strong>tenues de plage</strong></td>
+</tr>
+<tr>
+<td><strong>Chocobo de l'océan</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">Cloud</span></td>
+<td>Point d'échange, contre une <strong>carte Amor</strong></td>
+<td>Tenue de plage ; s'assortit avec <strong>Fleur de soleil</strong> et <strong>Gracieuse baleine</strong></td>
+</tr>
+<tr>
+<td><strong>Surfeur sauvage</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">Cloud</span></td>
+<td>Point d'échange, contre une <strong>carte Amor</strong></td>
+<td>Tenue de plage ; s'assortit avec <strong>Sirène rose</strong> et <strong>Dauphin étincelant</strong></td>
+</tr>
+<tr>
+<td><strong>Fleur de soleil</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">Aerith ou Tifa</span></td>
+<td>Point d'échange</td>
+<td>Assortie à <strong>Chocobo de l'océan</strong></td>
+</tr>
+<tr>
+<td><strong>Gracieuse baleine</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">Aerith ou Tifa</span></td>
+<td>Point d'échange</td>
+<td>Assortie à <strong>Chocobo de l'océan</strong></td>
+</tr>
+<tr>
+<td><strong>Sirène rose</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">Aerith ou Tifa</span></td>
+<td>Point d'échange</td>
+<td>Assortie à <strong>Surfeur sauvage</strong></td>
+</tr>
+<tr>
+<td><strong>Dauphin étincelant</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">Aerith ou Tifa</span></td>
+<td>Point d'échange</td>
+<td>Assortie à <strong>Surfeur sauvage</strong></td>
+</tr>
+<tr>
+<td><strong>Carte Mirafale</strong></td>
+<td><span class="badge neutre">Carte</span></td>
+<td><strong>1er défi</strong> du Carnaval des cartes</td>
+<td>Carte de Queen's Blood</td>
+</tr>
+<tr>
+<td><strong>Carte Chocobo chicos</strong></td>
+<td><span class="badge neutre">Carte</span></td>
+<td><strong>2e défi</strong> du Carnaval des cartes</td>
+<td>Carte de Queen's Blood</td>
+</tr>
+<tr>
+<td><strong>Carte Trio de mogs</strong></td>
+<td><span class="badge neutre">Carte</span></td>
+<td><strong>3e défi</strong> du Carnaval des cartes</td>
+<td>Carte de Queen's Blood</td>
+</tr>
+<tr>
+<td><strong>Éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Course Sauvage</strong>, en finissant 2e</td>
+<td>Restaure des PM</td>
+</tr>
+<tr>
+<td><strong>Viande tropicale</strong></td>
+<td><span class="badge neutre">Objet</span></td>
+<td><strong>Course Sauvage</strong>, en finissant 2e</td>
+<td>Red XIII se jette dessus</td>
+</tr>
+<tr>
+<td><strong>Appareil photo-bonheur</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Remis par la membre du staff du <strong>Défi des pampas-bonheur</strong></td>
+<td>Sert à photographier les pampas</td>
+</tr>
+<tr>
+<td><strong>Plan des pampas-bonheur</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Remis avec l'appareil</td>
+<td>Indique la zone des quatre dessins</td>
+</tr>
+<tr>
+<td><strong>Queue de phénix</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Concert de piano</strong> du Royal Crest</td>
+<td>Ranime un allié K.-O.</td>
+</tr>
+<tr>
+<td><strong>Remède</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Concert de piano</strong> du Royal Crest</td>
+<td>Soigne les altérations d'état</td>
+</tr>
+<tr>
+<td><strong>Élixir</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Concert de piano</strong> du Royal Crest</td>
+<td>Restaure tous les PV et PM</td>
+</tr>
+<tr>
+<td><strong>Parasol</strong></td>
+<td><span class="badge arme">Arme temporaire</span> <span class="type-pour">Cloud</span></td>
+<td>Ramassé automatiquement sur la plage avant le choix d'alliés</td>
+<td><strong>Reprend les attributs de l'arme équipée</strong> : aucun malus à se battre en maillot</td>
+</tr>
+<tr>
+<td><strong>Partition Tifa's Theme</strong></td>
+<td><span class="badge neutre">Partition</span></td>
+<td>Jouée au <strong>piano du Royal Crest</strong></td>
+<td>Morceau du mini-jeu de piano</td>
+</tr>
+<tr>
+<td><strong>Récompenses de la Campagne de promotion</strong></td>
+<td><span class="badge neutre">Objets divers</span></td>
+<td><strong>Paliers de distance</strong> parcourue en gyropode, à retirer au guichet de droite</td>
+<td>contenu des paliers <strong>à vérifier en jeu</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="boss-esc-cargo-2">Boss : E.S.C. Cargo</h3>
+<p>Ton équipe dépend du choix fait sur la plage : si tu as aidé <strong>Tifa et Red XIII</strong>, ils combattent avec toi ; si tu as aidé <strong>Aerith et Barret</strong>, ce sont eux.</p>
+<p><strong>Élémentaire</strong> : c'est une <strong>machine</strong>, donc <strong>sensible à la Foudre</strong>. Équipe la matéria Foudre avant de déclencher le combat.</p>
+<p><strong>Comment le fragiliser</strong> : ce sont les <strong>compétences synchronisées</strong> qui font le travail. Pense donc à <strong>enchaîner des compétences avec tous tes personnages</strong> pour les débloquer vite et en placer un maximum. <strong>Tu n'as pas beaucoup de temps</strong> : le boss va <strong>capturer tes alliés un par un</strong> jusqu'à te laisser seul.</p>
+<p><strong>Phase 1 — à trois.</strong></p>
+<ul>
+<li><strong>Mitrailleuses plasma</strong> : il te tire dessus. <strong>Mets-toi en garde.</strong></li>
+<li><strong>Charge foreuse</strong> : il se rue dans une direction définie pour te taillader. <strong>Sors de sa trajectoire</strong>, ça suffit.</li>
+<li><strong>Sabre laser</strong> : il balance des lasers de gauche à droite devant lui. <strong>Éloigne-toi dès que le texte s'affiche.</strong></li>
+<li><strong>Altérations d'état</strong> : un <strong>nuage violet</strong> se disperse autour de lui pour <strong>empoisonner</strong> — le temps de latence est assez long pour <strong>sortir du rayon</strong> ; un <strong>nuage rose</strong> s'échappe <strong>devant lui</strong> pour <strong>étourdir</strong> — <strong>tiens-toi derrière le boss</strong>. Il lance aussi des <strong>missiles</strong> qui <strong>baissent Magie, Attaque ou Défense</strong>.</li>
+</ul>
+<p>Phase 2 — seul, à un peu plus de la moitié de sa vie.</p>
+<p>Tes deux alliés capturés, c'est ton tour : la Capture téléguidée t'attrape. <strong>Yuffie te libère</strong> pendant une cinématique et prépare un plan, puis le combat reprend en <strong>un contre un</strong>.</p>
+<ul>
+<li>Le un contre un est relevé : <strong>temporise</strong> et <strong>attends les fenêtres</strong> plutôt que de forcer.</li>
+<li>Il est désormais doté d'un <strong>canon frontal</strong>, qu'il faut affaiblir en attaquant les Cylindres de chaque côté de son corps.</li>
+<li><strong>Dérapage dévastateur</strong> : il tourne sur lui-même en se déplaçant à tes trousses. <strong>Impossible à contrer avec R1</strong> — <strong>recule et fais le tour du terrain</strong>.</li>
+<li><strong>Et c'est la meilleure occasion du combat</strong> : une fois son dérapage terminé, il <strong>entre en Surchauffe</strong>, <strong>complètement immobilisé</strong>. <strong>Lâche tout</strong> : Bravoure de soldat et tes meilleures compétences.</li>
+<li><strong>En fin de vie</strong>, il tente son <strong>canon</strong>. Mets-le en état de Choc à ce moment-là : tu <strong>interromps l'attaque</strong> et tu peux l'achever à la Technique de Transcendance ou aux grosses compétences.</li>
+</ul>
+<h3 id="les-ennemis-de-la-plage">Les ennemis de la plage</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ennemi</th>
+<th>Point faible</th>
+<th>À savoir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Entité nécrotique</strong></td>
+<td>—</td>
+<td>Priorité absolue : c'est elle qui rend le combat pénible. Fragilisable en la frappant pendant un <strong>sort</strong> ou Griffes noires, ou en esquivant Lacération ténébreuse</td>
+</tr>
+<tr>
+<td><strong>Dæmonas</strong></td>
+<td>Glace</td>
+<td>Se fragilise facilement</td>
+</tr>
+<tr>
+<td><strong>Mhadomhanju</strong></td>
+<td>—</td>
+<td>Pare sa masse pour l'interrompre</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-mini-jeux">Les mini-jeux</h3>
+<ul>
+<li><strong>Carnage des pirates</strong> : vise les <strong>cibles cachées et résistantes</strong> (300 à 600 points) plutôt que d'arroser les petites. <strong>Désactive la gâchette adaptative</strong> si elle te freine.</li>
+<li><strong>Carnaval des cartes</strong> : les solutions ci-dessus sont <strong>exactes et dans l'ordre</strong>. Si une pose ne passe pas, c'est que tu as inversé deux étapes — le puzzle n'a qu'une solution.</li>
+<li><strong>Course Sauvage</strong> : ne cherche pas la victoire, <strong>la 2e place suffit</strong>. Tape vers les <strong>cages bleue et noire</strong> et <strong>surveille ton but</strong> dès l'apparition du deuxième ballon.</li>
+<li><strong>Gyro-promenade</strong> : les six gyropodes sont regroupés par paires devant les deux hôtels, plus deux jaunes isolés. Fais Royal Crest puis Resort (bleu + rouge chaque fois), puis les deux jaunes.</li>
+<li><strong>Piano</strong> : <strong>entraîne-toi</strong> avant de valider. Le mini-jeu ne demande que les deux joysticks, et <strong>le rang n'a pas d'importance</strong> pour la carte.</li>
+</ul>
+<h3 id="le-reste-5">Le reste</h3>
+<ul>
+<li>Le choix d'alliés sur la plage se prépare. Les deux que tu aides sont ceux qui combattront l'E.S.C. Cargo avec toi. Regarde qui porte ta matéria Foudre avant de trancher.</li>
+<li><strong>Roule en gyropode partout.</strong> La station est grande, et chaque mètre parcouru alimente les paliers de la Campagne de promotion.</li>
+<li>Fais les quatre activités des filles, pas deux. Une carte par personne suffit pour les tenues, mais les deux activités « en trop » rapportent un <strong>éther</strong>, une <strong>viande tropicale</strong>, une <strong>queue de phénix</strong>, un <strong>remède</strong>, un <strong>élixir</strong> et <strong>trois cartes de Queen's Blood</strong>.</li>
+<li>Les conversations d'affinité de fin de chapitre sont les plus faciles à rater du chapitre. Après le boss, avant de quitter la plage, fais le tour de tout le monde.</li>
+</ul>
+<h2 id="alertes-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : les <strong>conversations d'affinité sur la plage</strong> après la défaite de l'E.S.C. Cargo. Une fois que tu quittes la plage pour l'hôtel, c'est fini.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : le <strong>bonus d'affinité de Yuffie</strong> à son intégration — il faut <strong>jouer son jeu</strong> et montrer que tu es content de l'avoir dans l'équipe.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : l'<strong>affinité de « Une shinobi en vacances »</strong>, qui demande de <strong>complimenter Yuffie</strong> près du camion de glace.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : la conversation avec <strong>Johnny à l'Héliport</strong>, après Course Sauvage. Il passe en courant et rien ne te dit de le suivre.</li>
+<li class="alerte">⚠️ <strong>Choix irréversible</strong> : sur la plage, <strong>aider Barret et Aerith</strong> ou <strong>Tifa et Red XIII</strong> détermine ton équipe pour le boss. <strong>Ajuste matérias et équipement avant.</strong></li>
+<li class="alerte">⚠️ <strong>Choix engageant</strong> : la tenue de Cloud (<strong>Chocobo de l'océan</strong> ou <strong>Surfeur sauvage</strong>) détermine lesquelles des tenues d'Aerith et Tifa lui sont assorties.</li>
+<li class="alerte">⚠️ <strong>À vérifier en jeu</strong> : le <strong>contenu exact des paliers de récompense</strong> de la <strong>Campagne de promotion</strong> des gyropodes ; les sources mentionnent le système sans détailler les lots.</li>
+<li class="alerte">⚠️ <strong>Graphie du nom</strong> : la source française écrit <strong>Hôjô</strong> pour le professeur, là où la version française du jeu écrit <strong>Hojo</strong>. Le guide retient <strong>Hojo</strong>.</li>
+</ul>
+<h2 id="check-list-7" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Gyropodes</strong> découverts</li>
+<li class="tache"><input type="checkbox"> Histoire annexe <strong>« Office de tourisme »</strong> lancée au Bureau d'information touristique</li>
+<li class="tache"><input type="checkbox"> Histoire annexe <strong>« Campagne de promotion »</strong> lancée au guichet de droite</li>
+<li class="tache"><input type="checkbox"> Histoire annexe <strong>« Une shinobi en vacances »</strong> : <strong>Yuffie complimentée</strong> au camion de glace</li>
+<li class="tache"><input type="checkbox"> <strong>Royal Crest</strong> et <strong>Costa del Sol Resort</strong> visités (et refusés)</li>
+<li class="tache"><input type="checkbox"> <strong>Johnny</strong> suivi jusqu'à son hôtel ; <strong>épée de Cloud posée</strong> dans sa chambre</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Ticket del Amor n°7</strong> reçu</li>
+<li class="tache"><input type="checkbox"> <strong>Carnage des pirates</strong> : <strong>10 000 points</strong> atteints, carte Amor obtenue</li>
+<li class="tache"><input type="checkbox"> Carnaval des cartes — 1er défi réussi, carte <strong>Mirafale</strong> gagnée</li>
+<li class="tache"><input type="checkbox"> Carnaval des cartes — 2e défi réussi, carte <strong>Chocobo chicos</strong> gagnée</li>
+<li class="tache"><input type="checkbox"> Carnaval des cartes — 3e défi réussi, carte <strong>Trio de mogs</strong> + carte Amor gagnées</li>
+<li class="tache"><input type="checkbox"> Tenue de <strong>Cloud</strong> achetée</li>
+<li class="tache"><input type="checkbox"> <strong>Course Sauvage</strong> : <strong>2e place</strong> obtenue ; carte Amor, <strong>éther</strong> et <strong>viande tropicale</strong> récupérés</li>
+<li class="tache"><input type="checkbox"> <strong>Johnny</strong> suivi et interrogé à l'<strong>Héliport</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Pampa-bonheur 1</strong> photographié (bout du ponton de gauche, devant le Carnaval des cartes)</li>
+<li class="tache"><input type="checkbox"> <strong>Pampa-bonheur 2</strong> photographié (enseigne du bâtiment menant à la plage)</li>
+<li class="tache"><input type="checkbox"> <strong>Pampa-bonheur 3</strong> photographié (borne d'incendie la plus au sud, entrée côté bateau)</li>
+<li class="tache"><input type="checkbox"> <strong>Pampa-bonheur 4</strong> photographié (sud de la rue de Course Sauvage)</li>
+<li class="tache"><input type="checkbox"> <strong>Défi des pampas-bonheur</strong> validé, carte Amor obtenue</li>
+<li class="tache"><input type="checkbox"> <strong>Gyro-promenade</strong> : 2 gyropodes du <strong>Royal Crest</strong> rendus</li>
+<li class="tache"><input type="checkbox"> <strong>Gyro-promenade</strong> : 2 gyropodes du <strong>Costa del Sol Resort</strong> rendus</li>
+<li class="tache"><input type="checkbox"> <strong>Gyro-promenade</strong> : gyropode jaune près de <strong>Course Sauvage</strong> rendu</li>
+<li class="tache"><input type="checkbox"> <strong>Gyro-promenade</strong> : gyropode jaune face à l'<strong>hôtel de Johnny</strong> rendu</li>
+<li class="tache"><input type="checkbox"> <strong>Gyro-promenade</strong> terminée, carte Amor obtenue</li>
+<li class="tache"><input type="checkbox"> <strong>Concert de piano</strong> joué (<strong>Tifa's Theme</strong>) ; carte Amor, <strong>queue de phénix</strong>, <strong>remède</strong> et <strong>élixir</strong> obtenus</li>
+<li class="tache"><input type="checkbox"> Tenues d'<strong>Aerith</strong> et <strong>Tifa</strong> choisies (assorties si tu veux)</li>
+<li class="tache"><input type="checkbox"> Matérias et équipement ajustés <strong>avant</strong> le choix d'alliés</li>
+<li class="tache"><input type="checkbox"> Choix fait sur la plage (<strong>Barret et Aerith</strong> ou <strong>Tifa et Red XIII</strong>)</li>
+<li class="tache"><input type="checkbox"> Combat de la plage gagné (entité nécrotique, Dæmonas, Mhadomhanju)</li>
+<li class="tache"><input type="checkbox"> <strong>E.S.C. Cargo</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> Tous les amis interrogés sur la plage pour l'<strong>affinité</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Yuffie</strong> accueillie chaleureusement à son intégration</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="chapitre-5-une-croisiere-sanglante.html" rel="prev"><small>← Partie précédente</small><b>Chapitre 5 — Une croisière sanglante</b></a><a class="suiv" href="chapitre-7-un-retour-douloureux.html" rel="next"><small>Partie suivante →</small><b>Chapitre 7 — Un retour douloureux</b></a><a class="tout" href="final-fantasy-vii-rebirth.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Rebirth · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapitre 10 — Protecteur de la vallée – Guide Final Fantasy VII Rebirth</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Rebirth, Chapitre 10 — Protecteur de la vallée : À ne pas rater : la matéria Chakra de l&#x27;hôtel Syldra, et les cinq coffres de la réserve…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-10-protecteur-de-la-vallee.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Chapitre 10 — Protecteur de la vallée · Guide Final Fantasy VII Rebirth">
+<meta property="og:description" content="Final Fantasy VII Rebirth, Chapitre 10 — Protecteur de la vallée : À ne pas rater : la matéria Chakra de l&#x27;hôtel Syldra, et les cinq coffres de la réserve…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-10-protecteur-de-la-vallee.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Rebirth", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/"}, {"@type": "ListItem", "position": 3, "name": "Chapitre 10 — Protecteur de la vallée", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-10-protecteur-de-la-vallee.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-rebirth" class="compact" data-partie="chapitre-10-protecteur-de-la-vallee"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Rebirth</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Rebirth : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Rebirth</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-la-chute-dun-heros.html"><span class="num">✦</span><span class="libelle">Chapitre 1 — La chute d&#x27;un héros</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-vers-de-nouveaux-horizons.html"><span class="num">✦</span><span class="libelle">Chapitre 2 — Vers de nouveaux horizons</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-sur-les-traces-des-manteaux-noirs.html"><span class="num">✦</span><span class="libelle">Chapitre 3 — Sur les traces des manteaux noirs</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-le-debut-dune-nouvelle-ere.html"><span class="num">✦</span><span class="libelle">Chapitre 4 — Le début d&#x27;une nouvelle ère</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-une-croisiere-sanglante.html"><span class="num">✦</span><span class="libelle">Chapitre 5 — Une croisière sanglante</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-un-paradis-ensoleille.html"><span class="num">✦</span><span class="libelle">Chapitre 6 — Un paradis ensoleillé</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-un-retour-douloureux.html"><span class="num">✦</span><span class="libelle">Chapitre 7 — Un retour douloureux</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-le-gold-saucer.html"><span class="num">✦</span><span class="libelle">Chapitre 8 — Le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-a-lecoute-de-la-planete.html"><span class="num">✦</span><span class="libelle">Chapitre 9 — À l&#x27;écoute de la planète</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="#chapitre-10-protecteur-de-la-vallee"><span class="num">✦</span><span class="libelle">Chapitre 10 — Protecteur de la vallée</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-un-village-natal-meconnaissable.html"><span class="num">✦</span><span class="libelle">Chapitre 11 — Un village natal méconnaissable</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-en-quete-de-la-pierre-cle.html"><span class="num">✦</span><span class="libelle">Chapitre 12 — En quête de la pierre-clé</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-le-temple-des-anciens.html"><span class="num">✦</span><span class="libelle">Chapitre 13 — Le temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-un-monde-a-lagonie.html"><span class="num">✦</span><span class="libelle">Chapitre 14 — Un monde à l&#x27;agonie</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="region-de-la-prairie.html"><span class="num">✦</span><span class="libelle">Région de la Prairie</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="region-de-junon.html"><span class="num">✦</span><span class="libelle">Région de Junon</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="region-de-corel.html"><span class="num">✦</span><span class="libelle">Région de Corel</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="region-de-gongaga.html"><span class="num">✦</span><span class="libelle">Région de Gongaga</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="region-de-cosmo.html"><span class="num">✦</span><span class="libelle">Région de Cosmo</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="region-de-nibel.html"><span class="num">✦</span><span class="libelle">Région de Nibel</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="locean-central-et-les-iles.html"><span class="num">✦</span><span class="libelle">L&#x27;Océan Central et les îles</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-materias.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-armes-et-les-codex.html"><span class="num">✦</span><span class="libelle">Les armes et les codex</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-invocations.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="laffinite-et-les-coequipiers.html"><span class="num">✦</span><span class="libelle">L&#x27;affinité et les coéquipiers</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="queens-blood.html"><span class="num">✦</span><span class="libelle">Queen&#x27;s Blood</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-mini-jeux-4.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="le-simulateur-de-combat.html"><span class="num">✦</span><span class="libelle">Le simulateur de combat</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-rebirth.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Rebirth</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-11">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="chapitre-10-protecteur-de-la-vallee">Chapitre 10 — Protecteur de la vallée</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-11"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-11">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>À ne pas rater</strong> : la matéria <strong>Chakra</strong> de l'hôtel Syldra, et les cinq coffres de la réserve (suis l'assistant à la sortie de l'observatoire).</li>
+<li><strong>Affinité</strong> : les conversations au coin du feu et l'encouragement à Aerith, avant le lâcher de lanternes.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Atteindre <strong>Cosmo Canyon</strong>, le village natal de <strong>Red XIII</strong> — de son vrai nom <strong>Nanaki</strong> — et descendre avec lui dans la <strong>caverne scellée</strong> pour l'épreuve qui fera de lui le <strong>Protecteur de la vallée</strong>.</p>
+<p>Le chapitre t'apprend d'où vient Red XIII, te donne le <strong>chocobo de Cosmo</strong>, ouvre la <strong>région de Cosmo</strong> et ses <strong>trente rampes chocobos</strong>, et te fait affronter <strong>Gi Nattak</strong> — l'un des boss les plus difficiles du jeu jusqu'ici.</p>
+<p>Il contient aussi <strong>la réserve de Bugenhagen</strong>, cinq coffres d'affilée, et la caverne la plus riche en trésors de tout le jeu : deux matérias de <strong>niveau max</strong>, deux armes et une bonne quinzaine de coffres.</p>
+<h2 id="itineraire-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.actugaming.net/solution-chapitre-10-final-fantasy-vii-rebirth-629786/">Chapitre 10</a> — soluce illustrée sur ActuGaming, en français.</p>
+<ol>
+<li><strong>Les canyons de Cosmo</strong> : suivre Red XIII et les panneaux <strong>Cosmo Canyon</strong>.</li>
+<li><strong>Le Ranch chocobo de Kamaria</strong> : la quête « Vol à dos de chocobo » et le <strong>chocobo de la région</strong>.</li>
+<li><strong>Le village de Cosmo Canyon</strong> : l'<strong>hôtel Syldra</strong> et sa matéria <strong>Chakra</strong>.</li>
+<li><strong>L'observatoire de Bugenhagen</strong> et la <strong>leçon de planétologie</strong>.</li>
+<li><strong>La réserve</strong> : cinq coffres.</li>
+<li><strong>La cérémonie du Retour à la planète</strong> : affinité au coin du feu.</li>
+<li><strong>La caverne scellée</strong> avec <strong>Red XIII et Barret</strong> : trois salles, trois énigmes.</li>
+<li><strong>Le boss Gi Nattak</strong>.</li>
+<li><strong>Le village des Gi</strong> et la révélation sur la <strong>matéria noire</strong>.</li>
+<li><strong>L'aérodrome de Cosmo</strong> et <strong>Cid</strong> vers la <strong>région de Nibel</strong>.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="la-terre-natale-de-nanaki">La terre natale de Nanaki</h3>
+<p>Fini la jungle de Gongaga : place aux <strong>terres arides et aux canyons de Cosmo</strong>. <strong>Suis Red XIII</strong> et les <strong>panneaux Cosmo Canyon</strong>.</p>
+<p>Trois nouveaux ennemis sur la route :</p>
+<ul>
+<li><strong>Mélankiki</strong> : <strong>craint le Vent</strong> et <strong>très peu résistant</strong>.</li>
+<li><strong>Sahuagin du désert</strong> : embête un peu avec sa technique Saut, mais <strong>quelques attaques de Glace le fragilisent</strong>.</li>
+<li><strong>Basilic</strong> : se fragilise à la Glace encore plus vite, et — détail qui change tout — ça l'empêche de se rendre invisible pendant le combat.</li>
+</ul>
+<h3 id="le-ranch-chocobo-de-kamaria">Le Ranch chocobo de Kamaria</h3>
+<p>Sur le trajet, tu tombes sur le Ranch chocobo de Kamaria. Fais tout de suite la quête annexe « Vol à dos de chocobo » : elle te donne le chocobo de la région immédiatement.</p>
+<p><strong>Ne remets pas ça à plus tard.</strong> Cosmo est une région <strong>très verticale</strong>, parsemée d'une <strong>trentaine de rampes chocobos</strong> qui permettent de se déplacer <strong>en volant</strong>. Sans la monture, tu ne vois qu'une fraction de la région.</p>
+<h3 id="le-village-de-cosmo-canyon">Le village de Cosmo Canyon</h3>
+<p>Passé le ranch, l'ascension continue entre combats et dialogues, jusqu'à apercevoir le <strong>village de Cosmo Canyon</strong>.</p>
+<p><strong>Au bout du pont</strong>, un garde salue Red XIII en l'appelant Nanaki, son véritable nom. Et ce n'est pas la seule surprise : <strong>sa vraie voix</strong> se dévoile enfin.</p>
+<p>En voulant le suivre, le groupe est contrôlé à cause de l'avis de recherche de la Shinra — heureusement, les gardes de Cosmo ont reçu l'exemplaire falsifié de Reeves. Vous entrez.</p>
+<p><strong>Explore le village</strong> : il est grand et vertical, avec des boutiques et quelques jolies découvertes. Notamment l'<strong>hôtel Syldra</strong>, à côté du panneau d'annonce : à l'intérieur, une matéria Chakra est posée sur un meuble, à côté de bouteilles, près de la terrasse extérieure.</p>
+<p>Pour avancer, <strong>monte jusqu'au sommet du village</strong> dans les pas de Red XIII, qui compte rester ici pour remplir sa mission de Protecteur de la vallée. Le groupe se disperse, et tu restes avec <strong>Tifa et Aerith</strong> pour visiter les hauteurs.</p>
+<p>Tu vois rapidement <strong>Red XIII prendre un ascenseur</strong> : fais de même et continue jusqu'à le retrouver avec son « grand-père », Bugenhagen.</p>
+<p>Après la discussion, te voilà seul avec le vieux sage, qui veut te faire visiter l'<strong>observatoire</strong>. Entre.</p>
+<h3 id="la-lecon-de-planetologie">La leçon de planétologie</h3>
+<p>C'est une séquence d'observation : <strong>examine les éléments dans cet ordre</strong>.</p>
+<p><strong>Rez-de-chaussée :</strong></p>
+<ol>
+<li><strong>Le long parchemin sur ta gauche.</strong></li>
+<li><strong>La grande pile de livres</strong>, un peu plus loin.</li>
+<li><strong>La reproduction de la planète.</strong></li>
+<li><strong>Les pierres et cristaux</strong>, en face de celle-ci.</li>
+</ol>
+<p><strong>Puis monte l'escalier :</strong></p>
+<ol start="5">
+<li><strong>L'hologramme de Red XIII.</strong></li>
+<li><strong>Le détecteur de mako</strong> posé sur une table.</li>
+</ol>
+<p><strong>Un étage de plus :</strong></p>
+<ol start="7">
+<li><strong>La maquette de générateur de courants.</strong></li>
+</ol>
+<p><strong>Dernier étage :</strong></p>
+<ol start="8">
+<li><strong>Le télescope géant.</strong></li>
+</ol>
+<p>Puis redescends jusqu'à entendre un son grave, et observe le tube acoustique devant toi.</p>
+<p>Bugenhagen croit qu'il s'agit du <strong>cri de la planète</strong> ; <strong>Tifa le corrige</strong> : c'est celui des Armes. Peu crédule, le sage emmène les trois amis dans une salle spéciale pour une <strong>leçon de planétologie</strong>, accompagnée d'une très belle cinématique.</p>
+<p>Après la leçon, Tifa continue de bousculer ses certitudes, et le sage lui propose de <strong>participer au séminaire sur la planétologie</strong>. <strong>Aerith l'accompagne</strong>, et tu les rejoindras un peu plus tard.</p>
+<h3 id="la-reserve-de-bugenhagen">La réserve de Bugenhagen</h3>
+<p class="alerte manquable">⏳ En sortant de l'observatoire, un assistant de Bugenhagen t'interpelle et te conduit à une <strong>réserve</strong> pleine de coffres. <strong>Suis-le jusqu'à la porte</strong> et fais ta moisson.</p>
+<p><strong>Dans l'ordre :</strong></p>
+<ol>
+<li><strong>Premier coffre, en face de toi</strong> : <strong>5 médailles mogs</strong>.</li>
+<li><strong>Juste à droite, près de tableaux</strong> : <strong>5 000 gils</strong>.</li>
+<li><strong>Descends quelques marches, en face</strong> : un <strong>morceau de cosmolite enchantée</strong>.</li>
+<li><strong>Continue de descendre jusqu'en bas, puis retourne-toi</strong> : un coffre avec <strong>1 maxi-potion</strong>, et un <strong>coffre violet</strong> avec le <strong>mégaphone de cristal</strong> pour <strong>Cait Sith</strong>.</li>
+</ol>
+<p>C'est la fournée gratuite la plus généreuse du jeu. Ne pars pas sans les cinq.</p>
+<h3 id="la-ceremonie-du-retour-a-la-planete">La cérémonie du Retour à la planète</h3>
+<p>Tout vidé, sors et rejoins les filles : <strong>prends l'ascenseur de l'observatoire</strong>, puis <strong>suis le guide</strong> en bas.</p>
+<p>Assiste à la <strong>prise de parole de Tifa</strong>, puis le mentor t'invite à prendre place pour la <strong>cérémonie du Retour à la planète</strong>. <strong>Repars vers l'ouest</strong> et emprunte l'<strong>ascenseur du Flambeau</strong>.</p>
+<p>La nuit tombe. Avant que la cérémonie ne commence, parle à tous tes compagnons : chacun donne de l'<strong>affinité</strong>. Bonne nouvelle, <strong>ils sont tous près du feu</strong> — pas besoin de les chercher.</p>
+<p>Puis <strong>écoute le discours d'Aerith</strong> et <strong>encourage-la quand elle te regardera</strong>. Ensuite, profite de la cinématique et du <strong>lâcher de lanternes</strong>.</p>
+<h3 id="avant-la-caverne">Avant la caverne</h3>
+<p>Sitôt la cérémonie terminée, Bugenhagen veut montrer quelque chose à Red XIII et invite l'équipe. Suis-le jusqu'à une <strong>grande porte scellée</strong> : derrière, une <strong>épreuve</strong> attend votre compagnon.</p>
+<p><strong>Fais tes derniers préparatifs maintenant</strong> : une fois dedans, ta liberté de mouvement est très limitée.</p>
+<h3 id="la-caverne-scellee">La caverne scellée</h3>
+<p>Suis Bugenhagen et prends l'ascenseur. En bas, le sage demande <strong>qu'une autre personne accompagne Red XIII</strong> — et contre toute attente, <strong>ce sera Barret</strong>.</p>
+<p>Tu contrôles Red XIII, avec Barret pour seul allié, jusqu'au boss. Prépare-toi au lieu de repos juste à côté.</p>
+<p><strong>La mécanique de la caverne</strong> : Red XIII peut se déplacer sur certains murs, repérables à leur aspect <strong>brillant</strong>. C'est la clé de presque tous les trésors du donjon.</p>
+<p>Et un conseil qui vaut pour tout le donjon : il y a des <strong>caisses en très grand nombre partout</strong>, plus des <strong>matériaux disséminés</strong>. En grimpant, en prenant les chemins alternatifs et simplement en avançant, <strong>reste vigilant</strong> — tu fais le plein d'objets sans effort.</p>
+<h3 id="la-salle-de-la-trahison">La Salle de la Trahison</h3>
+<ul>
+<li>Premiers Nidhoggs : serpents <strong>vulnérables au Feu</strong>, fragilisés par toute attaque élémentaire. Sans souci.</li>
+<li><strong>Essaie les murs tout de suite</strong> : <strong>grimpe devant toi</strong> jusqu'à un <strong>coffre</strong> avec un <strong>super-éther</strong>.</li>
+<li>Redescends et <strong>passe par les murs côté ouest</strong> pour continuer. Brise les caisses devant toi.</li>
+<li><strong>Piqueurs</strong> : même traitement que les Nidhoggs, mais ils sont <strong>en plus vulnérables à la Foudre</strong>.</li>
+<li>Après le combat, grimpe sur le mur côté est et continue jusqu'à un <strong>coffre</strong> avec une <strong>boucle spiritiste</strong>.</li>
+<li>Redescends : deuxième partie de la Salle de la Trahison. De nouveaux Piqueurs au sol, et vers le centre de la zone, un mur mène à une méga-potion.</li>
+<li><strong>Reprends vers le sud-est</strong> : un Nidhogg et un Piqueur gardent une <strong>porte verrouillée</strong>.</li>
+</ul>
+<p><strong>L'énigme de la porte</strong> : il faut <strong>ronger la corde</strong>. Place-toi face à la porte, retourne-toi, et monte sur le mur brillant pour atteindre la corde et la couper.</p>
+<h3 id="la-salle-de-la-divagation">La Salle de la Divagation</h3>
+<ul>
+<li><strong>Juste à gauche, monte le mur brillant</strong> : tu vois un coffre à l'autre bout de la pièce. Traverse la salle par le mur de gauche et atterris près de ce coffre : une <strong>armille céleste</strong>.</li>
+<li><strong>Laisse-toi tomber en contrebas</strong> et bats les <strong>deux Nidhoggs</strong>.</li>
+<li><strong>Descends quelques marches</strong> jusqu'à apercevoir un autre coffre, au-dessus de la porte menant à la suite. Via le mur brillant de droite, cours jusqu'au coffre : un <strong>talisman ancien</strong>.</li>
+<li>Saute en contrebas et élimine le <strong>groupe de Nidhoggs</strong> devant la porte.</li>
+</ul>
+<h3 id="lautel-des-gi">L'autel des Gi</h3>
+<p>Tu débarques dans une salle particulière, avec <strong>l'autel d'un Gi</strong> en son centre. Les Gi sont un peuple de guerriers féroces auxquels le peuple de Red XIII a fait face.</p>
+<p><strong>Le principe</strong> : trouver des <strong>reliques Gi</strong> et les rapporter dans ta gueule avec L2 sur le <strong>symbole tracé par Bugenhagen</strong>.</p>
+<p>Mais la salle contient surtout trois trésors qui valent le détour :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Trésor</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Talisman Gi</strong></td>
+<td>Près de la statue, sur la droite</td>
+</tr>
+<tr>
+<td><strong>Matéria Soins niveau 3</strong></td>
+<td>Grimpe le mur brillant de droite en faisant face à la statue et <strong>arrête-toi sur la plateforme à mi-chemin</strong></td>
+</tr>
+<tr>
+<td><strong>Collier magique</strong> <em>(arme de Red XIII)</em></td>
+<td>Même mur, mais <strong>jusqu'au bout de la pièce</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Les autres objets disséminés ne sont « que » des <strong>matériaux</strong> : fouille si tu veux.</p>
+<p>La relique brillante demandée par la statue se situe au-dessus de la porte derrière elle. Tu peux l'atteindre par le mur brillant de droite ou de gauche.</p>
+<p>En la rapportant, la relique fait revivre la statue et laisse place à un Lancier Gi.</p>
+<p><strong>Les Gi</strong> existent en Lancier, Archer et Sorcier, et partagent les mêmes faiblesses quelle que soit la forme : les sorts et compétences de Feu les fragilisent, tout comme une puissante attaque physique au corps-à-corps au moment où ils renvoient tes attaques physiques à distance.</p>
+<p>À la fin du combat, <strong>remets la relique dans ta gueule</strong> et continue. En cas de combat, Red lâche la relique — comme contre les deux Nidhoggs de la salle suivante — <strong>n'oublie pas de la récupérer après</strong>.</p>
+<h3 id="les-quatre-autels-colores">Les quatre autels colorés</h3>
+<p>Tout de suite après les deux Nidhoggs, va sur ta gauche, vers le nord de la salle : un <strong>coffre</strong> avec <strong>5 peaux de bête légendaire</strong>.</p>
+<p>Puis descends vers les <strong>quatre autels colorés</strong>. L'énigme est limpide : chaque autel reçoit la statuette de sa couleur.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Couleur</th>
+<th>Où est la statuette</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rose</strong></td>
+<td>Déjà en place</td>
+</tr>
+<tr>
+<td><strong>Rouge</strong></td>
+<td>En ta possession si tu as rapporté la relique de la salle précédente — insère-la</td>
+</tr>
+<tr>
+<td><strong>Jaune</strong></td>
+<td>Par terre, non loin de son propre autel</td>
+</tr>
+<tr>
+<td><strong>Verte</strong></td>
+<td>La seule qui demande un trajet : <strong>chemin vers le nord-est</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Pour la verte :</strong></p>
+<ol>
+<li>Prends le chemin vers le nord-est et monte sur le mur brillant pour franchir le trou.</li>
+<li>Au lieu d'aller jusqu'au bout, laisse-toi tomber dans l'eau en bas. <strong>Nage</strong> et collecte la matéria <strong class="objet">Renforcement défensif niveau max</strong>.</li>
+<li>Remonte par le mur brillant. En haut des escaliers, va sur ta gauche : un <strong>coffre</strong> avec une <strong>queue de phénix</strong>.</li>
+<li><strong>Continue vers l'est</strong> jusqu'à la salle de la <strong>statuette</strong>.</li>
+<li>En revenant sur tes pas, un Lancier Gi apparaît. Règle-lui son compte, puis place la statuette sur l'autel vert.</li>
+</ol>
+<h3 id="la-salle-du-sacrifice">La Salle du Sacrifice</h3>
+<p>La porte ouverte, <strong>suis Bugenhagen</strong>. Au moment où il commence à monter les escaliers, va sur ta gauche : un <strong>coffre</strong> avec <strong>2 giga-potions</strong>.</p>
+<p>Puis entre dans l'immense Salle du Sacrifice, au plus près des profondeurs.</p>
+<ol>
+<li><strong>Descends par les escaliers</strong>, puis par le <strong>premier mur brillant</strong> que tu croises. Tue les <strong>quatre Nidhoggs</strong> et ouvre le coffre à droite du mur brillant : un <strong>éther</strong>.</li>
+<li>Prends le chemin de gauche, puis en face du mur brillant, descends sur la gauche. En bas des escaliers, encore à gauche : un <strong>coffre violet</strong> avec le <strong>bazooka dévastateur</strong> pour <strong>Barret</strong>.
+<strong>Avant de l'ouvrir</strong>, tue le Piqueur et les <strong>deux Doubles-faces</strong>. Ces nouveaux ennemis sont <strong>vulnérables à la Glace</strong> et se fragilisent pendant leur compétence « Faites vos jeux ! ». Quand ils utilisent Roulette, tu reçois <strong>soit un malus, soit un bonus</strong> — c'est la loterie, mais ils ne sont pas dangereux.</li>
+<li><strong>Remonte et ouvre la grille</strong> : tire sur la chaîne à droite jusqu'à ce qu'elle soit complètement remontée.</li>
+<li>Juste après : un Lancier Gi et un Archer Gi. <strong>Focalise-toi d'abord sur l'archer.</strong> Puis progresse jusqu'à <strong>deux Nidhoggs</strong>.</li>
+<li>Tire la chaîne pour faire apparaître un pont, traverse-le, et <strong>ouvre le coffre</strong> : <strong>3 épingles d'or</strong>.</li>
+<li>Monte par le mur brillant ou les ruines : deux Nidhoggs et un Double-face.</li>
+<li><strong>Deuxième grille</strong> : tire la chaîne à droite de la porte, mais cette fois attache-la à un bout de bois pour que la grille ne redescende pas.</li>
+<li><strong>Trois Gi</strong> derrière la porte, dont un Sorcier Gi.
+<ul>
+<li><strong>Cible prioritaire : le Sorcier Gi</strong>, qui ressuscite ses acolytes. Insensible aux dégâts normaux et aux compétences physiques : lance-lui des sorts de Feu. Une fois fragilisé, il devient vulnérable au physique.</li>
+<li>Ensuite l'archer, puis le lancier.</li>
+</ul>
+</li>
+<li>Continue jusqu'à un Piqueur et un Double-face. <strong>Tire la chaîne</strong> et grimpe au mur brillant sur ta droite.</li>
+<li>Après avoir ramassé quelques ressources, monte encore d'un cran pour combattre <strong>quatre Doubles-faces</strong>. Le jeu en vaut la chandelle : tu récupères ensuite la matéria <strong class="objet">Renforcement offensif niveau max</strong>.</li>
+<li><strong>Redescends tout en bas</strong>, <strong>franchis le pont</strong>, grimpe sur le mur brillant de droite et <strong>ouvre le coffre</strong> : <strong>5 pousses d'origan</strong>. Continue de monter jusqu'à une <strong>nouvelle chaîne</strong>.</li>
+</ol>
+<p><strong>La dernière énigme :</strong></p>
+<ol>
+<li><strong>Tire la chaîne</strong>, <strong>saute sur le pont</strong> et grimpe le mur brillant en face de toi.</li>
+<li><strong>En haut, tire une nouvelle chaîne</strong> : un <strong>second pont coulisse</strong>.</li>
+<li>Redescends, saute sur le deuxième pont, puis va tout de suite à gauche et monte le mur brillant : <strong>plein de ressources</strong> et un <strong>coffre</strong> avec <strong>2 600 gils</strong>.</li>
+<li>Reviens sur le pont et saute vers la grille. Sur la gauche, non loin, ramasse le bout de bois et fixe-le sur le socle près de la chaîne.</li>
+<li>Tire la chaîne et cale-la sur le bout de bois.</li>
+</ol>
+<p><strong>Avance jusqu'au lieu de repos.</strong> Comme tu t'en doutes, ce qui suit va être tendu.</p>
+<h3 id="boss-gi-nattak">Boss : Gi Nattak</h3>
+<p>Stratégie détaillée dans Conseils et pièges. Équipe obligatoire : Barret et Red XIII — <strong>deux combattants seulement</strong>.</p>
+<p>Après ce combat disputé, continue jusqu'au bout de la caverne pour la <strong>révélation de Bugenhagen</strong> — un moment vraiment émouvant, profite de la cinématique.</p>
+<p>Puis Gi Nattak se manifeste sous sa forme humanoïde et te demande de le suivre. Cloud y voit encore la main de Séphiroth.</p>
+<h3 id="le-village-des-gi">Le village des Gi</h3>
+<p><strong>Engouffre-toi dans le passage indiqué</strong> par le chef des Gi jusqu'à la Crique de la perdition, où il t'attend. <strong>En barque</strong>, il t'emmène à son village.</p>
+<p>En parallèle, un interlude avec Zack et Biggs. Comme les précédents, il n'y a pas grand-chose à faire que suivre cet arc narratif mystérieux — à une exception près : quand tu auras croisé Kyrié, examine le sac de voyage près des bidons où elle s'était cachée. Ensuite, <strong>retourne chez Aerith</strong> pour la fin de l'interlude.</p>
+<p>De retour avec Cloud : le groupe arrive à bon port, mais Gi Nattak disparaît et vous semblez piégés.</p>
+<p>Près du lieu de repos, un coffre violet contient le bâton de grande sagesse pour Aerith.</p>
+<p><strong>Avance</strong> pour le discours de Gi Nattak. Le chapitre alterne ensuite <strong>discours et combats</strong>, trois fois :</p>
+<ol>
+<li><strong>Trois Lanciers Gi.</strong></li>
+<li><strong>Deux Lanciers Gi et un Archer Gi.</strong></li>
+<li>Deux Sorciers, un Archer et un Lancier Gi — l'ultime combat du village. Deux Sorciers qui se ressuscitent mutuellement : tue-les en priorité, aux sorts de Feu.</li>
+</ol>
+<p>Tu apprends l'existence de la <strong>matéria noire</strong>, que Gi Nattak réclame en échange de son pardon envers le peuple Cétra. Elle se trouverait dans le <strong>temple des Anciens</strong> — et <strong>Cait Sith prétend savoir comment y aller</strong>.</p>
+<p>Le souhait exprimé, <strong>l'esprit de Gi Nattak se dissipe</strong> et l'équipe réapparaît devant Seto.</p>
+<h3 id="le-retour-et-le-depart">Le retour et le départ</h3>
+<p>Un assistant de Bugenhagen vient te chercher. Sur le trajet, le groupe décide de mettre la main sur la matéria noire sans la donner à personne, vu le danger qu'elle représente.</p>
+<p>Le vieux sage confirme l'existence probable d'un édifice Cétra mais n'en connaît pas la localisation. Et il y a plus urgent : un manteau noir a été aperçu à l'entrée du village.</p>
+<p><strong>Adresse-toi au guide</strong> pour te téléporter directement à l'entrée. En approchant du manteau noir, celui-ci murmure <strong>« Nibelheim »</strong> — et Cait Sith se souvient qu'un terminal de la Shinra y permettrait de localiser le temple.</p>
+<p><strong>À partir d'ici, de nouvelles quêtes s'ouvrent</strong> : « De la vie qui parcourt la planète », <strong>« Des présages de calamité »</strong>, et l'intrigue de la protorelique de Cosmo peut démarrer. Le détail est dans la partie <strong>19</strong>.</p>
+<p>Quand tu es prêt, <strong>direction la cabine de l'aérodrome de Cosmo</strong>. <strong>Appelle Cid</strong>, qui t'emmène en <strong>région de Nibel</strong> pour <strong>300 gils</strong>. Après une séquence de vol, le chapitre se clôt sur l'atterrissage du Tiny Bronco.</p>
+<h2 id="quetes-et-lieux-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-quetes-du-chapitre">Les quêtes du chapitre</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Quête / activité</th>
+<th>Où</th>
+<th>Quand</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vol à dos de chocobo</strong></td>
+<td>Ranch chocobo de Kamaria, sur la route du village</td>
+<td>Dès l'arrivée — donne le <strong>chocobo de Cosmo</strong></td>
+</tr>
+<tr>
+<td><strong>De la vie qui parcourt la planète</strong></td>
+<td>Région de Cosmo</td>
+<td>Après le village des Gi</td>
+</tr>
+<tr>
+<td><strong>Des présages de calamité</strong></td>
+<td>Région de Cosmo</td>
+<td>Après le village des Gi</td>
+</tr>
+<tr>
+<td><strong>Protorelique de Cosmo</strong></td>
+<td>Région de Cosmo</td>
+<td>Après le village des Gi <em>(partie <strong>19</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="cosmo-canyon">Cosmo Canyon</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>À faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pont d'entrée</strong></td>
+<td>Red XIII salué sous le nom de Nanaki ; contrôle passé grâce à l'avis falsifié de Reeves</td>
+</tr>
+<tr>
+<td><strong>Hôtel Syldra</strong> <em>(à côté du panneau d'annonce)</em></td>
+<td>Matéria <strong>Chakra</strong>, sur un meuble près de la <strong>terrasse extérieure</strong>, à côté de bouteilles</td>
+</tr>
+<tr>
+<td><strong>Boutiques du village</strong></td>
+<td>Emplettes avant la caverne</td>
+</tr>
+<tr>
+<td><strong>Observatoire de Bugenhagen</strong></td>
+<td>Huit éléments à examiner, puis le <strong>tube acoustique</strong> ; <strong>leçon de planétologie</strong></td>
+</tr>
+<tr>
+<td><strong>Réserve</strong> <em>(assistant à la sortie de l'observatoire)</em></td>
+<td>Cinq coffres : 5 médailles mogs, 5 000 gils, cosmolite enchantée, maxi-potion, <strong>mégaphone de cristal</strong></td>
+</tr>
+<tr>
+<td><strong>Séminaire sur la planétologie</strong></td>
+<td>Prise de parole de <strong>Tifa</strong></td>
+</tr>
+<tr>
+<td><strong>Ascenseur du Flambeau</strong> <em>(à l'ouest)</em></td>
+<td><strong>Cérémonie du Retour à la planète</strong> ; affinité avec tous les compagnons au coin du feu ; <strong>encourager Aerith</strong></td>
+</tr>
+<tr>
+<td><strong>Grande porte scellée</strong></td>
+<td>Dernier point de préparation avant la caverne</td>
+</tr>
+<tr>
+<td><strong>Aérodrome de Cosmo</strong></td>
+<td>Cid vers Nibel, <strong>300 gils</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="la-caverne-scellee-2">La caverne scellée</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Salle</th>
+<th>À faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Salle de la Trahison</strong></td>
+<td>Coffre <strong>super-éther</strong> <em>(mur devant soi)</em> ; coffre <strong>boucle spiritiste</strong> <em>(mur côté est)</em> ; <strong>méga-potion</strong> <em>(mur vers le centre)</em> ; <strong>porte à corde à ronger</strong></td>
+</tr>
+<tr>
+<td><strong>Salle de la Divagation</strong></td>
+<td>Coffre <strong>armille céleste</strong> <em>(mur de gauche)</em> ; coffre <strong>talisman ancien</strong> <em>(au-dessus de la porte, mur de droite)</em></td>
+</tr>
+<tr>
+<td><strong>Salle de l'autel des Gi</strong></td>
+<td><strong>Talisman Gi</strong> <em>(près de la statue, à droite)</em> ; <strong>matéria Soins niveau 3</strong> <em>(plateforme à mi-chemin du mur de droite)</em> ; <strong>collier magique</strong> <em>(bout de la pièce, même mur)</em> ; relique au-dessus de la porte derrière la statue</td>
+</tr>
+<tr>
+<td><strong>Salle des quatre autels</strong></td>
+<td>Coffre <strong>5 peaux de bête légendaire</strong> <em>(nord)</em> ; matéria <strong>Renforcement défensif niveau max</strong> <em>(dans l'eau, au nord-est)</em> ; coffre <strong>queue de phénix</strong> ; <strong>statuette verte à l'est</strong></td>
+</tr>
+<tr>
+<td><strong>Couloir de Bugenhagen</strong></td>
+<td>Coffre <strong>2 giga-potions</strong>, à gauche quand il monte les escaliers</td>
+</tr>
+<tr>
+<td><strong>Salle du Sacrifice</strong></td>
+<td>Coffre <strong>éther</strong> ; coffre violet <strong>bazooka dévastateur</strong> ; coffre <strong>3 épingles d'or</strong> ; matéria <strong>Renforcement offensif niveau max</strong> <em>(après les 4 Doubles-faces)</em> ; coffre <strong>5 pousses d'origan</strong> ; coffre <strong>2 600 gils</strong> ; <strong>trois grilles à chaîne</strong> ; <strong>lieu de repos</strong> avant le boss</td>
+</tr>
+<tr>
+<td><strong>Village des Gi</strong></td>
+<td>Coffre violet <strong>bâton de grande sagesse</strong> (Aerith), près du lieu de repos ; <strong>trois combats de Gi</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Matéria Chakra</strong></td>
+<td><span class="badge neutre">Matéria jaune</span> <span class="type-pour">compétence</span></td>
+<td><strong>Hôtel Syldra</strong>, sur un meuble près de la terrasse, à côté de bouteilles</td>
+<td>Soigne sans consommer de PM</td>
+</tr>
+<tr>
+<td><strong>Médaille mog</strong> ×5</td>
+<td><span class="badge neutre">Objet d&#x27;échange</span></td>
+<td><strong>Premier coffre de la réserve</strong>, en face de toi</td>
+<td>Monnaie des <strong>maisons de mogs</strong></td>
+</tr>
+<tr>
+<td><strong>5 000 gils</strong></td>
+<td><span class="badge gils">Argent</span></td>
+<td>Coffre <strong>juste à droite</strong>, près de tableaux, réserve</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Morceau de cosmolite enchantée</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre <strong>en face</strong>, après quelques marches, réserve</td>
+<td>Matériau de synthèse</td>
+</tr>
+<tr>
+<td><strong>Maxi-potion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre <strong>en bas des marches</strong>, en se retournant, réserve</td>
+<td>Restaure énormément de PV</td>
+</tr>
+<tr>
+<td><strong>Mégaphone de cristal</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cait Sith</span></td>
+<td><strong>Coffre violet</strong> au fond de la réserve</td>
+<td>Nouvelle arme pour Cait Sith</td>
+</tr>
+<tr>
+<td><strong>Super-éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre atteint par le <strong>premier mur brillant</strong>, Salle de la Trahison</td>
+<td>Restaure beaucoup de PM</td>
+</tr>
+<tr>
+<td><strong>Boucle spiritiste</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coffre via le <strong>mur côté est</strong>, après les Piqueurs</td>
+<td>effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Méga-potion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre via le <strong>mur vers le centre</strong>, 2e partie de la Salle de la Trahison</td>
+<td>Restaure beaucoup de PV</td>
+</tr>
+<tr>
+<td><strong>Armille céleste</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coffre à l'autre bout de la <strong>Salle de la Divagation</strong>, par le mur de gauche</td>
+<td>effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Talisman ancien</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coffre <strong>au-dessus de la porte</strong> de la Salle de la Divagation, par le mur de droite</td>
+<td>effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Talisman Gi</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td><strong>Près de la statue, sur la droite</strong>, salle de l'autel</td>
+<td>effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Soins niveau 3</strong></td>
+<td><span class="badge neutre">Matéria verte</span> <span class="type-pour">magie</span></td>
+<td><strong>Plateforme à mi-chemin</strong> du mur brillant de droite, face à la statue</td>
+<td><strong>Soins déjà au niveau 3</strong> — un gain énorme</td>
+</tr>
+<tr>
+<td><strong>Collier magique</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Red XIII</span></td>
+<td><strong>Bout de la pièce</strong> par le mur brillant de droite, salle de l'autel</td>
+<td>Nouvelle arme pour Red XIII, juste avant le boss</td>
+</tr>
+<tr>
+<td><strong>Peau de bête légendaire</strong> ×5</td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre <strong>au nord</strong> de la salle des quatre autels</td>
+<td>Matériau de synthèse</td>
+</tr>
+<tr>
+<td><strong>Renforcement défensif niveau max</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td><strong>Se laisser tomber dans l'eau</strong> depuis le mur du nord-est, puis nager</td>
+<td>Déjà au niveau maximum</td>
+</tr>
+<tr>
+<td><strong>Queue de phénix</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre <strong>à gauche en haut des escaliers</strong>, après l'eau</td>
+<td>Ranime un allié K.-O.</td>
+</tr>
+<tr>
+<td><strong>Giga-potion</strong> ×2</td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre <strong>à gauche</strong> quand Bugenhagen monte les escaliers</td>
+<td>Restaure énormément de PV</td>
+</tr>
+<tr>
+<td><strong>Éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre <strong>à droite du premier mur brillant</strong>, Salle du Sacrifice</td>
+<td>Restaure des PM</td>
+</tr>
+<tr>
+<td><strong>Bazooka dévastateur</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Barret</span></td>
+<td><strong>Coffre violet</strong> en bas des escaliers, à gauche, Salle du Sacrifice</td>
+<td>Nouvelle arme pour Barret, <strong>avant Gi Nattak</strong></td>
+</tr>
+<tr>
+<td><strong>Épingle d'or</strong> ×3</td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre après le <strong>pont de la première chaîne</strong></td>
+<td>Matériau de synthèse</td>
+</tr>
+<tr>
+<td><strong>Renforcement offensif niveau max</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td><strong>Après les quatre Doubles-faces</strong>, en montant d'un cran</td>
+<td>Déjà au niveau maximum</td>
+</tr>
+<tr>
+<td><strong>Pousse d'origan</strong> ×5</td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre via le <strong>mur brillant de droite</strong>, après le pont</td>
+<td>Matériau de synthèse</td>
+</tr>
+<tr>
+<td><strong>2 600 gils</strong></td>
+<td><span class="badge gils">Argent</span></td>
+<td>Coffre <strong>en haut du mur brillant</strong>, à gauche du second pont</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Bâton de grande sagesse</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Aerith</span></td>
+<td><strong>Coffre violet</strong> près du lieu de repos, <strong>village des Gi</strong></td>
+<td>Nouvelle arme pour Aerith</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Dépense prévue</strong> : <strong>300 gils</strong> pour <strong>Cid</strong> à l'aérodrome de Cosmo. Les <strong>5 000 gils</strong> et les <strong>2 600 gils</strong> de ce chapitre couvrent largement.</p>
+<h2 id="conseils-et-pieges-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="les-ennemis-du-chapitre-4">Les ennemis du chapitre</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ennemi</th>
+<th>Point faible</th>
+<th>À savoir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mélankiki</strong></td>
+<td><strong>Vent</strong></td>
+<td>Très peu résistant</td>
+</tr>
+<tr>
+<td><strong>Sahuagin du désert</strong></td>
+<td>Glace</td>
+<td>Embête avec sa technique Saut</td>
+</tr>
+<tr>
+<td><strong>Basilic</strong></td>
+<td>Glace</td>
+<td>Se fragilise <strong>très vite</strong> à la Glace — et <strong>ça l'empêche de devenir invisible</strong></td>
+</tr>
+<tr>
+<td><strong>Nidhogg</strong></td>
+<td>Feu</td>
+<td>Fragilisé par toute attaque élémentaire. Inoffensif</td>
+</tr>
+<tr>
+<td><strong>Piqueur</strong></td>
+<td>Feu, Foudre</td>
+<td>Comme le Nidhogg, avec une faiblesse de plus</td>
+</tr>
+<tr>
+<td><strong>Double-face</strong></td>
+<td>Glace</td>
+<td><strong>Se fragilise pendant « Faites vos jeux ! »</strong>. Sa Roulette donne <strong>un malus ou un bonus</strong> au hasard</td>
+</tr>
+<tr>
+<td><strong>Lancier Gi</strong></td>
+<td>Feu</td>
+<td>Aussi : une puissante attaque physique au corps-à-corps quand il renvoie tes attaques physiques à distance</td>
+</tr>
+<tr>
+<td><strong>Archer Gi</strong></td>
+<td>Feu</td>
+<td><strong>À tuer avant le lancier</strong> quand les deux sont ensemble</td>
+</tr>
+<tr>
+<td><strong>Sorcier Gi</strong></td>
+<td>Feu</td>
+<td><strong>Cible prioritaire absolue : il ressuscite ses acolytes.</strong> <strong>Insensible aux dégâts normaux et au physique</strong> jusqu'à ce qu'un <strong>sort de Feu</strong> le fragilise — <strong>ensuite il devient vulnérable au physique</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="boss-gi-nattak-2">Boss : Gi Nattak</h3>
+<p class="alerte">⚠️ Équipe obligatoire : Barret et Red XIII. Deux combattants, pas trois. C'est la première raison de sa difficulté.</p>
+<p><strong>Élémentaire</strong> : <strong>aucune faiblesse élémentaire.</strong> Sa jauge de Choc monte en lui infligeant des dégâts, surtout avec des attaques de mêlée.</p>
+<p><strong>Qui joue quoi</strong> : il se déplace majoritairement dans les airs, donc Red XIII a souvent du mal à l'atteindre. <strong>Utilise Barret en priorité</strong>, et <strong>spamme Grosse décharge</strong> : ça fait des dégâts <strong>et</strong> ça booste son gain d'ATB.</p>
+<p><strong>Ne reste jamais en face de lui.</strong></p>
+<p><strong>Son répertoire, phase 1 :</strong></p>
+<ul>
+<li><strong>Saignée</strong> : il <strong>aspire tes PV</strong> si tu es dans la zone d'effet. <strong>Déplace-toi hors des lueurs vertes devant lui.</strong></li>
+<li><strong>Agrippement spirituel</strong> : un <strong>puissant courant d'air</strong> attire ton personnage vers lui. S'il l'attrape, le personnage est immobilisé et se fait aspirer ses PV. Pour le libérer, bascule sur l'autre héros et frappe Gi Nattak avec une compétence offensive puissante.</li>
+<li><strong>Flammes spectrales</strong> : attaque à distance.</li>
+<li><strong>Attaques de zone</strong> : il envoie des <strong>projectiles enflammés</strong> dans ta direction. Tu peux en éviter certains à l'esquive, mais celle de Barret ne suffit pas toujours : n'hésite pas à garder, voire à utiliser la garde double avec R1.</li>
+<li><strong>Lance du chagrin</strong> : un enchaînement qui fait assez mal.</li>
+<li><strong>Lance de l'indignation</strong> : <strong>imparable</strong>.</li>
+<li>Il peut aussi saisir un combattant et aspirer sa vie pour se régénérer : même réponse que l'Agrippement — change de personnage et frappe fort.</li>
+</ul>
+<p><strong>Le vrai tournant : les Flammes d'âme.</strong></p>
+<p>Après le premier état de Choc, aux alentours d'un quart de PV retirés, il invoque une grande quantité de Flammes d'âme — des <strong>crânes volants</strong>.</p>
+<ul>
+<li>Ils ont <strong>peu de PV</strong>, mais ils <strong>lancent des Extra-Feu</strong>.</li>
+<li>Et surtout : si tu ne les tues pas très vite, ils prennent possession des statues du terrain. Gi Nattak lance alors <strong>Malédiction des Gi</strong>, et c'est là que le combat peut basculer.</li>
+<li><strong>Les quatre malédictions possibles</strong> : PV réduits de moitié, PM réduits de moitié, <strong>diminution de l'ATB</strong>, <strong>zone réduite</strong>. Toutes sont très handicapantes — la diminution de l'ATB est la pire.</li>
+<li><strong>La réponse</strong> : <strong>détruis les crânes le plus vite possible</strong> avec la Colère maximale de Barret ou la Poussière d'étoiles de Red XIII. Attention, <strong>Poussière d'étoiles coûte 2 barres d'ATB</strong> : garde-les en réserve quand tu sens les Flammes arriver.</li>
+<li>Si tu reçois quand même les malus, mettre Gi Nattak en état de Choc les annule.</li>
+</ul>
+<p>Il refera appel à ses Flammes d'âme une deuxième fois. Même traitement.</p>
+<p><strong>La fin : le Glas.</strong></p>
+<p>Vers son dernier quart de vie, il lance Glas : un compte à rebours de 90 secondes au bout duquel Barret et Red XIII meurent.</p>
+<p>C'est pour ça qu'il faut garder des ressources sous le coude. À ce stade, tu devrais avoir des <strong>compétences synchronisées</strong>, une Technique de Transcendance et/ou une <strong>invocation</strong> : <strong>lâche tout pendant le décompte</strong> pour vivre une dernière ligne droite tranquille. <strong>Titan</strong> est un bon choix, mais n'importe quel Esper disponible fait l'affaire — la seule faute serait de ne rien avoir gardé.</p>
+<h3 id="le-reste-9">Le reste</h3>
+<ul>
+<li>Fais « Vol à dos de chocobo » au ranch de Kamaria tout de suite. Cosmo est la région la plus verticale du jeu, avec <strong>une trentaine de rampes chocobos</strong>. Sans monture, tu ne vois rien.</li>
+<li>La réserve de Bugenhagen, c'est cinq coffres pour zéro effort, dont <strong>5 000 gils</strong> et une arme. Suis l'assistant et vide tout.</li>
+<li>Deux matérias de niveau max dans la même caverne — <strong>Renforcement défensif</strong> et <strong>Renforcement offensif</strong> — plus <strong>Soins niveau 3</strong>. C'est de très loin le meilleur rendement en matérias du jeu, et les trois sont <strong>hors chemin</strong>.</li>
+<li>Essaie chaque mur brillant, même ceux qui ne mènent « nulle part ». Dans cette caverne, la règle est simple : un mur brillant qui monte signale un coffre.</li>
+<li>Garde deux barres d'ATB disponibles quand tu approches du quart de vie de Gi Nattak. C'est la différence entre détruire les Flammes d'âme d'un coup et subir une malédiction.</li>
+<li>Parle à tout le monde au coin du feu avant la cérémonie, et <strong>encourage Aerith</strong>. C'est la plus grosse fournée d'affinité depuis Costa del Sol, et elle disparaît avec la cinématique.</li>
+</ul>
+<h2 id="alertes-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : la matéria <strong>Chakra</strong> de l'<strong>hôtel Syldra</strong>. Rien ne t'envoie visiter l'hôtel.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : les <strong>cinq coffres de la réserve</strong>, si tu ne suis pas l'assistant à la sortie de l'observatoire.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : les <strong>conversations d'affinité au coin du feu</strong> et l'<strong>encouragement à Aerith</strong> pendant son discours, tous perdus dès le lâcher de lanternes.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : les deux matérias de niveau max et la <strong>matéria Soins niveau 3</strong> de la caverne, toutes trois accessibles uniquement par les murs brillants.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : les <strong>quatre armes</strong> du chapitre — <strong>mégaphone de cristal</strong> (Cait Sith), <strong>collier magique</strong> (Red XIII), <strong>bazooka dévastateur</strong> (Barret), <strong>bâton de grande sagesse</strong> (Aerith).</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : le <strong>sac de voyage près des bidons</strong> où s'était cachée <strong>Kyrié</strong>, pendant l'interlude de Zack.</li>
+<li class="alerte">⚠️ <strong>Liberté de mouvement très limitée</strong> une fois la <strong>grande porte scellée</strong> franchie : fais tes emplettes et tes réglages <strong>avant</strong>.</li>
+<li class="alerte">⚠️ Red lâche la relique Gi dès qu'un combat se déclenche. Pense à la reprendre après chaque bagarre, sinon tu refais le trajet.</li>
+<li class="alerte">⚠️ Gi Nattak lance Glas à son dernier quart de vie : 90 secondes avant la mort de tes deux personnages. Garde Transcendance, compétences synchronisées ou invocation en réserve.</li>
+<li class="alerte">⚠️ <strong>Prévois 300 gils</strong> pour <strong>Cid</strong> à l'aérodrome.</li>
+<li class="alerte">⚠️ <strong>Effets à vérifier en jeu</strong> : <strong>boucle spiritiste</strong>, <strong>armille céleste</strong>, <strong>talisman ancien</strong> et <strong>talisman Gi</strong> sont cités par les sources sans détail de bonus.</li>
+</ul>
+<h2 id="check-list-11" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>« Vol à dos de chocobo »</strong> faite au <strong>Ranch de Kamaria</strong>, chocobo de Cosmo obtenu</li>
+<li class="tache"><input type="checkbox"> <strong>Cosmo Canyon</strong> atteint, contrôle passé</li>
+<li class="tache"><input type="checkbox"> Matéria <strong>Chakra</strong> récupérée à l'<strong>hôtel Syldra</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Observatoire</strong> : les <strong>huit éléments</strong> examinés, puis le <strong>tube acoustique</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Leçon de planétologie</strong> suivie</li>
+<li class="tache"><input type="checkbox"> <strong>Réserve</strong> : <strong>5 médailles mogs</strong> récupérées</li>
+<li class="tache"><input type="checkbox"> <strong>Réserve</strong> : <strong>5 000 gils</strong> récupérés</li>
+<li class="tache"><input type="checkbox"> <strong>Réserve</strong> : <strong>morceau de cosmolite enchantée</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> <strong>Réserve</strong> : <strong>maxi-potion</strong> récupérée</li>
+<li class="tache"><input type="checkbox"> <strong>Réserve</strong> : coffre violet <strong>mégaphone de cristal</strong> récupéré (Cait Sith)</li>
+<li class="tache"><input type="checkbox"> <strong>Séminaire</strong> rejoint, prise de parole de Tifa écoutée</li>
+<li class="tache"><input type="checkbox"> <strong>Tous les compagnons</strong> interrogés au coin du feu (affinité)</li>
+<li class="tache"><input type="checkbox"> <strong>Aerith encouragée</strong> pendant son discours</li>
+<li class="tache"><input type="checkbox"> Préparatifs faits <strong>avant</strong> la grande porte scellée</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>super-éther</strong> récupéré (premier mur brillant)</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>boucle spiritiste</strong> récupéré (mur côté est)</li>
+<li class="tache"><input type="checkbox"> <strong>Méga-potion</strong> récupérée (mur vers le centre)</li>
+<li class="tache"><input type="checkbox"> <strong>Corde de la porte</strong> rongée depuis le mur brillant</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>armille céleste</strong> récupéré (Salle de la Divagation)</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>talisman ancien</strong> récupéré (au-dessus de la porte)</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Talisman Gi</strong> récupéré près de la statue</li>
+<li class="tache"><input type="checkbox"> Matéria <strong>Soins niveau 3</strong> récupérée à mi-chemin du mur de droite</li>
+<li class="tache"><input type="checkbox"> Arme <strong>collier magique</strong> récupérée au bout de la pièce (Red XIII)</li>
+<li class="tache"><input type="checkbox"> <strong>Relique</strong> rapportée sur le symbole, <strong>Lancier Gi</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>5 peaux de bête légendaire</strong> récupéré au nord</li>
+<li class="tache"><input type="checkbox"> Statuette <strong>rouge</strong> insérée</li>
+<li class="tache"><input type="checkbox"> Statuette <strong>jaune</strong> insérée</li>
+<li class="tache"><input type="checkbox"> Matéria <strong class="objet">Renforcement défensif niveau max</strong> récupérée dans l'eau</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>queue de phénix</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> Statuette <strong>verte</strong> rapportée et insérée</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>2 giga-potions</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>éther</strong> récupéré (Salle du Sacrifice)</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong>bazooka dévastateur</strong> récupéré (Barret)</li>
+<li class="tache"><input type="checkbox"> Première <strong>grille</strong> ouverte à la chaîne</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>3 épingles d'or</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> Deuxième <strong>grille</strong> calée au <strong>bout de bois</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Sorcier Gi</strong> tué en priorité</li>
+<li class="tache"><input type="checkbox"> Matéria <strong class="objet">Renforcement offensif niveau max</strong> récupérée après les 4 Doubles-faces</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>5 pousses d'origan</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>2 600 gils</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> Dernière <strong>grille</strong> ouverte (bout de bois sur le socle)</li>
+<li class="tache"><input type="checkbox"> <strong>Gi Nattak</strong> vaincu (ressources gardées pour le <strong>Glas</strong>)</li>
+<li class="tache"><input type="checkbox"> Révélation de <strong>Bugenhagen</strong> vue</li>
+<li class="tache"><input type="checkbox"> <strong>Sac de voyage</strong> examiné pendant l'interlude de <strong>Zack</strong></li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong>bâton de grande sagesse</strong> récupéré (Aerith)</li>
+<li class="tache"><input type="checkbox"> Les trois combats du village des Gi gagnés</li>
+<li class="tache"><input type="checkbox"> <strong>Matéria noire</strong> et <strong>temple des Anciens</strong> évoqués ; <strong>Seto</strong> retrouvé</li>
+<li class="tache"><input type="checkbox"> Nouvelles quêtes de Cosmo lancées</li>
+<li class="tache"><input type="checkbox"> <strong>300 gils</strong> payés à <strong>Cid</strong> à l'aérodrome</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="chapitre-9-a-lecoute-de-la-planete.html" rel="prev"><small>← Partie précédente</small><b>Chapitre 9 — À l&#x27;écoute de la planète</b></a><a class="suiv" href="chapitre-11-un-village-natal-meconnaissable.html" rel="next"><small>Partie suivante →</small><b>Chapitre 11 — Un village natal méconnaissable</b></a><a class="tout" href="final-fantasy-vii-rebirth.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Rebirth · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

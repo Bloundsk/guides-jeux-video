@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Après le générique – Guide Final Fantasy VII Rebirth</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Rebirth, Après le générique : Le verrou central : Gilgamesh, au niveau 70. Puis : les six protoreliques, Brutal et Légendaire.">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/apres-le-generique.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Après le générique · Guide Final Fantasy VII Rebirth">
+<meta property="og:description" content="Final Fantasy VII Rebirth, Après le générique : Le verrou central : Gilgamesh, au niveau 70. Puis : les six protoreliques, Brutal et Légendaire.">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/apres-le-generique.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Rebirth", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/"}, {"@type": "ListItem", "position": 3, "name": "Après le générique", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/apres-le-generique.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-rebirth" class="compact" data-partie="apres-le-generique"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Rebirth</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Rebirth : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Rebirth</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-la-chute-dun-heros.html"><span class="num">✦</span><span class="libelle">Chapitre 1 — La chute d&#x27;un héros</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-vers-de-nouveaux-horizons.html"><span class="num">✦</span><span class="libelle">Chapitre 2 — Vers de nouveaux horizons</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-sur-les-traces-des-manteaux-noirs.html"><span class="num">✦</span><span class="libelle">Chapitre 3 — Sur les traces des manteaux noirs</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-le-debut-dune-nouvelle-ere.html"><span class="num">✦</span><span class="libelle">Chapitre 4 — Le début d&#x27;une nouvelle ère</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-une-croisiere-sanglante.html"><span class="num">✦</span><span class="libelle">Chapitre 5 — Une croisière sanglante</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-un-paradis-ensoleille.html"><span class="num">✦</span><span class="libelle">Chapitre 6 — Un paradis ensoleillé</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-un-retour-douloureux.html"><span class="num">✦</span><span class="libelle">Chapitre 7 — Un retour douloureux</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-le-gold-saucer.html"><span class="num">✦</span><span class="libelle">Chapitre 8 — Le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-a-lecoute-de-la-planete.html"><span class="num">✦</span><span class="libelle">Chapitre 9 — À l&#x27;écoute de la planète</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-protecteur-de-la-vallee.html"><span class="num">✦</span><span class="libelle">Chapitre 10 — Protecteur de la vallée</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-un-village-natal-meconnaissable.html"><span class="num">✦</span><span class="libelle">Chapitre 11 — Un village natal méconnaissable</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-en-quete-de-la-pierre-cle.html"><span class="num">✦</span><span class="libelle">Chapitre 12 — En quête de la pierre-clé</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-le-temple-des-anciens.html"><span class="num">✦</span><span class="libelle">Chapitre 13 — Le temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-un-monde-a-lagonie.html"><span class="num">✦</span><span class="libelle">Chapitre 14 — Un monde à l&#x27;agonie</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="region-de-la-prairie.html"><span class="num">✦</span><span class="libelle">Région de la Prairie</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="region-de-junon.html"><span class="num">✦</span><span class="libelle">Région de Junon</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="region-de-corel.html"><span class="num">✦</span><span class="libelle">Région de Corel</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="region-de-gongaga.html"><span class="num">✦</span><span class="libelle">Région de Gongaga</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="region-de-cosmo.html"><span class="num">✦</span><span class="libelle">Région de Cosmo</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="region-de-nibel.html"><span class="num">✦</span><span class="libelle">Région de Nibel</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="locean-central-et-les-iles.html"><span class="num">✦</span><span class="libelle">L&#x27;Océan Central et les îles</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-materias.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-armes-et-les-codex.html"><span class="num">✦</span><span class="libelle">Les armes et les codex</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-invocations.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="laffinite-et-les-coequipiers.html"><span class="num">✦</span><span class="libelle">L&#x27;affinité et les coéquipiers</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="queens-blood.html"><span class="num">✦</span><span class="libelle">Queen&#x27;s Blood</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-mini-jeux-4.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="le-simulateur-de-combat.html"><span class="num">✦</span><span class="libelle">Le simulateur de combat</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="#apres-le-generique"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-rebirth.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Rebirth</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-32">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="apres-le-generique">Après le générique</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-32"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-32">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Le verrou central</strong> : Gilgamesh, au niveau 70.</li>
+<li><strong>Puis</strong> : les six protoreliques, Brutal et Légendaire.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-32" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Savoir <strong>ce qu'il reste à faire</strong> quand le générique est passé, et <strong>dans quel ordre</strong>.</p>
+<p><strong>Bonne nouvelle</strong> : <em>Final Fantasy VII Rebirth</em> ne te renvoie pas au menu. Il te donne la <strong>sélection de chapitres</strong>, <strong>remet le monde ouvert à ta disposition</strong>, et multiplie par trois l'expérience et les PC gagnés.</p>
+<p>Mais plusieurs choses ne s'ouvrent qu'ici, et quatre récompenses majeures du jeu sont en post-générique : les <strong>modes Brutal et Légendaire</strong>, <strong>Séphiroth et Zack jouables</strong>, les 11 dernières cartes de Queen's Blood, et la <strong>partition One-Winged Angel</strong>.</p>
+<h2 id="itineraire-32" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>L'ordre qui fait gagner le plus de temps :</p>
+<ol>
+<li><strong>La sélection de chapitres</strong> : à quoi elle sert, et ce qu'elle débloque.</li>
+<li><strong>Les récompenses automatiques du post-générique</strong> : le <strong>×3</strong> sur l'Exp et les PC, les <strong>11 cartes</strong>, les <strong>boosters</strong>.</li>
+<li><strong>Terminer les six arcs de protoreliques</strong>, si ce n'est pas fait.</li>
+<li><strong>Gilgamesh</strong>, au niveau 70 — <strong>le verrou central</strong>.</li>
+<li>Les modes Brutal et Légendaire, puis <strong>Séphiroth et Zack jouables</strong>.</li>
+<li>« Le défi du fêtard ultime », qui exige toutes les quêtes et tous les mini-jeux du Gold Saucer.</li>
+<li><strong>Les 88 objets de collection</strong>, puis <strong>One-Winged Angel</strong>.</li>
+<li><strong>Le mode Difficile</strong>, pour le trophée « Autant se compliquer la tâche ».</li>
+<li>Les <strong>Aides de jeu</strong> et <strong>Nouvelle partie avantagée</strong> de la version <strong>1.005</strong>, si tu veux alléger.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-32" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="la-selection-de-chapitres">La sélection de chapitres</h3>
+<p><strong>Elle s'ouvre avec le générique</strong>, et elle sert à trois choses précises.</p>
+<p><strong>1. Revoir les rendez-vous du Gold Saucer.</strong></p>
+<p>Tu peux recommencer les chapitres liés à cette mécanique pour découvrir <strong>les cinq rendez-vous</strong> — et surtout, tu n'as pas besoin de refaire ton affinité : tu choisis directement dans les options qui viendra te déranger en pleine nuit, et si la scène sera amicale ou un peu plus spéciale <em>(partie <strong>26</strong>)</em>.</p>
+<p><strong>2. Rattraper le tournoi de Queen's Blood.</strong></p>
+<p>Si tu as refusé ou abandonné le tournoi du chapitre 5, c'est ici — et seulement ici — que tu peux le rejouer <em>(parties <strong>05</strong> et <strong>27</strong>)</em>.</p>
+<ol start="3">
+<li>Récupérer deux objets de collection impossibles en une seule partie.</li>
+</ol>
+<p>« Meilleure actrice dans Loveless — Tifa » et « Meilleure actrice dans Loveless — Yuffie » exigent le <strong>rang S à Loveless</strong> <strong>et</strong> d'avoir eu <strong>Tifa</strong> ou <strong>Yuffie</strong> au rendez-vous du chapitre 12. Il faut donc rejouer le chapitre 12 au moins deux fois <em>(partie <strong>29</strong>)</em>.</p>
+<p><strong>4. Et accessoirement, le monde ouvert redevient accessible.</strong></p>
+<p class="alerte manquable">⏳ <strong>Rappel du chapitre 13</strong> : <strong>s'amarrer au port de Northwood</strong> ferme le monde ouvert. La sélection de chapitres le rend de nouveau accessible — c'est la raison pour laquelle le guide te dit de <strong>tout faire avant Northwood</strong>, mais <strong>rien n'est perdu</strong> si tu as foncé.</p>
+<h3 id="les-recompenses-automatiques-du-post-generique">Les récompenses automatiques du post-générique</h3>
+<p><strong>Trois choses changent d'elles-mêmes dès le générique :</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Quoi</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Exp et PC ×3</strong></td>
+<td>Le montant d'expérience et de PC est de base multiplié par trois. C'est le seul vrai bon moment pour farmer <em>(partie <strong>32</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>11 nouvelles cartes de Queen's Blood</strong></td>
+<td><strong>Disponibles en boosters</strong> : Garde des forces spéciales, Kelzmelzer, Dwavhuurl, Hectoculus, Œil de la mort, <strong>Titan d'acier</strong>, Adamankhélone moussue, Cornéo &amp; Apsu, Dragon rouge, Porte démoniaque, Rochey</td>
+</tr>
+<tr>
+<td><strong>Le monde ouvert complet</strong></td>
+<td>Avec le <strong>déplacement rapide</strong> partout</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte manquable">⏳ Ne t'affole donc pas si ta collection de cartes plafonne à 134 avant le générique : <strong>c'est normal.</strong></p>
+<h3 id="terminer-les-protoreliques-le-verrou">Terminer les protoreliques — le verrou</h3>
+<p class="alerte">⚠️ C'est la condition qui bloque le plus de contenu de fin de jeu. Il faut les <strong>six protoreliques régionales</strong> :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Protorelique</th>
+<th>Région</th>
+<th>Ce qu'il faut faire</th>
+<th>Partie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Protorelique des brigands</strong></td>
+<td>Prairie</td>
+<td>4 rapports d'enquête + <strong>2 000 gils</strong> à Beck</td>
+<td><strong>15</strong></td>
+</tr>
+<tr>
+<td><strong>Protorelique du capitaine</strong></td>
+<td>Junon</td>
+<td>4 parties de Fort Condor</td>
+<td><strong>16</strong></td>
+</tr>
+<tr>
+<td><strong>Protorelique de Gob le Kid</strong></td>
+<td>Corel</td>
+<td><strong>4 mini-réacteurs de Dégomme-pampas</strong></td>
+<td><strong>17</strong></td>
+</tr>
+<tr>
+<td><strong>Protorelique des TURKs</strong></td>
+<td>Gongaga</td>
+<td><strong>4 centres d'entraînement</strong> + le Bretteur excentrique</td>
+<td><strong>18</strong></td>
+</tr>
+<tr>
+<td><strong>Protorelique des fontaines de mako</strong></td>
+<td>Cosmo</td>
+<td>4 parties de Rouages &amp; Gambits</td>
+<td><strong>19</strong></td>
+</tr>
+<tr>
+<td><strong>Protorelique des manteaux noirs</strong></td>
+<td>Nibel</td>
+<td><strong>4 traques</strong> + le Bretteur excentrique</td>
+<td><strong>20</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte manquable">⏳ La protorelique de Corel débloque l'Île de Gilgamesh, donc <strong>fais Corel d'abord</strong> si tu veux avancer vite.</p>
+<h3 id="gilgamesh-le-verrou-central">Gilgamesh — le verrou central</h3>
+<p>Tout le contenu de fin de jeu passe par lui.</p>
+<p><strong>Les quatre rapports d'enquête de l'Océan Central</strong>, sur l'Île de Gilgamesh <em>(partie <strong>21</strong>)</em> :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Rapport</th>
+<th>Adversaires</th>
+<th>Niveau</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2 — La lune de printemps</strong></td>
+<td><strong>Néo-Bahamut et Titan</strong></td>
+<td><strong>65</strong></td>
+</tr>
+<tr>
+<td><strong>3 — L'arc-en-ciel lunaire</strong></td>
+<td><strong>Kujata et Phénix</strong></td>
+<td><strong>65</strong></td>
+</tr>
+<tr>
+<td><strong>4 — La pleine lune</strong></td>
+<td><strong>Alexandre et Odin</strong></td>
+<td><strong>65</strong></td>
+</tr>
+<tr>
+<td><strong>1 — Les jardins de Gilgamesh</strong></td>
+<td><strong>Gilgamesh</strong></td>
+<td><strong>70</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ <strong>Et la préparation obligatoire</strong> : les <strong>armes à effet Frôle-la-mort</strong> — <strong>Lame dévoreuse</strong> ou <strong>Épée broyeuse</strong> pour Cloud, <strong>Bâton de grande sagesse</strong> ou <strong>Gambanteinn</strong> pour Aerith. Sans elles, Giga-Fission et Lame du Crépuscule tuent quel que soit ton niveau.</p>
+<p><strong>Ce que Gilgamesh débloque :</strong></p>
+<ul>
+<li><strong>La matéria d'invocation Gilgamesh</strong> — <strong>la dernière du jeu</strong> ;</li>
+<li><strong>Les modes Brutal et Légendaire</strong> du simulateur de combat ;</li>
+<li><strong>Le trophée « Bretteur légendaire »</strong> ;</li>
+<li><strong>La carte Gilgamesh</strong> chez <strong>Thorin</strong>, dans la Prairie.</li>
+</ul>
+<h3 id="brutal-et-legendaire-3">Brutal et Légendaire</h3>
+<p>Les deux modes demandent le niveau 70 et sont automatiquement paramétrés en mode Difficile — <strong>les objets sont interdits</strong>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Brutal</strong></td>
+<td>Combats en groupe</td>
+</tr>
+<tr>
+<td><strong>Légendaire</strong></td>
+<td>Combats individuels</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>La récompense au bout</strong> : Séphiroth et Zack deviennent jouables dans ton équipe.</p>
+<p class="alerte manquable">⏳ La Boussole du roi des pirates débloque aussi quelques défis de ces deux modes <em>(partie <strong>29</strong>)</em>.</p>
+<p>Le détail de la préparation est dans la partie <strong>30</strong>.</p>
+<h3 id="le-defi-du-fetard-ultime">Le défi du fêtard ultime</h3>
+<p class="alerte">⚠️ <strong>La dernière quête du jeu</strong>, et le dernier verrou avant le platine.</p>
+<p><strong>Ses conditions :</strong></p>
+<ul>
+<li><strong>Toutes les quêtes annexes du jeu</strong> terminées — les <strong>36 quêtes</strong> des six régions ;</li>
+<li>Tous les mini-jeux du Gold Saucer terminés ;</li>
+<li><strong>Rufus Shinra vaincu</strong> au chapitre 12 ;</li>
+<li><strong>Niveau 46</strong> minimum.</li>
+</ul>
+<p><strong>Ses récompenses</strong> : le <strong>titre de Fêtard ultime</strong>, la <strong>carte Fêtard ultime</strong>, une <strong>matéria Jeu de hasard</strong>, un <strong>Mécha-chocobo</strong>, Séphiroth débloqué à Combat 3D, et <strong>le trophée « Mercenaire ultime »</strong>.</p>
+<p><strong>Le détail est dans la partie 17.</strong></p>
+<h3 id="les-88-objets-de-collection-2">Les 88 objets de collection</h3>
+<p><strong>Le dernier grand chantier.</strong> Il faut :</p>
+<ol>
+<li>Le gîte de Johnny rénové — qui exige la couronne du Roi tomberry volée avec Vol ;</li>
+<li>Les seuils hauts de tous les mini-jeux <em>(partie <strong>28</strong>)</em> ;</li>
+<li>20 achats aux points d'échange du Gold Saucer, dont <strong>7 conditionnés par une victoire</strong> ;</li>
+<li>Les 6 trésors enterrés par des lapins ;</li>
+<li>Les deux objets de Loveless liés à Tifa et Yuffie, via la <strong>sélection de chapitres</strong>.</li>
+</ol>
+<p><strong>La récompense finale</strong> : la partition One-Winged Angel, dans le coffre à côté de Johnny.</p>
+<p><strong>Le détail est dans la partie 29.</strong></p>
+<h3 id="le-mode-difficile">Le mode Difficile</h3>
+<p>Le trophée « Autant se compliquer la tâche » demande de terminer tous les chapitres en mode Difficile.</p>
+<p><strong>En mode Difficile, les objets sont interdits.</strong> Tout passe par les <strong>matérias de soin</strong> et les <strong>barres d'ATB</strong> — exactement comme en Brutal et en Légendaire.</p>
+<p><strong>La préparation qui change tout :</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Quoi</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Soins au niveau le plus haut</strong></td>
+<td>La seule source de PV</td>
+</tr>
+<tr>
+<td><strong>Deux ou trois Chakra au stade maximal</strong></td>
+<td>40 % des PV manquants pour un segment d'ATB</td>
+</tr>
+<tr>
+<td><strong>Prière</strong></td>
+<td>Soin de groupe, sans PM</td>
+</tr>
+<tr>
+<td><strong>Résurrection</strong> sur tout le monde</td>
+<td>Pas de queue de phénix possible</td>
+</tr>
+<tr>
+<td><strong>Chronomancie (Hâte)</strong></td>
+<td>Plus d'ATB = plus de soins</td>
+</tr>
+<tr>
+<td><strong>Les pièces d'équipement Genji</strong></td>
+<td>Les accessoires les plus puissants du jeu</td>
+</tr>
+<tr>
+<td><strong>Toutes les compétences d'armes acquises</strong></td>
+<td>Jauge bleue remplie, case jaune cochée</td>
+</tr>
+<tr>
+<td><strong>Les codex développés pour les sept personnages</strong></td>
+<td>Le jeu impose des compositions</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et le conseil de jeuxvideo.com, donné dès les premiers chapitres : profite de ta première partie pour engranger un maximum d'automatismes avec toutes les équipes, parce que le mode Difficile ne te laissera pas apprendre en route.</p>
+<h3 id="la-version-1005-aides-de-jeu-et-nouvelle-partie-avantagee">La version 1.005 : Aides de jeu et Nouvelle partie avantagée</h3>
+<p><strong>La mise à jour du 3 juin 2026</strong>, qui a aligné toutes les plateformes, a ajouté <strong>deux systèmes d'aide facultatifs</strong>.</p>
+<p><strong>Les Aides de jeu.</strong></p>
+<p>Un jeu d'aides activables et désactivables option par option, à tout moment, dans le menu :</p>
+<ul>
+<li><strong>PV et PM illimités</strong> ;</li>
+<li><strong>9 999 de dégâts</strong> en combat et en mini-jeu ;</li>
+<li><strong>quantités d'objets au maximum</strong>.</li>
+</ul>
+<p class="alerte">⚠️ <strong>Les trophées</strong> : d'après un test de RPG Site, une seule option en bloque un, celle qui met les <strong>matérias au niveau maximum</strong> (elle empêche le trophée de la première montée de niveau d'une matéria). Les autres, et la Nouvelle partie avantagée, ne bloquent rien. <em>(Une seule source : à confirmer en jeu.)</em></p>
+<p class="alerte manquable">⏳ <strong>À quoi ça sert concrètement</strong> : débloquer un mini-jeu sur lequel tu butes, ou franchir un combat de fin de jeu sans y passer la soirée. Comme c'est option par option, tu peux n'activer que les 9 999 de dégâts en mini-jeu et garder le combat intact.</p>
+<p><strong>Nouvelle partie avantagée.</strong></p>
+<p>Elle permet de commencer une partie avec des personnages niveau 65 <em>(maximum 70)</em> et <strong>des matérias déjà améliorées</strong>.</p>
+<p><strong>Son usage le plus utile</strong> : <strong>attaquer directement le mode Difficile</strong> sans refaire toute la montée en niveau, ou <strong>se lancer dans les protoreliques et Gilgamesh</strong> dans une partie fraîche.</p>
+<h3 id="pas-de-dlc-scenaristique">Pas de DLC scénaristique</h3>
+<p>Il n'y a aucun contenu scénaristique payant pour <em>Rebirth</em>. Les seuls ajouts sont les <strong>quatre invocations bonus</strong> liées aux <strong>sauvegardes</strong> et aux <strong>éditions</strong> <em>(partie <strong>25</strong>)</em>.</p>
+<p>La suite de l'histoire est dans un autre jeu : Final Fantasy VII Revelation, annoncé pour le <strong>8 avril 2027</strong>, et que ce guide ne couvre pas.</p>
+<h2 id="quetes-et-lieux-32" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Où</th>
+<th>Ce qu'on y fait après le générique</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sélection de chapitres</strong></td>
+<td><strong>Les rendez-vous du Gold Saucer</strong>, le <strong>tournoi de Queen's Blood</strong>, les <strong>objets de Loveless</strong>, le <strong>monde ouvert</strong></td>
+</tr>
+<tr>
+<td><strong>Boutiques de boosters</strong></td>
+<td>Les 11 dernières cartes de Queen's Blood</td>
+</tr>
+<tr>
+<td><strong>Les six régions</strong></td>
+<td>Les protoreliques manquantes, les <strong>quêtes de haut niveau</strong> <em>(43 à 46)</em></td>
+</tr>
+<tr>
+<td><strong>Île de Gilgamesh</strong></td>
+<td><strong>Les 4 rapports d'enquête</strong>, puis <strong>Gilgamesh</strong> au niveau 70</td>
+</tr>
+<tr>
+<td><strong>Chadley</strong></td>
+<td><strong>Les modes Brutal et Légendaire</strong>, puis Séphiroth et Zack jouables</td>
+</tr>
+<tr>
+<td><strong>Entrée du Gold Saucer</strong></td>
+<td>« Le défi du fêtard ultime »</td>
+</tr>
+<tr>
+<td><strong>Points d'échange du Gold Saucer</strong></td>
+<td><strong>20 objets de collection</strong></td>
+</tr>
+<tr>
+<td><strong>Gîte de Johnny</strong></td>
+<td><strong>Le musée des 88 objets</strong> ; <strong>coffre de One-Winged Angel</strong></td>
+</tr>
+<tr>
+<td><strong>Océan Central</strong></td>
+<td><strong>Les 4 caches du roi des pirates</strong>, la Boussole, les <strong>débris</strong>, les <strong>pièces Genji</strong></td>
+</tr>
+<tr>
+<td><strong>Thorin</strong> <em>(Prairie)</em></td>
+<td><strong>La carte Gilgamesh</strong>, après l'avoir battu</td>
+</tr>
+<tr>
+<td><strong>Menu principal</strong></td>
+<td>Le mode Difficile, les <strong>Aides de jeu</strong>, <strong>Nouvelle partie avantagée</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-32" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sélection de chapitres</strong></td>
+<td><span class="badge neutre">Déblocage</span></td>
+<td><strong>Le générique</strong></td>
+<td>Rendez-vous, tournoi du ch. 5, objets de Loveless, monde ouvert</td>
+</tr>
+<tr>
+<td><strong>Multiplicateur ×3 sur l'Exp et les PC</strong></td>
+<td><span class="badge neutre">Bonus</span></td>
+<td>Automatique après le générique</td>
+<td>Le seul vrai bon moment pour farmer</td>
+</tr>
+<tr>
+<td><strong>Les 11 dernières cartes de Queen's Blood</strong></td>
+<td><span class="badge neutre">Cartes</span></td>
+<td>Boosters après la fin du jeu</td>
+<td>Complètent la collection de 145</td>
+</tr>
+<tr>
+<td><strong>Matéria Gilgamesh</strong></td>
+<td><span class="badge neutre">Matéria d&#x27;invocation</span> <span class="type-pour">rouge</span></td>
+<td><strong>Vaincre Gilgamesh</strong>, niveau 70</td>
+<td>La dernière invocation du jeu</td>
+</tr>
+<tr>
+<td><strong>Mode Brutal</strong></td>
+<td><span class="badge neutre">Déblocage</span></td>
+<td><strong>Jeu + protoreliques + Gilgamesh</strong></td>
+<td>Combats en groupe, sans objets</td>
+</tr>
+<tr>
+<td><strong>Mode Légendaire</strong></td>
+<td><span class="badge neutre">Déblocage</span></td>
+<td>Idem</td>
+<td>Combats individuels, sans objets</td>
+</tr>
+<tr>
+<td><strong>Séphiroth jouable</strong></td>
+<td><span class="badge neutre">Personnage</span></td>
+<td>Au bout de Brutal et Légendaire</td>
+<td>Personnage inédit en équipe</td>
+</tr>
+<tr>
+<td><strong>Zack jouable</strong></td>
+<td><span class="badge neutre">Personnage</span></td>
+<td>Idem</td>
+<td>Personnage inédit en équipe</td>
+</tr>
+<tr>
+<td><strong>Titre de Fêtard ultime</strong></td>
+<td><span class="badge neutre">Titre</span></td>
+<td>« Le défi du fêtard ultime »</td>
+<td>Titre</td>
+</tr>
+<tr>
+<td><strong>Matéria Jeu de hasard</strong></td>
+<td><span class="badge neutre">Matéria jaune</span></td>
+<td>« Le défi du fêtard ultime »</td>
+<td>Effet à vérifier en jeu</td>
+</tr>
+<tr>
+<td><strong>Mécha-chocobo</strong></td>
+<td><span class="badge neutre">Monture de course</span></td>
+<td>Course chocobo du Fêtard ultime</td>
+<td>Utilisable en course</td>
+</tr>
+<tr>
+<td><strong>Carte Fêtard ultime</strong></td>
+<td><span class="badge neutre">Carte</span></td>
+<td>Queen's Blood du Fêtard ultime</td>
+<td>Carte <strong>142</strong></td>
+</tr>
+<tr>
+<td><strong>Séphiroth à Combat 3D</strong></td>
+<td><span class="badge neutre">Déblocage</span></td>
+<td><strong>« Le défi du fêtard ultime »</strong> terminé</td>
+<td>Donne la Réplique de Masamune</td>
+</tr>
+<tr>
+<td><strong>Boussole du roi des pirates</strong></td>
+<td><span class="badge neutre">Accessoire + objet clé</span></td>
+<td>Les 4 reliques, au menu Synthèse</td>
+<td>Débris, pièces Genji, 3e barre d'ATB, défis Brutal et Légendaire</td>
+</tr>
+<tr>
+<td><strong>Pièces d'équipement Genji</strong></td>
+<td><span class="badge neutre">Accessoires</span></td>
+<td>Synthèse avec les débris du roi des pirates</td>
+<td>Les accessoires les plus puissants du jeu</td>
+</tr>
+<tr>
+<td><strong>Partition One-Winged Angel</strong></td>
+<td><span class="badge neutre">Partition</span></td>
+<td><strong>Coffre à côté de Johnny</strong>, après les <strong>88 objets</strong></td>
+<td>La dernière partition du jeu</td>
+</tr>
+<tr>
+<td><strong>Carte Gilgamesh</strong></td>
+<td><span class="badge neutre">Carte</span></td>
+<td><strong>Chez Thorin</strong>, après avoir battu Gilgamesh</td>
+<td>Carte <strong>106</strong></td>
+</tr>
+<tr>
+<td><strong>Aides de jeu</strong></td>
+<td><span class="badge neutre">Option</span></td>
+<td><strong>Menu</strong>, version <strong>1.005</strong></td>
+<td>PV/PM illimités, 9 999 de dégâts, objets au maximum, <strong>option par option</strong></td>
+</tr>
+<tr>
+<td><strong>Nouvelle partie avantagée</strong></td>
+<td><span class="badge neutre">Option</span></td>
+<td><strong>Menu</strong>, version <strong>1.005</strong></td>
+<td>Démarrer au niveau 65 avec des matérias améliorées</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-32" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="lordre-le-plus-efficace">L'ordre le plus efficace</h3>
+<p>Si tu veux le platine, voilà la séquence qui minimise les allers-retours :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Étape</th>
+<th>Quoi</th>
+<th>Pourquoi dans cet ordre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Récupère les 11 cartes de boosters</strong> et <strong>note que l'Exp est ×3</strong></td>
+<td>Gratuit, immédiat</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Termine la protorelique de Corel</strong> si ce n'est pas fait</td>
+<td>Elle débloque l'Île de Gilgamesh</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Termine les cinq autres protoreliques</td>
+<td><strong>Condition de Gilgamesh</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td><strong>Farme jusqu'au niveau 65</strong> <em>(partie <strong>32</strong>)</em></td>
+<td>Les trois autels de l'Île l'exigent</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Les 3 autels de l'Île de Gilgamesh</td>
+<td>Avec les armes à Frôle-la-mort</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td><strong>Farme jusqu'au niveau 70</strong></td>
+<td>Gilgamesh et les deux modes l'exigent</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td><strong>Gilgamesh</strong></td>
+<td>Débloque Brutal, Légendaire et le trophée</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td><strong>Les 4 caches du roi des pirates</strong>, la Boussole, les <strong>pièces Genji</strong></td>
+<td>L'équipement pour les modes sans objets</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Brutal et Légendaire</td>
+<td>Séphiroth et Zack jouables</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td><strong>Les quêtes annexes restantes</strong> et <strong>tous les mini-jeux du Gold Saucer</strong></td>
+<td>Conditions du Fêtard ultime</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>« Le défi du fêtard ultime »</td>
+<td><strong>Trophée Mercenaire ultime</strong> + <strong>Séphiroth à Combat 3D</strong></td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td><strong>Séphiroth à Combat 3D</strong>, puis les <strong>20 achats aux points d'échange</strong></td>
+<td>7 achats dépendent de victoires</td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td>Les 88 objets de collection</td>
+<td>Quatre trophées + One-Winged Angel</td>
+</tr>
+<tr>
+<td><strong>14</strong></td>
+<td>Le mode Difficile sur les 14 chapitres</td>
+<td>Avec tout l'équipement acquis</td>
+</tr>
+<tr>
+<td><strong>15</strong></td>
+<td>Les rendez-vous manquants et les <strong>objets de Loveless</strong></td>
+<td><strong>Sélection de chapitres</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-sept-regles-3">Les sept règles</h3>
+<ol>
+<li class="alerte manquable">⏳ Farme après le générique, pas avant. L'Exp et les PC sont multipliés par trois à partir de là. Avant, c'est du temps perdu.</li>
+<li><strong>Fais Corel d'abord</strong> parmi les protoreliques : elle ouvre l'Île de Gilgamesh.</li>
+<li class="alerte">⚠️ Procure-toi les armes à Frôle-la-mort avant l'Océan Central. C'est la seule protection contre Giga-Fission et Lame du Crépuscule.</li>
+<li>Monte la Boussole du roi des pirates avant Brutal et Légendaire. Elle donne <strong>les pièces Genji</strong> — les accessoires les plus puissants du jeu — et <strong>une troisième barre d'ATB</strong>, exactement ce qu'il faut quand les objets sont interdits.</li>
+<li>Fais le mode Difficile en dernier. Tu y arriveras avec toutes les compétences d'armes acquises, <strong>les codex développés</strong>, <strong>les pièces Genji</strong> et <strong>Chakra au maximum</strong>. Ce n'est plus le même jeu.</li>
+<li>Utilise la sélection de chapitres sans culpabilité. Elle existe pour ça : <strong>les rendez-vous</strong>, <strong>le tournoi du chapitre 5</strong>, et <strong>deux objets de collection</strong> ne sont pas accessibles autrement.</li>
+<li class="alerte manquable">⏳ <strong>Les Aides de jeu se règlent option par option.</strong> Si un mini-jeu te bloque, <strong>active les 9 999 de dégâts</strong> le temps de le passer et <strong>désactive ensuite</strong>. Tu n'as pas à choisir entre « tout assisté » et « rien ».</li>
+</ol>
+<h3 id="les-pieges-6">Les pièges</h3>
+<ul>
+<li>Croire que finir le jeu suffit pour Brutal et Légendaire. Il faut aussi <strong>les six protoreliques</strong> et <strong>Gilgamesh vaincu</strong>.</li>
+<li>Oublier que le mode Difficile interdit les objets. Sans <strong>Chakra améliorée</strong>, <strong>Prière</strong> et Soins de haut niveau, c'est injouable.</li>
+<li class="alerte">⚠️ Dépenser ses Points du Gold Saucer avant d'avoir vu la liste des 20 objets de collection qu'ils achètent <em>(partie <strong>29</strong>)</em>.</li>
+<li class="alerte">⚠️ Acheter les figurines du Combat 3D avant d'avoir battu les adversaires correspondants. <strong>Sept achats sont conditionnés</strong> : <strong>bagarreur GS</strong>, <strong>gros mog</strong>, <strong>Dio</strong>, <strong>Shiva</strong>, <strong>Ifrit</strong>, <strong>Séphiroth</strong>, et le <strong>Colisée des Costauds</strong> complet.</li>
+<li class="alerte">⚠️ Consommer le Sarment du grand morbol ou la Corne de jabberwocky. Ils sont obligatoires pour « Les démons surgis des flots », donc pour le <strong>Fêtard ultime</strong>, donc pour le <strong>platine</strong>.</li>
+<li>Ne pas voler la couronne du Roi tomberry. Sans elle, <strong>pas de gîte rénové</strong>, donc aucun des quatre trophées de collection, donc <strong>pas de platine</strong>.</li>
+</ul>
+<h2 id="alertes-32" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ Les modes Brutal et Légendaire exigent trois conditions : <strong>terminer le jeu</strong>, <strong>terminer les six protoreliques</strong>, et <strong>battre Gilgamesh</strong>.</li>
+<li class="alerte">⚠️ <strong>Gilgamesh demande le niveau 70</strong> et les armes à effet Frôle-la-mort.</li>
+<li class="alerte">⚠️ Brutal, Légendaire et le mode Difficile interdisent les objets.</li>
+<li class="alerte">⚠️ « Le défi du fêtard ultime » exige toutes les quêtes annexes du jeu et tous les mini-jeux du Gold Saucer.</li>
+<li class="alerte">⚠️ Deux objets de collection de Loveless sont impossibles en une seule partie : ils exigent <strong>Tifa</strong> et <strong>Yuffie</strong> comme partenaires de rendez-vous.</li>
+<li class="alerte">⚠️ La partition One-Winged Angel exige les 88 objets de collection.</li>
+<li class="alerte manquable">⏳ L'Exp et les PC sont multipliés par trois après le générique : ne farme pas avant.</li>
+<li class="alerte manquable">⏳ 11 cartes de Queen's Blood ne s'obtiennent qu'en post-générique.</li>
+<li class="alerte manquable">⏳ <strong>Aucun contenu scénaristique payant n'existe pour <em>Rebirth</em></strong> : la suite est <strong>Final Fantasy VII Revelation</strong>, prévue pour le <strong>8 avril 2027</strong>.</li>
+</ul>
+<h2 id="check-list-32" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="des-le-generique">Dès le générique</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Sélection de chapitres</strong> débloquée</li>
+<li class="tache"><input type="checkbox"> <strong>Les 11 cartes de Queen's Blood</strong> post-générique achetées en boosters</li>
+<li class="tache"><input type="checkbox"> <strong>Multiplicateur ×3</strong> sur l'Exp et les PC constaté</li>
+</ul>
+<h3 id="les-six-protoreliques">Les six protoreliques</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Prairie</strong> — <strong>protorelique des brigands</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Junon</strong> — <strong>protorelique du capitaine</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Corel</strong> — <strong>protorelique de Gob le Kid</strong> <em>(débloque l'Île de Gilgamesh)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Gongaga</strong> — <strong>protorelique des TURKs</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cosmo</strong> — protorelique des fontaines de mako</li>
+<li class="tache"><input type="checkbox"> <strong>Nibel</strong> — <strong>protorelique des manteaux noirs</strong></li>
+</ul>
+<h3 id="gilgamesh-2">Gilgamesh</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Niveau 65</strong> atteint</li>
+<li class="tache"><input type="checkbox"> <strong>Armes à Frôle-la-mort</strong> équipées</li>
+<li class="tache"><input type="checkbox"> <strong>Rapport 2 — La lune de printemps</strong> <em>(Néo-Bahamut et Titan)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Rapport 3 — L'arc-en-ciel lunaire</strong> <em>(Kujata et Phénix)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Rapport 4 — La pleine lune</strong> <em>(Alexandre et Odin)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Niveau 70</strong> atteint</li>
+<li class="tache"><input type="checkbox"> <strong>Gilgamesh</strong> vaincu → <strong>matéria</strong>, <strong>trophée « Bretteur légendaire »</strong>, <strong>Brutal et Légendaire</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Carte Gilgamesh</strong> achetée chez <strong>Thorin</strong></li>
+</ul>
+<h3 id="lequipement-de-fin-de-jeu">L'équipement de fin de jeu</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 4 caches du roi des pirates</strong></li>
+<li class="tache"><input type="checkbox"> Boussole du roi des pirates synthétisée</li>
+<li class="tache"><input type="checkbox"> Débris du roi des pirates récoltés</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Pièces d'équipement Genji</strong> synthétisées</li>
+<li class="tache"><input type="checkbox"> <strong>Deux ou trois Chakra</strong> au stade maximal</li>
+<li class="tache"><input type="checkbox"> Toutes les compétences d'armes acquises pour les <strong>sept personnages</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Les sept codex</strong> développés</li>
+</ul>
+<h3 id="brutal-et-legendaire-4">Brutal et Légendaire</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Tous les programmes Brutal</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Tous les programmes Légendaire</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Séphiroth</strong> jouable</li>
+<li class="tache"><input type="checkbox"> <strong>Zack</strong> jouable</li>
+<li class="tache"><input type="checkbox"> <strong>Objet « Étoile d'or de mai »</strong></li>
+</ul>
+<h3 id="le-fetard-ultime">Le Fêtard ultime</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 36 quêtes annexes</strong> terminées</li>
+<li class="tache"><input type="checkbox"> Tous les mini-jeux du Gold Saucer terminés</li>
+<li class="tache"><input type="checkbox"> « Le défi du fêtard ultime » réussi</li>
+<li class="tache"><input type="checkbox"> <strong>Séphiroth à Combat 3D</strong> vaincu</li>
+</ul>
+<h3 id="les-collections">Les collections</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Gîte de Johnny rénové</strong></li>
+<li class="tache"><input type="checkbox"> <strong>88 objets de collection</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Partition One-Winged Angel</strong></li>
+<li class="tache"><input type="checkbox"> <strong>145 cartes de Queen's Blood</strong></li>
+<li class="tache"><input type="checkbox"> <strong>14 matérias d'invocation</strong></li>
+</ul>
+<h3 id="la-selection-de-chapitres-2">La sélection de chapitres</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Tournoi de Queen's Blood</strong> rattrapé <em>(si manqué)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Les cinq rendez-vous</strong> du Gold Saucer vus</li>
+<li class="tache"><input type="checkbox"> <strong>Objet « Meilleure actrice — Tifa »</strong> <em>(rang S + Tifa au rendez-vous)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Objet « Meilleure actrice — Yuffie »</strong> <em>(rang S + Yuffie au rendez-vous)</em></li>
+</ul>
+<h3 id="le-mode-difficile-2">Le mode Difficile</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les 14 chapitres</strong> terminés en <strong>mode Difficile</strong> → trophée « Autant se compliquer la tâche »</li>
+</ul>
+<h3 id="les-options-de-la-version-1005">Les options de la version 1.005</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Aides de jeu</strong> essayées si besoin <em>(option par option)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Nouvelle partie avantagée</strong> essayée si besoin <em>(niveau 65 au départ)</em></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="le-simulateur-de-combat.html" rel="prev"><small>← Partie précédente</small><b>Le simulateur de combat</b></a><a class="suiv" href="astuces-trophees-et-secrets.html" rel="next"><small>Partie suivante →</small><b>Astuces, trophées et secrets</b></a><a class="tout" href="final-fantasy-vii-rebirth.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Rebirth · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

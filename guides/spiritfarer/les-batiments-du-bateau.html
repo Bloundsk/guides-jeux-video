@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Les bâtiments du bateau – Guide Spiritfarer</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Spiritfarer, Les bâtiments du bateau : « Maître du chantier » : construis chaque bâtiment une fois, puis démonte. Attention : les maisons d&#x27;esprits et la…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/les-batiments-du-bateau.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Les bâtiments du bateau · Guide Spiritfarer">
+<meta property="og:description" content="Spiritfarer, Les bâtiments du bateau : « Maître du chantier » : construis chaque bâtiment une fois, puis démonte. Attention : les maisons d&#x27;esprits et la…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/les-batiments-du-bateau.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Spiritfarer", "item": "https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/"}, {"@type": "ListItem", "position": 3, "name": "Les bâtiments du bateau", "item": "https://bloundsk.github.io/guides-jeux-video/guides/spiritfarer/les-batiments-du-bateau.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="spiritfarer" class="compact" data-partie="les-batiments-du-bateau"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Spiritfarer</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Spiritfarer : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque"><em>Spiritfarer</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction-tout-ce-quil-faut-savoir-avant-dembarquer.html"><span class="num">✦</span><span class="libelle">Introduction — tout ce qu&#x27;il faut savoir avant d&#x27;embarquer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="le-seuil-eternel-et-les-premiers-pas.html"><span class="num">✦</span><span class="libelle">Le Seuil éternel et les premiers pas</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="la-region-de-hummingberg-le-printemps.html"><span class="num">✦</span><span class="libelle">La région de Hummingberg : le printemps</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="le-district-industriel.html"><span class="num">✦</span><span class="libelle">Le district industriel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="la-region-de-hummingberg-lhiver.html"><span class="num">✦</span><span class="libelle">La région de Hummingberg : l&#x27;hiver</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="la-region-de-furogawa.html"><span class="num">✦</span><span class="libelle">La région de Furogawa</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="la-region-doxbury.html"><span class="num">✦</span><span class="libelle">La région d&#x27;Oxbury</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="crows-end-le-sud-ouest.html"><span class="num">✦</span><span class="libelle">Crow&#x27;s End : le sud-ouest</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="crows-end-le-nord-est.html"><span class="num">✦</span><span class="libelle">Crow&#x27;s End : le nord-est</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="les-points-dinteret-en-mer.html"><span class="num">✦</span><span class="libelle">Les points d&#x27;intérêt en mer</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="gwen.html"><span class="num">✦</span><span class="libelle">Gwen</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="atul.html"><span class="num">✦</span><span class="libelle">Atul</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="summer.html"><span class="num">✦</span><span class="libelle">Summer</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="astrid.html"><span class="num">✦</span><span class="libelle">Astrid</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="giovanni.html"><span class="num">✦</span><span class="libelle">Giovanni</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="alice.html"><span class="num">✦</span><span class="libelle">Alice</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="gustav.html"><span class="num">✦</span><span class="libelle">Gustav</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="bruce-et-mickey.html"><span class="num">✦</span><span class="libelle">Bruce et Mickey</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="buck.html"><span class="num">✦</span><span class="libelle">Buck</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="beverly.html"><span class="num">✦</span><span class="libelle">Beverly</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="stanley.html"><span class="num">✦</span><span class="libelle">Stanley</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="elena.html"><span class="num">✦</span><span class="libelle">Elena</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="jackie-et-daria.html"><span class="num">✦</span><span class="libelle">Jackie et Daria</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="le-bateau-et-le-chantier-naval-dalbert.html"><span class="num">✦</span><span class="libelle">Le bateau et le chantier naval d&#x27;Albert</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-capacites-de-stella-et-les-sanctuaires.html"><span class="num">✦</span><span class="libelle">Les capacités de Stella et les sanctuaires</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="#les-batiments-du-bateau"><span class="num">✦</span><span class="libelle">Les bâtiments du bateau</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="lagriculture-lelevage-et-les-ressources.html"><span class="num">✦</span><span class="libelle">L&#x27;agriculture, l&#x27;élevage et les ressources</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="la-cuisine-toutes-les-recettes.html"><span class="num">✦</span><span class="libelle">La cuisine — toutes les recettes</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="la-peche-tous-les-poissons.html"><span class="num">✦</span><span class="libelle">La pêche — tous les poissons</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-metaux-les-gemmes-et-lartisanat.html"><span class="num">✦</span><span class="libelle">Les métaux, les gemmes et l&#x27;artisanat</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="les-evenements-maritimes.html"><span class="num">✦</span><span class="libelle">Les événements maritimes</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="la-fin-du-jeu-lily-et-hades.html"><span class="num">✦</span><span class="libelle">La fin du jeu — Lily et Hadès</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="les-succes-les-secrets-et-les-astuces.html"><span class="num">✦</span><span class="libelle">Les succès, les secrets et les astuces</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes-index-manquables-et-check-list-finale.html"><span class="num">✦</span><span class="libelle">Annexes — index, manquables et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-spiritfarer.html"><span class="num">✦</span><span class="libelle">Sources — Spiritfarer</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-26">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="les-batiments-du-bateau">Les bâtiments du bateau</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-26"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-26">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>« Maître du chantier »</strong> : construis chaque bâtiment une fois, puis démonte.</li>
+<li><strong>Attention</strong> : les maisons d'esprits et la salle d'archives ne se démontent pas.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Tous les bâtiments du jeu, avec leurs matériaux exacts. Les 15 maisons d'esprits, les 17 bâtiments de production, les 3 structures de capacité — <strong>et leurs améliorations.</strong></p>
+<p><strong>Le succès visé</strong> : <strong>Maître du chantier</strong> — « Construire toutes les maisons et les stations au moins une fois sur le bateau ».</p>
+<p>Et la règle qui rend ce succès facile : il faut les construire <strong>au moins une fois</strong>, pas les garder tous en même temps. Construis, coche, démonte, reconstruis ailleurs <em>(partie <strong>23</strong>)</em>.</p>
+<h2 id="itineraire-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li>Les trois onglets de la table à dessin.</li>
+<li><strong>Les règles de construction</strong> — ce qui se démonte et ce qui ne se démonte pas.</li>
+<li><strong>Les 15 maisons d'esprits</strong>, avec tous leurs matériaux.</li>
+<li><strong>Les 17 bâtiments de production</strong>, avec leurs coûts et leurs améliorations.</li>
+<li><strong>Les 3 structures de capacité.</strong></li>
+<li>Le succès « Maître du chantier » — la liste complète à cocher.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="les-trois-onglets-de-la-table-a-dessin">Les trois onglets de la table à dessin</h3>
+<p>La table à dessin est sur le toit de la cabine de Stella <em>(partie <strong>01</strong>)</em>. Son onglet Construire a <strong>trois catégories</strong>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Onglet</th>
+<th>Ce qu'il contient</th>
+<th>Débloqué par</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Maisons d'esprits</strong></td>
+<td><strong>15 bâtiments</strong></td>
+<td>Les quêtes des esprits</td>
+</tr>
+<tr>
+<td><strong>Bâtiments de production</strong></td>
+<td><strong>17 bâtiments</strong></td>
+<td><strong>Les paliers de table à dessin</strong> <em>(partie <strong>23</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Structures de capacité</strong></td>
+<td><strong>3 bâtiments</strong></td>
+<td>Les sanctuaires, par courrier d'Albert <em>(partie <strong>24</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et tous les bâtiments, sans exception, <strong>peuvent être déplacés</strong> après construction.</p>
+<h3 id="les-regles-de-construction">Les règles de construction</h3>
+<p>Cinq règles à connaître, et elles changent tout.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La règle</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Les maisons d'esprits sont uniques</td>
+<td>Une seule par esprit, et on ne peut pas les démonter</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Les bâtiments de production se construisent en plusieurs exemplaires</td>
+<td>Mais le coût augmente à chaque copie</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Le coût des copies plafonne à la quatrième</td>
+<td>×1, ×2, ×3, puis ×4 pour toutes les suivantes</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Démonter un bâtiment de production rembourse tout le coût de construction et <strong>les lueurs dépensées en amélioration</strong> — <strong>mais pas les matériaux de l'amélioration</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Deux exceptions au démontage</td>
+<td>Les maisons d'esprits et <strong>la salle d'archives B-2522</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>La règle 3 est importante pour le portefeuille. Exemple avec le métier à tisser <em>(10 bûches d'érable + 8 quartz)</em> :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Copie</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1re</strong></td>
+<td><strong>10 bûches d'érable, 8 quartz</strong></td>
+</tr>
+<tr>
+<td><strong>2e</strong></td>
+<td><strong>20 bûches d'érable, 16 quartz</strong></td>
+</tr>
+<tr>
+<td><strong>3e</strong></td>
+<td><strong>30 bûches d'érable, 24 quartz</strong></td>
+</tr>
+<tr>
+<td><strong>4e et suivantes</strong></td>
+<td><strong>40 bûches d'érable, 32 quartz</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et voilà le piège de la maison d'invités : elle <strong>devient</strong> la salle de jeu de Stanley pendant sa quête « La chambre des grands » <em>(partie <strong>20</strong>)</em>. Mais elle peut être reconstruite après — c'est la seule maison dans ce cas.</p>
+<p>Et une précision qui sauve le succès « extatique » : améliorer la maison d'un esprit augmente son bonheur de façon permanente — sauf Elena, qui déteste toute amélioration de son cubicule <em>(partie <strong>21</strong>)</em>.</p>
+<h3 id="les-15-maisons-desprits">Les 15 maisons d'esprits</h3>
+<p><strong>Tous les matériaux, maison par maison.</strong></p>
+<p><strong>Maison d'invités</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Maison d'invités</strong></td>
+<td><strong>10 bûches d'érable</strong></td>
+</tr>
+<tr>
+<td><strong>Lumières suspendues</strong></td>
+<td><strong>4 flamboyantes</strong>, <strong>8 fils de lin</strong>, <strong>350 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Refuge de Gwen</strong> <em>(partie <strong>10</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Refuge</strong></td>
+<td><strong>10 bûches d'érable</strong>, <strong>2 calcaires</strong></td>
+</tr>
+<tr>
+<td><strong>Coin lecture</strong></td>
+<td><strong>5 tissus en lin</strong>, <strong>2 planches d'érable</strong>, <strong>80 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Bibliothèque</strong></td>
+<td><strong>2 tissus en lin</strong>, <strong>2 planches d'érable</strong>, <strong>250 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Décorations murales</strong></td>
+<td><strong>4 bûches d'érable</strong>, <strong>120 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Sanctuaire de Summer</strong> <em>(partie <strong>12</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sanctuaire</strong></td>
+<td><strong>12 planches de chêne</strong>, <strong>8 calcaires</strong></td>
+</tr>
+<tr>
+<td><strong>Table à cristal</strong></td>
+<td><strong>3 calcaires</strong>, <strong>5 planches de chêne</strong>, <strong>180 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Système CVC</strong></td>
+<td><strong>5 lingots de cuivre</strong>, <strong>5 lingots de fer</strong>, <strong>2 verres</strong>, <strong>250 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Monstera Deliciosa</strong></td>
+<td><strong>3 bûches de chêne</strong>, <strong>2 poireaux</strong>, <strong>200 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ Le système CVC ne se débloque qu'après que Summer est tombée dans son sommeil <em>(partie <strong>12</strong>)</em>.</p>
+<p><strong>Atelier d'Atul</strong> <em>(partie <strong>11</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Atelier</strong></td>
+<td><strong>30 planches d'érable</strong>, <strong>15 fils de lin</strong></td>
+</tr>
+<tr>
+<td><strong>Douche</strong></td>
+<td><strong>8 ardoises</strong>, <strong>8 tissus en lin</strong>, <strong>150 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Bureau</strong></td>
+<td><strong>5 lingots d'aluminium</strong>, <strong>8 planches de chêne</strong>, <strong>12 tissus en lin</strong>, <strong>200 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Cadre</strong></td>
+<td><strong>3 planches de frêne</strong>, <strong>6 poudres de comète</strong>, <strong>3 verres</strong>, <strong>350 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Le cadre d'Atul demande 6 poudres de comète, <strong>donc l'événement de Giovanni</strong> <em>(partie <strong>14</strong>)</em>.</p>
+<p><strong>Chalet d'Alice</strong> <em>(partie <strong>15</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Chalet</strong></td>
+<td><strong>12 planches de chêne</strong>, <strong>5 fils de lin</strong>, <strong>4 lingots de fer</strong></td>
+</tr>
+<tr>
+<td><strong>Penderie</strong></td>
+<td><strong>5 tissus en lin</strong>, <strong>2 minerais de fer</strong>, <strong>2 minerais de cuivre</strong>, <strong>150 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Vaisselle commémorative</strong></td>
+<td><strong>10 planches de chêne</strong>, <strong>5 lingots d'aluminium</strong>, <strong>3 ardoises</strong>, <strong>300 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Photos encadrées</strong></td>
+<td><strong>5 tissus en laine</strong>, <strong>2 verres</strong>, <strong>1 calcaire</strong>, <strong>200 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Bungalow d'Astrid</strong> <em>(partie <strong>13</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bungalow</strong></td>
+<td><strong>12 ardoises</strong>, <strong>12 tissus en lin</strong></td>
+</tr>
+<tr>
+<td><strong>Petit frigo</strong></td>
+<td><strong>5 planches de frêne</strong>, <strong>2 lingots de cuivre</strong>, <strong>2 lingots de zinc</strong>, <strong>400 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Vieille plante</strong></td>
+<td><strong>5 tissus en coton</strong>, <strong>12 planches de chêne</strong>, <strong>5 lingots de fer</strong>, <strong>250 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Ensemble télé</strong></td>
+<td><strong>3 lingots d'aluminium</strong>, <strong>8 planches de frêne</strong>, <strong>2 lingots de pulsar</strong>, <strong>1 feuille de verre clair</strong>, <strong>550 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Galerie de Gustav</strong> <em>(partie <strong>16</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Galerie</strong></td>
+<td><strong>15 planches de chêne</strong>, <strong>12 fils de coton</strong>, <strong>3 marbres</strong>, <strong>3 verres</strong></td>
+</tr>
+<tr>
+<td><strong>Bureau vintage moderniste</strong></td>
+<td><strong>12 planches de frêne</strong>, <strong>4 marbres</strong>, <strong>6 lingots d'argent</strong>, <strong>8 fils de soie</strong>, <strong>700 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Foyer nordique néoclassique</strong></td>
+<td><strong>7 ardoises</strong>, <strong>1 feuille d'acier</strong>, <strong>10 lingots de zinc</strong>, <strong>6 marbres</strong>, <strong>1 000 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Horloge maximinimaliste</strong></td>
+<td><strong>2 marbres</strong>, <strong>4 lingots d'or</strong>, <strong>1 feuille de verre clair</strong>, <strong>1 feuille d'or rose</strong>, <strong>1 300 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Bercail de Bruce et Mickey</strong> <em>(partie <strong>17</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bercail</strong></td>
+<td><strong>10 planches de frêne</strong>, <strong>5 tissus en coton</strong>, <strong>2 lingots d'aluminium</strong></td>
+</tr>
+<tr>
+<td><strong>Chandelier</strong></td>
+<td><strong>2 feuilles de bronze</strong>, <strong>5 lingots de fer</strong>, <strong>2 feuilles de verre cristallin</strong>, <strong>490 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Cinéma maison</strong></td>
+<td><strong>2 feuilles de verre clair</strong>, <strong>5 marbres</strong>, <strong>2 feuilles de laiton</strong>, <strong>920 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Meuble à liqueur</strong></td>
+<td><strong>2 feuilles de verre clair</strong>, <strong>2 lingots d'argent</strong>, <strong>12 fibres de soie</strong>, <strong>710 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Tour de l'horloge à coucou et Ferme de Beverly <em>(partie <strong>19</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tour de l'horloge à coucou</strong></td>
+<td><strong>8 planches d'érable</strong></td>
+</tr>
+<tr>
+<td><strong>Ferme</strong></td>
+<td><strong>5 planches de frêne</strong>, <strong>3 tissus en soie</strong>, <strong>2 lingots de cuivre</strong>, <strong>1 feuille de verre clair</strong></td>
+</tr>
+<tr>
+<td><strong>Accessoires</strong></td>
+<td><strong>5 lingots d'aluminium</strong>, <strong>8 planches de chêne</strong>, <strong>12 tissus en lin</strong>, <strong>200 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Classeur à anneaux</strong></td>
+<td><strong>3 planches de frêne</strong>, <strong>5 ectoplasmes en bouteille</strong>, <strong>3 verres</strong>, <strong>350 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Sofa</strong></td>
+<td><strong>8 minerais de zinc</strong>, <strong>5 tissus en coton</strong>, <strong>2 planches de frêne</strong>, <strong>500 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>La tour de l'horloge à Coucou est un bâtiment distinct : 8 planches d'érable, et c'est tout. Elle fait partie de la première quête de Beverly — ce qui résout une ambiguïté que la source laissait ouverte.</p>
+<p><strong>Salon</strong> <em>(partie <strong>14</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Salon</strong></td>
+<td><strong>14 planches de frêne</strong>, <strong>10 lingots de zinc</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Aucune décoration.</strong> C'est le logement de Giovanni après son expulsion du bungalow d'Astrid.</p>
+<p><strong>Salle de jeu de Stanley</strong> <em>(partie <strong>20</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Salle de jeu</strong></td>
+<td>Spécial — construite à partir de la maison d'invités pendant sa quête</td>
+</tr>
+<tr>
+<td><strong>La chambre des grands, 1re partie</strong></td>
+<td><strong>1 tissu en lin</strong></td>
+</tr>
+<tr>
+<td><strong>La chambre des grands, 2e partie</strong></td>
+<td><strong>1 babiole, n'importe laquelle</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>C'est le bâtiment le moins cher du jeu : un tissu en lin et une babiole. Ce qui explique pourquoi son succès « tombe tout seul » d'après le guide des trophées français.</p>
+<p><strong>Antre des merveilles de Buck</strong> <em>(partie <strong>18</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Antre des merveilles</strong></td>
+<td><strong>12 planches de pin</strong>, <strong>2 feuilles de verre clair</strong>, <strong>4 ardoises</strong></td>
+</tr>
+<tr>
+<td><strong>Figurines variées</strong></td>
+<td><strong>2 lingots d'or</strong>, <strong>11 tissus en soie</strong>, <strong>1 diamant</strong>, <strong>5 lingots d'argent</strong>, <strong>1 500 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Affiches</strong></td>
+<td><strong>2 papiers faits maison</strong>, <strong>42 fils de lin</strong>, <strong>5 poudres de carbone</strong>, <strong>1 200 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Armes puissantes</strong></td>
+<td><strong>8 planches de pin</strong>, <strong>13 tissus en soie</strong>, <strong>1 feuille d'électrum</strong>, <strong>1 feuille d'acier</strong>, <strong>1 000 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Les affiches de Buck demandent 2 papiers faits maison, qui se cuisinent avec sciure + colle tout usage <em>(partie <strong>20</strong>)</em>. Il faut donc avoir fait la quête de Stanley.</p>
+<p>Et 42 fils de lin, c'est le plus gros besoin en textile du jeu.</p>
+<p>Et les figurines demandent un diamant, ce qui porte le total de diamants nécessaires à <strong>5</strong> sur toute la partie <em>(partie <strong>29</strong>)</em>.</p>
+<p><strong>Cubicule d'Elena</strong> <em>(partie <strong>21</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cubicule</strong></td>
+<td><strong>18 planches de pin</strong>, <strong>22 tissus en lin</strong>, <strong>2 feuilles d'acier</strong></td>
+</tr>
+<tr>
+<td><strong>Abat-jour</strong></td>
+<td><strong>2 feuilles d'or rose</strong>, <strong>12 charbons</strong>, <strong>2 500 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Cadres photo</strong></td>
+<td><strong>18 planches de pin</strong>, <strong>5 lingots d'or</strong>, <strong>2 000 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Plante</strong></td>
+<td><strong>5 planches de chêne</strong>, <strong>3 ardoises</strong>, <strong>1 céleri</strong>, <strong>3 000 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Sept mille cinq cents lueurs de décorations. C'est le plus cher du jeu — et il faut le construire <strong>après</strong> l'avoir rendue extatique, parce que ça la rend malheureuse <em>(partie <strong>21</strong>)</em>.</p>
+<p class="alerte manquable">⏳ <strong>La bonne nouvelle</strong> : tu peux le faire <strong>après son départ</strong>, ce qui ne bloque aucun succès.</p>
+<p><strong>Chambre de garde de Jackie</strong> <em>(partie <strong>22</strong>)</em></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Construction</th>
+<th>Coût</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Chambre de garde</strong></td>
+<td><strong>10 planches de pin</strong>, <strong>5 tissus en coton</strong>, <strong>3 marbres</strong>, <strong>2 lingots d'argent</strong></td>
+</tr>
+<tr>
+<td><strong>Affiches motivantes</strong></td>
+<td><strong>1 feuille de bronze</strong>, <strong>5 lingots de fer</strong>, <strong>1 feuille de verre clair</strong>, <strong>1 100 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Jardin zen</strong></td>
+<td><strong>12 planches de pin</strong>, <strong>1 feuille d'acier</strong>, <strong>16 tissus en soie</strong>, <strong>1 300 lueurs</strong></td>
+</tr>
+<tr>
+<td><strong>Livres de développement</strong></td>
+<td><strong>2 feuilles de verre cristallin</strong>, <strong>6 lingots de pulsar</strong>, <strong>2 feuilles d'or rose</strong>, <strong>1 500 lueurs</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et Daria n'a pas de maison. Elle dort au plafond de ta cabine <em>(partie <strong>22</strong>)</em>.</p>
+<h3 id="les-17-batiments-de-production">Les 17 bâtiments de production</h3>
+<p>Tous les coûts de base et toutes les améliorations.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Bâtiment</th>
+<th>Palier</th>
+<th>Coût de base</th>
+<th>Amélioration</th>
+<th>Où trouver l'amélioration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jardin</strong></td>
+<td>Débutant</td>
+<td><strong>10 bûches d'érable</strong>, <strong>5 éclairs en bouteille</strong></td>
+<td><strong>12 tissus en lin, 12 en laine, 12 en nebula</strong>, <strong>285 lueurs</strong></td>
+<td><strong>La remise de la Villa Maggiore</strong> <em>(partie <strong>02</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Jardin</strong> <em>(2e amélioration)</em></td>
+<td>—</td>
+<td>—</td>
+<td>Terre retenant l'eau : <strong>3 flamboyantes</strong>, <strong>5 poudres de silice</strong>, <strong>1 000 lueurs</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Cuisine</strong></td>
+<td>Débutant</td>
+<td><strong>5 bûches d'érable</strong>, <strong>8 gelées scintillantes</strong></td>
+<td>5 gelées scintillantes, 8 éclairs en bouteille, 12 tissus en lin, <strong>0 lueur</strong></td>
+<td>La quête d'ATUL <em>(partie <strong>11</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Champ</strong></td>
+<td>Débutant</td>
+<td><strong>15 bûches d'érable</strong>, <strong>3 calcaires</strong></td>
+<td><strong>12 planches d'érable, 4 ardoises, 7 gelées scintillantes</strong>, <strong>390 lueurs</strong></td>
+<td><strong>Coffre 1 de la carrière Hoseki</strong> <em>(partie <strong>05</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Champ</strong> <em>(2e amélioration)</em></td>
+<td>—</td>
+<td>—</td>
+<td>Terre retenant l'eau : <strong>3 flamboyantes</strong>, <strong>5 poudres de silice</strong>, <strong>1 000 lueurs</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Champ</strong> <em>(3e amélioration)</em></td>
+<td>—</td>
+<td>—</td>
+<td>Ruche : <strong>12 planches de pin</strong>, <strong>6 potions d'XP</strong>, <strong>4 lingots d'or</strong>, <strong>4 000 lueurs</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Métier à tisser</strong></td>
+<td>Amateur</td>
+<td><strong>10 bûches d'érable</strong>, <strong>8 quartz</strong></td>
+<td><strong>10 planches d'érable, 18 fils de lin, 8 gelées scintillantes</strong>, <strong>120 lueurs</strong></td>
+<td><strong>Le balcon de la Villa Maggiore</strong> <em>(partie <strong>02</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Fonderie</strong></td>
+<td>Amateur</td>
+<td><strong>10 charbons</strong>, <strong>10 planches de chêne</strong></td>
+<td>12 tissus en nebula, 8 éclairs en bouteille, 7 gelées scintillantes, <strong>510 lueurs</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Scierie</strong></td>
+<td>Amateur</td>
+<td><strong>14 bûches d'érable</strong>, <strong>20 fils de lin</strong></td>
+<td><strong>8 lingots d'aluminium, 18 planches d'érable, 12 éclairs en bouteille</strong>, <strong>285 lueurs</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Moulin à vent</strong></td>
+<td>Artisan</td>
+<td><strong>16 planches de chêne</strong>, <strong>8 marbres</strong>, <strong>5 lingots d'aluminium</strong></td>
+<td>6 gelées scintillantes, 5 lingots de pulsar, 7 planches de pin, <strong>840 lueurs</strong></td>
+<td>La mission « Société de préservation de Hummingberg » à Port d'Alt <em>(partie <strong>02</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Verger</strong></td>
+<td>Artisan</td>
+<td><strong>8 planches de chêne</strong>, <strong>4 fils de nebula</strong></td>
+<td><strong>13 planches de chêne, 2 flamboyantes, 5 lingots d'aluminium</strong>, <strong>410 lueurs</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Corral à moutons</strong></td>
+<td>Artisan</td>
+<td><strong>16 planches de chêne</strong>, <strong>4 lingots de cuivre</strong></td>
+<td>12 fibres de lin, 1 corde métallique, 8 planches de frêne, <strong>390 lueurs</strong></td>
+<td><strong>Coffre 2 des quais de Southpoint</strong> <em>(partie <strong>03</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Poulailler</strong></td>
+<td>Expert</td>
+<td><strong>10 planches de frêne</strong>, <strong>20 tissus en laine</strong>, <strong>8 lingots de cuivre</strong></td>
+<td>14 planches de frêne, 12 tissus en laine, 4 lingots de zinc, 5 ectoplasmes, <strong>450 lueurs</strong></td>
+<td><strong>Coffre 1 de Loneberg</strong> <em>(partie <strong>04</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Salon</strong></td>
+<td>Expert</td>
+<td><strong>14 planches de frêne</strong>, <strong>10 lingots de zinc</strong></td>
+<td>Aucune</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Concasseur</strong></td>
+<td>Expert</td>
+<td><strong>7 lingots de pulsar</strong>, <strong>15 planches de frêne</strong>, <strong>5 lingots de zinc</strong></td>
+<td>5 lingots de pulsar, 6 poudres de comète, 6 de carbone, 6 de silice, <strong>585 lueurs</strong></td>
+<td><strong>Musée de Susan, les 5 gemmes</strong> <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Stalle à vaches</strong></td>
+<td>Maître</td>
+<td><strong>9 planches d'érable</strong>, <strong>3 lingots de cuivre</strong>, <strong>6 tissus en coton</strong>, <strong>1 preuve d'achat : vache</strong></td>
+<td><strong>3 flamboyantes, 5 potions d'XP, 18 tissus en soie</strong>, <strong>790 lueurs</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Forge</strong></td>
+<td>Maître</td>
+<td><strong>12 poudres de silice</strong>, <strong>5 poudres de comète</strong>, <strong>5 lingots de pulsar</strong>, <strong>12 planches de frêne</strong></td>
+<td>1 feuille d'acier, 5 lingots d'or, 12 potions d'XP, 1 feuille céleste, <strong>890 lueurs</strong></td>
+<td><strong>Musée de Susan, 10 métaux</strong> <em>(partie <strong>09</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Cellier</strong></td>
+<td>Maître</td>
+<td><strong>20 tissus en lin</strong>, <strong>3 roches de comète</strong>, <strong>10 ectoplasmes en bouteille</strong></td>
+<td><strong>12 tissus en soie, 7 ectoplasmes, 1 hématite</strong>, <strong>795 lueurs</strong></td>
+<td><strong>Coffre 1 des bois Brumeux</strong> <em>(partie <strong>08</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Salle d'archives B-2522</strong></td>
+<td>À acheter</td>
+<td><strong>10 planches de frêne</strong>, <strong>10 tissus en lin</strong>, <strong>2 lingots d'aluminium</strong></td>
+<td><strong>10 planches de pin, 2 feuilles d'électrum</strong>, <strong>500 lueurs</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Trois choses sautent aux yeux dans ce tableau.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce qu'il faut voir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>L'amélioration de la cuisine est gratuite en lueurs — mais elle demande les événements de Gwen et d'Atul</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>La stalle à vaches demande une preuve d'achat : vache — <strong>le coffre 3 d'Edgeborough Lane, ou sa boutique</strong> <em>(partie <strong>06</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Le cellier demande 10 ectoplasmes en bouteille</strong> — <strong>donc Stanley</strong> <em>(partie <strong>20</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et il y a une ruche dans le jeu, qui apparaît comme une amélioration du champ : 12 planches de pin, 6 potions d'XP, 4 lingots d'or, <strong>4 000 lueurs</strong>. C'est bien une <strong>amélioration du champ</strong>, et c'est elle qui produit du <strong>miel</strong>.</p>
+<p class="alerte">⚠️ Et la licence bovine d'Old-Central District <em>(partie <strong>06</strong>)</em> n'apparaît pas dans le coût de la stalle à vaches. ⚠️ <strong>à vérifier en jeu</strong> : si elle sert à débloquer le plan plutôt qu'à le construire.</p>
+<h3 id="les-3-structures-de-capacite">Les 3 structures de capacité</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Capacité</th>
+<th>Coût de la 1re</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Souffleur</strong></td>
+<td><strong>Planer</strong></td>
+<td><strong>2 lingots de fer</strong>, <strong>6 planches de chêne</strong>, <strong>12 tissus en nebula</strong></td>
+</tr>
+<tr>
+<td><strong>Tyrolienne</strong></td>
+<td><strong>Tyrolienne</strong></td>
+<td><strong>4 fils de laine</strong> <em>(8 pour les deux)</em>, <strong>2 marbres</strong> <em>(4)</em>, <strong>1 corde métallique</strong> <em>(2)</em></td>
+</tr>
+<tr>
+<td><strong>Surface rebondissante</strong></td>
+<td><strong>Rebond</strong></td>
+<td><strong>6 tissus en coton</strong>, <strong>5 planches de frêne</strong>, <strong>1 lingot de fer</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>La Tyrolienne demande deux exemplaires construits en même temps. Les valeurs entre parenthèses sont le total pour les deux blocs — soit 8 fils de laine, 4 marbres, 2 cordes métalliques.</p>
+<p class="alerte">⚠️ Et le souffleur demande 12 tissus en nebula, <strong>donc l'événement d'ALICE</strong> <em>(partie <strong>15</strong>)</em>. C'est le seul usage obligatoire du nebula hors Chasse Brouillard.</p>
+<p>Albert envoie chaque plan <strong>par courrier</strong> après l'acquisition de la capacité correspondante <em>(partie <strong>23</strong>)</em>. Il faut donc la boîte aux lettres.</p>
+<h3 id="le-succes-maitre-du-chantier">Le succès « Maître du chantier »</h3>
+<p>Voilà la liste complète de ce qu'il faut construire au moins une fois.</p>
+<p><strong>Le guide des trophées français la découpe en trois ensembles</strong> : **« les maisons des esprits », **« les fabriques » et <strong>« quelques éléments de décorations qui allègent vos déplacements ».</strong></p>
+<p><strong>Et il précise</strong> : « Ici, nul besoin de les améliorer. Il suffit juste de les ériger. »</p>
+<p class="alerte">⚠️ Attention, le guide Steam français ajoute une précision importante : « vous devez aussi construire au moins une fois un <strong>souffleur</strong>, une <strong>tyrolienne</strong> et une <strong>surface rebondissante</strong> ». Les trois structures de capacité comptent.</p>
+<p><strong>Et une précision de prudence</strong> : « évitez de les détruire une fois l'âme éconduite au Repos Éternel, car ces foyers deviennent le seul moyen de déclencher les mini-jeux assignés à vos compagnons » <em>(partie <strong>30</strong>)</em>. De toute façon, les maisons d'esprits ne se démontent pas.</p>
+<h2 id="quetes-et-lieux-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="quel-esprit-debloque-quel-batiment">Quel esprit débloque quel bâtiment</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Bâtiment</th>
+<th>Qui le débloque</th>
+<th>Sa quête</th>
+<th>Partie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Maison d'invités</strong></td>
+<td>Gwen</td>
+<td>En route, capitaine !</td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Cuisine</strong></td>
+<td>Gwen</td>
+<td>Je suis grincheuse quand j'ai faim</td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Champ</strong></td>
+<td>Gwen</td>
+<td>Des graines pour l'avenir</td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Métier à tisser</strong></td>
+<td>Gwen</td>
+<td>Coupés dans le même tissu</td>
+<td><strong>10</strong></td>
+</tr>
+<tr>
+<td><strong>Scierie</strong></td>
+<td>Atul</td>
+<td><strong>Travail du bois</strong></td>
+<td><strong>11</strong></td>
+</tr>
+<tr>
+<td><strong>Amélioration de la cuisine</strong></td>
+<td>Atul</td>
+<td>Grand fourneau</td>
+<td><strong>11</strong></td>
+</tr>
+<tr>
+<td><strong>Jardin</strong></td>
+<td>Summer</td>
+<td>Cours de nature</td>
+<td><strong>12</strong></td>
+</tr>
+<tr>
+<td><strong>Fonderie</strong></td>
+<td>Astrid</td>
+<td><strong>Lingots d'or</strong></td>
+<td><strong>13</strong></td>
+</tr>
+<tr>
+<td><strong>Salon</strong></td>
+<td>Giovanni</td>
+<td>Un endroit pour les étrangers</td>
+<td><strong>14</strong></td>
+</tr>
+<tr>
+<td><strong>Verger</strong></td>
+<td>Alice</td>
+<td>Des pommes et des oranges</td>
+<td><strong>15</strong></td>
+</tr>
+<tr>
+<td><strong>Corral à moutons</strong></td>
+<td>Alice</td>
+<td>Un manteau de laine</td>
+<td><strong>15</strong></td>
+</tr>
+<tr>
+<td><strong>Forge</strong></td>
+<td>Gustav</td>
+<td>Le maître faussaire</td>
+<td><strong>16</strong></td>
+</tr>
+<tr>
+<td><strong>Concasseur</strong></td>
+<td><strong>Bruce et Mickey</strong></td>
+<td>Écrase ! Écrase !</td>
+<td><strong>17</strong></td>
+</tr>
+<tr>
+<td><strong>Cellier</strong></td>
+<td>Stanley</td>
+<td>C'est vivant !</td>
+<td><strong>20</strong></td>
+</tr>
+<tr>
+<td><strong>Salle d'archives B-2522</strong></td>
+<td>Beverly</td>
+<td>Le commencement et la fin</td>
+<td><strong>19</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte manquable">⏳ Et trois bâtiments ne sont débloqués par personne : le moulin à vent, le poulailler et la stalle à vaches. Ils viennent uniquement des paliers de table à dessin <em>(partie <strong>23</strong>)</em>.</p>
+<p><strong>Le wiki le précise pour le moulin</strong> : « Stella n'est invitée à construire un moulin à vent par aucun passager, donc il peut être construit à tout moment. »</p>
+<h3 id="ou-trouver-les-ameliorations">Où trouver les améliorations</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Amélioration</th>
+<th>Où</th>
+<th>Partie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Jardin</strong></td>
+<td>La remise de la Villa Maggiore</td>
+<td><strong>02</strong></td>
+</tr>
+<tr>
+<td><strong>Métier à tisser</strong></td>
+<td><strong>Le balcon de la Villa Maggiore</strong> <em>(clé)</em></td>
+<td><strong>02</strong></td>
+</tr>
+<tr>
+<td><strong>Champ</strong></td>
+<td><strong>Coffre 1 de la carrière Hoseki</strong> <em>(Planer)</em></td>
+<td><strong>05</strong></td>
+</tr>
+<tr>
+<td><strong>Corral à moutons</strong></td>
+<td><strong>Coffre 2 des quais de Southpoint</strong> <em>(Rebond)</em></td>
+<td><strong>03</strong></td>
+</tr>
+<tr>
+<td><strong>Poulailler</strong></td>
+<td><strong>Coffre 1 de Loneberg</strong> <em>(Tyrolienne)</em></td>
+<td><strong>04</strong></td>
+</tr>
+<tr>
+<td><strong>Moulin à vent</strong></td>
+<td>La mission de Port d'Alt</td>
+<td><strong>02</strong></td>
+</tr>
+<tr>
+<td><strong>Cellier</strong></td>
+<td>Coffre 1 des bois Brumeux</td>
+<td><strong>08</strong></td>
+</tr>
+<tr>
+<td><strong>Concasseur</strong></td>
+<td>Musée de Susan, les 5 gemmes</td>
+<td><strong>09</strong></td>
+</tr>
+<tr>
+<td><strong>Forge</strong></td>
+<td>Musée de Susan, 10 métaux</td>
+<td><strong>09</strong></td>
+</tr>
+<tr>
+<td><strong>Cuisine</strong></td>
+<td>La quête d'Atul</td>
+<td><strong>11</strong></td>
+</tr>
+<tr>
+<td><strong>Fonderie, scierie, verger, stalle à vaches, salle d'archives, terre retenant l'eau, ruche</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>Sept améliorations sur seize n'ont pas d'emplacement documenté. Aucune source consultée ne les situe. Elles sont probablement dans les coffres que ce guide liste région par région <em>(parties <strong>02</strong> à <strong>08</strong>)</em>.</p>
+<h2 id="butin-exhaustif-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les 5 paliers de table à dessin</strong></td>
+<td><span class="badge neutre">Plans</span></td>
+<td><strong>Albert</strong> <em>(partie <strong>23</strong>)</em></td>
+<td>Les 17 bâtiments de production</td>
+</tr>
+<tr>
+<td><strong>Les 15 plans de maisons</strong></td>
+<td><span class="badge neutre">Plans</span></td>
+<td><strong>Les quêtes des esprits</strong> ; <strong>celui de Buck s'ACHÈTE à Edgeborough Lane</strong></td>
+<td><strong>Loger les passagers</strong></td>
+</tr>
+<tr>
+<td><strong>Les 3 plans de structures</strong></td>
+<td><span class="badge neutre">Plans</span></td>
+<td><strong>Par courrier d'Albert après chaque capacité</strong> <em>(partie <strong>24</strong>)</em></td>
+<td>Succès Maître du chantier</td>
+</tr>
+<tr>
+<td><strong>Preuve d'achat : vache</strong></td>
+<td><span class="badge neutre">Ressource</span></td>
+<td><strong>Coffre 3 d'Edgeborough Lane</strong>, <strong>ou sa boutique</strong> <em>(partie <strong>06</strong>)</em></td>
+<td>La stalle à vaches</td>
+</tr>
+<tr>
+<td><strong>Papier fait maison</strong> <em>(×2)</em></td>
+<td><span class="badge neutre">Plat</span></td>
+<td><strong>Sciure + colle tout usage</strong>, à la cuisine <em>(partie <strong>20</strong>)</em></td>
+<td>Les affiches de Buck</td>
+</tr>
+<tr>
+<td><strong>Diamant</strong></td>
+<td><span class="badge neutre">Gemme</span></td>
+<td>Carrière Hoseki, Nordweiler, quais de Southpoint, Overbrook, musée de Susan</td>
+<td>Les figurines variées de Buck</td>
+</tr>
+<tr>
+<td><strong>Corde métallique</strong> <em>(×2 pour la tyrolienne)</em></td>
+<td><span class="badge neutre">Ressource</span></td>
+<td><strong>Mines Kaltstein, quai Nordsee</strong>, <strong>course « Amateur de glisse »</strong> <em>(partie <strong>09</strong>)</em></td>
+<td>La Tyrolienne et l'amélioration du corral</td>
+</tr>
+<tr>
+<td><strong>Les 16 améliorations de bâtiments</strong></td>
+<td><span class="badge neutre">Améliorations</span></td>
+<td><strong>Coffres, musée, quêtes</strong></td>
+<td><strong>Doubler les rendements</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="lordre-de-construction-recommande">L'ordre de construction recommandé</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Quoi</th>
+<th>Pourquoi maintenant</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td><strong>Maison d'invités</strong> <em>(10 bûches d'érable)</em></td>
+<td>Loger tout le monde en attendant</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Cuisine</strong> <em>(5 bûches d'érable, 8 gelées scintillantes)</em></td>
+<td>Rien ne marche sans elle</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Jardin</strong> et <strong>Champ</strong></td>
+<td>Les cultures</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Scierie</td>
+<td>Les planches, et toutes les constructions</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Métier à tisser</td>
+<td>Les fils et les tissus</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Fonderie</td>
+<td>Les lingots et le verre</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Amélioration de la cuisine</td>
+<td>Cuisiner avec deux ingrédients</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Moulin à Vent</td>
+<td>Toutes les farines</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Les maisons des esprits, au fil des quêtes</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Concasseur</td>
+<td>Les poudres, dont la silice du palier Maître</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>Forge, <strong>cellier</strong>, <strong>stalle à vaches</strong></td>
+<td>Les feuilles, le fromage, le lait</td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td>Les 3 structures de capacité</td>
+<td>Le succès</td>
+</tr>
+<tr>
+<td><strong>13</strong></td>
+<td>Poulailler, verger, corral, salle d'archives, salon</td>
+<td>Le reste du succès</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="la-chaine-de-production-en-un-schema">La chaîne de production, en un schéma</h3>
+<p>Pour comprendre d'un coup d'œil quoi mène à quoi.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Entrée</th>
+<th>Bâtiment</th>
+<th>Sortie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bûche</strong></td>
+<td>Scierie</td>
+<td><strong>1 à 4 planches</strong> <em>(3 à 6 améliorée)</em> <strong>+ 1 sciure</strong></td>
+</tr>
+<tr>
+<td><strong>Fibre</strong></td>
+<td>Métier à tisser</td>
+<td><strong>1 à 3 fils</strong></td>
+</tr>
+<tr>
+<td><strong>Fil</strong></td>
+<td>Métier à tisser amélioré</td>
+<td><strong>1 à 3 tissus</strong></td>
+</tr>
+<tr>
+<td><strong>Minerai</strong></td>
+<td>Fonderie</td>
+<td>Lingot</td>
+</tr>
+<tr>
+<td><strong>Bouteille vide</strong></td>
+<td>Fonderie</td>
+<td><strong>Verre</strong></td>
+</tr>
+<tr>
+<td><strong>Vieux soulier</strong></td>
+<td>Fonderie</td>
+<td><strong>Colle tout usage</strong></td>
+</tr>
+<tr>
+<td><strong>Roche</strong></td>
+<td>Concasseur</td>
+<td>Poudre</td>
+</tr>
+<tr>
+<td><strong>Lingot + poudre</strong></td>
+<td>Forge</td>
+<td>Feuille</td>
+</tr>
+<tr>
+<td><strong>Grain</strong></td>
+<td>Moulin à Vent</td>
+<td>Farine</td>
+</tr>
+<tr>
+<td><strong>Lait</strong></td>
+<td>Cellier</td>
+<td>Yogourt, puis <strong>fromage</strong></td>
+</tr>
+<tr>
+<td><strong>Hareng</strong></td>
+<td>Cellier</td>
+<td><strong>Surströmming</strong></td>
+</tr>
+<tr>
+<td><strong>Chou</strong></td>
+<td>Cellier</td>
+<td><strong>Choucroute</strong></td>
+</tr>
+<tr>
+<td><strong>Ingrédients</strong></td>
+<td><strong>Cuisine</strong></td>
+<td><strong>Les 106 plats</strong> <em>(partie <strong>27</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p>Et le détail de chaque filière est dans les parties <strong>26</strong>, <strong>27</strong> et <strong>29</strong>.</p>
+<h3 id="les-pieges-des-batiments">Les pièges des bâtiments</h3>
+<ul>
+<li>Croire qu'il faut tout garder en même temps. <strong>Non</strong> : <strong>construis, coche, démonte.</strong></li>
+<li><strong>Démonter un bâtiment amélioré.</strong> Les matériaux de l'amélioration ne sont pas remboursés <em>(les lueurs, si)</em>.</li>
+<li>Essayer de démonter la salle d'archives B-2522. <strong>Impossible</strong>, <strong>comme les maisons d'esprits.</strong></li>
+<li>Oublier que la maison d'invités devient la salle de jeu de Stanley. <strong>Elle est reconstructible après.</strong></li>
+<li class="alerte">⚠️ Améliorer le cubicule d'ELENA avant de la rendre extatique. 7 500 lueurs pour la rendre malheureuse <em>(partie <strong>21</strong>)</em>.</li>
+<li>Oublier les 2 papiers faits maison des affiches de Buck. Ils demandent la quête de Stanley <em>(partie <strong>20</strong>)</em>.</li>
+<li>Oublier la preuve d'achat : vache de la stalle à vaches <em>(partie <strong>06</strong>)</em>.</li>
+<li><strong>Construire 4 métiers à tisser.</strong> Le coût quadruple, et un seul suffit.</li>
+<li>Ne construire qu'UN corral à moutons. Un seul mouton par corral — il en faut donc <strong>cinq</strong> pour les 5 moutons <em>(partie <strong>26</strong>)</em>.</li>
+</ul>
+<h3 id="un-seul-mouton-par-corral">Un seul mouton par corral</h3>
+<p>C'est la précision la plus utile de cette partie, et aucune source française ne la donne.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La règle</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Un corral = un mouton</strong></td>
+<td>« Only one sheep is allowed per corral »</td>
+</tr>
+<tr>
+<td><strong>Il y a 5 moutons</strong></td>
+<td>Hummingberg, mont Toroyama, champs Gurenu, Nordweiler, Sandwich Walk <em>(partie <strong>15</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Donc il faut 5 corraux</strong></td>
+<td>Pour le succès Gardien de moutons</td>
+</tr>
+<tr>
+<td><strong>Le coût</strong></td>
+<td>16+32+48+64+64 planches de chêne = 224 planches, et 4+8+12+16+16 = 56 lingots de cuivre</td>
+</tr>
+</tbody>
+</table></div>
+<p>Deux cent vingt-quatre planches de chêne. C'est le plus gros besoin en bois du jeu. Plante du chêne sur les sœurs Tortues <em>(partie <strong>09</strong>)</em>.</p>
+<p class="alerte manquable">⏳ Et sans corral, un mouton erre librement sur le bateau et <strong>mange tes cultures</strong>. Démonter un corral ne fait pas disparaître le mouton.</p>
+<p><strong>Un détail qui aide</strong> : tondre un mouton donne <strong>2 fibres de laine</strong>, et sa laine repousse plus vite s'il est bien nourri.</p>
+<h3 id="ce-que-les-ameliorations-apportent-vraiment">Ce que les améliorations apportent vraiment</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Amélioration</th>
+<th>Son effet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cuisine</strong></td>
+<td>Cuisiner avec deux ingrédients</td>
+</tr>
+<tr>
+<td><strong>Métier à tisser</strong></td>
+<td>Débloque le passage fil → tissu</td>
+</tr>
+<tr>
+<td><strong>Scierie</strong></td>
+<td>1 à 4 planches devient 3 à 6</td>
+</tr>
+<tr>
+<td><strong>Moulin à vent</strong></td>
+<td>Double la production</td>
+</tr>
+<tr>
+<td><strong>Cellier</strong></td>
+<td>Double la production</td>
+</tr>
+<tr>
+<td><strong>Corral à moutons</strong></td>
+<td>Les moutons restent rassasiés plus longtemps</td>
+</tr>
+<tr>
+<td><strong>Les autres</strong></td>
+<td>⚠️ <strong>à vérifier en jeu</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Les deux améliorations vraiment indispensables sont celle de la cuisine et celle du métier à tisser. Les autres sont du confort.</p>
+<p class="alerte manquable">⏳ Et le guide des trophées français le confirme : « Si il n'est pas obligatoire de les améliorer pour le Platine, un concasseur ou une fonderie plus performante vont vous faciliter la vie. »</p>
+<h2 id="alertes-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ Le succès « Maître du chantier » demande de construire chaque bâtiment au moins une fois, pas de les garder tous. <strong>Construis, coche, démonte.</strong></li>
+<li class="alerte">⚠️ Les maisons d'esprits et la salle d'archives B-2522 ne se démontent pas.</li>
+<li class="alerte">⚠️ Démonter rembourse tout le coût de construction et <strong>les lueurs de l'amélioration</strong> — mais pas les matériaux de l'amélioration.</li>
+<li class="alerte">⚠️ Un seul mouton par corral. Il faut donc <strong>5 corraux</strong> pour les 5 moutons, soit <strong>224 planches de chêne</strong> et <strong>56 lingots de cuivre</strong> <em>(partie <strong>15</strong>)</em>.</li>
+<li class="alerte">⚠️ Le coût des bâtiments de production augmente à chaque copie, et plafonne à la quatrième <em>(×1, ×2, ×3, ×4)</em>.</li>
+<li class="alerte">⚠️ La maison d'invités devient la salle de jeux de Stanley, <strong>mais elle est reconstructible</strong> <em>(partie <strong>20</strong>)</em>.</li>
+<li class="alerte">⚠️ Les décorations du cubicule d'Elena coûtent 7 500 lueurs — le plus cher du jeu — <strong>et la rendent malheureuse.</strong> <strong>Fais-les après son départ</strong> <em>(partie <strong>21</strong>)</em>.</li>
+<li class="alerte">⚠️ Les affiches de Buck demandent 2 papiers faits maison <em>(sciure + colle tout usage)</em>, donc la quête de Stanley <em>(partie <strong>20</strong>)</em>, et <strong>42 fils de lin</strong>, le plus gros besoin en textile du jeu.</li>
+<li class="alerte">⚠️ <strong>Les figurines variées de Buck demandent 1 diamant.</strong></li>
+<li class="alerte">⚠️ Le cellier demande 10 ectoplasmes en bouteille <em>(Stanley)</em> et la stalle à vaches une preuve d'achat : vache <em>(Edgeborough Lane)</em>.</li>
+<li class="alerte">⚠️ La Tyrolienne se construit en deux exemplaires en même temps : 8 fils de laine, 4 marbres, 2 cordes métalliques au total <em>(partie <strong>24</strong>)</em>.</li>
+<li class="alerte">⚠️ Le souffleur demande 12 tissus en nebula, <strong>donc l'événement d'ALICE</strong> <em>(partie <strong>15</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : <strong>l'emplacement de 7 améliorations sur 16</strong> <em>(fonderie, scierie, verger, stalle à vaches, salle d'archives, terre retenant l'eau, ruche)</em>.</li>
+<li class="alerte">⚠️ <strong>à vérifier en jeu</strong> : à quoi sert exactement la <strong>licence bovine</strong> d'Old-Central District, puisqu'elle n'apparaît pas dans le coût de la stalle à vaches <em>(partie <strong>06</strong>)</em>.</li>
+<li class="alerte">⚠️ <strong>noms français à vérifier en jeu</strong> : « tour de l'horloge à coucou », <strong>« lumières suspendues »</strong>, <strong>« terre retenant l'eau »</strong>, <strong>« ruche »</strong>, <strong>« cadres photo »</strong>, <strong>« abat-jour »</strong>, <strong>« expériences ratées »</strong> — les noms de maisons et de décorations viennent du guide des trophées français.</li>
+</ul>
+<h2 id="check-list-26" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="les-15-maisons-desprits-2">Les 15 maisons d'esprits</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Maison d'invités</strong> <em>(10 bûches d'érable)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Refuge de Gwen</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Sanctuaire de Summer</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Atelier d'Atul</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Chalet d'Alice</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Bungalow d'Astrid</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Galerie de Gustav</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Bercail de Bruce et Mickey</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Tour de l'horloge à coucou</strong> <em>(8 planches d'érable)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Ferme de Beverly</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Salon</strong> <em>(Giovanni)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Salle de jeu de Stanley</strong> <em>(depuis la maison d'invités)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Antre des merveilles de Buck</strong> <em>(plan à acheter)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Cubicule d'Elena</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Chambre de garde de Jackie</strong></li>
+</ul>
+<h3 id="les-17-batiments-de-production-2">Les 17 bâtiments de production</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Jardin</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cuisine</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Champ</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Métier à tisser</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Fonderie</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Scierie</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Moulin à vent</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Verger</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Corral à moutons</strong> <em>(×5 pour les 5 moutons)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Poulailler</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Salon</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Concasseur</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Stalle à vaches</strong> <em>(preuve d'achat : vache)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Forge</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cellier</strong> <em>(10 ectoplasmes)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Salle d'archives B-2522</strong> <em>(à acheter, non démontable)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Ruche</strong> <em>(amélioration du champ, produit du miel)</em></li>
+</ul>
+<h3 id="les-3-structures-de-capacite-2">Les 3 structures de capacité</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Souffleur</strong> <em>(12 tissus en nebula)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Tyrolienne</strong> <em>(deux exemplaires)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Surface rebondissante</strong></li>
+</ul>
+<h3 id="les-16-ameliorations">Les 16 améliorations</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Cuisine</strong> <em>(la plus importante)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Métier à tisser</strong> <em>(débloque les tissus)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Jardin</strong> et <strong>Terre retenant l'eau</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Champ</strong>, <strong>Terre retenant l'eau</strong> et <strong>Ruche</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Scierie</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Fonderie</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Moulin à vent</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Verger</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Corral à moutons</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Poulailler</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Concasseur</strong> <em>(musée, 5 gemmes)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Stalle à vaches</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Forge</strong> <em>(musée, 10 métaux)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Cellier</strong> <em>(bois Brumeux)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Salle d'archives</strong></li>
+</ul>
+<h3 id="le-succes">Le succès</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Succès « Maître du chantier »</strong></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="les-capacites-de-stella-et-les-sanctuaires.html" rel="prev"><small>← Partie précédente</small><b>Les capacités de Stella et les sanctuaires</b></a><a class="suiv" href="lagriculture-lelevage-et-les-ressources.html" rel="next"><small>Partie suivante →</small><b>L&#x27;agriculture, l&#x27;élevage et les ressources</b></a><a class="tout" href="spiritfarer.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Spiritfarer · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

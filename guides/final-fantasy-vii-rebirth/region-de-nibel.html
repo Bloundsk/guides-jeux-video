@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Région de Nibel – Guide Final Fantasy VII Rebirth</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Rebirth, Région de Nibel : D&#x27;abord : le chocobo Sirèna et son Choco-jet. À ne pas rater : le Pendantéria Affaiblissement défensif du…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/region-de-nibel.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Région de Nibel · Guide Final Fantasy VII Rebirth">
+<meta property="og:description" content="Final Fantasy VII Rebirth, Région de Nibel : D&#x27;abord : le chocobo Sirèna et son Choco-jet. À ne pas rater : le Pendantéria Affaiblissement défensif du…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/region-de-nibel.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Rebirth", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/"}, {"@type": "ListItem", "position": 3, "name": "Région de Nibel", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/region-de-nibel.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-rebirth" class="compact" data-partie="region-de-nibel"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Rebirth</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Rebirth : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Rebirth</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-la-chute-dun-heros.html"><span class="num">✦</span><span class="libelle">Chapitre 1 — La chute d&#x27;un héros</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-vers-de-nouveaux-horizons.html"><span class="num">✦</span><span class="libelle">Chapitre 2 — Vers de nouveaux horizons</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-sur-les-traces-des-manteaux-noirs.html"><span class="num">✦</span><span class="libelle">Chapitre 3 — Sur les traces des manteaux noirs</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-le-debut-dune-nouvelle-ere.html"><span class="num">✦</span><span class="libelle">Chapitre 4 — Le début d&#x27;une nouvelle ère</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-une-croisiere-sanglante.html"><span class="num">✦</span><span class="libelle">Chapitre 5 — Une croisière sanglante</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-un-paradis-ensoleille.html"><span class="num">✦</span><span class="libelle">Chapitre 6 — Un paradis ensoleillé</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-un-retour-douloureux.html"><span class="num">✦</span><span class="libelle">Chapitre 7 — Un retour douloureux</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-le-gold-saucer.html"><span class="num">✦</span><span class="libelle">Chapitre 8 — Le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-a-lecoute-de-la-planete.html"><span class="num">✦</span><span class="libelle">Chapitre 9 — À l&#x27;écoute de la planète</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-protecteur-de-la-vallee.html"><span class="num">✦</span><span class="libelle">Chapitre 10 — Protecteur de la vallée</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-un-village-natal-meconnaissable.html"><span class="num">✦</span><span class="libelle">Chapitre 11 — Un village natal méconnaissable</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-en-quete-de-la-pierre-cle.html"><span class="num">✦</span><span class="libelle">Chapitre 12 — En quête de la pierre-clé</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-13-le-temple-des-anciens.html"><span class="num">✦</span><span class="libelle">Chapitre 13 — Le temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-un-monde-a-lagonie.html"><span class="num">✦</span><span class="libelle">Chapitre 14 — Un monde à l&#x27;agonie</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="region-de-la-prairie.html"><span class="num">✦</span><span class="libelle">Région de la Prairie</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="region-de-junon.html"><span class="num">✦</span><span class="libelle">Région de Junon</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="region-de-corel.html"><span class="num">✦</span><span class="libelle">Région de Corel</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="region-de-gongaga.html"><span class="num">✦</span><span class="libelle">Région de Gongaga</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="region-de-cosmo.html"><span class="num">✦</span><span class="libelle">Région de Cosmo</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="#region-de-nibel"><span class="num">✦</span><span class="libelle">Région de Nibel</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="locean-central-et-les-iles.html"><span class="num">✦</span><span class="libelle">L&#x27;Océan Central et les îles</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-materias.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-armes-et-les-codex.html"><span class="num">✦</span><span class="libelle">Les armes et les codex</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-invocations.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="laffinite-et-les-coequipiers.html"><span class="num">✦</span><span class="libelle">L&#x27;affinité et les coéquipiers</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="queens-blood.html"><span class="num">✦</span><span class="libelle">Queen&#x27;s Blood</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-mini-jeux-4.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="le-simulateur-de-combat.html"><span class="num">✦</span><span class="libelle">Le simulateur de combat</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-rebirth.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Rebirth</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-21">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="region-de-nibel">Région de Nibel</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-21"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-21">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>D'abord</strong> : le chocobo <strong>Sirèna</strong> et son Choco-jet.</li>
+<li><strong>À ne pas rater</strong> : le <strong class="objet">Pendantéria Affaiblissement défensif</strong> du sous-marin (enquête 2).</li>
+<li><strong class="objet">Gjallahorn</strong> de Cait Sith : 45 lotus chocobo au total.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-21" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Porter la sixième et dernière région continentale à <strong>100 %</strong> : <strong>4 puits de vie</strong>, <strong>1 rapport chocobo</strong>, <strong>4 rapports de chasse</strong>, <strong>4 rapports d'enquête</strong> menant à la <strong>protorelique des manteaux noirs</strong>, <strong>1 rapport d'excavation</strong>, <strong>3 autels d'Odin</strong> plus <strong>Odin</strong> au simulateur, <strong>1 rapport mog</strong> — celui qui porte la Boutique mog au rang maximal — <strong>1 rapport secret</strong> <em>(Roi zu)</em> et <strong>3 quêtes annexes</strong>.</p>
+<p>Nibel s'atteint par l'aérodrome de Cosmo à la fin du chapitre 10 et s'ouvre au <strong>chapitre 11</strong>. Les niveaux vont de <strong>40</strong> à <strong>45</strong>.</p>
+<p>La région entière tourne autour d'un seul objet : Sirèna, le chocobo marin et son Choco-jet. Trois puits de vie sur quatre, deux autels d'Odin, le rapport mog, deux rapports de chasse et deux rapports d'enquête en dépendent. <strong>Capture-la avant toute chose.</strong></p>
+<h2 id="itineraire-21" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ol>
+<li><strong>« Les arcanes du dressage »</strong> auprès de Billy au Palais du sage des chocobos, qui t'envoie <strong>capturer Sirèna</strong>.</li>
+<li>Le rapport chocobo : le chocobo marin de Nibel — le Choco-jet ouvre toute la région.</li>
+<li><strong>Récolter 30 lotus chocobo</strong> pour finir la quête — mais vise 45 pour l'arme de Cait Sith.</li>
+<li><strong>Les tours de transmission</strong>.</li>
+<li><strong>Le rapport mog</strong>, dans les montagnes en face de la Tour 2 → <strong>Boutique mog rang 7, le rang maximal</strong>.</li>
+<li><strong>Les puits de vie</strong>, le <strong>rapport d'excavation</strong>, les <strong>chasses</strong> et les <strong>autels d'Odin</strong>.</li>
+<li><strong>Les quatre rapports d'enquête</strong>, dans l'ordre imposé, jusqu'au <strong>Bretteur excentrique</strong> et à la <strong>protorelique des manteaux noirs</strong>.</li>
+<li><strong>Le rapport secret : Roi zu</strong> <em>(niveau 43)</em>.</li>
+<li>« Un ange à la fourrure blanche », puis <strong>« Un air mélancolique »</strong> au chapitre 12.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-21" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="le-rapport-chocobo-sirena">Le rapport chocobo : Sirèna</h3>
+<p class="alerte">⚠️ <strong>À faire en premier.</strong> Le rapport se débloque dans le cadre de la quête « Les arcanes du dressage », donnée par Billy au Palais du sage des chocobos.</p>
+<p><strong>Le principe</strong> : t'approcher de Sirèna sans te faire repérer par les autres chocobos.</p>
+<p><strong>Le pas à pas :</strong></p>
+<ol>
+<li>Monte d'abord sur la droite pour récupérer des Appâts pour chocobos.</li>
+<li>Sers-t'en pour attirer l'attention de Sirèna et <strong>la guider jusqu'à l'entrée</strong>.</li>
+<li class="alerte">⚠️ Fais bien attention à ce que les cactus se dégonflent avant son passage.</li>
+<li>Attire-la jusque dans le champ de lavandes à l'entrée, puis <strong>faufile-toi jusqu'à elle</strong> et <strong>capture-la avec Triangle</strong>.</li>
+</ol>
+<p>Sirèna est un chocobo marin. Son Choco-jet — <strong>maintiens L2 dans l'eau</strong> — te <strong>propulse en l'air</strong> pour atteindre des corniches et récolter des <strong>lotus chocobo</strong>. C'est la clé de toute la région.</p>
+<h3 id="les-quatre-puits-de-vie-2">Les quatre puits de vie</h3>
+<p>Ici, l'oiseau hulule-vies est violet. Et trois des quatre puits exigent le Choco-jet.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Nom</th>
+<th>Où</th>
+<th>Choco-jet ?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Puits de vie de l'estuaire</td>
+<td><strong>Au nord-ouest de la Tour de transmission 3</strong> ; <strong>suis-le dans l'eau</strong>, puis Choco-jet jusqu'à une corniche</td>
+<td>Oui</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Puits de vie aux terrasses</td>
+<td><strong>Au nord-ouest de la Tour de transmission 3</strong> ; <strong>même principe</strong> : <strong>dans l'eau, puis Choco-jet</strong></td>
+<td>Oui</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Puits de vie côtier</td>
+<td><strong>À l'ouest de la Tour de transmission 3</strong> ; <strong>dans l'eau, puis Choco-jet</strong></td>
+<td>Oui</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Puits de vie insulaire</td>
+<td>Dans une grotte sur l'île au sud de la Tour de transmission 4</td>
+<td>Non</td>
+</tr>
+</tbody>
+</table></div>
+<p>Les trois premiers sont groupés autour de la Tour 3 : fais-les d'une traite.</p>
+<h3 id="les-quatre-rapports-de-chasse-2">Les quatre rapports de chasse</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Nom</th>
+<th>Niveau</th>
+<th>Où</th>
+<th>Ennemis</th>
+<th>Objectifs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Un hurlement enflammé</td>
+<td>40</td>
+<td>À l'est de la Tour de transmission 1</td>
+<td>3 Loups flamboyants</td>
+<td>Fragiliser ; Choc ; <strong>2 min</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Un insecte omnivore</td>
+<td>41</td>
+<td>Dans une grotte au nord du Pont de la Gjöll, <strong>accessible par voie maritime</strong></td>
+<td>4 Carnifex</td>
+<td>Fragiliser ; Choc ; <strong>1 min 30</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Un esprit envoûté par la mako</td>
+<td>41</td>
+<td>Au sud-est de la Tour de transmission 3</td>
+<td>2 Valrons marquis</td>
+<td>Fragiliser ; Choc ; <strong>1 min 40</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Un dragon venimeux</td>
+<td>42</td>
+<td>À l'ouest de l'île au sud de la Tour de transmission 4 ; passe par la grotte sur la face ouest et utilise le Choco-jet pour atteindre la corniche</td>
+<td>1 Pétrigorgon</td>
+<td>Fragiliser ; Choc ; <strong>2 min 30</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Les stratégies :</strong></p>
+<ul>
+<li><strong>Chasse 1</strong> — Loups flamboyants : Feu, et surtout Extra-Feu quand ils sont entourés de flammes bleues. Flammes éteintes, tu les fragilises en esquivant Percée mordante ou Bond carnassier.</li>
+<li><strong>Chasse 2</strong> — Carnifex : Glace. Ils sont rapides et bougent beaucoup : les Enchaînements glacés sont plus fiables que les sorts visés.</li>
+<li><strong>Chasse 3</strong> — Valrons marquis : Glace, et surtout Extra-Glace.</li>
+<li><strong>Chasse 4</strong> — Pétrigorgon : Glace. Tu le fragilises facilement en détruisant sa mâchoire quand il lance Brume empoisonnée : garde un sort de Glace puissant prêt et vise cet endroit pendant qu'il prépare l'attaque. Évite de rester derrière lui : il frappe de la queue.</li>
+</ul>
+<h3 id="les-quatre-rapports-denquete-la-traque-des-manteaux-noirs">Les quatre rapports d'enquête : la traque des manteaux noirs</h3>
+<p>Les rapports d'enquête de Nibel consistent à suivre des groupes de manteaux noirs, et chacun donne un <strong>fragment de protorelique</strong>.</p>
+<p>Rapport 1 — Un groupe de manteaux noirs. Niveau <strong>41</strong>. Juste à l'ouest de la Tour de transmission 2, de l'autre côté du pont.</p>
+<p>Suis les hommes en manteaux noirs jusqu'à leur destination. <strong>Ils avancent très lentement</strong> — mais tu peux les pousser avec L2.</p>
+<p>En chemin, ils sont attaqués par des Oronges gulvaniques et des Loups de Nibel, <strong>tous sensibles au Feu</strong>.</p>
+<p><strong>Ouvre la porte du bâtiment</strong> : <strong>2 Rôdeurs furtifs</strong>, <strong>sensibles à la Glace</strong>. Pour les fragiliser : lance tes sorts et compétences de Glace au moment où ils lancent Agressivité stimulée. <strong>Ça les interrompt</strong>, et tu peux ensuite les choquer.</p>
+<p><strong>Récompense</strong> : un <strong class="objet">Fragment de protorelique α</strong>.</p>
+<p><strong>Rapport 2 — À l'aérodrome.</strong> Niveau <strong>41</strong>. Sur la route qui mène à l'aérodrome de Nibel, juste au sud de la Tour de transmission 1.</p>
+<p>Suis à nouveau le groupe — <strong>jusqu'à une porte verrouillée</strong>.</p>
+<p><strong>Il faut la contourner par la mer :</strong></p>
+<ol>
+<li><strong>Longe la côte</strong> jusqu'à un <strong>portail enfoncé</strong> par lequel passer pour <strong>rejoindre les docks</strong>.</li>
+<li class="alerte manquable">⏳ <strong>Choco-jet pour passer au-dessus des débris</strong> : tu atterris sur une plateforme avec <strong>2 Loups de Nibel</strong> <em>(Feu)</em> et <strong>1 Valron</strong> <em>(Glace)</em>. Le Valron peut lancer Méga-Gravité : interromps-le avant la fin du sort.</li>
+<li><strong>Inspecte la porte du côté gauche</strong> pour retrouver la trace des manteaux noirs. <strong>Leur porte est verrouillée de l'intérieur</strong> : il faut un autre chemin.</li>
+<li><strong>Descends à gauche</strong> : <strong>2 Disgorgons</strong> au fond de la salle. Compétences de Glace sur leur Mâchoire quand ils commencent Brume empoisonnée.</li>
+<li>Utilise les flaques d'eau au sol pour te hisser au niveau supérieur avec ton chocobo.</li>
+<li>Et surtout : fais un tour dans le sous-marin pour récupérer un Pendantéria Affaiblissement défensif. C'est le trésor caché de la région.</li>
+<li>Passe par le trou dans le mur sur la droite, puis Choco-jet par-dessus les débris pour rejoindre les manteaux noirs.</li>
+<li><strong>3 Rôdeurs furtifs</strong> — même méthode : Glace pendant Agressivité stimulée.</li>
+</ol>
+<p><strong>Récompense</strong> : un <strong class="objet">Fragment de protorelique β</strong>.</p>
+<p><strong>Rapport 3 — À l'estuaire.</strong> Niveau <strong>42</strong>. À l'estuaire au sud de la Tour de transmission 1.</p>
+<p>Cette fois, les manteaux noirs sont attaqués et se transforment en Entités nécrotiques, comme au chapitre 5.</p>
+<p><strong>Rappel de leurs trois fenêtres de Fragilité</strong> : <strong>esquiver Lacération ténébreuse</strong>, ou les attaquer avec des compétences puissantes pendant qu'ils préparent un sort ou lancent Griffes noires.</p>
+<ol>
+<li>Suis les manteaux noirs en haut de la pente : un Dæmonas <em>(Glace)</em> et une Entité nécrotique.</li>
+<li><strong>Continue l'ascension</strong> : une autre Entité nécrotique et un Mhadomhanju. Il fonctionne comme le Hurleur : <strong>attaque-le à distance</strong> pour faire monter sa jauge de Choc et éviter le tournoiement de sa masse. Déflagration supersonique est parfaite si tu l'as.</li>
+<li>Tout en haut, suis de nouveaux manteaux noirs jusqu'au portail. Tourne la valve 3 fois pour l'ouvrir.</li>
+<li>À l'intérieur : 2 Entités nécrotiques en bas à gauche, puis <strong>une énigme de valves</strong>.</li>
+</ol>
+<p><strong>L'énigme des valves</strong> : il faut <strong>aligner les triangles rouges</strong> avec les entités. <strong>La règle de couplage :</strong></p>
+<ul>
+<li>la valve de gauche fait aussi bouger celle du milieu ;</li>
+<li>la valve du milieu fait aussi bouger celle de droite ;</li>
+<li>la valve de droite est la seule à bouger seule.</li>
+</ul>
+<p><strong>Autrement dit : règle de droite à gauche</strong>, en finissant par celle de gauche.</p>
+<ol start="5">
+<li><strong>Salle suivante</strong> : un Ptéronops sanguinaire, <strong>faible à la Foudre</strong>, qui ne se fragilise que par les dégâts.
+<ul>
+<li>Frappe-le à l'œil au physique.</li>
+<li>PV bas, il lance Bouclier de mana : la matéria <strong>Annihilation</strong> le retire, profites-en pour le physique et les compétences de Foudre.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Récompense</strong> : un <strong class="objet">Fragment de protorelique γ</strong>.</p>
+<p><strong>Rapport 4 — Sur la côte.</strong> Niveau <strong>45</strong>. Sur la côte au sud-ouest de la Tour de transmission 1.</p>
+<p>Appelle ton chocobo marin et rejoins l'île en face de la côte. De nombreux manteaux noirs sur la plage.</p>
+<p>Utilise le Choco-jet pour te hisser sur les différentes corniches et atteindre le <strong>niveau supérieur</strong>. Et là, <strong>le Bretteur excentrique</strong> t'attend de nouveau.</p>
+<p>Il est plus puissant que dans la version de Gongaga, mais il reste <strong>sensible au Feu</strong> et fragilisable par des gardes précises.</p>
+<p>La préparation idéale, et elle fait toute la différence :</p>
+<ul>
+<li><strong>matéria Garde précise renforcée</strong> — c'est le cœur du combat ;</li>
+<li>il est aussi sensible au Poison et aux altérations Anti-Cuirasse, Anti-Providence, Anti-Bravoure et Anti-Foi : équipe Affaiblissement défensif, Affaiblissement offensif et Vénéfice ;</li>
+<li><strong>lance Méga-Toxine dès que possible</strong>.</li>
+</ul>
+<p class="alerte manquable">⏳ <strong>La boucle du combat</strong> : attends qu'il t'attaque et pare avec R1 pour le déstabiliser, puis sorts et compétences de Feu. <strong>Garde Barrière ou Récupération</strong> pour les parades ratées.</p>
+<p>Au niveau 45, le combat ne devrait pas te donner trop de fil à retordre.</p>
+<p><strong>Récompense</strong> : la <strong>Protorelique des manteaux noirs</strong>.</p>
+<h3 id="le-rapport-dexcavation-2">Le rapport d'excavation</h3>
+<p><strong>Un seul dans cette région.</strong></p>
+<p><strong>Ruines d'une base isolée.</strong> Du côté est de l'île au sud de la Tour de transmission 4. <strong>3 trésors.</strong></p>
+<p><strong>Recettes</strong> : <strong>Protège-bras de la gloire +</strong>, Amulette de l'Arbre-Monde +, Révélation de la planète, Écusson de l'ardeur combattante, Armille de Garm +, Bracelet de Varvados +.</p>
+<h3 id="les-trois-autels-dodin">Les trois autels d'Odin</h3>
+<p>Ici, les pierres guides sont bleues. Deux des trois autels exigent le Choco-jet.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Autel</th>
+<th>Où</th>
+<th>Choco-jet ?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Autel d'Odin α</strong></td>
+<td>Passe par l'étendue d'eau au nord de la Tour de transmission 3 : pierre guide visible ; <strong>suis la lueur jusqu'à une caverne</strong>, puis <strong>Choco-jet pour monter sur la corniche</strong></td>
+<td>Oui</td>
+</tr>
+<tr>
+<td><strong>Autel d'Odin β</strong></td>
+<td>Depuis la Tour de transmission 3, part vers l'ouest : pierres guides en route ; <strong>suis la lueur jusqu'à un tunnel</strong></td>
+<td>Non</td>
+</tr>
+<tr>
+<td><strong>Autel d'Odin γ</strong></td>
+<td>Tout au nord de l'île la plus au nord-ouest de la région : pierre guide <strong>sur la côte</strong> ; <strong>Choco-jet pour monter sur une corniche</strong>, puis <strong>suis le chemin de la grotte</strong></td>
+<td>Oui</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Battre Odin</strong> au simulateur, programme <strong>Esper : Odin</strong>.</p>
+<p>Odin est l'Esper le plus dangereux du jeu, pour une raison précise :</p>
+<p>S'il parvient à te toucher trop souvent, il utilise Annonce du Ragnarök puis Lame du Crépuscule — ce qui tue toute ton équipe.</p>
+<p>Il n'a aucune faiblesse élémentaire. Trois façons de le fragiliser :</p>
+<ol>
+<li><strong>des commandes ATB</strong>, c'est-à-dire des <strong>compétences d'arme</strong> ;</li>
+<li><strong>des altérations d'état</strong> — il résiste à presque tout, mais sa résistance à Anti-Cuirasse, Anti-Providence, Anti-Bravoure et Anti-Foi est légère ;</li>
+<li><strong>esquiver ses coups</strong>.</li>
+</ol>
+<p><strong>La préparation :</strong></p>
+<ul>
+<li><strong>matérias Affaiblissement défensif et Affaiblissement offensif</strong> pour le fragiliser plus facilement ;</li>
+<li><strong>Hâte sur toute l'équipe</strong> pour monter les jauges d'ATB plus vite et <strong>multiplier les compétences offensives</strong> ;</li>
+<li><strong>Maxi-Toxine quand même</strong>, malgré sa résistance au Poison : ça peut le fragiliser et infliger des dégâts passifs ;</li>
+<li>Privilégie les altérations qui font baisser sa défense plutôt que sa puissance — car tu dois absolument esquiver ses attaques pour éviter Lame du Crépuscule, et non pas encaisser moins fort ;</li>
+<li>Une équipe d'attaquants à distance facilite les esquives. <strong>Yuffie</strong> est idéale : rapide et elle couvre beaucoup de terrain en esquivant.</li>
+</ul>
+<h3 id="le-rapport-mog-5">Le rapport mog</h3>
+<p>Au centre de la carte, dans une maison de mog dans les montagnes en face de la Tour de transmission 2. Le chocobo marin est probablement nécessaire pour y accéder.</p>
+<p><strong>Minimogs à malice</strong>, en <strong>3 minutes</strong>. Tourbillons, L2 pour porter, interrupteur à tourbillons — les minimogs ramenés lancent des sorts, <strong>trois coups = perdu</strong>.</p>
+<p>→ Boutique mog de rang 7, le rang maximal, avec <strong>une cinématique spectaculaire</strong> à la clé.</p>
+<p><strong>Ce qu'on peut y acheter :</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Objet</th>
+<th>Prix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Éther</strong> ×6</td>
+<td><strong>1 médaille</strong></td>
+</tr>
+<tr>
+<td><strong>Élixir</strong> ×5</td>
+<td><strong>15 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Rubis</strong> ×60</td>
+<td><strong>10 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Émeraude</strong> ×47</td>
+<td><strong>10 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Saphir</strong> ×18</td>
+<td><strong>10 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Matéria Élévation de matéria</strong> ×3</td>
+<td><strong>6 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Pendantéria Soins</strong> ×1</td>
+<td><strong>6 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Pendantéria Feu</strong> ×1</td>
+<td><strong>6 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Pendantéria PV augmentés</strong> ×1</td>
+<td><strong>6 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Pendantéria Renforcement offensif</strong> ×1</td>
+<td><strong>6 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Pendantéria Garde précise renforcée</strong> ×1</td>
+<td><strong>6 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Amulette mog</strong> ×1</td>
+<td><strong>6 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Détecteur de vibrations</strong> ×1</td>
+<td><strong>3 médailles</strong></td>
+</tr>
+<tr>
+<td><strong>Codex Combat à l'épée I</strong> et <strong>IV</strong></td>
+<td><strong>6 médailles</strong> chacun</td>
+</tr>
+<tr>
+<td><strong>Codex Combat à l'arme à feu II</strong> et <strong>IV</strong></td>
+<td><strong>6 médailles</strong> chacun</td>
+</tr>
+<tr>
+<td><strong>Codex Techniques d'arts martiaux I</strong> et <strong>IV</strong></td>
+<td><strong>6 médailles</strong> chacun</td>
+</tr>
+<tr>
+<td><strong>Codex Secrets de la planète II</strong> et <strong>IV</strong></td>
+<td><strong>6 médailles</strong> chacun</td>
+</tr>
+<tr>
+<td><strong>Codex Chronique du guerrier rutilant I</strong> et <strong>V</strong></td>
+<td><strong>6 médailles</strong> chacun</td>
+</tr>
+<tr>
+<td><strong>Codex Techniques de ninjutsu I</strong> et <strong>V</strong></td>
+<td><strong>6 médailles</strong> chacun</td>
+</tr>
+<tr>
+<td><strong>Codex Arcanes de la divination II</strong> et <strong>III</strong></td>
+<td><strong>6 médailles</strong> chacun</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Nouveautés du rang 7</strong> : l'<strong class="objet">Amulette mog</strong>, et les codex Combat à l'arme à feu IV et Techniques de ninjutsu V.</p>
+<h3 id="le-rapport-secret-roi-zu">Le rapport secret : Roi zu</h3>
+<p>Niveau recommandé : <strong>43</strong>. Au sud de l'île la plus à l'ouest de la carte, au niveau d'un grand terrain circulaire.</p>
+<p>Le Roi zu est sensible à la Foudre — mais les sorts de Foudre seuls ne le fragilisent pas.</p>
+<p><strong>La mécanique clé</strong> : focalise tes sorts et compétences élémentaires sur ses ailes quand il lance Chant du zu. <strong>Ça l'interrompt</strong> <strong>et</strong> ça le met en Fragilité — tu peux alors faire monter sa jauge de Choc en l'attaquant.</p>
+<p>Son répertoire tourne autour des tornades et du feu :</p>
+<ul>
+<li>une <strong>grosse Tornade</strong> lancée face à lui ;</li>
+<li>plusieurs petites Tornades incendiaires ;</li>
+<li>des Tourbillons tyranniques ;</li>
+<li><strong>Geôle éolienne</strong>, qui crée une prison de flammes tout autour de ton équipe.</li>
+</ul>
+<p class="alerte manquable">⏳ <strong>La parade contre la Geôle éolienne</strong> : élève-toi dans les airs et frappe-le sans relâche jusqu'à ce que la prison disparaisse. C'est la façon la plus simple de ne pas prendre de dégâts en touchant les bords.</p>
+<h3 id="les-trois-quetes-annexes">Les trois quêtes annexes</h3>
+<p><strong>Les arcanes du dressage.</strong> Aucun niveau. Tableau d'annonces de Nibelheim, puis Billy au Palais du sage des chocobos, au sud-est de l'aérodrome.</p>
+<ol>
+<li>Tu rencontres le Sage des chocobos, qui t'envoie chercher <strong>Sirèna</strong> <em>(voir le rapport chocobo)</em>.</li>
+<li><strong>Sirèna capturée, retourne le voir</strong> : il te demande de <strong>récolter 30 lotus chocobo</strong>. <strong>Maintiens L2 dans l'eau</strong> pour <strong>t'élever dans les airs</strong> et les récolter au Choco-jet.</li>
+<li>Et voilà le conseil à retenir : récolte-en plus de 30. Le surplus s'échange contre des objets utiles dans l'histoire annexe <strong>Collectionneur de lotus chocobo</strong> — et notamment l'arme Gjallahorn pour Cait Sith si tu lui en apportes 45 au total, soit <strong>15 de plus</strong>.</li>
+<li>Pour finir la quête, il faut faire la course contre le Sage des chocobos, avec <strong>Sirèna</strong>, <strong>harnachée comme tu veux</strong>. <em>(La source a opté pour le casque et le plastron de chevalier noir et les <strong>protège-tibias de mercenaire</strong>.)</em></li>
+</ol>
+<p><strong>Récompense</strong> : un <strong class="objet">Bracelet chocobo</strong> et <strong>de l'affinité avec Yuffie</strong>.</p>
+<p>Un ange à la fourrure blanche. Niveau <strong>41</strong>. <strong>Tableau d'annonces de Nibelheim</strong>, puis Christine, la chef de cuisine dans l'ancienne maison de Cloud.</p>
+<p>Elle a perdu son chat et te donne une <strong>ration de pâtée pour chat</strong>.</p>
+<ol>
+<li>Part vers le nord-est depuis Nibelheim jusqu'à l'Arête sud du mont Nibel : tu y trouves le chat blanc — Bouboule — et <strong>ses chatons</strong>. Mais un groupe d'Abeilles tueuses attaque : <strong>sorts de Feu</strong>, par exemple Enchaînement enflammé.</li>
+<li><strong>Suis Bouboule</strong> pour retrouver ses chatons, et <strong>débarrasse-toi des Abeilles tueuses</strong> qui les menacent.</li>
+<li><strong>Suis-le encore</strong> pour les chatons manquants : cette fois, des Abeilles tueuses et une Abeille reine. Elle est aussi sensible au Feu : Extra-Feu ou Méga-Feu expédient le combat.</li>
+<li class="alerte">⚠️ Il faut ensuite escorter Bouboule et ses chatons jusqu'au village. Avance doucement pour ne pas perdre les chatons, et suis simplement le sentier qui mène à Nibelheim.</li>
+<li>De retour au village, les chats se ruent dans l'ancienne maison de Tifa : suis-les dans son ancienne chambre.</li>
+<li>Tu dois jouer du piano pour les chats. La partition Aerith's theme est sur le piano, et c'est elle qu'il faut jouer : <strong>entraîne-toi</strong> avant.</li>
+</ol>
+<p><strong>Récompense</strong> : un Codex Techniques d'arts martiaux V pour Tifa et <strong>de l'affinité avec Tifa</strong>.</p>
+<p><strong>Un air mélancolique.</strong> Niveau <strong>44</strong>. Tableau d'annonces de Nibelheim, à partir du chapitre 12, puis <strong>l'administrateur à la mairie</strong>.</p>
+<p>Il te demande d'<strong>inspecter le Manoir Shinra</strong>, où l'on entend des <strong>bruits étranges</strong> depuis ta dernière visite.</p>
+<p><strong>Entre</strong>, prends l'<strong>ascenseur</strong> avec pour destination Souterrain, laboratoire d'étude de la mako. <strong>Suis Vincent jusqu'au monte-charge</strong>, puis le chemin jusqu'à un <strong>simulateur de combat</strong>.</p>
+<p><strong>Quatre tests préliminaires à réussir :</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Adversaires</th>
+<th>Condition / stratégie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Des <strong>créatures aériennes</strong> — en réalité des Yeux veilleurs</td>
+<td>Sensibles à la Foudre : <strong>quelques Enchaînements fulgurants suffisent</strong>. <strong>Des attaquants à distance aident</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Des <strong>créatures rapides</strong> : <strong>3 créatures inconnues</strong> <em>(Feu)</em> puis un Juge <em>(Foudre)</em></td>
+<td><strong>Garde les créatures inconnues enflammées en permanence</strong> avec des Enchaînements enflammés pour <strong>éviter qu'elles revivent</strong>. Le Juge devient insensible au type d'attaque qui l'a fragilisé : <strong>jongle entre physique et magique</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Yin &amp; Yang + <strong>2 Entités nécrotiques</strong></td>
+<td>Il faut infliger le Choc au moins 3 fois au cours du combat. <strong>Sorts de Feu sur Yin &amp; Yang</strong> ; <strong>évite Griffes noires et Lacération ténébreuse</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Yin &amp; Yang + <strong>1 Juge</strong></td>
+<td><strong>Concentre-toi d'abord sur Yin &amp; Yang</strong>, et mets les deux monstres en état de Choc pour valider</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>La porte déverrouillée</strong>, tu découvres l'origine de la voix étrange : un Dranabarga.</p>
+<p>Il a la Glace pour faiblesse, mais une légère résistance à la magie et il est insensible aux attaques physiques portées dans son dos.</p>
+<p>Pour le fragiliser : des compétences puissantes quand il lance Charge rapace. Et méfie-toi après son Cri du désespoir : il peut t'empoisonner avec n'importe quelle attaque.</p>
+<p><strong>Récompense</strong> : un Codex Combat à l'épée VI pour Cloud et <strong>de l'affinité avec Barret</strong>.</p>
+<h2 id="quetes-et-lieux-21" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="recapitulatif-des-activites-de-nibel">Récapitulatif des activités de Nibel</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Nombre</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="badge neutre">Puits de vie</span></td>
+<td><strong>4</strong></td>
+<td>Oiseau <strong>violet</strong> ; <strong>3 sur 4 exigent le Choco-jet</strong></td>
+</tr>
+<tr>
+<td><span class="badge neutre">Rapport chocobo</span></td>
+<td><strong>1</strong></td>
+<td><strong>Sirèna</strong>, le <strong>chocobo marin</strong> et son Choco-jet</td>
+</tr>
+<tr>
+<td><span class="badge neutre">Rapports de chasse</span></td>
+<td><strong>4</strong></td>
+<td>Niveaux <strong>40</strong> à <strong>42</strong> ; <strong>2 exigent la voie maritime</strong></td>
+</tr>
+<tr>
+<td><span class="badge neutre">Rapports d&#x27;enquête</span></td>
+<td><strong>4</strong></td>
+<td>Traque des <strong>manteaux noirs</strong> → Bretteur excentrique → <strong>protorelique des manteaux noirs</strong></td>
+</tr>
+<tr>
+<td><span class="badge neutre">Rapport d&#x27;excavation</span></td>
+<td><strong>1</strong></td>
+<td><strong>3 trésors</strong></td>
+</tr>
+<tr>
+<td><span class="badge neutre">Autels Esper</span></td>
+<td><strong>3</strong></td>
+<td><strong>Odin</strong> ; <strong>l'Esper le plus dangereux du jeu</strong></td>
+</tr>
+<tr>
+<td><span class="badge neutre">Rapport mog</span></td>
+<td><strong>1</strong></td>
+<td><strong>Boutique mog de rang 7, le rang maximal</strong> ; <strong>3 min</strong></td>
+</tr>
+<tr>
+<td><span class="badge neutre">Rapport secret</span></td>
+<td><strong>1</strong></td>
+<td>Roi zu, niveau <strong>43</strong></td>
+</tr>
+<tr>
+<td><span class="badge neutre">Quêtes annexes</span></td>
+<td><strong>3</strong></td>
+<td>Niveaux <strong>41</strong> et <strong>44</strong>, plus une sans niveau</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-lieux-de-la-region-6">Les lieux de la région</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'on y trouve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nibelheim</strong></td>
+<td>Tableau d'annonces <em>(3 quêtes)</em>, <strong>mairie</strong> <em>(l'administrateur)</em>, <strong>ancienne maison de Cloud</strong> <em>(Christine)</em>, <strong>ancienne maison de Tifa</strong> <em>(le piano)</em></td>
+</tr>
+<tr>
+<td><strong>Palais du sage des chocobos</strong> <em>(sud-est de l'aérodrome)</em></td>
+<td>Billy et le Sage des chocobos ; quête Les arcanes du dressage ; <strong>course de chocobos</strong></td>
+</tr>
+<tr>
+<td><strong>Aérodrome de Nibel</strong></td>
+<td><strong>Rapport d'enquête 2</strong> sur la route au sud de la Tour 1</td>
+</tr>
+<tr>
+<td><strong>Manoir Shinra</strong></td>
+<td>Quête Un air mélancolique ; <strong>4 tests</strong> + Dranabarga</td>
+</tr>
+<tr>
+<td><strong>Arête sud du mont Nibel</strong></td>
+<td>Quête <strong>Un ange à la fourrure blanche</strong> : Bouboule et ses chatons</td>
+</tr>
+<tr>
+<td><strong>Pont de la Gjöll</strong></td>
+<td><strong>Chasse 2</strong> dans une grotte au nord, <strong>par voie maritime</strong></td>
+</tr>
+<tr>
+<td><strong>Île au sud de la Tour 4</strong></td>
+<td><strong>Puits de vie 4</strong> ; <strong>rapport d'excavation</strong> côté est ; <strong>chasse 4</strong> à l'ouest</td>
+</tr>
+<tr>
+<td><strong>Île la plus au nord-ouest</strong></td>
+<td><strong>Autel d'Odin γ</strong></td>
+</tr>
+<tr>
+<td><strong>Île la plus à l'ouest</strong></td>
+<td><strong>Rapport secret : Roi zu</strong>, au sud</td>
+</tr>
+<tr>
+<td><strong>Docks et sous-marin</strong> <em>(rapport d'enquête 2)</em></td>
+<td><strong>Pendantéria Affaiblissement défensif</strong> dans le <strong>sous-marin</strong></td>
+</tr>
+<tr>
+<td><strong>Montagnes face à la Tour 2</strong></td>
+<td>Rapport mog</td>
+</tr>
+<tr>
+<td><strong>Estuaire au sud de la Tour 1</strong></td>
+<td><strong>Rapport d'enquête 3</strong> et son <strong>énigme de valves</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-21" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sirèna</strong></td>
+<td><span class="badge neutre">Chocobo marin</span></td>
+<td><strong>Rapport chocobo</strong></td>
+<td><strong>Choco-jet</strong> — indispensable à la région</td>
+</tr>
+<tr>
+<td><strong>Matéria Odin renforcée</strong></td>
+<td><span class="badge neutre">Matéria d&#x27;invocation</span> <span class="type-pour">rouge</span></td>
+<td><strong>Battre Odin</strong> au simulateur</td>
+<td>Invoque <strong>Odin</strong></td>
+</tr>
+<tr>
+<td><strong>Protorelique des manteaux noirs</strong></td>
+<td><span class="badge neutre">Protorelique</span></td>
+<td><strong>Rapport d'enquête 4</strong> <em>(Bretteur excentrique)</em></td>
+<td>Une des <strong>sept protoreliques</strong></td>
+</tr>
+<tr>
+<td><strong>Fragment de protorelique α</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td><strong>Rapport d'enquête 1</strong></td>
+<td>Progression de l'enquête</td>
+</tr>
+<tr>
+<td><strong>Fragment de protorelique β</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td><strong>Rapport d'enquête 2</strong></td>
+<td>Progression de l'enquête</td>
+</tr>
+<tr>
+<td><strong>Fragment de protorelique γ</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td><strong>Rapport d'enquête 3</strong></td>
+<td>Progression de l'enquête</td>
+</tr>
+<tr>
+<td><strong>Pendantéria Affaiblissement défensif</strong></td>
+<td><span class="badge neutre">Accessoire à matéria</span></td>
+<td><strong>Dans le sous-marin</strong>, pendant le <strong>rapport d'enquête 2</strong></td>
+<td>Accessoire avec emplacement ; très utile contre Odin et le Bretteur excentrique</td>
+</tr>
+<tr>
+<td><strong>Gjallahorn</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cait Sith</span></td>
+<td><strong>45 lotus chocobo au total</strong> remis au Sage <em>(histoire annexe <strong>Collectionneur de lotus chocobo</strong>)</em></td>
+<td>Nouvelle arme pour Cait Sith</td>
+</tr>
+<tr>
+<td><strong>Bracelet chocobo</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Quête <strong>Les arcanes du dressage</strong> : <strong>course gagnée</strong></td>
+<td>effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Codex Techniques d'arts martiaux V</strong></td>
+<td><span class="badge neutre">Codex</span> <span class="type-pour">Tifa</span></td>
+<td>Quête <strong>Un ange à la fourrure blanche</strong></td>
+<td>Points de codex</td>
+</tr>
+<tr>
+<td><strong>Partition Aerith's theme</strong></td>
+<td><span class="badge neutre">Partition</span></td>
+<td>Sur le piano de l'ancienne chambre de Tifa</td>
+<td>Morceau du mini-jeu de piano</td>
+</tr>
+<tr>
+<td><strong>Codex Combat à l'épée VI</strong></td>
+<td><span class="badge neutre">Codex</span> <span class="type-pour">Cloud</span></td>
+<td>Quête <strong>Un air mélancolique</strong> <em>(niveau 44)</em></td>
+<td>Points de codex</td>
+</tr>
+<tr>
+<td><strong>Puce : Protège-bras de la gloire +</strong></td>
+<td><span class="badge neutre">Recette</span></td>
+<td><strong>Rapport d'excavation</strong></td>
+<td>Synthèse</td>
+</tr>
+<tr>
+<td><strong>Puce : Amulette de l'Arbre-Monde +</strong></td>
+<td><span class="badge neutre">Recette</span></td>
+<td><strong>Rapport d'excavation</strong></td>
+<td>Synthèse</td>
+</tr>
+<tr>
+<td><strong>Puce : Révélation de la planète</strong></td>
+<td><span class="badge neutre">Recette</span></td>
+<td><strong>Rapport d'excavation</strong></td>
+<td>Synthèse</td>
+</tr>
+<tr>
+<td><strong>Puce : Écusson de l'ardeur combattante</strong></td>
+<td><span class="badge neutre">Recette</span></td>
+<td><strong>Rapport d'excavation</strong></td>
+<td>Synthèse</td>
+</tr>
+<tr>
+<td><strong>Puce : Armille de Garm +</strong></td>
+<td><span class="badge neutre">Recette</span></td>
+<td><strong>Rapport d'excavation</strong></td>
+<td>Synthèse</td>
+</tr>
+<tr>
+<td><strong>Puce : Bracelet de Varvados +</strong></td>
+<td><span class="badge neutre">Recette</span></td>
+<td><strong>Rapport d'excavation</strong></td>
+<td>Synthèse</td>
+</tr>
+<tr>
+<td><strong>Amulette mog</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td><strong>Boutique mog rang 7</strong>, <strong>6 médailles</strong></td>
+<td><strong>Exclusivité du rang maximal</strong> ; effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Codex Combat à l'arme à feu IV</strong></td>
+<td><span class="badge neutre">Codex</span> <span class="type-pour">Barret</span></td>
+<td><strong>Boutique mog rang 7</strong>, <strong>6 médailles</strong></td>
+<td><strong>Nouveauté du rang 7</strong></td>
+</tr>
+<tr>
+<td><strong>Codex Techniques de ninjutsu V</strong></td>
+<td><span class="badge neutre">Codex</span> <span class="type-pour">Yuffie</span></td>
+<td><strong>Boutique mog rang 7</strong>, <strong>6 médailles</strong></td>
+<td><strong>Nouveauté du rang 7</strong></td>
+</tr>
+<tr>
+<td><strong>Appât pour chocobos</strong></td>
+<td><span class="badge neutre">Objet</span></td>
+<td><strong>En montant sur la droite</strong> au début du rapport chocobo</td>
+<td>Attire Sirèna</td>
+</tr>
+<tr>
+<td><strong>Lotus chocobo</strong> ×45</td>
+<td><span class="badge neutre">Objet d&#x27;échange</span></td>
+<td>Choco-jet dans les étendues d'eau</td>
+<td><strong>30</strong> pour la quête, <strong>45</strong> pour le <strong>Gjallahorn</strong></td>
+</tr>
+<tr>
+<td><strong>Études de région</strong></td>
+<td><span class="badge neutre">Textes</span></td>
+<td>Les <strong>4 puits de vie</strong></td>
+<td>Histoire des lieux</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-21" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="les-ennemis-de-la-region-6">Les ennemis de la région</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ennemi</th>
+<th>Point faible</th>
+<th>À savoir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Loup flamboyant</strong></td>
+<td>Feu</td>
+<td>Extra-Feu quand il est entouré de flammes bleues ; flammes éteintes, esquive Percée mordante ou Bond carnassier</td>
+</tr>
+<tr>
+<td><strong>Carnifex</strong></td>
+<td>Glace</td>
+<td>Rapide et très mobile : Enchaînements glacés</td>
+</tr>
+<tr>
+<td><strong>Valron marquis</strong></td>
+<td>Glace</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Pétrigorgon</strong></td>
+<td>Glace</td>
+<td><strong>Détruis sa mâchoire pendant Brume empoisonnée</strong> ; <strong>ne reste pas derrière lui</strong></td>
+</tr>
+<tr>
+<td><strong>Oronge gulvanique</strong></td>
+<td>Feu</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Loup de Nibel</strong></td>
+<td>Feu</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Rôdeur furtif</strong></td>
+<td>Glace</td>
+<td>Glace pendant Agressivité stimulée : interruption + Fragilité</td>
+</tr>
+<tr>
+<td><strong>Valron</strong></td>
+<td>Glace</td>
+<td>Méga-Gravité : <strong>interromps-le</strong></td>
+</tr>
+<tr>
+<td><strong>Disgorgon</strong></td>
+<td>Glace</td>
+<td>Glace sur sa Mâchoire pendant Brume empoisonnée</td>
+</tr>
+<tr>
+<td><strong>Entité nécrotique</strong></td>
+<td>—</td>
+<td>Trois fenêtres : esquiver Lacération ténébreuse, ou frapper pendant un <strong>sort</strong> ou Griffes noires</td>
+</tr>
+<tr>
+<td><strong>Dæmonas</strong></td>
+<td>Glace</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Mhadomhanju</strong></td>
+<td>—</td>
+<td>Attaque-le à distance pour éviter le tournoiement de sa masse ; Déflagration supersonique</td>
+</tr>
+<tr>
+<td><strong>Ptéronops sanguinaire</strong></td>
+<td>Foudre</td>
+<td><strong>Fragilisable seulement par les dégâts</strong> ; <strong>frappe son œil au physique</strong> ; <strong>Bouclier de mana à bas PV</strong> → <strong>Annihilation</strong></td>
+</tr>
+<tr>
+<td><strong>Abeille tueuse</strong> / <strong>Abeille reine</strong></td>
+<td>Feu</td>
+<td>Extra-Feu ou Méga-Feu</td>
+</tr>
+<tr>
+<td><strong>Œil veilleur</strong></td>
+<td>Foudre</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Juge</strong></td>
+<td>Foudre</td>
+<td><strong>Devient insensible au type qui l'a fragilisé</strong> : <strong>jongle physique/magique</strong></td>
+</tr>
+<tr>
+<td><strong>Yin &amp; Yang</strong></td>
+<td>Feu</td>
+<td>Sorts de Feu</td>
+</tr>
+<tr>
+<td><strong>Dranabarga</strong></td>
+<td>Glace</td>
+<td><strong>Légère résistance à la magie</strong> ; <strong>insensible au physique dans le dos</strong> ; <strong>compétences puissantes pendant Charge rapace</strong> ; après Cri du désespoir, toutes ses attaques empoisonnent</td>
+</tr>
+<tr>
+<td><strong>Roi zu</strong></td>
+<td>Foudre</td>
+<td><strong>Les sorts seuls ne le fragilisent pas</strong> : <strong>frappe ses ailes pendant Chant du zu</strong> ; Geôle éolienne → monte dans les airs et frappe sans relâche</td>
+</tr>
+<tr>
+<td><strong>Bretteur excentrique</strong></td>
+<td>Feu, Poison, <strong>Anti-Cuirasse / Providence / Bravoure / Foi</strong></td>
+<td><strong>Garde précise renforcée</strong> est le cœur du combat ; Méga-Toxine dès que possible</td>
+</tr>
+<tr>
+<td><strong>Odin</strong> <em>(Esper)</em></td>
+<td>— <em>(aucune)</em></td>
+<td>Annonce du Ragnarök puis Lame du Crépuscule tuent toute l'équipe s'il te touche trop souvent. <strong>Compétences d'arme, altérations légères, et esquive</strong> ; Hâte, Affaiblissements, et une <strong>équipe à distance</strong> <em>(Yuffie)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="le-reste-19">Le reste</h3>
+<ul>
+<li>Capture Sirèna avant toute chose. Trois puits de vie sur quatre, <strong>deux autels d'Odin</strong>, <strong>le rapport mog</strong>, <strong>deux chasses</strong> et <strong>deux rapports d'enquête</strong> passent par le Choco-jet.</li>
+<li><strong>Récolte 45 lotus chocobo, pas 30.</strong> Les 15 de plus te donnent le <strong class="objet">Gjallahorn</strong> de Cait Sith, via l'histoire annexe <strong>Collectionneur de lotus chocobo</strong>. Tu es dans l'eau de toute façon pour les autres activités.</li>
+<li><strong>N'oublie pas le sous-marin du rapport d'enquête 2.</strong> Le <strong class="objet">Pendantéria Affaiblissement défensif</strong> qui s'y trouve est <strong>exactement</strong> ce dont tu as besoin contre <strong>Odin</strong> et contre le Bretteur excentrique — les deux combats les plus durs de la région.</li>
+<li>Prépare Garde précise renforcée avant le rapport d'enquête 4. Le Bretteur excentrique se fragilise par <strong>gardes précises</strong>, pas par les éléments.</li>
+<li>Contre Odin, joue l'esquive, pas la défense. Lame du Crépuscule tue toute l'équipe, et elle se déclenche parce qu'il t'a <strong>touché trop souvent</strong>. Baisse sa défense, pas sa puissance, et <strong>prends Yuffie</strong> pour sa mobilité.</li>
+<li>L'énigme des valves se règle de droite à gauche : la <strong>droite bouge seule</strong>, la <strong>milieu entraîne la droite</strong>, la <strong>gauche entraîne la milieu</strong>.</li>
+<li>La Boutique mog de rang 7 est le rang maximal. Après Nibel, <strong>plus aucune boutique mog ne s'améliore</strong> : c'est ici que tu dépenses tes médailles accumulées sur les six régions.</li>
+<li>Entraîne-toi au piano avant « Un ange à la fourrure blanche ». La partition imposée est <strong>Aerith's theme</strong>, et le concert est noté.</li>
+</ul>
+<h2 id="alertes-21" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Sirèna est un prérequis de fait</strong> : sans le <strong>Choco-jet</strong>, plus de la moitié de la région est inaccessible.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : le <strong class="objet">Pendantéria Affaiblissement défensif</strong> du <strong>sous-marin</strong>, pendant le rapport d'enquête 2. Rien n'indique qu'il y a quelque chose dedans.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : le <strong class="objet">Gjallahorn</strong> de Cait Sith, qui exige <strong>45 lotus chocobo au total</strong> et non les 30 de la quête.</li>
+<li class="alerte">⚠️ Odin tue toute l'équipe avec Lame du Crépuscule s'il te touche trop souvent. Privilégie l'esquive et les baisses de défense.</li>
+<li class="alerte">⚠️ Le Bretteur excentrique de Nibel est plus fort que celui de Gongaga. <strong>Garde précise renforcée</strong> est quasi obligatoire.</li>
+<li class="alerte">⚠️ Le Roi zu ne se fragilise pas aux sorts de Foudre seuls : il faut frapper ses ailes pendant Chant du zu.</li>
+<li class="alerte">⚠️ Le Dranabarga est insensible aux attaques physiques portées dans son dos.</li>
+<li class="alerte">⚠️ Le test 3 d'« Un air mélancolique » exige 3 états de Choc, et le test 4 en exige un sur chacun des deux monstres.</li>
+<li class="alerte">⚠️ « Un air mélancolique » n'apparaît qu'au chapitre 12 et demande le <strong>niveau 44</strong>.</li>
+<li class="alerte">⚠️ Le rapport mog est limité à 3 minutes, et <strong>3 coups reçus</strong> font perdre.</li>
+<li class="alerte">⚠️ <strong>Effets à vérifier en jeu</strong> : <strong class="objet">Bracelet chocobo</strong> et <strong class="objet">Amulette mog</strong>.</li>
+</ul>
+<h2 id="check-list-21" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="chocobo-et-puits-de-vie-3">Chocobo et puits de vie</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Sirèna</strong> capturée <em>(appâts, cactus dégonflés, champ de lavandes)</em></li>
+<li class="tache"><input type="checkbox"> <strong>1 — Puits de vie de l'estuaire</strong> <em>(Choco-jet)</em></li>
+<li class="tache"><input type="checkbox"> <strong>2 — Puits de vie aux terrasses</strong> <em>(Choco-jet)</em></li>
+<li class="tache"><input type="checkbox"> <strong>3 — Puits de vie côtier</strong> <em>(Choco-jet)</em></li>
+<li class="tache"><input type="checkbox"> <strong>4 — Puits de vie insulaire</strong></li>
+</ul>
+<h3 id="rapports-de-chasse-6">Rapports de chasse</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>1 — Un hurlement enflammé</strong></li>
+<li class="tache"><input type="checkbox"> <strong>2 — Un insecte omnivore</strong> <em>(par voie maritime)</em></li>
+<li class="tache"><input type="checkbox"> <strong>3 — Un esprit envoûté par la mako</strong></li>
+<li class="tache"><input type="checkbox"> <strong>4 — Un dragon venimeux</strong> <em>(Choco-jet)</em></li>
+</ul>
+<h3 id="rapports-denquete-4">Rapports d'enquête</h3>
+<ul>
+<li class="tache"><input type="checkbox"> 1 — Un groupe de manteaux noirs → <strong>Fragment α</strong></li>
+<li class="tache"><input type="checkbox"> <strong>2 — À l'aérodrome</strong> → <strong>Fragment β</strong> + Pendantéria Affaiblissement défensif du sous-marin</li>
+<li class="tache"><input type="checkbox"> <strong>3 — À l'estuaire</strong> → <strong>Fragment γ</strong> <em>(énigme des valves, Ptéronops)</em></li>
+<li class="tache"><input type="checkbox"> <strong>4 — Sur la côte</strong> : <strong>Bretteur excentrique</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> <strong>Protorelique des manteaux noirs</strong> obtenue</li>
+</ul>
+<h3 id="excavation-esper-mog-secret-5">Excavation, Esper, mog, secret</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Rapport d'excavation — Ruines d'une base isolée</strong> <em>(3 trésors)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Autel d'Odin α</strong> <em>(Choco-jet)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Autel d'Odin β</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Autel d'Odin γ</strong> <em>(Choco-jet)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Odin</strong> vaincu au simulateur <em>(esquives, Hâte, Affaiblissements)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Minimogs à malice</strong> réussi en <strong>3 min</strong> → <strong>Boutique mog rang 7</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Roi zu</strong> vaincu <em>(ailes pendant Chant du zu)</em></li>
+</ul>
+<h3 id="quetes-annexes-6">Quêtes annexes</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Les arcanes du dressage</strong> — <strong>30 lotus chocobo</strong> remis</li>
+<li class="tache"><input type="checkbox"> <strong>45 lotus chocobo</strong> au total → <strong class="objet">Gjallahorn</strong> (Cait Sith)</li>
+<li class="tache"><input type="checkbox"> <strong>Les arcanes du dressage</strong> — <strong>course contre le Sage</strong> gagnée <em>(affinité Yuffie)</em></li>
+<li class="tache"><input type="checkbox"> Un ange à la fourrure blanche — <strong>Bouboule</strong> et ses chatons escortés</li>
+<li class="tache"><input type="checkbox"> Un ange à la fourrure blanche — <strong>Aerith's theme</strong> jouée au piano <em>(affinité Tifa)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Un air mélancolique</strong> — <strong>test 1</strong> <em>(Yeux veilleurs)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Un air mélancolique</strong> — <strong>test 2</strong> <em>(créatures inconnues + Juge)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Un air mélancolique</strong> — <strong>test 3</strong> <em>(3 Chocs)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Un air mélancolique</strong> — <strong>test 4</strong> <em>(les deux en Choc)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Un air mélancolique</strong> — <strong>Dranabarga</strong> vaincu <em>(affinité Barret)</em></li>
+</ul>
+<h3 id="divers-6">Divers</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Toutes les <strong>tours de transmission</strong> activées</li>
+<li class="tache"><input type="checkbox"> Boutique mog de rang 7 dévalisée — <strong>c'est le rang maximal</strong></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="region-de-cosmo.html" rel="prev"><small>← Partie précédente</small><b>Région de Cosmo</b></a><a class="suiv" href="locean-central-et-les-iles.html" rel="next"><small>Partie suivante →</small><b>L&#x27;Océan Central et les îles</b></a><a class="tout" href="final-fantasy-vii-rebirth.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Rebirth · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

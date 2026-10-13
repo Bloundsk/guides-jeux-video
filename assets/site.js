@@ -177,7 +177,7 @@
   }
   function carteReprise(x) {
     var partie = x.l && x.l.a ? x.j.parties.filter(function (p) { return p.a === x.l.a; })[0] : null;
-    var url = BASE + x.j.guide + (partie ? "#" + partie.a : "");
+    var url = BASE + (partie && partie.f ? x.j.fiche + partie.f : x.j.guide);
     var sous = partie ? "Reprendre à : " + partie.t : (x.p.faits ? x.p.faits + " objectifs cochés" : "Ouvrir le guide");
     return '<a class="reprise" href="' + url + '" style="--c1:' + x.j.c1 + ";--c2:" + x.j.c2 + '">' +
       '<span class="emoji" aria-hidden="true">' + x.j.emoji + "</span><div><b>" + echapper(x.j.titre) + "</b><span>" +
@@ -249,7 +249,7 @@
         '</span><div><h3><a href="' + BASE + x.j.fiche + '">' + echapper(x.j.titre) + '</a></h3><p class="sous">' +
         x.p.faits + " / " + x.p.total + " objectifs · " + x.p.finies + " / " + x.j.parties.filter(function (p) { return p.n; }).length +
         " parties terminées" + (lec ? " · " + lec : "") + '</p><div class="barre"><i style="width:' + x.p.pct + '%"></i></div>' +
-        '<div class="liens"><a href="' + BASE + x.j.guide + (partie ? "#" + partie.a : "") + '">' + (partie ? "Reprendre : " + echapper(partie.t) : "Ouvrir le guide") +
+        '<div class="liens"><a href="' + BASE + (partie && partie.f ? x.j.fiche + partie.f : x.j.guide) + '">' + (partie ? "Reprendre : " + echapper(partie.t) : "Ouvrir le guide") +
         '</a><a href="' + BASE + x.j.fiche + '#sommaire">Voir le détail par partie</a></div></div></div>';
     }).join("");
     zone.querySelector("#ma-progression .message-vide").hidden = commences.length > 0;
@@ -404,7 +404,7 @@
   function chargerIndex() {
     if (index) return Promise.resolve(index);
     if (!chargement) chargement = fetch(BASE + "assets/recherche.json").then(function (r) { return r.json(); }).then(function (d) {
-      index = d.map(function (e) { return { type: e[0], t: e[1], s: e[2], g: e[3], a: e[4], n: norm(e[1]), ns: norm(e[2] || "") }; });
+      index = d.map(function (e) { return { type: e[0], t: e[1], s: e[2], g: e[3], a: e[4], f: e[5], n: norm(e[1]), ns: norm(e[2] || "") }; });
       return index;
     });
     return chargement;
@@ -465,7 +465,7 @@
       total += l.length;
       html += "<h4>" + titres[t] + (l.length > LIM[t] ? " · " + LIM[t] + " sur " + l.length : "") + "</h4>";
       l.slice(0, LIM[t]).forEach(function (r) {
-        var j = GJV.jeux[r.e.g], url = BASE + (r.e.type === "j" ? j.fiche : j.guide + (r.e.a ? "#" + r.e.a : ""));
+        var j = GJV.jeux[r.e.g], url = BASE + (r.e.type === "j" ? j.fiche : (r.e.f ? j.fiche + r.e.f : j.guide) + (r.e.a ? "#" + r.e.a : ""));
         var sous = r.e.type === "j" ? r.e.s : j.titre + (r.e.s ? " · " + r.e.s : "");
         html += '<a href="' + url + '" role="option"><span class="e" aria-hidden="true">' + j.emoji + "</span><span><b>" +
           surligner(r.e.t, q) + "</b><small>" + echapper(sous) + "</small></span></a>";

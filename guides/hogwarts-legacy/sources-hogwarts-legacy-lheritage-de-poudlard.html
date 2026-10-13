@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sources — Hogwarts Legacy : L&#x27;Héritage de Poudlard – Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Hogwarts Legacy : L&#x27;Héritage de Poudlard, Sources — Hogwarts Legacy : L&#x27;Héritage de Poudlard : Les noms viennent des sources françaises, toujours en…">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/sources-hogwarts-legacy-lheritage-de-poudlard.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Sources — Hogwarts Legacy : L&#x27;Héritage de Poudlard · Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard">
+<meta property="og:description" content="Hogwarts Legacy : L&#x27;Héritage de Poudlard, Sources — Hogwarts Legacy : L&#x27;Héritage de Poudlard : Les noms viennent des sources françaises, toujours en…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/sources-hogwarts-legacy-lheritage-de-poudlard.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Hogwarts Legacy : L'Héritage de Poudlard", "item": "https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/"}, {"@type": "ListItem", "position": 3, "name": "Sources — Hogwarts Legacy : L'Héritage de Poudlard", "item": "https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/sources-hogwarts-legacy-lheritage-de-poudlard.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="hogwarts-legacy" class="compact" data-partie="sources-hogwarts-legacy-lheritage-de-poudlard"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard</a><span aria-hidden="true">›</span><span>Références</span></nav>
+<p class="gjv-jeu">Hogwarts Legacy : L&#x27;Héritage de Poudlard : le guide complet en français</p>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Hogwarts Legacy : L&#x27;Héritage de <em>Poudlard</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="le-prologue-la-repartition-et-les-premiers-pas.html"><span class="num">✦</span><span class="libelle">Le prologue, la Répartition et les premiers pas</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="les-premiers-cours-et-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les premiers cours et Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="la-reserve-la-botanique-et-les-potions.html"><span class="num">✦</span><span class="libelle">La réserve, la botanique et les potions</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="lheritage-dollivander-le-vol-et-la-salle-sur-demande.html"><span class="num">✦</span><span class="libelle">L&#x27;héritage d&#x27;Ollivander, le vol et la Salle sur Demande</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="lepreuve-de-percival-rackham-et-les-creatures-magiques.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Percival Rackham et les créatures magiques</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="lepreuve-de-charles-rookwood.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Charles Rookwood</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="lepreuve-de-niamh-fitzgerald.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Niamh Fitzgerald</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="lepreuve-de-san-bakar.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de San Bakar</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="le-dernier-depot-et-la-coupe-des-quatre-maisons.html"><span class="num">✦</span><span class="libelle">Le dernier dépôt et la Coupe des Quatre Maisons</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="poudlard-le-chateau-aile-par-aile.html"><span class="num">✦</span><span class="libelle">Poudlard : le château, aile par aile</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="pre-au-lard-2.html"><span class="num">✦</span><span class="libelle">Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="les-abords-de-poudlard-et-la-vallee-de-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les abords de Poudlard et la vallée de Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="la-vallee-de-poudlard-la-foret-interdite-et-le-marais-du-north-ford.html"><span class="num">✦</span><span class="libelle">La vallée de Poudlard, la Forêt interdite et le marais du North Ford</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="la-region-de-feldcroft-et-le-marais-de-southsea.html"><span class="num">✦</span><span class="libelle">La région de Feldcroft et le marais de Southsea</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="la-cote-du-collet-la-caverne-cotiere-et-cragcroftshire.html"><span class="num">✦</span><span class="libelle">La côte du Collet, la Caverne côtière et Cragcroftshire</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="le-lac-de-grottaleau-la-pointe-du-manoir-et-la-cote-de-salgat.html"><span class="num">✦</span><span class="libelle">Le lac de Grottaleau, la Pointe du Manoir et la côte de Salgât</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="sebastian-pallow-et-les-sorts-impardonnables.html"><span class="num">✦</span><span class="libelle">Sebastian Pallow et les Sorts Impardonnables</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="natsai-onai.html"><span class="num">✦</span><span class="libelle">Natsai Onai</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="poppy-sweeting-et-amit-thakkar.html"><span class="num">✦</span><span class="libelle">Poppy Sweeting et Amit Thakkar</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="les-12-devoirs-et-les-26-sortileges.html"><span class="num">✦</span><span class="libelle">Les 12 devoirs et les 26 sortilèges</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="les-6-cartes-au-tresor.html"><span class="num">✦</span><span class="libelle">Les 6 cartes au trésor</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat-la-magie-ancienne-et-les-enchainements.html"><span class="num">✦</span><span class="libelle">Le combat, la magie ancienne et les enchaînements</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-talents.html"><span class="num">✦</span><span class="libelle">Les talents</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="lequipement-les-attributs-et-le-metier-a-tisser.html"><span class="num">✦</span><span class="libelle">L&#x27;équipement, les attributs et le métier à tisser</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="la-salle-sur-demande-les-potions-les-plantes-et-les-creasorts.html"><span class="num">✦</span><span class="libelle">La Salle sur Demande, les potions, les plantes et les créasorts</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="le-vivarium-et-les-creatures-magiques.html"><span class="num">✦</span><span class="libelle">Le vivarium et les créatures magiques</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="les-balais-les-montures-et-les-courses.html"><span class="num">✦</span><span class="libelle">Les balais, les montures et les courses</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-95-epreuves-de-merlin.html"><span class="num">✦</span><span class="libelle">Les 95 épreuves de Merlin</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-pages-du-guide-du-sorcier.html"><span class="num">✦</span><span class="libelle">Les pages du Guide du Sorcier</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="les-coffres-de-collection-les-portes-darithmancie-et-les-coffres-a-œil.html"><span class="num">✦</span><span class="libelle">Les coffres de collection, les portes d&#x27;arithmancie et les coffres à œil</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="les-statues-de-demiguise-et-les-cles-du-dedale.html"><span class="num">✦</span><span class="libelle">Les statues de Demiguise et les clés du dédale</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="les-tables-dastronomie-les-ballons-les-plateformes-et-les-sources-de-magie-ancienne.html"><span class="num">✦</span><span class="libelle">Les tables d&#x27;astronomie, les ballons, les plateformes et les sources de magie ancienne</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="les-ennemis-connus-les-arenes-et-les-campements.html"><span class="num">✦</span><span class="libelle">Les ennemis connus, les arènes et les campements</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="les-46-trophees-le-contenu-deluxe-et-la-route-du-100.html"><span class="num">✦</span><span class="libelle">Les 46 trophées, le contenu Deluxe et la route du 100 %</span><span class="compte"></span></a></li>
+<li data-section="section-36"><a href="les-quetes-annexes-de-poudlard-et-de-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes de Poudlard et de Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-37"><a href="les-quetes-annexes-des-highlands.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes des Highlands</span><span class="compte"></span></a></li>
+<li data-section="section-38"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-39"><a href="#sources-hogwarts-legacy-lheritage-de-poudlard"><span class="num">✦</span><span class="libelle">Sources — Hogwarts Legacy : L&#x27;Héritage de Poudlard</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-39">
+<header class="tete-section">
+<p class="eyebrow">Références</p>
+<h1 id="sources-hogwarts-legacy-lheritage-de-poudlard">Sources — Hogwarts Legacy : L&#x27;Héritage de Poudlard</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-39"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-39">
+<h2 id="methode" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Méthode</span></h2>
+<p>Les noms viennent des sources françaises, toujours en premier. La structure, les emplacements et les solutions viennent de la soluce française de jeuxvideo.com, recoupée avec le guide des trophées de psthc et les guides thématiques de Millenium.</p>
+<p>Quand un nom n'est donné par aucune source française, il est écrit en anglais et marqué « ⚠️ nom français à vérifier en jeu ». Aucun nom n'a été traduit de ma propre initiative.</p>
+<p>Quand deux sources françaises divergent, la décision est tranchée une fois et notée dans le tableau de divergences de la partie concernée.</p>
+<h2 id="les-sources-principales" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Les sources principales</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Adresse</th>
+<th>Ce qu'elle apporte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>jeuxvideo.com, soluce complète</strong> <em>(160 pages)</em></td>
+<td>https://www.jeuxvideo.com/wikis-soluce-astuces/1361199/wiki-de-hogwarts-legacy-l-heritage-de-poudlard.htm</td>
+<td><strong>La source de référence</strong> : les 40 quêtes principales une par une, les quêtes annexes, les 12 devoirs, les quêtes de compagnons, les 95 épreuves de Merlin avec emplacement <strong>et</strong> solution, les pages du Guide du Sorcier, les coffres de collection, les 30 statues de Demiguise, les 16 jetons de maison, les 21 ennemis connus, les tables d'astronomie, les ballons, les plateformes, les sources de magie ancienne, les 6 cartes au trésor</td>
+</tr>
+<tr>
+<td><strong>Psthc, liste des trophées</strong></td>
+<td>https://www.psthc.fr/unjeu/hogwarts-legacy-ps5/liste-trophees.htm</td>
+<td><strong>Les 46 noms et libellés officiels des trophées</strong>, en français</td>
+</tr>
+<tr>
+<td><strong>Psthc, guide des trophées</strong> <em>(par Elite-man)</em></td>
+<td>https://www.psthc.fr/unjeu/hogwarts-legacy-ps5/guide-trophees.htm</td>
+<td><strong>La route du platine</strong>, les <strong>4 trophées manquables</strong>, le total de <strong>605 collectibles</strong>, la méthode du niveau 40, les coffres à œil</td>
+</tr>
+<tr>
+<td><strong>Millenium</strong></td>
+<td>https://www.millenium.org/guide/400156.html</td>
+<td>Les quêtes de relation et les tables d'astronomie, en recoupement</td>
+</tr>
+<tr>
+<td><strong>Wikipédia français</strong></td>
+<td>https://fr.wikipedia.org/wiki/Hogwarts_Legacy</td>
+<td>Titre officiel, dates, plateformes, éditions</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="phase-1-identification-et-decoupage" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Phase 1 — Identification et découpage</span></h2>
+<ul>
+<li>Wikipédia français, « Hogwarts Legacy » — https://fr.wikipedia.org/wiki/Hogwarts_Legacy
+<ul>
+<li><strong>Le titre officiel français</strong> : Hogwarts Legacy : L'Héritage de Poudlard.</li>
+<li>Développeur <strong>Avalanche Software</strong>, éditeurs <strong>Warner Bros. Games</strong> et <strong>Portkey Games</strong>.</li>
+<li><strong>Les dates par plateforme</strong> : PC, ps5 et Xbox Series le 10 février 2023 ; ps4 et Xbox One le 5 mai 2023 ; Switch le 14 novembre 2023 ; <strong>Switch 2 le 5 juin 2025</strong>.</li>
+<li><strong>Les éditions</strong> : <strong>pack Magie noire</strong> <em>(cosmétiques, arène, monture Sombral)</em>, <strong>Deluxe</strong> <em>(pack Magie noire, monture Hippogriffe, 72 h d'accès anticipé)</em>, <strong>Collector</strong>.</li>
+<li><strong>Le cadre</strong> : <strong>les années 1890</strong>, un siècle avant Harry Potter.</li>
+</ul>
+</li>
+<li>GameSpot, « Hogwarts Legacy Expansion And Definitive Edition Canceled » — https://www.gamespot.com/articles/hogwarts-legacy-expansion-and-definitive-edition-canceled-sequel-still-in-the-works-report/1100-6530445/
+<ul>
+<li>La Definitive Edition et l'extension ont été annulées par Warner Bros. en mars 2025, l'éditeur jugeant le contenu prévu insuffisant pour son prix.</li>
+<li>Avalanche travaille sur une suite. Le jeu n'a donc aucune extension scénaristique, ce que le plan et l'introduction du guide signalent.</li>
+</ul>
+</li>
+<li>Gamesider, « Quoi de neuf dans le jeu grâce à la mise à jour d'avril 2025 » — https://www.gamesider.com/jeux-video/hogwarts-legacy-quoi-de-neuf-dans-le-jeu-grace-a-la-mise-a-jour-d-avril-2025_art43076.html
+<ul>
+<li><strong>Mise à jour du 17 avril 2025</strong> : support AMD FSR 3 et Intel XeSS 2.0, <strong>améliorations du Creator Kit.</strong></li>
+</ul>
+</li>
+<li>Art Gaming, « Un patch du 15 octobre 2025 » — https://www.artgaming.fr/hogwarts-legacy-un-patch-du-15-octobre-2025-booste-lexperience-sur-pc-et-portables/
+<ul>
+<li>Prise en charge officielle des consoles portables ROG Ally et ROG Ally X.</li>
+</ul>
+</li>
+<li>Psthc, « Liste des trophées » et « Guide des trophées »
+<ul>
+<li><strong>46 trophées, 0 en ligne, 21 cachés</strong>, platine obtenu par 42 % des joueurs, <strong>difficulté 3/10, une cinquantaine d'heures.</strong></li>
+<li class="alerte">⚠️ <strong>4 trophées manquables</strong> : les quatre trophées de maison. « Une fois une maison choisie, il sera impossible de revenir sur votre décision » — il faut 1 partie principale et 3 parties partielles de deux heures.</li>
+<li><strong>605 collectibles au total.</strong></li>
+<li><strong>Le niveau maximum est 40</strong>, et « vous atteindrez le niveau maximum qu'une fois tous les défis réalisés ».</li>
+<li>La monnaie est le <strong>gallion</strong>. Les <strong>coffres à œil</strong> demandent <strong>Désillusion</strong> et rendent <strong>500 gallions</strong> chacun.</li>
+<li><strong>L'animalerie s'appelle Pick &amp; Peck.</strong></li>
+<li>La quête exclusive PlayStation n'est disponible qu'en saison d'hiver, et la boutique obtenue permet de revendre son équipement plus cher.</li>
+<li><strong>Les objets nécessaires à « Collectionnite »</strong> : les <strong>créasorts d'invocations</strong>, les <strong>graines</strong> et les <strong>balais</strong>.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, sommaire de la soluce
+<ul>
+<li><strong>Le découpage réel du jeu</strong> : 40 quêtes principales, ~60 quêtes annexes, 12 tâches, 3 lignes de compagnons, 7 types de défis d'exploration, 5 familles de collectibles, 6 cartes au trésor.</li>
+<li><strong>Les 95 épreuves de Merlin, réparties en 13 zones</strong> : Marais du North Ford 4, Forêt Interdite 3, Vallée de Pré-au-Lard 5, Région Nord de Poudlard 5, Région Sud de Poudlard 15, Vallée de Poudlard 16, Marais de Southsea 2, Région de Feldcroft 16, Côte du Collet 10, Lac de Grottaleau 4, Pointe du Manoir 5, Côte de Salgât 5, Cragcroftshire 5.</li>
+<li><strong>Les 30 statues de Demiguise</strong> : 10 à Poudlard, 9 à Pré-au-Lard, 11 dans les Highlands <em>(une par hameau)</em>. 9 pour Alohomora niveau 2, 13 de plus pour le niveau 3.</li>
+<li><strong>Les 21 ennemis connus</strong>, <strong>nommés et localisés.</strong></li>
+<li><strong>Les noms français des 11 hameaux</strong> : Pitt-upon-Ford, Campolard-en-Haut, Aranshire, Campolard-en-Bas, Bourg-Garenne, Pont-Désir, Feldcroft, Irondale, Grottaleau, Bainbourg, Cragcroft.</li>
+</ul>
+</li>
+<li>Alucare, « Compagnon Hogwarts Legacy : Amit Thakkar »
+<ul>
+<li>Amit Thakkar est un camarade de Serdaigle, passionné d'astronomie, qui prête son vieux télescope au cours d'astronomie.</li>
+<li>Cette source affirme que « Dans les étoiles » est sa quête de relation. Vérification faite en partie 19 : c'est faux <em>(voir la divergence traitée plus bas)</em>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="divergences-relevees-en-phase-1">Divergences relevées en phase 1</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Choix du guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sebastian Sallow / Pallow</strong></td>
+<td><strong>jeuxvideo.com écrit <strong>Sebastian Pallow</strong></strong> ; <strong>le libellé du trophée français est <strong>« La lignée Pallow »</strong>, qui est le texte du jeu</strong> ; **les sources anglaises disent <strong>Sallow</strong></td>
+<td><strong>Pallow</strong>, <strong>partout dans le guide</strong> — **le nom anglais <strong>Sallow</strong> rappelé une fois, parce que les vidéos et les guides étrangers l'emploient</td>
+</tr>
+<tr>
+<td><strong>« Dans les étoiles »</strong></td>
+<td><strong>jeuxvideo.com la classe chez Poppy Sweeting</strong> ; <strong>Alucare et Millenium l'attribuent à Amit Thakkar</strong></td>
+<td><strong>Poppy Sweeting</strong>, <strong>tranché en partie 19 après vérification</strong> <em>(voir le bloc de la partie 19)</em></td>
+</tr>
+<tr>
+<td><strong>Nom de la zone du nord-est</strong></td>
+<td>jeuxvideo.com écrit « Marais du North Ford », en mélangeant français et anglais, y compris dans le nom des flammes de Cheminette</td>
+<td><strong>Marais du North Ford</strong>, <strong>la forme de la source française</strong>, <strong>marquée « ⚠️ nom français à vérifier en jeu »</strong> parce que le mélange est suspect</td>
+</tr>
+<tr>
+<td><strong>Côte de Salgât</strong></td>
+<td>*<em>jeuxvideo.com écrit tantôt <strong>côte de Salgât</strong>, tantôt <strong>Côte de Salgat</strong>, tantôt <strong>Côte du Salgât</strong></em></td>
+<td><strong>Côte de Salgât</strong>, <strong>la forme la plus fréquente</strong>, **tenue partout</td>
+</tr>
+<tr>
+<td><strong>Nombre de statues de Demiguise</strong></td>
+<td>*<em>jeuxvideo.com dit <strong>30</strong></em> <em>(10 + 9 + 11)</em></td>
+<td><strong>30</strong>, **le seul chiffre donné par une source française, et il est détaillé zone par zone</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-01-le-prologue-la-repartition-et-les-premiers-pas" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 01 — Le prologue, la Répartition et les premiers pas</span></h2>
+<ul>
+<li>jeuxvideo.com, « La route vers Poudlard » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704755/la-route-vers-poudlard.htm
+<ul>
+<li><strong>Le déroulé complet du prologue</strong> : la potion de départ, le mur de glace, la gravure murale, le chemin à l'est, le symbole magique.</li>
+<li class="alerte">⚠️ « Approchez du symbole magique et attendez que le professeur Fig vous rejoigne avant de le toucher. »</li>
+<li>Revelio s'apprend dans la salle du coffre n° 12 ; Lumos dans la salle du reflet.</li>
+<li><strong>La contre-attaque</strong> : « maintenez la touche associée à Protego » pour lancer <strong>Stupéfix</strong>.</li>
+<li>« Choisissez bien, car il sera impossible de changer par la suite » ; « ce choix n'aura d'impact que sur votre salle commune, votre couleur d'équipement et autres aspects secondaires ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Bienvenue à Poudlard » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704793/bienvenue-a-poudlard.htm
+<ul>
+<li>Le <strong>guide du sorcier</strong> sert de menu pause.</li>
+<li>La première page du Guide du Sorcier s'obtient avec Revelio sur une décoration.</li>
+<li>Les <strong>flammes de Cheminette</strong> sont le déplacement rapide, apprises par le professeur Weasley.</li>
+<li>« Le choix du premier cours à suivre n'a aucune importance. »</li>
+</ul>
+</li>
+<li>Psthc, guide des trophées
+<ul>
+<li><strong>Les 4 trophées de maison</strong> : <strong>L'étoffe d'un héros</strong> <em>(Serpentard)</em>, <strong>Auror en devenir</strong> <em>(Poufsouffle)</em>, Un Gryffondor dans le cimetière <em>(Gryffondor)</em>, <strong>Hibou sagace</strong> <em>(Serdaigle)</em> — « Trouver la salle de la carte avec… ».</li>
+<li>« Il vous faudra créer trois autres personnages issus de chacune des autres maisons et avancer sur l'histoire principale pendant 2 heures. »</li>
+<li>La difficulté se change librement et « vous aurez la possibilité de terminer le jeu dans la difficulté la plus faible sans que cela affecte votre chasse aux trophées ».</li>
+</ul>
+</li>
+</ul>
+<h3 id="divergences-relevees-pour-la-partie-01">Divergences relevées pour la partie 01</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Choix du guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ensemble cosmétique Wizarding World</strong></td>
+<td>Aucune source française ne le nomme</td>
+<td>Marqué « nom français à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>Prénom du professeur Weasley</strong></td>
+<td>La source française dit seulement « professeur Weasley »</td>
+<td><strong>Le prénom Matilda est donné en italique</strong>, <strong>et marqué</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-02-les-premiers-cours-et-pre-au-lard" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 02 — Les premiers cours et Pré-au-Lard</span></h2>
+<ul>
+<li>jeuxvideo.com, « Cours de sortilèges : comment apprendre Accio ? » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704804/cours-de-sortileges-comment-apprendre-accio.htm
+<ul>
+<li><strong>La technique de la compétition d'Accio</strong> : « il faut interrompre le sort bien avant que la boule n'arrive sur la zone que vous visez », et « si un obstacle touche votre boule alors que votre sort Accio est toujours actif, ce dernier ne sera pas interrompu ! ».</li>
+<li>« Natsai devrait faire plusieurs lancers à 30 points, essayez de viser les 50 pour la dépasser. »</li>
+<li>Samantha Dale attend à la sortie du cours.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Cours de défense contre les forces du Mal : comment apprendre Levioso ? » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704818/cours-de-defense-contre-les-forces-du-mal-comment-apprendre-levioso.htm
+<ul>
+<li>Levioso « permet de briser les boucliers jaunes et de rendre vos adversaires vulnérables pendant quelques secondes ».</li>
+<li>Le duel contre <strong>Sebastian Pallow</strong>, un élève de Serpentard ; « pour l'emporter, vous devrez le pousser hors du terrain ».</li>
+<li><strong>Le club de duel clandestin</strong> : parler à <strong>Lucan Brattleby</strong> dans l'AILE sud**.**</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « L'après-cours de Weasley » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704828/l-apres-cours-de-weasley.htm
+<ul>
+<li><strong>Le choix d'accompagnant pour Pré-au-Lard</strong> : Natsai Onai ou Sebastian Pallow.</li>
+<li class="alerte">⚠️ « Vous ne pourrez pas passer à la suite de la quête principale avant d'apprendre le sortilège Reparo. »</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Bienvenue à Pré-au-Lard » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704831/bienvenue-a-pre-au-lard.htm
+<ul>
+<li><strong>Les ingrédients de la route</strong> : buissons à <strong>Chrysopes</strong>, <strong>champignons vénéneux sauteurs</strong> dont on extrait les chapeaux, <strong>pierres de lune</strong> à détruire au sort de base.</li>
+<li><strong>Les quatre boutiques et leurs gérants</strong> : <strong>Tomes et parchemins</strong> <em>(Thomas Brown, 2 articles gratuits, un coffre à l'étage accessible en touchant le livre sur la table à droite du vendeur)</em>, <strong>Ollivander</strong> <em>(un coffre à gauche, la baguette gratuite)</em>, <strong>Potions Pippin</strong> <em>(Parry Pippin, un coffre, 2 recettes offertes)</em>, <strong>Le navet magique</strong> <em>(le vendeur Timothy Teasdale est devant la boutique, dans la cour, graines gratuites, une sacoche à fouiller)</em>.</li>
+<li class="alerte">⚠️ Le boss : le troll en armure — « Levioso ne sert à rien contre lui », « la plupart de ses coups ne peuvent pas être bloqués avec Protego, préférez l'esquive quand un halo rouge vous entoure », « abusez de la magie ancienne ».</li>
+<li><strong>« Il y en a sept »</strong> : les débris à réparer au Reparo autour de la Grand-place.</li>
+<li>Gaichiffon offre une tenue qui améliore les statistiques.</li>
+<li><strong>Gladwin Moon est croisé sur la route.</strong></li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Le secret du médaillon » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704867/le-secret-du-medaillon.htm
+<ul>
+<li>Le <strong>Hibou Express</strong> est la boîte aux lettres, dans le Guide du Sorcier.</li>
+<li class="alerte">⚠️ « Vous n'aurez donc d'autre choix que de faire la tâche Devoirs du professeur Hecat 1 avant de pouvoir continuer. »</li>
+</ul>
+</li>
+<li>Psthc, liste des trophées
+<ul>
+<li><strong>Le nom français confirmé</strong> : le trophée <strong>« La lignée Pallow »</strong> — « Finir l'histoire de Sebastian Pallow ».</li>
+</ul>
+</li>
+</ul>
+<h3 id="divergences-relevees-pour-la-partie-02">Divergences relevées pour la partie 02</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Choix du guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sebastian Sallow / Pallow</strong></td>
+<td><strong>jeuxvideo.com et le libellé du trophée français disent <strong>Pallow</strong></strong> ; *<em>toutes les sources anglaises disent <strong>Sallow</strong></em></td>
+<td><strong>Pallow</strong>, <strong>partout</strong> ; **le nom anglais rappelé une fois dans la partie <strong>02</strong>, parce que les vidéos étrangères l'emploient</td>
+</tr>
+<tr>
+<td><strong>Gérant de Gaichiffon</strong></td>
+<td>La source française ne le nomme pas</td>
+<td>Marqué « nom français à vérifier en jeu »</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-03-la-reserve-la-botanique-et-les-potions" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 03 — La réserve, la botanique et les potions</span></h2>
+<ul>
+<li>jeuxvideo.com, « Les secrets de la réserve de la bibliothèque : comment apprendre Désillusion ? » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704869/les-secrets-de-la-reserve-de-la-bibliotheque-comment-apprendre-desillusion.htm
+<ul>
+<li>Désillusion « vous permet de vous rendre plus difficile à repérer par vos adversaires » — « votre sort ne vous rend pas totalement invisible ».</li>
+<li><strong>L'infiltration pas à pas</strong> : l'élève, les deux préfets, la bibliothécaire, la clé du tiroir pendant la diversion, les étagères de droite.</li>
+<li class="alerte">⚠️ <strong>Les deux fantômes</strong> : « envoyez un sort de base sur l'armure pour détourner l'attention de l'esprit », puis « faites-le bouger en lançant un sort contre le mur ».</li>
+<li>Peeves, et <strong>Reparo</strong> sur l'armure ; les traces de magie ancienne révèlent le portail.</li>
+<li class="alerte">⚠️ <strong>Les quatre coffres</strong> : le grand coffre à gauche de la grande porte, le coffre de la plateforme secrète <em>(« tirez sur la rune et regardez sur votre droite »)</em>, et les deux coffres latéraux avant la dernière salle.</li>
+<li><strong>Les Sentinelles de Pensine</strong> : « vous pouvez pousser les sentinelles dans le vide si vous les attaquez près du bord », « occupez-vous en priorité de celles qui peuvent attaquer à distance », « esquivez quand un cercle se forme autour de vous ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Tomes et tribulations » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704906/tomes-et-tribulations.htm
+<ul>
+<li>Le professeur Sharp est présent ; « cette conversation suffira à terminer la quête, et à en démarrer bien d'autres ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Cours de botanique » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704910/cours-de-botanique.htm
+<ul>
+<li><strong>La mandragore se déracine puis se rempote.</strong></li>
+<li>Les <strong>graines de Dictame</strong> mettent <strong>10 minutes</strong> à pousser, et servent à la <strong>potion Wiggenweld</strong>, « dont vous vous servez en combat pour vous soigner ».</li>
+<li>Léandre Prewett, élève de Gryffondor, accompagne jusqu'à la deuxième serre.</li>
+<li>Le <strong>chou mordeur</strong> « attaquera à votre place pendant quelques coups ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Cours de potions » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704924/cours-de-potions.htm
+<ul>
+<li>Le professeur Sharp, la potion <strong>Wiggenweld</strong> par QTE, puis la potion <strong>Edurus</strong> en <strong>30 secondes</strong>.</li>
+<li>Garreth Weasley demande une plume de Focifère ; « à vous de voir si vous voulez accepter ou non ».</li>
+<li><strong>Si on accepte</strong> : « ce dernier réalisera une potion qui tournera horriblement mal » et il faut se justifier.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « La fille d'Uagadou » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704937/la-fille-d-uagadou.htm
+<ul>
+<li><strong>Le hameau s'appelle Campolard-en-Bas</strong> ; la route passe par la pelouse du cours de vol et la salle du cours sur les créatures magiques.</li>
+<li><strong>Natsai Onai est aussi appelée Natty.</strong></li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Épreuve de Merlin » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704943/epreuve-de-merlin.htm
+<ul>
+<li><strong>Nora Treadwell</strong>, agressée par deux mages noirs au <strong>lac de Campolard-en-Bas</strong>.</li>
+<li><strong>La mécanique</strong> : « prenez la mauve douce dans le coffre près de la tente de Nora et placez-la au cœur du cercle de pierre au sol », puis Incendio sur les trois piliers le plus vite possible.</li>
+</ul>
+</li>
+</ul>
+<h3 id="divergences-relevees-pour-la-partie-03">Divergences relevées pour la partie 03</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Choix du guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Campolard-en-bas / Campolard-en-Bas</strong></td>
+<td><strong>jeuxvideo.com écrit les deux</strong>, **selon la page</td>
+<td><strong>Campolard-en-Bas</strong>, **avec une majuscule, tenue partout</td>
+</tr>
+<tr>
+<td><strong>Natsai / Natty</strong></td>
+<td>Les deux formes sont employées par le jeu</td>
+<td><strong>Natsai Onai comme nom</strong>, <strong>Natty comme diminutif</strong>, et la précision est écrite dans la partie 03</td>
+</tr>
+<tr>
+<td><strong>Prénoms des professeurs Black, Sharp et Bulbille</strong></td>
+<td>La source française ne donne que les noms de famille</td>
+<td>Les prénoms de l'univers sont donnés en italique, <strong>et marqués</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="parties-04-a-09-la-trame-principale" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Parties 04 à 09 — la trame principale</span></h2>
+<ul>
+<li>jeuxvideo.com, « L'héritage d'Ollivander » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704953/l-heritage-d-ollivander.htm
+<ul>
+<li><strong>L'énigme des 6 statues d'oiseaux de la volière</strong> : « utilisez Accio sur toutes les poignées des environs pour en trouver trois, puis grimpez à l'échelle », puis « réitérez l'opération sur les poignées des quatre piliers pour trouver les deux autres ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Le repos de Richard Choucas » — https://www.jeuxvideo.com/wikis-soluce-astuces/1704963/le-repos-de-richard-choucas.htm
+<ul>
+<li class="alerte">⚠️ <strong>Expelliarmus est requis</strong> <em>(Devoirs du professeur Hecat 2)</em>.</li>
+<li>« Suivez scrupuleusement le chemin indiqué par votre boussole ensorcelée si vous voulez arriver en un morceau » ; « les araignées sont très vulnérables au feu ».</li>
+<li><strong>Tous les coffres du tombeau dans l'ordre</strong>, <strong>les 3 grilles à 3 symboles</strong> <em>(dont un caché « en vous approchant de celui le plus à droite et en regardant vers la gauche »)</em>, <strong>les matriarches épineuses et leurs coups imparables.</strong></li>
+<li>Les 3 sentinelles finales sont « insensibles à vos sorts de contrôle » ; « la magie ancienne et Expelliarmus seront vos meilleurs amis ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Cours de vol » — https://www.jeuxvideo.com/wikis-soluce-astuces/1705010/cours-de-vol.htm
+<ul>
+<li>Madame Kogawa, la pelouse de l'aile du clocher, les trois cerceaux puis le tour du château.</li>
+<li>Everett Clopton « vous apprendra également à accélérer encore davantage ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « La salle sur demande » — https://www.jeuxvideo.com/wikis-soluce-astuces/1705024/la-salle-sur-demande.htm
+<ul>
+<li>Evanesco, le sortilège d'invocation et le bureau de description, qui « servira à identifier votre équipement lorsqu'il dispose de propriétés inconnues ».</li>
+<li><strong>La liste exacte des 7 créasorts de départ.</strong></li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Dans l'ombre de la crypte » — https://www.jeuxvideo.com/wikis-soluce-astuces/1705039/dans-l-ombre-de-la-crypte-comment-apprendre-confringo.htm
+<ul>
+<li>La quête se fait la nuit, devant le squelette de rhinocéros ; 3 coffres dans la crypte ; Ominis Gaunt.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « L'épreuve de Percival Rackham » — https://www.jeuxvideo.com/wikis-soluce-astuces/1705057/l-epreuve-de-percival-rackham.htm
+<ul>
+<li>« Nous vous conseillons vivement d'acheter un balai volant sous peine de prendre énormément de temps. »</li>
+<li class="alerte">⚠️ Désillusion + Petrificus Totalus au corps à corps ; « la discrétion n'est absolument pas obligatoire ».</li>
+<li class="alerte">⚠️ <strong>La mécanique des portails</strong> : traverser dans un sens fait disparaître le pont, dans l'autre il réapparaît avec le point d'accroche.</li>
+<li><strong>Le boss Gardien de Pensine</strong> : « préparez deux sorts jaunes, pour être sûr de toujours avoir de quoi interrompre son orbe », « les sorts violets ne vous seront d'aucune utilité, préférez les rouges et les jaunes ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Le heaume d'Urtkot » — https://www.jeuxvideo.com/wikis-soluce-astuces/1705098/le-heaume-d-urtkot.htm
+<ul>
+<li class="alerte">⚠️ <strong>Repulso requis</strong>, <strong>Wingardium Leviosa utile.</strong></li>
+<li><strong>La mécanique des papillons</strong> : « allumez votre baguette pour que le papillon vous suive, et éteignez-la devant la porte pour qu'il s'y réfugie ».</li>
+<li><strong>Les Inferi</strong> : « utilisez des sorts de feu comme Incendio ou Confringo pour les brûler et les rendre vulnérables à toutes vos autres attaques ».</li>
+<li><strong>Le pont d'os</strong> <em>(rebord de droite, Accio ou Wingardium Leviosa sur deux ossements)</em> et le coffre de collection derrière les vieilles portes du chariot.</li>
+<li><strong>L'astuce du quatrième papillon</strong> de la dernière énigme, « pour résoudre l'énigme sans avoir à récupérer celui que vous avez laissé sur le mécanisme ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Cours sur les créatures magiques » — https://www.jeuxvideo.com/wikis-soluce-astuces/1705145/cours-sur-les-creatures-magiques.htm
+<ul>
+<li>Professeur Howin, Gérald le Boursouf, Perséphone le Fléreur, Aile-Céleste l'Hippogriffe, Poppy Sweeting.</li>
+<li>« Ajoutez les deux commandes dans votre roue des sorts » : la brosse et la nourriture.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « La plainte lunaire du concierge » — https://www.jeuxvideo.com/wikis-soluce-astuces/1705158/la-plainte-lunaire-du-concierge-comment-apprendre-alohomora.htm
+<ul>
+<li><strong>Alohomora</strong>, « faire tourner les mécanismes en même temps jusqu'à trouver la bonne position, et les maintenir en place quelques secondes ».</li>
+<li>Les 2 statues de Demiguise de la salle de bain des préfets et de l'infirmerie ; « lancez un sort vers la statue de licorne pour le distraire ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « L'elfe, le sac de capture et le métier à tisser » — https://www.jeuxvideo.com/wikis-soluce-astuces/1705176/l-elfe-le-sac-de-capture-et-le-metier-a-tisser-comment-debloquer-les-creatures-fantastiques-et-ameliorer-son-equipement.htm
+<ul>
+<li class="alerte">⚠️ « Utilisez Levioso sur l'un d'entre eux pour l'immobiliser avant de sortir votre Sac de capture. »</li>
+<li>Les Veaudelune ne sortent que la nuit ; « Attendre » sur la carte accélère le temps.</li>
+<li>Les attributs de niveau 2 et 3 demandent une plume de Dirico et une fourrure de Fléreur.</li>
+<li><strong>La liste exacte des récompenses</strong> : Sac de capture, Bancs, Barrières, Métier à tisser enchanté, Brûlure I, Boursouf, Jobarbille, Veaudelune.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Dans l'ombre du domaine » — https://www.jeuxvideo.com/wikis-soluce-astuces/1707011/dans-l-ombre-du-domaine.htm
+<ul>
+<li><strong>Anne et l'oncle Solomon à Feldcroft</strong> ; <strong>les 6 indices</strong> <em>(pioche, armes, four en laiton, puits, banc, tableau brûlé)</em>.</li>
+<li>« Utilisez Lumos pour tenir les Filets du Diable éloignés. »</li>
+<li>Les 2 premiers extraits du journal d'Isidora Morganach, et le Diagramme de runes.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Le haut donjon » — https://www.jeuxvideo.com/wikis-soluce-astuces/1707592/le-haut-donjon-comment-debloquer-les-montures-volantes-hippogriffes.htm
+<ul>
+<li><strong>La combinaison clé</strong> : « utilisez Wingardium Leviosa sur la caisse pour la déplacer », puis « utilisez Levioso sur la caisse pour la maintenir en hauteur ».</li>
+<li>« Si vous avez le niveau 2 d'Alohomora, vous pourrez ouvrir une grille et récupérer des coffres sur le chemin. »</li>
+<li class="alerte">⚠️ La quête se fait la nuit, et débloque les montures volantes.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Cours d'astronomie » — https://www.jeuxvideo.com/wikis-soluce-astuces/1707626/cours-d-astronomie-comment-debloquer-les-tables-d-astronomie.htm
+<ul>
+<li>Professeur Shah, Amit Thakkar, le télescope de la salle de stockage, et la première table d'astronomie de la tour de la muraille.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Épreuve de Charles Rookwood » — https://www.jeuxvideo.com/wikis-soluce-astuces/1708496/epreuve-de-charles-rookwood.htm
+<ul>
+<li><strong>La mécanique des piliers-cubes</strong> : un pilier passé par un portail devient un cube déplaçable au Wingardium Leviosa, et inversement.</li>
+<li><strong>L'énigme du cube traversant</strong> : « attirez le cube à vous à l'aide de Wingardium Leviosa de façon à ce qu'il traverse le portail, puis contournez ce dernier, toujours en faisant léviter le cube, pour aller le replacer exactement là où il était ».</li>
+<li>Le 3e symbole du château se voit « en vous tournant franchement vers la droite et en regardant à travers le trou dans le mur ».</li>
+<li class="alerte">⚠️ <strong>L'astuce du boss</strong> : « attention à ne pas confondre son fléau avec l'orbe jaune. Parez ou évitez simplement ce coup pour ne pas gâcher un de vos sorts jaunes. »</li>
+<li><strong>Le coffre tournant</strong> : « vous aurez l'occasion d'attirer un coffre à vous avec Accio quand il aura atteint les 180° ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Tout feu tout flamme » — https://www.jeuxvideo.com/wikis-soluce-astuces/1708557/tout-feu-tout-flamme.htm
+<ul>
+<li>« Vous ne devrez pas vous faire repérer au cours de cette partie de la quête. »</li>
+<li>L'œuf de dragon à l'Alohomora niveau 1 ; Accio sur les chaînes du dragon.</li>
+<li class="alerte">⚠️ « Vous n'aurez d'autre choix que d'accomplir » le Devoir du professeur Weasley avant de continuer.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Une affaire de Gobelbabil » — https://www.jeuxvideo.com/wikis-soluce-astuces/1708585/une-affaire-de-gobelbabil.htm
+<ul>
+<li><strong>La mécanique des portes à œil</strong> : « vous devrez toujours vous rendre invisible au moment où l'œil ne vous observe pas déjà. Si c'est le cas, éloignez-vous jusqu'à ce qu'il ferme ses paupières et revenez sous invisibilité. »</li>
+<li><strong>2 coffres de collection</strong>, dont un qui demande Alohomora niveau 2.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Dans l'ombre de la mine » — https://www.jeuxvideo.com/wikis-soluce-astuces/1708866/dans-l-ombre-de-la-mine.htm
+<ul>
+<li><strong>L'énigme des 3 runes</strong> : « placez-vous juste à côté de la lanterne au sol pour pouvoir lancer un sort de base sur les trois runes des environs ».</li>
+<li><strong>2 coffres de collection</strong>, un extrait du journal d'Isidora, et la quête se fait de nuit.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Le complot du Polynectar » — https://www.jeuxvideo.com/wikis-soluce-astuces/1709652/le-complot-du-polynectar.htm
+<ul>
+<li>Scrope, madame Kogawa, Cressida Blume, le pupitre du directeur.</li>
+<li>La devise des Black « est liée à la pureté de sang », « si vous ne voulez pas passer pour un total imposteur ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « L'épreuve de Niamh Fitzgerald » — https://www.jeuxvideo.com/wikis-soluce-astuces/1710327/l-epreuve-de-niamh-fitzgerald.htm
+<ul>
+<li>Toute l'infiltration des Ombres de la mort, pas à pas, dont « tournez-vous et revenez en arrière jusqu'à ce qu'une porte s'ouvre sur votre gauche ».</li>
+<li class="alerte">⚠️ <strong>Les trois Reliques</strong> : <strong>la cape mystérieuse</strong> <em>(invisibilité définitive)</em>, <strong>la baguette mystérieuse</strong> <em>(Bombarda)</em> <strong>et la pierre mystérieuse.</strong></li>
+<li>« Gardez vos sorts de contrôle pour les ennemis les plus faibles comme les Ombres de la mort et les Chiens noirs de la mort, et abusez de Bombarda et Diffindo sur les Trolls de la mort. »</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Dans l'ombre de la montagne » — https://www.jeuxvideo.com/wikis-soluce-astuces/1710434/dans-l-ombre-de-la-montagne.htm
+<ul>
+<li class="alerte">⚠️ <strong>Bombarda requis</strong> ; « vous n'aurez d'autre choix que de passer par la Caverne côtière en passant par le Campement de bandits moyen tout au sud du marais de Southsea » pour accéder au sud-est.</li>
+<li><strong>2 coffres de collection</strong>, les extraits du journal n° 4, 5 et le dernier, et le troisième morceau du triptyque.</li>
+<li>« Brûlez les œufs d'araignées à distance grâce à Confringo. »</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « La loyauté de Lodgok » — https://www.jeuxvideo.com/wikis-soluce-astuces/1710910/la-loyaute-de-lodgok.htm
+<ul>
+<li><strong>La machine du début</strong> : « allumez la machine sur la gauche grâce à Confringo ou Incendio (cela vous servira plus tard pour récupérer un Coffre de collection) ».</li>
+<li><strong>2 coffres de collection</strong>, Grodbik et son grand coffre <em>(détour facultatif)</em>, et les 5 piliers de la foreuse de Rannrok.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « L'épreuve de San Bakar » — https://www.jeuxvideo.com/wikis-soluce-astuces/1710955/l-epreuve-de-san-bakar-comment-debloquer-le-grapcorne.htm
+<ul>
+<li><strong>Le Grapcorne</strong> : « les sorts de contrôle n'ont aucun effet sur lui », « les Sorts Impardonnables n'auront aucun effet », « vous ne pourrez pas non plus le maudire », « vous pouvez utiliser vos potions de soin même au sol », « les potions Maxima, Edurus et de Concentration sont vos meilleures amies ».</li>
+<li><strong>Le choix final</strong> <em>(attaquer ou s'agenouiller)</em> : « votre choix n'a aucune importance en dehors de l'aspect roleplay ».</li>
+<li>Le Grapcorne détruit les barricades, « utilisez la même touche que pour accélérer à dos de balai » ; « il est possible d'en capturer d'autres et notamment une femelle pour votre Vivarium ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Un sacré coup de baguette » — https://www.jeuxvideo.com/wikis-soluce-astuces/1711812/un-sacre-coup-de-baguette.htm
+<ul>
+<li><strong>Victor Rookwood</strong> : « vous ne pourrez pas vous battre seul à seul contre Rookwood », « utilisez votre magie ancienne et les objets environnants pour briser son bouclier », « deux fois dans le combat, vous devrez marteler une touche affichée pour contrer son sortilège de mort instantanée ».</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « Le dernier dépôt » — https://www.jeuxvideo.com/wikis-soluce-astuces/1711895/le-dernier-depot.htm
+<ul>
+<li class="alerte">⚠️ <strong>Le choix de la fin</strong> : « cette question est précisément celle qui scellera laquelle des deux fins s'offrira à vous » ; « votre choix ne vous bloquera aucune quête annexe, et la fin en question ne change que très peu selon votre réponse ».</li>
+<li><strong>Le Dragon de Rannrok</strong> : <strong>trois vagues</strong>, « il fera apparaître des bulles violettes, jaunes ou rouges. Utilisez vos sorts de la même couleur sur ces derniers pour les détruire et rendre le boss vulnérable », « les Sorts Impardonnables, en revanche, sont inutiles », et la grosse attaque de zone de la 3e phase.</li>
+</ul>
+</li>
+<li>jeuxvideo.com, « La coupe des quatre maisons » — https://www.jeuxvideo.com/wikis-soluce-astuces/1712012/la-coupe-des-quatre-maisons.htm
+<ul>
+<li class="alerte">⚠️ <strong>Niveau 34 requis</strong> ; « remplir votre Guide du Sorcier est un moyen très efficace de gagner des niveaux » ; « vous approcher de la Grande Salle démarrera automatiquement cette dernière quête ».</li>
+</ul>
+</li>
+</ul>
+<h3 id="divergences-relevees-pour-les-parties-04-a-09">Divergences relevées pour les parties 04 à 09</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Choix du guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nombre de coffres du tombeau de Choucas</strong></td>
+<td>La source écrit « les coffres sur la droite » au pluriel, sans les compter</td>
+<td><strong>L'ordre de passage est donné</strong>, et le total marqué « à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>Coffres des « nouveaux points d'accroche » de l'épreuve de Rackham</strong></td>
+<td>La source écrit « quelques coffres »</td>
+<td>Marqué « à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>Coffres de la grille d'Alohomora 2 du château de Falbarton</strong></td>
+<td>La source écrit « des coffres » sans les compter</td>
+<td>Marqué « à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>« Lune de Demiguise » / « Statue de Demiguise »</strong></td>
+<td>La source française emploie les deux dans la même page</td>
+<td><strong>Statue de Demiguise</strong>, la forme la plus fréquente et celle du trophée <em>(« Fléau des Demiguises »)</em></td>
+</tr>
+<tr>
+<td><strong>Panneau du repaire du Grapcorne</strong></td>
+<td><strong>La source cite le panneau en anglais</strong> <em>(« Extreme danger »)</em></td>
+<td>Marqué « nom français à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>Prénoms des professeurs et des Pallow</strong></td>
+<td>La source ne donne que les noms de famille</td>
+<td>Les prénoms de l'univers sont donnés en italique, <strong>et marqués</strong></td>
+</tr>
+<tr>
+<td><strong>Collectibles de l'arène de Rookwood et de la grotte des gardiens</strong></td>
+<td>La source n'en liste aucun</td>
+<td><strong>Marqué « à vérifier en jeu »</strong>, <strong>avec le conseil de lancer Revelio</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="parties-10-a-19-poudlard-les-highlands-et-les-compagnons" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Parties 10 à 19 — Poudlard, les Highlands et les compagnons</span></h2>
+<h3 id="partie-10-poudlard-le-chateau">Partie 10 — Poudlard, le château</h3>
+<ul>
+<li>jeuxvideo.com, « Tous les coffres de collection de Poudlard », « Toutes les pages du Guide du sorcier de Poudlard », « Secrets de Poudlard : comment percer les 3 secrets du château »
+<ul>
+<li>Les 7 zones du château et leurs 47 coffres de collection : astronomie 6, Clocher 6, grand escalier 7, Grande Salle 3, annexe de la bibliothèque 8, aile sud 5, Salle sur Demande et vivarium 12.</li>
+<li><strong>Les portes d'arithmancie</strong> : compter les traits de chaque symbole ; les deux boutons sont souvent à des étages différents.</li>
+<li><strong>Les coffres à œil</strong> : <strong>arriver déjà sous Désillusion</strong>, <strong>500 gallions chacun</strong> ; entrer une fois sans le sort pour que la grille reste ouverte.</li>
+<li><strong>Les 3 secrets</strong> : <strong>Le Pont</strong> <em>(Incendio sur 4 brasiers, chiffres romains)</em>, <strong>La Tour de l'horloge</strong> <em>(Arresto Momentum sur le pendule, 4 étages)</em>, <strong>Le Bureau du directeur</strong> <em>(Alohomora niveau 3, balai par une porte extérieure, clé sur le bureau)</em>.</li>
+<li><strong>Pas de Quidditch dans le jeu.</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-11-pre-au-lard">Partie 11 — Pré-au-Lard</h3>
+<ul>
+<li>jeuxvideo.com, « Tous les coffres de Pré-au-Lard », « Toutes les pages du Guide du sorcier de Pré-au-Lard », « Occupe-toi de ton chaudron »
+<ul>
+<li><strong>Les 11 boutiques</strong>, dont <strong>Bôbalais</strong> pour les balais et <strong>Pique &amp; Peck</strong> pour les animaux.</li>
+<li><strong>55 pages du guide à Pré-au-Lard</strong> : 30 au Revelio, 20 à l'Accio, 5 au Lumos ; <strong>aucune statue, aucun brasier.</strong></li>
+<li><strong>9 statues de Demiguise</strong>, <strong>de nuit uniquement.</strong></li>
+<li><strong>5 coffres de collection</strong> : <strong>2 demandent Alohomora niveau 3</strong> ; celui du Repaire de Serpencendres demande un Accio maintenu jusqu'au bout sur les deux points d'accroche, puis de passer derrière les fûts à l'ouest.</li>
+<li>Revelio sur les planches derrière la Tête de Sanglier révèle les Quais de la Tête de Sanglier.</li>
+<li><strong>La quête exclusive PlayStation</strong> : Penny, 1 500 gallions, Cassandra Mason, le sous-sol au Lumos ; boss Monstre de Fastidio et Cassandra Mason ; <strong>aucun trophée n'en dépend.</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="parties-12-a-16-les-highlands-zone-par-zone">Parties 12 à 16 — Les Highlands, zone par zone</h3>
+<ul>
+<li>jeuxvideo.com, « Tous les coffres des Highlands », « Toutes les pages des Highlands », « Épreuves de Merlin », « Tables d'astronomie », « Éclater les ballons », « Plateformes d'atterrissage », « Sources de magie ancienne », « Ennemis connus »
+<ul>
+<li>Les comptes par zone ont été reconstitués à la main, aucune source ne les présente ainsi : 95 épreuves de Merlin, 15 tables d'astronomie, 32 ensembles de ballons, 20 plateformes d'atterrissage, 20 sources de magie ancienne, 21 ennemis connus.</li>
+<li><strong>Une statue de Demiguise par hameau, 11 hameaux.</strong></li>
+<li>Tout campement de bandits abrite un coffre de collection ; un château occupé par des bandits en abrite deux.</li>
+<li class="alerte">⚠️ La quête « suivre les papillons » est un prérequis aux coffres à papillons.</li>
+<li>Quatre zones des Highlands n'ont <strong>aucune</strong> page du guide : côte du Collet, lac de Grottaleau, Pointe du Manoir, et la Forêt interdite.</li>
+<li>La région de Feldcroft est la plus riche : 16 épreuves de Merlin, 22 coffres de collection, 11 campements de bandits, 4 plateformes d'atterrissage.</li>
+<li>La vallée de Poudlard est la plus dense en collectibles variés : 16 Merlin, 8 pages, 7 ensembles de ballons, 6 sources, 5 ennemis connus.</li>
+<li class="alerte">⚠️ Le marais de Southsea est le plus pauvre <em>(2 Merlin, 1 page, 1 coffre)</em> <strong>mais le plus stratégique</strong> : son campement moyen du sud est la seule porte vers le sud-est.</li>
+<li>La caverne côtière n'a aucune épreuve de Merlin.</li>
+<li>La côte du Collet a 10 Merlin et 10 coffres mais zéro page du guide.</li>
+<li>Grottaleau détient le record des hameaux avec 6 coffres.</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-17-sebastian-pallow">Partie 17 — Sebastian Pallow</h3>
+<ul>
+<li>jeuxvideo.com, les 9 quêtes de relation de Sebastian Pallow
+<ul>
+<li class="alerte">⚠️ <strong>Chaque quête a un double prérequis</strong> : la quête de relation précédente <strong>et</strong> une quête principale précise ; le Hibou Express arrive « plusieurs dizaines de minutes » plus tard.</li>
+<li><strong>Le Scriptorium</strong> : Revelio, 3 brasiers allumés <strong>simultanément</strong>, les 3 notes de Noctua Gaunt, Reparo sur les gravats, le Fourchelang d'Ominis ; chaque statue de serpent commande une grille qui n'est pas en face d'elle ; le Livre de Serpentard sur le comptoir.</li>
+<li><strong>Les 3 choix d'Endoloris</strong> : refuser, accepter et subir, accepter et lancer.</li>
+<li>Pour Avada Kedavra, répondre que « tout le monde devrait connaître ce sort ».</li>
+<li><strong>Hogwarts Legacy n'a aucun système de Karma</strong> : apprendre la magie noire ne condamne à aucune mauvaise fin.</li>
+<li>Dénoncer Sebastian change son sort et la dernière quête, mais pas ta fin, et aucun trophée n'en dépend.</li>
+<li>Les Sorts Impardonnables ne fonctionnent ni sur le Grapcorne ni sur le Dragon de Rannrok.</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-18-natsai-onai">Partie 18 — Natsai Onai</h3>
+<ul>
+<li>jeuxvideo.com, les 7 quêtes de relation de Natsai Onai
+<ul>
+<li><strong>L'astuce Diffindo</strong> : lancer <strong>Diffindo</strong> au moment où un <strong>Duelliste Serpencendre</strong> s'apprête à lancer <strong>Reducto</strong> l'interrompt et lui infligent de lourds dégâts.</li>
+<li class="alerte">⚠️ Deux des 21 ennemis connus se rencontrent dans cette chaîne : <strong>Catrin Haggarty</strong> <em>(L'enfant perdu)</em> <strong>et Gwendoline Zhou</strong> <em>(Les fondements d'un chantage)</em>.</li>
+<li>Le coffre de collection du Repaire de Serpencendres : derrière les fûts à l'ouest, pendant « Les fondements d'un chantage », après un <strong>Accio maintenu jusqu'au bout</strong> sur les deux points d'accroche.</li>
+<li>Le professeur Onai est la mère de Natsai, et elle donne le devoir de <strong>Descendo</strong>.</li>
+<li><strong>Natsai est animagus</strong> <em>(révélé dans « Entre mère et fille »)</em>.</li>
+<li>Théophilus Harlow finit par un sortilège de mort instantanée, à contrer en martelant la touche indiquée — la même mécanique que Victor Rookwood.</li>
+<li class="alerte">⚠️ « L'enfant perdu » se fait de jour, et la traque se fait entièrement au <strong>Revelio</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-19-poppy-sweeting-et-la-question-amit-thakkar">Partie 19 — Poppy Sweeting, et la question Amit Thakkar</h3>
+<ul>
+<li>jeuxvideo.com, les 8 quêtes de relation classées sous Poppy Sweeting</li>
+<li>Harry Potter Fandom, fiche « Poppy Sweeting »</li>
+<li>Psthc, liste des trophées
+<ul>
+<li><strong>La divergence est tranchée</strong> : « Dans les étoiles » appartient à Poppy Sweeting, <strong>pas à Amit Thakkar.</strong> <strong>Trois éléments le prouvent</strong> :
+<ul>
+<li><strong>Le contenu de la quête</strong> : on y parle à <strong>Poppy</strong> et au centaure <strong>Dorran</strong>, et il n'y est question ni de télescope ni d'Amit.</li>
+<li class="alerte manquable">⏳ <strong>La place dans la chaîne</strong> : elle demande « Le centaure et la pierre » <em>(Poppy n° 5)</em> <strong>et débloque « Vol d'oiseaux »</strong> <em>(Poppy n° 7)</em>.</li>
+<li>La fiche encyclopédique de Poppy liste <strong>huit</strong> quêtes nommées, <strong>celle-ci comprise</strong> : A Dragon Debrief, Poached Egg, The Poachers' House Call, Surprise Meeting, The Centaur and the Stone, <strong>It's in the Stars</strong>, A Bird in the Hand, Poppy Blooms.</li>
+<li>Et la liste des trophées ne contient <strong>aucun</strong> trophée Amit Thakkar : il y a « La gazelle vengeresse » pour Natsai, « L'amie des bêtes » pour Poppy, « La lignée Pallow » pour Sebastian — et c'est tout.</li>
+</ul>
+</li>
+<li class="alerte">⚠️ Donc Poppy a 8 quêtes de relation et Amit Thakkar n'en a aucune. Amit n'apparaît que dans des quêtes principales <em>(le cours d'astronomie et la mine des gobelins)</em>.</li>
+<li>Les 3 noms de trophées de compagnons, confirmés sur psthc : <strong>« La gazelle vengeresse »</strong> <em>(Natsai)</em>, <strong>« L'amie des bêtes »</strong> <em>(Poppy)</em>, <strong>« La lignée Pallow »</strong> <em>(Sebastian)</em>.</li>
+<li>Trois coffres de collection ne s'obtiennent que dans la chaîne de Poppy : 2 au Jardin de pierre de lune, 1 au Perchoir doré.</li>
+<li>« Le centaure et la pierre » et « vol d'oiseaux » demandent le niveau 27 ; « vol d'oiseaux » demande aussi Glacius.</li>
+<li>Le puzzle des Ombres des ruines des vivets : placer les piliers à l'opposé des symboles illuminés.</li>
+<li><strong>Au Perchoir doré</strong> : Glacius sur le bloc le plus au sud, Incendio sur celui le plus au nord.</li>
+</ul>
+</li>
+</ul>
+<h3 id="divergences-relevees-dans-les-parties-10-a-19">Divergences relevées dans les parties 10 à 19</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Choix du guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>« Dans les étoiles »</strong></td>
+<td><strong>jeuxvideo.com la classe chez Poppy</strong> ; <strong>Alucare et Millenium chez Amit Thakkar</strong></td>
+<td><strong>Poppy Sweeting</strong>, après vérification par le contenu de la quête, la fiche encyclopédique et la liste des trophées ; l'erreur des deux autres sites est signalée dans la partie 19</td>
+</tr>
+<tr>
+<td><strong>Nombre de quêtes de Poppy</strong></td>
+<td><strong>Plusieurs sites annoncent 7</strong></td>
+<td><strong>Huit</strong>, <strong>comptées une par une</strong></td>
+</tr>
+<tr>
+<td><strong>Points d'accroche du Jardin de pierre de lune</strong></td>
+<td>La source les montre en images sans les décrire</td>
+<td><strong>Marqué « à vérifier en jeu »</strong>, <strong>avec le conseil d'essayer chaque point d'accroche</strong></td>
+</tr>
+<tr>
+<td><strong>« Pierre de lune des spécialistes »</strong></td>
+<td>La source emploie cette forme une seule fois</td>
+<td><strong>Pierre de lune</strong>, la forme courte, cohérente avec le nom du lieu ; <strong>marqué « nom français à vérifier en jeu »</strong></td>
+</tr>
+<tr>
+<td><strong>Focifère / Dirico</strong></td>
+<td>Les deux noms apparaissent dans les sources françaises</td>
+<td><strong>Deux créatures différentes</strong>, <strong>tenues séparées</strong> : **le <strong>Focifère</strong> <em>(plume de Garreth Weasley, nid du Jardin de pierre de lune, créasort)</em> **et le <strong>Dirico</strong> <em>(plume du métier à tisser)</em></td>
+</tr>
+<tr>
+<td><strong>Vivets dorés capturables</strong></td>
+<td>Aucune source ne le dit</td>
+<td>Marqué « à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>Prénom du professeur Onai</strong></td>
+<td>La source française ne le donne pas</td>
+<td>Marqué « nom français à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>Catrin Haggarty et Gwendoline Zhou hors quête</strong></td>
+<td>La source ne dit pas s'ils réapparaissent</td>
+<td><strong>Marqué « à vérifier en jeu »</strong>, avec le conseil de faire la chaîne de Natsai jusqu'au bout</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="parties-20-a-29-quetes-annexes-devoirs-talents-equipement-et-vol" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Parties 20 à 29 — Quêtes annexes, devoirs, talents, équipement et vol</span></h2>
+<h3 id="sources-nouvelles-mobilisees-a-partir-de-la-partie-22">Sources nouvelles mobilisées à partir de la partie 22</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La source</th>
+<th>L'adresse</th>
+<th>Ce qu'elle apporte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RPG Soluce, « Hogwarts Legacy — Inventaire — Talents »</strong></td>
+<td>https://www.rpgsoluce.com/soluces/ps5/hogwarts-legacy/inventaire/talents.htm</td>
+<td>Les 48 talents avec leur nom français, leur niveau et leur effet exact</td>
+</tr>
+<tr>
+<td><strong>Harry Potter Fandom, fiche « Poppy Sweeting »</strong></td>
+<td>https://harrypotter.fandom.com/wiki/Poppy_Sweeting</td>
+<td>La liste des 8 quêtes de relation de Poppy</td>
+</tr>
+<tr>
+<td><strong>Psthc, guide des trophées</strong> <em>(section par section)</em></td>
+<td>https://www.psthc.fr/unjeu/hogwarts-legacy-ps5/guide-trophees.htm</td>
+<td>Les 6 Potions, les 8 plantes, les 13 créatures, les 2 arènes, le décompte des points de talent</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="parties-20-et-21-les-quetes-annexes">Parties 20 et 21 — Les quêtes annexes</h3>
+<ul>
+<li>jeuxvideo.com, les 59 pages de quêtes annexes
+<ul>
+<li>22 quêtes démarrent à Poudlard ou à Pré-au-Lard <em>(13 au château, 9 au village)</em>, <strong>et 13 dans les Highlands</strong>.</li>
+<li>4 coffres de collection dans les quêtes de Poudlard et Pré-au-Lard : Ruines de Korrow, tombeau de la famille Dale, Caverne aux Horglups, Cave de Mary Portman.</li>
+<li>3 coffres de collection dans les quêtes des Highlands : 2 à la Grotte du phénix, 1 à la Cachette d'Henrietta.</li>
+<li class="alerte">⚠️ « Suivre les papillons » est un prérequis aux coffres à papillons.</li>
+<li>« Décorations intérieures » donne le sortilège d'Altération, et les décorations de la Salle sur Demande se recyclent en pierres de lune.</li>
+<li>Boire la Potion d'invisibilité de « une livraison urgente » valide le devoir 2 du professeur Sharp.</li>
+<li>« L'envol du phénix » est la seule source de plumes de phénix, qui améliorent l'équipement légendaire au dernier niveau.</li>
+<li>Le phénix se capture au sac de capture seul, sans Levioso.</li>
+<li class="alerte">⚠️ « La fin de Selwyn » et « rencontre avec la Fugitive » verrouillent chacune un ennemi connu.</li>
+<li>Silvanus Selwyn est de niveau 37 et reprend les coups d'un Bourreau Serpencendre : <strong>Expelliarmus retourne ses éclairs.</strong></li>
+<li class="alerte">⚠️ Les 20 vases de « des vases communicants » sont le prérequis de l'arène de combat d'Irondale <em>(confirmé par psthc)</em>.</li>
+<li><strong>Deux quêtes exigent la nuit</strong> : « Une voleuse dans la nuit » et « Qui se ressemble s'assemble ».</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-22-les-12-devoirs-et-les-26-sortileges">Partie 22 — Les 12 devoirs et les 26 sortilèges</h3>
+<ul>
+<li>jeuxvideo.com, les 12 pages de devoirs
+<ul>
+<li class="alerte">⚠️ Les devoirs de Ronen et de Hecat 1 sont obligatoires pour avancer dans l'histoire.</li>
+<li>Les tâches du devoir de Hecat 1 sont deux quêtes annexes complètes : « Joutes magiques : manche 2 » et « Entraînement aux enchaînements de sorts 1 ».</li>
+<li>Le devoir 2 de Bulbille exige un <strong>grand pot</strong> à 1 000 gallions chez Tomes et parchemins pour faire pousser le sisymbre, dont la graine coûte 350 gallions au Navet magique.</li>
+<li>Achète les Potions toutes faites mais les graines de plantes : une potion refaite redemande des ingrédients, une plante ne demande que du temps et un pot.</li>
+<li class="alerte">⚠️ <strong>Le quiz de Sophronia Franklin compte 25 questions</strong> : <strong>5 obligatoires, 10 intermédiaires, 10 difficiles</strong> ; toutes les réponses donnent une potion Wiggenweld, une Maxima et une Edurus.</li>
+<li>Les devoirs de Ronen et de Weasley donnent 4 pages du guide du sorcier.</li>
+<li>Au repaire de Diricos, ignore les Inferi <strong>ou les Diricos s'échappent.</strong></li>
+<li>Le total de 26 sortilèges est le décompte du guide <em>(16 de la roue + 10 hors roue)</em>, marqué « à vérifier en jeu ».</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-23-les-6-cartes-au-tresor">Partie 23 — Les 6 cartes au trésor</h3>
+<ul>
+<li>jeuxvideo.com, les 6 pages de cartes au trésor
+<ul>
+<li>Aucune carte au trésor n'est signalée sur la carte du jeu.</li>
+<li>La carte du « spectre de notre amour » est par terre au sommet de la volière, après une échelle, et la boussole n'aide pas sur cette chasse.</li>
+<li><strong>Les 9 braséros D'« Objectif Hippogriffe »</strong> : le N° 1 est le plus loin de l'entrée, on compte dans le sens des aiguilles d'une montre ; allume 1, 3, 4 et 7, éteins les autres au Glacius.</li>
+<li>Les 9 dalles du tombeau de la Trahison se comptent face au <strong>sud-ouest</strong> : Flipendo sur les N° 2, 7 et 9.</li>
+<li>Le rythme des cloches de « plus rien ne cloche » n'a <strong>aucune incidence</strong> ; la mélodie est le thème d'Hedwige, et la partition est dessinée sur la carte au trésor.</li>
+<li>Repulso sur le Reducto d'ailsa travers, qui reprend les compétences des Assassines Serpencendres.</li>
+<li>Le Seigneur du manoir est un Inferi : il faut le brûler.</li>
+<li class="alerte">⚠️ Un coffre de collection est caché dans le tombeau de la Trahison, avant la salle du tombeau.</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-24-le-combat">Partie 24 — Le combat</h3>
+<ul>
+<li>jeuxvideo.com, les 3 joutes magiques, les 2 entraînements aux enchaînements, les 5 duels de plateau d'attraction
+<ul>
+<li>Les 3 joutes magiques enseignent une couleur de bouclier chacune : jaune <em>(contrôle, Levioso)</em>, violet <em>(force, Accio)</em>, rouge <em>(dégâts, Incendio)</em>.</li>
+<li><strong>Les combos de l'entraînement 1</strong> : Accio + 4 lancers de base ; Levioso + 4 lancers ; Levioso + 3 attaques + Accio + 4 attaques.</li>
+<li><strong>Les combos de l'entraînement 2</strong> : Accio-Incendio-Levioso ; Levioso + base ×3 + Accio + Incendio ; et un enchaînement de 14 actions.</li>
+<li><strong>Les sorts ont un temps de rechargement</strong> : aller trop vite casse le combo.</li>
+<li><strong>Les 5 duels de plateau d'attraction sont séquentiels.</strong></li>
+<li>Sur le plateau, aller trop loin ne marque aucun point, et décaler les boules de l'adversaire peut lui <strong>ajouter</strong> des points.</li>
+<li class="alerte">⚠️ Pour les cibles à 100 points : lâcher prise juste avant la pente.</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-25-les-talents">Partie 25 — Les talents</h3>
+<ul>
+<li>RPG Soluce, « Inventaire — Talents »
+<ul>
+<li><strong>48 talents, en 5 branches</strong> : Sorts <em>(10)</em>, Magie noire <em>(10)</em>, Cœur <em>(16)</em>, Furtivité <em>(4)</em>, Salle sur Demande <em>(8)</em>.</li>
+<li><strong>Trois paliers : niveau 5</strong> <em>(22 talents)</em>, <strong>niveau 16</strong> <em>(17)</em>, <strong>niveau 22</strong> <em>(9)</em>.</li>
+<li>Les noms français et les effets exacts des 48 talents, <strong>repris dans la partie 25.</strong></li>
+</ul>
+</li>
+<li>Psthc, guide des trophées
+<ul>
+<li>Un point de talent par niveau, du niveau 5 au niveau 40 <em>(niveau maximum)</em> → <strong>36 points pour 48 talents.</strong></li>
+<li><strong>« Vous ne pourrez pas tout apprendre. »</strong></li>
+<li>Les talents s'ouvrent dans la salle de la carte, avec Percival Rackham.</li>
+<li>Sept des dix talents de magie noire ne demandent aucun sort Impardonnable <em>(déduction du guide à partir des descriptions)</em>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="parties-26-a-28-equipement-salle-sur-demande-vivarium">Parties 26 à 28 — Équipement, Salle sur Demande, vivarium</h3>
+<ul>
+<li>jeuxvideo.com, « L'elfe, le sac de capture et le métier à tisser », « La salle sur demande », « L'elfe de maison en détresse », « Le poulain qui sauva son espèce »
+<ul>
+<li>La quête du métier à tisser est au niveau 15, après « La plainte lunaire du concierge ».</li>
+<li>Elle donne le sac de capture, le 1er vivarium, le métier à tisser enchanté et l'attribut <strong>Brûlure I</strong>.</li>
+<li>Les attributs de niveau 2 demandent une <strong>plume de Dirico</strong>, ceux de niveau 3 une <strong>fourrure de Fléreur</strong>.</li>
+<li>Le Veaudelune ne sort que la nuit ; la touche « attendre » depuis la carte suffit <em>(R3 sur ps5)</em>.</li>
+<li>« La Salle sur Demande » est au niveau 6 et donne Évanesco, Invocation, le Bureau de description et 7 créasorts.</li>
+<li>Le bureau de description identifie l'équipement aux propriétés inconnues.</li>
+<li><strong>Les 4 vivariums</strong> : Forêt interdite <em>(quête du métier à tisser)</em>, plage <em>(L'elfe de maison en détresse, niveau 20)</em>, marais <em>(Le poulain qui sauva son espèce, niveau 17)</em>, prairie <em>(L'envol du phénix)</em>.</li>
+<li><strong>4 espèces et 12 individus par vivarium.</strong></li>
+<li>L'enclos de reproduction coûte 1 000 gallions chez Tomes et parchemins, et une reproduction prend <strong>30 minutes</strong> de temps réel.</li>
+<li>Attendre 24 H de temps de jeu réinitialise la position d'un troupeau enfui.</li>
+<li>La Grotte du métier à tisser <em>(L'elfe de maison en détresse)</em> est un donjon d'araignées au cœur de la Forêt interdite, avec Tobbs, des acromantules et 2 coffres.</li>
+</ul>
+</li>
+<li>Psthc, guide des trophées
+<ul>
+<li><strong>Les 6 Potions et leurs ingrédients exacts</strong> : concentration, Breuvorage, invisibilité, Wiggenweld, Edurus, Maxima.</li>
+<li><strong>Les 8 plantes et leur taille de pot</strong> : chou mordeur de Chine <em>(moyen)</em>, mandragore <em>(petit)</em>, Tentacula vénéneuse <em>(grand)</em>, Dictame <em>(petit)</em>, sisymbre <em>(grand)</em>, Polygonium <em>(petit)</em>, mauve douce <em>(petit)</em>, figue sèche <em>(grand)</em>.</li>
+<li><strong>Une plante met 10 à 15 minutes à mûrir.</strong></li>
+<li>Invoque le maximum de tables de rempotage et de postes de Potions <strong>pour augmenter la production.</strong></li>
+<li>Les 13 races de créatures, avec leurs lieux et leurs pièges de capture.</li>
+<li>« Chercher la petite bête » demande de faire <strong>reproduire</strong> les races, pas de les capturer : un mâle et une femelle dans le même vivarium, avec l'enclos de reproduction.</li>
+<li>Le rang 3 d'amélioration demande des ingrédients exotiques des 4 créatures légendaires : <strong>Grapcorne, Hippogriffe, Phénix, Licorne</strong> ; achetables chez les vendeurs en quantité limitée et à prix élevé.</li>
+<li>Les icônes de pattes de la carte donnent le nom de la créature de chaque nid — <strong>elles n'apparaissent qu'au zoom.</strong></li>
+<li>Les tenues se comptent ainsi : 49 par les défis, 27 par les quêtes, 2 par les arènes, et les 12 du contenu additionnel ne comptent pas.</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-29-les-balais-et-les-courses">Partie 29 — Les balais et les courses</h3>
+<ul>
+<li>jeuxvideo.com, « Cours de vol », « Essais en vol », « Survoler la compétition », « Entre ciel et terre », « Le haut donjon »
+<ul>
+<li>Tous les Balais ont les mêmes performances et coûtent 600 gallions : le choix est purement esthétique.</li>
+<li><strong>Les 3 améliorations coûtent 1 000, 4 000 et 7 500 gallions.</strong></li>
+<li><strong>3 courses contre Imelda Reyes</strong> : le terrain de Quidditch, le parcours d'Irondale, le sud-ouest de la côte de Salgât.</li>
+<li>Un Anneau manqué = pénalité de temps ; toutes les bulles d'énergie = vitesse maximale constante.</li>
+<li>Accepter le défi d'Everett Clopton au cours de vol donne la seconde accélération.</li>
+<li>La pièce aux animaux fantastiques du haut donjon est une occasion de capture, et Alohomora niveau 2 y ouvre des coffres supplémentaires.</li>
+</ul>
+</li>
+</ul>
+<h3 id="divergences-relevees-dans-les-parties-20-a-29">Divergences relevées dans les parties 20 à 29</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Choix du guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le trophée des ennemis connus</strong></td>
+<td>Le guide attribuait à tort les ennemis connus au trophée « À la hauteur du défi » ; le libellé officiel de ce trophée est « Vaincre tous les ennemis dans <strong>toutes les arènes de combat</strong> »</td>
+<td><strong>Corrigé partout</strong> : les ennemis connus comptent pour l'onglet Ennemis de la collection, donc pour « Collectionnite »</td>
+</tr>
+<tr>
+<td><strong>Nombre d'ennemis connus</strong></td>
+<td>*<em>jeuxvideo.com en annonce <strong>21</strong></em> ; *<em>psthc en annonce <strong>18</strong></em></td>
+<td><strong>21 retenu</strong>, <strong>la source la plus détaillée</strong> ; <strong>marqué « à vérifier en jeu » en partie 35</strong></td>
+</tr>
+<tr>
+<td><strong>Nombre de statues de Demiguise</strong></td>
+<td><strong>jeuxvideo.com en compte 30 par zone</strong> <em>(10 + 9 + 11)</em> ; <strong>psthc annonce 33 lunes de Demiguise</strong></td>
+<td><strong>Les deux chiffres sont donnés</strong>, <strong>et l'écart est signalé en partie 33</strong></td>
+</tr>
+<tr>
+<td><strong>Nombre de collectibles</strong></td>
+<td>Psthc parle de <strong>« plus de 300 collectibles »</strong> pour l'onglet Collection ; la recherche de phase 1 donnait <strong>605</strong> collectibles au total</td>
+<td><strong>Les deux mesures sont distinctes</strong> : <strong>l'onglet Collection n'est qu'une partie du total</strong> ; <strong>marqué en partie 32</strong></td>
+</tr>
+<tr>
+<td><strong>Les cairns</strong></td>
+<td>Psthc mentionne « les 5 cairns de donjons du jeu » pour le trophée « Soif d'aventure » ; <strong>jeuxvideo.com n'en parle jamais</strong></td>
+<td><strong>Le chiffre de 5 est donné</strong>, et l'identité des 5 cairns est marquée « à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>Les pages du Guide du sorcier</strong></td>
+<td>Psthc annonce 150 pages de Revelio et précise que les pages volantes, derrière un miroir papillon ou un braséro ne comptent que pour l'expérience ; <strong>jeuxvideo.com les compte toutes ensemble</strong></td>
+<td><strong>Les deux lectures sont données en partie 31</strong>, <strong>et l'écart est marqué</strong></td>
+</tr>
+<tr>
+<td><strong>Nombre de quêtes de Poppy</strong></td>
+<td><strong>Plusieurs sites annoncent 7</strong></td>
+<td><strong>Huit</strong>, comptées une par une sur la fiche encyclopédique</td>
+</tr>
+<tr>
+<td><strong>Biome du 3e vivarium</strong></td>
+<td>*<em>jeuxvideo.com dit <strong>marais</strong></em> ; *<em>psthc dit <strong>montagne</strong></em></td>
+<td><strong>Marais retenu</strong> <em>(la source la plus détaillée)</em>, <strong>marqué « à vérifier en jeu »</strong></td>
+</tr>
+<tr>
+<td><strong>Races de créatures</strong></td>
+<td>*<em>Psthc annonce <strong>13 races à faire reproduire</strong> tout en précisant que le <strong>phénix ne se reproduit pas</strong></em></td>
+<td>**Le guide retient <strong>12 races reproductibles + le phénix</strong>, <strong>et signale la contradiction</strong></td>
+</tr>
+<tr>
+<td><strong>Nom de la quête de la licorne</strong></td>
+<td>jeuxvideo.com écrit « La licorne unique » dans son adresse et « La licorne magique » dans son texte ; <strong>psthc écrit « Il faut sauver Noisette »</strong></td>
+<td><strong>La licorne unique</strong>, <strong>la forme du sommaire</strong> ; <strong>marqué « nom français à vérifier en jeu »</strong></td>
+</tr>
+<tr>
+<td><strong>Potion Édurus / Edurus</strong></td>
+<td>La liste des talents écrit Édurus, la liste des potions Edurus</td>
+<td><strong>Edurus</strong>, <strong>la forme la plus fréquente</strong>, <strong>marquée</strong></td>
+</tr>
+<tr>
+<td><strong>Démiguise / Demiguise</strong></td>
+<td>Le talent s'écrit Démiguise humaine, le collectible statue de Demiguise</td>
+<td><strong>Demiguise</strong>, <strong>la forme du collectible et du trophée</strong>, <strong>marquée</strong></td>
+</tr>
+<tr>
+<td><strong>Transformation / Métamorphose</strong></td>
+<td>Le sort s'appelle Transformation, mais la description de son talent parle du « sortilège de Métamorphose »</td>
+<td><strong>Transformation</strong>, <strong>le nom du menu des sorts</strong>, <strong>marqué</strong></td>
+</tr>
+<tr>
+<td><strong>Fruit de figuier d'Abyssinie / Figue sèche</strong></td>
+<td>L'ingrédient et la plante qui le produit portent <strong>deux noms différents</strong> dans la même source</td>
+<td><strong>Les deux sont donnés</strong>, <strong>et le lien est signalé en partie 27</strong></td>
+</tr>
+<tr>
+<td><strong>Focifère / Dirico</strong></td>
+<td>Les deux noms apparaissent dans les sources</td>
+<td><strong>Deux créatures distinctes</strong>, confirmé par la liste des 13 races de psthc, qui les sépare</td>
+</tr>
+<tr>
+<td><strong>Talents « de cœur »</strong></td>
+<td>jeuxvideo.com parle d'un « Revelio amélioré grâce aux talents de cœur »</td>
+<td>*<em>La branche s'appelle <strong>cœur</strong></em> <em>(confirmé par la liste des talents)</em> ; **le talent visé est <strong>Maîtrise de Revelio</strong></td>
+</tr>
+<tr>
+<td><strong>Effet des améliorations de balai</strong></td>
+<td>*<em>jeuxvideo.com parle de <strong>vitesse</strong></em> ; *<em>psthc parle de <strong>durée du boost</strong></em></td>
+<td><strong>Les deux sont donnés</strong>, <strong>marqués « à vérifier en jeu »</strong></td>
+</tr>
+<tr>
+<td><strong>Nombre de sortilèges</strong></td>
+<td>Aucune source française ne donne de total</td>
+<td><strong>26</strong>, <strong>décompte du guide</strong> <em>(16 de la roue + 10 hors roue)</em>, <strong>marqué « à vérifier en jeu »</strong></td>
+</tr>
+<tr>
+<td><strong>Vases de « Des vases communicants »</strong></td>
+<td>jeuxvideo.com ne les compte pas</td>
+<td><strong>20 vases</strong>, chiffre donné par psthc pour l'arène du même lieu</td>
+</tr>
+<tr>
+<td><strong>Points d'accroche du Jardin de pierre de lune</strong></td>
+<td>La source les montre en images sans les décrire</td>
+<td><strong>Marqué « à vérifier en jeu »</strong>, <strong>avec le conseil d'essayer chaque point</strong></td>
+</tr>
+<tr>
+<td><strong>Ordre des cloches du Château de Salgât</strong></td>
+<td>La source le donne en vidéo, pas en texte</td>
+<td><strong>La mélodie est identifiée</strong> <em>(le thème d'Hedwige)</em> et le rythme est signalé comme sans incidence ; <strong>l'ordre exact est marqué</strong></td>
+</tr>
+<tr>
+<td><strong>Réattribution des points de talent</strong></td>
+<td>Aucune source française n'en parle</td>
+<td><strong>Traités comme définitifs</strong>, <strong>marqué « à vérifier en jeu »</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="parties-30-a-36-les-collectibles-les-defis-et-les-trophees" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Parties 30 à 36 — Les collectibles, les défis et les trophées</span></h2>
+<h3 id="les-pages-de-collectibles-de-jeuxvideocom">Les pages de collectibles de jeuxvideo.com</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La page</th>
+<th>Ce qu'elle apporte</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>« Épreuves de Merlin : où les trouver et comment les réussir »</strong></td>
+<td>Les 95 épreuves, zone par zone, avec emplacement et solution</td>
+</tr>
+<tr>
+<td>« Toutes les pages du Guide du sorcier » de Poudlard, de Pré-au-Lard et des Highlands</td>
+<td>Les 236 pages + 5 bonus, par zone et par méthode</td>
+</tr>
+<tr>
+<td><strong>« Tous les coffres de collection » de Poudlard, de Pré-au-Lard et des Highlands</strong></td>
+<td>Les 182 coffres, avec leur récompense exacte</td>
+</tr>
+<tr>
+<td><strong>« Portes d'arithmancie : comment réussir l'énigme des portes à symboles »</strong></td>
+<td>La vraie règle des portes d'arithmancie</td>
+</tr>
+<tr>
+<td><strong>« L'homme derrière les lunes »</strong></td>
+<td>Les 30 statues de Demiguise et les paliers d'Alohomora</td>
+</tr>
+<tr>
+<td><strong>« Les clés du dédale »</strong></td>
+<td>Les 16 jetons de maison</td>
+</tr>
+<tr>
+<td><strong>« Tables d'astronomie »</strong></td>
+<td>Les 15 tables et leur manipulation</td>
+</tr>
+<tr>
+<td><strong>« Éclater les ballons »</strong></td>
+<td>Les 32 ensembles, dont les 4 manquables</td>
+</tr>
+<tr>
+<td><strong>« Plateformes d'atterrissage »</strong></td>
+<td><strong>Les 20 plateformes</strong></td>
+</tr>
+<tr>
+<td><strong>« Sources de magie ancienne »</strong></td>
+<td>Les 20 sources et leurs 3 traces chacune</td>
+</tr>
+<tr>
+<td><strong>« Ennemis connus : où trouver les 21 ennemis connus »</strong></td>
+<td>Les 21 ennemis, nommés et localisés</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="partie-30-les-95-epreuves-de-merlin">Partie 30 — Les 95 épreuves de Merlin</h3>
+<ul>
+<li>jeuxvideo.com, « Épreuves de Merlin »
+<ul>
+<li><strong>95 épreuves sur 13 zones</strong> : vallée de Poudlard 16, Feldcroft 16, région sud de Poudlard 15, côte du Collet 10, vallée de Pré-au-Lard 5, région nord de Poudlard 5, Pointe du Manoir 5, côte de Salgât 5, Cragcroftshire 5, marais du North Ford 4, lac de Grottaleau 4, Forêt interdite 3, marais de Southsea 2.</li>
+<li>La caverne côtière est la seule zone à n'en avoir aucune.</li>
+<li><strong>Il n'y a que 9 types d'énigmes</strong> : 5 stèles <em>(Confringo)</em>, vases sur piliers <em>(sort de base)</em>, 3 brasiers <em>(Confringo, dans l'ordre)</em>, papillons <em>(Lumos)</em>, cubes à symboles <em>(Flipendo, même sens)</em>, boule et bassin <em>(Repulso / Wingardium Leviosa / Accio)</em>, plaques à trous <em>(Wingardium Leviosa)</em>, parcours de sauts, débris <em>(Reparo)</em>.</li>
+<li>C'est <strong>Flipendo</strong> pour les cubes partout sauf au <strong>lac de Grottaleau N° 4</strong>, où c'est <strong>Repulso</strong>.</li>
+<li>La première épreuve est imposée par la quête principale : celle à l'est de Campolard-en-Bas.</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-31-les-pages-du-guide-du-sorcier">Partie 31 — Les pages du Guide du sorcier</h3>
+<ul>
+<li>jeuxvideo.com, les trois pages dédiées
+<ul>
+<li><strong>236 pages + 5 bonus</strong> : 150 à Poudlard <em>(+5 bonus)</em>, 55 à Pré-au-Lard, 31 dans les Highlands.</li>
+<li><strong>Six méthodes</strong> : Revelio, page volante <em>(Accio)</em>, statue <em>(Levioso)</em>, tableau vide <em>(Lumos + papillon)</em>, brasier dragon <em>(Incendio)</em>, torche murale <em>(Confringo puis Accio)</em>.</li>
+<li>Les 31 pages des Highlands sont <strong>toutes</strong> au Revelio.</li>
+<li><strong>Quatre zones des Highlands n'ont aucune page</strong> : Forêt interdite, côte du Collet, lac de Grottaleau, Pointe du Manoir ; la Salle sur Demande non plus.</li>
+<li><strong>5 pages n'existent que pendant leur quête</strong> : 2 au Devoir du professeur Ronen, 2 à « Cours d'histoire de la magie » <em>(crâne de Grimbald Brode et statue du Chevalier saluant)</em>, 1 au Devoir du professeur Weasley.</li>
+<li><strong>Une seule page demande l'Alohomora niveau 3</strong> : le brasier de l'aile sud, derrière une cheminée à éteindre au <strong>Glacius</strong>.</li>
+<li><strong>À Pré-au-Lard, ni statue ni brasier</strong> : <strong>30 Revelio, 20 volantes, 5 tableaux vides.</strong></li>
+</ul>
+</li>
+<li>Psthc, guide des trophées
+<ul>
+<li>L'onglet <strong>collection</strong> demanderait <strong>150 pages de Revelio</strong>, et les pages volantes, de Miroirs à papillon et de brasiers ne serviraient <strong>qu'à l'expérience</strong>.</li>
+<li>Le décompte détaillé ne trouve que <strong>147</strong> pages de Revelio <em>(86 + 30 + 31)</em>, soit un écart de 3, signalé en partie 31.</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-32-les-coffres-de-collection">Partie 32 — Les coffres de collection</h3>
+<ul>
+<li>jeuxvideo.com, les trois pages dédiées et « Portes d'arithmancie »
+<ul>
+<li><strong>182 coffres</strong> : 130 dans les Highlands, 47 à Poudlard, 5 à Pré-au-Lard.</li>
+<li>Un coffre de collection contient <strong>toujours</strong> une Invocation, un Manche de baguette ou un Attribut.</li>
+<li><strong>La vraie règle des portes d'arithmancie</strong> : chaque Symbole est un animal fantastique, et l'arche qui entoure la porte donne l'ordre des chiffres <strong>0 à 9</strong>, de gauche à droite ; demiguise = 0, licorne = 1, dragon = 2, hydre = 3, crabe = 5, araignée = 8 ; puis une <strong>addition à trou</strong>.</li>
+<li><strong>Et le jeu donne une antisèche</strong> : la <strong>page du manuel d'arithmancie</strong>, dans un petit coffre bleu des combles de la Salle de Divination, consultable dans l'onglet <strong>Objets de quête</strong>.</li>
+<li>Les 2 salles de l'énigme Repulso n'existent qu'après <strong>« le hall d'Herodiana »</strong>, et il faut prendre <strong>tous</strong> les coffres ordinaires de la salle pour avoir le coffre de collection.</li>
+<li><strong>14 coffres à papillons</strong>, et la carte du monde ne les affiche pas.</li>
+<li><strong>Aranshire a 4 coffres</strong> <em>(le sommaire de la source en oublie un)</em> <strong>et Feldcroft en a 24</strong> <em>(et non 22)</em>.</li>
+<li class="alerte">⚠️ La machine du début de la mine côtière doit être allumée, sinon le second coffre est perdu.</li>
+</ul>
+</li>
+<li><strong>Et la grande trouvaille de cette partie</strong> : les 51 attributs du métier à tisser sont 17 familles × 3 niveaux, et 50 d'entre eux viennent d'un coffre de campement ou de château occupé ; seul Brûlure I est donné par la quête du métier à tisser.
+<ul>
+<li>Les 17 familles : Application, Assourdissement, Botanique, Brûlure, Concentration Magie Ancienne, Contrôle, Crocs, Cruauté, Désarmement, Destruction, Embuscade, Explosion, Impardonnables, Lacération, Liaison, Manipulation, Venin.</li>
+<li>Cela résout la question laissée ouverte en partie 26.</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-33-les-statues-de-demiguise-et-les-cles-du-dedale">Partie 33 — Les statues de Demiguise et les clés du dédale</h3>
+<ul>
+<li>jeuxvideo.com, « L'homme derrière les lunes » et « Les clés du dédale »
+<ul>
+<li><strong>30 statues</strong> : 10 à Poudlard, 9 à Pré-au-Lard, 11 dans les Highlands <em>(une par hameau)</em>.</li>
+<li><strong>Visibles uniquement la nuit</strong>, et la commande Attendre depuis la carte suffit <em>(R3 sur ps5)</em>.</li>
+<li><strong>9 statues = Alohomora 2 ; 13 de plus <em>(22 au total)</em> = Alohomora 3.</strong></li>
+<li>Le personnage <strong>signale à voix haute</strong> une statue à proximité, et la statue fait un bruit.</li>
+<li>La statue de l'aile sud est derrière la porte <strong>« Out of Order »</strong> des toilettes des garçons.</li>
+<li>La quête finit par un Hibou Express de <strong>M. Piers Pemberton</strong>, puis un retour à <strong>Gladwin Moon</strong>.</li>
+<li class="alerte">⚠️ <strong>16 jetons de maison</strong> : 1 par la quête, 15 dans le château ; 3 sont verrouillés derrière « la plainte lunaire du concierge ».</li>
+<li>La mécanique : un <strong>meuble de maison</strong> et une <strong>clé du dédale</strong> sont toujours proches ; <strong>Revelio</strong> rend la clé visible ; puis un <strong>mini-jeu de réflexes</strong> pour frapper la clé sur la serrure.</li>
+<li><strong>Récompense : l'<strong>Uniforme antique</strong> de ta maison.</strong></li>
+</ul>
+</li>
+<li>Psthc, guide des trophées
+<ul>
+<li><strong>Annonce 33 lunes de Demiguise et non 30</strong> : l'écart est signalé en partie 33.</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-34-les-defis-dexploration">Partie 34 — Les défis d'exploration</h3>
+<ul>
+<li>jeuxvideo.com, les quatre pages dédiées
+<ul>
+<li><strong>15 tables d'astronomie</strong> : trois gestes seulement — zoomer, dézoomer, renverser l'image ; <strong>3 zones n'en ont aucune.</strong></li>
+<li class="alerte">⚠️ <strong>32 ensembles de ballons</strong>, dont <strong>4 manquables</strong> qui n'existent que pendant les deux devoirs de Madame Kogawa.</li>
+<li><strong>20 plateformes d'atterrissage</strong>, et elles demandent une <strong>monture volante</strong>, pas un balai.</li>
+<li><strong>20 sources de magie ancienne</strong> : un <strong>réservoir de magie</strong> à activer, puis <strong>3 traces de magie</strong> à trouver ; deux sont derrière un Alohomora <em>(niveau 3 au lac de Grottaleau, niveau 2 à la Pointe du Manoir)</em> ; cinq zones n'en ont aucune.</li>
+</ul>
+</li>
+<li>Psthc, guide des trophées
+<ul>
+<li>Mentionne 5 cairns de donjons pour le trophée « Soif d'aventure », et affirme que toutes les quêtes annexes y mènent. Aucune source ne les nomme : le guide propose cinq candidats et marque l'ensemble « à vérifier en jeu ».</li>
+</ul>
+</li>
+</ul>
+<h3 id="partie-35-les-ennemis-connus-les-arenes-et-les-campements">Partie 35 — Les ennemis connus, les arènes et les campements</h3>
+<ul>
+<li>jeuxvideo.com, « Ennemis connus »
+<ul>
+<li>21 ennemis connus, nommés et localisés un par un, <strong>sur 13 zones.</strong></li>
+<li><strong>Quatre ne s'affrontent que pendant une quête</strong> : La Fugitive, Gwendoline Zhou, Catrin Haggarty et Le Troll d'Alexandra. Cela résout les questions laissées ouvertes en parties 13 et 18.</li>
+<li>Le Loup Blanc et le Sinistros sont dans la <strong>même grotte</strong>, en aval de la rivière à l'ouest de Pont-Désir.</li>
+<li class="alerte">⚠️ <strong>Ogbert le singulier est obligatoire</strong> : il faut le tuer pour atteindre le sud-est de la carte.</li>
+</ul>
+</li>
+<li>Psthc, guide des trophées
+<ul>
+<li>« À la hauteur du défi » = « vaincre tous les ennemis dans toutes les arènes de combat », et il n'y en a que <strong>deux</strong>.</li>
+<li class="alerte">⚠️ Chaque arène demande de détruire <strong>20 vases</strong> avant d'activer la statue centrale, puis de survivre à <strong>5 manches</strong>.</li>
+<li>Arène 1 : nord-est du marais du North Ford, contre araignées, mages noirs et Inferi. Arène 2 : <strong>sud-ouest d'Irondale</strong>, contre trolls, gobelins et Fangieux — et ses 20 vases sont ceux de la quête « des vases communicants ».</li>
+<li class="alerte">⚠️ Bug connu : l'arène d'Irondale ne se valide pas toujours ; refaire celle du North Ford a débloqué le trophée pour plusieurs joueurs.</li>
+<li><strong>Chaque arène donne une tenue.</strong></li>
+<li><strong>Annonce 18 ennemis connus et non 21</strong> : l'écart est signalé en partie 35.</li>
+</ul>
+</li>
+<li>Décompte du guide, reconstitué à partir de la liste des coffres : 31 petits campements, 11 campements moyens, 5 châteaux occupés, <strong>soit 50 coffres de collection</strong> <em>(31 + 11 + 8)</em> — exactement le nombre d'attributs trouvés dans les coffres.</li>
+</ul>
+<h3 id="partie-36-les-trophees">Partie 36 — Les trophées</h3>
+<ul>
+<li>Psthc, liste des trophées et guide des trophées
+<ul>
+<li>Les 46 noms et libellés français officiels, <strong>avec leur pourcentage d'obtention.</strong></li>
+<li>Platine : « qui dit trophées dit triomphe », obtenu par 42 % des joueurs.</li>
+<li class="alerte">⚠️ Les 4 trophées de maison sont les seuls manquables : 1 partie principale + 3 parties partielles de 2 h jusqu'à la Salle de la carte.</li>
+<li>« De grâce ! » demande la magie ancienne sur <strong>35 types d'ennemis</strong>, et les ennemis connus ne comptent pas.</li>
+<li>« Toujours plus ! » <em>(combo de 100)</em> se fait sur un <strong>Inferi non brûlé</strong>, qui ne perd aucune vie mais fait monter la jauge de combo.</li>
+<li>« Crème renversée » demande Flipendo 10 fois sur la même vache.</li>
+<li>« La racine du problème » demande <strong>10 ennemis différents</strong> étourdis par une mandragore.</li>
+<li>Terminer les défis du guide du sorcier donne le <strong>niveau 40</strong> et <strong>« Collectionnite »</strong> ensemble.</li>
+<li>Pense à <strong>réclamer</strong> les récompenses de l'onglet défis : une case à fond rouge est un objet de collection non ramassé ; elle passe en bleu avec une coche quand c'est fait.</li>
+<li class="alerte">⚠️ <strong>Le bug de « Collectionnite » est corrigé</strong> : il suffit de recharger sa partie.</li>
+<li>La difficulté se change librement sans affecter aucun trophée.</li>
+<li>Les 12 tenues du contenu additionnel ne comptent pas pour le trophée.</li>
+</ul>
+</li>
+</ul>
+<h3 id="divergences-relevees-dans-les-parties-30-a-36">Divergences relevées dans les parties 30 à 36</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Choix du guide</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Règle des portes d'arithmancie</strong></td>
+<td>Le guide avait d'abord écrit qu'il fallait compter les traits des symboles ; la page dédiée explique que c'est l'ORDRE des animaux sur l'arche</td>
+<td><strong>Corrigé en partie 10</strong>, et la vraie règle est détaillée en partie 32</td>
+</tr>
+<tr>
+<td><strong>Valeurs des symboles d'arithmancie</strong></td>
+<td>La source donne demiguise 0, licorne 1, dragon 2, crabe 5, araignée 8 mais se contredit sur le 9 et l'hydre 3</td>
+<td><strong>Les six valeurs sûres sont données</strong>, et les quatre autres marquées « à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>Nombre de pages du Guide</strong></td>
+<td><strong>236 pages énumérées</strong> contre 150 pages de Revelio annoncées par le guide des trophées</td>
+<td><strong>Les deux lectures sont données</strong>, <strong>avec le conseil de toutes les prendre</strong></td>
+</tr>
+<tr>
+<td><strong>Nombre de statues de Demiguise</strong></td>
+<td><strong>30 énumérées</strong> contre <strong>33 annoncées</strong></td>
+<td><strong>Les 30 sont listées</strong>, <strong>et l'écart signalé</strong></td>
+</tr>
+<tr>
+<td><strong>Nombre d'ennemis connus</strong></td>
+<td><strong>21 énumérés</strong> contre <strong>18 annoncés</strong></td>
+<td><strong>21 retenu</strong> <em>(vérifiable nom par nom)</em>, <strong>et l'écart signalé</strong></td>
+</tr>
+<tr>
+<td><strong>Trophée des ennemis connus</strong></td>
+<td><strong>Le guide les attribuait à « À la hauteur du défi »</strong> ; *<em>le libellé officiel de ce trophée parle des <strong>arènes de combat</strong></em></td>
+<td><strong>Corrigé dans les parties 12 à 23</strong> : **ils comptent pour <strong>« Collectionnite »</strong></td>
+</tr>
+<tr>
+<td><strong>Coffres d'Aranshire</strong></td>
+<td>Le sommaire de la source en liste 3, le corps du texte 4</td>
+<td><strong>Quatre</strong></td>
+</tr>
+<tr>
+<td><strong>Coffres de la région de Feldcroft</strong></td>
+<td>Le guide avait d'abord compté 22</td>
+<td><strong>Vingt-quatre</strong>, <strong>recomptés un par un</strong></td>
+</tr>
+<tr>
+<td><strong>Coffres des châteaux occupés</strong></td>
+<td>Le guide avait d'abord écrit « deux par château »</td>
+<td>Trois châteaux en ont deux, deux n'en ont qu'un</td>
+</tr>
+<tr>
+<td><strong>Coffres de Pré-au-Lard à l'Alohomora 3</strong></td>
+<td>Le guide avait d'abord compté 2</td>
+<td><strong>Trois</strong></td>
+</tr>
+<tr>
+<td><strong>Biome du 3e vivarium</strong></td>
+<td><strong>marais contre montagne</strong></td>
+<td><strong>Marais</strong>, <strong>confirmé deux fois par la soluce <em>(« Vivarium marécageux »)</em></strong></td>
+</tr>
+<tr>
+<td><strong>Les 5 cairns de donjons</strong></td>
+<td>Mentionnés par une seule source, sans être nommés</td>
+<td><strong>Le chiffre est donné, cinq candidats proposés</strong>, <strong>et l'ensemble marqué « à vérifier en jeu »</strong></td>
+</tr>
+<tr>
+<td><strong>Panneau « Out of Order »</strong></td>
+<td>La source cite le panneau <strong>en anglais</strong> dans un texte français</td>
+<td>Marqué « nom français à vérifier en jeu »</td>
+</tr>
+<tr>
+<td><strong>« Grimbaild Brode » / « Grimbald Brode »</strong></td>
+<td>La source écrit les deux</td>
+<td><strong>Grimbald Brode</strong>, <strong>la forme de la page de quête</strong></td>
+</tr>
+<tr>
+<td><strong>« Le hall d'Herodiania » / « d'Herodiana »</strong></td>
+<td>La source écrit les deux</td>
+<td><strong>Herodiana</strong>, la forme de la page de la quête et des trois pièces d'équipement</td>
+</tr>
+<tr>
+<td><strong>Arène de la Magie noire</strong> <em>(contenu d'édition)</em></td>
+<td>Mentionnée par la fiche des éditions, jamais par le guide des trophées</td>
+<td><strong>Signalée en partie 36</strong>, <strong>et marquée « à vérifier en jeu »</strong></td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="annexes.html" rel="prev"><small>← Partie précédente</small><b>Annexes</b></a><a class="tout" href="hogwarts-legacy.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Hogwarts Legacy : L&#x27;Héritage de Poudlard · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

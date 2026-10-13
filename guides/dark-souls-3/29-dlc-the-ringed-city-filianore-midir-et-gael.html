@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DLC The Ringed City : Filianore, Midir et Gael – Guide Dark Souls III</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Dark Souls III, DLC The Ringed City : Filianore, Midir et Gael : Boss : Midir, Aube, Gael le chevalier-esclave. Sur le pont : sprinte entre les passages…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/dark-souls-3/29-dlc-the-ringed-city-filianore-midir-et-gael.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="DLC The Ringed City : Filianore, Midir et Gael · Guide Dark Souls III">
+<meta property="og:description" content="Dark Souls III, DLC The Ringed City : Filianore, Midir et Gael : Boss : Midir, Aube, Gael le chevalier-esclave. Sur le pont : sprinte entre les passages…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/dark-souls-3/29-dlc-the-ringed-city-filianore-midir-et-gael.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Dark Souls III", "item": "https://bloundsk.github.io/guides-jeux-video/guides/dark-souls-3/"}, {"@type": "ListItem", "position": 3, "name": "DLC The Ringed City : Filianore, Midir et Gael", "item": "https://bloundsk.github.io/guides-jeux-video/guides/dark-souls-3/29-dlc-the-ringed-city-filianore-midir-et-gael.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="dark-souls-3" class="compact" data-partie="29-dlc-the-ringed-city-filianore-midir-et-gael"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Dark Souls III</a><span aria-hidden="true">›</span><span>Partie 29</span></nav>
+<p class="gjv-jeu">Dark Souls III : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Dark Souls <em>III</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction-tout-ce-quil-faut-savoir-avant-de-commencer.html"><span class="num">00</span><span class="libelle">Introduction : tout ce qu&#x27;il faut savoir avant de commencer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-le-cimetiere-des-cendres-et-le-sanctuaire-de-lige-feu.html"><span class="num">01</span><span class="libelle">Le Cimetière des cendres et le Sanctuaire de Lige-Feu</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-le-grand-mur-de-lothric.html"><span class="num">02</span><span class="libelle">Le Grand mur de Lothric</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-le-camp-des-mort-vivants.html"><span class="num">03</span><span class="libelle">Le Camp des mort-vivants</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-la-route-des-sacrifices.html"><span class="num">04</span><span class="libelle">La Route des sacrifices</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-la-cathedrale-des-profondeurs.html"><span class="num">05</span><span class="libelle">La Cathédrale des profondeurs</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-le-bastion-de-farron.html"><span class="num">06</span><span class="libelle">Le Bastion de Farron</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-les-catacombes-de-carthus.html"><span class="num">07</span><span class="libelle">Les Catacombes de Carthus</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-le-lac-incandescent.html"><span class="num">08</span><span class="libelle">Le Lac incandescent</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-irithyll-de-la-vallee-boreale.html"><span class="num">09</span><span class="libelle">Irithyll de la vallée boréale</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-le-donjon-dirithyll-et-la-capitale-profanee.html"><span class="num">10</span><span class="libelle">Le Donjon d&#x27;Irithyll et la Capitale profanée</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="11-anor-londo.html"><span class="num">11</span><span class="libelle">Anor Londo</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-le-chateau-de-lothric.html"><span class="num">12</span><span class="libelle">Le Château de Lothric</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="13-le-jardin-du-roi-illumine.html"><span class="num">13</span><span class="libelle">Le Jardin du Roi illuminé</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="14-les-sepultures-oubliees.html"><span class="num">14</span><span class="libelle">Les Sépultures oubliées</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="15-les-grandes-archives.html"><span class="num">15</span><span class="libelle">Les Grandes archives</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="16-le-pic-du-dragon-ancien.html"><span class="num">16</span><span class="libelle">Le Pic du Dragon ancien</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="17-le-kiln-de-la-premiere-flamme-et-les-fins.html"><span class="num">17</span><span class="libelle">Le Kiln de la Première Flamme et les fins</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="18-les-quetes-de-pnj-le-sanctuaire.html"><span class="num">18</span><span class="libelle">Les quêtes de PNJ : le Sanctuaire</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="19-les-quetes-de-pnj-les-chaines-longues.html"><span class="num">19</span><span class="libelle">Les quêtes de PNJ : les chaînes longues</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="20-les-serments.html"><span class="num">20</span><span class="libelle">Les serments</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="21-ameliorer-impregner-et-forger.html"><span class="num">21</span><span class="libelle">Améliorer, imprégner et forger</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="22-les-magies-sorcelleries-pyromancies-et-miracles.html"><span class="num">22</span><span class="libelle">Les magies : sorcelleries, pyromancies et miracles</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="23-les-collectibles.html"><span class="num">23</span><span class="libelle">Les collectibles</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="24-lequipement-essentiel.html"><span class="num">24</span><span class="libelle">L&#x27;équipement essentiel</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="25-dlc-les-cendres-dariandel-le-champ-de-neige.html"><span class="num">25</span><span class="libelle">DLC Les Cendres d&#x27;Ariandel : le Champ de neige</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="26-dlc-les-cendres-dariandel-la-passe-enneigee-les-profondeurs-et-friede.html"><span class="num">26</span><span class="libelle">DLC Les Cendres d&#x27;Ariandel : la Passe enneigée, les Profondeurs et Friede</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="27-dlc-the-ringed-city-le-capharnaum-des-confins.html"><span class="num">27</span><span class="libelle">DLC The Ringed City : le Capharnaüm des confins</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="28-dlc-the-ringed-city-la-cite-enclavee.html"><span class="num">28</span><span class="libelle">DLC The Ringed City : la Cité enclavée</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="#29-dlc-the-ringed-city-filianore-midir-et-gael"><span class="num">29</span><span class="libelle">DLC The Ringed City : Filianore, Midir et Gael</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="99-annexes-points-de-non-retour-manquables-index-et-check-list-finale.html"><span class="num">99</span><span class="libelle">Annexes : points de non-retour, manquables, index et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="sources-dark-souls-iii.html"><span class="num">✦</span><span class="libelle">Sources — Dark Souls III</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-30">
+<header class="tete-section">
+<p class="eyebrow">Partie 29</p>
+<h1 id="29-dlc-the-ringed-city-filianore-midir-et-gael">DLC The Ringed City : Filianore, Midir et Gael</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-30"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-30">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Boss</strong> : Midir, Aube, Gael le chevalier-esclave.</li>
+<li><strong>Sur le pont</strong> : sprinte entre les passages de Midir.</li>
+<li><strong>Attention</strong> : le Monument purificateur efface les Marques sombres, incompatible avec la fin cachée.</li>
+<li><strong>À ne pas rater</strong> : l'<strong>Anneau de l'Œil maléfique +3</strong> (Mimic) et le <strong class="objet">Crucifix du Roi dément</strong>.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>La fin du DLC et la fin de la série : traverser le <strong>pont de Midir</strong>, explorer la <strong>tour en ruines</strong>, conclure la <strong>quête de Lapp</strong>, abattre <strong>Midir</strong> dans les tréfonds, battre <strong>Aube, Lance de l'église</strong>, réveiller <strong>Filianore</strong> — puis affronter <strong>Gael le chevalier-esclave</strong>, le dernier boss de <em>Dark Souls</em>. Et enfin <strong>rendre le Sang de l'Âme ténébreuse</strong> à la peintre d'Ariandel.</p>
+<p><strong>Niveau conseillé</strong> : 120 et plus.</p>
+<h2 id="itineraire-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://darksouls3.wiki.fextralife.com/The+Ringed+City">Cité enclavée</a> · <a href="https://darksouls3.wiki.fextralife.com/Filianore's+Rest">Repos de Filianore</a> — sur le Fextralife, en anglais : carte, captures et objets de chaque lieu.</p>
+<ol>
+<li><strong>Le pont</strong> : les passages de Midir.</li>
+<li><strong>La tour en ruines</strong> : <strong>Lapp</strong>, le Mimic, l'<strong>Anneau de l'Œil maléfique +3</strong>.</li>
+<li><strong>Le second passage de Midir</strong> : le rocher et l'attaque critique.</li>
+<li><strong>L'ascenseur-raccourci</strong>, l'<strong>Anneau de Chlorantie +3</strong>, le <strong>mur illusoire</strong> des statues.</li>
+<li><strong>Midir dans les tréfonds.</strong></li>
+<li>Le Monument de la Lance divine et le <strong>Serment des Lances divines</strong>.</li>
+<li><strong>Aube, Lance de l'église</strong>, puis <strong>la coquille de Filianore</strong>.</li>
+<li><strong>Le Repos de Filianore</strong> et <strong>Gael</strong>.</li>
+<li><strong>Après le boss</strong> : <strong>Shira</strong>, les Cendres de la vieille femme, le <strong>nouveau monde peint</strong>.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="le-pont-et-la-tour-en-ruines">Le pont et la tour en ruines</h3>
+<ol>
+<li><strong>Midir survole le pont.</strong> Avance de quelques pas pour déclencher son premier passage, puis sprinte en te laissant tomber vers le chemin du bas pour t'abriter sous le toit rocheux : <strong class="objet">2 Écailles de Titanite</strong>.</li>
+<li>À l'entrée de la tour, fais une sortie au bon moment pour la Grande âme de guerrier épuisé, puis <strong>rentre</strong>.</li>
+<li><strong>Descends à droite</strong> : Lapp est dans la salle funéraire — c'est la conclusion de sa quête (étape 30).</li>
+<li><strong>Après la chute</strong> : monte pour mieux te laisser tomber, prends la <strong class="objet">Gemme bénite</strong>, et tue le Mimic de la pièce suivante : l'<strong>Anneau de l'Œil maléfique +3</strong>.</li>
+<li>Monte les escaliers du passage suivant en éliminant les squelettes, continue à monter : <strong>un Feu bienvenu</strong>.</li>
+</ol>
+<h3 id="le-second-passage-de-midir-et-les-trefonds">Le second passage de Midir et les tréfonds</h3>
+<ol start="6">
+<li class="alerte">⚠️ <strong>Dehors, Midir bloque à nouveau le passage.</strong>
+<ul>
+<li>Fonce vers lui pour t'abriter derrière le rocher de gauche, puis fais des sorties ponctuelles pour l'attaquer — de préférence à la tête, avec une arme lourde et longue.</li>
+<li>Ne reste pas trop longtemps immobile derrière le rocher : il y passe la tête pour te rôtir.</li>
+<li>Quand il est sonné, exécute une attaque critique sur sa tête : il tombe dans les tréfonds, où il t'attendra pour l'ultime confrontation.</li>
+</ul>
+</li>
+<li><strong class="objet">Écaille de Titanite</strong> ici, puis <strong>traverse jusqu'au bâtiment voisin</strong>.</li>
+<li>Monte les escaliers, tourne à droite et prends l'ascenseur : raccourci vers le deuxième Feu de la Cité enclavée.</li>
+<li><strong>En reprenant l'ascenseur, repère l'ouverture à mi-chemin</strong> : engouffre-toi, va à droite et laisse-toi tomber sur la statue de Gwyn pour l'<strong>Anneau de Chlorantie +3</strong>.</li>
+<li>Reprends ce passage et va de l'autre côté : une <strong>Braise</strong>, et surtout un mur illusoire.
+<ul>
+<li>Frappe la deuxième statue en partant de la droite : derrière, un Ornement de Lance de Filianore, un <strong class="objet">Costume simple suranné</strong> et des <strong class="objet">Brassards violets</strong>.</li>
+<li>Ce passage mène aussi aux tréfonds où Midir s'est écrasé : ses défenses restent très hautes.</li>
+</ul>
+</li>
+</ol>
+<h3 id="boss-midir-fleau-des-tenebres">Boss : Midir, fléau des ténèbres</h3>
+<ol start="11">
+<li><strong>Combat long et intense</strong> : santé et défenses extrêmement élevées.</li>
+<li>Arme lourde — ultra espadon ou grand marteau — et frappe la tête : les dégâts y sont doublés.</li>
+<li><strong>Ses attaques</strong> : <strong>balayage de queue</strong>, enchaînements de coups de pattes, torrents de flammes sous lui et à distance.</li>
+<li>Quand il génère de la lumière par la gueule, fuis le rayon : il te propulse en l'air.</li>
+<li>Pour t'abriter de ses jets de flammes, cours vers le bout de sa queue et place quelques coups.</li>
+<li><strong>Phase 2</strong> : il canalise de l'énergie ténébreuse autour de lui — quitte la zone avant l'explosion annoncée.
+<ul>
+<li>Guette un jet de flammes pour le contourner et frapper la tête.</li>
+<li><strong>Reste mobile en sprintant</strong> pour te replacer vers sa nuque.</li>
+</ul>
+</li>
+</ol>
+<h3 id="le-monument-de-la-lance-divine-et-aube">Le Monument de la Lance divine et Aube</h3>
+<ol start="17">
+<li>De retour dans la salle de la statue de Gwyn, sors : un chevalier enclavé manie des Espadons appariés de chevalier enclavé — <strong>à récupérer sur lui</strong>.</li>
+<li>Juste à droite du chevalier, le Monument de la Lance divine : on y fait don de ses Ornements de Lance de Filianore pour monter en galon dans le Serment des Lances divines.</li>
+<li><strong>Fais le tour de la zone</strong> : un <strong class="objet">Fragment de lance rituelle</strong>, <strong>3 Fleurs vertes bourgeonnantes</strong> et <strong class="objet">2 Titanites scintillantes</strong>.</li>
+<li>Passe les portes de l'église. Tu peux invoquer Lapp à droite en entrant, mais c'est déconseillé. <strong>Franchis le brouillard.</strong></li>
+</ol>
+<h3 id="boss-aube-lance-de-leglise">Boss : Aube, Lance de l'église</h3>
+<ol start="21">
+<li>Après le discours du Juge Argo, c'est d'abord une Lance divine invoquée que tu affrontes — et ce peut être un vrai joueur si tu es en ligne.</li>
+<li>Le véritable boss n'entre qu'après quelques instants. <strong>Aube</strong> est polyvalent et reste souvent à distance :
+<ul>
+<li><strong>lame courbe</strong> qui envoie des flammes noires au sol ;</li>
+<li>traînées de lances qui jaillissent du sol et persistent plusieurs secondes ;</li>
+<li><strong>miracle de la flèche foudroyante</strong>.</li>
+</ul>
+</li>
+<li>Profite de sa distance pour éliminer d'abord la Lance divine, en te couvrant derrière les piliers.</li>
+<li>Coince ensuite tes adversaires à tour de rôle dans un coin pour enchaîner.</li>
+<li><strong>Récompenses</strong> : une <strong class="objet">Tablette de Titanite</strong> et un Ornement de Lance de Filianore.</li>
+<li>Prends l'ascenseur vers la chambre de Filianore et interagis avec la coquille brisée : une scène se déclenche.</li>
+</ol>
+<h3 id="le-repos-de-filianore-et-gael">Le Repos de Filianore et Gael</h3>
+<ol start="27">
+<li>Tu te réveilles au Repos de Filianore, un vaste désert sans fin parsemé de ruines.</li>
+<li>Suis les traces laissées par la carcasse qui se traîne au sol, vers <strong>les ruines en contrebas</strong> : c'est là que t'attend le <strong>boss final du DLC</strong>.</li>
+</ol>
+<h3 id="boss-gael-le-chevalier-esclave">Boss : Gael le chevalier-esclave</h3>
+<ol start="29">
+<li>Il se déplace vite autour de toi, mais ses attaques sont relativement lentes : <strong>n'esquive pas trop tôt</strong>, sinon tu les prends de plein fouet.
+<ul>
+<li><strong>Les meilleures fenêtres</strong> : après son coup d'estoc sauté, quand son épée est légèrement auréolée de rouge, et quand il saute pour planter son épée dans le sol.</li>
+<li><strong>Assez de dégâts le font chanceler</strong> : autant d'occasions supplémentaires.</li>
+</ul>
+</li>
+<li><strong>À un gros tiers de vie perdu</strong> : chacune de ses attaques est accompagnée de la traînée rouge de sa cape.
+<ul>
+<li>Il envoie des shurikens de lumière qui reviennent vers lui et <strong>tire des rafales d'arbalète</strong>.</li>
+<li>À partir de là, pars toujours du principe qu'il enchaînera plus d'une attaque : ses longs combos comportent des temps morts qui ne sont pas de vraies ouvertures.</li>
+</ul>
+</li>
+<li><strong>Au tiers de vie</strong> : il se contorsionne et fait exploser un torrent d'âmes rouges qui te traquent.
+<ul>
+<li>Des éclairs commencent à s'abattre sur l'arène et <strong>ses coups redoublent d'intensité</strong>, <strong>parfois suivis d'invocations d'âmes</strong>.</li>
+<li><strong>Ne sois pas pressé de frapper</strong> : concentre-toi sur les esquives, les ouvertures viendront.</li>
+</ul>
+</li>
+<li><strong>Récompense</strong> : le <strong class="objet">Sang de l'Âme ténébreuse</strong>.</li>
+</ol>
+<h3 id="apres-le-boss">Après le boss</h3>
+<ol start="33">
+<li><strong>Shira</strong> : <strong>allume le Feu</strong>, retourne en haut de la colline et descends dans les ruines à gauche.
+<ul>
+<li>Tu peux l'y combattre, même après avoir vaincu Midir et lui avoir rapporté ta victoire.</li>
+<li>La battre donne le <strong class="objet">Crucifix du Roi dément</strong>.</li>
+</ul>
+</li>
+<li>Retourne au premier Feu du Capharnaüm des confins : les <strong class="objet">Cendres de la vieille femme</strong> sont là où se tenait la vieille marchande.</li>
+<li>Enfin, retourne à la Chapelle d'Ariandel (DLC précédent) et monte à l'échelle : donne le Sang de l'Âme ténébreuse à la jeune femme aux cheveux blancs pour la laisser peindre un nouveau monde. C'est la vraie dernière image de la série.</li>
+</ol>
+<h3 id="la-quete-de-lapp-de-bout-en-bout">La quête de Lapp, de bout en bout</h3>
+<ol start="36">
+<li>Elle commence dans la zone dégagée juste après la tour écroulée, en passant par la chapelle aux deux chevaliers de Lothric (partie 27).</li>
+<li>Près du Feu de l'Aiguille de Terre, il parle d'un trésor : <strong>une Tablette de Titanite</strong>. Tu peux la prendre toi-même, ou revenir à ce Feu après une mort ou un rechargement pour qu'il te la remette.</li>
+<li><strong>Dans la Cité enclavée</strong>, il est sur un balcon au bout de la pièce du deuxième Feu (partie 28).</li>
+<li>Puis dans une pièce accessible depuis le marais : échelle à gauche en entrant dans le marais, puis le chemin au-delà du pont à gauche.</li>
+<li>L'étape suivante exige le raccourci du Feu du marais : traverse le toit du grand bâtiment englouti, continue à droite, reviens dans le bâtiment ouvrir la grille, puis <strong>résous l'énigme</strong> (Jeune branche blanche ou Caméléon dans le marais, puis devant l'inscription).</li>
+<li>Après avoir atteint le Monument purificateur, retourne lui en parler.</li>
+<li><strong>Enfin, dans la tour en ruines</strong> : descends à droite pour le trouver accroupi, puis <strong>fais mine de sortir</strong> : une scène <strong>dévoile son identité</strong>.</li>
+<li><strong>Remonte là où il t'a poussé</strong> : le <strong class="objet">Set d'armure de Lapp</strong>.</li>
+</ol>
+<h2 id="quetes-et-lieux-27" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<ul>
+<li><strong>Lapp</strong> : sa chaîne court sur les deux parties du DLC. Elle se conclut dans la tour en ruines, et donne son Set d'armure.</li>
+<li><strong>Shira</strong> : elle t'autorise à affronter Midir, et devient un adversaire après Gael, où elle lâche le <strong class="objet">Crucifix du Roi dément</strong>.</li>
+<li>Le Serment des Lances divines se rejoint au Monument de la Lance divine : les Ornements de Lance de Filianore en sont la monnaie.</li>
+<li class="alerte manquable">⏳ <strong>Le Monument purificateur</strong> (partie 28) purge les <strong>Marques sombres</strong> : attention si tu vises la fin cachée du jeu de base (partie 17).</li>
+<li><strong>Trois anneaux +3 dans cette partie</strong> : <strong>de l'Œil maléfique</strong>, <strong>de Chlorantie</strong>, et ceux des parties 27 et 28.</li>
+</ul>
+<h2 id="butin-exhaustif-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2 Écailles de Titanite</strong></td>
+<td><span class="badge neutre">Matériaux</span></td>
+<td><strong>Chemin du bas sous le toit rocheux</strong>, pont de Midir</td>
+<td>Armes de Transposition</td>
+</tr>
+<tr>
+<td><strong>Grande âme de guerrier épuisé</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td><strong>Sortie au bon moment</strong>, entrée de la tour</td>
+<td>Âmes</td>
+</tr>
+<tr>
+<td><strong>Gemme bénite</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Après la chute, dans la tour</td>
+<td>Infusion Foi</td>
+</tr>
+<tr>
+<td><strong>Anneau de l'Œil maléfique +3</strong></td>
+<td><span class="badge neutre">Anneau</span></td>
+<td><strong>Mimic</strong> de la pièce suivante</td>
+<td>Vole de la vie à chaque ennemi tué</td>
+</tr>
+<tr>
+<td><strong>Écaille de Titanite</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Après le second passage de Midir</td>
+<td>Armes de Transposition</td>
+</tr>
+<tr>
+<td><strong>Anneau de Chlorantie +3</strong></td>
+<td><span class="badge neutre">Anneau</span></td>
+<td><strong>Statue de Gwyn</strong>, par l'ouverture à mi-ascenseur</td>
+<td>Récupération d'endurance</td>
+</tr>
+<tr>
+<td><strong>Braise</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>De l'autre côté du passage de l'ascenseur</td>
+<td>Porte-braise</td>
+</tr>
+<tr>
+<td><strong>Ornement de Lance de Filianore</strong> ×2</td>
+<td><span class="badge objet">Objets clés</span></td>
+<td><strong>Mur illusoire de la deuxième statue</strong> ; <strong>Aube</strong></td>
+<td>Monnaie du Serment des Lances divines</td>
+</tr>
+<tr>
+<td><strong>Costume simple suranné</strong>, <strong>Brassards violets</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td>Mur illusoire de la deuxième statue</td>
+<td>Tenue légère</td>
+</tr>
+<tr>
+<td><strong>Espadons appariés de chevalier enclavé</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td><strong>Chevalier enclavé</strong>, en sortant de la salle de la statue</td>
+<td>Épées jumelées</td>
+</tr>
+<tr>
+<td><strong>Fragment de lance rituelle</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Tour de la zone du Monument</td>
+<td>Objet de rituel</td>
+</tr>
+<tr>
+<td><strong>3 Fleurs vertes bourgeonnantes</strong></td>
+<td><span class="badge neutre">Consommables</span></td>
+<td>Tour de la zone du Monument</td>
+<td>Endurance</td>
+</tr>
+<tr>
+<td><strong>2 Titanites scintillantes</strong></td>
+<td><span class="badge neutre">Matériaux</span></td>
+<td>Tour de la zone du Monument</td>
+<td>Armes uniques</td>
+</tr>
+<tr>
+<td><strong>Tablette de Titanite</strong> ×2</td>
+<td><span class="badge neutre">Matériaux</span></td>
+<td><strong>Aube</strong> ; <strong>trésor de Lapp</strong> à l'Aiguille de Terre</td>
+<td>Armes +9 à +10</td>
+</tr>
+<tr>
+<td><strong>Sang de l'Âme ténébreuse</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td><strong>Gael le chevalier-esclave</strong></td>
+<td>À donner à la peintre d'Ariandel</td>
+</tr>
+<tr>
+<td><strong>Crucifix du Roi dément</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td><strong>Shira</strong>, dans les ruines après Gael</td>
+<td>Arme de miracles</td>
+</tr>
+<tr>
+<td><strong>Cendres de la vieille femme</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td><strong>Premier Feu du Capharnaüm</strong>, après Gael</td>
+<td>Stock de la Servante</td>
+</tr>
+<tr>
+<td><strong>Set d'armure de Lapp</strong></td>
+<td><span class="badge armure">Armure</span></td>
+<td><strong>Là où Lapp t'a poussé</strong>, tour en ruines</td>
+<td>Armure complète</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Midir se combat en deux temps.</strong> Sur le pont, on l'assomme depuis un rocher pour une attaque critique ; dans les tréfonds, on le finit vraiment. Vouloir le tuer d'un coup sur le pont, c'est perdre son temps.</li>
+<li><strong>Ne t'attarde pas derrière le rocher.</strong> Il y passe la tête : l'abri est un point de départ, pas une planque.</li>
+<li><strong>La tête, toujours la tête.</strong> Doubler les dégâts sur un boss qui en a autant, c'est la différence entre dix minutes et une demi-heure.</li>
+<li>Frappe la deuxième statue en partant de la droite. Ce mur illusoire donne un Ornement de Lance, deux pièces d'armure et l'accès aux tréfonds : rien de tout cela n'est signalé.</li>
+<li><strong>Contre Gael, esquive tard.</strong> Ses gestes sont lents malgré sa vitesse de déplacement : l'esquive anticipée est l'erreur la plus fréquente.</li>
+<li><strong>En phase 3, accepte de ne pas frapper.</strong> Les éclairs et les âmes rouges punissent la gourmandise ; les ouvertures reviennent toujours.</li>
+<li><strong>Termine par la Chapelle d'Ariandel.</strong> Rendre le Sang de l'Âme ténébreuse à la peintre est la conclusion de toute la série : ne quitte pas le jeu sans l'avoir fait.</li>
+</ul>
+<h2 id="alertes-30" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Midir survole le pont</strong> : la traversée se fait par sprints entre ses passages.</li>
+<li class="alerte">⚠️ Le Mimic de la tour garde l'Anneau de l'Œil maléfique +3.</li>
+<li class="alerte">⚠️ La Lance divine d'Aube peut être un vrai joueur si tu es en ligne.</li>
+<li class="alerte">⚠️ <strong>Invoquer Lapp contre Aube est déconseillé.</strong></li>
+<li class="alerte">⚠️ En phase 3, Gael invoque des âmes traqueuses et des éclairs tombent sur l'arène.</li>
+<li class="alerte">⚠️ <strong>Le Monument purificateur efface les Marques sombres</strong> : incompatible avec la fin cachée du jeu de base.</li>
+<li class="alerte manquable">⏳ <strong>Manquables</strong> : l'<strong>Anneau de l'Œil maléfique +3</strong>, l'<strong>Anneau de Chlorantie +3</strong>, les objets du <strong>mur illusoire des statues</strong>, les <strong>Espadons appariés</strong>, le <strong class="objet">Crucifix du Roi dément</strong> (Shira), les <strong class="objet">Cendres de la vieille femme</strong>, le <strong class="objet">Set d'armure de Lapp</strong>, et le <strong>nouveau monde peint</strong> si tu ne rends pas le Sang de l'Âme ténébreuse.</li>
+</ul>
+<h2 id="check-list-29" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Pont de Midir</strong> traversé, <strong class="objet">2 Écailles de Titanite</strong> récupérées</li>
+<li class="tache"><input type="checkbox"> <strong>Lapp</strong> retrouvé dans la salle funéraire</li>
+<li class="tache"><input type="checkbox"> <strong>Mimic</strong> tué : <strong>Anneau de l'Œil maléfique +3</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Feu de la tour</strong> allumé</li>
+<li class="tache"><input type="checkbox"> <strong>Midir assommé sur le pont</strong> par une attaque critique</li>
+<li class="tache"><input type="checkbox"> <strong>Ascenseur-raccourci</strong> ouvert</li>
+<li class="tache"><input type="checkbox"> <strong>Anneau de Chlorantie +3</strong> sur la statue de Gwyn</li>
+<li class="tache"><input type="checkbox"> <strong>Mur illusoire</strong> de la deuxième statue frappé : <strong>Ornement</strong>, <strong class="objet">Costume simple suranné</strong>, <strong class="objet">Brassards violets</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Midir</strong> vaincu dans les tréfonds</li>
+<li class="tache"><input type="checkbox"> Espadons appariés de chevalier enclavé récupérés</li>
+<li class="tache"><input type="checkbox"> Ornements de Lance de Filianore offerts au Monument de la Lance divine</li>
+<li class="tache"><input type="checkbox"> <strong>Aube, Lance de l'église</strong> vaincue</li>
+<li class="tache"><input type="checkbox"> <strong>Coquille de Filianore</strong> touchée</li>
+<li class="tache"><input type="checkbox"> <strong>Gael le chevalier-esclave</strong> vaincu : <strong class="objet">Sang de l'Âme ténébreuse</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Shira</strong> vaincue : <strong class="objet">Crucifix du Roi dément</strong></li>
+<li class="tache"><input type="checkbox"> Cendres de la vieille femme récupérées</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Set d'armure de Lapp</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Sang de l'Âme ténébreuse</strong> remis à la <strong>peintre d'Ariandel</strong></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="28-dlc-the-ringed-city-la-cite-enclavee.html" rel="prev"><small>← Partie précédente</small><b>DLC The Ringed City : la Cité enclavée</b></a><a class="suiv" href="99-annexes-points-de-non-retour-manquables-index-et-check-list-finale.html" rel="next"><small>Partie suivante →</small><b>Annexes : points de non-retour, manquables, index et check-list finale</b></a><a class="tout" href="dark-souls-3.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Dark Souls III · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

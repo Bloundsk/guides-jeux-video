@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pays de Bowser – Guide Super Mario Odyssey</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Super Mario Odyssey, Pays de Bowser : Boss : le Robobrood. Tenue requise : l&#x27;Armure de samouraï (n° 31 et 32). Plus tard : les n° 40 et 44 après…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/pays-de-bowser.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Pays de Bowser · Guide Super Mario Odyssey">
+<meta property="og:description" content="Super Mario Odyssey, Pays de Bowser : Boss : le Robobrood. Tenue requise : l&#x27;Armure de samouraï (n° 31 et 32). Plus tard : les n° 40 et 44 après…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/pays-de-bowser.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Super Mario Odyssey", "item": "https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/"}, {"@type": "ListItem", "position": 3, "name": "Pays de Bowser", "item": "https://bloundsk.github.io/guides-jeux-video/guides/super-mario-odyssey/pays-de-bowser.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="super-mario-odyssey" class="compact" data-partie="pays-de-bowser"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Super Mario Odyssey</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Super Mario Odyssey : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Super Mario <em>Odyssey</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="pays-des-chapeaux.html"><span class="num">✦</span><span class="libelle">Pays des Chapeaux</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="pays-des-chutes.html"><span class="num">✦</span><span class="libelle">Pays des Chutes</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="pays-des-sables-lhistoire-et-les-quarante-premieres-lunes.html"><span class="num">✦</span><span class="libelle">Pays des Sables — l&#x27;histoire et les quarante premières lunes</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="pays-des-sables-les-lunes-41-a-89.html"><span class="num">✦</span><span class="libelle">Pays des Sables — les lunes 41 à 89</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="pays-du-lac.html"><span class="num">✦</span><span class="libelle">Pays du Lac</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="pays-de-la-foret.html"><span class="num">✦</span><span class="libelle">Pays de la Forêt</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="pays-des-nuages.html"><span class="num">✦</span><span class="libelle">Pays des Nuages</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="pays-perdu.html"><span class="num">✦</span><span class="libelle">Pays Perdu</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="pays-des-gratte-ciel-lhistoire-et-les-quarante-premieres-lunes.html"><span class="num">✦</span><span class="libelle">Pays des Gratte-ciel — l&#x27;histoire et les quarante premières lunes</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="pays-des-gratte-ciel-les-lunes-41-a-81.html"><span class="num">✦</span><span class="libelle">Pays des Gratte-ciel — les lunes 41 à 81</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="pays-des-neiges.html"><span class="num">✦</span><span class="libelle">Pays des Neiges</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="pays-de-la-mer.html"><span class="num">✦</span><span class="libelle">Pays de la Mer</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="pays-de-la-cuisine.html"><span class="num">✦</span><span class="libelle">Pays de la Cuisine</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="pays-des-ruines.html"><span class="num">✦</span><span class="libelle">Pays des Ruines</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="#pays-de-bowser"><span class="num">✦</span><span class="libelle">Pays de Bowser</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="pays-de-la-lune.html"><span class="num">✦</span><span class="libelle">Pays de la Lune</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="royaume-champignon-retour-au-chateau.html"><span class="num">✦</span><span class="libelle">Royaume Champignon — retour au château</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="royaume-champignon-les-defis-de-toadette.html"><span class="num">✦</span><span class="libelle">Royaume Champignon — les défis de Toadette</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="cote-obscur.html"><span class="num">✦</span><span class="libelle">Côté obscur</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="cote-tres-obscur.html"><span class="num">✦</span><span class="libelle">Côté très obscur</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="tous-les-mouvements-de-mario.html"><span class="num">✦</span><span class="libelle">Tous les mouvements de Mario</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="toutes-les-chapimorphoses.html"><span class="num">✦</span><span class="libelle">Toutes les chapimorphoses</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="toutes-les-tenues.html"><span class="num">✦</span><span class="libelle">Toutes les tenues</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-pieces-locales.html"><span class="num">✦</span><span class="libelle">Les pièces locales</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="tous-les-boss.html"><span class="num">✦</span><span class="libelle">Tous les boss</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="apres-le-generique-3.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="multijoueur-ballons-et-mises-a-jour.html"><span class="num">✦</span><span class="libelle">Multijoueur, ballons et mises à jour</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="astuces-avancees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces avancées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="sources-super-mario-odyssey.html"><span class="num">✦</span><span class="libelle">Sources — Super Mario Odyssey</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-16">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="pays-de-bowser">Pays de Bowser</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-16"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-16">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Boss</strong> : le Robobrood.</li>
+<li><strong>Tenue requise</strong> : l'Armure de samouraï (n° 31 et 32).</li>
+<li><strong>Plus tard</strong> : les n° 40 et 44 après l'aventure ; 17 lunes après la roche lunaire.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Le <strong>château de Bowser</strong> est un château japonais posé sur les nuages, avec des cours successives, des murailles, des douves empoisonnées et un donjon au sommet. C'est l'avant-dernier pays de l'histoire, le plus <strong>vertical</strong> après le pays de la Forêt, et celui d'une chapimorphose entièrement nouvelle : le <strong>Pikonio</strong>, l'oiseau dont le <strong>bec se plante dans les murs</strong> et sert à la fois de piton et de tremplin.</p>
+<p><strong>62 lunes de puissance</strong>, et seulement <strong>8 exigées</strong> pour repartir.</p>
+<p>Ce qu'il faut accomplir :</p>
+<ol>
+<li><strong>Infiltrer le château</strong> et détruire le premier mini-boss.</li>
+<li>Réunir les <strong>cinq éclats de lune</strong> de la <strong>stratégie explosive</strong>.</li>
+<li>Battre <strong>Hariet</strong> et <strong>Topper</strong> dans les deux arènes du <strong>baroud des Broodals</strong>.</li>
+<li>Traverser les murailles et battre le <strong>Robobrood</strong> au sommet.</li>
+<li>Réunir <strong>8 lunes</strong> : l'histoire en donne <strong>6</strong>, il t'en faut <strong>2</strong> de plus.</li>
+</ol>
+<h2 id="itineraire-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.millenium.org/guide/279827.html">Pays de Bowser en vidéo</a> — soluce illustrée sur Millenium, en français.</p>
+<p>🗺️ <strong>Carte interactive</strong> : <a href="https://www.ign.com/maps/super-mario-odyssey/bowser-kingdom">le Pays de Bowser sur la carte IGN</a> (en anglais), avec chaque lune placée.</p>
+<p>Le château se lit en <strong>cours numérotées</strong>, de l'arrière vers l'avant, puis en murs et en donjon.</p>
+<ol>
+<li><strong>L'arrivée</strong>, tout en bas : l'Odyssée, la grille de fer au roi Koopa, les Goombas.</li>
+<li><strong>La troisième cour (arrière)</strong> : le premier mini-boss, les Hériss, les escaliers.</li>
+<li><strong>La deuxième cour</strong> : la zone des <strong>cinq éclats de lune</strong>, les boulets explosifs, la tourelle.</li>
+<li><strong>L'îlot de la boutique</strong>, atteint par une <strong>borne gzzzt</strong> : boutique, statues <strong>Jizo</strong>, la porte à samouraï.</li>
+<li><strong>La première cour et ses deux arènes</strong> : Hariet à gauche, Topper à droite.</li>
+<li><strong>La cour principale</strong> et <strong>la cour du château</strong> : le pont, les douves, les jumelles, les lance-pierres.</li>
+<li><strong>Le mur extérieur</strong> puis le <strong>mur intérieur</strong> : les cercles pivotants, les rectangles coulissants, la <strong>tour pivotante</strong>.</li>
+<li><strong>Le pied du donjon</strong>, puis le <strong>toit du donjon</strong> : la dernière borne gzzzt, et l'arène du Robobrood.</li>
+</ol>
+<p>Le <strong>Pikonio</strong> est la clé de tout :</p>
+<ul>
+<li><strong>Son bec se plante</strong> dans les murs qui ne sont <strong>pas en métal</strong>, et sert de point d'appui pour se propulser.</li>
+<li><strong>Il renvoie les boulets explosifs</strong> d'un coup de bec.</li>
+<li><strong>Il se plante dans les plates-formes mobiles</strong> pour se laisser porter.</li>
+</ul>
+<h2 id="deroule-pas-a-pas-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="objectif-1-infiltration-du-chateau-de-bowser">Objectif 1 — infiltration du château de Bowser</h3>
+<ol>
+<li>Passe les Goombas et prends le <strong>premier câble électrique</strong>.</li>
+<li><strong>Chapimorphose un Pikonio.</strong> Sers-toi de son <strong>coup de bec dans les murs</strong> pour te propulser vers le haut — exactement comme les fourchettes du pays de la Cuisine — et rejoins le <strong>deuxième câble électrique</strong>, en hauteur.</li>
+<li>Dans la zone suivante, avance <strong>à droite</strong> : un <strong>mini-boss</strong> t'attend.</li>
+<li><strong>Esquive son attaque</strong>, puis <strong>grimpe sur son arme</strong> et fais une <strong>charge au sol sur l'interrupteur de sa tête</strong>.</li>
+<li>Lune <strong>Infiltration du château de Bowser</strong>.</li>
+</ol>
+<h3 id="objectif-2-strategie-explosive">Objectif 2 — stratégie explosive</h3>
+<p>Prends le <strong>câble électrique en haut des escaliers</strong> et <strong>chapimorphose un Pikonio</strong> à l'arrivée. Il faut réunir <strong>5 éclats de lune</strong> dans la <strong>deuxième cour</strong> :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Éclat</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>devant une arrivée de bombes</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>au-dessus d'un flambeau, à droite</strong> — fais un <strong>salto en Mario</strong></td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>au-dessus du vide, à gauche</strong> — <strong>accroche-toi en Pikonio</strong></td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>derrière le mur, en hauteur</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>dans une caisse en métal, entre deux arrivées de bombes</strong> — <strong>frappe une bombe au bec</strong> pour la rediriger dessus</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="objectif-3-le-baroud-des-broodals">Objectif 3 — le baroud des Broodals</h3>
+<ol>
+<li>Prends le <strong>câble électrique</strong> jusqu'à l'<strong>îlot de la boutique</strong>. <strong>Fais tes emplettes</strong> : c'est le moment, tu passes juste devant.</li>
+<li>Prends le câble suivant : <strong>deux arènes</strong> s'offrent à toi.
+<ul>
+<li><strong>À gauche : Hariet.</strong> Elle utilise désormais <strong>deux bombes au lieu d'une</strong>. Même méthode : <strong>Cappy sur la bombe posée loin</strong>, puis <strong>saut sur la tête</strong>.</li>
+<li><strong>À droite : Topper.</strong> Il porte un <strong>nombre croissant de chapeaux</strong> : il faut tous les faire tomber au Cappy avant de pouvoir lui sauter dessus.</li>
+</ul>
+</li>
+<li>Les deux vaincus, <strong>les deux statues de Bowser sont détruites</strong> et la lune apparaît dans la <strong>première cour</strong>.</li>
+</ol>
+<h3 id="objectif-4-grabuge-au-chateau-de-bowser">Objectif 4 — grabuge au château de Bowser</h3>
+<ol>
+<li><strong>Chapimorphose un Pikonio dès le début</strong> : il élimine les ennemis sur la route et <strong>grimpe toutes les parois non métalliques</strong>.</li>
+<li><strong>Repousse les bombes à coups de bec</strong> jusqu'au <strong>mur extérieur</strong>.</li>
+<li><strong>Un second mini-boss</strong> : même méthode — <strong>redeviens Mario</strong>, <strong>grimpe sur son arme</strong>, <strong>écrase-lui la tête</strong>.</li>
+<li><strong>Reprends le Pikonio en contrebas</strong> et remonte la <strong>paroi nord</strong>.</li>
+<li><strong>Les cercles pivotants</strong> : <strong>plante ton bec dedans</strong> pour te propulser.</li>
+<li><strong>Les rectangles coulissants</strong> du <strong>mur intérieur</strong> : même principe.</li>
+<li>Tu arrives au <strong>pied du donjon</strong>. Un <strong>dernier câble électrique</strong> mène à Bowser… mais les Broodals ont autre chose en tête.</li>
+</ol>
+<h3 id="le-robobrood">Le Robobrood</h3>
+<p>Les quatre Broodals réunis dans un <strong>méca géant</strong>.</p>
+<ol>
+<li><strong>Dès qu'un Pikonio apparaît, chapimorphose-le.</strong></li>
+<li><strong>Renvoie les bombes du boss dans ses jambes</strong> en les <strong>frappant au bec</strong>.</li>
+<li>Le méca s'écroule : <strong>grimpe sur les parties boisées au bec</strong> et <strong>attaque le Broodal accessible</strong> pour l'éliminer.</li>
+<li><strong>Esquive les charges</strong> en <strong>courant latéralement</strong>, le temps que l'<strong>aura de ses jambes se dissipe</strong>.</li>
+<li>Même manœuvre pour le <strong>mettre à genoux</strong> et éliminer un <strong>deuxième Broodal</strong>.</li>
+<li>Il envoie ensuite des <strong>pétards tournoyants</strong> : <strong>tiens-toi le plus loin possible</strong>.</li>
+<li class="alerte">⚠️ <strong>Plus il reste peu de Broodals, plus les parties boisées sont difficiles d'accès.</strong> Ne rate pas ton escalade sur la fin.</li>
+</ol>
+<p>Victoire : la <strong>multilune Grabuge au château de Bowser</strong>.</p>
+<h3 id="repartir-7">Repartir</h3>
+<p><strong>8 lunes</strong> exigées, <strong>6</strong> données par l'histoire. Les deux plus rapides : <strong>En chapeautant la grille de fer</strong> <em>(n° 12, derrière l'Odyssée)</em> et <strong>Trésor des douves</strong> <em>(n° 8, dans le bassin à gauche du pont)</em>.</p>
+<p>Destination suivante : le <strong>pays de la Lune</strong>, et la fin de l'histoire.</p>
+<h2 id="quetes-et-lieux-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-cours">Les cours</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'on y trouve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L'arrivée</strong></td>
+<td>la <strong>grille de fer au roi Koopa</strong> derrière l'Odyssée (n° 12), les <strong>dix Goombas à empiler</strong> (n° 19), le toit du début et son oiseau (n° 50), la borne gzzzt du toit de gauche (n° 16)</td>
+</tr>
+<tr>
+<td><strong>La troisième cour (arrière)</strong></td>
+<td>le premier mini-boss, la <strong>note de musique</strong> près des Hériss (n° 18), le rebord du fond avec son Pikonio (n° 21), les toits du bout (n° 54), le Pikonio du mur sud-ouest (n° 46), le relais vers la quatrième cour (n° 56)</td>
+</tr>
+<tr>
+<td><strong>La deuxième cour</strong></td>
+<td>les <strong>5 éclats</strong> de l'objectif 2, la <strong>tourelle</strong> (n° 6, 22), les boulets explosifs de gauche, la borne gzzzt du bas des escaliers est (n° 57)</td>
+</tr>
+<tr>
+<td><strong>L'îlot de la boutique</strong></td>
+<td>la <strong>boutique</strong>, la <strong>ligne de statues Jizo</strong> incomplète (n° 24), la <strong>porte à samouraï</strong> derrière (n° 31, 32), la borne gzzzt vers la porte (n° 7), <strong>Peach</strong> (n° 44)</td>
+</tr>
+<tr>
+<td><strong>La première cour</strong></td>
+<td>les <strong>deux arènes</strong> d'Hariet et de Topper ; plus tard, le <strong>robot</strong> à écraser en pile de Goombas (n° 51), la <strong>clé de sol</strong> de l'arène de gauche (n° 55), l'<strong>épouvantail</strong> de l'arène (n° 17), le tuyau vert des <strong>Jizo</strong> (n° 35, 36), le sol vibrant (n° 42)</td>
+</tr>
+<tr>
+<td><strong>La cour principale</strong></td>
+<td>le pont, les <strong>douves</strong> (n° 8, 47), les <strong>jumelles</strong> de gauche (n° 39), les <strong>bannières</strong> de l'entrée (n° 52), les <strong>boulets explosifs</strong> du pont (n° 49), le mur de gauche et sa <strong>photo d'indice</strong> (n° 45), les <strong>lance-pierres</strong> des murs nord-ouest et sud-est (n° 59 à 62), le toit sud-est (n° 26), le Chapiforme du mur principal sud (n° 40)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-murs-et-le-donjon">Les murs et le donjon</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'on y trouve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le mur extérieur</strong></td>
+<td>le second mini-boss, l'Escaboum de l'est et ses caisses métalliques (n° 14), le toit sud-est et <strong>Capitaine Toad</strong> (n° 28), le nez du mur (n° 23)</td>
+</tr>
+<tr>
+<td><strong>Le mur intérieur</strong></td>
+<td>le <strong>mur mouvant</strong> (n° 9), la <strong>tour pivotante</strong> (n° 33, 34), la graine du nord-ouest et la <strong>course en propulfleurs</strong> (n° 37, 38), la <strong>salle au trésor</strong> du sud-est (n° 30), le <strong>marais empoisonné</strong> en contrebas (n° 10, 11, 27)</td>
+</tr>
+<tr>
+<td><strong>Le pied du donjon</strong></td>
+<td>le départ de la <strong>course Koopa</strong> (n° 41, 58), la borne gzzzt vers le toit (n° 13, 48), les toits du sud-est (n° 53), le nez derrière l'escalier (n° 23)</td>
+</tr>
+<tr>
+<td><strong>Le toit du donjon</strong></td>
+<td>l'arène du Robobrood, les <strong>lapins</strong> (n° 15), les <strong>cornes</strong> du sommet (n° 48), la <strong>statue dorée de Bowser</strong> en contrebas (n° 13)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-personnages-13">Les personnages</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Personnage</th>
+<th>Où</th>
+<th>Ce qu'il donne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hariet</strong></td>
+<td>arène de gauche, première cour</td>
+<td>une moitié de l'objectif 3 ; <strong>deux bombes</strong> cette fois</td>
+</tr>
+<tr>
+<td><strong>Topper</strong></td>
+<td>arène de droite, première cour</td>
+<td>l'autre moitié ; <strong>de plus en plus de chapeaux</strong></td>
+</tr>
+<tr>
+<td><strong>Le Robobrood</strong></td>
+<td>pied du donjon</td>
+<td>la multilune de l'objectif 4</td>
+</tr>
+<tr>
+<td><strong>Capitaine Toad</strong></td>
+<td>rebord de tuiles sous le bord sud-est du toit du mur extérieur</td>
+<td>la lune n° 28</td>
+</tr>
+<tr>
+<td><strong>L'homme au casque de samouraï</strong></td>
+<td>derrière la boutique</td>
+<td>l'accès à la <strong>porte du paravent</strong>, en <strong>Armure de samouraï</strong></td>
+</tr>
+<tr>
+<td><strong>Les statues Jizo</strong></td>
+<td>près de la boutique, au sous-sol, et dans le tuyau vert de l'arène</td>
+<td>les lunes n° 24, 25, 35 et 36</td>
+</tr>
+<tr>
+<td><strong>Le Chapiforme au Pikonio</strong></td>
+<td>sud du mur principal, sur le toit</td>
+<td>la lune n° 40, si tu arrives <strong>en Pikonio</strong></td>
+</tr>
+<tr>
+<td><strong>Le Sphynx</strong></td>
+<td>dans le ciel, vu aux jumelles de la cour du château</td>
+<td>la lune n° 39</td>
+</tr>
+<tr>
+<td><strong>Le Koopa des courses</strong></td>
+<td>pied du donjon</td>
+<td>les lunes n° 41 et n° 58</td>
+</tr>
+<tr>
+<td><strong>Peach</strong></td>
+<td>près de la boutique</td>
+<td>la lune n° 44</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="la-boutique-crazy-cap-11">La boutique Crazy Cap</h3>
+<p>Sur l'<strong>îlot que l'on atteint par une borne gzzzt</strong>, pendant l'objectif 3 : tu passes forcément devant. Les pièces locales sont des <strong>koban</strong> oblongs frappés de l'insigne de Bowser, et il y en a <strong>100</strong>. Deux panoplies : <strong>samouraï</strong> et <strong>happi</strong>.</p>
+<p class="alerte">⚠️ L'<strong>Armure de samouraï</strong> est <strong>obligatoire</strong> pour les lunes n° 31 et 32.</p>
+<h2 id="butin-exhaustif-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<p>Préfixes de disponibilité :</p>
+<ul>
+<li><strong>[Début]</strong> — dès l'arrivée dans le pays.</li>
+<li><strong>[Obj. 1]</strong> à <strong>[Obj. 4]</strong> — après l'objectif d'histoire correspondant.</li>
+<li><strong>[Autre pays]</strong> — se débloque depuis un autre pays.</li>
+<li><strong>[Bowser]</strong> — après avoir vaincu Bowser au pays de la Lune.</li>
+<li><strong>[Roche]</strong> — après avoir ouvert la <strong>roche lunaire</strong> du pays.</li>
+</ul>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Infiltration du château de Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Objectif 1 : élimine le <strong>mini-boss</strong> à l'arrière de la troisième cour en <strong>grimpant sur son arme</strong> puis en <strong>aplatissant l'interrupteur de sa tête</strong></td>
+<td>Ouvre l'objectif 2</td>
+</tr>
+<tr>
+<td><strong>Stratégie explosive</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 1]</strong> Objectif 2 : réunis les <strong>5 éclats de lune</strong> de la deuxième cour, dont un dans une <strong>caisse métallique</strong> à ouvrir en <strong>renvoyant une bombe au bec</strong></td>
+<td>Ouvre l'objectif 3</td>
+</tr>
+<tr>
+<td><strong>Le baroud des Broodals</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Objectif 3 : bats <strong>Hariet</strong> <em>(deux bombes)</em> dans l'arène de gauche et <strong>Topper</strong> <em>(chapeaux en nombre croissant)</em> dans celle de droite</td>
+<td>Détruit les deux statues de Bowser et ouvre l'objectif 4</td>
+</tr>
+<tr>
+<td><strong>Grabuge au château de Bowser</strong></td>
+<td><span class="badge neutre">Multilune</span> <span class="type-pour">vaut 3</span></td>
+<td><strong>[Obj. 3]</strong> Objectif 4 : traverse les murailles <strong>en Pikonio</strong> et bats le <strong>Robobrood</strong> en renvoyant ses bombes dans ses jambes</td>
+<td>Termine l'histoire du pays</td>
+</tr>
+<tr>
+<td><strong>Derrière la muraille</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Après le <strong>premier câble électrique</strong>, chapimorphose un <strong>Pikonio</strong> pour grimper au mur, puis <strong>laisse-toi tomber de l'autre côté</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Trésor de la tourelle</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 1]</strong> Téléporte-toi au drapeau de la <strong>deuxième cour</strong>, chapimorphose un <strong>Pikonio</strong> et <strong>plante ton bec dans le mur</strong> pour passer de l'autre côté du canon. Monte sur le <strong>toit</strong>, approche-toi du <strong>bord nord-est</strong> : des <strong>pièces</strong> brillent en contrebas. <strong>Laisse-toi tomber en les ramassant</strong>, puis <strong>replante ton bec dans le mur</strong> pour remonter jusqu'à la lune <strong>cachée sous le toit</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En grimpant sur la porte par le côté</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Depuis la <strong>boutique</strong>, prends la <strong>borne gzzzt</strong> : elle te dépose de l'autre côté. Emprunte la <strong>corniche de gauche, au-dessus du flambeau</strong>, avec un <strong>double saut aidé de Cappy</strong>, puis saute sur le <strong>toit</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Trésor des douves</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 3]</strong> Depuis la <strong>cour principale</strong>, va <strong>à gauche après le pont</strong> : un <strong>Pikonio</strong> et un <strong>bassin</strong> t'y attendent. <strong>Plonge</strong></td>
+<td>Une des deux lunes libres les plus rapides</td>
+</tr>
+<tr>
+<td><strong>Au bout du mur mouvant</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Depuis le <strong>nord-ouest du mur intérieur</strong>, sous le donjon, passe l'<strong>Escaboum</strong> et descends au niveau des <strong>Hériss</strong>. À hauteur de la <strong>graine</strong>, regarde la <strong>corniche en contrebas avec le Pikonio</strong> : laisse-toi tomber et fais un <strong>saut en longueur</strong>. En Pikonio, va à l'<strong>extrémité gauche de la corniche</strong> jusqu'au <strong>mur mouvant</strong>, <strong>plante ton bec</strong> pour atteindre le <strong>rebord de tuiles vertes</strong>, puis <strong>plante-toi dans une dalle mouvante</strong> et laisse-toi porter pour te ficher <strong>en hauteur avant le mur hérissé</strong>. La lune est <strong>à gauche, derrière des barreaux</strong></td>
+<td>Carburant de l'Odyssée ; l'enchaînement de Pikonio le plus long du pays</td>
+</tr>
+<tr>
+<td><strong>Au-dessus du marais empoisonné</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Depuis l'<strong>arche du donjon</strong> où se trouve la lune n° 11, regarde à l'<strong>extrémité est</strong>, puis <strong>en contrebas près d'une fronde</strong> : <strong>saut en longueur</strong> pour la rejoindre</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En faisant tomber le joli cadre</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 3]</strong> Depuis le drapeau <strong>Sous le donjon</strong>, <strong>tourne le dos</strong> et monte sur le <strong>toit de tuiles vertes de gauche</strong>. En contrebas, <strong>Lakitu</strong> flotte au-dessus du <strong>marais empoisonné</strong> : <strong>chapimorphose-le</strong>, suis le marais jusqu'à une <strong>fronde bleue</strong>, <strong>catapulte-toi</strong> sur la <strong>grande arche</strong> en face, et <strong>fais tomber le cadre au Cappy</strong>. La lune apparaît au <strong>sommet de l'arche</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En chapeautant la grille de fer</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> <strong>Derrière l'Odyssée</strong>, <strong>lance Cappy et maintiens-le sur l'embout de la grille de fer</strong> représentant le roi Koopa — <strong>celui qui crache du feu</strong></td>
+<td>Une des deux lunes libres les plus rapides</td>
+</tr>
+<tr>
+<td><strong>Sur le nez de la statue de Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 3]</strong> Depuis le <strong>pied du donjon</strong>, prends la <strong>borne gzzzt vers le toit</strong>. À l'arrivée, une <strong>statue dorée de la tête de Bowser</strong> est en dessous de toi : <strong>descends</strong> et fais une <strong>charge au sol sur son nez</strong>, là où le sol brille</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Dans un bloc à l'intérieur du château</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 3]</strong> À l'<strong>est du mur extérieur</strong>, <strong>amène l'Escaboum</strong> à détruire les <strong>caisses métalliques Bowser</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Lapichou chez Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Sur le <strong>toit du donjon</strong> — par la borne gzzzt du pied du donjon —, <strong>élimine tous les ennemis</strong> : les <strong>lapins</strong> apparaissent. <strong>Rabats-en un dans un coin du toit</strong> et <strong>lance-lui Cappy</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En exterminant les Escaboums</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> À l'<strong>entrée principale</strong>, monte sur le <strong>toit de tuiles vertes de gauche</strong> : une <strong>borne gzzzt</strong> t'emmène dans une zone où il faut <strong>exterminer tous les Escaboums</strong>. Rappel : <strong>attends leur attaque</strong>, et quand leur <strong>marteau est coincé au sol</strong>, <strong>grimpe dessus</strong> et fais une <strong>charge au sol sur leur tête</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Pays de Bowser : athlétic-tac 1</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Dans l'<strong>arène du château de Bowser</strong>, <strong>frappe l'épouvantail</strong> : la lune apparaît au sommet d'une <strong>structure circulaire</strong> qu'il faut escalader vite</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Course aux notes entre les pointes</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Téléporte-toi à la <strong>troisième cour (arrière)</strong>, monte les escaliers : la <strong>note de musique</strong> est <strong>à gauche des Hériss</strong>. Ramasse toute la série à temps</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Sur le mur à la courte échelle</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Début]</strong> Au <strong>début du niveau</strong>, chapimorphose un <strong>Goomba</strong> et <strong>empile-toi avec les neuf autres</strong>. <strong>Fais demi-tour en bas de l'escalier</strong>, longe le mur, et <strong>saute sur la plaque de pression</strong></td>
+<td>Carburant de l'Odyssée ; <strong>dix Goombas</strong> en tout</td>
+</tr>
+<tr>
+<td><strong>Dans le passage sous le sol</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 3]</strong> Juste après la <strong>porte de la cour principale</strong>, escalade le mur <strong>en Pikonio</strong>. En haut, <strong>laisse-toi tomber depuis l'arrière du rebord aux Hériss</strong> et <strong>plante ton bec dans le mur</strong> : la lune est <strong>derrière des barreaux</strong>, le passage bloqué par <strong>quatre caisses</strong>. <strong>Plante ton bec dedans pour les casser</strong>, mais <strong>replante-toi aussitôt dans le mur en dessous</strong> pour ne pas tomber, puis <strong>projette-toi dans l'ouverture</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En fourrant son nez dans le mur</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 1]</strong> À la <strong>troisième cour (arrière)</strong>, <strong>laisse-toi tomber sur le rebord du fond</strong> : chapimorphose le <strong>Pikonio</strong> et <strong>plante ton bec dans le seul trou qui n'est pas bouché</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Le nez dans le mur de la tourelle</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 1]</strong> À la <strong>deuxième cour</strong>, va vers les <strong>boulets explosifs de gauche</strong>, chapimorphose un <strong>Pikonio</strong> et <strong>renvoie un boulet vers les caisses métalliques tout à gauche</strong> : un <strong>trou</strong> apparaît, où <strong>planter ton bec</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En pointant son nez à la grande porte</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Chapimorphose un <strong>Pikonio</strong> au <strong>mur extérieur</strong>, grimpe la paroi au bec et <strong>laisse-toi tomber sur le côté de l'escalier au pied du donjon</strong>. <strong>Derrière l'escalier</strong>, élimine les ennemis et <strong>plante ton bec dans le trou de droite</strong>, derrière les caisses</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En alignant les Jizo</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Depuis la <strong>boutique</strong>, tu vois une <strong>ligne de statues incomplète</strong>. <strong>Chapimorphose la statue collée à la boutique</strong> et <strong>déplace-la jusqu'à la place libre</strong> dans le rang</td>
+<td>Carburant de l'Odyssée ; les Jizo se pilotent très lentement</td>
+</tr>
+<tr>
+<td><strong>Des Jizo dans le sous-sol</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Chapimorphose une <strong>statue Jizo</strong> et va jusqu'à la <strong>dalle de pierre effritée près des robots</strong>. <strong>Saute dessus</strong> : tu tombes au <strong>sous-sol</strong>. Place-toi sur l'<strong>emplacement libre</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Derrière les barreaux</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 3]</strong> Depuis la <strong>cour principale</strong>, saute sur le <strong>toit</strong> et va au <strong>sud-est</strong> jusqu'à un <strong>promontoire qui avance vers la gauche</strong> : une <strong>borne gzzzt</strong> t'y conduit</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Partie de pêche chez Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> À l'<strong>est du drapeau Sous le donjon</strong>, sur le <strong>marais empoisonné</strong>, chapimorphose <strong>Lakitu</strong>. Repère les <strong>ombres</strong> dans le marais, trouve <strong>la plus grosse</strong> — non loin du pont — et <strong>lance ta ligne</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Toujours un plaisir, Capitaine Toad !</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 3]</strong> Au <strong>sud-est du mur extérieur</strong>, longe le <strong>toit en restant sur les tuiles vertes</strong>. Au <strong>bord sud-est</strong>, un <strong>vide</strong> mène à un <strong>rebord de tuiles</strong> : <strong>Capitaine Toad</strong> est là</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Affaire en or au château de Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Achète-la <strong>100 pièces d'or</strong> à la boutique de l'îlot. Après Bowser, <strong>10 de plus</strong> sont mises en vente, soit <strong>11</strong> en tout</td>
+<td>Convertit tes pièces d'or en compteur</td>
+</tr>
+<tr>
+<td><strong>Salle au trésor du château de Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Au <strong>sud-est du mur intérieur</strong>, escalade le <strong>mur aux anneaux mouvants en Pikonio</strong>. Au sommet, <strong>passe la porte</strong> : c'est la <strong>salle au trésor</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En traversant le paravent empoisonné</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Achète et enfile l'<strong>Armure de samouraï</strong> à la boutique, puis va <strong>derrière la boutique</strong> parler à l'<strong>homme au casque de samouraï</strong> : il t'ouvre la porte. Prends le <strong>tunnel 2D</strong> et va au bout du parcours</td>
+<td>Carburant de l'Odyssée ; <strong>impossible sans l'armure</strong></td>
+</tr>
+<tr>
+<td><strong>Course aux notes dans le paravent</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 2]</strong> Même zone bonus. Au <strong>troisième tableau 2D</strong>, <strong>active la note de musique</strong> : les autres apparaissent <strong>toutes sur le chemin de la plate-forme</strong> qui t'a permis d'atteindre la première. Ramasse vite</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Clouée de bec sur la tour pivotante</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Au <strong>mur intérieur</strong>, en <strong>Pikonio</strong>, escalade le <strong>mur mouvant de gauche</strong> en plantant ton bec dans les <strong>dalles blanches</strong>. En haut, <strong>saute sur le toit de gauche</strong> : des <strong>anneaux</strong> t'indiquent la route en contrebas. <strong>Tue l'Escaboum</strong> pour ouvrir la <strong>porte</strong>, qui mène à la <strong>tour pivotante</strong>. Pour l'escalader : <strong>attends que ta dalle soit immobile</strong> avant de t'élancer vers la <strong>dalle supérieure alignée avec la tienne</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>De bas en haut sur la tour pivotante</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Même tour. Monte jusqu'au <strong>premier étage pivotant</strong> et <strong>laisse-le tourner deux fois</strong> pour te retrouver <strong>derrière la tour</strong>, sous des <strong>pièces</strong>. <strong>Laisse-toi tomber légèrement à droite</strong> pour <strong>piquer le mur blanc</strong>, puis élance-toi dans le <strong>renfoncement</strong> où attendent un <strong>Pikonio</strong> et une <strong>clé</strong>. Prends la clé, puis <strong>escalade la tour</strong> jusqu'à la lune du sommet</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>La grande aventure de Jizo</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Prends le <strong>tuyau vert de l'arène de Bowser</strong> et rassemble les <strong>trois statues Jizo</strong> sur les <strong>interrupteurs P bleus du centre</strong> pour faire apparaître les plates-formes. <strong>Laisse une statue sur le P du milieu</strong> pour pouvoir placer les <strong>deux autres sur les deux plaques du nord</strong>, puis enchaîne les <strong>sauts muraux</strong> vers la lune</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Jizo et la cache secrète</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 4]</strong> Même zone bonus. Après avoir placé <strong>deux statues sur les deux P du nord</strong> pour faire sortir les parois verticales, place la <strong>troisième sur le P du tout début, au sud de l'entrée</strong>, puis <strong>reviens au nord en saut en longueur</strong> jusqu'à l'<strong>alcôve</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Comme un éclair dans les nuages</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 3]</strong> Au <strong>nord-ouest du mur intérieur</strong>, en sortant de la <strong>pièce de la tour pivotante</strong>, <strong>laisse-toi tomber à droite en contrebas</strong>. <strong>Élimine les Hériss</strong> et va chercher la <strong>graine au bout du toit</strong>. <strong>Reviens la planter à ton point de chute</strong> : la plante te hisse jusqu'à un <strong>parcours dans les nuages</strong>. Prends les <strong>propulfleurs</strong> et <strong>reste sur la piste</strong> pour enchaîner les suivantes ; au bout, <strong>saut en longueur</strong> vers la plate-forme</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Sur la sente étroite du bout du nuage</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Obj. 3]</strong> Même parcours en propulfleurs : la lune est <strong>sur ta gauche, après trois grands sauts</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Sphynx au château de Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Bowser]</strong> Va à la <strong>cour du château</strong> et chapimorphose les <strong>jumelles de gauche</strong>. Observe <strong>au loin vers l'est dans le ciel</strong> pour trouver le <strong>Sphynx</strong> volant</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Rencontre avec un Pikonio !</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Bowser]</strong> Chapimorphose un <strong>Pikonio</strong>, puis, depuis le drapeau <strong>Cour principale</strong>, va <strong>à gauche</strong> et rejoins le <strong>toit en escaladant au bec</strong>. Parle au <strong>Chapiforme au sud du mur principal</strong></td>
+<td>Carburant de l'Odyssée ; il faut arriver <strong>sous la forme de Pikonio</strong></td>
+</tr>
+<tr>
+<td><strong>Pays de Bowser : standard</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Bowser]</strong> La course part du <strong>pied du donjon</strong>. Enchaîne les <strong>grands sauts en longueur</strong> pour couper les distances et <strong>roule droit devant</strong> quand c'est possible</td>
+<td>Carburant de l'Odyssée ; obligatoire avant la version experte</td>
+</tr>
+<tr>
+<td><strong>Quand vibre le sol de l'arène</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Bowser]</strong> Dans l'<strong>arène de Bowser</strong>, cherche dans le <strong>quart nord-ouest</strong> et fais une <strong>charge au sol</strong> là où les <strong>vibrations</strong> sont les plus fortes</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Accès secret : château de Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Autre pays]</strong> Le <strong>tableau</strong> est au <strong>pays des Chutes</strong> : <strong>nage derrière la cascade</strong>, au début du niveau, et cherche un <strong>renfoncement</strong>. Tu débarques ici sur un <strong>nouveau drapeau</strong>, devant la lune</td>
+<td>Carburant de l'Odyssée ; invisible depuis ce pays</td>
+</tr>
+<tr>
+<td><strong>Peach au pays de Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Bowser]</strong> Parle à <strong>Peach près de la boutique</strong>, après l'avoir croisée au pays des Ruines</td>
+<td>Une des 15 lunes « Peach »</td>
+</tr>
+<tr>
+<td><strong>Avec l'indice du pays de Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Bowser]</strong> La <strong>photo d'indice</strong> est sur le <strong>mur de gauche en entrant dans la cour principale</strong>. Elle désigne le <strong>pays des Sables</strong> : va aux <strong>Ruines Ma'tuvu</strong> et fais une <strong>charge au sol dans l'ombre du cactus tout à l'ouest</strong></td>
+<td>Carburant de l'Odyssée ; se ramasse dans un autre pays</td>
+</tr>
+<tr>
+<td><strong>Un bon coup de nez derrière le mur</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> À la <strong>troisième cour</strong>, chapimorphose le <strong>Pikonio derrière le mur sud-ouest</strong> et rejoins le <strong>mur est</strong> en plantant ton bec <strong>sur sa face extérieure</strong>, puis <strong>plante-le dans le trou</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Cachée dans une caisse des douves</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Nage <strong>au fond du bassin de droite</strong> dans la <strong>cour du château</strong> et <strong>détruis les caisses</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En chapeautant une grosse corne</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Depuis le <strong>pied du donjon</strong>, prends la <strong>borne gzzzt vers le toit</strong> et va <strong>faire tournoyer Cappy sur la corne gauche du sommet</strong>, au bout de la tranche dorée</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Dans un bloc de la porte</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Dans la <strong>cour du château</strong>, chapimorphose un <strong>Pikonio</strong> et monte au niveau des <strong>boulets explosifs les plus proches</strong>. Place-toi pour <strong>frapper un boulet</strong> de façon à le faire <strong>rebondir contre la rambarde du pont</strong> et atteindre la <strong>caisse métallique de l'entrée</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Petit oiseau au château de Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Monte sur le <strong>toit du tout début du niveau</strong> et va à son <strong>extrémité ouest</strong> : <strong>approche-toi lentement</strong> de l'<strong>oiseau scintillant</strong> et <strong>lance-lui Cappy</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>L'importun du château de Bowser</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Sur l'<strong>arène de droite de la cour principale</strong>, chapimorphose de <strong>grandes piles de Goombas</strong> pour pouvoir <strong>sauter sur la tête du robot</strong> — <strong>deux fois</strong>, en te libérant à chaque fois</td>
+<td>Carburant de l'Odyssée ; même principe que l'EVNI du pays de la Forêt</td>
+</tr>
+<tr>
+<td><strong>En sautant de drapeau en drapeau</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> À l'<strong>entrée de la cour principale</strong>, <strong>fais volte-face</strong> : une <strong>clé</strong> flotte dans le vide au bout de la <strong>rangée de bannières de gauche</strong>. <strong>Saute de bannière en bannière</strong> pour la prendre et <strong>reviens indemne</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Pays de Bowser : athlétic-tac 2</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Au <strong>pied du donjon</strong>, marche sur les <strong>toits du sud-est</strong> et lance Cappy sur l'<strong>épouvantail</strong>. Saute vers le <strong>cylindre vert en contrebas</strong> pour prendre la <strong>clé</strong>, puis saute vers la lune révélée</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Course aux notes sur le mur</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Monte sur les <strong>toits au bout de la troisième cour</strong> et laisse-toi tomber vers le <strong>Pikonio isolé au sud-ouest</strong>. Chapimorphose-le, passe sur la <strong>clé de sol</strong>, et <strong>ramasse les notes du mur au bec</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Course aux notes à coups de chapeau</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Sur l'<strong>arène de gauche de la cour principale</strong>, passe sur la <strong>clé de sol</strong> et ramasse vite les <strong>trois groupes de notes</strong> en te servant de l'<strong>attaque circulaire de Cappy</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Rempart de la troisième cour</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Prends le <strong>relais électrique entre la troisième et la quatrième cour</strong> et <strong>saute au niveau du cercle de pièces</strong> pour attraper la lune au passage</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En parcourant la muraille</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> À la <strong>deuxième cour</strong>, va <strong>en bas des escaliers de l'est</strong> et lance Cappy sur la <strong>borne gzzzt</strong>. <strong>Libère-toi au milieu du segment supérieur du carré</strong> qui suit pour tomber vers la <strong>clé</strong>, puis <strong>relance vite Cappy</strong> pour retourner dans le circuit et revenir vers la lune</td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Pays de Bowser : expert</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Même course, contre le <strong>Koopa doré</strong>. <strong>Sauts longs</strong> pour couper, <strong>roulade</strong> dès que possible, et <strong>accélère sur les trajets électriques</strong></td>
+<td>Carburant de l'Odyssée ; exige la coupe standard</td>
+</tr>
+<tr>
+<td><strong>En fouillant la tour hexagonale</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> <strong>Lance-pierre du mur nord-ouest de la cour du château</strong> → tuyau lunaire. Chapimorphose une <strong>Koopa volante</strong> et explore la tour en <strong>évitant les chutes de roc</strong> pour réunir les <strong>5 éclats de lune</strong> — l'un est <strong>bien caché derrière une paroi verte, tout en bas</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Au cœur de la tour hexagonale</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Même tuyau lunaire. <strong>Plane avec minutie sous une plate-forme verte, tout en bas de la tour</strong> : un <strong>passage</strong> mène à une <strong>clé</strong>, qui fait apparaître la lune <strong>au sommet</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>En haut de la charpente excentrique</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> <strong>Lance-pierre du mur sud-est de la cour du château</strong> → tuyau lunaire. Chapimorphose un <strong>Pikonio</strong> et franchis le parcours en <strong>plantant ton bec dans les poutres pivotantes</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Prise de bec sur la charpente</strong></td>
+<td><span class="badge neutre">Lune</span></td>
+<td><strong>[Roche]</strong> Même tuyau lunaire. <strong>Laisse-toi tomber derrière le pilier</strong> pour <strong>détruire les caisses</strong> et révéler la lune — en pensant à <strong>te raccrocher à temps au bec</strong></td>
+<td>Carburant de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Casque de samouraï</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">chapeau</span></td>
+<td>Boutique Crazy Cap, <strong>5 pièces locales</strong></td>
+<td>Ouvre les portes à tenue correspondantes</td>
+</tr>
+<tr>
+<td><strong>Armure de samouraï</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">costume</span></td>
+<td>Boutique Crazy Cap, <strong>10 pièces locales</strong></td>
+<td><strong>Obligatoire</strong> pour les lunes n° 31 et 32</td>
+</tr>
+<tr>
+<td><strong>Hachimaki</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">chapeau</span></td>
+<td>Boutique Crazy Cap, <strong>20 pièces locales</strong></td>
+<td>Ouvre les portes à tenue correspondantes</td>
+</tr>
+<tr>
+<td><strong>Happi</strong></td>
+<td><span class="badge neutre">Tenue</span> <span class="type-pour">costume</span></td>
+<td>Boutique Crazy Cap, <strong>25 pièces locales</strong></td>
+<td>Idem</td>
+</tr>
+<tr>
+<td><strong>Lanterne en papier</strong></td>
+<td><span class="badge neutre">Souvenir</span></td>
+<td>Boutique Crazy Cap, <strong>5 pièces locales</strong></td>
+<td>Décore l'intérieur de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Statuette de Jizo</strong></td>
+<td><span class="badge neutre">Souvenir</span></td>
+<td>Boutique Crazy Cap, <strong>25 pièces locales</strong></td>
+<td>Décore l'intérieur de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Vignette du pays de Bowser</strong></td>
+<td><span class="badge neutre">Vignette</span></td>
+<td>Boutique Crazy Cap, <strong>10 pièces locales</strong></td>
+<td>Se colle sur la coque de l'Odyssée</td>
+</tr>
+<tr>
+<td><strong>Cœur de soin</strong></td>
+<td><span class="badge neutre">Objet</span></td>
+<td>Boutique Crazy Cap, <strong>50 pièces d'or</strong></td>
+<td>Fait passer ta vie de 3 à 6 points jusqu'au changement de pays</td>
+</tr>
+<tr>
+<td><strong>Pièce locale du pays de Bowser</strong></td>
+<td><span class="badge neutre">Monnaie</span></td>
+<td><strong>100</strong> dans le pays, <strong>koban</strong> frappés de l'insigne de Bowser</td>
+<td>Le total des articles en pièces locales fait <strong>100 pile</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<ul>
+<li><strong>Le Pikonio n'est pas un oiseau, c'est un piolet.</strong> Son bec se plante dans tout ce qui n'est <strong>pas métallique</strong> : murs, poutres, dalles mouvantes. Il <strong>renvoie aussi les boulets explosifs</strong>. Une bonne vingtaine de lunes du pays passent par lui, et plusieurs demandent de <strong>se replanter immédiatement après avoir cassé quelque chose</strong> pour ne pas tomber.</li>
+<li><strong>Le métal résiste au bec.</strong> Si ton Pikonio rebondit, c'est que la surface est en métal : cherche une autre prise, ou un boulet explosif à rediriger.</li>
+<li><strong>Achète l'Armure de samouraï quand tu passes à la boutique.</strong> L'objectif 3 t'y emmène de force ; profites-en. Deux lunes en dépendent, et la boutique est un détour pénible ensuite.</li>
+<li><strong>Les statues Jizo se pilotent très lentement.</strong> Quatre lunes leur sont consacrées (n° 24, 25, 35, 36). Ne t'énerve pas : elles avancent au pas, et deux des énigmes exigent d'en placer <strong>trois à la fois</strong> sur des interrupteurs.</li>
+<li><strong>Les deux mini-boss se battent pareil.</strong> Esquive, grimpe sur l'arme, charge au sol sur l'interrupteur de la tête. Ils reviennent à l'objectif 1 et à l'objectif 4.</li>
+<li><strong>Contre le Robobrood, garde tes distances quand il en reste peu.</strong> Les pétards tournoyants sont la vraie menace, et les parties boisées à escalader deviennent plus rares au fil du combat.</li>
+<li><strong>La pile de dix Goombas est un travail de patience.</strong> Pour la lune n° 19, il faut <strong>tous</strong> les ramasser au début du niveau sans en perdre.</li>
+<li><strong>Deux lance-pierres, deux tuyaux lunaires.</strong> Celui du <strong>mur nord-ouest</strong> mène à la tour hexagonale, celui du <strong>mur sud-est</strong> à la charpente. Ne les confonds pas.</li>
+<li><strong>La tour pivotante s'escalade à l'arrêt.</strong> L'erreur classique est de sauter pendant que la dalle tourne. Attends l'immobilité et l'alignement.</li>
+</ul>
+<h2 id="alertes-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Rien n'est définitivement manquable dans ce pays.</strong></li>
+<li class="alerte manquable">⏳ <strong>Dix-sept lunes attendent la roche lunaire</strong> : les n° 46 à 62, dont <strong>deux tuyaux lunaires</strong>.</li>
+<li class="alerte manquable">⏳ <strong>La lune n° 43 ne se prend pas d'ici.</strong> <em>Accès secret : château de Bowser</em> s'ouvre par le <strong>tableau derrière la cascade du pays des Chutes</strong>.</li>
+<li class="alerte manquable">⏳ <strong>Les lunes n° 31 et 32 exigent l'Armure de samouraï.</strong></li>
+<li class="alerte manquable">⏳ <strong>Les lunes n° 40 et 44 exigent d'avoir terminé l'aventure principale.</strong></li>
+<li class="alerte manquable">⏳ <strong>Les deux athlétic-tac et les quatre courses aux notes sont chronométrés.</strong> Échouer ne coûte rien.</li>
+<li class="alerte manquable">⏳ <strong>Le pays de Bowser contient un tableau vers le pays de la Mer et un vers le pays des Neiges.</strong> Ils servent à deux lunes d'autres pays : <em>Accès secret : Pétillance</em> et <em>Accès secret : Flocons-en-Flonflonnie</em>.</li>
+</ul>
+<h2 id="check-list-16" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="lhistoire-10">L'histoire</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Infiltration du château de Bowser</strong> — premier mini-boss</li>
+<li class="tache"><input type="checkbox"> <strong>Stratégie explosive</strong> — les <strong>5 éclats</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Le baroud des Broodals</strong> — <strong>Hariet</strong> et <strong>Topper</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Robobrood</strong> vaincu — <strong>Grabuge au château de Bowser</strong></li>
+<li class="tache"><input type="checkbox"> <strong>8 lunes</strong> réunies, départ pour le <strong>pays de la Lune</strong></li>
+</ul>
+<h3 id="les-lunes-du-pays-3">Les lunes du pays</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Derrière la muraille</li>
+<li class="tache"><input type="checkbox"> Trésor de la tourelle</li>
+<li class="tache"><input type="checkbox"> En grimpant sur la porte par le côté</li>
+<li class="tache"><input type="checkbox"> Trésor des douves</li>
+<li class="tache"><input type="checkbox"> Au bout du mur mouvant</li>
+<li class="tache"><input type="checkbox"> Au-dessus du marais empoisonné</li>
+<li class="tache"><input type="checkbox"> En faisant tomber le joli cadre</li>
+<li class="tache"><input type="checkbox"> En chapeautant la grille de fer</li>
+<li class="tache"><input type="checkbox"> Sur le nez de la statue de Bowser</li>
+<li class="tache"><input type="checkbox"> Dans un bloc à l'intérieur du château</li>
+<li class="tache"><input type="checkbox"> Lapichou chez Bowser</li>
+<li class="tache"><input type="checkbox"> En exterminant les Escaboums</li>
+<li class="tache"><input type="checkbox"> Pays de Bowser : athlétic-tac 1</li>
+<li class="tache"><input type="checkbox"> Course aux notes entre les pointes</li>
+<li class="tache"><input type="checkbox"> Sur le mur à la courte échelle — <strong>dix Goombas</strong></li>
+<li class="tache"><input type="checkbox"> Dans le passage sous le sol</li>
+<li class="tache"><input type="checkbox"> En fourrant son nez dans le mur</li>
+<li class="tache"><input type="checkbox"> Le nez dans le mur de la tourelle</li>
+<li class="tache"><input type="checkbox"> En pointant son nez à la grande porte</li>
+<li class="tache"><input type="checkbox"> En alignant les Jizo</li>
+<li class="tache"><input type="checkbox"> Des Jizo dans le sous-sol</li>
+<li class="tache"><input type="checkbox"> Derrière les barreaux</li>
+<li class="tache"><input type="checkbox"> Partie de pêche chez Bowser</li>
+<li class="tache"><input type="checkbox"> Toujours un plaisir, Capitaine Toad !</li>
+<li class="tache"><input type="checkbox"> Affaire en or au château de Bowser</li>
+<li class="tache"><input type="checkbox"> Salle au trésor du château de Bowser</li>
+<li class="tache"><input type="checkbox"> En traversant le paravent empoisonné — <strong>Armure de samouraï</strong></li>
+<li class="tache"><input type="checkbox"> Course aux notes dans le paravent</li>
+<li class="tache"><input type="checkbox"> Clouée de bec sur la tour pivotante</li>
+<li class="tache"><input type="checkbox"> De bas en haut sur la tour pivotante</li>
+<li class="tache"><input type="checkbox"> La grande aventure de Jizo</li>
+<li class="tache"><input type="checkbox"> Jizo et la cache secrète</li>
+<li class="tache"><input type="checkbox"> Comme un éclair dans les nuages</li>
+<li class="tache"><input type="checkbox"> Sur la sente étroite du bout du nuage</li>
+<li class="tache"><input type="checkbox"> Avec l'indice du pays de Bowser <em>(lune au pays des Sables)</em></li>
+</ul>
+<h3 id="la-boutique-10">La boutique</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Les <strong>100 pièces locales</strong> ramassées</li>
+<li class="tache"><input type="checkbox"> <strong>Casque</strong> et <strong>Armure de samouraï</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Hachimaki</strong> et <strong>Happi</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Lanterne en papier</strong> et <strong>Statuette de Jizo</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Vignette du pays de Bowser</strong></li>
+</ul>
+<h3 id="depuis-dautres-pays-8">Depuis d'autres pays</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Accès secret : château de Bowser <em>(tableau derrière la cascade, pays des Chutes)</em></li>
+</ul>
+<h3 id="apres-bowser-11">Après Bowser</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Sphynx au château de Bowser</li>
+<li class="tache"><input type="checkbox"> Rencontre avec un Pikonio !</li>
+<li class="tache"><input type="checkbox"> Pays de Bowser : standard</li>
+<li class="tache"><input type="checkbox"> Quand vibre le sol de l'arène</li>
+<li class="tache"><input type="checkbox"> Peach au pays de Bowser</li>
+<li class="tache"><input type="checkbox"> Les <strong>10 lunes supplémentaires</strong> de la boutique</li>
+</ul>
+<h3 id="apres-la-roche-lunaire-11">Après la roche lunaire</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Un bon coup de nez derrière le mur</li>
+<li class="tache"><input type="checkbox"> Cachée dans une caisse des douves</li>
+<li class="tache"><input type="checkbox"> En chapeautant une grosse corne</li>
+<li class="tache"><input type="checkbox"> Dans un bloc de la porte</li>
+<li class="tache"><input type="checkbox"> Petit oiseau au château de Bowser</li>
+<li class="tache"><input type="checkbox"> L'importun du château de Bowser</li>
+<li class="tache"><input type="checkbox"> En sautant de drapeau en drapeau</li>
+<li class="tache"><input type="checkbox"> Pays de Bowser : athlétic-tac 2</li>
+<li class="tache"><input type="checkbox"> Course aux notes sur le mur</li>
+<li class="tache"><input type="checkbox"> Course aux notes à coups de chapeau</li>
+<li class="tache"><input type="checkbox"> Rempart de la troisième cour</li>
+<li class="tache"><input type="checkbox"> En parcourant la muraille</li>
+<li class="tache"><input type="checkbox"> Pays de Bowser : expert</li>
+<li class="tache"><input type="checkbox"> En fouillant la tour hexagonale — les <strong>5 éclats</strong></li>
+<li class="tache"><input type="checkbox"> Au cœur de la tour hexagonale</li>
+<li class="tache"><input type="checkbox"> En haut de la charpente excentrique</li>
+<li class="tache"><input type="checkbox"> Prise de bec sur la charpente</li>
+<li class="tache"><input type="checkbox"> <strong>62 / 62 lunes</strong> au compteur du pays</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="pays-des-ruines.html" rel="prev"><small>← Partie précédente</small><b>Pays des Ruines</b></a><a class="suiv" href="pays-de-la-lune.html" rel="next"><small>Partie suivante →</small><b>Pays de la Lune</b></a><a class="tout" href="super-mario-odyssey.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Super Mario Odyssey · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

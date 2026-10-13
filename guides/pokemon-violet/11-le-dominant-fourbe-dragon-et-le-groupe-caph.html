@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le Dominant Fourbe-Dragon et le groupe Caph – Guide Pokémon Violet</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Pokémon Violet, Le Dominant Fourbe-Dragon et le groupe Caph : À la fin : l&#x27; Épice Secrète Corsée, la monture Escalade, le Badge Team Combat et 20 000…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/11-le-dominant-fourbe-dragon-et-le-groupe-caph.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Le Dominant Fourbe-Dragon et le groupe Caph · Guide Pokémon Violet">
+<meta property="og:description" content="Pokémon Violet, Le Dominant Fourbe-Dragon et le groupe Caph : À la fin : l&#x27; Épice Secrète Corsée, la monture Escalade, le Badge Team Combat et 20 000…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/11-le-dominant-fourbe-dragon-et-le-groupe-caph.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Pokémon Violet", "item": "https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/"}, {"@type": "ListItem", "position": 3, "name": "Le Dominant Fourbe-Dragon et le groupe Caph", "item": "https://bloundsk.github.io/guides-jeux-video/guides/pokemon-violet/11-le-dominant-fourbe-dragon-et-le-groupe-caph.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="pokemon-violet" class="compact" data-partie="11-le-dominant-fourbe-dragon-et-le-groupe-caph"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Pokémon Violet</a><span aria-hidden="true">›</span><span>Partie 11</span></nav>
+<p class="gjv-jeu">Pokémon Violet : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Pokémon <em>Violet</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction-tout-comprendre-avant-de-commencer.html"><span class="num">00</span><span class="libelle">Introduction : tout comprendre avant de commencer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-le-prologue-cuchalaga-miraidon-et-lacademie-raisin.html"><span class="num">01</span><span class="libelle">Le prologue : Cuchalaga, Miraidon et l&#x27;Académie Raisin</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-sevaro-larene-insecte-et-le-dominant-roche-falaise.html"><span class="num">02</span><span class="libelle">Sevaro : l&#x27;arène Insecte et le Dominant Roche-Falaise</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-cuencia-larene-plante-et-le-dominant-vaste-ciel.html"><span class="num">03</span><span class="libelle">Cuencia : l&#x27;arène Plante et le Dominant Vaste-Ciel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-le-groupe-segin-et-larene-electrik-de-levalendura.html"><span class="num">04</span><span class="libelle">Le groupe Segin et l&#x27;arène Électrik de Levalendura</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-le-groupe-schedar-et-le-dominant-acier-tranche.html"><span class="num">05</span><span class="libelle">Le groupe Schedar et le Dominant Acier-Tranché</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-jarramanca-porto-marinada-et-le-groupe-tsih.html"><span class="num">06</span><span class="libelle">Jarramanca, Porto Marinada et le groupe Tsih</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-mezclamora-larene-normal-et-le-plat-secret.html"><span class="num">07</span><span class="libelle">Mezclamora : l&#x27;arène Normal et le plat secret</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-frigao-larene-spectre-et-le-dominant-tremble-terre.html"><span class="num">08</span><span class="libelle">Frigao : l&#x27;arène Spectre et le Dominant Tremble-Terre</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-alforneira-larene-psy.html"><span class="num">09</span><span class="libelle">Alforneira : l&#x27;arène Psy</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-le-mont-nappe-larene-glace-et-le-groupe-ruchbah.html"><span class="num">10</span><span class="libelle">Le Mont Nappé : l&#x27;arène Glace et le groupe Ruchbah</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="#11-le-dominant-fourbe-dragon-et-le-groupe-caph"><span class="num">11</span><span class="libelle">Le Dominant Fourbe-Dragon et le groupe Caph</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-la-ligue-pokemon-lexamen-le-conseil-4-et-alisma.html"><span class="num">12</span><span class="libelle">La Ligue Pokémon : l&#x27;examen, le Conseil 4 et Alisma</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="13-les-trois-denouements-menzi-pepper-clavel-et-pania.html"><span class="num">13</span><span class="libelle">Les trois dénouements : Menzi, Pepper, Clavel et Pania</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="14-retour-aux-sources-la-zone-zero-et-le-professeur-turum.html"><span class="num">14</span><span class="libelle">Retour aux sources : la Zone Zéro et le professeur Turum</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="15-lapres-generique-revanches-tournoi-et-juge-iv.html"><span class="num">15</span><span class="libelle">L&#x27;après-générique : revanches, tournoi et Juge IV</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="16-les-zones-sud-la-route-de-cuchalaga-et-la-caverne-de-la-crique.html"><span class="num">16</span><span class="libelle">Les Zones Sud, la Route de Cuchalaga et la Caverne de la Crique</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="17-les-zones-ouest-et-le-desert-rotissable.html"><span class="num">17</span><span class="libelle">Les Zones Ouest et le Désert Rôtissable</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="18-les-zones-est-et-le-bosquet-tague.html"><span class="num">18</span><span class="libelle">Les Zones Est et le Bosquet Tagué</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="19-le-nord-zones-nord-lac-asrol-foret-toastee-et-mont-nappe.html"><span class="num">19</span><span class="libelle">Le nord : Zones Nord, Lac Asrol, Forêt Toastée et Mont Nappé</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="20-le-cratere-de-paldea-et-la-zone-zero.html"><span class="num">20</span><span class="libelle">Le Cratère de Paldea et la Zone Zéro</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="21-les-villes-de-paldea-boutiques-pnj-et-services.html"><span class="num">21</span><span class="libelle">Les villes de Paldea : boutiques, PNJ et services</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="22-les-tours-dobservation-les-grottes-et-les-spots-de-pokemon-rares.html"><span class="num">22</span><span class="libelle">Les Tours d&#x27;Observation, les grottes et les spots de Pokémon rares</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="23-les-32-pieux-et-les-quatre-tresors-du-fleau.html"><span class="num">23</span><span class="libelle">Les 32 pieux et les quatre Trésors du Fléau</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="24-les-pieces-de-mordudor-et-gromago.html"><span class="num">24</span><span class="libelle">Les pièces de Mordudor et Gromago</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="25-les-capsules-techniques-et-la-machine-a-ct.html"><span class="num">25</span><span class="libelle">Les Capsules Techniques et la Machine à CT</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="26-les-pique-niques-les-sandwichs-et-les-auras-gustatives.html"><span class="num">26</span><span class="libelle">Les pique-niques, les sandwichs et les Auras Gustatives</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="27-la-teracristallisation-et-les-raids-teracristal.html"><span class="num">27</span><span class="libelle">La Téracristallisation et les Raids Téracristal</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="28-les-pokemon-paradoxes-et-les-exclusivites-de-violet.html"><span class="num">28</span><span class="libelle">Les Pokémon paradoxes et les exclusivités de Violet</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="29-les-evolutions-speciales-lelevage-et-les-echanges.html"><span class="num">29</span><span class="libelle">Les évolutions spéciales, l&#x27;élevage et les échanges</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="30-le-combat-les-types-les-talents-et-le-choix-dequipe.html"><span class="num">30</span><span class="libelle">Le combat, les types, les talents et le choix d&#x27;équipe</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="31-largent-les-objets-les-encheres-et-les-tenues.html"><span class="num">31</span><span class="libelle">L&#x27;argent, les objets, les enchères et les tenues</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="32-lacademie-les-cours-et-le-multijoueur.html"><span class="num">32</span><span class="libelle">L&#x27;Académie, les cours et le multijoueur</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="33-le-masque-turquoise-arriver-a-septentria.html"><span class="num">33</span><span class="libelle">Le Masque Turquoise : arriver à Septentria</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="34-le-masque-turquoise-les-trois-adoramis-et-ogerpon.html"><span class="num">34</span><span class="libelle">Le Masque Turquoise : les trois Adoramis et Ogerpon</span><span class="compte"></span></a></li>
+<li data-section="section-36"><a href="35-le-masque-turquoise-les-collectibles-de-septentria.html"><span class="num">35</span><span class="libelle">Le Masque Turquoise : les collectibles de Septentria</span><span class="compte"></span></a></li>
+<li data-section="section-37"><a href="36-le-disque-indigo-linstitut-myrtille-et-le-terra-dome.html"><span class="num">36</span><span class="libelle">Le Disque Indigo : l&#x27;Institut Myrtille et le Terra-Dôme</span><span class="compte"></span></a></li>
+<li data-section="section-38"><a href="37-le-disque-indigo-la-ligue-myrtille-et-terapagos.html"><span class="num">37</span><span class="libelle">Le Disque Indigo : la Ligue Myrtille et Terapagos</span><span class="compte"></span></a></li>
+<li data-section="section-39"><a href="38-le-disque-indigo-les-quetes-myrtille-et-les-25-legendaires.html"><span class="num">38</span><span class="libelle">Le Disque Indigo : les Quêtes Myrtille et les 25 légendaires</span><span class="compte"></span></a></li>
+<li data-section="section-40"><a href="39-la-nuit-des-kibi-lepilogue-et-pechaminus.html"><span class="num">39</span><span class="libelle">La Nuit des Kibi : l&#x27;épilogue et Pêchaminus</span><span class="compte"></span></a></li>
+<li data-section="section-41"><a href="40-les-trois-pokedex-paldea-septentria-et-myrtille.html"><span class="num">40</span><span class="libelle">Les trois Pokédex : Paldea, Septentria et Myrtille</span><span class="compte"></span></a></li>
+<li data-section="section-42"><a href="99-annexes-index-manquables-et-check-list-finale.html"><span class="num">99</span><span class="libelle">Annexes : index, manquables et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-43"><a href="sources.html"><span class="num">✦</span><span class="libelle">Sources</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-12">
+<header class="tete-section">
+<p class="eyebrow">Partie 11</p>
+<h1 id="11-le-dominant-fourbe-dragon-et-le-groupe-caph">Le Dominant Fourbe-Dragon et le groupe Caph</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-12"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-12">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>À la fin</strong> : l'<strong class="objet">Épice Secrète Corsée</strong>, la monture <strong>Escalade</strong>, le <strong class="objet">Badge Team Combat</strong> et 20 000 points de ligue.</li>
+<li><strong>Les boss</strong> : <strong>Oyacata</strong>, piloté de l'intérieur par un <strong>Nigirigon</strong>, puis <strong>Nèflie</strong> et ses <strong>cinq</strong> Pokémon.</li>
+<li><strong>À ne pas rater</strong> : les trois <strong>Tours d'Observation</strong> du Lac Asrol, qui révèlent tout le nord de la carte.</li>
+<li><strong>Avant de partir</strong> : de la <strong>Plante</strong> ou de l'<strong>Électrik</strong> pour le Dominant, de la <strong>Fée</strong>, du <strong>Psy</strong> ou du <strong>Vol</strong> pour le repaire, et une équipe niveau 55 à 60.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Les deux dernières étapes avant la Ligue : le <strong>cinquième et dernier Dominant</strong>, au fond du <strong>Lac Asrol</strong>, et le <strong>cinquième et dernier repaire</strong> de la Team Star, dans la <strong>Zone Nord n° 2</strong>.</p>
+<p>À la clé, <strong>Escalade</strong> : Miraidon grimpe les parois verticales. C'est la dernière capacité de monture, et avec elle <strong>plus un seul endroit de Paldea ne t'est fermé</strong>.</p>
+<h2 id="itineraire-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ul>
+<li>📍 <strong>La zone en images</strong> : <a href="https://www.millenium.org/guide/397506.html">le Dominant Fourbe-Dragon</a> et <a href="https://www.millenium.org/guide/397409.html">le repaire Combat</a> sur Millenium ; <a href="https://www.pokebip.com/page/jeux-video/pokemon-ecarlate-violet/guide-des-lieux/lac-asrol">le Lac Asrol</a> sur Pokébip.</li>
+</ul>
+<ol>
+<li><strong>Pars vers le nord-ouest</strong> depuis le Mont Nappé.</li>
+<li><strong>Le Lac Asrol</strong> s'ouvre : un immense lac froid, bordé de ruines, avec la <strong>Cascade Asrol</strong> et le littoral des <strong>Rocs Onaissance</strong>.</li>
+<li><strong>Va à la petite île au bout du lac</strong> — Pepper t'appelle depuis le milieu de l'eau pour t'y envoyer.</li>
+<li><strong>Les Nigirigon échoués</strong> sont sur la rive de cette pointe.</li>
+<li><strong>La grotte des tréfonds</strong> s'ouvre sous l'eau après la scène : c'est là que se trouve l'Épice.</li>
+<li><strong>Redescends vers la Zone Nord n° 2</strong> après le Dominant, par la Zone Nord n° 1 ou par la Forêt Toastée.</li>
+<li><strong>Le repaire du groupe Caph</strong> est marqué sur ta carte dans la Zone Nord n° 2.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="le-dominant-fourbe-dragon-et-son-enigme">Le Dominant Fourbe-Dragon, et son énigme</h3>
+<ol>
+<li><strong>Vise le niveau 55.</strong> C'est le Dominant le plus fort des cinq, et il est volontairement placé en dernier.</li>
+<li><strong>Amène de la Plante ou de l'Électrik</strong> pour Oyacata, qui est un Pokémon Eau. Un Miascarade ou un Pohmotte évolué font le travail.</li>
+<li><strong>Garde aussi une attaque Dragon ou Fée</strong> pour le Nigirigon, qui est <strong>Dragon / Eau</strong>.</li>
+<li><strong>Va sur la pointe de l'île</strong> et regarde les petits poissons échoués. Il y en a <strong>trois</strong>, de couleurs différentes.</li>
+<li><strong>Parle au Nigirigon rose</strong> : il te provoque, et il faut le battre. C'est une mise en bouche.</li>
+<li><strong>Parle ensuite au Nigirigon orange</strong> : c'est lui qui fait sortir le Dominant.</li>
+<li><strong>Oyacata surgit du lac.</strong> C'est un poisson-chat de six mètres, et il a l'air parfaitement inoffensif.</li>
+<li><strong>Comprends le mécanisme avant de taper.</strong> Oyacata <strong>avale</strong> un Nigirigon, et le talent Commandant du petit poisson <strong>monte toutes les statistiques</strong> du gros. Tu ne te bats pas contre un Pokémon lent et mou : tu te bats contre un Pokémon lent et mou qui vient de recevoir un boost sur toute la ligne.</li>
+<li><strong>Phase 1 : bats Oyacata.</strong> Les attaques Plante et Électrik passent très bien. Prévois plus de tours que d'habitude : il a énormément de PV.</li>
+<li><strong>Suis-le dans l'eau</strong> quand il fuit : il t'emmène dans une grotte, où un poisson lui donne une Épice Secrète.</li>
+<li><strong>Phase 2 avec Pepper</strong> et son Rongrigou. Même combat, à deux, et c'est beaucoup plus simple.</li>
+<li><strong>Entre dans la grotte</strong> et prends l'<strong class="objet">Épice Secrète Corsée</strong>, la cinquième et dernière.</li>
+<li><strong>Donne le sandwich à Miraidon</strong> : tu débloques Escalade.</li>
+<li><strong>Note que le Nigirigon réapparaît.</strong> Après les événements de la Zone Zéro, un Nigirigon de forme Courbée, mâle, <strong>niveau 57</strong>, nature Discrète, talent Commandant, revient à l'endroit du combat. C'est le seul de son espèce qu'on peut raffronter, et donc capturer dans cette forme.</li>
+</ol>
+<h3 id="ce-quescalade-debloque-et-le-grand-tour-qui-sensuit">Ce qu'Escalade débloque, et le grand tour qui s'ensuit</h3>
+<ol start="15">
+<li><strong>Monte les parois verticales</strong> en maintenant la direction. Toutes les falaises de Paldea deviennent des escaliers.</li>
+<li><strong>Fais les trois Tours d'Observation du Lac Asrol.</strong> Elles révèlent la carte du nord, qui est la partie la moins explorée du jeu, et le sommet de chacune porte un objet.</li>
+<li><strong>Fais le tour complet de Paldea maintenant.</strong> Tu as les <strong>cinq capacités</strong> : Sprint, Surf, Bond, Planer, Escalade. C'est le bon moment pour :</li>
+</ol>
+<ul>
+<li>les <strong>pieux</strong> des quatre sanctuaires, partie <strong>23</strong> ;</li>
+<li>les <strong>pièces de Mordudor</strong> en hauteur, partie <strong>24</strong> ;</li>
+<li>les Capsules Techniques restantes, parties <strong>16</strong> à <strong>19</strong>.</li>
+</ul>
+<ol start="18">
+<li><strong>Prends les Plumes cachées</strong> du Lac Asrol. Ce sont des objets cachés qui montent les points d'effort, et le lac en est la meilleure source.</li>
+</ol>
+<h3 id="le-repaire-du-groupe-caph">Le repaire du groupe Caph</h3>
+<ol start="19">
+<li><strong>Soigne ton équipe</strong> et remets tes <strong>trois meilleurs Pokémon en tête de liste</strong>. Dernière fois.</li>
+<li><strong>Choisis-les contre le Combat</strong> : de la Fée, du <strong>Psy</strong> ou du <strong>Vol</strong>. Un Briochien, une Cléopsytra ou un Flambusard sont parfaits.</li>
+<li><strong>Laisse tes Acier, tes Glace, tes Normal, tes Roche et tes Ténèbres de côté</strong> : le Combat les bat tous les cinq.</li>
+<li><strong>N'amène pas de Spectre pur</strong> : le Combat ne lui fait rien, mais le Spectre ne fait rien au Combat non plus. C'est le même piège que l'arène Normal, à l'envers.</li>
+<li><strong>Vise le niveau 55 à 60.</strong></li>
+<li><strong>Bats le garde</strong>, <strong>Rose de la Team Star</strong> :</li>
+</ol>
+<ul>
+<li><strong>Cradopaud</strong> niveau 54 ;</li>
+<li><strong>Colossinge</strong> niveau 55 ;</li>
+<li>récompense : <strong>2 860 Pokédollars</strong>.</li>
+</ul>
+<ol start="25">
+<li><strong>Mets 30 Pokémon K.O. en 10 minutes.</strong> Ce sont des Hariyama, des Gallame, des Hexadron et des Flamenroule : du lourd, et dix minutes ne sont plus confortables. Ne t'arrête pas une seconde.</li>
+</ol>
+<h3 id="le-combat-contre-neflie">Le combat contre Nèflie</h3>
+<ol start="26">
+<li><strong>Nèflie</strong> t'attend, et c'est le seul boss de la Team Star avec <strong>cinq Pokémon</strong>.</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Pokémon</th>
+<th>Niveau</th>
+<th>Types</th>
+<th>Talent</th>
+<th>Capacités</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Coatox</strong> ♂</td>
+<td>55</td>
+<td>Poison / Combat</td>
+<td>Anticipation</td>
+<td>Direct Toxik, Casse-Brique, Coup Bas</td>
+</tr>
+<tr>
+<td><strong>Courrousinge</strong> ♂</td>
+<td>56</td>
+<td>Combat / Spectre</td>
+<td>Esprit Vital</td>
+<td>Poing de Colère, Close Combat, Poing Glace, Poing Feu</td>
+</tr>
+<tr>
+<td><strong>Lucario</strong> ♂</td>
+<td>55</td>
+<td>Combat / Acier</td>
+<td>Impassible</td>
+<td>Draco-Choc, Aurasphère, Vibrobscur</td>
+</tr>
+<tr>
+<td><strong>Vrombotor</strong>, en Starmobile</td>
+<td>56</td>
+<td>Combat</td>
+<td>Endurance</td>
+<td>Cavalerie Lourde, Change-Vitesse, Crash Musclé, Dérapage</td>
+</tr>
+<tr>
+<td><strong>Quartermac</strong> ♂</td>
+<td>55</td>
+<td>Combat</td>
+<td>Receveur</td>
+<td>Close Combat, Tomberoche, Canon Graine</td>
+</tr>
+</tbody>
+</table></div>
+<ol start="27">
+<li><strong>Le Courrousinge est le danger principal.</strong> <strong>Combat / Spectre</strong>, donc <strong>immunisé au Normal et au Combat</strong>, et il a <strong>quatre attaques de poing</strong> dont trois typées différemment. Sa faiblesse :</li>
+</ol>
+<ul>
+<li><strong>Vol</strong> ;</li>
+<li><strong>Psy</strong> ;</li>
+<li><strong>Spectre</strong> et Fée.</li>
+</ul>
+<ol start="28">
+<li><strong>Le Lucario résiste au Psy et à la Fée</strong> parce qu'il est aussi <strong>Acier</strong>. Pour lui, prends du Feu, du Combat ou du Sol.</li>
+<li><strong>Attention à Endurance</strong> sur la Starmobile : le talent lui permet de <strong>survivre à un coup fatal</strong> avec 1 PV. Compte toujours un tour de plus que prévu.</li>
+<li><strong>Méfie-toi de Change-Vitesse</strong>, qui échange sa Vitesse avec la tienne. Si ton Pokémon est très rapide, il devient très lent, et la voiture passe avant toi.</li>
+<li><strong>Encaisse</strong> : le <strong class="objet">Badge Team Combat</strong>, la <strong>CT167 Close Combat</strong> et <strong>20 000 points de ligue</strong>.</li>
+<li><strong>Repasse à la machine à CT</strong> : dernier lot de matériaux de Pania, et la liste est maintenant presque complète.</li>
+</ol>
+<h3 id="loperation-stardust-est-bouclee">L'Opération Stardust est bouclée</h3>
+<ol start="33">
+<li><strong>Les cinq repaires sont tombés.</strong> Cassiopée va te rappeler, et la suite se passe à l'Académie, en partie <strong>13</strong>.</li>
+<li><strong>Note pour plus tard</strong> : une fois les cinq boss battus, tu pourras affronter des Raids Téracristal de Starmobile et capturer une Starmobile à toi. C'est dans la partie <strong>27</strong>.</li>
+</ol>
+<h2 id="quetes-et-lieux-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="le-lac-asrol">Le Lac Asrol</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dominant</strong></td>
+<td>Oyacata, avec Nigirigon aux commandes</td>
+</tr>
+<tr>
+<td><strong>Épice</strong></td>
+<td>Corsée</td>
+</tr>
+<tr>
+<td><strong>Monture</strong></td>
+<td>Escalade</td>
+</tr>
+<tr>
+<td><strong>Niveau des sauvages</strong></td>
+<td>49 à 56</td>
+</tr>
+<tr>
+<td><strong>Biomes</strong></td>
+<td>Lac, Neige, Océan, Plage, Rivière, Roche, Ruines</td>
+</tr>
+<tr>
+<td><strong>Pokémon fixes</strong></td>
+<td>Ramoloss, Flagadoss, Léviator, Draco, Azumarill, Tropius, Étouraptor, Séracrawl, Délestin, et les trois formes de Nigirigon</td>
+</tr>
+<tr>
+<td><strong>Points d'intérêt</strong></td>
+<td>Trois Tours d'Observation, la Cascade Asrol, les ruines du nord-ouest et du sud, le pont du nord-ouest, le littoral des Rocs Onaissance</td>
+</tr>
+<tr>
+<td><strong>Objets cachés</strong></td>
+<td>Des <strong>Plumes</strong>, qui montent les points d'effort</td>
+</tr>
+<tr>
+<td><strong>Lieux voisins</strong></td>
+<td>Forêt Toastée et Mer du Nord au nord ; Mer du Nord à l'ouest ; Mont Nappé et Zone Ouest n° 3 à l'est ; Zones Ouest n° 2 et n° 3 au sud</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le détail complet du lac est dans la partie <strong>19</strong>.</p>
+<h3 id="le-repaire-du-groupe-caph-2">Le repaire du groupe Caph</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Lieu</strong></td>
+<td>Zone Nord n° 2</td>
+</tr>
+<tr>
+<td><strong>Type</strong></td>
+<td>Combat</td>
+</tr>
+<tr>
+<td><strong>Boss</strong></td>
+<td>Nèflie</td>
+</tr>
+<tr>
+<td><strong>Niveau conseillé</strong></td>
+<td>55 à 60</td>
+</tr>
+<tr>
+<td><strong>Garde</strong></td>
+<td>Rose, avec Cradopaud niveau 54 et Colossinge niveau 55</td>
+</tr>
+<tr>
+<td><strong>Épreuve</strong></td>
+<td>30 Pokémon en 10 minutes, les plus coriaces des cinq repaires</td>
+</tr>
+<tr>
+<td><strong>Récompenses</strong></td>
+<td>Badge Team Combat, CT167 Close Combat, 20 000 PL</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-cinq-capacites-de-monture-recapitulees">Les cinq capacités de monture, récapitulées</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Capacité</th>
+<th>Dominant</th>
+<th>Ce qu'elle fait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Sprint</strong></td>
+<td>Roche-Falaise, partie <strong>02</strong></td>
+<td>Foncer, et percuter les arbres</td>
+</tr>
+<tr>
+<td><strong>Surf</strong></td>
+<td>Vaste-Ciel, partie <strong>03</strong></td>
+<td>Rouler sur l'eau</td>
+</tr>
+<tr>
+<td><strong>Bond</strong></td>
+<td>Acier-Tranché, partie <strong>05</strong></td>
+<td>Sauter très haut</td>
+</tr>
+<tr>
+<td><strong>Planer</strong></td>
+<td>Tremble-Terre, partie <strong>08</strong></td>
+<td>Voler en descente</td>
+</tr>
+<tr>
+<td><strong>Escalade</strong></td>
+<td>Fourbe-Dragon, ici</td>
+<td>Grimper les parois verticales</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-pokemon-a-prendre-en-passant-9">Les Pokémon à prendre en passant</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Pokémon</th>
+<th>Où</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Nigirigon</strong></td>
+<td>Lac Asrol, les trois formes</td>
+<td>Trois formes différentes à enregistrer au Pokédex</td>
+</tr>
+<tr>
+<td><strong>Oyacata</strong></td>
+<td>Lac Asrol</td>
+<td>Eau, énormément de PV</td>
+</tr>
+<tr>
+<td><strong>Draco</strong></td>
+<td>Lac Asrol</td>
+<td>Devient Dracolosse</td>
+</tr>
+<tr>
+<td><strong>Séracrawl</strong></td>
+<td>Lac Asrol</td>
+<td>Glace / Eau, très résistant</td>
+</tr>
+<tr>
+<td><strong>Tropius</strong></td>
+<td>Lac Asrol</td>
+<td>Plante / Vol, et un membre du Conseil 4 en a un</td>
+</tr>
+<tr>
+<td><strong>Délestin</strong></td>
+<td>Lac Asrol</td>
+<td>Eau / Psy</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Épice Secrète Corsée</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Grotte des tréfonds du Lac Asrol</td>
+<td><strong>La cinquième et dernière</strong></td>
+</tr>
+<tr>
+<td><strong>Sandwich de Pepper</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Pepper, juste après l'Épice</td>
+<td>Donne <strong>Escalade</strong> à Miraidon</td>
+</tr>
+<tr>
+<td><strong>Objets des trois Tours d'Observation</strong></td>
+<td><span class="badge neutre">Divers</span></td>
+<td>Sommet de chaque tour du Lac Asrol</td>
+<td>Un objet par sommet, et la carte révélée</td>
+</tr>
+<tr>
+<td><strong>Plumes</strong></td>
+<td><span class="badge neutre">Objet caché</span></td>
+<td>Un peu partout autour du Lac Asrol</td>
+<td>Montent les points d'effort</td>
+</tr>
+<tr>
+<td><strong>Téra-Éclats</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Objets au sol du Lac Asrol</td>
+<td>Changent le type Téracristal</td>
+</tr>
+<tr>
+<td><strong>Perles</strong></td>
+<td><span class="badge neutre">Objet de valeur</span></td>
+<td>Objets au sol du Lac Asrol</td>
+<td>Se revendent bien</td>
+</tr>
+<tr>
+<td><strong>2 860 Pokédollars</strong></td>
+<td><span class="badge gils">Argent</span></td>
+<td>Rose, garde du repaire du groupe Caph</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Badge Team Combat</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td>Victoire sur Nèflie</td>
+<td><strong>Cinquième et dernier badge de la Team Star</strong></td>
+</tr>
+<tr>
+<td><strong>CT167 Close Combat</strong></td>
+<td><span class="badge neutre">Capsule Technique</span></td>
+<td>Victoire sur Nèflie</td>
+<td>La meilleure attaque Combat du jeu</td>
+</tr>
+<tr>
+<td><strong>20 000 points de ligue</strong></td>
+<td><span class="badge neutre">Monnaie</span></td>
+<td>Cassiopée, après Nèflie</td>
+<td>Machine à CT et boutiques</td>
+</tr>
+<tr>
+<td><strong>Matériaux de CT</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Pania, après le repaire</td>
+<td>Dernier élargissement de la machine à CT</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="commandant-le-talent-le-plus-bizarre-du-jeu">Commandant, le talent le plus bizarre du jeu</h3>
+<p><strong>Oyacata</strong> est un Pokémon Eau tout à fait ordinaire : beaucoup de PV, peu de Vitesse, rien de spécial. <strong>Nigirigon</strong> est un minuscule poisson-sushi que n'importe quoi tue en un coup.</p>
+<p>Mis ensemble, c'est autre chose. Le talent Commandant fait que Nigirigon <strong>se glisse dans la bouche d'Oyacata</strong> et lui <strong>monte deux crans de chaque statistique</strong> — Attaque, Défense, Attaque Spéciale, Défense Spéciale et Vitesse. Et tant que le petit est dedans, <strong>tu ne peux pas le viser</strong>.</p>
+<p>Ce qu'il faut en retenir pour le combat : ne sous-estime pas Oyacata, et prévois des attaques qui font vraiment mal. Électrik et Plante sont tes deux meilleurs amis ici.</p>
+<p>Ce qu'il faut en retenir pour ton équipe : ce duo est <strong>jouable par toi aussi</strong>, et c'est l'une des combinaisons les plus fortes du jeu. Capture les deux.</p>
+<h3 id="le-dernier-repaire-est-le-seul-vraiment-serre">Le dernier repaire est le seul vraiment serré</h3>
+<p>Les quatre premiers repaires sont confortables : 30 Pokémon en 10 minutes, c'est large. Le <strong>groupe Caph</strong> change ça, parce que ses Pokémon sont des Hariyama, des Gallame et des Flamenroule niveau 50 et plus, qui ne tombent pas en un coup.</p>
+<p>Deux conseils concrets :</p>
+<ul>
+<li><strong>Prends trois Pokémon qui frappent vite et fort</strong>, pas trois murs. Un Pokémon défensif encaisse bien, mais il met trois fois plus de temps à tuer, et le chronomètre ne pardonne pas.</li>
+<li><strong>Utilise les distributeurs sans attendre.</strong> Un aller-retour au distributeur coûte dix secondes ; un Pokémon K.O. coûte beaucoup plus.</li>
+</ul>
+<h3 id="le-piege-spectre-deuxieme-episode">Le piège Spectre, deuxième épisode</h3>
+<p>Ici, l'immunité ne marche que dans un sens, et c'est ce qui trompe. Le <strong>Combat ne touche pas le Spectre</strong> : un Spectre pur encaisse donc parfaitement tout ce repaire. En revanche, le <strong>Spectre ne fait que des dégâts normaux au Combat</strong> : tu es intouchable, mais tu tapes mou.</p>
+<p>La bonne façon d'utiliser un Ectoplasma ici, c'est donc contre le Courrousinge, qui est <strong>Combat / Spectre</strong> et que le Spectre frappe vraiment. Pour l'épreuve des 30, où il faut tuer vite, prends autre chose.</p>
+<h3 id="faire-le-grand-tour-maintenant-pas-plus-tard">Faire le grand tour maintenant, pas plus tard</h3>
+<p>Tu viens d'obtenir la dernière capacité de monture, et tu es niveau 55 à 60. C'est, objectivement, <strong>le meilleur moment de toute la partie pour explorer</strong> :</p>
+<ul>
+<li>tu peux aller <strong>partout</strong> ;</li>
+<li>tes Pokémon t'obéissent <strong>tous</strong> ;</li>
+<li>et les Pokémon sauvages des zones les plus dures sont désormais à ton niveau.</li>
+</ul>
+<p>Si tu attends la fin du jeu, tu le feras quand même — mais tu passeras le Conseil 4 avec une équipe moins fournie et un sac à moitié vide.</p>
+<h3 id="les-niveaux-encore-une-fois">Les niveaux, encore une fois</h3>
+<p>Pour le Nigirigon du Lac Asrol, Pokébip donne <strong>niveau 57</strong> avec sa nature, son talent et ses quatre capacités ; Dexerto écrit <strong>55</strong>. J'ai retenu 57. L'Oyacata du combat, lui, est de niveau comparable : viens à 55 au minimum et tu ne verras pas la différence.</p>
+<h2 id="alertes-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte manquable">⏳ <strong>Les trois Nigirigon échoués</strong> doivent être abordés <strong>dans le bon ordre</strong> : le rose pour le combat, l'orange pour faire sortir le Dominant. Parler au mauvais ne bloque rien, mais tu peux tourner en rond un moment sur cette pointe.</li>
+<li class="alerte">⚠️ <strong>Le Nigirigon de forme Courbée</strong> ne réapparaît qu'<strong>après les événements de la Zone Zéro</strong>, donc après la partie <strong>14</strong>. Avant ça, inutile de retourner au lac pour le capturer.</li>
+</ul>
+<h2 id="check-list-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Niveau 55 atteint, Plante ou Électrik dans l'équipe</li>
+<li class="tache"><input type="checkbox"> Les trois Nigirigon échoués trouvés sur la pointe</li>
+<li class="tache"><input type="checkbox"> Nigirigon rose battu, Nigirigon orange abordé</li>
+<li class="tache"><input type="checkbox"> Oyacata battu en phase 1 puis en phase 2 avec Pepper</li>
+<li class="tache"><input type="checkbox"> Épice Secrète Corsée récupérée, la cinquième</li>
+<li class="tache"><input type="checkbox"> Sandwich donné à Miraidon, Escalade débloquée</li>
+<li class="tache"><input type="checkbox"> Les trois Tours d'Observation du Lac Asrol montées</li>
+<li class="tache"><input type="checkbox"> Plumes cachées du lac ramassées</li>
+<li class="tache"><input type="checkbox"> Trois Pokémon Fée, Psy ou Vol en tête de liste</li>
+<li class="tache"><input type="checkbox"> Rose battue à l'entrée du repaire du groupe Caph</li>
+<li class="tache"><input type="checkbox"> 30 Pokémon battus en moins de 10 minutes</li>
+<li class="tache"><input type="checkbox"> Nèflie battue, les cinq Pokémon compris</li>
+<li class="tache"><input type="checkbox"> Badge Team Combat, CT167 Close Combat et 20 000 PL reçus</li>
+<li class="tache"><input type="checkbox"> Grand tour de Paldea entamé avec les cinq capacités de monture</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="10-le-mont-nappe-larene-glace-et-le-groupe-ruchbah.html" rel="prev"><small>← Partie précédente</small><b>Le Mont Nappé : l&#x27;arène Glace et le groupe Ruchbah</b></a><a class="suiv" href="12-la-ligue-pokemon-lexamen-le-conseil-4-et-alisma.html" rel="next"><small>Partie suivante →</small><b>La Ligue Pokémon : l&#x27;examen, le Conseil 4 et Alisma</b></a><a class="tout" href="pokemon-violet.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Pokémon Violet · guide complet généré le 12 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

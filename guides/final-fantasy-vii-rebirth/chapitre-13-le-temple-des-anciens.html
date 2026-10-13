@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapitre 13 — Le temple des Anciens – Guide Final Fantasy VII Rebirth</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy VII Rebirth, Chapitre 13 — Le temple des Anciens : Chapitre le plus long : cinq boss. À ne pas rater : Chakra niveau max (deux crans en…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-13-le-temple-des-anciens.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Chapitre 13 — Le temple des Anciens · Guide Final Fantasy VII Rebirth">
+<meta property="og:description" content="Final Fantasy VII Rebirth, Chapitre 13 — Le temple des Anciens : Chapitre le plus long : cinq boss. À ne pas rater : Chakra niveau max (deux crans en…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-13-le-temple-des-anciens.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy VII Rebirth", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/"}, {"@type": "ListItem", "position": 3, "name": "Chapitre 13 — Le temple des Anciens", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-vii-rebirth/chapitre-13-le-temple-des-anciens.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-vii-rebirth" class="compact" data-partie="chapitre-13-le-temple-des-anciens"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy VII Rebirth</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Final Fantasy VII Rebirth : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy VII <em>Rebirth</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="chapitre-1-la-chute-dun-heros.html"><span class="num">✦</span><span class="libelle">Chapitre 1 — La chute d&#x27;un héros</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-2-vers-de-nouveaux-horizons.html"><span class="num">✦</span><span class="libelle">Chapitre 2 — Vers de nouveaux horizons</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-3-sur-les-traces-des-manteaux-noirs.html"><span class="num">✦</span><span class="libelle">Chapitre 3 — Sur les traces des manteaux noirs</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-4-le-debut-dune-nouvelle-ere.html"><span class="num">✦</span><span class="libelle">Chapitre 4 — Le début d&#x27;une nouvelle ère</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-5-une-croisiere-sanglante.html"><span class="num">✦</span><span class="libelle">Chapitre 5 — Une croisière sanglante</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-6-un-paradis-ensoleille.html"><span class="num">✦</span><span class="libelle">Chapitre 6 — Un paradis ensoleillé</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-7-un-retour-douloureux.html"><span class="num">✦</span><span class="libelle">Chapitre 7 — Un retour douloureux</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-8-le-gold-saucer.html"><span class="num">✦</span><span class="libelle">Chapitre 8 — Le Gold Saucer</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-9-a-lecoute-de-la-planete.html"><span class="num">✦</span><span class="libelle">Chapitre 9 — À l&#x27;écoute de la planète</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-10-protecteur-de-la-vallee.html"><span class="num">✦</span><span class="libelle">Chapitre 10 — Protecteur de la vallée</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="chapitre-11-un-village-natal-meconnaissable.html"><span class="num">✦</span><span class="libelle">Chapitre 11 — Un village natal méconnaissable</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-12-en-quete-de-la-pierre-cle.html"><span class="num">✦</span><span class="libelle">Chapitre 12 — En quête de la pierre-clé</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="#chapitre-13-le-temple-des-anciens"><span class="num">✦</span><span class="libelle">Chapitre 13 — Le temple des Anciens</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="chapitre-14-un-monde-a-lagonie.html"><span class="num">✦</span><span class="libelle">Chapitre 14 — Un monde à l&#x27;agonie</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="region-de-la-prairie.html"><span class="num">✦</span><span class="libelle">Région de la Prairie</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="region-de-junon.html"><span class="num">✦</span><span class="libelle">Région de Junon</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="region-de-corel.html"><span class="num">✦</span><span class="libelle">Région de Corel</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="region-de-gongaga.html"><span class="num">✦</span><span class="libelle">Région de Gongaga</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="region-de-cosmo.html"><span class="num">✦</span><span class="libelle">Région de Cosmo</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="region-de-nibel.html"><span class="num">✦</span><span class="libelle">Région de Nibel</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="locean-central-et-les-iles.html"><span class="num">✦</span><span class="libelle">L&#x27;Océan Central et les îles</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat.html"><span class="num">✦</span><span class="libelle">Le combat</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-materias.html"><span class="num">✦</span><span class="libelle">Les matérias</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-armes-et-les-codex.html"><span class="num">✦</span><span class="libelle">Les armes et les codex</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="les-invocations.html"><span class="num">✦</span><span class="libelle">Les invocations</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="laffinite-et-les-coequipiers.html"><span class="num">✦</span><span class="libelle">L&#x27;affinité et les coéquipiers</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="queens-blood.html"><span class="num">✦</span><span class="libelle">Queen&#x27;s Blood</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-mini-jeux-4.html"><span class="num">✦</span><span class="libelle">Les mini-jeux</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-objets-a-collectionner.html"><span class="num">✦</span><span class="libelle">Les objets à collectionner</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="le-simulateur-de-combat.html"><span class="num">✦</span><span class="libelle">Le simulateur de combat</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="apres-le-generique.html"><span class="num">✦</span><span class="libelle">Après le générique</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="astuces-trophees-et-secrets.html"><span class="num">✦</span><span class="libelle">Astuces, trophées et secrets</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="sources-final-fantasy-vii-rebirth.html"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy VII Rebirth</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-14">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="chapitre-13-le-temple-des-anciens">Chapitre 13 — Le temple des Anciens</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-14"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-14">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Chapitre le plus long</strong> : cinq boss.</li>
+<li><strong>À ne pas rater</strong> : <strong>Chakra niveau max</strong> (deux crans en contrebas après l'inversion de l'Astre rubis) et le <strong>foulard siffle-vent</strong> (Astre saphir à 180° avant 90°).</li>
+<li><strong>Point de non-retour</strong> : s'amarrer au port de Northwood.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Entrer dans le <strong>temple des Anciens</strong>, le traverser de bout en bout, et mettre la main sur la <strong>matéria noire</strong>.</p>
+<p>C'est le chapitre le plus long et le plus copieux du jeu. Cinq boss, cinq engrenages gravitationnels, une mécanique entièrement nouvelle pour Aerith, <strong>six épreuves personnelles</strong> pour l'équipe, et une trentaine de coffres dont <strong>sept armes</strong> et <strong>quatre matérias de niveau max ou précieuses</strong>.</p>
+<p class="alerte">⚠️ Et il contient le point de non-retour du jeu. Lis la section suivante avant de t'amarrer.</p>
+<h2 id="le-point-de-non-retour" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Le point de non-retour</span></h2>
+<p>En approchant du port de Northwood, tu aperçois Rufus qui se rend lui aussi au temple. Les TURKs sont déjà sur place et activent le temple avec la pierre-clé.</p>
+<p class="alerte">⚠️ Avant de t'amarrer, tu passes le point de non-retour du jeu. Prends le temps de tout faire avant de t'engager dans cette dernière ligne droite : quêtes annexes, rapports de Chadley, protoreliques, Queen's Blood, mini-jeux, affinité.</p>
+<p>Le monde ouvert redevient accessible après la fin du jeu, via la <strong>sélection de chapitres</strong> — mais tu perds ta progression naturelle, et certains contenus liés à l'affinité se jouent mieux maintenant. Les parties <strong>15</strong> à <strong>21</strong> listent tout ce qui reste.</p>
+<h2 id="itineraire-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.actugaming.net/solution-chapitre-13-final-fantasy-vii-rebirth-634007/">Chapitre 13</a> — soluce illustrée sur ActuGaming, en français.</p>
+<ol>
+<li><strong>La forêt de Northwood</strong> et le parvis du temple : deux pelotons Shinra, trois coffres.</li>
+<li><strong>L'entrée du temple</strong> et les <strong>cinq engrenages gravitationnels</strong> : <strong>Astre rubis</strong>, <strong>Astre émeraude</strong>, <strong>Astre saphir</strong>, <strong>Astre topaze</strong>, <strong>Astre améthyste</strong>.</li>
+<li><strong>Le boss Dragon rouge</strong>, gardien du labyrinthe.</li>
+<li><strong>Le hall de la Vie</strong> : le groupe se scinde en deux.</li>
+<li><strong>Chemins séparés</strong> avec <strong>Cloud, Tifa et Barret</strong>.</li>
+<li><strong>Persévérance</strong> avec <strong>Aerith, Yuffie et Red XIII</strong> : la mécanique de l'<strong>énergie</strong> et des <strong>vaisseaux</strong>.</li>
+<li><strong>Une nouvelle voie</strong> : les cubes à pousser, puis le boss <strong>Titan d'acier</strong>.</li>
+<li><strong>Torrent déchaîné</strong> : le boss <strong>Rude &amp; Réno</strong>.</li>
+<li><strong>Reprise des recherches</strong> avec Aerith : les deux faisceaux, puis le boss <strong>Elena &amp; Tseng</strong>.</li>
+<li><strong>Le hall de la Résurrection</strong> : les <strong>six épreuves</strong>.</li>
+<li><strong>Vers la matéria noire</strong> : la <strong>salle de la Fresque</strong>, puis le boss <strong>Porte démoniaque</strong>.</li>
+<li><strong>L'autel de la Noirceur</strong> et la chute du temple.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="le-parvis-du-temple">Le parvis du temple</h3>
+<p>Avance dans la forêt <strong>vers le nord</strong> jusqu'à apercevoir le temple. <strong>Descends les marches</strong> et <strong>va sur ta gauche</strong> : un <strong>coffre</strong> avec <strong>2 méga-brumipotions</strong>.</p>
+<p><strong>Traverse le pont</strong> : un <strong>peloton Shinra</strong> t'attend.</p>
+<p>Entre Gardes, Gardes des forces spéciales et <strong>soldat 2e classe</strong>, c'est surtout ce dernier qu'il faut retenir. <strong>Vulnérable au Feu</strong> comme ses collègues, il se fragilise si tu bloques ses attaques à l'épée. Attention à son Chaos gravitationnel et au sceau qu'il crée au sol, qui l'immunise aux dégâts physiques.</p>
+<p>Sitôt ce groupe réglé, d'autres Gardes débarquent des deux côtés de l'entrée, avec cette fois des Grenadiers d'élite, des Gardes d'élite et de nouveaux <strong>SOLDATs 2e classe</strong>.</p>
+<p>Le ménage terminé, deux coffres de part et d'autre :</p>
+<ul>
+<li><strong>chemin de droite</strong> : une <strong>maxi-potion</strong> ;</li>
+<li><strong>chemin de gauche</strong> : un <strong>ultra-éther</strong>.</li>
+</ul>
+<h3 id="lentree-et-la-gravite">L'entrée et la gravité</h3>
+<p><strong>Dirige-toi vers l'entrée.</strong> Cid et Vincent ne t'accompagnent pas et restent devant le temple.</p>
+<p>À l'intérieur, après avoir croisé Rochey, descends et passe par l'ouverture. Élimine les Gardes antiémeutes en les <strong>fragilisant au Feu</strong>, puis <strong>ouvre la porte</strong>.</p>
+<p><strong>Monte les escaliers</strong> : tu remarques au loin des soldats Shinra la tête en bas. La gravité se comporte différemment ici — tu vas vite en faire l'expérience. Plus loin, les TURKs se séparent en deux duos.</p>
+<p>De retour aux commandes, descends les escaliers sur ta droite et va vers le sud : un <strong>coffre</strong> avec <strong>2 giga-potions</strong>.</p>
+<p><strong>Continue de descendre</strong> : deux Grenouilles toxiques et un Lézard chthonien.</p>
+<ul>
+<li>Les Grenouilles ont peu de PV et sont <strong>vulnérables à la Glace</strong>.</li>
+<li>Le Lézard chthonien est aussi <strong>vulnérable à la Glace</strong>, mais il faut lui lancer un sort au moment où il lance Embuscade pour le fragiliser — toute autre attaque le fait riposter. Attention à ses Souffles pétrifiants et Souffles batraciens.</li>
+</ul>
+<h3 id="lengrenage-de-lastre-rubis">L'engrenage de l'Astre rubis</h3>
+<p><strong>Monte l'escalier au nord</strong> : tu arrives devant l'<strong>engrenage de l'Astre rubis</strong>, une <strong>relique flottante</strong>.</p>
+<p><strong>Comment ça marche</strong> : <strong>interagis avec l'engrenage</strong>, puis bouge le joystick droit pour déplacer la flèche et <strong>valide</strong>. Pour inverser la gravité à 180°, amène la flèche à l'opposé de là où tu es.</p>
+<p><strong>Fais-le.</strong> Désormais à l'envers :</p>
+<ol>
+<li><strong>Avance vers le manteau noir devant toi.</strong></li>
+<li>Remarque la plateforme en contrebas sur ta droite, avec deux cristaux. <strong>Saute pour la rejoindre.</strong></li>
+<li><strong>Descends encore d'un cran</strong> : la matéria <strong>Chakra niveau max</strong>.</li>
+<li><strong>Saute une dernière fois</strong> : deux Dragons anciens.</li>
+</ol>
+<p><strong>Les Dragons anciens</strong> sont <strong>vulnérables au Vent</strong>, et les sorts et attaques à distance restent le plus simple pour les toucher. Pour les fragiliser, attends qu'ils lancent Croix du Sud : à ce moment-là ils sont près du sol, et des attaques physiques les fragilisent. Mais ne les lâche pas, sinon la Fragilité ne dure pas.</p>
+<p>Après le combat, va vers l'est et escalade la plante grimpante. <strong>Monte tout droit, hisse-toi</strong>, et récupère l'arme <strong>brise-courant</strong> pour <strong>Cloud</strong> dans un <strong>coffre violet</strong>. <strong>Remonte sur la plante</strong> et va <strong>sur ta gauche</strong>.</p>
+<h3 id="lengrenage-de-lastre-emeraude">L'engrenage de l'Astre émeraude</h3>
+<p>De nouveau les pieds sur terre, actionne l'engrenage de l'Astre émeraude. Amène encore la flèche à l'opposé pour une <strong>inversion à 180°</strong>.</p>
+<p>Une fois dans l'autre sens, derrière la salle de l'engrenage, un <strong>coffre</strong> contient un <strong>super-éther</strong>.</p>
+<p>Continue : combat contre deux Lézards chthoniens et un Dragon ancien.</p>
+<p class="alerte manquable">⏳ Avant de rejoindre l'engrenage suivant au nord, va plutôt côté sud : un <strong>coffre</strong> avec une <strong>maxi-potion</strong>, gardé par deux Grenouilles toxiques et un Lézard chthonien.</p>
+<h3 id="lengrenage-de-lastre-saphir">L'engrenage de l'Astre saphir</h3>
+<p><strong>Repars vers le nord</strong> et rejoins l'<strong>engrenage de l'Astre saphir</strong>.</p>
+<p class="alerte">⚠️ Attention, cette fois il y a trois positions possibles, en comptant l'actuelle.</p>
+<ol>
+<li><strong>D'abord, tourne la flèche à 180°</strong> : tu te retrouves au plafond de la salle, où un <strong>coffre</strong> contient un <strong>foulard siffle-vent</strong>.</li>
+<li><strong>Réactive l'engrenage</strong> et tourne cette fois simplement à 90° pour te retrouver au niveau du manteau noir.</li>
+<li>Accroche-toi à la plante grimpante pour une petite séquence d'escalade. En haut, casse quelques caisses et cristaux et <strong>va vers l'ouest</strong>.</li>
+</ol>
+<p><strong>Passe la porte</strong> : un Garde, deux Gardes antiémeutes et un <strong>soldat 2e classe</strong>.</p>
+<p>Le combat fini, saisis le gros cube et place-le sous la plante grimpante pour pouvoir l'atteindre.</p>
+<p><strong>Hisse-toi</strong>, puis fais le grand saut dans la cascade pour atterrir dans un <strong>bassin</strong>. Sors de l'eau, fais le tour, et ouvre le coffre : un morceau de minerai de mithril.</p>
+<p>Reprends la route, <strong>monte quelques escaliers</strong> et affronte — ou pas — <strong>deux Lézards chthoniens et une Grenouille toxique</strong>.</p>
+<h3 id="les-engrenages-de-lastre-topaze-et-de-lastre-amethyste">Les engrenages de l'Astre topaze et de l'Astre améthyste</h3>
+<p><strong>Grimpe encore quelques marches</strong> : tu as le choix entre <strong>deux engrenages</strong>.</p>
+<p>D'abord l'engrenage de l'Astre topaze, le jaune :</p>
+<ol>
+<li><strong>Tourne-le vers la droite, à 45°.</strong></li>
+<li>Monte l'escalier près du bassin, bats les <strong>deux Dragons anciens</strong> et passe par la porte au nord.</li>
+<li><strong>En haut : la matéria Gain d'expérience.</strong></li>
+<li><strong>Saute dans le bassin</strong> et reprends l'engrenage de l'Astre topaze pour remettre la gravité dans son état initial.</li>
+</ol>
+<p><strong>Puis l'engrenage de l'Astre améthyste</strong> :</p>
+<ol>
+<li><strong>Tourne-le à 90° vers le haut.</strong></li>
+<li>Accroche-toi à la plante grimpante et <strong>va vers le haut</strong>. <strong>Hisse-toi</strong> et <strong>monte le petit chemin</strong> qui mène à un trésor gardé par un Dragon ancien. Tue-le et ouvre le coffre : une <strong>armille de Cétra</strong>.</li>
+<li>Reviens à l'engrenage de l'Astre améthyste et <strong>pivote à 180°</strong>.</li>
+</ol>
+<p>Tu sauras que tu es sur la bonne voie en voyant le cadavre d'un garde Shinra sur ta droite en quittant l'engrenage.</p>
+<p><strong>Descends les escaliers</strong> et bats <strong>de nombreux gardes</strong>. Puis <strong>continue vers le nord</strong>, <strong>repose-toi sur le banc</strong>, et entre par la porte plus loin.</p>
+<h3 id="boss-dragon-rouge">Boss : Dragon rouge</h3>
+<p>Stratégie détaillée dans Conseils et pièges.</p>
+<p><strong>Le gardien du labyrinthe vaincu</strong>, continue dans les profondeurs du temple. <strong>Prends l'ascenseur</strong> après quelques dizaines de mètres : tu te retrouves <strong>dans le labyrinthe</strong>.</p>
+<h3 id="le-hall-de-la-vie">Le hall de la Vie</h3>
+<p>À l'intérieur du <strong>hall de la Vie</strong>, tu aperçois de nouveau la Shinra et les TURKs — mais la rivière de la vie chasse ce qu'elle considère comme des intrus.</p>
+<p>Aerith essaie de la calmer. Et alors qu'elle a presque réussi, la plateforme sur laquelle elle prie s'élève et sépare le groupe en deux :</p>
+<ul>
+<li>d'un côté Aerith, Yuffie et Red XIII ;</li>
+<li>de l'autre <strong>Cloud, Tifa et Barret</strong>.</li>
+</ul>
+<h3 id="chemins-separes-cloud-tifa-et-barret">Chemins séparés — Cloud, Tifa et Barret</h3>
+<p><strong>Avance vers l'ouest.</strong> Tu rencontres un <strong>essaim de Frelons voraces</strong> : un Extra-Vent les élimine d'un claquement de doigts, vu leur vulnérabilité.</p>
+<p><strong>Continue vers le nord</strong> : de nouveaux <strong>gardes Shinra</strong> et un Drone type G, <strong>vulnérable à la Foudre</strong>.</p>
+<p><strong>Enjambe l'obstacle</strong> : un <strong>coffre violet</strong> contient l'arme <strong>paire de Jarngreipr</strong> pour <strong>Tifa</strong>.</p>
+<p><strong>Descends les escaliers</strong> et, au moment où tout s'effondre devant toi, grimpe par la plante grimpante sur ta droite.</p>
+<p>Au bout de cette petite escalade, contourne le chemin par l'extérieur en <strong>longeant une corniche</strong>, puis en jouant les funambules sur un pont de fortune.</p>
+<p>Juste après : deux Lézards chthoniens et un essaim de Frelons voraces.</p>
+<p class="alerte manquable">⏳ Avant d'escalader les obstacles vers le nord, va plutôt vers l'ouest. Après deux Grenouilles toxiques et un essaim de Frelons voraces, un <strong>coffre</strong> un peu plus loin contient un <strong>morceau de cosmolite enchantée</strong>.</p>
+<h3 id="les-courants-de-la-riviere-de-la-vie">Les courants de la rivière de la vie</h3>
+<p><strong>Va côté ouest</strong> : tu arrives devant des courants de rivière de la vie. Tu vois où ils se diffusent grâce aux traces au sol. Attends qu'ils s'arrêtent avant de traverser.</p>
+<p><strong>L'énigme</strong> : pousse le cube vers le troisième courant, celui qui <strong>se diffuse en continu</strong>, pour <strong>libérer le passage</strong>.</p>
+<p><strong>Reviens au couloir principal</strong> en faisant attention au deuxième courant, puis traverse le passage désormais ouvert.</p>
+<p>Affronte un Dragon ancien et un nouvel <strong>essaim de Frelons voraces</strong>. <strong>Progresse vers l'ouest</strong> et monte par une plante grimpante.</p>
+<p class="alerte manquable">⏳ En haut, avant d'enjamber l'obstacle devant toi, part sur la gauche vers <strong>deux Dragons anciens</strong>. À leur mort, un <strong>coffre</strong> contient un <strong>fragment d'étoile</strong>.</p>
+<p><strong>Reviens en arrière</strong> et attaque le Garde des forces spéciales accompagné d'un Drone type G.</p>
+<p>Suis le seul chemin possible jusqu'à ce que la rivière de la vie fasse s'effondrer le décor. <strong>Cours droit devant toi</strong> puis, dans la salle circulaire, ouvre le coffre : <strong>2 giga-potions</strong>.</p>
+<p>Une fois le premier courant traversé, va sur ta gauche quand le deuxième se calme, puis <strong>tourne directement à droite</strong> pour arriver au niveau d'un <strong>cube géant</strong>. <strong>Sors par le nord</strong> et rejoins le bâtiment en face en passant sous les débris.</p>
+<p>Te voilà face à <strong>trois SOLDATs 2e classe</strong>. Un seul est gérable, mais leurs attaques combinées peuvent vite te déborder — Chaos gravitationnel ou Lame tornade. Et surveille leur Sceau protecteur : tant qu'ils sont à l'intérieur, ils sont insensibles aux dégâts physiques. Priorise les sorts de Feu à ce moment-là.</p>
+<p>Le combat fini, Cloud s'enfonce un peu plus dans son état second. Puis Rude et Réno se manifestent, font exploser le bâtiment et s'enfuient.</p>
+<h3 id="perseverance-aerith-yuffie-et-red-xiii">Persévérance — Aerith, Yuffie et Red XIII</h3>
+<p>Tu prends <strong>Aerith</strong>. <strong>Ouvre la porte</strong> : la Cétra peut désormais utiliser l'énergie de la rivière de la vie.</p>
+<p><strong>La mécanique du chapitre, côté Aerith :</strong></p>
+<ul>
+<li>Aerith peut modifier la configuration du temple en transférant de l'énergie dans des vaisseaux.</li>
+<li>Place-toi sur la plaque au symbole gravé en rouge pour transférer. Joystick droit pour localiser le vaisseau, joystick gauche en petits ronds pour transférer l'énergie.</li>
+<li><strong>Où trouver de l'énergie</strong> : en <strong>détruisant les cristaux verts</strong>, en <strong>tuant des ennemis</strong>, ou <strong>simplement en l'air</strong>. L'essentiel est d'appuyer sur Triangle à proximité de la moindre particule.</li>
+<li><strong>Et le bonus caché</strong> : tant qu'Aerith n'a pas transféré son énergie, elle en tire des bonus en combat — Foi, Récupération, voire Mur quand les trois quarts du cercle sont remplis. Garde donc de l'énergie en réserve avant un combat.</li>
+</ul>
+<p><strong>Premier vaisseau</strong> : place-toi sur la plaque et transfère. Tu <strong>reconstitues le chemin</strong> et peux avancer.</p>
+<h3 id="la-plaque-a-deux-vaisseaux">La plaque à deux vaisseaux</h3>
+<p>Nouvelle plaque, <strong>reliée à deux vaisseaux</strong>. Avant de t'y installer, explore les alentours pour trouver de l'énergie.</p>
+<ul>
+<li><strong>Dans l'une des salles à côté</strong> : <strong>trois cristaux verts</strong> à briser.</li>
+<li><strong>Dans l'autre salle</strong> : une Grenouille toxique et un Dwavhuurl. Le Dwavhuurl est moins inquiétant qu'il n'y paraît : assez de dégâts le fragilisent, et mets-le en Choc avant qu'il ne riposte avec Déferlement de lumière.</li>
+<li>À la fin du combat, siphonne l'énergie de tes ennemis vaincus.</li>
+<li>Sors et, côté est de la zone, brise quelques caisses et récupère <strong>trois nouvelles particules d'énergie</strong>.</li>
+</ul>
+<p>Normalement, tu devrais avoir tous les bonus avec un cercle rempli à un peu plus de la moitié.</p>
+<ol>
+<li>Retourne à la plaque et transfère vers le vaisseau côté est. Tu reconstitues un bâtiment avec <strong>deux coffres</strong>. Ouvre celui à ta portée : un <strong>super-éther</strong>. <strong>L'autre viendra plus tard</strong> — pas de panique.</li>
+<li>Active cette fois le vaisseau côté ouest, ce qui te coûte tout le reste de ton énergie. <strong>Rejoins le bâtiment reconstruit</strong> et <strong>descends les escaliers</strong>. <strong>En bas, retourne-toi</strong> : un <strong>coffre violet</strong> contient l'arme <strong class="objet">Gambanteinn</strong> (🗺️ <a href="https://mapgenie.io/final-fantasy-vii-rebirth/maps/midgar?locationIds=351395">carte</a>) pour <strong>Aerith</strong>. Brise et aspire le cristal vert tout près.</li>
+<li><strong>Quelques pas</strong>, puis le Dragon ancien — <strong>récolte son énergie</strong>.</li>
+</ol>
+<h3 id="la-plaque-a-quatre-vaisseaux">La plaque à quatre vaisseaux</h3>
+<p>Tu rejoins une plaque qui a <strong>non pas deux mais quatre vaisseaux</strong>.</p>
+<p>Casse et récupère l'énergie des cristaux autour de la plaque, puis transfère sur le vaisseau qui a déjà le plus d'énergie préremplie, celui côté nord-est.</p>
+<ol>
+<li>Tu reconstitues un <strong>bassin</strong>. <strong>Fais le tour</strong> pour <strong>récolter des particules</strong> et <strong>ouvrir un coffre</strong> : un <strong>élixir</strong>. <strong>Récupère une dernière particule</strong>, <strong>brise deux cristaux verts</strong> et <strong>reviens sur la plaque</strong>.</li>
+<li>Tu devrais avoir une moitié de cercle. Transfère vers le vaisseau au sud. Ça fait apparaître un cinquième vaisseau, côté nord, que tu rempliras en dernier.</li>
+<li>Va visiter la zone reconstituée. Note les nombreux cristaux du couloir principal.
+<ul>
+<li><strong>Première salle à gauche</strong> : <strong>particules d'énergie flottantes</strong>.</li>
+<li><strong>Deuxième salle</strong> : deux Lézards chthoniens et un Kelzmelzer. Le Kelzmelzer se fragilise rapidement avec une compétence offensive, comme les Crocs tournoyants de Red XIII. <strong>Aspire les énergies</strong> et récupère la matéria Garde renforcée niveau max.</li>
+<li><strong>Première salle à droite</strong> : un Œil de la mort. <strong>Vulnérable à la Foudre</strong>, il se fragilise avec assez de dégâts, l'œil étant la partie la plus vulnérable. Attention à son Regard hypnotique, qui inflige Stop, et à son Bouclier de mana, qui le rend insensible au physique. <strong>Aspire son énergie.</strong></li>
+<li><strong>Deuxième pièce à droite</strong> : un <strong>coffre</strong> avec un <strong>morceau de saphir</strong>.</li>
+</ul>
+</li>
+<li>Reviens à la plaque et active le vaisseau côté ouest : nouveau bâtiment, partiellement. <strong>Brise les cristaux</strong>, tue le petit groupe de Grenouilles toxiques et <strong>aspire leur énergie</strong>. Tu devrais être aux trois quarts.</li>
+<li>Active le vaisseau côté sud-est et va voir la <strong>tour reconstituée</strong>. Bats les deux Dragons anciens, <strong>détruis les cristaux</strong>, <strong>récolte tout</strong>. Monte les escaliers en absorbant d'autres cristaux et ouvre enfin le coffre jusque-là inaccessible : un <strong>bracelet de Cétra</strong>.</li>
+<li><strong>Reviens sur la plaque</strong> pour l'ultime vaisseau de la zone. Tu devrais avoir un peu plus de la moitié.</li>
+</ol>
+<p>Aerith regroupe alors toutes ses forces pour reconstituer une grosse partie du temple. Épuisée, elle se repose — et tu rebascules sur l'équipe de Cloud.</p>
+<h3 id="une-nouvelle-voie-cloud-tifa-et-barret">Une nouvelle voie — Cloud, Tifa et Barret</h3>
+<p>Le trio profite des œuvres d'Aerith pour se remettre en marche. Mais d'abord, <strong>les SOLDATs précédemment tués se transforment</strong> en <strong>deux Grenouilles toxiques et un Dwavhuurl</strong>.</p>
+<p>Le combat fini, Réno et Rude réapparaissent : ce sont tes nouvelles cibles.</p>
+<p>Avance, repose-toi et fais le plein au lieu de repos, puis bats les <strong>trois Lézards chthoniens</strong>.</p>
+<p>Un peu plus loin, trois gardes Shinra se font chasser par la rivière de la vie, et <strong>le chemin s'écroule</strong>. Il faut pousser des débris pour se faire un passage de fortune.</p>
+<ol>
+<li><strong>Un premier cube</strong> un peu plus loin : pousse-le vers le coin est de la zone pour qu'il soit pris dans un courant de la rivière de la vie — ça <strong>établit un passage</strong>.</li>
+<li>De l'autre côté, après avoir aperçu d'autres gardes Shinra — là où tu dois te rendre — <strong>pénètre dans la petite tour à côté</strong> : un <strong>coffre violet</strong> contient l'arme <strong class="objet">Cri de la planète</strong> pour <strong>Barret</strong>.</li>
+<li><strong>Monte les escaliers</strong> et tue les <strong>deux Kelzmelzers</strong>.</li>
+<li>Après quelques marches, remarque le cube sur ta droite. Pousse-le quelques mètres plus loin, vers le nord, pour commencer à créer un passage.</li>
+<li>Comme le dit Barret, ça ne suffira pas. <strong>Continue de monter</strong> jusqu'à une <strong>tour</strong>. Avec Cloud, saisis le mécanisme et tourne-le pour <strong>faire monter l'énergie mako</strong>. <strong>La tour s'active</strong> et <strong>le pilier devient fragile</strong>.</li>
+</ol>
+<p>Mais un Titan d'acier apparaît pour te barrer la route.</p>
+<h3 id="boss-titan-dacier">Boss : Titan d'acier</h3>
+<p>Stratégie détaillée dans Conseils et pièges.</p>
+<p class="alerte manquable">⏳ Pendant le combat, le titan se cogne contre la tour, ce qui fait tomber le cube qui te manquait. Mais termine le combat avant de le déplacer.</p>
+<p>Le titan détruit, pousse le cube dans le vide.</p>
+<h3 id="torrent-dechaine">Torrent déchaîné</h3>
+<p><strong>Ton pont est prêt.</strong> Mais avant d'y aller :</p>
+<p>Va du côté sud de la zone du combat pour apercevoir <strong>un coffre en contrebas</strong>. <strong>Laisse-toi tomber et ouvre-le</strong> : un <strong>diadème</strong>.</p>
+<p>Saute une deuxième fois en contrebas et rejoins ton <strong>pont de fortune</strong>. Traverse en longeant la corniche, puis <strong>de l'autre côté, retourne-toi</strong> : un coffre au bord du vide contient un <strong>pendantéria Résurrection</strong>.</p>
+<p><strong>Regrimpe par les débris</strong> et <strong>va vers le nord</strong> : un <strong>coffre</strong> avec une <strong>giga-brumipotion</strong>.</p>
+<p><strong>Bats les deux Dwavhuurls</strong> dans la salle d'à côté, puis <strong>monte les escaliers</strong> et <strong>repose-toi</strong>.</p>
+<p>Tu aperçois Rude et Réno aux prises avec des monstres. En les aidant, tu finis par te battre contre le duo.</p>
+<h3 id="boss-rude-reno">Boss : Rude &amp; Réno</h3>
+<p>Stratégie détaillée dans Conseils et pièges.</p>
+<p>Une cinématique prolonge le combat, et Cloud fait s'effondrer le sol d'un coup d'épée. En bas, <strong>l'équipe est de nouveau au complet</strong> — mais <strong>un retour en arrière</strong> explique ce que l'équipe d'Aerith faisait pendant ce temps.</p>
+<h3 id="reprise-des-recherches-aerith-yuffie-et-red-xiii">Reprise des recherches — Aerith, Yuffie et Red XIII</h3>
+<p>Tu retrouves l'équipe d'Aerith, <strong>quelques heures avant les retrouvailles</strong>.</p>
+<p><strong>Va droit devant toi</strong> en tuant le Dragon ancien sur le passage. Avant d'ouvrir la porte, récolte l'énergie des cristaux à gauche et à droite de l'entrée.</p>
+<p><strong>Ouvre la porte</strong> : un <strong>ultime vaisseau</strong> à alimenter.</p>
+<p class="alerte manquable">⏳ Avant de te rendre sur la plaque, récolte l'énergie :</p>
+<ul>
+<li>des <strong>cristaux sur ta gauche</strong> ;</li>
+<li>de ceux en bas de l'escalier à droite de la plaque ;</li>
+<li>monte l'escalier près de toi pour une particule et un cristal dans la même pièce ;</li>
+<li>et un peu plus loin, au bord du vide : la matéria <strong>Annihilation niveau max</strong>.</li>
+</ul>
+<p><strong>Reviens à la plaque</strong> pour le transfert. <strong>Aerith touche au but</strong> — mais le transfert est altéré par la présence de créatures près de deux faisceaux d'énergie. À toi de les déloger.</p>
+<p><strong>Le faisceau rouge du nord :</strong></p>
+<ol>
+<li><strong>Commence par aller sur ta gauche</strong> : un <strong>coffre violet</strong> contient l'arme <strong class="objet">Brisingamen</strong> (🗺️ <a href="https://mapgenie.io/final-fantasy-vii-rebirth/maps/midgar?locationIds=351499">carte</a>) pour <strong>Red XIII</strong>. Récolte aussi l'énergie de deux cristaux dans la même pièce.</li>
+<li><strong>Avance vers le nord</strong> pour tuer puis absorber l'énergie d'un <strong>essaim de Frelons voraces</strong>. Brise les cristaux près du faisceau vert et continue vers l'ouest puis le sud.</li>
+<li>Suis le chemin jusqu'à un nouvel essaim de Frelons voraces et trois Grenouilles toxiques. <strong>Récolte leur énergie</strong>, <strong>brise les cristaux</strong>, et <strong>ouvre le coffre</strong> : une <strong>amulette de Cétra</strong>.</li>
+<li>Fais demi-tour et rejoins le faisceau rouge au nord en brisant les cristaux. Au bout : <strong>deux Hectoculus</strong>.</li>
+</ol>
+<p><strong>Les Hectoculus</strong> sont vulnérables au Feu, à la Glace et à la Foudre — mais ils ont Miroir dès le début du combat, et ils infligent des attaques pétrifiantes ou à base de poison.</p>
+<p><strong>La solution est simple</strong> : équipe quelqu'un de la matéria Annihilation. Une fois Miroir retiré avec Dissipe-Barrière, lance-leur deux sorts de niveau Extra pour les mettre en Choc et les éliminer vite. Au bout d'un certain temps, il se reprotège avec Miroir en lançant Réflexion dissipée. Même traitement pour le second. <strong>Le faisceau devient vert</strong> — et n'oublie pas d'absorber l'énergie des monstres.</p>
+<p><strong>L'autre faisceau, à l'opposé :</strong></p>
+<p>Si besoin, retourne à la plaque et soigne-toi au lieu de repos, puis passe par la salle où tu as récupéré la matéria Annihilation pour affronter un nouvel Hectoculus accompagné d'un Œil de la mort. <strong>Concentre-toi d'abord sur l'Hectoculus.</strong> Récolte leur énergie.</p>
+<p>Tous les faisceaux au vert, retourne sur la plaque pour l'ultime transfert. Tu devrais avoir un cercle aux trois quarts — sinon, refais un tour de la zone pour les particules manquées, et note que certains ennemis réapparaissent.</p>
+<p>À la fin du transfert, tu devrais toujours avoir les bonus Foi et Récupération — utiles pour ce qui suit.</p>
+<p>Le temple reconstitué, <strong>repars sur la droite</strong> et rejoins le coffre désormais accessible grâce au pont reconstruit : un <strong>fragment d'étoile</strong>.</p>
+<p><strong>Reprends le chemin principal</strong>, <strong>descends quelques escaliers</strong> et <strong>ouvre la porte</strong> derrière laquelle se trouvent Elena et Tseng.</p>
+<h3 id="boss-elena-tseng">Boss : Elena &amp; Tseng</h3>
+<p>Stratégie détaillée dans Conseils et pièges.</p>
+<p>Le duo à terre, les deux récits se rejoignent. Cloud montre de nouveau des signes très inquiétants devant un groupe médusé. L'équipe se remet en marche, et tu peux désormais la recomposer librement.</p>
+<h3 id="le-hall-de-la-resurrection">Le hall de la Résurrection</h3>
+<p><strong>Avance et prends l'ascenseur</strong> pour rattraper Tseng dans le <strong>hall de la Résurrection</strong>. <strong>Embroché par Séphiroth</strong>, qui disparaît ensuite, il faut courir le voir avec Aerith — il devrait finir par s'en sortir et quitte la salle.</p>
+<p>Toujours avec Aerith, active le piédestal au centre du hall. Des épreuves attendent chaque membre du groupe, sauf Cloud.</p>
+<p>Avance, entre dans la salle et inspecte la statue. Tour à tour, tu vis <strong>le passé de chacun</strong>, avec ses malheurs et ses deuils.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Personnage</th>
+<th>Ce qu'il faut faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Red XIII</strong></td>
+<td>Cours sur les murs en essayant d'échapper aux <strong>tirs Shinra</strong>, puis <strong>maintiens les gâchettes affichées à l'écran</strong> lorsque tu es traîné chez Hojo</td>
+</tr>
+<tr>
+<td><strong>Tifa</strong></td>
+<td>Rejoins sa version jeune en haut du puits de Nibelheim, puis <strong>redescends quand l'incendie se déclenche</strong>. Suis <strong>le seul chemin possible</strong> jusqu'à son père</td>
+</tr>
+<tr>
+<td><strong>Yuffie</strong></td>
+<td>Escalade des barreaux en suivant le shuriken tournoyant lumineux, puis <strong>suis le spectre de Sonon</strong>. Dans la <strong>salle remplie de brume</strong>, <strong>grappine-toi sur trois points d'accroche successifs</strong></td>
+</tr>
+<tr>
+<td><strong>Barret</strong></td>
+<td>Avance simplement, puis — <strong>avec le bras amputé</strong> — <strong>passe sous des débris</strong> et <strong>défonce le grillage</strong> un peu plus loin</td>
+</tr>
+<tr>
+<td><strong>Aerith</strong></td>
+<td>Dans le <strong>wagon avec sa mère</strong>, <strong>inspecte les points lumineux</strong> pour <strong>propager des fleurs</strong>. Puis, <strong>aux commandes de la petite Aerith</strong>, <strong>avance jusqu'à la rencontre avec Elmyra</strong>, et <strong>retourne voir sa mère à la gare</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Tout le monde ressort, et après <strong>un discours touchant d'Aerith</strong>, Cloud annonce froidement qu'il faut reprendre la route.</p>
+<p class="alerte manquable">⏳ Mais avant de continuer, retourne dans la salle située à l'ouest pour récupérer une précieuse matéria PC augmentés.</p>
+<h3 id="vers-la-materia-noire">Vers la matéria noire</h3>
+<p><strong>Avance vers le nord</strong> en passant par la <strong>galerie des Effigies</strong>. Cloud vit finalement sa propre épreuve : avance dans le réacteur mako jusqu'à Biggs, puis grimpe les escaliers de la tour pour rejoindre <strong>Tifa et Jessie</strong>. Cloud revient à lui — toujours sans rassurer personne.</p>
+<p><strong>Continue</strong>, <strong>descends l'escalier en colimaçon</strong> et passe la porte en bas pour te battre contre un Dwavhuurl et un Dragon ancien.</p>
+<p><strong>Passe la porte au nord</strong>, descends des escaliers, et tu as le choix entre <strong>aller à droite</strong> ou <strong>droit devant</strong>.</p>
+<ol>
+<li><strong>Choisis d'abord le chemin de droite</strong> : une salle gardée par un Œil de la mort. <strong>Tue-le</strong> et récupère un <strong>protège-bras Cétra</strong> dans un <strong>coffre</strong>.</li>
+<li><strong>Remonte</strong>, et avant de prendre l'autre chemin vers l'est, remarque le coffre violet sur ta gauche : l'arme <strong>shuriken de Fûma</strong> pour <strong>Yuffie</strong>.</li>
+<li><strong>Descends les escaliers</strong> et pénètre dans une salle gardée par une Adamankhélone moussue.</li>
+</ol>
+<p><strong>L'Adamankhélone moussue</strong> est <strong>très agaçante</strong> : elle riposte par d'innombrables orbes rouges et se booste en résistance physique et magique.</p>
+<p><strong>La préparation qui change tout</strong> : avec <strong>Protection + Aire d'effet</strong>, lance Mur sur toute l'équipe pour réduire les dégâts. Tu peux faire pareil avec Soin et Récupération.</p>
+<p>Quand elle ne se protège pas et n'envoie pas ses orbes, <strong>elle fonce avec Charge furieuse</strong>. Pour que le combat soit court, lance des Extra-Feu à la chaîne pour la <strong>fragiliser</strong> puis la <strong>mettre en Choc</strong>.</p>
+<p>Sors par la porte côté ouest et ouvre le <strong>coffre</strong> : une <strong>maxi-potion</strong>.</p>
+<h3 id="la-salle-de-la-fresque">La salle de la Fresque</h3>
+<p>De retour dans l'escalier en colimaçon, <strong>choisis d'abord de monter</strong> : un <strong>coffre</strong> contient un <strong>élixir</strong>.</p>
+<p>Ensuite, descends tout en bas, <strong>brise quelques caisses</strong> et <strong>ouvre la porte</strong>.</p>
+<p>Te voilà dans la <strong>salle de la Fresque</strong>. <strong>Admire la cinématique</strong> qui montre le début de l'histoire de la chute des Cétras, puis avance.</p>
+<ul>
+<li><strong>Continue d'observer et d'écouter le récit</strong> : tu tombes face à un Dwavhuurl et un Œil de la mort.</li>
+<li><strong>Ouvre la porte</strong> et écoute la suite jusqu'à une salle avec un Dwavhuurl et une nouvelle Adamankhélone moussue. Concentre-toi d'abord sur le Dwavhuurl.</li>
+<li><strong>Après le combat, repose-toi</strong> et va jusqu'au bout du couloir.</li>
+</ul>
+<p>Une cinématique lance un <strong>dialogue entre Aerith et Séphiroth</strong>, puis ce dernier fait apparaître une Porte démoniaque.</p>
+<h3 id="boss-porte-demoniaque">Boss : Porte démoniaque</h3>
+<p>Stratégie détaillée dans Conseils et pièges.</p>
+<h3 id="la-fin-du-chapitre-4">La fin du chapitre</h3>
+<p>Après le combat, Cloud continue de perdre pied et, avec Aerith, approche-toi de l'autel de la Noirceur.</p>
+<p><strong>Cloud saisit la matéria noire</strong> — sauf que le temple a été conçu pour se détruire afin d'éviter qu'elle se retrouve dans la nature. Sorti de nulle part, Cait Sith se sacrifie pour laisser au groupe le temps de s'enfuir.</p>
+<p><strong>Suis Vincent</strong> et rebrousse chemin jusqu'à la sortie. Dehors, <strong>le temple disparaît</strong> et laisse <strong>un vide béant</strong>.</p>
+<p>Profite de la conclusion : Séphiroth joue avec Cloud au sujet de la matéria noire. Avec Cloud, dirige-toi vers Séphiroth, puis vers Aerith, aux moments où tu as le contrôle. Le chapitre se termine sur la chute vertigineuse de nos deux amis.</p>
+<h2 id="quetes-et-lieux-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<p>Ce chapitre n'a ni boutique, ni quête annexe, ni PNJ de service : c'est un donjon fermé, le plus grand du jeu. Les lieux notables sont ses salles.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>À faire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Forêt et parvis</strong></td>
+<td>Coffre <strong>2 méga-brumipotions</strong> à gauche ; deux pelotons Shinra ; coffre <strong>maxi-potion</strong> à droite ; coffre <strong>ultra-éther</strong> à gauche</td>
+</tr>
+<tr>
+<td><strong>Entrée du temple</strong></td>
+<td>Rochey ; Gardes antiémeutes ; coffre <strong>2 giga-potions</strong> au sud des escaliers de droite</td>
+</tr>
+<tr>
+<td><strong>Engrenage de l'Astre rubis</strong></td>
+<td><strong>180°</strong> ; matéria <strong>Chakra niveau max</strong> ; coffre violet <strong>brise-courant</strong> (Cloud)</td>
+</tr>
+<tr>
+<td><strong>Engrenage de l'Astre émeraude</strong></td>
+<td><strong>180°</strong> ; coffre <strong>super-éther</strong> derrière la salle ; coffre <strong>maxi-potion</strong> au sud</td>
+</tr>
+<tr>
+<td><strong>Engrenage de l'Astre saphir</strong></td>
+<td><strong>180° puis 90°</strong> ; coffre <strong>foulard siffle-vent</strong> au plafond ; <strong>cube sous la plante grimpante</strong> ; coffre <strong>minerai de mithril</strong> après la cascade</td>
+</tr>
+<tr>
+<td><strong>Engrenage de l'Astre topaze</strong></td>
+<td><strong>45° à droite</strong> ; matéria <strong>Gain d'expérience</strong> ; puis <strong>remettre dans l'état initial</strong></td>
+</tr>
+<tr>
+<td><strong>Engrenage de l'Astre améthyste</strong></td>
+<td><strong>90° vers le haut</strong> → coffre <strong>armille de Cétra</strong> ; puis <strong>180°</strong> pour continuer</td>
+</tr>
+<tr>
+<td><strong>Salle du Dragon rouge</strong></td>
+<td>Banc avant le boss ; <strong>quatre piliers</strong> aux coins</td>
+</tr>
+<tr>
+<td><strong>Hall de la Vie</strong></td>
+<td>Séparation du groupe</td>
+</tr>
+<tr>
+<td><strong>Chemins séparés</strong> <em>(Cloud)</em></td>
+<td>Coffre violet <strong>paire de Jarngreipr</strong> (Tifa) ; coffre <strong>cosmolite enchantée</strong> à l'ouest ; <strong>cube à pousser dans le troisième courant</strong> ; coffre <strong>fragment d'étoile</strong> ; coffre <strong>2 giga-potions</strong> dans la salle circulaire</td>
+</tr>
+<tr>
+<td><strong>Persévérance</strong> <em>(Aerith)</em></td>
+<td>Coffre <strong>super-éther</strong> ; coffre violet <strong>Gambanteinn</strong> (Aerith) ; coffre <strong>élixir</strong> au bassin ; matéria <strong>Garde renforcée niveau max</strong> ; coffre <strong>morceau de saphir</strong> ; coffre <strong>bracelet de Cétra</strong></td>
+</tr>
+<tr>
+<td><strong>Une nouvelle voie</strong> <em>(Cloud)</em></td>
+<td>Coffre violet <strong>Cri de la planète</strong> (Barret) ; <strong>deux cubes à pousser</strong> ; <strong>mécanisme de la tour</strong> ; boss <strong>Titan d'acier</strong></td>
+</tr>
+<tr>
+<td><strong>Torrent déchaîné</strong></td>
+<td>Coffre <strong>diadème</strong> en contrebas sud ; coffre <strong>pendantéria Résurrection</strong> au bord du vide ; coffre <strong>giga-brumipotion</strong> au nord ; boss Rude &amp; Réno</td>
+</tr>
+<tr>
+<td><strong>Reprise des recherches</strong> <em>(Aerith)</em></td>
+<td>Matéria <strong>Annihilation niveau max</strong> au bord du vide ; coffre violet <strong>Brisingamen</strong> (Red XIII) ; coffre <strong>amulette de Cétra</strong> ; <strong>deux faisceaux à déloger</strong> ; coffre <strong>fragment d'étoile</strong> ; boss Elena &amp; Tseng</td>
+</tr>
+<tr>
+<td><strong>Hall de la Résurrection</strong></td>
+<td>Piédestal ; <strong>six épreuves</strong> ; matéria <strong>PC augmentés</strong> dans la salle <strong>ouest</strong></td>
+</tr>
+<tr>
+<td><strong>Galerie des Effigies</strong></td>
+<td>Épreuve de <strong>Cloud</strong></td>
+</tr>
+<tr>
+<td><strong>Salles après l'escalier en colimaçon</strong></td>
+<td>Coffre <strong>protège-bras Cétra</strong> <em>(chemin de droite)</em> ; coffre violet <strong>shuriken de Fûma</strong> (Yuffie) ; coffre <strong>maxi-potion</strong> après l'Adamankhélone ; coffre <strong>élixir</strong> en montant</td>
+</tr>
+<tr>
+<td><strong>Salle de la Fresque</strong></td>
+<td>Récit de la chute des Cétras ; boss Porte démoniaque</td>
+</tr>
+<tr>
+<td><strong>Autel de la Noirceur</strong></td>
+<td><strong>Matéria noire</strong> ; <strong>sacrifice de Cait Sith</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Méga-brumipotion</strong> ×2</td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre <strong>à gauche</strong> après les marches du parvis</td>
+<td>Soigne tout le groupe</td>
+</tr>
+<tr>
+<td><strong>Maxi-potion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre du <strong>chemin de droite</strong> devant le temple</td>
+<td>Restaure énormément de PV</td>
+</tr>
+<tr>
+<td><strong>Ultra-éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre du <strong>chemin de gauche</strong> devant le temple</td>
+<td>Restaure énormément de PM</td>
+</tr>
+<tr>
+<td><strong>Giga-potion</strong> ×2</td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre <strong>au sud</strong> des escaliers de droite, à l'entrée</td>
+<td>Restaure énormément de PV</td>
+</tr>
+<tr>
+<td><strong>Matéria Chakra niveau max</strong></td>
+<td><span class="badge neutre">Matéria jaune</span> <span class="type-pour">compétence</span></td>
+<td><strong>Deux crans en contrebas</strong> après l'inversion de l'<strong>Astre rubis</strong></td>
+<td>Soigne <strong>sans consommer de PM</strong>, <strong>déjà au niveau maximum</strong></td>
+</tr>
+<tr>
+<td><strong>Brise-courant</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Cloud</span></td>
+<td>Coffre violet via la <strong>plante grimpante à l'est</strong>, après les Dragons anciens</td>
+<td>Nouvelle arme pour Cloud</td>
+</tr>
+<tr>
+<td><strong>Super-éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre <strong>derrière la salle</strong> de l'engrenage de l'<strong>Astre émeraude</strong></td>
+<td>Restaure beaucoup de PM</td>
+</tr>
+<tr>
+<td><strong>Maxi-potion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre <strong>côté sud</strong> avant l'Astre saphir, gardé par trois monstres</td>
+<td>Restaure énormément de PV</td>
+</tr>
+<tr>
+<td><strong>Foulard siffle-vent</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coffre <strong>au plafond</strong>, Astre saphir tourné à <strong>180°</strong> ; un premier exemplaire s'obtient bien plus tôt par la quête « Là où souffle le vent » <em>(partie <strong>15</strong>)</em></td>
+<td><strong>Booste l'ATB</strong> — très utile sur les gros combats</td>
+</tr>
+<tr>
+<td><strong>Morceau de minerai de mithril</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre autour du <strong>bassin</strong>, après le saut dans la cascade</td>
+<td>Matériau de synthèse</td>
+</tr>
+<tr>
+<td><strong>Matéria Gain d'expérience</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td><strong>Porte au nord</strong> après l'Astre topaze à <strong>45° à droite</strong> et les deux Dragons anciens</td>
+<td><strong>Augmente l'expérience gagnée</strong></td>
+</tr>
+<tr>
+<td><strong>Armille de Cétra</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coffre gardé par un <strong>Dragon ancien</strong>, Astre améthyste à <strong>90° vers le haut</strong></td>
+<td>effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Paire de Jarngreipr</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Tifa</span></td>
+<td>Coffre violet après l'obstacle, <strong>hall de la Vie</strong> <em>(équipe Cloud)</em></td>
+<td>Nouvelle arme pour Tifa</td>
+</tr>
+<tr>
+<td><strong>Morceau de cosmolite enchantée</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre du <strong>chemin ouest</strong> <em>(équipe Cloud)</em></td>
+<td>Matériau de synthèse</td>
+</tr>
+<tr>
+<td><strong>Fragment d'étoile</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre après <strong>deux Dragons anciens</strong>, à gauche avant l'obstacle</td>
+<td>Matériau de synthèse rare</td>
+</tr>
+<tr>
+<td><strong>Giga-potion</strong> ×2</td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre de la <strong>salle circulaire</strong> <em>(équipe Cloud)</em></td>
+<td>Restaure énormément de PV</td>
+</tr>
+<tr>
+<td><strong>Super-éther</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre <strong>à portée</strong> dans le bâtiment du <strong>vaisseau est</strong> <em>(Aerith)</em></td>
+<td>Restaure beaucoup de PM</td>
+</tr>
+<tr>
+<td><strong>Gambanteinn</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Aerith</span></td>
+<td>Coffre violet en bas des escaliers du vaisseau ouest, en se retournant · <a href="https://mapgenie.io/final-fantasy-vii-rebirth/maps/midgar?locationIds=351395">Voir sur la carte</a></td>
+<td>Nouvelle arme pour Aerith</td>
+</tr>
+<tr>
+<td><strong>Élixir</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre autour du <strong>bassin</strong> du vaisseau <strong>nord-est</strong></td>
+<td>Restaure tous les PV et PM</td>
+</tr>
+<tr>
+<td><strong>Matéria Garde renforcée niveau max</strong></td>
+<td><span class="badge neutre">Matéria violette</span> <span class="type-pour">indépendante</span></td>
+<td><strong>Deuxième salle à gauche</strong>, après le <strong>Kelzmelzer</strong></td>
+<td>Déjà au niveau maximum</td>
+</tr>
+<tr>
+<td><strong>Morceau de saphir</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre de la <strong>deuxième pièce à droite</strong> <em>(Aerith)</em></td>
+<td>Matériau de synthèse</td>
+</tr>
+<tr>
+<td><strong>Bracelet de Cétra</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coffre en haut des escaliers de la <strong>tour</strong> du vaisseau <strong>sud-est</strong></td>
+<td>effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Cri de la planète</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Barret</span></td>
+<td>Coffre violet dans la <strong>petite tour</strong>, après le premier cube</td>
+<td>Nouvelle arme pour Barret</td>
+</tr>
+<tr>
+<td><strong>Diadème</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coffre <strong>en contrebas, côté sud</strong> de la zone du Titan d'acier</td>
+<td>effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Pendantéria Résurrection</strong></td>
+<td><span class="badge neutre">Accessoire à matéria</span></td>
+<td>Coffre <strong>au bord du vide</strong>, de l'autre côté du pont de fortune, <strong>en se retournant</strong></td>
+<td>Accessoire avec emplacement, fourni avec <strong>Résurrection</strong></td>
+</tr>
+<tr>
+<td><strong>Giga-brumipotion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre <strong>au nord</strong>, après avoir regrimpé par les débris</td>
+<td>Soigne énormément tout le groupe</td>
+</tr>
+<tr>
+<td><strong>Matéria Annihilation niveau max</strong></td>
+<td><span class="badge neutre">Matéria</span></td>
+<td><strong>Au bord du vide</strong>, après l'escalier près de la dernière plaque <em>(Aerith)</em></td>
+<td><strong>Dissipe les barrières</strong> — <strong>indispensable contre les Hectoculus</strong></td>
+</tr>
+<tr>
+<td><strong>Brisingamen</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Red XIII</span></td>
+<td>Coffre violet <strong>à gauche</strong> de la dernière plaque <em>(Aerith)</em> · <a href="https://mapgenie.io/final-fantasy-vii-rebirth/maps/midgar?locationIds=351499">Voir sur la carte</a></td>
+<td>Nouvelle arme pour Red XIII</td>
+</tr>
+<tr>
+<td><strong>Amulette de Cétra</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coffre après l'essaim de Frelons et les trois Grenouilles toxiques</td>
+<td>effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Fragment d'étoile</strong></td>
+<td><span class="badge neutre">Matériau</span></td>
+<td>Coffre accessible par le <strong>pont reconstruit</strong>, après l'ultime transfert</td>
+<td>Matériau de synthèse rare</td>
+</tr>
+<tr>
+<td><strong>Matéria PC augmentés</strong></td>
+<td><span class="badge neutre">Matéria bleue</span> <span class="type-pour">soutien</span></td>
+<td><strong>Salle à l'ouest</strong> du hall de la Résurrection, <strong>après les six épreuves</strong></td>
+<td>Matéria de soutien précieuse</td>
+</tr>
+<tr>
+<td><strong>Protège-bras Cétra</strong></td>
+<td><span class="badge neutre">Accessoire</span></td>
+<td>Coffre de la salle de l'<strong>Œil de la mort</strong>, <strong>chemin de droite</strong></td>
+<td>effet exact <strong>à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Shuriken de Fûma</strong></td>
+<td><span class="badge arme">Arme</span> <span class="type-pour">Yuffie</span></td>
+<td>Coffre violet <strong>sur la gauche</strong>, avant le chemin de l'est</td>
+<td>Nouvelle arme pour Yuffie</td>
+</tr>
+<tr>
+<td><strong>Maxi-potion</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre par la <strong>porte ouest</strong>, après l'Adamankhélone moussue</td>
+<td>Restaure énormément de PV</td>
+</tr>
+<tr>
+<td><strong>Élixir</strong></td>
+<td><span class="badge neutre">Consommable</span></td>
+<td>Coffre en <strong>montant</strong> l'escalier en colimaçon</td>
+<td>Restaure tous les PV et PM</td>
+</tr>
+<tr>
+<td><strong>Matéria noire</strong></td>
+<td><span class="badge objet">Objet clé</span></td>
+<td><strong>Autel de la Noirceur</strong>, à la fin du chapitre</td>
+<td>L'objectif de tout le chapitre</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Sept armes dans un seul chapitre</strong> : <strong>brise-courant</strong> (Cloud), <strong>paire de Jarngreipr</strong> (Tifa), <strong class="objet">Gambanteinn</strong> (Aerith), <strong class="objet">Cri de la planète</strong> (Barret), <strong class="objet">Brisingamen</strong> (Red XIII), <strong>shuriken de Fûma</strong> (Yuffie). <strong>Cait Sith n'en reçoit aucune ici</strong> — il en a eu six au total dans les chapitres précédents.</p>
+<h2 id="conseils-et-pieges-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="les-ennemis-du-temple">Les ennemis du temple</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ennemi</th>
+<th>Point faible</th>
+<th>À savoir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Garde</strong>, <strong>Garde des forces spéciales</strong>, <strong>Garde antiémeute</strong>, <strong>Grenadier d'élite</strong>, <strong>Garde d'élite</strong></td>
+<td>Feu</td>
+<td>Troupe standard</td>
+</tr>
+<tr>
+<td><strong>Soldat 2e classe</strong></td>
+<td>Feu</td>
+<td><strong>Bloque ses attaques à l'épée</strong> pour le fragiliser. <strong>Chaos gravitationnel</strong> et Lame tornade ; <strong>son Sceau protecteur l'immunise au physique</strong> → <strong>sorts de Feu</strong></td>
+</tr>
+<tr>
+<td><strong>Grenouille toxique</strong></td>
+<td>Glace</td>
+<td>Peu de PV</td>
+</tr>
+<tr>
+<td><strong>Lézard chthonien</strong></td>
+<td>Glace</td>
+<td>Seul un sort pendant son Embuscade le fragilise ; <strong>toute autre attaque le fait riposter</strong>. <strong>Souffle pétrifiant</strong>, Souffle batracien</td>
+</tr>
+<tr>
+<td><strong>Dragon ancien</strong></td>
+<td><strong>Vent</strong></td>
+<td><strong>Sorts et attaques à distance</strong> pour le toucher. <strong>Attends Croix du Sud</strong> — il descend près du sol — et <strong>frappe au physique</strong>. <strong>Ne le lâche pas</strong>, la Fragilité est brève</td>
+</tr>
+<tr>
+<td><strong>Frelon vorace</strong></td>
+<td><strong>Vent</strong></td>
+<td>En essaim ; <strong>un Extra-Vent les balaie</strong></td>
+</tr>
+<tr>
+<td><strong>Drone type G</strong></td>
+<td>Foudre</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Dwavhuurl</strong></td>
+<td>—</td>
+<td>Assez de dégâts le fragilise. <strong>Choque-le avant sa riposte Déferlement de lumière</strong></td>
+</tr>
+<tr>
+<td><strong>Kelzmelzer</strong></td>
+<td>—</td>
+<td><strong>Se fragilise vite avec une compétence offensive</strong> <em>(Crocs tournoyants de Red XIII)</em></td>
+</tr>
+<tr>
+<td><strong>Œil de la mort</strong></td>
+<td>Foudre</td>
+<td><strong>L'œil est la partie la plus vulnérable</strong>. <strong>Regard hypnotique</strong> inflige Stop ; Bouclier de mana l'immunise au physique</td>
+</tr>
+<tr>
+<td><strong>Hectoculus</strong></td>
+<td>Feu, Glace, Foudre</td>
+<td><strong>Miroir dès le début du combat</strong> → <strong>matéria Annihilation</strong> et Dissipe-Barrière, puis <strong>deux sorts Extra pour le Choc</strong>. <strong>Réflexion dissipée</strong> lui redonne Miroir. Attaques <strong>pétrifiantes</strong> et <strong>poison</strong></td>
+</tr>
+<tr>
+<td><strong>Adamankhélone moussue</strong></td>
+<td>Feu</td>
+<td><strong>Innombrables orbes rouges en riposte</strong> ; <strong>se booste en résistance physique et magique</strong> ; Charge furieuse. <strong>Protection + Aire d'effet → Mur sur l'équipe</strong>, et Extra-Feu à la chaîne</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="boss-dragon-rouge-2">Boss : Dragon rouge</h3>
+<p>Un dragon cracheur de feu, <strong>vulnérable à la Glace</strong>, et <strong>assez facile à lire</strong>.</p>
+<p>Phase 1 — au sol, et tout tient aux piliers.</p>
+<p>Il alterne <strong>griffes</strong>, <strong>queue</strong> et <strong>attaques enflammées</strong>.</p>
+<p><strong>La mécanique du combat</strong> : au moment où il lance une attaque de Feu comme Souffle incandescent, cache-toi derrière l'un des piliers aux quatre coins de la salle. Ça fait fondre la base du pilier.</p>
+<p>Ensuite, si le Dragon rouge est assez près de ce pilier, frappe le pilier pour qu'il s'écroule sur lui. En cas de succès, le boss est fragilisé.</p>
+<p><strong>Enchaîne alors</strong> : <strong>sorts de Glace</strong> et compétences à potentiel de Choc pour faire grimper la jauge. <strong>Répète l'opération jusqu'au Choc.</strong></p>
+<p><strong>En Choc</strong>, fais grimper le multiplicateur avec le Salto éclair de Tifa ou le Rayon de jugement d'Aerith, tout en lâchant de grosses attaques comme la Fin infinie de Cloud.</p>
+<p>Phase 2 — à la moitié de sa vie, il inverse la gravité et se met à voler.</p>
+<p><strong>Les piliers ont disparu.</strong> Tu dois maintenant viser les ailes droite et gauche pour le fragiliser, avec des magies, des attaques à distance ou des actions synchronisées aériennes.</p>
+<p><strong>En vol, son répertoire :</strong></p>
+<ul>
+<li><strong>Projectile explosif</strong> ;</li>
+<li><strong>Queue enflammée</strong>, une attaque en <strong>balayage vertical</strong> ;</li>
+<li><strong>Plongeon enflammé</strong>, un souffle de feu propagé au sol sur une longue distance ;</li>
+<li><strong>Souffle écarlate</strong>, qui t'oblige à reculer tout au fond de la pièce si tu ne veux pas être touché. Vise son torse pour en réduire la portée.</li>
+</ul>
+<p>Les lésions infligées aux ailes et la Fragilité déclenchée, <strong>amène-le au Choc</strong> et conclus aux <strong>compétences synchronisées</strong> et Transcendances.</p>
+<h3 id="boss-titan-dacier-2">Boss : Titan d'acier</h3>
+<p>Bonne nouvelle : il se fragilise de lui-même en utilisant Affûtage enchanté.</p>
+<p>Mauvaise nouvelle : tu dois lui infliger un Choc dans un délai imparti, sinon il lance Lame thanatique, une attaque destructrice. Tu peux éviter les dégâts en t'éloignant à l'annonce du coup.</p>
+<p><strong>Son répertoire :</strong></p>
+<ul>
+<li><strong>Grande épée</strong> : il <strong>abat son arme à trois reprises</strong> devant lui et sur les côtés.</li>
+<li><strong>Épée du glas</strong> : <strong>tue instantanément l'allié touché</strong>.</li>
+<li>Les redoutables Méga-Feu et surtout Méga-Gravité.</li>
+</ul>
+<p class="alerte manquable">⏳ Si tu te débrouilles bien, tu devrais pouvoir le choquer après un deuxième Affûtage enchanté. À ce moment-là, le titan se cogne contre la tour et fait tomber le cube qui te manquait — mais termine le combat avant de le déplacer.</p>
+<p><strong>En Choc</strong>, fais grimper le multiplicateur avec Enseignements secrets puis l'<strong>attaque spéciale (Triangle)</strong> de Tifa, et lâche Colère maximale et Fin infinie ou Âme brave de Cloud.</p>
+<h3 id="boss-rude-reno-2">Boss : Rude &amp; Réno</h3>
+<p><strong>Rude</strong> — tu connais la chanson : <strong>vulnérable à la Foudre</strong>, maître du corps-à-corps. Il se fragilise surtout si tu lui infliges des compétences offensives pendant sa position de garde — <strong>symbolisée par une aura</strong> — <strong>ou pendant Éruption d'énergie</strong>.</p>
+<p>Ses Frappes telluriques et <strong>titanesques</strong> propagent des ondes au sol, Revers tornade t'envoie un <strong>tourbillon à distance</strong>, et il peut t'embêter avec un combo démarrant par Coup de pied à la tête.</p>
+<p><strong>Réno</strong> — <strong>vulnérable au Feu</strong>, bien plus <strong>virevoltant</strong>, et il esquive la plupart des attaques basiques.</p>
+<p><strong>Pour le fragiliser</strong> : esquive ses contre-attaques, ou exécute les tiennes, en lançant une compétence offensive après une esquive.</p>
+<p><strong>Et le raccourci</strong> : interrompre leur attaque en tandem les fragilise tous les deux.</p>
+<p><strong>Priorise Réno</strong>, à cause de sa <strong>mobilité</strong> et de ses <strong>attaques paralysantes</strong> :</p>
+<ul>
+<li><strong>Tir électromagnétique</strong>, souvent suivi de Bombe éclair pour te bondir dessus ;</li>
+<li><strong>Rayon des TURKs</strong> : trois <strong>projectiles électrifiés</strong> devant lui ;</li>
+<li><strong>Lancer de mines</strong> : des <strong>mines électromagnétiques</strong> qu'il faut <strong>détruire rapidement</strong> ;</li>
+<li><strong>Coup de tonnerre</strong> : une <strong>estoc fulgurante</strong>.</li>
+</ul>
+<p>À un tiers de sa barre de vie, les deux compères sortent de nouvelles attaques. <strong>Réno</strong> t'inflige un Bâton éclair suivi du combo Rossée aérienne, et <strong>passe très probablement en Posture fulgurante</strong>, qui le fait <strong>attaquer encore plus vite</strong>.</p>
+<p>Continue de te concentrer sur Réno. Quand il ne reste que Rude, la suite est bien plus tranquille. Finis aux <strong>compétences synchronisées</strong> et Transcendances.</p>
+<h3 id="boss-elena-tseng-2">Boss : Elena &amp; Tseng</h3>
+<p><strong>Elena</strong> — tu la connais : <strong>armes à feu</strong> et <strong>grenades</strong>, notamment <strong>étourdissantes</strong>. Mais elle a aussi des cartouches au corps-à-corps : Coups de pied papillon, Coups de poing sprinté, Coups de pied sautés.</p>
+<p>Elle se fragilise assez facilement avec deux puissantes compétences offensives — c'est donc la cible prioritaire. <strong>Mais Tseng viendra t'embêter</strong> : <strong>jongle entre les deux</strong> s'il est trop insistant.</p>
+<p><strong>Tseng</strong> — <strong>moins pénible que Réno</strong>. Il utilise des <strong>enchaînements d'attaques physiques</strong> commençant par Coup de pied vortex ou Roue du karma.</p>
+<p class="alerte manquable">⏳ <strong>Le schéma à retenir</strong> : bloque ou esquive le dernier coup de ses combos pour le <strong>fragiliser brièvement</strong>. Puis c'est en lui infligeant assez de dégâts pendant la grosse attaque qu'il prépare ensuite — comme Frappe des Asuras — que tu le fragilises réellement.</p>
+<p>Et comme toujours avec les TURKs : interrompre leurs attaques en tandem fragilise les deux simultanément.</p>
+<p>Une fois un premier tiers de barre de vie vidé sur l'un des deux, ils passent en Posture de tandem et attaquent littéralement en même temps. Ils sont vifs et leur rythme est élevé — mais à la fin d'un enchaînement, ils se replient et marquent un temps d'arrêt. <strong>C'est ta fenêtre</strong> : lance des compétences offensives sur Elena pour risquer de les fragiliser.</p>
+<p>En cas de réussite, lâche tout sur Elena et essaie de la mettre en Choc avant qu'elle ne se reprenne.</p>
+<p>Car si le duo reste au complet, ils finissent par lancer Spéciale des TURKs, une attaque redoutable exécutée à la fin d'un compte à rebours. Son lancement peut être interrompu avec assez de dégâts.</p>
+<h3 id="boss-porte-demoniaque-2">Boss : Porte démoniaque</h3>
+<p>Sa particularité, liée à la zone de combat : elle fait avancer les murs petit à petit pour t'écraser, avec Constriction murale.</p>
+<p>L'idée est de lui balancer toutes tes attaques à ce moment-là pour <strong>l'interrompre</strong> et donc <strong>la fragiliser</strong>.</p>
+<p>Ses mains peuvent être ciblées selon les attaques qu'elle lance : <strong>lance-leur des sorts</strong> dans ce cas.</p>
+<p><strong>Son répertoire :</strong></p>
+<ul>
+<li><strong>Chute de pierres</strong> : de <strong>gros blocs de pierre</strong> tombent.</li>
+<li><strong>Répulsion maléfique</strong> : t'éjecte au fond de la salle.</li>
+<li><strong>Poignée démoniaque</strong> : immobilise un allié à proximité et le broie petit à petit. Rue la Porte démoniaque de coups pour tenter de <strong>libérer la personne emprisonnée</strong>.</li>
+<li><strong>Regard pétrifiant.</strong></li>
+<li><strong>Éruption arcanique</strong> : une puissante attaque magique qui te propulse dans les airs.</li>
+</ul>
+<p>Après un premier tiers de barre de vie, une deuxième Porte démoniaque apparaît derrière toi, avec <strong>les mêmes attaques</strong>.</p>
+<p>Continue de te concentrer sur la première en surveillant les attaques de la deuxième, notamment Constriction murale, qu'elle peut aussi lancer.</p>
+<p>En jonglant entre les deux, tu finis par détruire la première. <strong>Compétences synchronisées et Transcendances</strong> pour ça, et pour gérer la seconde.</p>
+<h3 id="le-reste-12">Le reste</h3>
+<ul>
+<li>Fais tout ce que tu as à faire avant de t'amarrer à Northwood. C'est le point de non-retour. Après, le monde ouvert ne revient qu'avec la sélection de chapitres.</li>
+<li>Les engrenages ne sont pas que des énigmes de progression : chaque inversion cache un coffre. <strong>Astre rubis</strong> → <strong>Chakra niveau max</strong> ; <strong>Astre saphir à 180°</strong> → <strong>foulard siffle-vent</strong> ; <strong>Astre topaze à 45°</strong> → <strong>Gain d'expérience</strong> ; <strong>Astre améthyste à 90°</strong> → <strong>armille de Cétra</strong>. Fais toujours le détour avant de prendre la position « utile ».</li>
+<li>Côté Aerith, garde de l'énergie avant un combat. Les bonus Foi, Récupération et Mur ne coûtent rien et disparaissent au transfert.</li>
+<li>La matéria Annihilation niveau max est l'objet le plus important de la seconde partie du chapitre. Sans elle, les Hectoculus et leur Miroir permanent sont un calvaire. Elle est posée <strong>juste avant</strong> eux — ce n'est pas un hasard.</li>
+<li>Trois des quatre matérias du chapitre sont de niveau max. <strong>Chakra</strong>, <strong>Garde renforcée</strong>, <strong>Annihilation</strong> : c'est le meilleur rendement du jeu avec la caverne du chapitre 10.</li>
+<li><strong>Prépare Protection + Aire d'effet avant les Adamankhélones.</strong> Mur sur toute l'équipe transforme un combat long et pénible en formalité.</li>
+<li>Les épreuves du hall de la Résurrection ne sont pas des combats : ce sont des séquences narratives dirigées, sans échec possible. Détends-toi et regarde.</li>
+<li>N'oublie pas la salle à l'ouest après les épreuves. La matéria <strong>PC augmentés</strong> y est posée, et le jeu te pousse à repartir vers le nord.</li>
+</ul>
+<h2 id="alertes-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Point de non-retour</strong> : <strong>t'amarrer au port de Northwood</strong> t'engage dans la dernière ligne droite. Le monde ouvert ne redevient accessible qu'après la fin du jeu, via la sélection de chapitres. Termine tes quêtes, protoreliques, rapports de Chadley, Queen's Blood, mini-jeux et affinité <strong>avant</strong>.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : la matéria <strong>Chakra niveau max</strong>, <strong>deux crans en contrebas</strong> après l'inversion de l'Astre rubis.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : le <strong>foulard siffle-vent</strong>, qui demande de tourner l'<strong>Astre saphir à 180°</strong> <strong>avant</strong> de le mettre à 90°.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : la matéria <strong>Gain d'expérience</strong>, qui demande un <strong>aller-retour</strong> sur l'<strong>Astre topaze</strong>.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : l'<strong>armille de Cétra</strong>, qui demande de mettre l'<strong>Astre améthyste à 90°</strong> avant de le passer à 180°.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : la matéria <strong>Garde renforcée niveau max</strong> et la matéria <strong>Annihilation niveau max</strong>, toutes deux dans les sections d'Aerith.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : la matéria <strong>PC augmentés</strong>, dans la <strong>salle à l'ouest</strong> du hall de la Résurrection, <strong>après les six épreuves</strong>.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : les <strong>sept armes</strong> du chapitre, toutes dans des coffres violets hors chemin.</li>
+<li class="alerte manquable">⏳ <strong>Manquable</strong> : le <strong>second coffre</strong> du bâtiment du <strong>vaisseau est</strong> d'Aerith, accessible <strong>seulement après</strong> avoir alimenté le vaisseau <strong>sud-est</strong> — c'est le <strong>bracelet de Cétra</strong>.</li>
+<li class="alerte">⚠️ Épée du glas du Titan d'acier tue instantanément l'allié touché.</li>
+<li class="alerte">⚠️ Les Hectoculus ont Miroir dès le début du combat. Sans <strong>Annihilation</strong>, le combat est très long.</li>
+<li class="alerte">⚠️ Termine le combat contre le Titan d'acier avant de déplacer le cube qu'il fait tomber.</li>
+<li class="alerte">⚠️ <strong>Effets à vérifier en jeu</strong> : <strong>armille de Cétra</strong>, <strong>bracelet de Cétra</strong>, <strong>amulette de Cétra</strong>, <strong>protège-bras Cétra</strong> et <strong>diadème</strong> sont cités sans détail de bonus.</li>
+</ul>
+<h2 id="check-list-14" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> Tout le contenu annexe terminé avant de s'amarrer à Northwood</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>2 méga-brumipotions</strong> récupéré à gauche</li>
+<li class="tache"><input type="checkbox"> Deux pelotons Shinra vaincus sur le parvis</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>maxi-potion</strong> récupéré (chemin de droite)</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>ultra-éther</strong> récupéré (chemin de gauche)</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>2 giga-potions</strong> récupéré au sud</li>
+<li class="tache"><input type="checkbox"> <strong>Astre rubis</strong> inversé à 180°</li>
+<li class="tache"><input type="checkbox"> Matéria <strong>Chakra niveau max</strong> récupérée</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong>brise-courant</strong> récupéré (Cloud)</li>
+<li class="tache"><input type="checkbox"> <strong>Astre émeraude</strong> inversé à 180°</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>super-éther</strong> récupéré derrière la salle</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>maxi-potion</strong> récupéré au sud</li>
+<li class="tache"><input type="checkbox"> <strong>Astre saphir</strong> mis à <strong>180°</strong>, coffre <strong>foulard siffle-vent</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> <strong>Astre saphir</strong> remis à <strong>90°</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Cube</strong> placé sous la plante grimpante, saut dans la cascade</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>minerai de mithril</strong> récupéré au bassin</li>
+<li class="tache"><input type="checkbox"> <strong>Astre topaze</strong> à <strong>45° à droite</strong>, matéria <strong>Gain d'expérience</strong> récupérée</li>
+<li class="tache"><input type="checkbox"> <strong>Astre topaze</strong> remis à l'état initial</li>
+<li class="tache"><input type="checkbox"> <strong>Astre améthyste</strong> à <strong>90° vers le haut</strong>, coffre <strong>armille de Cétra</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> <strong>Astre améthyste</strong> mis à <strong>180°</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Dragon rouge</strong> vaincu</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong>paire de Jarngreipr</strong> récupéré (Tifa)</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>cosmolite enchantée</strong> récupéré à l'ouest</li>
+<li class="tache"><input type="checkbox"> <strong>Cube</strong> poussé dans le troisième courant</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>fragment d'étoile</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>2 giga-potions</strong> récupéré dans la salle circulaire</li>
+<li class="tache"><input type="checkbox"> Les <strong>trois SOLDATs 2e classe</strong> vaincus</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>super-éther</strong> récupéré (Aerith, vaisseau est)</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong class="objet">Gambanteinn</strong> récupéré (Aerith)</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>élixir</strong> récupéré au bassin</li>
+<li class="tache"><input type="checkbox"> Matéria <strong>Garde renforcée niveau max</strong> récupérée</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>morceau de saphir</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>bracelet de Cétra</strong> récupéré (vaisseau sud-est)</li>
+<li class="tache"><input type="checkbox"> Les <strong>cinq vaisseaux</strong> de la grande plaque alimentés</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong class="objet">Cri de la planète</strong> récupéré (Barret)</li>
+<li class="tache"><input type="checkbox"> Les <strong>deux cubes</strong> poussés, <strong>mécanisme de la tour</strong> activé</li>
+<li class="tache"><input type="checkbox"> <strong>Titan d'acier</strong> vaincu, <strong>cube</strong> poussé dans le vide</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>diadème</strong> récupéré en contrebas sud</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>pendantéria Résurrection</strong> récupéré au bord du vide</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>giga-brumipotion</strong> récupéré au nord</li>
+<li class="tache"><input type="checkbox"> <strong>Rude &amp; Réno</strong> vaincus</li>
+<li class="tache"><input type="checkbox"> Matéria <strong>Annihilation niveau max</strong> récupérée</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong class="objet">Brisingamen</strong> récupéré (Red XIII)</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>amulette de Cétra</strong> récupéré</li>
+<li class="tache"><input type="checkbox"> Les <strong>deux Hectoculus</strong> du faisceau nord vaincus</li>
+<li class="tache"><input type="checkbox"> L'<strong>Hectoculus</strong> et l'<strong>Œil de la mort</strong> du second faisceau vaincus</li>
+<li class="tache"><input type="checkbox"> <strong>Ultime transfert</strong> effectué</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>fragment d'étoile</strong> récupéré par le pont reconstruit</li>
+<li class="tache"><input type="checkbox"> <strong>Elena &amp; Tseng</strong> vaincus</li>
+<li class="tache"><input type="checkbox"> Épreuve de <strong>Red XIII</strong> terminée</li>
+<li class="tache"><input type="checkbox"> Épreuve de <strong>Tifa</strong> terminée</li>
+<li class="tache"><input type="checkbox"> Épreuve de <strong>Yuffie</strong> terminée</li>
+<li class="tache"><input type="checkbox"> Épreuve de <strong>Barret</strong> terminée</li>
+<li class="tache"><input type="checkbox"> Épreuve d'<strong>Aerith</strong> terminée</li>
+<li class="tache"><input type="checkbox"> Matéria <strong>PC augmentés</strong> récupérée dans la salle à l'ouest</li>
+<li class="tache"><input type="checkbox"> Épreuve de <strong>Cloud</strong> terminée (galerie des Effigies)</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>protège-bras Cétra</strong> récupéré (chemin de droite)</li>
+<li class="tache"><input type="checkbox"> Coffre violet <strong>shuriken de Fûma</strong> récupéré (Yuffie)</li>
+<li class="tache"><input type="checkbox"> <strong>Adamankhélone moussue</strong> vaincue (<strong>Mur</strong> préparé)</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>maxi-potion</strong> récupéré par la porte ouest</li>
+<li class="tache"><input type="checkbox"> Coffre <strong>élixir</strong> récupéré en montant le colimaçon</li>
+<li class="tache"><input type="checkbox"> <strong>Salle de la Fresque</strong> traversée, récit des Cétras écouté</li>
+<li class="tache"><input type="checkbox"> <strong>Porte démoniaque</strong> vaincue (les deux)</li>
+<li class="tache"><input type="checkbox"> <strong class="objet">Matéria noire</strong> saisie à l'<strong>autel de la Noirceur</strong></li>
+<li class="tache"><input type="checkbox"> Sortie du temple atteinte</li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="chapitre-12-en-quete-de-la-pierre-cle.html" rel="prev"><small>← Partie précédente</small><b>Chapitre 12 — En quête de la pierre-clé</b></a><a class="suiv" href="chapitre-14-un-monde-a-lagonie.html" rel="next"><small>Partie suivante →</small><b>Chapitre 14 — Un monde à l&#x27;agonie</b></a><a class="tout" href="final-fantasy-vii-rebirth.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy VII Rebirth · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

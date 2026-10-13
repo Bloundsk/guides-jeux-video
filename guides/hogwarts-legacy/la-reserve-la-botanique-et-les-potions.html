@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La réserve, la botanique et les potions – Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Hogwarts Legacy : L&#x27;Héritage de Poudlard, La réserve, la botanique et les potions : Sort appris : Désillusion (pense à l&#x27;assigner à ta roue). Il faut…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/la-reserve-la-botanique-et-les-potions.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="La réserve, la botanique et les potions · Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard">
+<meta property="og:description" content="Hogwarts Legacy : L&#x27;Héritage de Poudlard, La réserve, la botanique et les potions : Sort appris : Désillusion (pense à l&#x27;assigner à ta roue). Il faut…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/la-reserve-la-botanique-et-les-potions.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Hogwarts Legacy : L'Héritage de Poudlard", "item": "https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/"}, {"@type": "ListItem", "position": 3, "name": "La réserve, la botanique et les potions", "item": "https://bloundsk.github.io/guides-jeux-video/guides/hogwarts-legacy/la-reserve-la-botanique-et-les-potions.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+@media print {
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="hogwarts-legacy" class="compact" data-partie="la-reserve-la-botanique-et-les-potions"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Hogwarts Legacy : L&#x27;Héritage de Poudlard</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Hogwarts Legacy : L&#x27;Héritage de Poudlard : le guide complet en français</p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Hogwarts Legacy : L&#x27;Héritage de <em>Poudlard</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="introduction.html"><span class="num">✦</span><span class="libelle">Introduction</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="le-prologue-la-repartition-et-les-premiers-pas.html"><span class="num">✦</span><span class="libelle">Le prologue, la Répartition et les premiers pas</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="les-premiers-cours-et-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les premiers cours et Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="#la-reserve-la-botanique-et-les-potions"><span class="num">✦</span><span class="libelle">La réserve, la botanique et les potions</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="lheritage-dollivander-le-vol-et-la-salle-sur-demande.html"><span class="num">✦</span><span class="libelle">L&#x27;héritage d&#x27;Ollivander, le vol et la Salle sur Demande</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="lepreuve-de-percival-rackham-et-les-creatures-magiques.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Percival Rackham et les créatures magiques</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="lepreuve-de-charles-rookwood.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Charles Rookwood</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="lepreuve-de-niamh-fitzgerald.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de Niamh Fitzgerald</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="lepreuve-de-san-bakar.html"><span class="num">✦</span><span class="libelle">L&#x27;épreuve de San Bakar</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="le-dernier-depot-et-la-coupe-des-quatre-maisons.html"><span class="num">✦</span><span class="libelle">Le dernier dépôt et la Coupe des Quatre Maisons</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="poudlard-le-chateau-aile-par-aile.html"><span class="num">✦</span><span class="libelle">Poudlard : le château, aile par aile</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="pre-au-lard-2.html"><span class="num">✦</span><span class="libelle">Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="les-abords-de-poudlard-et-la-vallee-de-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les abords de Poudlard et la vallée de Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="la-vallee-de-poudlard-la-foret-interdite-et-le-marais-du-north-ford.html"><span class="num">✦</span><span class="libelle">La vallée de Poudlard, la Forêt interdite et le marais du North Ford</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="la-region-de-feldcroft-et-le-marais-de-southsea.html"><span class="num">✦</span><span class="libelle">La région de Feldcroft et le marais de Southsea</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="la-cote-du-collet-la-caverne-cotiere-et-cragcroftshire.html"><span class="num">✦</span><span class="libelle">La côte du Collet, la Caverne côtière et Cragcroftshire</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="le-lac-de-grottaleau-la-pointe-du-manoir-et-la-cote-de-salgat.html"><span class="num">✦</span><span class="libelle">Le lac de Grottaleau, la Pointe du Manoir et la côte de Salgât</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="sebastian-pallow-et-les-sorts-impardonnables.html"><span class="num">✦</span><span class="libelle">Sebastian Pallow et les Sorts Impardonnables</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="natsai-onai.html"><span class="num">✦</span><span class="libelle">Natsai Onai</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="poppy-sweeting-et-amit-thakkar.html"><span class="num">✦</span><span class="libelle">Poppy Sweeting et Amit Thakkar</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="les-12-devoirs-et-les-26-sortileges.html"><span class="num">✦</span><span class="libelle">Les 12 devoirs et les 26 sortilèges</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="les-6-cartes-au-tresor.html"><span class="num">✦</span><span class="libelle">Les 6 cartes au trésor</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="le-combat-la-magie-ancienne-et-les-enchainements.html"><span class="num">✦</span><span class="libelle">Le combat, la magie ancienne et les enchaînements</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-talents.html"><span class="num">✦</span><span class="libelle">Les talents</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="lequipement-les-attributs-et-le-metier-a-tisser.html"><span class="num">✦</span><span class="libelle">L&#x27;équipement, les attributs et le métier à tisser</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="la-salle-sur-demande-les-potions-les-plantes-et-les-creasorts.html"><span class="num">✦</span><span class="libelle">La Salle sur Demande, les potions, les plantes et les créasorts</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="le-vivarium-et-les-creatures-magiques.html"><span class="num">✦</span><span class="libelle">Le vivarium et les créatures magiques</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="les-balais-les-montures-et-les-courses.html"><span class="num">✦</span><span class="libelle">Les balais, les montures et les courses</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-95-epreuves-de-merlin.html"><span class="num">✦</span><span class="libelle">Les 95 épreuves de Merlin</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="les-pages-du-guide-du-sorcier.html"><span class="num">✦</span><span class="libelle">Les pages du Guide du Sorcier</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="les-coffres-de-collection-les-portes-darithmancie-et-les-coffres-a-œil.html"><span class="num">✦</span><span class="libelle">Les coffres de collection, les portes d&#x27;arithmancie et les coffres à œil</span><span class="compte"></span></a></li>
+<li data-section="section-32"><a href="les-statues-de-demiguise-et-les-cles-du-dedale.html"><span class="num">✦</span><span class="libelle">Les statues de Demiguise et les clés du dédale</span><span class="compte"></span></a></li>
+<li data-section="section-33"><a href="les-tables-dastronomie-les-ballons-les-plateformes-et-les-sources-de-magie-ancienne.html"><span class="num">✦</span><span class="libelle">Les tables d&#x27;astronomie, les ballons, les plateformes et les sources de magie ancienne</span><span class="compte"></span></a></li>
+<li data-section="section-34"><a href="les-ennemis-connus-les-arenes-et-les-campements.html"><span class="num">✦</span><span class="libelle">Les ennemis connus, les arènes et les campements</span><span class="compte"></span></a></li>
+<li data-section="section-35"><a href="les-46-trophees-le-contenu-deluxe-et-la-route-du-100.html"><span class="num">✦</span><span class="libelle">Les 46 trophées, le contenu Deluxe et la route du 100 %</span><span class="compte"></span></a></li>
+<li data-section="section-36"><a href="les-quetes-annexes-de-poudlard-et-de-pre-au-lard.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes de Poudlard et de Pré-au-Lard</span><span class="compte"></span></a></li>
+<li data-section="section-37"><a href="les-quetes-annexes-des-highlands.html"><span class="num">✦</span><span class="libelle">Les quêtes annexes des Highlands</span><span class="compte"></span></a></li>
+<li data-section="section-38"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-39"><a href="sources-hogwarts-legacy-lheritage-de-poudlard.html"><span class="num">✦</span><span class="libelle">Sources — Hogwarts Legacy : L&#x27;Héritage de Poudlard</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-4">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="la-reserve-la-botanique-et-les-potions">La réserve, la botanique et les potions</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-4"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-4">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>Sort appris</strong> : <strong>Désillusion</strong> (pense à l'assigner à ta roue).</li>
+<li><strong>Il faut d'abord</strong> : <strong>Incendio</strong>.</li>
+<li><strong>À faire tôt</strong> : ta première épreuve de Merlin, seule source d'emplacements d'inventaire.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Infiltrer la réserve de la bibliothèque avec Désillusion, suivre tes cours de botanique et de potions, et réussir ta première épreuve de Merlin.</p>
+<p><strong>Les six quêtes couvertes</strong> : « Les secrets de la réserve de la bibliothèque », <strong>« Tomes et tribulations »</strong>, <strong>« Cours de botanique »</strong>, <strong>« Cours de potions »</strong>, <strong>« La fille d'Uagadou »</strong> et <strong>« Épreuve de Merlin ».</strong></p>
+<p class="alerte">⚠️ Et c'est la partie qui ouvre le jeu en grand : tu sors de Poudlard pour la première fois, et tu débloques les <strong>épreuves de Merlin</strong>, soit <strong>95 défis</strong> sur toute la carte <em>(partie <strong>30</strong>)</em>.</p>
+<p><strong>Niveau conseillé</strong> : <strong>3 à 8.</strong></p>
+<h2 id="itineraire-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<p>📍 <strong>La zone en images</strong> : <a href="https://www.millenium.org/guide/400283.html">Quêtes principales</a> — soluce illustrée sur Millenium, en français.</p>
+<ol>
+<li>Le bureau du professeur Fig — <strong>l'interruption du professeur Black.</strong></li>
+<li><strong>La réserve, de nuit</strong> — <strong>Désillusion.</strong></li>
+<li><strong>La bibliothèque</strong> — la clé du tiroir, les deux fantômes, Peeves.</li>
+<li><strong>Le portail magique</strong> — les ponts à runes et les sentinelles de pensine.</li>
+<li><strong>Retour chez Fig</strong> — le livre et ses pages arrachées.</li>
+<li><strong>Les Serres</strong> — la mandragore, le Dictame, les choux mordeurs.</li>
+<li><strong>La salle de potions</strong> — Wiggenweld, Edurus, et le choix de la plume.</li>
+<li><strong>Campolard-en-Bas</strong> — ta première épreuve de Merlin.</li>
+</ol>
+<h2 id="deroule-pas-a-pas-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="les-secrets-de-la-reserve-de-la-bibliotheque-desillusion">Les secrets de la réserve de la bibliothèque — Désillusion</h3>
+<p class="alerte">⚠️ <strong>Prérequis</strong> : le sort Incendio, des Devoirs du professeur Hecat 1 <em>(parties <strong>02</strong> et <strong>22</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce que tu fais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Retrouve le <strong>professeur Fig</strong> dans son bureau et parle-lui</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Le professeur Black vous interrompt</strong> et t'empêche d'aller à la bibliothèque</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Rejoins Sebastian quelques étages plus bas</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Il propose de t'aider à infiltrer la réserve <strong>la nuit tombée</strong></td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>La quête te téléporte au bon endroit au bon moment</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Il t'apprend <strong>Désillusion</strong>, par le mini-jeu habituel</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>N'oublie pas de l'assigner à ta roue des sorts</td>
+</tr>
+</tbody>
+</table></div>
+<p>Désillusion est le sort d'infiltration du jeu, et il a une limite à connaître.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ce qu'il fait</strong></td>
+<td>Il te rend plus difficile à repérer</td>
+</tr>
+<tr>
+<td><strong>Ce qu'il ne fait pas</strong></td>
+<td>Il ne te rend pas invisible</td>
+</tr>
+<tr>
+<td><strong>La conséquence</strong></td>
+<td>Reste à <strong>distance</strong> et ne t'attarde pas</td>
+</tr>
+<tr>
+<td><strong>Et son autre usage, bien plus tard</strong></td>
+<td>Les <strong>coffres à œil</strong>, qui rendent <strong>500 gallions</strong> chacun <em>(partie <strong>32</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>L'infiltration</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce que tu fais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Un peu plus bas, un premier élève à éviter : Désillusion, et passe-lui sous le nez de loin</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Descends vers la porte indiquée par la boussole</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Attends que les <strong>deux préfets</strong> aient le dos tourné, puis entre</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Dans la bibliothèque, la <strong>bibliothécaire</strong> est encore là</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Cache-toi derrière les <strong>étagères de gauche</strong> pour déclencher une conversation</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Approche du bureau et <strong>attends la diversion</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td><strong>Prends la clé dans le tiroir</strong>, <strong>puis longe les étagères de droite</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>La réserve et les deux fantômes</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce que tu fais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Ouvre la porte de la réserve, descends les escaliers</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Un <strong>fantôme</strong> monte la garde</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Toujours sous Désillusion, envoie un <strong>sort de base sur l'armure</strong> pour détourner son attention</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Contourne-le et passe dans la pièce suivante</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Un <strong>second fantôme</strong> garde ton objectif</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Fais-le bouger en lançant un sort <strong>contre le mur</strong>, et passe derrière lui</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>En bas des escaliers, tu peux annuler Désillusion</td>
+</tr>
+</tbody>
+</table></div>
+<p>C'est la mécanique d'infiltration du jeu en entier : un sort lancé sur un objet fait du bruit, et le garde va voir. Tu la retrouveras dans plusieurs quêtes <em>(parties <strong>17</strong> et <strong>21</strong>)</em>.</p>
+<p><strong>Peeves et le portail</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce que tu fais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Avance tout droit jusqu'à une <strong>porte en bois</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Descends dans une pièce sombre pleine d'objets</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Tu croises Peeves, l'esprit frappeur</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Laisse Sebastian s'en charger</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Lance <strong>Reparo</strong> sur l'armure pour te libérer le passage</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Descends tout en bas de l'escalier en colimaçon</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Suis les <strong>traces de magie ancienne</strong> jusqu'à révéler un <strong>portail magique</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>L'antichambre : les ponts à runes</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce que tu fais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Passe le portail et descends tout en bas jusqu'à une <strong>grande porte</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Fouille le grand coffre à gauche</strong> avant d'ouvrir</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>De l'autre côté, un <strong>seul sort de base</strong> sur la Rune de l'autre côté du précipice fait apparaître un pont</td>
+</tr>
+</tbody>
+</table></div>
+<p>La mécanique des runes est la signature des donjons de magie ancienne.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La règle</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Un sort de base sur la rune</strong></td>
+<td>Fait apparaître une portion de pont</td>
+</tr>
+<tr>
+<td><strong>Certaines portions se dérobent</strong></td>
+<td>Il faut courir, et finir par un <strong>saut</strong></td>
+</tr>
+<tr>
+<td><strong>Certaines runes révèlent des plateformes secrètes</strong></td>
+<td>Regarde autour de toi après chaque tir</td>
+</tr>
+</tbody>
+</table></div>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La suite, salle par salle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>4</strong></td>
+<td>Première antichambre : <strong>quelques Sentinelles de Pensine.</strong> <strong>Attention à leur attaque plongeante.</strong> Magie ancienne pour finir</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Salle suivante : deux sentinelles à <strong>attaque à distance</strong>, puis le pont à rune</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Ce pont se dérobe : cours vers l'autre bout et termine par un <strong>saut</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Salle d'après : tire sur la rune, puis <strong>regarde à ta droite</strong></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td><strong>Une plateforme secrète apparaît dans le vide</strong> : saute dessus, avance pour révéler le pont au fur et à mesure</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Au bout, <strong>retire sur la rune</strong> pour révéler la suite, qui mène à un <strong>coffre</strong></td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Refais l'opération à l'envers pour revenir au chemin principal</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>Puis : tire sur la rune pour une <strong>moitié de pont</strong>, avance, et <strong>retire</strong> pour la suite. <strong>Ne traîne pas</strong></td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td><strong>Ouvre les deux coffres sur les côtés</strong> avant de passer</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Le combat final de la réserve</strong></p>
+<p>Un grand nombre de <strong>sentinelles de pensine</strong> t'attend.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>La méthode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Tout y passe : <strong>combos, magie ancienne, Incendio, Protego</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Esquive quand un <strong>cercle</strong> se forme autour de toi — <strong>une sentinelle te tombe dessus</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Tu peux les pousser dans le vide</strong> en les frappant près du bord</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Occupe-toi en priorité de celles qui tirent à distance</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Puis avance pour récupérer le <strong>livre</strong>, cinématique, fin de quête</td>
+</tr>
+</tbody>
+</table></div>
+<p>La poussée dans le vide est l'astuce du combat. Un Flipendo ou un Repulso bien placé au bord règle une sentinelle d'un coup <em>(partie <strong>22</strong>)</em>. Ici tu ne les as pas encore : sers-toi de la magie ancienne.</p>
+<h3 id="tomes-et-tribulations">Tomes et tribulations</h3>
+<p><strong>La quête la plus courte du jeu.</strong></p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce que tu fais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Entre dans le bureau du professeur Fig</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Tu interromps une conversation entre lui et le <strong>professeur Sharp</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Parle-lui du livre</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Il découvre que des <strong>pages ont été arrachées</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte">⚠️ Et cette conversation ouvre la moitié du jeu. Elle débloque les cours de botanique et de potions, « La fille d'Uagadou », et un paquet de quêtes annexes.</p>
+<h3 id="le-cours-de-botanique">Le cours de botanique</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce que tu fais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Boussole jusqu'au <strong>professeur Bulbille</strong>, dans les Serres</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Suis ses instructions : <strong>déracine la mandragore, puis REMPOTE-la</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Attention à tes oreilles</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Parle au professeur après le cours</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Récupère des <strong>ingrédients</strong> dans la serre</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Rejoins la <strong>jardinière</strong> au milieu de la pièce et plante des <strong>graines de Dictame</strong></td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Elles poussent en <strong>10 minutes</strong></td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Monte les escaliers, rencontre Léandre Prewett, un Gryffondor</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Il t'accompagne à la <strong>deuxième serre</strong></td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>En bas, ramasse les <strong>choux mordeurs</strong> et lance-en un sur le mannequin</td>
+</tr>
+<tr>
+<td><strong>11</strong></td>
+<td>Retourne voir le professeur Bulbille</td>
+</tr>
+</tbody>
+</table></div>
+<p>La mandragore et le chou mordeur sont tes deux armes de soutien <em>(partie <strong>27</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La plante</th>
+<th>Ce qu'elle fait</th>
+<th>Son trophée</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mandragore</strong></td>
+<td>Son cri <strong>étourdit tous les ennemis</strong> autour</td>
+<td><strong>« La racine du problème »</strong> : <strong>étourdir 10 ennemis différents</strong></td>
+</tr>
+<tr>
+<td><strong>Chou mordeur</strong></td>
+<td>Il <strong>attaque à ta place</strong> quelques coups</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Dictame</strong></td>
+<td>L'ingrédient de la <strong>Potion Wiggenweld</strong>, ta potion de soin</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Plante du Dictame dès maintenant, et n'arrête plus.</strong> <strong>C'est ta réserve de soins pour tout le jeu.</strong> <strong>Et un trophée demande de faire pousser <strong>tous les types de plantes</strong> <em>(« Main verte »)</em></strong> <em>(partie <strong>36</strong>)</em>.</p>
+<h3 id="le-cours-de-potions">Le cours de potions</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce que tu fais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Rends-toi à la <strong>salle de Potions</strong>, chez le <strong>professeur Sharp</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Écoute, puis réalise ta <strong>Potion Wiggenweld</strong> en répondant aux QTE</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Approche-toi du <strong>bureau du professeur</strong> pour rencontrer Garreth Weasley, un Gryffondor</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Il te demande de voler une <strong>plume de Focifère</strong> dans le bureau</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>À toi de voir : <strong>tu peux accepter ou refuser</strong></td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Dans tous les cas, entre et prends ce que tu veux</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Si tu as pris la plume, donne-la à Garreth</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td><strong>Va préparer ta Potion Edurus</strong> — <strong>30 secondes de préparation</strong></td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Retourne voir le professeur</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le choix de la plume, et sa conséquence.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Ton choix</th>
+<th>Ce qui se passe</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tu refuses</strong></td>
+<td>Rien de particulier</td>
+</tr>
+<tr>
+<td><strong>Tu acceptes</strong></td>
+<td><strong>La potion de Garreth tourne mal</strong>, <strong>le professeur Sharp soupçonne un complice</strong>, <strong>et tu dois te justifier</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Aucune conséquence mécanique dans un cas comme dans l'autre. <strong>C'est de la saveur</strong> — et c'est le début d'une amitié avec Garreth, qui donne plusieurs quêtes annexes <em>(partie <strong>20</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>La potion</th>
+<th>Ce qu'elle fait</th>
+<th>Temps</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wiggenweld</strong></td>
+<td>Ta Potion de soin</td>
+<td><strong>Voir la partie 27</strong></td>
+</tr>
+<tr>
+<td><strong>Edurus</strong></td>
+<td>Une <strong>peau de pierre</strong> qui réduit les dégâts subis</td>
+<td><strong>30 secondes</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="la-fille-duagadou">La fille d'Uagadou</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce que tu fais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Consulte ton <strong>Hibou Express</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Boussole jusqu'à Natty Onai, à l'extérieur de Poudlard, <strong>dans le hameau de Campolard-en-Bas</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Le chemin est long : tu passes par la <strong>pelouse du cours de vol</strong>, puis devant la <strong>salle du cours sur les créatures magiques</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Puis tu quittes l'enceinte de Poudlard</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Parle à Natsai — <strong>la conversation suffit à terminer la quête</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>C'est ta première sortie dans les Highlands. <strong>Profite du trajet</strong> : ramasse les ingrédients, lance <strong>Revelio</strong> partout, et active les <strong>flammes de Cheminette</strong> que tu croises <em>(partie <strong>12</strong>)</em>.</p>
+<p><strong>Et une précision de nom</strong> : le jeu l'appelle tantôt Natsai, tantôt Natty. <strong>C'est son diminutif</strong> <em>(partie <strong>18</strong>)</em>.</p>
+<h3 id="epreuve-de-merlin-ta-premiere">Épreuve de Merlin — ta première</h3>
+<p>La quête se déclenche automatiquement après ta conversation avec Natty. Une inconnue a besoin d'aide, du côté du <strong>lac de Campolard-en-Bas</strong>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Ce que tu fais</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>De l'autre côté de la tente, Nora Treadwell se fait agresser par <strong>deux mages noirs</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Aide-la, et élimine les <strong>renforts</strong></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Parle-lui</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Prends la <strong>mauve douce</strong> dans le coffre près de sa tente</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Place-la au <strong>cœur du cercle de pierre</strong> au sol</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>Puis <strong>Incendio</strong> sur les <strong>trois piliers</strong>, le plus vite possible</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Commence par celui <strong>à côté de Nora</strong>, puis fais un <strong>demi-tour</strong> pour voir les deux autres</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td>Sprinte vers chacun des deux</td>
+</tr>
+<tr>
+<td><strong>9</strong></td>
+<td>Retourne parler à Nora</td>
+</tr>
+</tbody>
+</table></div>
+<p>Et voilà la mécanique des 95 épreuves de Merlin <em>(partie <strong>30</strong>)</em>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Notion</th>
+<th>Détail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La mauve douce est la clé</strong></td>
+<td>Il en faut une par épreuve</td>
+</tr>
+<tr>
+<td><strong>Où en trouver</strong></td>
+<td><strong>Elle pousse partout dans les Highlands</strong>, <strong>et se cultive</strong> <em>(partie <strong>27</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Comment lancer une épreuve</strong></td>
+<td>Pose la mauve douce au centre du cercle de pierre</td>
+</tr>
+<tr>
+<td><strong>Ce que les épreuves donnent</strong></td>
+<td><strong>Des emplacements d'inventaire</strong> — <strong>la seule façon d'en gagner</strong></td>
+</tr>
+<tr>
+<td><strong>Le trophée</strong></td>
+<td><strong>« Par la barbe de Merlin ! »</strong> : <strong>les 95</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Fais les épreuves de Merlin tôt et souvent. Ton inventaire démarre minuscule, et il va vite déborder d'équipement. Chaque palier d'épreuves te donne de la place <em>(partie <strong>26</strong>)</em>.</p>
+<p>Et prends l'habitude de garder <strong>5 ou 6 mauves douces</strong> sur toi. Rien n'est plus agaçant que de tomber sur un cercle de pierre les poches vides.</p>
+<h2 id="quetes-et-lieux-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-six-quetes-principales">Les six quêtes principales</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Quête</th>
+<th>Niveau</th>
+<th>Prérequis</th>
+<th>Ce qu'elle donne</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Les secrets de la réserve de la bibliothèque</strong></td>
+<td><strong>3</strong></td>
+<td><strong>Incendio</strong></td>
+<td><strong>Désillusion</strong>, <strong>4 coffres, le livre</strong></td>
+</tr>
+<tr>
+<td><strong>Tomes et tribulations</strong></td>
+<td><strong>3</strong></td>
+<td>La réserve</td>
+<td>Elle ouvre la moitié du jeu</td>
+</tr>
+<tr>
+<td><strong>Cours de botanique</strong></td>
+<td><strong>3</strong></td>
+<td>Tomes et tribulations</td>
+<td>Mandragore, chou mordeur, graines de Dictame</td>
+</tr>
+<tr>
+<td><strong>Cours de potions</strong></td>
+<td><strong>4</strong></td>
+<td>Cours de botanique</td>
+<td>Potion Wiggenweld, potion Edurus</td>
+</tr>
+<tr>
+<td><strong>La fille d'Uagadou</strong></td>
+<td><strong>4</strong></td>
+<td>Tomes et tribulations</td>
+<td>La sortie dans les Highlands</td>
+</tr>
+<tr>
+<td><strong>Épreuve de Merlin</strong></td>
+<td><strong>4</strong></td>
+<td>La fille d'Uagadou</td>
+<td>Les 95 épreuves de Merlin</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-lieux-decouverts">Les lieux découverts</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Lieu</th>
+<th>Ce qu'il y a</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>La bibliothèque</strong></td>
+<td>La bibliothécaire, les préfets, le tiroir à clé</td>
+</tr>
+<tr>
+<td><strong>La réserve</strong></td>
+<td><strong>Le donjon de magie ancienne</strong>, <strong>4 coffres, les sentinelles de pensine</strong></td>
+</tr>
+<tr>
+<td><strong>Les Serres</strong></td>
+<td>Le professeur Bulbille, les jardinières, la deuxième serre</td>
+</tr>
+<tr>
+<td><strong>La salle de potions</strong></td>
+<td>Le professeur Sharp, son bureau, Garreth Weasley</td>
+</tr>
+<tr>
+<td><strong>La pelouse du cours de vol</strong></td>
+<td><strong>Sur la route de Campolard-en-Bas</strong> <em>(partie <strong>05</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Campolard-en-Bas</strong></td>
+<td>Ton premier hameau <em>(partie <strong>12</strong>)</em>, <strong>et une statue de Demiguise</strong> <em>(partie <strong>33</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Le lac de Campolard-en-Bas</strong></td>
+<td>La tente de Nora Treadwell</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-personnages-a-retenir-2">Les personnages à retenir</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Qui</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Professeur Phineas Nigellus Black</strong></td>
+<td>Le directeur, et une épine dans le pied toute la partie ; ⚠️ <strong>nom français à vérifier en jeu</strong></td>
+</tr>
+<tr>
+<td><strong>Professeur Aesop Sharp</strong></td>
+<td>Potions : <strong>les devoirs de Repulso et Diffindo</strong> <em>(partie <strong>22</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Professeur Mirabel Bulbille</strong></td>
+<td>Botanique : <strong>les devoirs de Wingardium Leviosa et Flipendo</strong></td>
+</tr>
+<tr>
+<td><strong>Nora Treadwell</strong></td>
+<td><strong>Elle t'apprend les épreuves de Merlin</strong> <em>(partie <strong>30</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Garreth Weasley</strong></td>
+<td><strong>Le neveu du professeur Weasley</strong>, <strong>et plusieurs quêtes annexes</strong> <em>(partie <strong>20</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Léandre Prewett</strong></td>
+<td>Gryffondor, rencontré aux Serres</td>
+</tr>
+<tr>
+<td><strong>Peeves</strong></td>
+<td>L'esprit frappeur, dans la réserve</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>noms français à vérifier en jeu</strong> : les prénoms complets des professeurs Black, Sharp et Bulbille — la source française ne donne que leur nom de famille.</p>
+<h2 id="butin-exhaustif-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Désillusion</strong></td>
+<td><span class="badge neutre">Sortilège</span></td>
+<td>Sebastian, dans « Les secrets de la réserve »</td>
+<td><strong>L'infiltration</strong>, <strong>et les coffres à œil à 500 gallions</strong> <em>(partie <strong>32</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Clé du tiroir de la bibliothécaire</strong></td>
+<td><span class="badge neutre">Objet de quête</span></td>
+<td>Le tiroir du bureau, pendant la diversion</td>
+<td><strong>Ouvrir la réserve</strong></td>
+</tr>
+<tr>
+<td><strong>Grand coffre de la réserve</strong></td>
+<td><span class="badge neutre">Équipement</span></td>
+<td><strong>À gauche de la grande porte</strong>, <strong>avant de l'ouvrir</strong></td>
+<td><strong>Équipement</strong></td>
+</tr>
+<tr>
+<td><strong>Coffre de la plateforme secrète</strong></td>
+<td><span class="badge neutre">Équipement</span></td>
+<td>Tire sur la rune, puis regarde à droite</td>
+<td><strong>Équipement</strong></td>
+</tr>
+<tr>
+<td><strong>2 coffres latéraux</strong></td>
+<td><span class="badge neutre">Équipement</span></td>
+<td>Avant la dernière salle de la réserve</td>
+<td><strong>Équipement</strong></td>
+</tr>
+<tr>
+<td><strong>Le livre de la réserve</strong></td>
+<td><span class="badge neutre">Objet de quête</span></td>
+<td>Après le combat final</td>
+<td>Lance « Tomes et tribulations »</td>
+</tr>
+<tr>
+<td><strong>Mandragore</strong></td>
+<td><span class="badge neutre">Plante</span></td>
+<td>Le cours de botanique</td>
+<td><strong>Étourdit tous les ennemis autour</strong> ; <strong>trophée « La racine du problème »</strong></td>
+</tr>
+<tr>
+<td><strong>Chou mordeur</strong></td>
+<td><span class="badge neutre">Plante</span></td>
+<td><strong>La deuxième serre</strong></td>
+<td>Il attaque à ta place quelques coups</td>
+</tr>
+<tr>
+<td><strong>Graines de Dictame</strong></td>
+<td><span class="badge neutre">Graine</span></td>
+<td>La jardinière des Serres</td>
+<td><strong>L'ingrédient de la Potion Wiggenweld</strong> ; <strong>10 minutes de pousse</strong></td>
+</tr>
+<tr>
+<td><strong>Potion Wiggenweld</strong></td>
+<td><span class="badge neutre">Potion</span></td>
+<td>Le cours de potions</td>
+<td>Ta Potion de soin</td>
+</tr>
+<tr>
+<td><strong>Potion Edurus</strong></td>
+<td><span class="badge neutre">Potion</span></td>
+<td>Le cours de potions</td>
+<td><strong>Réduit les dégâts subis</strong> ; <strong>30 secondes de préparation</strong></td>
+</tr>
+<tr>
+<td><strong>Plume de Focifère</strong></td>
+<td><span class="badge neutre">Objet de quête</span></td>
+<td><strong>Le bureau du professeur Sharp</strong>, <strong>si tu acceptes de la voler</strong></td>
+<td><strong>À donner à Garreth Weasley</strong> ; <strong>sans conséquence mécanique</strong></td>
+</tr>
+<tr>
+<td><strong>Mauve douce</strong></td>
+<td><span class="badge neutre">Plante</span></td>
+<td>Le coffre près de la tente de Nora Treadwell</td>
+<td><strong>Une par épreuve de Merlin</strong> <em>(partie <strong>30</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Emplacements d'inventaire</strong></td>
+<td><span class="badge neutre">Amélioration</span></td>
+<td>Les paliers d'épreuves de Merlin</td>
+<td><strong>La seule façon d'agrandir ton sac</strong> <em>(partie <strong>26</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>Ingrédients des Serres</strong></td>
+<td><span class="badge neutre">Ingrédients</span></td>
+<td>Les plans de travail de la serre</td>
+<td><strong>Potions</strong> <em>(partie <strong>27</strong>)</em></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<h3 id="la-reserve-les-quatre-coffres-a-ne-pas-rater">La réserve, les quatre coffres à ne pas rater</h3>
+<p>La réserve est le premier donjon du jeu, et elle cache quatre coffres.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Le coffre</th>
+<th>Où</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Le grand coffre</td>
+<td><strong>À gauche de la grande porte</strong>, <strong>avant de l'ouvrir</strong></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Le coffre de la plateforme secrète</td>
+<td>Tire sur la rune, puis regarde À droite, dans le vide</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Coffre latéral gauche</td>
+<td>Avant la dernière salle</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Coffre latéral droit</td>
+<td>Idem</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte manquable">⏳ <strong>Rassure-toi</strong> : la réserve reste accessible après la quête. <strong>Rien n'est manquable ici.</strong></p>
+<h3 id="les-sentinelles-de-pensine-et-comment-les-gerer">Les sentinelles de pensine, et comment les gérer</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Leur attaque</th>
+<th>Ta réponse</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Attaque plongeante</strong> <em>(un cercle se forme autour de toi)</em></td>
+<td>Esquive</td>
+</tr>
+<tr>
+<td><strong>Attaque à distance</strong></td>
+<td>Occupe-t'en en priorité</td>
+</tr>
+<tr>
+<td><strong>Corps à corps</strong></td>
+<td><strong>Protego maintenu → Stupéfix</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Et l'astuce qui règle le combat</strong> : tu peux les <strong>pousser dans le vide</strong>. <strong>Frappe-les près du bord.</strong> Avec Flipendo ou Repulso, plus tard, ça devient une tuerie <em>(partie <strong>22</strong>)</em>.</p>
+<h3 id="les-epreuves-de-merlin-le-bon-reflexe-des-maintenant">Les épreuves de Merlin, le bon réflexe dès maintenant</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>L'habitude à prendre</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1</strong></td>
+<td>Garde toujours 5 ou 6 mauves douces sur toi</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td><strong>Elles poussent partout dans les Highlands</strong>, <strong>et se cultivent en jardinière</strong> <em>(partie <strong>27</strong>)</em></td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td><strong>Fais chaque épreuve que tu croises</strong> — <strong>ça agrandit ton inventaire</strong></td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>Le cercle de pierre au sol est le repère : <strong>Revelio le met en surbrillance</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Et voilà pourquoi c'est urgent</strong> : ton sac démarre très petit. Sans épreuves de Merlin, tu passeras ton temps à jeter de l'équipement <em>(partie <strong>26</strong>)</em>.</p>
+<h3 id="les-pieges-de-cette-partie-3">Les pièges de cette partie</h3>
+<ul>
+<li>Oublier d'assigner Désillusion à la roue des sorts. Le jeu ne le fait pas pour toi.</li>
+<li>Croire que Désillusion rend invisible. <strong>Non</strong> : <strong>reste à distance.</strong></li>
+<li class="alerte">⚠️ Rater le grand coffre à gauche de la grande porte de la réserve.</li>
+<li class="alerte">⚠️ <strong>Rater la plateforme secrète</strong> : après avoir tiré sur la rune, regarde à droite.</li>
+<li>Traîner sur un pont à rune qui se dérobe. Cours, et termine par un saut.</li>
+<li>Oublier de planter du Dictame. C'est ta réserve de soins pour tout le jeu.</li>
+<li>Partir en épreuve de Merlin sans mauve douce.</li>
+<li>S'inquiéter du choix de la plume de Focifère. <strong>Aucune conséquence mécanique.</strong></li>
+<li>Passer à côté des flammes de Cheminette de la route vers Campolard-en-Bas.</li>
+</ul>
+<h2 id="alertes-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Incendio est obligatoire</strong> pour lancer « Les secrets de la réserve de la bibliothèque » <em>(partie <strong>22</strong>)</em>.</li>
+<li class="alerte">⚠️ Désillusion ne rend pas invisible. Reste à distance et ne t'attarde pas.</li>
+<li class="alerte">⚠️ Pense à assigner Désillusion à ta roue des sorts.</li>
+<li class="alerte">⚠️ Un sort lancé sur un objet distrait les gardes. C'est toute l'infiltration du jeu.</li>
+<li class="alerte">⚠️ La réserve cache quatre coffres, dont un derrière une plateforme secrète révélée par une rune — regarde à droite après avoir tiré.</li>
+<li class="alerte">⚠️ Les Sentinelles de Pensine se poussent dans le vide.</li>
+<li class="alerte">⚠️ Esquive quand un cercle se forme autour de toi : <strong>c'est une attaque plongeante.</strong></li>
+<li class="alerte">⚠️ Il faut une mauve douce par épreuve de Merlin <em>(partie <strong>30</strong>)</em>. Garde-en toujours cinq ou six.</li>
+<li class="alerte">⚠️ Les épreuves de Merlin sont la seule source d'emplacements d'inventaire <em>(partie <strong>26</strong>)</em>. <strong>Fais-les tôt.</strong></li>
+<li class="alerte">⚠️ Plante du Dictame dès le cours de botanique. C'est la potion Wiggenweld, donc tes soins.</li>
+<li class="alerte manquable">⏳ <strong>La mandragore a son trophée</strong> : <strong>« La racine du problème »</strong>, <strong>étourdir 10 ennemis différents</strong> <em>(partie <strong>36</strong>)</em>.</li>
+<li class="alerte manquable">⏳ Le choix de la plume de Focifère n'a aucune conséquence mécanique.</li>
+<li class="alerte">⚠️ <strong>noms français à vérifier en jeu</strong> : les prénoms complets des professeurs Black, Sharp et Bulbille — la source française ne donne que leurs noms de famille.</li>
+</ul>
+<h2 id="check-list-4" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<h3 id="les-secrets-de-la-reserve-de-la-bibliotheque">Les secrets de la réserve de la bibliothèque</h3>
+<ul>
+<li class="tache"><input type="checkbox"> Désillusion appris et assigné à la roue des sorts</li>
+<li class="tache"><input type="checkbox"> <strong>Premier élève évité</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Deux préfets contournés</strong></li>
+<li class="tache"><input type="checkbox"> Clé prise dans le tiroir de la bibliothécaire</li>
+<li class="tache"><input type="checkbox"> <strong>Les deux fantômes détournés</strong> <em>(sort sur l'armure, puis sur le mur)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Peeves croisé, armure réparée au Reparo</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Portail magique révélé</strong> <em>(traces de magie ancienne)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Grand coffre de gauche fouillé</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Plateforme secrète trouvée</strong> <em>(rune, puis à droite)</em> <strong>et son coffre ouvert</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Les 2 coffres latéraux ouverts</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Combat final des sentinelles de pensine gagné</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Livre récupéré</strong></li>
+</ul>
+<h3 id="les-cours-2">Les cours</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Tomes et tribulations terminée</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Mandragore déracinée et rempotée</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Graines de Dictame plantées</strong></li>
+<li class="tache"><input type="checkbox"> Choux mordeurs ramassés et testés sur le mannequin</li>
+<li class="tache"><input type="checkbox"> <strong>Potion Wiggenweld préparée</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Potion Edurus préparée</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Choix fait sur la plume de Focifère</strong></li>
+</ul>
+<h3 id="la-sortie-dans-les-highlands">La sortie dans les Highlands</h3>
+<ul>
+<li class="tache"><input type="checkbox"> <strong>Campolard-en-Bas atteint</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Natty Onai retrouvée</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Flammes de Cheminette de la route activées</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Nora Treadwell sauvée des deux mages noirs</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Mauve douce prise dans son coffre</strong></li>
+<li class="tache"><input type="checkbox"> <strong>Première épreuve de Merlin réussie</strong> <em>(3 piliers à l'Incendio)</em></li>
+<li class="tache"><input type="checkbox"> <strong>Nora Treadwell revue</strong></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="les-premiers-cours-et-pre-au-lard.html" rel="prev"><small>← Partie précédente</small><b>Les premiers cours et Pré-au-Lard</b></a><a class="suiv" href="lheritage-dollivander-le-vol-et-la-salle-sur-demande.html" rel="next"><small>Partie suivante →</small><b>L&#x27;héritage d&#x27;Ollivander, le vol et la Salle sur Demande</b></a><a class="tout" href="hogwarts-legacy.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Hogwarts Legacy : L&#x27;Héritage de Poudlard · guide complet généré le 10 octobre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=63ad9633"></script>
+<script type="module" src="../../assets/compte.js?v=63ad9633"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button><button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) return;
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false); else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+  });
+})();
+</script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

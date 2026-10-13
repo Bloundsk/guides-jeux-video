@@ -67,13 +67,33 @@ Comme tout hébergeur, GitHub enregistre dans ses journaux techniques des donné
 et de fonctionnement. Ce traitement relève de GitHub, Inc. et de sa propre politique de confidentialité ; l'éditeur n'y a pas accès.</p>
 
 <h2>Données personnelles</h2>
-<p>Le site ne dépose <strong>aucun cookie</strong>, n'utilise <strong>aucun outil de mesure d'audience</strong> et ne demande aucune inscription : le compte est facultatif.</p>
+<p>Le site ne dépose <strong>aucun cookie</strong>, mesure son audience de façon anonyme (voir ci-dessous) et ne demande aucune inscription : le compte est facultatif.</p>
 <p>Quelques informations sont conservées dans le stockage local de ton navigateur (<em>localStorage</em>) pour que le site te rende service :
 le thème et les réglages de confort de lecture, tes favoris, les cases cochées dans chaque guide et la dernière partie lue.
-Elles <strong>restent sur ton appareil</strong>, ne sont transmises à aucun serveur et disparaissent quand tu effaces les données de navigation du site.
+Elles <strong>restent sur ton appareil</strong>, ne sont transmises à aucun serveur (sauf si tu crées un compte : voir « Le compte facultatif ») et disparaissent quand tu effaces les données de navigation du site.
 La page <a href="mon-espace.html">Mon espace</a> permet de les exporter, de les importer ou de les effacer d'un clic.</p>
 <p>Pour la lecture hors connexion, les pages du site et les guides que tu ouvres sont aussi gardés dans le cache de ton navigateur, sur ton appareil uniquement.
 Tu peux retirer un guide depuis Mon espace, ou tout effacer avec les données de navigation du site.</p>
+<h3 id="mesure">Mesure d'audience</h3>
+<p>Pour savoir quels guides sont lus et lesquels améliorer, le site compte les pages vues avec <strong>GoatCounter</strong>, un outil de statistiques
+<strong>sans cookie</strong>. À chaque page vue, il reçoit l'adresse de la page, la page d'où tu arrives, la taille de ton écran, ton navigateur, ton système
+et ton pays (déduit de ta connexion). D'après GoatCounter, ni ton adresse IP ni l'identifiant complet de ton navigateur ne sont conservés :
+seules des statistiques globales le sont, qui ne permettent pas de t'identifier. Ces statistiques servent uniquement à l'éditeur ; elles ne sont
+ni vendues, ni croisées avec d'autres données, ni utilisées pour de la publicité.</p>
+<p>Cette mesure se limite aux statistiques de fréquentation du site, pour le seul compte de l'éditeur : c'est pourquoi aucun bandeau de consentement n'est affiché,
+conformément à l'exemption prévue par la CNIL pour la mesure d'audience. Tu peux t'y opposer à tout moment, sans aucune conséquence sur le site :
+<button type="button" id="gc-refus" style="font:inherit;font-weight:600;color:inherit;background:transparent;border:1px solid currentColor;border-radius:999px;padding:.3em .9em;cursor:pointer;margin:.2em 0">Ne plus compter mes visites</button> <span id="gc-etat" aria-live="polite"></span></p>
+<script>
+(function () {
+  var b = document.getElementById("gc-refus"), s = document.getElementById("gc-etat");
+  function lire() { try { return localStorage.getItem("skipgc") === "t"; } catch (e) { return false; } }
+  function maj() { var r = lire(); b.textContent = r ? "Compter de nouveau mes visites" : "Ne plus compter mes visites";
+    s.textContent = r ? "Tes visites ne sont plus comptées sur cet appareil." : ""; }
+  b.addEventListener("click", function () { try { if (lire()) localStorage.removeItem("skipgc"); else localStorage.setItem("skipgc", "t"); } catch (e) {} maj(); });
+  maj();
+})();
+</script>
+
 <p>Le bouton « Signaler une erreur » ne transmet rien par lui-même : il ouvre ta messagerie avec un message prérempli, que tu es libre d'envoyer ou non.</p>
 <p>Le thème et le confort de lecture sont partagés avec <a href="https://bloundsk.github.io/docmaster/">Clicked</a>, l'autre site du même éditeur, hébergé à la même adresse.</p>
 <h2 id="compte">Le compte facultatif</h2>
@@ -126,5 +146,6 @@ interactives tierces (Map Genie, IGN), qui restent sous la responsabilité de le
 <script src="assets/site.js?v=d316f8d3"></script>
 <script src="assets/firebase-config.js?v=63ad9633"></script>
 <script type="module" src="assets/compte.js?v=63ad9633"></script>
+<script data-goatcounter="https://manette-en-main.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

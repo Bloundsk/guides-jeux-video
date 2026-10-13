@@ -164,7 +164,16 @@ async function demarrer() {
 .gjv-c-invite button{font:600 14px system-ui,sans-serif;border-radius:999px;padding:8px 14px;cursor:pointer;border:1px solid rgba(133,196,196,.35);background:none;color:#dfeef0}
 .gjv-c-invite button[data-oui]{background:#4fd6c8;color:#0a1420;border-color:#4fd6c8}
 @media (max-width:560px){.entete .gjv-c-btn .gjv-c-lib{display:none}.entete .gjv-c-btn{padding:7px 10px}}
-@media print{.gjv-c-btn,.gjv-c-invite{display:none}}`;
+.gjv-v{display:inline-flex;flex-wrap:wrap;align-items:center;gap:5px;margin:0 0 0 8px;vertical-align:middle;font:600 12px/1.2 system-ui,sans-serif}
+.gjv-v-q{opacity:.65;font-weight:500}
+.gjv-v button{font:inherit;cursor:pointer;border-radius:999px;padding:3px 8px;border:1px solid rgba(127,140,150,.45);background:transparent;color:inherit;opacity:.85}
+.gjv-v button:hover{opacity:1;border-color:#4fd6c8}
+.gjv-v button[data-v="1"][aria-pressed=true]{background:rgba(79,214,200,.18);border-color:#4fd6c8;color:#4fd6c8;opacity:1}
+.gjv-v button[data-v="-1"][aria-pressed=true]{background:rgba(255,130,114,.15);border-color:#ff8272;color:#ff8272;opacity:1}
+.gjv-v b:empty{display:none}
+.gjv-v-merci{flex-basis:100%;font-weight:500;opacity:.8}
+.gjv-v-merci button{margin-left:4px}
+@media print{.gjv-c-btn,.gjv-c-invite,.gjv-v{display:none}}`;
   document.head.appendChild(style);
 
   const bouton = document.createElement("button");
@@ -329,9 +338,90 @@ ${u.emailVerified || !u.email ? "" : '<p style="color:#e0a15c">Ton adresse n\'es
     if (renvoi) renvoi.onclick = async () => { try { await A.sendEmailVerification(u); message("E-mail renvoyé.", true); } catch (e) { message(messageErreur(e)); } };
     corps().querySelector("[data-suppr]").onclick = async () => {
       if (!confirm("Supprimer définitivement ton compte et la copie en ligne de ta progression ? Ta progression reste sur cet appareil.")) return;
-      try { await F.deleteDoc(F.doc(db, "progression", u.uid)); await A.deleteUser(u); fermer(); }
+      try {
+        // ses votes « Vérifié en jeu » partent avec le compte
+        const mesVotes = await F.getDocs(F.query(F.collection(db, "votes"), F.where("uid", "==", u.uid)));
+        await Promise.all(mesVotes.docs.map(d => F.deleteDoc(d.ref)));
+        await F.deleteDoc(F.doc(db, "progression", u.uid)); await A.deleteUser(u); fermer();
+      }
       catch (e) { message(e.code === "auth/requires-recent-login" ? "Par sécurité, déconnecte-toi, reconnecte-toi, puis recommence la suppression." : messageErreur(e)); }
     };
+  }
+
+  // --- « Confirmé en jeu » : un joueur connecté dit, d'un clic, si un point « à vérifier en jeu » est juste.
+  // Un vote par joueur et par point (votes/{point}__{uid}), sans texte libre ; les totaux sont publics.
+  const points = [...document.querySelectorAll("[data-verif]")];
+  const jeu = document.body.getAttribute("data-guide");
+  let votes = {};   // point -> { oui, non, moi }
+  function partieDe(el) { const s = el.closest("section.section"), h = s && s.querySelector("h1[id]"); return h ? h.id : ""; }
+  function afficherVotes() {
+    document.querySelectorAll(".gjv-v").forEach(w => {
+      const v = votes[w.dataset.p] || { oui: 0, non: 0, moi: 0 };
+      w.querySelector('[data-v="1"] b').textContent = v.oui ? v.oui : "";
+      w.querySelector('[data-v="-1"] b').textContent = v.non ? v.non : "";
+      w.querySelector('[data-v="1"]').setAttribute("aria-pressed", v.moi === 1 ? "true" : "false");
+      w.querySelector('[data-v="-1"]').setAttribute("aria-pressed", v.moi === -1 ? "true" : "false");
+    });
+  }
+  async function chargerVotes() {
+    if (!points.length || !jeu) return;
+    try {
+      const partie = document.body.getAttribute("data-partie");
+      const filtres = [F.where("g", "==", jeu)];
+      if (partie) filtres.push(F.where("s", "==", partie));
+      const r = await F.getDocs(F.query(F.collection(db, "votes"), ...filtres));
+      votes = {};
+      r.forEach(d => {
+        const x = d.data(), v = votes[x.p] || (votes[x.p] = { oui: 0, non: 0, moi: 0 });
+        if (x.v === 1) v.oui++; else if (x.v === -1) v.non++;
+        if (utilisateur && x.uid === utilisateur.uid) v.moi = x.v;
+      });
+      afficherVotes();
+    } catch (e) { console.warn("Votes indisponibles :", e); }
+  }
+  async function voter(p, v, w) {
+    if (!utilisateur) { ouvrir("inscription"); return; }
+    if (ageManquant) { demanderAge(); return; }
+    if (!pret) return;   // première synchronisation en cours
+    const cur = votes[p] || (votes[p] = { oui: 0, non: 0, moi: 0 });
+    const ref = F.doc(db, "votes", p + "__" + utilisateur.uid);
+    const compter = (x, sens) => { if (x === 1) cur.oui += sens; else if (x === -1) cur.non += sens; };
+    const ancien = cur.moi;
+    try {
+      if (ancien === v) { await F.deleteDoc(ref); compter(v, -1); cur.moi = 0; }
+      else {
+        await F.setDoc(ref, { g: jeu, s: partieDe(w), p, v, uid: utilisateur.uid, le: Date.now() });
+        if (ancien) compter(ancien, -1);
+        compter(v, 1); cur.moi = v;
+      }
+      afficherVotes();
+      const merci = w.querySelector(".gjv-v-merci");
+      if (merci) merci.remove();
+      if (cur.moi) {
+        const m = document.createElement("span"); m.className = "gjv-v-merci";
+        m.textContent = cur.moi === 1 ? "Merci ! Ton vote aide les autres joueurs." : "Merci ! Dis-nous ce que tu vois à l'écran : ";
+        if (cur.moi === -1 && document.getElementById("gjv-signaler")) {
+          const b = document.createElement("button"); b.type = "button"; b.textContent = "Signaler une erreur";
+          b.onclick = () => document.getElementById("gjv-signaler").click();
+          m.appendChild(b);
+        }
+        w.appendChild(m);
+      }
+    } catch (e) { w.title = "Vote impossible : " + messageErreur(e); afficherVotes(); }
+  }
+  if (points.length && jeu) {
+    points.forEach(el => {
+      const w = document.createElement("span"); w.className = "gjv-v"; w.dataset.p = el.dataset.verif;
+      w.innerHTML = '<span class="gjv-v-q">Vérifié en jeu ?</span>' +
+        '<button type="button" data-v="1" aria-pressed="false" title="Je l\'ai vérifié en jouant : c\'est bien ça">✓ Oui <b></b></button>' +
+        '<button type="button" data-v="-1" aria-pressed="false" title="Je l\'ai vérifié en jouant : ce n\'est pas ça">✗ Non <b></b></button>';
+      el.appendChild(w);
+    });
+    document.addEventListener("click", e => {
+      const b = e.target.closest(".gjv-v button[data-v]");
+      if (b) { e.preventDefault(); const w = b.closest(".gjv-v"); voter(w.dataset.p, +b.dataset.v, w); }
+    });
+    chargerVotes();
   }
 
   A.onAuthStateChanged(auth, async u => {
@@ -346,6 +436,7 @@ ${u.emailVerified || !u.email ? "" : '<p style="color:#e0a15c">Ton adresse n\'es
       await synchroniser(true);
     }
     afficherEtat();
+    chargerVotes();   // pour afficher ses propres votes (ou les masquer après déconnexion)
     if (boite) { if (!u) vueConnexion("connexion"); else if (pret) vueConnecte(); }
   });
   // reprise de l'onglet : on récupère ce qui a été fait ailleurs ; en le quittant, on envoie ce qui attendait

@@ -164,7 +164,66 @@
     }
   }
   majProgressions();
-  window.addEventListener("storage", function () { majProgressions(); majFavoris(); });
+
+  /* ---------- Bilan de partie (fiche d'un jeu) ----------
+     window.GJV_BILAN (écrit dans la fiche par site.py) donne, pour chaque partie du parcours,
+     ses alertes ⏳ et les cases qui citent le même objet : { l: libellé, a: ancre, k: ["section-N|début du texte"] }.
+     Une case est reconnue par sa section et les 50 premiers caractères de son texte, espaces retirés. */
+  function cleCase(k) {
+    var i = k.indexOf("|");
+    return k.slice(0, i) + "|" + Array.from(k.slice(i + 1).replace(/\s+/g, "")).slice(0, 50).join("");
+  }
+  function rendreBilan() {
+    var zone = document.getElementById("bilan"), B = window.GJV_BILAN;
+    if (!zone || !B || !parSlug[B.slug]) return;
+    var etat = lire("guide-coches:" + B.slug, {}), coches = {};
+    Object.keys(etat || {}).forEach(function (k) { if (etat[k] === true && k.indexOf("|") > 0) coches[cleCase(k)] = true; });
+    var p = progression(B.slug), lec = lectures()[B.slug], j = parSlug[B.slug], ici = -1;
+    var lue = lec && lec.a ? j.parties.filter(function (q) { return q.a === lec.a; })[0] : null;
+    B.parties.forEach(function (part, i) {
+      if ((p.parts[part.s] || 0) > 0 || (lue && lue.s === part.s)) ici = i;   // la partie la plus avancée, cochée ou lue
+    });
+    if (ici < 0 || !p.faits) { zone.hidden = true; return; }   // une simple lecture, sans case cochée, ne fait pas une partie
+    function fait(m) { return m.k.length > 0 && m.k.every(function (k) { return coches[k]; }); }
+    function lien(part, m) { return BASE + j.fiche + part.f + (m && m.a ? "#" + m.a : ""); }
+    function liste(items, max) {
+      var html = items.slice(0, max).join("");
+      if (items.length > max) html += '<li class="plus"><details><summary>Voir les ' + (items.length - max) + " autres</summary><ul>" + items.slice(max).join("") + "</ul></details></li>";
+      return '<ul class="bilan-liste">' + html + "</ul>";
+    }
+    var cur = B.parties[ici], nCur = p.parts[cur.s] || 0, oublies = [], incompletes = [];
+    B.parties.slice(0, ici).forEach(function (part) {
+      part.m.forEach(function (m) {
+        if (m.k.length && !fait(m)) oublies.push('<li><a href="' + lien(part, m) + '"><span class="t">' + echapper(m.l) + '</span><span class="c">' + echapper(part.t) + "</span></a></li>");
+      });
+      var n = p.parts[part.s] || 0;
+      if (part.n && n < part.n) {
+        var signales = part.m.filter(function (m) { return !fait(m); }).length;
+        incompletes.push('<li><a href="' + lien(part) + '"><span class="t">' + echapper(part.t) + '</span><span class="c">' + n + " / " + part.n +
+          (signales ? " · " + signales + " ⏳" : "") + "</span></a></li>");
+      }
+    });
+    var html = '<div class="bilan-tete"><p class="bilan-ou">Tu en es à <b>' + echapper(cur.t) + "</b>" +
+      (cur.n ? " : <b>" + Math.round(nCur / cur.n * 100) + " %</b> de cette partie fait (" + nCur + " / " + cur.n + ")." : ".") + "</p>" +
+      '<p class="bilan-chiffres">' + p.pct + " % du guide · " + p.finies + " partie" + (p.finies > 1 ? "s" : "") + " terminée" + (p.finies > 1 ? "s" : "") +
+      " sur " + j.parties.filter(function (q) { return q.n; }).length + '</p><a class="btn btn-plein" href="' + lien(cur) + '">Reprendre : ' + echapper(cur.t) + "</a></div>";
+    if (ici > 0) {
+      html += oublies.length
+        ? '<div class="bilan-bloc alerte-bilan"><h3>⏳ Il te manque ' + oublies.length + " manquable" + (oublies.length > 1 ? "s" : "") +
+          " dans les parties que tu as passées</h3><p>Leur case n'est pas cochée. Certains se rattrapent encore : le lien t'emmène à l'alerte du guide.</p>" + liste(oublies, 6) + "</div>"
+        : '<div class="bilan-bloc ok-bilan"><h3>✓ Aucun manquable non coché derrière toi</h3><p>Toutes les cases liées à une alerte ⏳ des parties passées sont cochées.</p></div>';
+      if (incompletes.length) html += '<details class="bilan-bloc"><summary><b>Parties passées encore incomplètes</b><span>' + incompletes.length + "</span></summary>" +
+        "<p>Pour chacune : les cases cochées et le nombre d'alertes ⏳ encore à vérifier.</p>" + liste(incompletes, 50) + "</details>";
+    }
+    var restants = cur.m.filter(function (m) { return !fait(m); });
+    if (restants.length) html += '<div class="bilan-bloc"><h3>Avant de quitter ' + echapper(cur.t) + "</h3><p>Les " + restants.length +
+      " alerte" + (restants.length > 1 ? "s" : "") + " ⏳ de ta partie en cours à ne pas laisser derrière toi.</p>" +
+      liste(restants.map(function (m) { return '<li><a href="' + lien(cur, m) + '"><span class="t">' + echapper(m.l) + "</span></a></li>"; }), 6) + "</div>";
+    zone.querySelector(".bilan-corps").innerHTML = html;
+    zone.hidden = false;
+  }
+  rendreBilan();
+  window.addEventListener("storage", function () { majProgressions(); majFavoris(); rendreBilan(); });
 
   /* ---------- « Reprendre ta partie » ---------- */
   function jeuxCommences() {
@@ -250,7 +309,7 @@
         x.p.faits + " / " + x.p.total + " objectifs · " + x.p.finies + " / " + x.j.parties.filter(function (p) { return p.n; }).length +
         " parties terminées" + (lec ? " · " + lec : "") + '</p><div class="barre"><i style="width:' + x.p.pct + '%"></i></div>' +
         '<div class="liens"><a href="' + BASE + (partie && partie.f ? x.j.fiche + partie.f : x.j.guide) + '">' + (partie ? "Reprendre : " + echapper(partie.t) : "Ouvrir le guide") +
-        '</a><a href="' + BASE + x.j.fiche + '#sommaire">Voir le détail par partie</a></div></div></div>';
+        '</a><a href="' + BASE + x.j.fiche + '#bilan">Voir mon bilan</a><a href="' + BASE + x.j.fiche + '#sommaire">Voir le détail par partie</a></div></div></div>';
     }).join("");
     zone.querySelector("#ma-progression .message-vide").hidden = commences.length > 0;
   }

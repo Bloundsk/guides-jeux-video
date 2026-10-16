@@ -223,6 +223,15 @@
     zone.hidden = false;
   }
   rendreBilan();
+
+  /* ---------- Sommaire de la fiche : « Juste l'histoire » ---------- */
+  document.querySelectorAll("[data-filtre-histoire]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var som = document.querySelector(".sommaire[data-jeu]"), on = b.getAttribute("aria-pressed") !== "true";
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      if (som) som.classList.toggle("que-histoire", on);
+    });
+  });
   window.addEventListener("storage", function () { majProgressions(); majFavoris(); rendreBilan(); });
 
   /* ---------- « Reprendre ta partie » ---------- */

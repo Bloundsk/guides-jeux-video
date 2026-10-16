@@ -341,10 +341,26 @@ body.gjv-pas #gjv-boutons { display: none !important; }
 }
 @media (max-width: 560px) {
   .barre-inner { gap: 8px; }
+  .btn-sommaire .gjv-lib { display: none; }
   .search-box:not(:focus-within) .search-nav { display: none; }
   .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
 }
+.gjv-terme { text-decoration: underline dotted color-mix(in srgb, var(--teal, #4fd6c8) 75%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 3px; cursor: help; }
+.gjv-terme:focus-visible { outline: 2px solid var(--teal, #4fd6c8); outline-offset: 2px; border-radius: 3px; }
+body.gjv-sans-jargon .gjv-terme { text-decoration: none; cursor: auto; }
+body.gjv-sans-jargon .gjv-fil { display: none; }
+.gjv-bulle { position: absolute; z-index: 10000; width: min(340px, calc(100vw - 16px)); padding: 14px 16px 12px; border-radius: 12px; background: #13293f; color: #e6f1f2;
+  border: 1px solid rgba(79,214,200,.5); box-shadow: 0 10px 30px rgba(0,0,0,.45); font: 400 14.5px/1.55 var(--sans, system-ui, sans-serif); }
+.gjv-bulle b { display: block; font-size: 15.5px; color: #4fd6c8; margin: 0 26px 4px 0; }
+.gjv-bulle p { margin: 0 0 8px; }
+.gjv-bulle a { color: #d9b25a; font-weight: 600; font-size: 13.5px; }
+.gjv-bulle-x { position: absolute; top: 8px; right: 8px; border: 0; background: none; color: #9fb3bd; font-size: 15px; cursor: pointer; padding: 4px 6px; }
+.gjv-fil { margin: .2rem 0 .6rem; font: 500 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-fil-oui b { color: var(--teal, #4fd6c8); }
+.gjv-fil a { color: var(--teal, #4fd6c8); margin-left: .3em; }
 @media print {
+  .gjv-fil, .gjv-bulle { display: none !important; }
+  .gjv-terme { text-decoration: none; }
   main { zoom: 1; }
   .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
   h2.gjv-pliable::after { display: none; }
@@ -1242,6 +1258,9 @@ body.gjv-pas #gjv-boutons { display: none !important; }
   function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
   appliquerTaille();
   var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  // Sur téléphone, le bouton Sommaire se réduit à ☰ pour laisser de la place à la recherche.
+  var bs = document.getElementById("btnSommaire");
+  if (bs && /^☰\s*Sommaire$/.test(bs.textContent.trim())) { bs.innerHTML = '☰<span class="gjv-lib"> Sommaire</span>'; bs.setAttribute("aria-label", "Sommaire"); }
   function bouton(html, titre) {
     var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
   }
@@ -1349,6 +1368,7 @@ body.gjv-pas #gjv-boutons { display: none !important; }
   });
 })();
 </script>
+<script src="../../assets/glossaire.js?v=a55da0dc"></script>
 <script>
 /* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
 (function () {

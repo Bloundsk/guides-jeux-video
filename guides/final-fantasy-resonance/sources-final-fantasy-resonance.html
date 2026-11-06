@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sources — Final Fantasy Resonance – Guide Final Fantasy Resonance</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Final Fantasy Resonance, Sources — Final Fantasy Resonance : Ces pages n&#x27;ont pas servi à écrire une partie mais à vérifier ce qui n&#x27;avait qu&#x27;une source…">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-resonance/sources-final-fantasy-resonance.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Sources — Final Fantasy Resonance · Guide Final Fantasy Resonance">
+<meta property="og:description" content="Final Fantasy Resonance, Sources — Final Fantasy Resonance : Ces pages n&#x27;ont pas servi à écrire une partie mais à vérifier ce qui n&#x27;avait qu&#x27;une source…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-resonance/sources-final-fantasy-resonance.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Final Fantasy Resonance", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-resonance/"}, {"@type": "ListItem", "position": 3, "name": "Sources — Final Fantasy Resonance", "item": "https://bloundsk.github.io/guides-jeux-video/guides/final-fantasy-resonance/sources-final-fantasy-resonance.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+.gjv-methode { margin: .55rem 0 0; font: 500 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-methode a { color: var(--teal, #4fd6c8); }
+.gjv-methode-bloc { max-width: 1248px; margin: 0 auto; padding: 4px 24px 0; text-align: center; }
+@media print { .gjv-methode, .gjv-methode-bloc { display: none; } }
+main p.visuel { text-align: center; line-height: 1.4; }
+main p.visuel img { border-radius: 8px; height: auto; }
+main p.visuel small { color: var(--ink-dim, #9fb3bd); font-size: 12.5px; }
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .btn-sommaire .gjv-lib { display: none; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+.gjv-terme { text-decoration: underline dotted color-mix(in srgb, var(--teal, #4fd6c8) 75%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 3px; cursor: help; }
+.gjv-terme:focus-visible { outline: 2px solid var(--teal, #4fd6c8); outline-offset: 2px; border-radius: 3px; }
+body.gjv-sans-jargon .gjv-terme { text-decoration: none; cursor: auto; }
+body.gjv-sans-jargon .gjv-fil { display: none; }
+.gjv-bulle { position: absolute; z-index: 10000; width: min(340px, calc(100vw - 16px)); padding: 14px 16px 12px; border-radius: 12px; background: #13293f; color: #e6f1f2;
+  border: 1px solid rgba(79,214,200,.5); box-shadow: 0 10px 30px rgba(0,0,0,.45); font: 400 14.5px/1.55 var(--sans, system-ui, sans-serif); }
+.gjv-bulle b { display: block; font-size: 15.5px; color: #4fd6c8; margin: 0 26px 4px 0; }
+.gjv-bulle p { margin: 0 0 8px; }
+.gjv-bulle a { color: #d9b25a; font-weight: 600; font-size: 13.5px; }
+.gjv-bulle-x { position: absolute; top: 8px; right: 8px; border: 0; background: none; color: #9fb3bd; font-size: 15px; cursor: pointer; padding: 4px 6px; }
+.gjv-fil { margin: .2rem 0 .6rem; font: 500 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-fil-oui b { color: var(--teal, #4fd6c8); }
+.gjv-fil a { color: var(--teal, #4fd6c8); margin-left: .3em; }
+@media print {
+  .gjv-fil, .gjv-bulle { display: none !important; }
+  .gjv-terme { text-decoration: none; }
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="final-fantasy-resonance" class="compact" data-partie="sources-final-fantasy-resonance"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Final Fantasy Resonance</a><span aria-hidden="true">›</span><span>Références</span></nav>
+<p class="gjv-jeu">Final Fantasy Resonance : le guide complet en français</p>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Final Fantasy <em>Resonance</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="00-introduction-tout-comprendre-avant-de-commencer.html"><span class="num">00</span><span class="libelle">Introduction : tout comprendre avant de commencer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="01-prologue-le-champ-de-bataille.html"><span class="num">01</span><span class="libelle">Prologue : le champ de bataille</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="02-chapitre-1-en-quete-de-verite.html"><span class="num">02</span><span class="libelle">Chapitre 1 : En quête de vérité</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="03-chapitre-2-bleu-eternel.html"><span class="num">03</span><span class="libelle">Chapitre 2 : Bleu éternel</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="04-chapitre-3-gardiens-dolderion.html"><span class="num">04</span><span class="libelle">Chapitre 3 : Gardiens d&#x27;Olderion</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="05-chapitre-4-le-serment.html"><span class="num">05</span><span class="libelle">Chapitre 4 : Le serment</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="06-chapitre-5-premiere-moitie-laeronef-et-mysidia.html"><span class="num">06</span><span class="libelle">Chapitre 5, première moitié : l&#x27;aéronef et Mysidia</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="07-chapitre-5-seconde-moitie-les-vestiges-du-temps.html"><span class="num">07</span><span class="libelle">Chapitre 5, seconde moitié : les vestiges du temps</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="08-chapitre-6-serenite.html"><span class="num">08</span><span class="libelle">Chapitre 6 : Sérénité</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="09-chapitre-7-lheure-de-la-vengeance.html"><span class="num">09</span><span class="libelle">Chapitre 7 : L&#x27;heure de la vengeance</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="10-chapitre-8-une-lueur-despoir.html"><span class="num">10</span><span class="libelle">Chapitre 8 : Une lueur d&#x27;espoir</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="11-les-26-visions-ou-les-trouver-et-lesquelles-eveiller.html"><span class="num">11</span><span class="libelle">Les 26 Visions : où les trouver et lesquelles éveiller</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="12-les-9-chimeres.html"><span class="num">12</span><span class="libelle">Les 9 Chimères</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="14-les-enigmes-des-donjons.html"><span class="num">14</span><span class="libelle">Les énigmes des donjons</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="15-le-combat-tour-par-tour-jauge-de-choc-et-limites.html"><span class="num">15</span><span class="libelle">Le combat : tour par tour, jauge de Choc et Limites</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="16-statistiques-alterations-detat-et-composition-dequipe.html"><span class="num">16</span><span class="libelle">Statistiques, altérations d&#x27;état et composition d&#x27;équipe</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="17-les-huit-heros-un-par-un.html"><span class="num">17</span><span class="libelle">Les huit héros, un par un</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="18-armes-armures-accessoires-et-la-forge-daileen.html"><span class="num">18</span><span class="libelle">Armes, armures, accessoires et la forge d&#x27;Aileen</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="19-les-quinze-ennemis-des-grottes-et-les-douze-armes-legendaires.html"><span class="num">19</span><span class="libelle">Les quinze ennemis des grottes et les douze armes légendaires</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="20-les-boss-de-terrain-rares-et-gilgamesh.html"><span class="num">20</span><span class="libelle">Les boss de terrain rares, et Gilgamesh</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="21-le-colisee-et-ses-quatre-ligues.html"><span class="num">21</span><span class="libelle">Le Colisée et ses quatre ligues</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="22-lapres-jeu-et-les-superboss.html"><span class="num">22</span><span class="libelle">L&#x27;après-jeu et les superboss</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="23-farm-experience-gils-et-points-de-maitrise.html"><span class="num">23</span><span class="libelle">Farm : expérience, gils et points de maîtrise</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="24-les-trophees-ps5-et-la-route-du-platine.html"><span class="num">24</span><span class="libelle">Les trophées PS5 et la route du platine</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="13-les-33-quetes-annexes.html"><span class="num">13</span><span class="libelle">Les 33 quêtes annexes</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="99-annexes-index-manquables-et-check-list-finale.html"><span class="num">99</span><span class="libelle">Annexes : index, manquables et check-list finale</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="#sources-final-fantasy-resonance"><span class="num">✦</span><span class="libelle">Sources — Final Fantasy Resonance</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-27">
+<header class="tete-section">
+<p class="eyebrow">Références</p>
+<h1 id="sources-final-fantasy-resonance">Sources — Final Fantasy Resonance</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-27"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-27">
+<p>Toutes les pages ont été consultées en novembre 2026, soit deux semaines après la sortie du jeu. Quand une information n'a qu'une seule source, le guide le dit à l'endroit concerné.</p>
+<h2 id="les-sources-principales" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Les sources principales</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Ce qu'elle apporte</th>
+<th>Langue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/">Final Fantasy Resonance Wiki, version française</a></td>
+<td>La soluce chapitre par chapitre, les Visions, les Chimères, les quêtes annexes, les énigmes — <strong>et surtout les noms français officiels</strong></td>
+<td>Français</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/guides/">Final Fantasy Resonance Wiki, version anglaise</a></td>
+<td>Les mêmes pages, souvent plus détaillées sur les chiffres : PV, niveaux, récompenses</td>
+<td>Anglais</td>
+</tr>
+<tr>
+<td><a href="https://www.gameblog.fr/">Gameblog</a></td>
+<td>Guides français ciblés : les 26 Visions, les 9 Chimères</td>
+<td>Français</td>
+</tr>
+<tr>
+<td><a href="https://www.gamingdeputy.com/france/">Gaming Deputy France</a></td>
+<td>Les quêtes annexes et leurs récompenses</td>
+<td>Français</td>
+</tr>
+<tr>
+<td><a href="https://zoneasoluces.fr/solution-final-fantasy-resonance-guide-complet-hd-2d/">Zone à Soluces</a></td>
+<td>Soluce vidéo française complète, chapitre par chapitre</td>
+<td>Français</td>
+</tr>
+<tr>
+<td><a href="https://vorxu.com/final-fantasy-resonance/">Vorxu</a></td>
+<td>Routes de donjon détaillées, coffre par coffre, avec PV et niveaux des ennemis</td>
+<td>Anglais</td>
+</tr>
+<tr>
+<td><a href="https://egw.news/">EGW</a></td>
+<td>Secteurs détaillés, mécaniques de boss</td>
+<td>Anglais</td>
+</tr>
+<tr>
+<td><a href="https://meowdb.com/db/final-fantasy-resonance/">MeowDB</a></td>
+<td>Base de données : objets, ennemis, équipement</td>
+<td>Anglais</td>
+</tr>
+<tr>
+<td><a href="https://en.wikipedia.org/wiki/Final_Fantasy_Resonance">Wikipédia</a></td>
+<td>La fiche du jeu : studio, dates, plateformes, accueil critique</td>
+<td>Anglais</td>
+</tr>
+<tr>
+<td><a href="https://store.playstation.com/fr-fr/product/JP0082-PPSA31544_00-FFRSSTDWW0000000">PlayStation Store France</a></td>
+<td>Éditions, prix, contenu de la version PS5</td>
+<td>Français</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="phase-1-identification-et-decoupage" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Phase 1 — identification et découpage</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://en.wikipedia.org/wiki/Final_Fantasy_Resonance">Final Fantasy Resonance — Wikipédia</a></td>
+<td>Sortie le <strong>22 octobre 2026</strong>, Lancarse et Square Enix, Unreal Engine 5, <strong>premier HD-2D de la série</strong>, adaptation de l'arc <em>Lapis</em> de Brave Exvius, tour par tour et non ATB, Metacritic <strong>86 sur PS5</strong></td>
+</tr>
+<tr>
+<td><a href="https://store.playstation.com/fr-fr/product/JP0082-PPSA31544_00-FFRSSTDWW0000000">Final Fantasy Resonance — PlayStation Store FR</a></td>
+<td>Version PS5, édition standard et Digital Deluxe</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-walkthrough/">Soluce : tous les chapitres, version française</a></td>
+<td><strong>Les titres français des huit chapitres</strong>, le nombre d'objectifs de chacun, et les noms français des lieux</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/guides/ff-resonance-walkthrough/">Walkthrough : all chapters</a></td>
+<td>La même structure côté anglais, pour recouper les noms de lieux</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/">Index des guides, version française</a></td>
+<td>L'existence des pages françaises, et les termes <strong>Visions</strong>, <strong>Chimères</strong>, <strong>Limites</strong>, <strong>Mécabo</strong></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-01-le-prologue" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 01 — Le prologue</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-chapter-1-walkthrough/">Soluce du chapitre 1, version française</a></td>
+<td>Le prologue en entier : <strong>Dark Fina niveau 55</strong>, les trois combats, les ennemis et leurs niveaux, <strong>Méga Foudre</strong>, la Limite <strong>Convergence chaotique</strong>, le <strong>Géant de fer</strong> à 89 999 PV et l'invocation forcée de <strong>Bahamut</strong>, les six leçons de <em>Comment jouer</em>, et l'absence totale de coffre</td>
+</tr>
+<tr>
+<td><a href="https://vorxu.com/final-fantasy-resonance/walkthrough/tailing-the-truth">Chapter 1: Tailing the Truth Walkthrough — Vorxu</a></td>
+<td>Confirme que le prologue est un tutoriel sans butin : la page commence après lui, « after the opening tutorial »</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-02-chapitre-1-en-quete-de-verite" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 02 — Chapitre 1 : En quête de vérité</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-chapter-1-walkthrough/">Soluce du chapitre 1, version française</a></td>
+<td><strong>Les 18 objectifs dans leur libellé français exact</strong>, les coffres lieu par lieu avec les <strong>noms français des objets</strong>, les niveaux et PV des boss, les ennemis ordinaires, les quatre quêtes annexes, et les trois conversations à embranchements</td>
+</tr>
+<tr>
+<td><a href="https://vorxu.com/final-fantasy-resonance/walkthrough/tailing-the-truth">Chapter 1: Tailing the Truth Walkthrough — Vorxu</a></td>
+<td>La <strong>route précise du Temple de la Terre</strong>, coffre par coffre, et les chiffres de Belmodar : niveau 4, 2 000 PV, faible Feu et Ténèbres, <strong>divise la Foudre par deux</strong>, récompense 300 EXP / 750 gils / Queue de phénix. Confirme aussi le garde soigneur et le téléporteur du point de sauvegarde</td>
+</tr>
+<tr>
+<td><a href="https://egw.news/gaming/news/38043/final-fantasy-resonance-chapter-1-walkthrough-eart-WHqDZxz32">Sanctuaire de la Terre, Belmodar et l'attaque de Grandshelt — EGW</a></td>
+<td>Confirme que <strong>la réponse choisie devant le temple renforce durablement Rain</strong></td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/guides/ff-resonance-gilgamesh-genji-gloves/">Gilgamesh, From Siren's Tower to the Genji Armor</a></td>
+<td>Le coffre piégé des <strong>Gants de Genji</strong> : Gilgamesh niveau 11, 6 000 PV, jauge d'étourdissement de 1 000, <strong>imbattable</strong>, le vol réussit toujours, coffre <strong>entièrement optionnel</strong>, et un <strong>Éther</strong> à voler au premier tour</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-points-of-no-return/">Points de non-retour, version française</a></td>
+<td>Confirme qu'<strong>embarquer pour Dirnado ne ferme rien</strong> : le premier avertissement du jeu n'arrive qu'au chapitre 2</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-03-chapitre-2-bleu-eternel" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 03 — Chapitre 2 : Bleu éternel</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-walkthrough/chapter-2/">Soluce du chapitre 2, version française</a></td>
+<td><strong>Les 14 objectifs en français</strong>, les coffres et les <strong>noms français des objets</strong> lieu par lieu, les boss avec niveaux et PV, les trois conversations à embranchements dont le <strong>+3 en Force, Magie ou Endurance pour Lid</strong>, le <strong>sentier payant à 1 000 gils</strong>, les trois sanctuaires de Dilmagia (Chevalier Oignon, Djidane, Noctis), la <strong>Vision Aileen</strong> par <em>Volonté forgée</em> et la <strong>Chimère Ramuh</strong> par l'épreuve du Mont foudroyant</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/guides/ff-resonance-walkthrough/chapter-2/">Walkthrough chapter 2, version anglaise</a></td>
+<td><strong>L'évasion de 15 minutes étape par étape</strong> : le <strong>levier 16</strong> sur cinq, le mot de Borin, le combat de pénalité en cas de mauvais levier, le Gardien qu'on fuit toujours, Épiméthée sans fuite, et Adrastea sur le train. Précise aussi que la <strong>Chambre des armes</strong> demande le <strong>niveau 50</strong> et une arme ancienne</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-points-of-no-return/">Points de non-retour, version française</a></td>
+<td>L'<strong>avertissement de sauvegarde</strong> du chantier naval dans son libellé exact, et le fait que <strong>le chantier reste accessible ensuite</strong> : deux quêtes annexes y renvoient, donc rien n'y est perdu</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-04-chapitre-3-gardiens-dolderion" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 04 — Chapitre 3 : Gardiens d'Olderion</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-walkthrough/chapter-3/">Soluce du chapitre 3, version française</a></td>
+<td><strong>Les 21 objectifs en français</strong>, les coffres et les objets lieu par lieu, les quatre boss avec niveaux, PV et mécaniques — <strong>khélones dévorées</strong>, <strong>Orbes de lumière</strong>, <strong>Noyaux de prisme</strong> —, les trois sanctuaires d'Olderion, <strong>Carbuncle par la stèle de la Grotte aux rubis</strong>, Léviathan au lac Dorr, les deux quêtes annexes et leurs récompenses, et le <strong>+30 PV / +3 Magie / +3 Vitesse</strong> de Nichol</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-points-of-no-return/">Points de non-retour, version française</a></td>
+<td>L'<strong>avertissement de la Vieille ville</strong> dans son libellé exact, le fait que <strong>les boutiques d'Olderion sont fermées</strong> jusqu'à la fin de l'événement, et le conseil d'amener de la Foudre pour le Dragon d'eau, Léviathan et Alluvion</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/guides/ff-resonance-gilgamesh-genji-gloves/">Gilgamesh, From Siren's Tower to the Genji Armor</a></td>
+<td>La <strong>scène sans combat du Passage de la cascade</strong>, où il refuse de rendre les Gants de Genji</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-05-chapitre-4-le-serment" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 05 — Chapitre 4 : Le serment</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-walkthrough/chapter-4/">Soluce du chapitre 4, version française</a></td>
+<td><strong>Les 20 objectifs en français</strong>, les coffres et objets lieu par lieu, les trois combats d'Ignis dont le troisième à <strong>56 000 PV</strong>, l'<strong>Empereur de Zoldaad</strong> et ses Prétorien spectral tous faibles à l'Eau, <strong>Évan qui remonte à 20 % de ses PV</strong>, <strong>Lazarov</strong> et sa fenêtre d'injection avec ses trois expériences, la <strong>Barrette de grâce</strong> par le livre griffonné et le tableau, l'ouverture du <strong>Colisée de Grandshelt</strong>, les sanctuaires de Cécil, Shantotto et Y'shtola, l'<strong>épreuve d'Ifrit</strong> à la Demeure de chimère, et la Limite <strong>Frappe de l'Entreprise</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Cette page se contredit sur un point : elle affirme qu'« aucune quête annexe ne s'ouvre au chapitre 4 » tout en listant quatre quêtes avec leurs récompenses — <em>Au bout du chemin</em>, <em>L'appel lointain</em>, <em>Rebelle solitaire</em> et <em>Ô Général ! Mon Général !</em>. Le guide signale la contradiction au lieu de trancher, et renvoie à la partie <strong>13</strong> pour les points de départ.</p>
+<h2 id="partie-06-chapitre-5-premiere-moitie" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 06 — Chapitre 5, première moitié</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-walkthrough/chapter-5/">Soluce du chapitre 5, version française</a></td>
+<td><strong>Les objectifs 1 à 18 en français</strong>, les coffres de Mysidia, Sunioo, du vieux château et de la bibliothèque avec leurs effets chiffrés, le <strong>coffre verrouillé de l'Armure de Tyr</strong> et l'ordre des trois statues, <strong>Goulu</strong> et son Avale, les <strong>deux serviteurs qui ripostent au physique</strong>, <strong>Tellus</strong> et ses deux registres imposés, les <strong>cinq étagères</strong> avec leurs compositions, <strong>Byblos</strong>, les sanctuaires de Bartz, Vaan et Lightning, l'<strong>épreuve de Shiva</strong>, et les trois manches de <strong>Mog perché</strong></td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/guides/ff-resonance-gilgamesh-genji-gloves/">Gilgamesh, From Siren's Tower to the Genji Armor</a></td>
+<td>Le <strong>deuxième combat sur le pont de l'aéronef</strong> : <strong>niveau 40, 90 000 PV</strong>, refusable, et la victoire <strong>rend les Gants de Genji</strong></td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/database/items/">Base d'objets, version française</a></td>
+<td>La distinction entre <strong>Queue de phénix</strong> (25 % des PV, dès 200 gils) et <strong>Plume de phénix</strong> (50 %, dès 2 000 gils)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-07-chapitre-5-seconde-moitie" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 07 — Chapitre 5, seconde moitié</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-walkthrough/chapter-5/">Soluce du chapitre 5, version française</a></td>
+<td><strong>Les objectifs 19 à 38 en français</strong>, les quatre coffres de la <strong>Tour de Mysidia</strong>, le <strong>Morbol</strong> de l'objectif 29, le Pot azur, et les deux invites « pas encore »</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-how-to-beat-dark-fina/">Comment battre Dark Fina, version française</a></td>
+<td>Sa fiche complète : <strong>100 000 PV</strong>, barre de choc <strong>800</strong>, faiblesses Eau et Lumière, Ténèbres de moitié, <strong>toutes ses immunités d'état</strong>, ses <strong>treize compétences avec leurs noms français</strong>, ses <strong>deux phases à 60 %</strong>, le fait qu'<strong>aucune Chimère n'est invocable</strong>, et les récompenses — 15 000 EXP, 19 500 gils, 132 PRM, un <strong>Ruban</strong></td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-how-to-beat-tellus/">Comment battre Tellus, version française</a></td>
+<td><strong>Les noms français de ses compétences</strong> — Aplatissement, Méga Terre, Charge, Frappe protectrice, Brise-os, Méga Cécité, Poing fortifiant, Souffle écrasant —, ses deux contres (« Tu parles de magie ! », « C'est tout ce que vous avez ? »), ses immunités, et les <strong>noms français de ses butins</strong> : <strong>Noyau de golem</strong> au chapitre 5, <strong>Parchemin terre II</strong> au chapitre 7</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/guides/ff-resonance-how-to-beat-tellus/">How to Beat Tellus, version anglaise</a></td>
+<td><strong>Ses trois apparitions</strong> : un combat <strong>scénarisé et imbattable</strong> aux ruines sans nom au chapitre 5, le vrai combat à la fin du chapitre 5, et la <strong>revanche du chapitre 7 au niveau 49 avec 220 000 PV</strong>. C'est cette page qui a corrigé ma première lecture, qui faisait du premier Tellus un boss normal</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="partie-08-chapitre-6-serenite" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 08 — Chapitre 6 : Sérénité</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-walkthrough/chapter-6/">Soluce du chapitre 6, version française</a></td>
+<td><strong>Les 13 objectifs en français avec leur lieu</strong>, les <strong>niveaux de danger</strong> de chaque zone, les coffres et les noms français des objets, les quatre boss — <strong>Lux</strong> et son Miroir, <strong>Elfdrit</strong> dont le Rétablissement remplit sa propre barre de choc, le <strong>duel de Rain contre Lasswell</strong> à barre de choc de 9 999, et <strong>Gelidus</strong> à 200 000 PV —, les <strong>six combats du temple de Sanctissimus</strong>, les 23 ennemis ordinaires de Gronoa, les six quêtes annexes, et la <strong>Chimère Odin</strong> par <em>Fracture métallique</em> à la Ville de Duggle</td>
+</tr>
+</tbody>
+</table></div>
+<p>Cette page se contredit sur le cinquième combat du temple de Sanctissimus : son texte parle de <strong>deux Archigargouilles</strong>, sa liste n'en donne <strong>qu'une</strong>. Le guide signale le point comme à vérifier en jeu plutôt que de trancher.</p>
+<h2 id="partie-09-chapitre-7-lheure-de-la-vengeance" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 09 — Chapitre 7 : L'heure de la vengeance</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-walkthrough/chapter-7/">Soluce du chapitre 7, version française</a></td>
+<td><strong>Les 8 objectifs en français avec leur lieu</strong>, les niveaux de danger et le nombre de points de sauvegarde, les <strong>11 coffres de la Tour de cristal</strong> zone par zone — deux sans position documentée —, les <strong>cinq revanches</strong> avec leurs nouveaux chiffres, le fait qu'<strong>Aether devient insensible au Vent</strong> et qu'<strong>Ignis agit en premier</strong>, <strong>Umbra qui contre-attaque les coups de Lumière</strong>, les six adversaires optionnels, les Visions <strong>Charlotte</strong> et <strong>Ayaka</strong>, et la condition de <strong>Bahamut</strong> : sept Chimères, puis monter à bord de l'aéronef</td>
+</tr>
+</tbody>
+</table></div>
+<p>C'est aussi cette page qui donne la liste des <strong>sept Chimères prérequises</strong> — Carbuncle, Ramuh, Léviathan, Ifrit, Shiva, Titan, Odin —, et donc l'existence de <strong>Titan</strong> comme Chimère à part entière.</p>
+<h2 id="partie-10-chapitre-8-une-lueur-despoir" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 10 — Chapitre 8 : Une lueur d'espoir</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-walkthrough/chapter-8/">Soluce du chapitre 8, version française</a></td>
+<td>L'<strong>objectif unique</strong>, la <strong>séquence des sept combats</strong>, l'<strong>avertissement du point de non-retour dans son libellé exact</strong>, le fait qu'<strong>Alluvion combat à tes côtés</strong> contre Béhémoth, les <strong>sept péchés</strong> de la seconde forme avec leurs niveaux et leurs faiblesses, les <strong>chemins des deux coffres cachés</strong> de la tour, la <strong>sauvegarde de fin de partie</strong>, <strong>Ultima niveau 70 au Cratère d'Ardra</strong> signalé par le radar, et le <strong>Générateur puissant</strong> à 60 000 gils du cinquième navire marchand</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-how-to-beat-sol/">Comment battre Sol, version française</a></td>
+<td><strong>Les noms français</strong> — Sol, et <strong>Bahamut obscur</strong> et non « Dark Bahamut » —, les chiffres des deux combats de Sol avec leurs barres de choc de <strong>1 400</strong> et <strong>3 000</strong>, ceux de Bahamut obscur, ses compétences, et la liste des Visions qui donnent une <strong>aptitude Ténèbres à Rain</strong> : <strong>Cécil</strong>, <strong>Séphiroth</strong>, <strong>Victoria</strong> dès le départ, <strong>Shantotto</strong> après son premier éveil</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-how-to-beat-chaotic-darkness/">Comment battre l'Obscurité chaotique, version française</a></td>
+<td><strong>Le nom français du boss final : Obscurité chaotique</strong>, ses deux formes à <strong>180 000</strong> puis <strong>320 000 PV</strong>, les <strong>60 000 PV par main</strong>, les barres de choc <strong>1 450</strong>, <strong>1 700</strong> et <strong>900</strong>, et ses trente aptitudes</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-how-to-beat-behemoth/">Comment battre Béhémoth, version française</a></td>
+<td><strong>L'orthographe française Béhémoth</strong>, et sa barre de choc de <strong>1 400</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Ces trois fiches de boss ont corrigé des noms que j'aurais sinon traduits moi-même : « Chaos des ténèbres », « Dark Bahamut » et « Behemoth » étaient de ma main, et sont remplacés partout par <strong>Obscurité chaotique</strong>, <strong>Bahamut obscur</strong> et <strong>Béhémoth</strong>.</p>
+<h2 id="partie-11-les-26-visions" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 11 — Les 26 Visions</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.gameblog.fr/jeu-video/ed/astuces/guide-ff-resonance-visions-725033">GUIDE FF Resonance : où et comment trouver les 26 Visions — Gameblog</a></td>
+<td><strong>La liste française complète des 26 Visions</strong>, avec leur <strong>rôle</strong> — Attaquant, Briseur, Défenseur, Soigneur, Saboteur —, leur chapitre et leur <strong>emplacement précis sur la carte</strong>. C'est aussi cette page qui explique que les Visions montent avec les <strong>PRM</strong> et que les passifs se conservent sans la Vision équipée</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-sanctum-questions/">Questions des sanctuaires, version française</a></td>
+<td>Le fait décisif : <strong>les 48 questions des 16 sanctuaires n'ont pas de bonne réponse</strong>, les trois choix mènent à la même Vision, sans bonus ni malus, et les questions se <strong>rejouent</strong> en retouchant le cristal. Plus le sujet des trois questions de chaque sanctuaire</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-tablet-shards-magicite/">Fragments de tablette, magilithes et éveil des Visions, version française</a></td>
+<td><strong>Fragment de magilithe, Magilithe et Cristal de magilithe pour les éveils 1, 2 et 3</strong>, le fait que l'éveil <strong>ne monte pas les statistiques</strong>, les <strong>sources de magilithes</strong> — Palais de l'Oubli, boutique du Colisée à 10 000 / 50 000 / 250 000 gils, les huit Chimères, le navire marchand, les mogs —, et surtout que le <strong>Fragment de tablette n'est pas un objet d'éveil</strong> : il ouvre les coffres du <strong>Palais de l'Oubli</strong>, 99 exemplaires dans 48 lieux</td>
+</tr>
+</tbody>
+</table></div>
+<p>Cette dernière page a corrigé une erreur de mon propre guide : les parties <strong>02</strong> et <strong>03</strong> présentaient le Fragment de tablette comme un objet d'éveil. C'est réparé.</p>
+<p>Divergence relevée : Gameblog et le wiki ne rattachent pas au même chapitre les six Visions de quête <strong>Aileen</strong>, <strong>Wilhelm</strong>, <strong>Victoria</strong>, <strong>Camille</strong>, <strong>Amélia</strong> et <strong>Charlotte</strong>. Le guide donne le chapitre de Gameblog — celui où la quête se termine — et signale l'écart au lecteur.</p>
+<h2 id="partie-12-les-9-chimeres" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 12 — Les 9 Chimères</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.gameblog.fr/jeu-video/ed/astuces/guide-ff-resonance-chimeres-emplacement-725213">GUIDE FF Resonance : les 9 Chimères — Gameblog</a></td>
+<td><strong>Les neuf Chimères en français</strong>, leur <strong>niveau conseillé</strong>, leur emplacement, la mécanique d'invocation — <strong>50 PM</strong>, trois tours d'action libre, puis une grosse attaque —, les mécaniques des épreuves de Ramuh, Titan, Ifrit, Shiva et de l'<strong>Ombre d'Odin</strong>, les chiffres de <strong>Bahamut</strong> (200 000 PV, aucune faiblesse, Méga Fission, dégâts élémentaires stockés et renvoyés), et le trophée <strong>« Souverains de la planète »</strong></td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-all-espers/">Chaque Chimère et comment l'obtenir, version française</a></td>
+<td><strong>L'élément de chaque Chimère</strong> et le <strong>nom français de son invocation</strong> — Voix ensorcelante, Foudre du jugement, Éclat du rubis, Tsunami, Colère de Gaïa, Flammes de l'enfer, Poussière de diamant, Zantetsuken, Méga Fission —, le <strong>Marteau de Gaïa</strong> gagné au <strong>rang Novice 5 du Colisée</strong>, et le fait que <strong>Léviathan ne rejoint Fina qu'après <em>La mission de Nichol</em></strong>, sans second combat</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-tablet-shards-magicite/">Fragments de tablette, magilithes et éveil des Visions, version française</a></td>
+<td><strong>L'objet d'éveil que chaque Chimère donne</strong> : un Fragment pour Sirène, Ramuh et Léviathan, une Magilithe pour Ifrit, Shiva et Titan, un Cristal pour Odin et Bahamut — et <strong>rien pour Carbuncle</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Divergence relevée sur Ifrit : Gameblog situe son épreuve au chapitre 5, le wiki la rend accessible dès le chapitre 4. Les deux parlent du même endroit, le cratère du volcan à l'est de Zoldaad. Le guide donne le lieu et le niveau conseillé, et signale que c'est l'aéronef qui rend l'accès commode.</p>
+<h2 id="partie-13-les-33-quetes-annexes" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 13 — Les 33 quêtes annexes</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.gamingdeputy.com/france/final-fantasy-resonance-quetes-secondaires-recompenses/">Final Fantasy Resonance : toutes les quêtes secondaires et récompenses — Gaming Deputy France</a></td>
+<td><strong>Le compte de 33 quêtes</strong>, le <strong>point de départ</strong> de chacune, ce qu'elle demande étape par étape, ses <strong>ennemis à battre</strong>, et surtout les <strong>huit quêtes de personnage</strong> avec leurs bonus chiffrés — <strong>+100 PV</strong>, <strong>+30 PM</strong> et deux statistiques —, plus les <strong>quatre chaînes de prérequis</strong> et le prérequis inhabituel de <em>Fracture métallique</em></td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-side-quests-guide/">Quêtes annexes, version française</a></td>
+<td><strong>Les noms français des quêtes</strong>, que la source précédente laisse en partie en anglais</td>
+</tr>
+</tbody>
+</table></div>
+<p>Réserve explicite dans le guide : la page de Gaming Deputy est <strong>visiblement traduite automatiquement</strong> — elle laisse des titres de quêtes en anglais. Ses <strong>noms d'objets</strong> sont donc présentés comme à vérifier en jeu, sauf ceux que le wiki français confirme par ailleurs (<strong>Diadème rose</strong>, <strong>Blason critique</strong>).</p>
+<p>Divergence relevée : <em>Mog perché</em> est <strong>une quête en trois manches</strong> pour le wiki français, <strong>trois quêtes distinctes</strong> pour Gaming Deputy — dont vient le compte de 33. Je n'ai de nom français que pour la première, et le guide le dit.</p>
+<h2 id="partie-14-les-enigmes-des-donjons" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 14 — Les énigmes des donjons</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-dungeon-puzzles/">Énigmes des donjons, version française</a></td>
+<td><strong>Les neuf énigmes et leurs solutions</strong> : le <strong>levier 16</strong> du chantier naval et l'indice des trois nombres peints au sol, les éléments du Temple de l'Eau, le <strong>livre puis le tableau</strong> du château de Zoldaad, l'<strong>ordre des trois statues</strong> et le fait qu'il faut <strong>examiner le coffre d'abord</strong>, les <strong>trois cartes d'accès</strong> des Ruines du laboratoire, les <strong>sept stèles</strong> de Sanctissimus, les <strong>trois emplacements des Fragment de rubis</strong> et le rôle de <strong>Dalim</strong>, la <strong>pierre de sceau</strong> de Titan avec ses chiffres de combat (65 000 PV, barre de choc 1 500) et le fait que le <strong>Marteau de Gaïa n'est pas consommé</strong>, et les <strong>65 dalles du chemin invisible</strong> de la Tour de cristal avec ses quatre culs-de-sac</td>
+</tr>
+<tr>
+<td><a href="https://www.weareplaystation.fr/communautes/final-fantasy-resonance/astuces/wiki/final-fantasy-resonance-all-puzzles-guide-commentary">Final Fantasy Resonance — All Puzzles Guide, WeArePlayStation France</a></td>
+<td>La vidéo française qui montre les énigmes résolues, avec commentaires — utile pour vérifier le chemin invisible en mouvement</td>
+</tr>
+</tbody>
+</table></div>
+<p>Cette page a aussi <strong>tranché une contradiction</strong> de la partie <strong>08</strong> : son tableau des stèles donne <strong>deux Archigargouille</strong> au cinquième combat du temple de Sanctissimus, et rappelle que la stèle met en garde contre le fait de laisser un ennemi debout. La partie 08 est corrigée en conséquence.</p>
+<h2 id="partie-15-le-combat" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 15 — Le combat</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-combat-for-beginners/">Bases du combat pour débuter, version française</a></td>
+<td>Le <strong>tour par tour sans ATB</strong>, la <strong>barre de Choc</strong> et le fait que frapper une <strong>résistance peut la faire remonter</strong>, les trois effets du Choc, l'<strong>Action bonus</strong>, le <strong>CHOC TOTAL</strong>, les attaques de <strong>Résonance</strong> et le conseil de les réserver aux tours gratuits, et l'échelle de maîtrise propre à chaque Vision</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/game/combat/">Combat et systèmes, page de référence française</a></td>
+<td>La <strong>file des tours</strong> en haut de l'écran, le <strong>chiffre de Choc affiché avant chaque attaque</strong>, le fait qu'un Choc <strong>annule l'attaque dévastatrice</strong>, la roue <strong>SELECT RESONANCE</strong> et quatre Résonances nommées — <strong>Âme brave de cristal</strong>, <strong>Péril ascendant</strong>, <strong>Vent éthéréen</strong>, <strong>Lame rebelle-Lotus</strong> —, les <strong>Limites de niveau 2 à deux jauges chargeables jusqu'à 200 %</strong>, les règles d'invocation par Fina, les <strong>trois difficultés</strong> et le surplus de PRM en Expert, les <strong>trois bonus de fin de combat</strong>, et les <strong>six rôles</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Cette seconde page liste aussi explicitement ce qu'elle <strong>ne publie pas</strong> : valeurs numériques du Choc, formules de dégâts, coûts en PM, durée exacte d'une invocation et fonctionnement du « système de jobs évolué ». Le guide reprend cette liste telle quelle plutôt que de combler les trous.</p>
+<h2 id="partie-16-statistiques-alterations-detat-et-composition-dequipe" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 16 — Statistiques, altérations d'état et composition d'équipe</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-stats-explained/">Les statistiques expliquées, version française</a></td>
+<td><strong>Les sept attributs et les PA</strong>, les <strong>cinq valeurs dérivées</strong> dont la <strong>Spiritualité</strong> qui vient des arcs et des robes, le <strong>niveau 99</strong> et les <strong>200 → 7 030 PV de Rain</strong>, les gains des <strong>rangs de maîtrise de Vision</strong>, le fait que certaines <strong>armures lourdes baissent la Vitesse</strong>, et surtout que la <strong>puissance de Choc n'est liée à aucun attribut</strong> : elle appartient aux aptitudes et se monte par passifs, et le <strong>niveau de l'ennemi</strong> la rend plus dure à vider</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-status-ailments/">Les altérations d'état, version française</a></td>
+<td><strong>Les dix altérations</strong> avec leur effet, leur objet de soin et leur accessoire de prévention, le fait que <strong>Sommeil et Confusion se lèvent par une attaque physique</strong>, que la <strong>Pétrification de tout le groupe fait perdre</strong>, que le <strong>Silence n'a aucun accessoire</strong>, que <strong>Guérison ne soigne pas la Mort instantanée</strong>, et la différence entre le <strong>Ruban</strong> et le <strong>Super ruban</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>La grille des huit héros et de leurs éléments n'est pas une fiche officielle : c'est la synthèse des compétences que mes sources nomment chapitre par chapitre, et le guide le dit explicitement au lecteur.</p>
+<h2 id="partie-17-les-huit-heros" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 17 — Les huit héros</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-best-vision-for-each-character/">La meilleure Vision pour chaque personnage, version française</a></td>
+<td><strong>Le rôle, les éléments naturels et le type d'arme des huit héros</strong> — et deux corrections à mon propre guide : <strong>Lasswell est Briseur</strong> et non Attaquant, <strong>Dark Fina est Saboteuse</strong>, et surtout <strong>Jake et Sakura portent la Foudre</strong>, ce que la partie 16 niait. Plus la recommandation <strong>Tronn</strong> pour sept héros sur huit, avec son raisonnement chiffré — <strong>Danse de glace</strong>, puissance de choc <strong>29</strong>, la plus élevée parmi les Visions qui ajoutent un élément —, <strong>Amélia</strong> pour Lasswell, <strong>Leah</strong> pour doubler le soin de Fina, le fait que <strong>Nichol est le seul Tacticien du jeu</strong>, et la <strong>Furie élémentaire</strong> de Sakura qui tire au hasard parmi six éléments</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le reste de la partie — les aptitudes nommées de chaque héros, leurs armes, leurs quêtes et leurs choix de dialogue — vient des recherches faites chapitre par chapitre pour les parties <strong>01</strong> à <strong>13</strong>, et chaque source est citée à sa partie.</p>
+<p>Les <strong>huit fiches de build</strong> du wiki sont <strong>liées dans la partie 17 comme lecture complémentaire</strong>, mais je ne les ai pas exploitées : leur contenu détaillé n'est donc pas repris dans le guide.</p>
+<p>Correction apportée à mon propre guide : les parties <strong>04</strong> et <strong>16</strong> affirmaient qu'<strong>aucun héros ne porte la Foudre</strong>. C'est faux — <strong>Jake</strong> et <strong>Sakura</strong> l'ont, mais ils rejoignent le groupe aux chapitres <strong>4</strong> et <strong>5</strong>, alors que les ennemis faibles à la Foudre commencent au chapitre 2. Les deux parties sont reformulées.</p>
+<h2 id="partie-18-equipement-et-forge-daileen" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 18 — Équipement et forge d'Aileen</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-aileen-forge-adamantite/">La forge d'Aileen et les 8 Adamantite, version française</a></td>
+<td><strong>Les noms français des huit armes forgées</strong> — Sauvécarlate, Shisui, Elysium, SUPER Marteau Mécabo, Caelum renatum, Codex providentiae, Rosélia, Abysse —, leurs <strong>statistiques et leurs effets</strong>, le déblocage par <strong>Volonté forgée</strong> au chapitre 5 puis la forge au <strong>pont de l'aéronef</strong> au chapitre 6, <strong>une Adamantite par arme</strong> et <strong>une seule arme par héros</strong>, les <strong>huit emplacements d'Adamantite</strong>, et la comparaison honnête avec les <strong>douze armes légendaires</strong>, qui restent supérieures pour sept héros sur huit</td>
+</tr>
+<tr>
+<td><a href="https://meowdb.com/db/final-fantasy-resonance/mechanics/aileens-forge">FF Resonance Aileen's Forge: Adamantite Weapons — MeowDB</a></td>
+<td><strong>Recoupement complet</strong> des huit armes, de leurs effets et des emplacements d'Adamantite, et la précision que le menu d'Aileen <strong>ne liste que les armes que tu ne possèdes pas encore</strong></td>
+</tr>
+<tr>
+<td><a href="https://games.gg/final-fantasy-resonance/guides/ff-resonance-crafting-guide/">Final Fantasy Resonance Crafting Guide — games.gg</a></td>
+<td>Consultée pour recouper le déblocage ; elle ajoute une condition d'<strong>amélioration de l'aéronef</strong> que <strong>ni le wiki français ni MeowDB ne confirment</strong>, donc le guide ne la reprend pas</td>
+</tr>
+</tbody>
+</table></div>
+<p>Le reste de la partie — les armes, armures et accessoires du scénario — vient des recherches faites chapitre par chapitre pour les parties <strong>02</strong> à <strong>10</strong>.</p>
+<p>Lecture explicite de mes sources : les deux Adamantite du Palais de l'Oubli sont données « à 80 et 89 fragments de tablette ». Comme le jeu n'en compte que <strong>99 au total</strong>, le guide les présente comme des <strong>paliers de collecte</strong> et non comme un coût, et le dit au lecteur.</p>
+<h2 id="partie-19-les-ennemis-des-grottes-et-les-armes-legendaires" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 19 — Les ennemis des grottes et les armes légendaires</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-cave-masters-guide/">Les puissants ennemis des grottes, version française</a></td>
+<td><strong>Les quinze ennemis de grotte</strong> avec leur <strong>niveau</strong>, leur <strong>faiblesse</strong>, leur <strong>grotte et sa région</strong>, et leur <strong>butin</strong> : un objet d'éveil plus un consommable, selon une échelle nette — Fragment jusqu'au niveau 26, Magilithe jusqu'à 45, <strong>Cristal de magilithe pour les six derniers</strong>. C'est aussi cette page qui donne le terme français employé par le jeu, « puissants ennemis des grottes »</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-legendary-arms-guardians/">Les gardiens des armes légendaires, version française</a></td>
+<td>La <strong>Chambre des armes</strong> sur Dirnado, le principe de la <strong>pièce ancienne</strong> posée sur l'autel, les <strong>niveaux 50 et 75</strong> des deux épreuves, le gardien identique avec <strong>3 à 5 fois plus de PV</strong> dans la seconde, les récompenses — <strong>30 000 EXP / 18 000 gils</strong> puis <strong>200 000 EXP / 100 000 gils</strong> —, la <strong>forme « + »</strong> et sa <strong>limite de dégâts à 99 999</strong>, et les <strong>douze gardiens avec leur faiblesse et leur pièce légendaire</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Deux lectures que le guide signale comme telles. L'<strong>attribution des huit premières pièces aux huit héros</strong> n'est pas écrite sur la page : elle se déduit du <strong>type d'arme</strong>, qui est propre à chaque héros. Et la page ne dit pas <strong>lesquelles</strong> des douze pièces passent à 99 999 ; le guide propose les huit armes comme hypothèse, en le disant.</p>
+<p>Point que mes sources ne publient pas : la <strong>provenance des douze pièces anciennes</strong>. Le guide n'en documente qu'une, le <strong>Katana ancien</strong> de la Tour de cristal, et marque le reste comme à vérifier.</p>
+<p>Cette partie a aussi résolu une inconnue de la partie <strong>16</strong> : l'<strong>Armure tatenashi</strong>, qui bloque la Mort instantanée, est la pièce légendaire gardée par <strong>Sadalsuud</strong>.</p>
+<h2 id="partie-20-les-boss-de-terrain-rares-et-gilgamesh" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 20 — Les boss de terrain rares et Gilgamesh</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-rare-field-bosses/">Les boss de rencontre rares, version française</a></td>
+<td><strong>Les neuf rares</strong> avec leur lieu, leur niveau, leurs <strong>PV</strong>, leur faiblesse, leur <strong>objet rare</strong> et leur <strong>taux d'apparition</strong> zone par zone ; le <strong>vol de Djidane au rang de maîtrise 1</strong>, puis <strong>Œil perspicace</strong> à l'éveil 1 et <strong>Chasse au trésor</strong> à l'éveil 3 ; <strong>Dix mille épines</strong> du Pampa jumbo qui inflige exactement 10 000 dégâts et sa fuite spontanée ; les <strong>deux Picotyugh</strong> du Gobetyugh ; et le fait que quatre de ces monstres <strong>reviennent au Colisée</strong> en versions plus fortes</td>
+</tr>
+<tr>
+<td><a href="https://allthings.how/gilgamesh-final-fantasy-resonance/">Gilgamesh in Final Fantasy Resonance — AllThings.how</a></td>
+<td><strong>Les trois combats</strong> avec niveau, PV, objets volables et récompenses — <strong>10 000 EXP / 12 000 gils / Gants de Genji</strong> sur l'aéronef, <strong>22 000 EXP / 20 000 gils / Armure de Genji</strong> au pont de Kolobos —, le fait que le <strong>premier combat ne se gagne pas</strong> et ne donne même pas d'écran de résultat, les <strong>trois invocations du combat de l'aéronef</strong>, et la <strong>seconde phase du pont de Kolobos</strong> à la moitié des PV</td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/guides/ff-resonance-gilgamesh-genji-gloves/">Gilgamesh, From Siren's Tower to the Genji Armor</a></td>
+<td>La <strong>chaîne complète</strong> : coffre piégé, scène du Passage de la cascade, rencontre de la voie ferrée de Timber, les <strong>quatre ponts</strong> de la mappemonde, puis le pont de Kolobos</td>
+</tr>
+</tbody>
+</table></div>
+<p>Noms traduits avec prudence : la source anglophone parle de « Cactuar », « Tonberry » et « Bomb » pour les trois invocations de l'aéronef. Le guide écrit <strong>Pampa</strong>, <strong>Tomberry</strong> et <strong>Bombo</strong>, qui sont les formes françaises attestées ailleurs dans mes sources — les deux premières dans le bestiaire de Gronoa, la troisième par <strong>Maman bombo</strong> et <strong>Papa bombo</strong>.</p>
+<p>Cette page a aussi donné le nom français d'un lieu que j'avais traduit moi-même : le « Forest Path » du chapitre 7 s'appelle le <strong>Sentier sylvestre</strong>, et la partie <strong>07</strong> est corrigée.</p>
+<h2 id="partie-21-le-colisee" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 21 — Le Colisée</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-colosseum-guide/">Le guide du Colisée, version française</a></td>
+<td>Le Colisée dans la <strong>capitale royale de Grandshelt</strong>, son ouverture au <strong>chapitre 4</strong> avec l'objectif « Se rendre à la station de Mozul », les <strong>4 ligues et 20 combats</strong>, les <strong>niveaux conseillés</strong> par ligue, les <strong>adversaires de chaque ligue</strong>, les <strong>20 récompenses de première victoire</strong>, les consommables des rejouées, les <strong>certificats</strong> qui étoffent la boutique, le <strong>catalogue complet avec ses prix</strong>, et la règle décisive : <strong>fuir compte comme une défaite</strong></td>
+</tr>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-gladiator-league-guide/">La ligue Gladiateur, version française</a></td>
+<td>Citée dans la partie comme renvoi pour le détail de ses cinq duels</td>
+</tr>
+</tbody>
+</table></div>
+<p>Cette partie a résolu <strong>trois inconnues</strong> du guide. Le <strong>Super ruban</strong>, dont les parties 16 et 18 ne connaissaient pas la provenance, est la récompense du rang <strong>Champion 1</strong>. Et <strong>deux des douze pièces anciennes</strong> de la Chambre des armes viennent du Colisée : l'<strong>Espadon ancien</strong> au rang <strong>Novice 3</strong>, la <strong>Cuirasse ancienne</strong> au rang <strong>Combattant 5</strong>. Les parties <strong>16</strong>, <strong>18</strong> et <strong>19</strong> sont corrigées en conséquence.</p>
+<h2 id="partie-22-lapres-jeu-et-les-superboss" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 22 — L'après-jeu et les superboss</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-post-game-guide/">Le guide de l'après-jeu, version française</a></td>
+<td>La <strong>sauvegarde de fin de partie</strong> et le fait qu'<strong>il n'y a pas de New Game+</strong>, ce qui reste accessible, les <strong>huit superboss avec leurs niveaux et leurs PV</strong> — <strong>Séphiroth 250 000</strong>, <strong>Intangir 300 000</strong>, <strong>Arme magitech 573 000</strong>, <strong>Ultima 3 900 000</strong>, <strong>Bête de la ruine 4 500 000</strong>, <strong>Shinryû 4 000 000</strong>, <strong>Oméga 9 999 999</strong> —, les <strong>cinq rangs de la ligue Champion</strong> avec les PV de la Reine morbol et du Dragon sacré, le <strong>Palais de l'Oubli</strong> et ses <strong>25 coffres</strong> ouverts par tranches de fragments de tablette avec les paliers <strong>76</strong>, <strong>84</strong>, <strong>89</strong> et <strong>99</strong>, et l'<strong>ordre conseillé</strong> en quatre étapes</td>
+</tr>
+</tbody>
+</table></div>
+<p>Cette page a complété deux points du guide. Elle donne les <strong>PV de Séphiroth</strong> et l'orthographe <strong>Grotte du tourbillon</strong>, que la partie <strong>11</strong> écrivait « Grotte Tourbillon » d'après Gameblog. Et elle ajoute <strong>deux pièces anciennes</strong> aux trois déjà documentées : le <strong>Fusil ancien</strong> à 76 fragments et le <strong>Fouet ancien</strong> à 84, tous deux au Palais de l'Oubli. La partie <strong>19</strong> passe donc de trois à <strong>cinq pièces anciennes documentées sur douze</strong>.</p>
+<h2 id="partie-23-farm-experience-gils-et-points-de-maitrise" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 23 — Farm : expérience, gils et points de maîtrise</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-farming-exp-gil-mrp/">Farmer EXP, gils et PRM, version française</a></td>
+<td>Le fait que le <strong>scénario ne demande aucun farm</strong>, les <strong>trois familles de monstres</strong> — Pampa, Gilkhélone, Pampinet —, les <strong>spots et les gains par combat de chaque tranche de chapitres</strong> <em>(de 300 EXP au chapitre 1 à 150 000 à Pharm)</em>, les <strong>trois bonus de fin de combat</strong> avec leurs multiplicateurs <strong>×1,2</strong>, <strong>×1,3</strong> et <strong>×1,3</strong>, le fait que la difficulté <strong>ne change que les PRM</strong> avec un <strong>×1,5 en Expert</strong>, les <strong>sept accessoires de farm</strong> avec leurs effets, les Visions <strong>Victoria</strong> et <strong>Vaan</strong>, les <strong>rangs de maîtrise 4 et 9</strong> et leurs <strong>+8 PA</strong>, le mode d'emploi des <strong>monstres métalliques</strong>, et la réserve sur la <strong>Gueule du dragon</strong> dont les combats ne se fuient pas</td>
+</tr>
+</tbody>
+</table></div>
+<p>Cette page a demandé <strong>deux lectures</strong>. La première a renvoyé les noms de monstres et d'accessoires <strong>traduits en anglais</strong> ; je l'ai relue en demandant les chaînes <strong>françaises verbatim</strong>, ce qui a donné <strong>Khimaira dhorme</strong>, <strong>Pampinet</strong>, <strong>Requin</strong>, <strong>Œil flottant</strong>, <strong>Mini Pampinator</strong>, <strong>Pampa métallique</strong>, <strong>Pampa jumbo métallique</strong>, <strong>Mini Gilkhélone</strong>, <strong>Gilkhélone</strong>, <strong>Roi Gilkhélone</strong>, puis <strong>Bracelet d'adepte</strong>, <strong>Plastron de préparation</strong>, <strong>Pendentif de maîtrise</strong>, <strong>Anneau de maîtrise</strong>, <strong>Cuirasse bénie</strong>, <strong>Leurre-ennemis</strong> et <strong>Cloche protectrice</strong>. Aucun de ces noms n'est de ma traduction.</p>
+<p>Information dépendant de l'édition, signalée comme telle dans le guide : le <strong>Plastron de préparation</strong> est un <strong>bonus de précommande</strong> et l'<strong>Anneau de maîtrise</strong> vient de l'<strong>édition Digital Deluxe</strong>.</p>
+<p>Point que mes sources ne publient pas : le <strong>nom français</strong> de l'objet du rang de maîtrise 9 qui regroupe toutes les aptitudes d'une Vision en un seul emplacement. Le guide en donne l'effet, pas le nom.</p>
+<h2 id="partie-24-les-trophees-ps5" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 24 — Les trophées PS5</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://ffresonance.wiki/fr/guides/ff-resonance-trophy-guide/">Le guide français des trophées</a></td>
+<td><strong>Les noms français des 40 trophées</strong> et leurs conditions, le fait qu'<strong>aucun ne se rate définitivement</strong> et qu'<strong>aucun ne dépend de la difficulté</strong>, la <strong>feuille de route en quatre temps</strong>, et le signalement de l'<strong>incohérence de « Rendre Lid fière »</strong> : « dépenser » un million de gils en français, « amasser » un million en anglais et en espagnol</td>
+</tr>
+<tr>
+<td><a href="https://www.powerpyx.com/final-fantasy-resonance-trophy-list-revealed/">Final Fantasy Resonance Trophy List Revealed — PowerPyx</a></td>
+<td>La <strong>répartition par grade</strong> — <strong>1 platine, 4 or, 7 argent, 28 bronze</strong> —, la <strong>difficulté estimée à 4/10</strong>, les <strong>50 à 60 heures</strong>, <strong>une seule partie</strong>, <strong>zéro trophée manquable</strong>, et le trophée le plus dur : <strong>Je m'appelle Ultima…</strong></td>
+</tr>
+<tr>
+<td><a href="https://www.gameblog.fr/jeu-video/ed/news/final-fantasy-resonance-liste-trophees-succes-leak-722571">Final Fantasy Resonance : la liste des trophées — Gameblog</a></td>
+<td>Recoupement du <strong>compte de 40</strong> et des conditions, avec les <strong>titres anglais</strong> d'avant la sortie — utiles pour retrouver les guides anglophones</td>
+</tr>
+</tbody>
+</table></div>
+<p>Deux limites signalées dans le guide. Mes sources françaises <strong>ne publient pas le grade de chaque trophée</strong>, seulement la répartition globale : le guide ne devine donc pas quels sont les quatre <strong>or</strong>. Et la <strong>ligue Champion du Colisée n'a aucun trophée associé</strong> — ni Oméga, ni Shinryû, ni les trois autres —, ce que le guide dit explicitement pour éviter dix heures de préparation inutile à qui ne veut que le platine.</p>
+<h2 id="partie-00-introduction" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Partie 00 — Introduction</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce que j'en ai tiré</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.playstation.com/fr-fr/games/final-fantasy-resonance/">Final Fantasy Resonance — PlayStation France</a></td>
+<td>La <strong>présentation officielle française</strong> : le HD-2D et ses cinématiques en pixel art, les Visions comme « échos » de héros de la série, le combat au tour par tour où l'on <strong>exploite les faiblesses pour étourdir</strong>, les contenus annexes nommés — <strong>Gilgamesh</strong>, le <strong>Colisée</strong>, la <strong>Chambre des armes</strong>, <strong>Ultima</strong> —, les <strong>éditions à 59,99 € et 69,99 €</strong>, et les langues : <strong>textes en français</strong>, voix en anglais et en japonais</td>
+</tr>
+<tr>
+<td><a href="https://blog.fr.playstation.com/2026/09/03/demo-ps5-de-final-fantasy-resonance-disponible-aujourdhui-sephiroth-devoile/">Démo PS5 de Final Fantasy Resonance disponible, Séphiroth dévoilé — PlayStation Blog France</a></td>
+<td>La <strong>démo contient le chapitre 1 en entier</strong> et sa <strong>sauvegarde est transférable</strong>, <strong>Séphiroth</strong> est un défi à récompense spéciale, les Chimères <strong>combattent trois tours puis portent un coup final</strong>, les Visions s'obtiennent en terminant les <strong>événements de personnage</strong> et aux <strong>sanctuaires de cristal</strong>, et le fait qu'on peut <strong>équiper des aptitudes de plusieurs Visions à la fois dans une limite de coût</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p>Ces deux pages officielles ont aussi apporté <strong>trois noms français</strong> que le guide signale : le PlayStation Blog appelle la barre de Choc la <strong>jauge de posture</strong>, l'Action bonus la <strong>phase bonus</strong>, et nomme la file des tours <strong>Ligne temporelle</strong> — terme que le guide a adopté.</p>
+<p>Le reste de l'introduction est une synthèse des parties <strong>01</strong> à <strong>24</strong>, dont chaque source est citée à sa partie.</p>
+<h2 id="divergences-relevees-sur-les-faits-du-jeu" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Divergences relevées sur les faits du jeu</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Ce que le guide écrit</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Date de sortie</td>
+<td><strong>22 octobre 2026</strong> (Wikipédia et le PlayStation Blog France) contre <strong>21 octobre 2026</strong> (page produit du PlayStation Store français)</td>
+<td><strong>22 octobre 2026</strong></td>
+<td>Deux sources contre une, dont le blog officiel de l'éditeur de la plateforme</td>
+</tr>
+<tr>
+<td>Nom du superboss du Cratère d'Ardra</td>
+<td><strong>Ultima</strong> (wiki français, et le trophée <strong>« Je m'appelle Ultima… »</strong>) contre <strong>Ultima Arma</strong> (page PlayStation officielle)</td>
+<td><strong>Ultima</strong></td>
+<td>Le <strong>nom du trophée</strong> est un texte affiché par le jeu : il tranche</td>
+</tr>
+<tr>
+<td>Nom de la jauge d'étourdissement</td>
+<td><strong>barre de Choc</strong> (wiki français, qui cite les textes du jeu) contre <strong>jauge de posture</strong> (PlayStation Blog France)</td>
+<td><strong>barre de Choc</strong></td>
+<td>La source qui reproduit les libellés affichés en jeu l'emporte, et le guide signale l'autre terme</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="phase-4-les-recoupements-qui-ont-corrige-ou-complete-le-guide" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Phase 4 — les recoupements qui ont corrigé ou complété le guide</span></h2>
+<p>Ces pages n'ont pas servi à écrire une partie mais à <strong>vérifier</strong> ce qui n'avait qu'une source, et plusieurs ont comblé de vrais trous.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Page</th>
+<th>Ce qu'elle a apporté</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.keengamer.com/articles/guides/final-fantasy-resonance-trophy-list-platinum-roadmap/">Trophy List &amp; Platinum Roadmap — KeenGamer</a></td>
+<td><strong>Le grade de chaque trophée</strong>, que mes sources françaises ne publient pas : le platine <strong>Fantaisie ultime</strong>, les <strong>quatre or</strong> — Plus dure est la chute, Détermination cristallisée, Adepte des résonances, Je m'appelle Ultima… — et les <strong>sept argent</strong>. La partie <strong>24</strong> ne devine donc plus rien</td>
+</tr>
+<tr>
+<td><a href="https://www.gfinityesports.com/article/final-fantasy-resonance-editions-guide-content-pre-order-bonuses-and-price">Editions Guide: Content, Pre-Order Bonuses and Price — Gfinity Esports</a></td>
+<td>L'origine des <strong>trois boosters de farm</strong> : le <strong>Plastron de préparation</strong> vient du pack de précommande, l'<strong>Anneau de maîtrise</strong> du pack Deluxe, et la <strong>Cuirasse bénie</strong> du <strong>bonus d'achat anticipé</strong> avant le 6 novembre 2026. La partie <strong>23</strong> disait de la dernière que son emplacement était inconnu</td>
+</tr>
+<tr>
+<td><a href="https://vorxu.com/final-fantasy-resonance/walkthrough/eternal-blue">Chapter 2: Eternal Blue — Vorxu</a></td>
+<td><strong>Recoupement complet des coffres du chapitre 2</strong>, qui confirme la liste française coffre pour coffre. Elle ajoute les <strong>PV de Ramuh (24 000) et du Shoggoth (45 500)</strong>, les <strong>15 Fragment de tablette</strong> du chapitre lieu par lieu, le fait que le <strong>Sabre lunaire</strong>, les <strong>Poignets de force</strong> et les <strong>800 gils</strong> sont sur la <strong>route du Sanctuaire du Chevalier Oignon</strong>, et un <strong>Marteau de bronze</strong> à ramasser à même le sol que la source française ne mentionnait pas</td>
+</tr>
+<tr>
+<td><a href="https://meowdb.com/db/final-fantasy-resonance/">Final Fantasy Resonance — MeowDB</a></td>
+<td>Les <strong>totaux de la base de données</strong> : <strong>593 ennemis</strong>, <strong>448 pièces d'équipement</strong>, <strong>89 objets</strong>, <strong>1 482 compétences</strong>, <strong>26 Visions</strong>, <strong>163 zones</strong>, <strong>20 combats de Colisée</strong>, <strong>40 trophées</strong>. Les Visions, le Colisée et les trophées concordent avec le guide</td>
+</tr>
+<tr>
+<td><a href="https://meowdb.com/db/final-fantasy-resonance/mechanics/stat-choices">Stat Choices — MeowDB</a></td>
+<td><strong>Les huit conversations à bonus permanent, au complet</strong> : le chapitre, le héros concerné et les <strong>trois bonus de chacune</strong>. C'est le plus gros apport de cette phase : les parties <strong>05</strong>, <strong>06</strong> et <strong>08</strong> écrivaient « mes sources ne précisent pas lesquelles »</td>
+</tr>
+<tr>
+<td><a href="https://games.gg/final-fantasy-resonance/guides/dialogue-choices-stat-bonuses/">Dialogue Choices &amp; Stat Bonuses — games.gg</a></td>
+<td><strong>Recoupement des huit conversations</strong>, avec le <strong>lieu exact</strong> de chacune — Temple de la Terre, tour de Sirène, Dilmagia, Olderion, base des rebelles, sommet du château de Zoldaad, village de Sunioo, Ruines du laboratoire</td>
+</tr>
+<tr>
+<td><a href="https://meowdb.com/db/final-fantasy-resonance/recommended-levels">Recommended Levels — MeowDB</a></td>
+<td>Les <strong>fourchettes de niveaux des ennemis et des boss, chapitre par chapitre</strong>, d'où le tableau des annexes. La page ne donne <strong>pas</strong> de niveau conseillé : le guide le dit, et présente les niveaux des ennemis à la place</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="les-divergences-que-ces-recoupements-ont-fait-apparaitre">Les divergences que ces recoupements ont fait apparaître</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Ce que le guide écrit</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bonus de dialogue de <strong>Nichol</strong></td>
+<td><strong>+30 PV</strong> (wiki français et MeowDB) contre <strong>+10 PV</strong> (games.gg, qui se contredit dans son propre encadré)</td>
+<td><strong>+30 PV</strong></td>
+<td>Deux sources contre une, et la troisième s'avoue incertaine</td>
+</tr>
+<tr>
+<td>Chapitre de la conversation de <strong>Lid</strong></td>
+<td><strong>Chapitre 2</strong> (wiki français et MeowDB) contre <strong>chapitre 3</strong> (games.gg)</td>
+<td><strong>Chapitre 2</strong></td>
+<td>Les trois situent la scène à <strong>Dilmagia</strong>, que le scénario quitte à la fin du chapitre 2</td>
+</tr>
+<tr>
+<td>Nombre de <strong>Chimères</strong></td>
+<td><strong>9</strong> (wiki français et Gameblog, et le trophée « Souverains de la planète ») contre <strong>10</strong> (compteur de MeowDB)</td>
+<td><strong>9</strong></td>
+<td>Deux sources et un <strong>texte du jeu</strong> contre un compteur de base de données, qui inclut probablement une entrée technique</td>
+</tr>
+<tr>
+<td>Nombre de <strong>personnages</strong></td>
+<td><strong>8 héros jouables</strong> dans ce guide contre <strong>11 personnages</strong> au compteur de MeowDB</td>
+<td><strong>8</strong></td>
+<td>Le compteur inclut les personnages invités et temporaires — Ignis au chapitre 4, Alluvion au chapitre 8, l'archisorcière Fina — qui ne sont pas des membres du groupe</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="divergences-tranchees" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Divergences tranchées</span></h2>
+<p>Quand deux sources ne disent pas la même chose, je choisis une fois et je tiens le choix dans tout le guide.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Point</th>
+<th>Les sources</th>
+<th>Ce que le guide écrit</th>
+<th>Pourquoi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Queue de phénix et Plume de phénix</td>
+<td>Les pages de soluce emploient l'un ou l'autre selon le chapitre, ce qui ressemble à une incohérence de traduction</td>
+<td><strong>Deux objets différents</strong>, écrits chacun à sa place</td>
+<td>Vérification faite dans la <a href="https://ffresonance.wiki/fr/database/items/">base d'objets du wiki</a> : la <strong>Queue de phénix</strong> relève à <strong>25 % des PV</strong> et se vend à partir de <strong>200 gils</strong>, la <strong>Plume de phénix</strong> relève à <strong>50 %</strong> et se vend à partir de <strong>2 000 gils</strong>. Ce n'était donc pas une divergence</td>
+</tr>
+<tr>
+<td>Contenu de la démo</td>
+<td>« le chapitre 1 entier » (PlayStation Blog France) contre « la fin du chapitre 1 » (Wikipédia)</td>
+<td><strong>Le chapitre 1 en entier</strong></td>
+<td><strong>Tranché</strong> : le PlayStation Blog France est le blog officiel de la plateforme, et il écrit que la démo contient le chapitre 1 en entier avec une sauvegarde transférable</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="nom-francais-a-confirmer" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-diamond"/></svg></span><span>Nom français à confirmer</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Terme</th>
+<th>Ce que j'ai écrit</th>
+<th>Pourquoi c'est en attente</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>La Vision soigneuse recommandée contre Dark Fina</td>
+<td><strong>Leah</strong></td>
+<td>La page française écrit « Leah (Lia) », donc elle hésite elle-même. J'ai retenu <strong>Leah</strong>, et la partie <strong>11</strong> tranchera avec la liste complète des 26 Visions</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="99-annexes-index-manquables-et-check-list-finale.html" rel="prev"><small>← Partie précédente</small><b>Annexes : index, manquables et check-list finale</b></a><a class="tout" href="final-fantasy-resonance.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Final Fantasy Resonance · guide complet généré le 2 novembre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=41900d0d"></script>
+<script type="module" src="../../assets/compte.js?v=41900d0d"></script>
+<script data-goatcounter="https://manette-en-main.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas, lecture à voix haute). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  // Sur téléphone, le bouton Sommaire se réduit à ☰ pour laisser de la place à la recherche.
+  var bs = document.getElementById("btnSommaire");
+  if (bs && /^☰\s*Sommaire$/.test(bs.textContent.trim())) { bs.innerHTML = '☰<span class="gjv-lib"> Sommaire</span>'; bs.setAttribute("aria-label", "Sommaire"); }
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois, lisible à voix haute");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button>' +
+    '<button type="button" data-voix aria-pressed="false" title="Lire les étapes à voix haute" aria-label="Lire les étapes à voix haute" hidden>🔊</button>' +
+    '<button type="button" data-relire title="Relire l\'étape" aria-label="Relire l\'étape" hidden>↻</button>' +
+    '<button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+
+  // 4. Lecture à voix haute (synthèse vocale du navigateur, rien ne part sur Internet) : en mode Pas à pas,
+  // chaque étape est lue à l'arrivée. Phrase par phrase, car Chrome coupe les textes longs.
+  var synth = window.speechSynthesis && window.SpeechSynthesisUtterance ? window.speechSynthesis : null;
+  var voix = false, voixFr = null, bVoix = bar.querySelector("[data-voix]"), bRelire = bar.querySelector("[data-relire]");
+  function choisirVoix() {
+    var v = synth.getVoices().filter(function (x) { return /^fr/i.test(x.lang); });
+    voixFr = v.filter(function (x) { return /fr[-_]FR/i.test(x.lang) && x.localService; })[0] || v.filter(function (x) { return /fr[-_]FR/i.test(x.lang); })[0] || v[0] || null;
+  }
+  function aDire(li) {
+    var c = li.cloneNode(true);
+    c.querySelectorAll("input, .gjv-verif, button, sup").forEach(function (n) { n.remove(); });
+    c.querySelectorAll("li").forEach(function (n) { n.insertAdjacentText("afterbegin", " "); n.insertAdjacentText("beforeend", ". "); });
+    return c.textContent.replace(/⚠️?/g, "Attention : ").replace(/⏳/g, "Manquable : ").replace(/[→➜]/g, ", puis ").replace(/\[(\d+)\]/g, " $1")
+      .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\uFE0F]/gu, "").replace(/\s*([.:;,])\s*(?=[.:;,])/g, "").replace(/\s+/g, " ").trim();
+  }
+  function dire(li) {
+    synth.cancel();
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    var phrases = ("Étape " + rang + ". " + aDire(li)).match(/[^.!?;]+[.!?;]*\s*/g) || [];
+    phrases.forEach(function (ph) {
+      if (!ph.trim()) return;
+      var u = new SpeechSynthesisUtterance(ph.trim());
+      u.lang = "fr-FR"; if (voixFr) u.voice = voixFr;
+      synth.speak(u);
+    });
+  }
+  function basculerVoix(on) {
+    if (!synth) return;
+    voix = on; ecrire("gjv:voix", on ? "1" : "0");
+    bVoix.setAttribute("aria-pressed", on ? "true" : "false"); bVoix.textContent = on ? "🔊" : "🔇";
+    bRelire.hidden = !on;
+    if (on && cur >= 0) dire(etapes[cur]); else synth.cancel();
+  }
+  if (synth && etapes.length) {
+    choisirVoix(); if (synth.addEventListener) synth.addEventListener("voiceschanged", choisirVoix);
+    bVoix.hidden = false; bVoix.textContent = "🔇";
+    if (lire("gjv:voix") === "1") { voix = true; bVoix.setAttribute("aria-pressed", "true"); bVoix.textContent = "🔊"; bRelire.hidden = false; }
+    addEventListener("pagehide", function () { synth.cancel(); });
+  }
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+    if (voix) dire(li);
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) { if (synth) synth.cancel(); return; }
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false);
+    else if (b.hasAttribute("data-voix")) basculerVoix(!voix);
+    else if (b.hasAttribute("data-relire")) { if (cur >= 0) dire(etapes[cur]); }
+    else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+    else if ((e.key === "l" || e.key === "L") && synth) basculerVoix(!voix);
+    else if ((e.key === "r" || e.key === "R") && voix && cur >= 0) dire(etapes[cur]);
+  });
+})();
+</script>
+<script src="../../assets/glossaire.js?v=4d7cc8d9"></script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

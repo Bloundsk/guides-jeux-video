@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="fr" prefix="og: https://ogp.me/ns#">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chapitre 4 : l&#x27;Ajax Gym et la préparation du coup de l&#x27;aéroport – Guide Grand Theft Auto VI</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg-deep: #0a1420; --bg-panel: #101f30; --bg-panel-2: #13293f;
+  --line: rgba(133,196,196,0.16);
+  --teal: #4fd6c8; --teal-dim: #2a8f86; --gold: #d9b25a; --gold-dim: #8a6f34;
+  --ink: #dfeef0; --ink-body: #c4d7db; --ink-dim: #8ea8b0; --ink-faint: #5c7379;
+  --blanc: #f2f8f6; --violet: #8f7ad1; --amber: #e0a15c;
+  --rouge: #ff8272;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; background: var(--bg-deep); }
+body {
+  margin: 0; min-height: 100vh; color: var(--ink-body);
+  background:
+    radial-gradient(ellipse 800px 500px at 15% -5%, rgba(79,214,200,0.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at 90% 10%, rgba(143,122,209,0.10), transparent 55%),
+    var(--bg-deep);
+  font: 17px/1.62 var(--serif);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { text-decoration: underline; text-decoration-color: var(--teal-dim); }
+a:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+/* Lucioles */
+.pyre { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+.pyre span {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: var(--teal); opacity: 0.55; filter: blur(0.5px);
+  box-shadow: 0 0 6px 1px rgba(79,214,200,0.6);
+  animation: drift 14s ease-in-out infinite;
+}
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: .6; }
+  50% { transform: translateY(-60px) translateX(12px); }
+  90% { opacity: .5; }
+  100% { transform: translateY(-130px) translateX(-8px); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pyre span { animation: none; opacity: .35; }
+  html { scroll-behavior: auto; }
+}
+
+/* Couverture */
+header.hero { position: relative; z-index: 1; padding: 72px 24px 44px; text-align: center; border-bottom: 1px solid var(--line); }
+.glyph-row { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; opacity: .75; }
+.glyph { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--teal); }
+.hero .eyebrow { margin-bottom: 10px; }
+.titre { font-weight: 400; font-size: clamp(34px, 6vw, 58px); letter-spacing: .02em; line-height: 1.1; margin: 0 0 12px; color: var(--blanc); text-shadow: 0 0 30px rgba(79,214,200,0.18); text-wrap: balance; }
+.titre em { font-style: italic; color: var(--teal); }
+.sous-titre { color: var(--ink-dim); font-size: 17px; max-width: 560px; margin: 0 auto 14px; }
+.meta { font: 13px/1.5 var(--sans); color: var(--ink-faint); letter-spacing: .03em; margin: 0 auto 26px; }
+.meta a { color: var(--ink-dim); border-bottom: 1px solid var(--teal-dim); }
+.meta a:hover { color: var(--teal); text-decoration: none; }
+.progress-wrap { max-width: 420px; margin: 0 auto; }
+.progress-label { display: flex; justify-content: space-between; font: 12.5px var(--sans); color: var(--ink-dim); margin-bottom: 6px; letter-spacing: .02em; }
+.progress-track { height: 6px; border-radius: 4px; background: var(--bg-panel); border: 1px solid var(--line); overflow: hidden; }
+.progress-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--teal-dim), var(--teal)); transition: width .4s ease; }
+.reset-btn { margin-top: 14px; font: 11.5px var(--sans); color: var(--ink-faint); background: none; border: 1px solid var(--line); border-radius: 12px; padding: 5px 12px; cursor: pointer; }
+.reset-btn:hover { color: var(--amber); border-color: var(--amber); }
+
+/* Barre du haut : recherche */
+nav.barre { position: sticky; top: 0; z-index: 20; background: rgba(10,20,32,0.88); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.barre-inner { max-width: 78rem; margin: 0 auto; padding: 10px 24px; display: flex; align-items: center; gap: 14px; font-family: var(--sans); }
+.marque { font: 15px var(--serif); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.marque em { color: var(--teal); }
+.btn-sommaire { display: none; font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; }
+.btn-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.btn-plier { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 12px; cursor: pointer; white-space: nowrap; }
+.btn-plier:hover { color: var(--teal); border-color: var(--teal-dim); }
+.search-box { margin-left: auto; display: flex; align-items: center; gap: 8px; background: var(--bg-panel); border: 1px solid var(--line); border-radius: 20px; padding: 6px 8px 6px 14px; }
+.search-box:focus-within { border-color: var(--teal-dim); }
+.search-box svg { flex-shrink: 0; opacity: .6; color: var(--ink-dim); }
+.search-box input { background: none; border: 0; outline: none; color: var(--ink); font: 13px var(--sans); width: 190px; }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-compte { font-size: 11.5px; color: var(--ink-faint); white-space: nowrap; min-width: 3.5em; text-align: right; }
+.search-nav { background: none; border: 0; color: var(--ink-dim); cursor: pointer; font-size: 12px; padding: 2px 5px; border-radius: 8px; }
+.search-nav:hover { color: var(--teal); background: rgba(79,214,200,0.08); }
+::highlight(recherche) { background-color: rgba(217,178,90,0.30); color: #ffffff; }
+::highlight(recherche-courant) { background-color: var(--gold); color: var(--bg-deep); }
+
+/* Mise en page */
+.page { position: relative; z-index: 1; display: grid; grid-template-columns: 17rem minmax(0, 1fr); column-gap: 3.5rem; max-width: 78rem; margin: 0 auto; padding: 0 24px; }
+.sommaire { position: sticky; top: 58px; align-self: start; max-height: calc(100vh - 58px); overflow-y: auto; padding: 2rem 4px 2rem 0; font-family: var(--sans); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+.fermer-sommaire { display: none; float: right; margin: -4px 0 0; font: 13px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 5px 12px; cursor: pointer; }
+.fermer-sommaire:hover { color: var(--teal); border-color: var(--teal-dim); }
+.sommaire .etiquette { margin: 0 0 12px 4px; color: var(--gold); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.sommaire ol { margin: 0; padding: 0; list-style: none; }
+.sommaire a { display: flex; align-items: center; gap: 10px; padding: 6px 6px; border-radius: 8px; color: var(--ink-dim); font-size: 13.5px; line-height: 1.3; text-decoration: none; transition: color .15s, background .15s; }
+.sommaire a:hover { color: var(--teal); background: rgba(79,214,200,0.05); }
+.sommaire a.actif { color: var(--ink); background: rgba(79,214,200,0.08); }
+.sommaire .num { width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--teal-dim); display: flex; align-items: center; justify-content: center; font-size: 10.5px; color: var(--teal); flex-shrink: 0; }
+.sommaire a.actif .num { border-color: var(--teal); box-shadow: 0 0 8px 1px rgba(79,214,200,0.35); }
+.sommaire li.complet .num { background: var(--teal); color: var(--bg-deep); border-color: var(--teal); }
+.sommaire .libelle { flex: 1; min-width: 0; }
+.sommaire .compte { font-size: 10.5px; color: var(--ink-faint); white-space: nowrap; }
+main { min-width: 0; max-width: 47rem; padding: 0 0 6rem; }
+
+/* Sections */
+section.section { padding: 3.2rem 0 1.5rem; }
+section.section + section.section { border-top: 1px solid var(--line); }
+.tete-section { margin-bottom: 1.6rem; }
+.tete-section { position: relative; }
+.bascule { position: absolute; inset: -12px -14px; background: none; border: 0; padding: 0; border-radius: 12px; cursor: pointer; }
+.bascule:hover { background: rgba(79,214,200,0.05); }
+.bascule:focus-visible { outline: 2px solid var(--teal-dim); outline-offset: 0; }
+.chevron { position: absolute; right: 20px; top: 50%; width: 10px; height: 10px; margin-top: -9px; border-right: 2px solid var(--teal); border-bottom: 2px solid var(--teal); transform: rotate(45deg); transition: transform .18s ease, margin-top .18s ease; }
+section.replie .chevron { transform: rotate(-45deg); margin-top: -3px; }
+section.replie { padding-bottom: 1rem; }
+section.replie .tete-section { margin-bottom: 0; }
+section.replie .corps { display: none; }
+.corps { animation: deplie .18s ease; }
+@keyframes deplie { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+.sr { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.eyebrow { font: 12.5px var(--sans); color: var(--gold); letter-spacing: .06em; margin: 0 0 8px; text-transform: uppercase; }
+h1, h2, h3, h4 { scroll-margin-top: 72px; text-wrap: balance; }
+h1 { font: 400 clamp(28px, 4vw, 38px)/1.15 var(--serif); margin: 0; color: var(--blanc); text-shadow: 0 0 24px rgba(79,214,200,0.10); }
+h2.h-chapitre { display: flex; align-items: center; gap: 12px; margin: 2.6rem 0 1rem; padding-bottom: 10px; border-bottom: 1px solid var(--line); font: 600 13px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); }
+.h-ic { width: 32px; height: 32px; flex-shrink: 0; }
+.h-ic svg { width: 100%; height: 100%; display: block; }
+h3 { font: 400 21px/1.3 var(--serif); color: var(--blanc); margin: 2rem 0 .6rem; }
+h4 { font: 400 18px/1.3 var(--serif); color: var(--ink); margin: 1.4rem 0 .4rem; }
+p, ul, ol { margin: .75rem 0; }
+ul, ol { padding-left: 1.5rem; }
+li { margin: .3rem 0; }
+li > p { margin: .2rem 0; }
+ul > li::marker { color: var(--teal-dim); }
+ol > li::marker { color: var(--teal); font: 600 .85em var(--sans); }
+strong { color: var(--blanc); font-weight: 600; }
+strong.objet { color: var(--rouge); }   /* objet à récupérer, listé dans le Butin */
+em { color: var(--ink); }
+hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line); }
+code { padding: .1em .4em; border-radius: 5px; background: var(--bg-panel); border: 1px solid var(--line); font-size: .88em; color: var(--ink); }
+img { max-width: 100%; height: auto; }
+blockquote { margin: 1.2rem 0; padding: .8rem 1.1rem; border: 1px solid var(--line); border-left: 3px solid var(--teal-dim); border-radius: 8px; background: var(--bg-panel); }
+blockquote > :first-child { margin-top: 0; }
+blockquote > :last-child { margin-bottom: 0; }
+
+/* Tableaux */
+.tableau { position: relative; margin: 1.1rem 0 1.6rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: linear-gradient(160deg, var(--bg-panel), var(--bg-panel-2)); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; line-height: 1.45; }
+th, td { padding: .6rem .85rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { font: 600 11px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--gold); background: rgba(10,20,32,0.35); white-space: nowrap; }
+td { color: var(--ink-body); }
+td:first-child { color: var(--blanc); }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: rgba(79,214,200,0.035); }
+.badge { display: inline-block; font: 600 10px/1.4 var(--sans); letter-spacing: .04em; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; white-space: nowrap; }
+.badge.arme { background: rgba(217,178,90,0.12); color: var(--gold); border: 1px solid var(--gold-dim); }
+.badge.armure { background: rgba(142,168,176,0.10); color: var(--ink); border: 1px solid rgba(142,168,176,0.45); }
+.badge.invoc { background: rgba(143,122,209,0.14); color: #b3a4ec; border: 1px solid rgba(143,122,209,0.45); }
+.badge.objet { background: rgba(79,214,200,0.10); color: var(--teal); border: 1px solid var(--teal-dim); }
+.badge.gils { background: rgba(224,161,92,0.12); color: var(--amber); border: 1px solid rgba(224,161,92,0.4); }
+.badge.neutre { background: rgba(92,115,121,0.12); color: var(--ink-dim); border: 1px solid rgba(92,115,121,0.45); }
+.type-pour { display: block; margin-top: 3px; font: 11.5px var(--sans); color: var(--ink-faint); }
+
+/* Cases à cocher */
+ul:has(> li.tache) { padding-left: 0; list-style: none; }
+li.tache { position: relative; padding: 7px 0 7px 34px; margin: 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+li.tache:last-child { border-bottom: 0; }
+li.tache input {
+  -webkit-appearance: none; appearance: none; position: absolute; left: 0; top: 9px;
+  width: 20px; height: 20px; margin: 0; border-radius: 5px; border: 1.5px solid var(--teal-dim);
+  background: rgba(79,214,200,0.04); cursor: pointer; transition: background .15s, border-color .15s;
+}
+li.tache input:hover { border-color: var(--teal); }
+li.tache input:checked { background: var(--teal); border-color: var(--teal); }
+li.tache input:checked::after { content: ""; position: absolute; left: 5px; top: 1px; width: 6px; height: 11px; border: solid var(--bg-deep); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+li.tache:has(input:checked) { color: var(--ink-faint); text-decoration: line-through; text-decoration-color: var(--teal-dim); }
+li.tache:has(input:checked) strong { color: var(--ink-faint); }
+
+/* Alertes */
+.alerte { padding: .7rem 1rem; border: 1px solid rgba(224,161,92,0.35); border-left: 3px solid var(--amber); border-radius: 8px; background: rgba(224,161,92,0.07); color: var(--ink); }
+.alerte.manquable { border-color: rgba(217,178,90,0.35); border-left-color: var(--gold); background: rgba(217,178,90,0.07); }
+.alerte strong { color: #ffe3c2; }
+.alerte.manquable strong { color: #f3dfa9; }
+li.alerte { margin: .55rem 0; list-style: none; }
+ul:not(:has(> li:not(.alerte))) { padding-left: 0; }
+.a-verifier { display: inline-block; font: 600 11px/1.4 var(--sans); color: var(--amber); border: 1px solid rgba(224,161,92,0.35); background: rgba(224,161,92,0.08); padding: 1px 9px; border-radius: 12px; white-space: nowrap; }
+
+footer.pied { position: relative; z-index: 1; text-align: center; padding: 40px 24px 50px; color: var(--ink-faint); font: 12.5px var(--sans); border-top: 1px solid var(--line); }
+
+@media screen and (max-width: 999px) {
+  .page { display: block; padding: 0 16px; }
+  .btn-sommaire { display: inline-block; }
+  .marque { display: none; }
+  .btn-plier { display: none; }
+  .barre-inner { padding: 10px 16px; }
+  .search-box { flex: 1; min-width: 0; }
+  .search-box input { width: 100%; min-width: 0; }
+  .sommaire { display: none; position: fixed; inset: 0; z-index: 30; max-height: none; padding: 1.2rem 16px 2rem; background: var(--bg-deep); }
+  body.toc-ouvert { overflow: hidden; }
+  body.toc-ouvert .page { z-index: 40; }
+  body.toc-ouvert .sommaire { display: block; }
+  .fermer-sommaire { display: block; }
+  header.hero { padding: 48px 16px 32px; }
+  body { font-size: 16px; }
+  .h-ic { width: 28px; height: 28px; }
+}
+
+/* PDF (impression) : même ambiance sombre, fond jusqu'aux bords de la page */
+@page {
+  size: A4; margin: 16mm 15mm 18mm; background: #0a1420;
+  @bottom-center { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #5c7379; }
+}
+@page :first { @bottom-center { content: none; } }
+@media print {
+  html, body, * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html, body { background: #0a1420; }
+  body { font-size: 10.5pt; line-height: 1.5; }
+  .pyre, nav.barre, .progress-wrap, .lien-pdf, .sommaire .compte, .fermer-sommaire, footer.pied { display: none !important; }
+  header.hero { display: flex; flex-direction: column; justify-content: center; min-height: 250mm; padding: 0; border: 0; break-after: page; }
+  .titre { font-size: 40pt; }
+  .page { display: block; max-width: none; padding: 0; }
+  .sommaire { position: static; max-height: none; overflow: visible; padding: 0; break-after: page; }
+  .sommaire .etiquette { font-size: 11pt; margin: 0 0 4mm; }
+  .sommaire a { padding: .8mm 0; font-size: 10pt; color: var(--ink); }
+  .sommaire .num { width: 19px; height: 19px; font-size: 7.5pt; }
+  .sommaire a.actif { background: none; }
+  .sommaire a.actif .num { box-shadow: none; }
+  h1, .titre { text-shadow: none; }
+  main { max-width: none; padding: 0; }
+  section.section { break-before: page; padding: 0; }
+  section.section + section.section { border-top: 0; }
+  h1 { font-size: 24pt; }
+  h2.h-chapitre { font-size: 9.5pt; margin-top: 7mm; }
+  .h-ic { width: 22px; height: 22px; }
+  h3 { font-size: 13.5pt; }
+  h1, h2, h3, h4, .tete-section { break-after: avoid; }
+  .tete-section { break-inside: avoid; }   /* le surtitre ne reste jamais seul en bas de page */
+  .bascule, .chevron { display: none; }
+  section.replie .corps { display: block; }
+  .corps { animation: none !important; opacity: 1 !important; }
+  section.replie .tete-section { margin-bottom: 1.6rem; }
+  p, li { orphans: 3; widows: 3; }
+  .tableau { overflow: visible; background: #101f30; }
+  table { font-size: 8.8pt; }
+  thead { display: table-header-group; }
+  tr, .alerte, blockquote, li.tache { break-inside: avoid; }
+  /* Mode compact (--compact) : les parties s'enchaînent sans saut de page */
+  body.compact { font-size: 9.8pt; line-height: 1.42; }
+  body.compact section.section { break-before: auto; padding-top: 7mm; }
+  body.compact section.section + section.section { border-top: 1px solid rgba(133,196,196,0.16); }
+  body.compact h1 { font-size: 19pt; }
+  body.compact .tete-section { margin-bottom: 3mm; }
+  body.compact h2.h-chapitre { margin: 4.5mm 0 2.5mm; padding-bottom: 1.5mm; }
+  body.compact h3 { font-size: 12pt; margin-top: 4mm; }
+  body.compact p, body.compact ul, body.compact ol { margin: 1.8mm 0; }
+  body.compact li { margin: .6mm 0; }
+  body.compact li.tache { padding: 1mm 0 1mm 26px; }
+  body.compact li.tache input { top: 1.2mm; width: 15px; height: 15px; }
+  body.compact li.tache input:checked::after { left: 4px; top: 0; width: 5px; height: 9px; }
+  body.compact .tableau { margin: 2.5mm 0 3.5mm; }
+  body.compact th, body.compact td { padding: 1.2mm 2mm; }
+  body.compact table { font-size: 8.3pt; }
+  body.compact .alerte { padding: 1.6mm 3mm; }
+}
+</style>
+<meta name="description" content="Grand Theft Auto VI, Chapitre 4 : l&#x27;Ajax Gym et la préparation du coup de l&#x27;aéroport : La manquable la plus brutale du jeu : Bad Driver! disparaît…">
+<link rel="canonical" href="https://bloundsk.github.io/guides-jeux-video/guides/gta-6/chapitre-4-lajax-gym-et-la-preparation-du-coup-de-laeroport.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Manette en main">
+<meta property="og:title" content="Chapitre 4 : l&#x27;Ajax Gym et la préparation du coup de l&#x27;aéroport · Guide Grand Theft Auto VI">
+<meta property="og:description" content="Grand Theft Auto VI, Chapitre 4 : l&#x27;Ajax Gym et la préparation du coup de l&#x27;aéroport : La manquable la plus brutale du jeu : Bad Driver! disparaît…">
+<meta property="og:url" content="https://bloundsk.github.io/guides-jeux-video/guides/gta-6/chapitre-4-lajax-gym-et-la-preparation-du-coup-de-laeroport.html">
+<meta property="og:image" content="https://bloundsk.github.io/guides-jeux-video/assets/og-image.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Manette en main", "item": "https://bloundsk.github.io/guides-jeux-video/"}, {"@type": "ListItem", "position": 2, "name": "Guide Grand Theft Auto VI", "item": "https://bloundsk.github.io/guides-jeux-video/guides/gta-6/"}, {"@type": "ListItem", "position": 3, "name": "Chapitre 4 : l'Ajax Gym et la préparation du coup de l'aéroport", "item": "https://bloundsk.github.io/guides-jeux-video/guides/gta-6/chapitre-4-lajax-gym-et-la-preparation-du-coup-de-laeroport.html"}]}</script>
+<style id="gjv-partie">
+.gjv-entete { max-width: 1248px; margin: 0 auto; padding: 20px 24px 10px; }
+.gjv-ariane { font: 600 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-ariane a { color: var(--teal, #4fd6c8); text-decoration: none; }
+.gjv-ariane a:hover { text-decoration: underline; }
+.gjv-ariane span[aria-hidden] { margin: 0 .35em; opacity: .6; }
+.gjv-entete .gjv-jeu { margin: .5rem 0 0; font: 700 1.05rem/1.3 var(--serif, Georgia, serif); color: var(--gold, #d9b25a); }
+.gjv-entete .progress-wrap { margin: 12px 0 0; max-width: 420px; }
+.gjv-suite { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 34px 0 10px; }
+.gjv-suite a { display: block; padding: 14px 16px; border: 1px solid var(--line, rgba(255,255,255,.15)); border-radius: 12px;
+  text-decoration: none; color: var(--ink, #e6f1f2); background: var(--bg-panel, rgba(255,255,255,.03)); }
+.gjv-suite a:hover { border-color: var(--teal, #4fd6c8); }
+.gjv-suite small { display: block; font: 600 12px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); margin-bottom: 4px; }
+.gjv-suite b { font-weight: 600; line-height: 1.35; }
+.gjv-suite .suiv { text-align: right; grid-column: 2; }
+.gjv-suite .tout { grid-column: 1 / -1; text-align: center; font: 600 14px/1.4 var(--sans, system-ui, sans-serif); color: var(--teal, #4fd6c8); }
+@media (max-width: 600px) { .gjv-suite { grid-template-columns: 1fr; } .gjv-suite .suiv { grid-column: 1; } }
+@media print { .gjv-entete, .gjv-suite { display: none; } }
+</style>
+<style id="gjv-lecture">
+.gjv-methode { margin: .55rem 0 0; font: 500 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-methode a { color: var(--teal, #4fd6c8); }
+.gjv-methode-bloc { max-width: 1248px; margin: 0 auto; padding: 4px 24px 0; text-align: center; }
+@media print { .gjv-methode, .gjv-methode-bloc { display: none; } }
+main p.visuel { text-align: center; line-height: 1.4; }
+main p.visuel img { border-radius: 8px; height: auto; }
+main p.visuel small { color: var(--ink-dim, #9fb3bd); font-size: 12.5px; }
+main { zoom: var(--gjv-t, 1); }
+main p, main li { line-height: 1.75; }
+main p { margin: .9rem 0; }
+main li { margin: .5rem 0; }
+main ol > li > ul { margin: .35rem 0 .7rem; padding-left: 1.2rem; }
+main ol > li > ul > li { margin: .2rem 0; line-height: 1.6; }
+.corps > blockquote:first-child { border-left-color: var(--gold); background: rgba(217,178,90,.06); }
+h2.h-chapitre[data-r] { color: var(--c); }
+.gjv-bloc { border-left: 2px solid color-mix(in srgb, var(--c) 45%, transparent); padding: .1rem 0 .1rem 1.1rem; margin-left: 15px; }
+[data-r=objectif] { --c: var(--gold); }
+[data-r=itineraire] { --c: var(--teal); }
+[data-r=deroule] { --c: #7fe3d6; }
+[data-r=quetes] { --c: #b3a4ec; }
+[data-r=butin] { --c: var(--gold); }
+[data-r=conseils] { --c: var(--amber); }
+[data-r=alertes] { --c: var(--rouge); }
+[data-r=check] { --c: var(--teal); }
+[data-r=autre] { --c: var(--teal); }
+h2.gjv-pliable { cursor: pointer; user-select: none; }
+h2.gjv-pliable::after { content: "Masquer"; margin-left: auto; font: 500 11.5px var(--sans); letter-spacing: 0; text-transform: none; color: var(--ink-faint); border: 1px solid var(--line); border-radius: 12px; padding: 3px 10px; }
+h2.gjv-pliable.gjv-ferme::after { content: "Afficher" attr(data-n); color: var(--c); border-color: color-mix(in srgb, var(--c) 45%, transparent); }
+h2.gjv-pliable:hover::after { border-color: var(--c); }
+h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: none; }
+body.gjv-recherche h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+.gjv-outil { font: 12.5px var(--sans); color: var(--ink-dim); background: var(--bg-panel); border: 1px solid var(--line); border-radius: 16px; padding: 6px 11px; cursor: pointer; white-space: nowrap; }
+.gjv-outil:hover, .gjv-outil[aria-pressed=true] { color: var(--teal); border-color: var(--teal-dim); }
+.gjv-tailles { display: flex; gap: 4px; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li { opacity: .38; transition: opacity .2s; cursor: pointer; }
+body.gjv-pas [data-r=deroule] + .gjv-bloc ol > li.gjv-actuelle { opacity: 1; background: rgba(79,214,200,.07); outline: 1px solid var(--teal-dim); outline-offset: 6px; border-radius: 6px; }
+#gjv-pas { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 9999; display: none; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #13293f; border: 1px solid rgba(79,214,200,.45); box-shadow: 0 6px 20px rgba(0,0,0,.5); font: 600 13.5px/1 var(--sans); color: var(--ink); max-width: calc(100vw - 24px); }
+#gjv-pas button { font: inherit; cursor: pointer; border: 0; border-radius: 999px; padding: 9px 13px; background: rgba(79,214,200,.12); color: var(--teal); }
+#gjv-pas button:hover { background: rgba(79,214,200,.22); }
+#gjv-pas .gjv-ou { padding: 0 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--ink-dim); font-weight: 500; }
+body.gjv-pas #gjv-pas { display: flex; }
+body.gjv-pas #gjv-boutons { display: none !important; }
+@media (max-width: 999px) {
+  .gjv-outil { padding: 6px 9px; }
+  .gjv-outil .gjv-lib { display: none; }
+  .gjv-bloc { margin-left: 4px; padding-left: .8rem; }
+  #gjv-pas .gjv-ou { display: none; }
+}
+@media (max-width: 560px) {
+  .barre-inner { gap: 8px; }
+  .btn-sommaire .gjv-lib { display: none; }
+  .search-box:not(:focus-within) .search-nav { display: none; }
+  .barre-inner:has(.search-box:focus-within) .gjv-tailles, .barre-inner:has(.search-box:focus-within) .gjv-outil { display: none; }
+}
+.gjv-terme { text-decoration: underline dotted color-mix(in srgb, var(--teal, #4fd6c8) 75%, transparent); text-decoration-thickness: 1.5px; text-underline-offset: 3px; cursor: help; }
+.gjv-terme:focus-visible { outline: 2px solid var(--teal, #4fd6c8); outline-offset: 2px; border-radius: 3px; }
+body.gjv-sans-jargon .gjv-terme { text-decoration: none; cursor: auto; }
+body.gjv-sans-jargon .gjv-fil { display: none; }
+.gjv-bulle { position: absolute; z-index: 10000; width: min(340px, calc(100vw - 16px)); padding: 14px 16px 12px; border-radius: 12px; background: #13293f; color: #e6f1f2;
+  border: 1px solid rgba(79,214,200,.5); box-shadow: 0 10px 30px rgba(0,0,0,.45); font: 400 14.5px/1.55 var(--sans, system-ui, sans-serif); }
+.gjv-bulle b { display: block; font-size: 15.5px; color: #4fd6c8; margin: 0 26px 4px 0; }
+.gjv-bulle p { margin: 0 0 8px; }
+.gjv-bulle a { color: #d9b25a; font-weight: 600; font-size: 13.5px; }
+.gjv-bulle-x { position: absolute; top: 8px; right: 8px; border: 0; background: none; color: #9fb3bd; font-size: 15px; cursor: pointer; padding: 4px 6px; }
+.gjv-fil { margin: .2rem 0 .6rem; font: 500 13px/1.5 var(--sans, system-ui, sans-serif); color: var(--ink-dim, #9fb3bd); }
+.gjv-fil-oui b { color: var(--teal, #4fd6c8); }
+.gjv-fil a { color: var(--teal, #4fd6c8); margin-left: .3em; }
+@media print {
+  .gjv-fil, .gjv-bulle { display: none !important; }
+  .gjv-terme { text-decoration: none; }
+  main { zoom: 1; }
+  .gjv-outil, .gjv-tailles, #gjv-pas { display: none !important; }
+  h2.gjv-pliable::after { display: none; }
+  h2.gjv-pliable.gjv-ferme + .gjv-bloc { display: block; }
+}
+</style>
+</head>
+<body data-guide="gta-6" class="compact" data-partie="chapitre-4-lajax-gym-et-la-preparation-du-coup-de-laeroport"><div class="no-print" id="gjv-boutons" style="position:fixed;right:14px;bottom:14px;z-index:9999;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;font:600 14px/1 system-ui,sans-serif"><button type="button" id="gjv-signaler" title="Signaler une erreur dans cette partie" style="cursor:pointer;background:#13293f;color:#e6f1f2;border:1px solid rgba(230,241,242,.25);border-radius:999px;padding:9px 13px;font:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#9888;&#xFE0E; Signaler une erreur</button><a href="./" style="background:#13293f;color:#4fd6c8;border:1px solid rgba(79,214,200,.45);border-radius:999px;padding:9px 15px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.4)">&#8592; Fiche du jeu</a></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <symbol id="ic-crest" viewBox="0 0 40 40"><path d="M20 4l12 5v9c0 9-6 15-12 18-6-3-12-9-12-18V9z" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="18" r="3.4" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-sigil" viewBox="0 0 40 40"><circle cx="20" cy="20" r="14" fill="none" stroke="var(--gold)" stroke-width="1.6"/><path d="M20 8v24M8 20h24" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/><circle cx="20" cy="20" r="4" fill="var(--gold)" opacity=".7"/></symbol>
+  <symbol id="ic-chest" viewBox="0 0 40 40"><rect x="7" y="16" width="26" height="16" rx="2" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M7 16c0-5 5-8 13-8s13 3 13 8" fill="none" stroke="var(--teal)" stroke-width="1.6"/><circle cx="20" cy="22" r="2" fill="var(--teal)" opacity=".7"/></symbol>
+  <symbol id="ic-flag" viewBox="0 0 40 40"><path d="M12 6v28" stroke="var(--amber)" stroke-width="1.8"/><path d="M12 8l16 5-16 5z" fill="var(--amber)" opacity=".8"/></symbol>
+  <symbol id="ic-book" viewBox="0 0 40 40"><path d="M8 9c4-2 8-2 12 0v22c-4-2-8-2-12 0z M32 9c-4-2-8-2-12 0v22c4-2 8-2 12 0z" fill="none" stroke="var(--teal)" stroke-width="1.5"/></symbol>
+  <symbol id="ic-star" viewBox="0 0 40 40"><path d="M20 5l3.6 9.8L34 18l-8 6.6L28.4 35 20 28.8 11.6 35 14 24.6 6 18l10.4-3.2z" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-route" viewBox="0 0 40 40"><path d="M9 32c6 0 6-8 11-8s5-9 11-9" fill="none" stroke="var(--teal)" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round"/><circle cx="9" cy="32" r="3" fill="var(--teal)" opacity=".7"/><path d="M31 6c-3.3 0-6 2.6-6 5.8 0 4.2 6 10.2 6 10.2s6-6 6-10.2C37 8.6 34.3 6 31 6z" fill="none" stroke="var(--gold)" stroke-width="1.5"/><circle cx="31" cy="11.8" r="2" fill="var(--gold)" opacity=".8"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 40 40"><rect x="8" y="8" width="24" height="24" rx="5" fill="none" stroke="var(--teal)" stroke-width="1.6"/><path d="M14 20.5l4.2 4.2L27 15.5" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="ic-diamond" viewBox="0 0 40 40"><path d="M20 6l12 14-12 14L8 20z" fill="none" stroke="var(--violet)" stroke-width="1.6"/><path d="M20 13l6 7-6 7-6-7z" fill="var(--violet)" opacity=".55"/></symbol>
+</defs>
+</svg>
+<div class="pyre" id="pyre" aria-hidden="true"></div>
+<header class="gjv-entete">
+<nav class="gjv-ariane" aria-label="Fil d'Ariane"><a href="../../index.html">Accueil</a><span aria-hidden="true">›</span><a href="./">Guide Grand Theft Auto VI</a><span aria-hidden="true">›</span><span>Complément</span></nav>
+<p class="gjv-jeu">Grand Theft Auto VI : le guide complet en français</p>
+<p class="gjv-methode">🔎 Recherches effectuées par l'équipe Manette en main avec l’aide d’une IA, à jour au 21 novembre 2026 · 2 points à vérifier en jeu dans cette partie · <a href="./#methode">Comment ce guide est fait</a></p>
+<div class="progress-wrap"><div class="progress-label"><span id="progressText"></span><span id="progressPct"></span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div>
+</header>
+<nav class="barre" aria-label="Navigation">
+  <div class="barre-inner">
+    <button class="btn-sommaire" id="btnSommaire" type="button" aria-expanded="false">☰ Sommaire</button>
+    <div class="marque">Grand Theft Auto <em>VI</em></div>
+    <div class="search-box" role="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="search" id="searchInput" placeholder="Rechercher (objet, lieu, boss…)" aria-label="Rechercher dans le guide">
+      <span class="search-compte" id="searchCount" aria-live="polite"></span>
+      <button class="search-nav" id="searchPrev" type="button" aria-label="Résultat précédent">▲</button>
+      <button class="search-nav" id="searchNext" type="button" aria-label="Résultat suivant">▼</button>
+    </div>
+  </div>
+</nav>
+<div class="page">
+<nav class="sommaire" aria-label="Sommaire">
+  <button class="fermer-sommaire" id="fermerSommaire" type="button">✕ Fermer</button>
+  <p class="etiquette">Sommaire</p>
+  <ol>
+<li data-section="section-1"><a href="grand-theft-auto-vi-bien-commencer.html"><span class="num">✦</span><span class="libelle">Grand Theft Auto VI — bien commencer</span><span class="compte"></span></a></li>
+<li data-section="section-2"><a href="prologue-et-premiers-pas.html"><span class="num">✦</span><span class="libelle">Prologue et premiers pas</span><span class="compte"></span></a></li>
+<li data-section="section-3"><a href="chapitre-1-les-petits-boulots-de-jason.html"><span class="num">✦</span><span class="libelle">Chapitre 1 : les petits boulots de Jason</span><span class="compte"></span></a></li>
+<li data-section="section-4"><a href="chapitre-1-larrivee-de-lucia-et-la-fin-des-keys.html"><span class="num">✦</span><span class="libelle">Chapitre 1 : l&#x27;arrivée de Lucia et la fin des Keys</span><span class="compte"></span></a></li>
+<li data-section="section-5"><a href="chapitre-1-les-optionnelles-la-maison-et-les-secrets.html"><span class="num">✦</span><span class="libelle">Chapitre 1 : les optionnelles, la maison et les secrets</span><span class="compte"></span></a></li>
+<li data-section="section-6"><a href="chapitre-2-port-gellhorn-et-le-starlet-motel.html"><span class="num">✦</span><span class="libelle">Chapitre 2 : Port Gellhorn et le Starlet Motel</span><span class="compte"></span></a></li>
+<li data-section="section-7"><a href="chapitre-2-le-thrillbilly-et-le-depart-pour-vice-city.html"><span class="num">✦</span><span class="libelle">Chapitre 2 : le Thrillbilly et le départ pour Vice City</span><span class="compte"></span></a></li>
+<li data-section="section-8"><a href="chapitre-3-bienvenue-a-vice-city.html"><span class="num">✦</span><span class="libelle">Chapitre 3 : bienvenue à Vice City</span><span class="compte"></span></a></li>
+<li data-section="section-9"><a href="chapitre-3-les-contrats-le-label-et-lequipe-de-raul.html"><span class="num">✦</span><span class="libelle">Chapitre 3 : les contrats, le label et l&#x27;équipe de Raul</span><span class="compte"></span></a></li>
+<li data-section="section-10"><a href="chapitre-3-la-preparation-et-le-braquage-du-cartel.html"><span class="num">✦</span><span class="libelle">Chapitre 3 : la préparation et le braquage du cartel</span><span class="compte"></span></a></li>
+<li data-section="section-11"><a href="chapitre-4-la-belle-vie-au-y-hotel.html"><span class="num">✦</span><span class="libelle">Chapitre 4 : la belle vie au Y Hotel</span><span class="compte"></span></a></li>
+<li data-section="section-12"><a href="#chapitre-4-lajax-gym-et-la-preparation-du-coup-de-laeroport"><span class="num">✦</span><span class="libelle">Chapitre 4 : l&#x27;Ajax Gym et la préparation du coup de l&#x27;aéroport</span><span class="compte"></span></a></li>
+<li data-section="section-13"><a href="chapitre-4-le-casse-de-laeroport-et-la-trahison.html"><span class="num">✦</span><span class="libelle">Chapitre 4 : le casse de l&#x27;aéroport et la trahison</span><span class="compte"></span></a></li>
+<li data-section="section-14"><a href="chapitre-5-la-fin-et-ses-denouements.html"><span class="num">✦</span><span class="libelle">Chapitre 5 : la fin et ses dénouements</span><span class="compte"></span></a></li>
+<li data-section="section-15"><a href="la-carte-de-leonida.html"><span class="num">✦</span><span class="libelle">La carte de Leonida</span><span class="compte"></span></a></li>
+<li data-section="section-16"><a href="vice-city-quartier-par-quartier.html"><span class="num">✦</span><span class="libelle">Vice City quartier par quartier</span><span class="compte"></span></a></li>
+<li data-section="section-17"><a href="le-combat-les-armes-et-la-police.html"><span class="num">✦</span><span class="libelle">Le combat, les armes et la police</span><span class="compte"></span></a></li>
+<li data-section="section-18"><a href="la-conduite-et-les-vehicules.html"><span class="num">✦</span><span class="libelle">La conduite et les véhicules</span><span class="compte"></span></a></li>
+<li data-section="section-19"><a href="jason-lucia-la-relation-et-les-statistiques.html"><span class="num">✦</span><span class="libelle">Jason, Lucia, la relation et les statistiques</span><span class="compte"></span></a></li>
+<li data-section="section-20"><a href="le-telephone-et-ses-applications.html"><span class="num">✦</span><span class="libelle">Le téléphone et ses applications</span><span class="compte"></span></a></li>
+<li data-section="section-21"><a href="largent-braquages-recel-et-revente.html"><span class="num">✦</span><span class="libelle">L&#x27;argent : braquages, recel et revente</span><span class="compte"></span></a></li>
+<li data-section="section-22"><a href="les-missions-optionnelles-les-defis-et-les-gangs.html"><span class="num">✦</span><span class="libelle">Les missions optionnelles, les défis et les gangs</span><span class="compte"></span></a></li>
+<li data-section="section-23"><a href="les-collections.html"><span class="num">✦</span><span class="libelle">Les collections</span><span class="compte"></span></a></li>
+<li data-section="section-24"><a href="les-activites-et-les-loisirs.html"><span class="num">✦</span><span class="libelle">Les activités et les loisirs</span><span class="compte"></span></a></li>
+<li data-section="section-25"><a href="les-proprietes-et-les-garages.html"><span class="num">✦</span><span class="libelle">Les propriétés et les garages</span><span class="compte"></span></a></li>
+<li data-section="section-26"><a href="la-chasse-au-tresor-de-kenton.html"><span class="num">✦</span><span class="libelle">La chasse au trésor de Kenton</span><span class="compte"></span></a></li>
+<li data-section="section-27"><a href="les-codes-de-triche.html"><span class="num">✦</span><span class="libelle">Les codes de triche</span><span class="compte"></span></a></li>
+<li data-section="section-28"><a href="le-100-et-lapres-histoire.html"><span class="num">✦</span><span class="libelle">Le 100 % et l&#x27;après-histoire</span><span class="compte"></span></a></li>
+<li data-section="section-29"><a href="les-trophees-ps5.html"><span class="num">✦</span><span class="libelle">Les trophées PS5</span><span class="compte"></span></a></li>
+<li data-section="section-30"><a href="annexes.html"><span class="num">✦</span><span class="libelle">Annexes</span><span class="compte"></span></a></li>
+<li data-section="section-31"><a href="sources-grand-theft-auto-vi.html"><span class="num">✦</span><span class="libelle">Sources — Grand Theft Auto VI</span><span class="compte"></span></a></li>
+  </ol>
+</nav>
+<main>
+<section class="section" id="section-12">
+<header class="tete-section">
+<p class="eyebrow">Complément</p>
+<h1 id="chapitre-4-lajax-gym-et-la-preparation-du-coup-de-laeroport">Chapitre 4 : l&#x27;Ajax Gym et la préparation du coup de l&#x27;aéroport</h1>
+<button class="bascule" type="button" aria-expanded="false" aria-controls="corps-12"><span class="chevron" aria-hidden="true"></span><span class="sr">Ouvrir ou fermer cette partie</span></button></header>
+<div class="corps" id="corps-12">
+<blockquote>
+<p><strong>L'essentiel</strong></p>
+<ul>
+<li><strong>La manquable la plus brutale du jeu</strong> : <em>Bad Driver!</em> <strong>disparaît définitivement si tu lances <em>Power Play</em> avant</strong>. Elle vaut <strong>20 000 $</strong>.</li>
+<li><strong>Le choix qui marque Lucia</strong> : accepter les stéroïdes de Nate pendant <em>Making Gainz</em> <strong>change son physique pour le reste du jeu</strong>.</li>
+<li><strong>La fenêtre qui se ferme</strong> : de <em>Making Gainz</em> à <em>VCIA Takedown</em>, le couple ne peut <strong>plus être vu ensemble en public</strong>.</li>
+<li><strong>Avant de partir</strong> : les filatures de ce chapitre se ratent facilement. Garde le marqueur <strong>blanc</strong>, jamais jaune.</li>
+</ul>
+</blockquote>
+<h2 id="objectif-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-star"/></svg></span><span>Objectif</span></h2>
+<p>Raul veut braquer une équipe rivale menée par <strong>Kordell Grant</strong>, un culturiste. Lucia s'infiltre à l'<strong>Ajax Gym</strong> et met des semaines à gagner la confiance de sa bande, pendant que Jason travaille pour Dre'Quan et pour Andrés.</p>
+<p>Treize missions principales et une optionnelle à ne pas manquer. C'est le cœur du chapitre 4, et la partie où le jeu assume enfin sa longueur.</p>
+<p><strong>Note sur les noms</strong> : les titres sont donnés en anglais faute de localisation française publiée, et rassemblés dans les annexes.</p>
+<h2 id="itineraire-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-route"/></svg></span><span>Itinéraire</span></h2>
+<ul>
+<li><strong>L'Ajax Gym</strong> : la salle de Kordell, avec son <strong>Trauma Floor</strong> privé à l'étage, sa piscine et son salon de bronzage. Le décor central de cette partie.</li>
+<li><strong>Le comté de Leonard</strong> : la péniche de Raul.</li>
+<li><strong>Le Grand Majestic Aparthotel</strong> : le bout de la filature de <em>Heavy Lifting</em>.</li>
+<li><strong>Tequesta</strong> : le <strong>Velvet Palm Motel</strong> et le point de rendez-vous de <em>Photo/Shoot</em>.</li>
+<li><strong>Millport</strong> : le bar de <em>Bad Driver!</em>.</li>
+<li><strong>Le VCIA</strong> : l'aéroport, à repérer dans <em>Too Much Baggage</em>.</li>
+<li><strong>Ocean Beach</strong> : la <strong>Muscle Beach gym</strong>, la boutique <strong>Nola</strong>, le parking <strong>Cruda</strong>.</li>
+<li><strong>Starfish Island</strong> : la maison d'Andrés.</li>
+<li><strong>The Vault</strong> : la boîte de nuit d'<em>Adventures in Babysitting</em>.</li>
+<li><strong>Washington Island</strong> : le guet-apens d'<em>Amateur Hour</em>.</li>
+<li><strong>Le Doight d'Or</strong> : l'hôtel de Royce Jones.</li>
+</ul>
+<p>📍 <strong>La zone en images</strong> : la carte interactive française — https://gta6map.io/</p>
+<h2 id="deroule-pas-a-pas-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-book"/></svg></span><span>Déroulé pas à pas</span></h2>
+<h3 id="heavy-lifting">Heavy Lifting</h3>
+<p>Elle se débloque après <em>Lawyer Up</em>, quand Raul réclame le disque dur. <strong>Huit objectifs.</strong></p>
+<ol>
+<li><strong>Le disque dur</strong> : va au bâtiment de stockage, prends l'ascenseur et <strong>récupère-le dans le box</strong>.</li>
+<li><strong>La péniche</strong> : roule jusqu'au <strong>comté de Leonard</strong>, où Raul est amarré. <strong>Prends l'escalier de droite</strong> vers le pont supérieur, où Karim attend. Raul veut braquer l'équipe de <strong>Kordell Grant</strong>, un culturiste avec qui il a travaillé.</li>
+<li><strong>L'Ajax Gym</strong> : navigue vers le sud et amarre-toi à côté. Lucia entre la première. En <strong>Jason</strong>, parle à la <strong>réceptionniste en débardeur bleu</strong> et suis <strong>J-Wang</strong> pour la visite.</li>
+<li><strong>Le sac de Raina</strong> : tu passes sur <strong>Lucia</strong>, à l'accueil. <strong>Change de tenue au casier marqué</strong>, puis <strong>fouille le sac à dos de Raina dans le casier de gauche</strong>.</li>
+<li><strong>L'entraînement de couverture</strong> : monte à la salle principale.
+<ul>
+<li>En <strong>Jason</strong> : <strong>tapote le bouton</strong> sur le tapis de course pour tenir le rythme.</li>
+<li>En <strong>Lucia</strong> : utilise la <strong>machine à extensions de jambes</strong>.</li>
+<li>Quand l'équipe de Kordell s'en va, <strong>va au salon de bronzage avec Jason</strong>.</li>
+</ul>
+</li>
+<li><strong>Le piège à Nate</strong> : pendant que Jason distrait l'employé, entre dans les cabines. <strong>Nate est dans la deuxième à droite.</strong>
+<ul>
+<li><strong>Ramasse la sangle de musculation par terre</strong> et <strong>utilise-la sur le banc de bronzage</strong> pour l'enfermer.</li>
+<li><strong>Fouille son sac</strong>, <strong>ouvre l'appli WhatUp sur son téléphone</strong> et <strong>lis les messages</strong>, <strong>range le téléphone</strong>, puis <strong>libère Nate</strong>.</li>
+</ul>
+</li>
+<li><strong>La filature</strong> : sors de la salle — tu peux te changer d'abord — et retrouve Jason au bord de l'eau. La nuit, <strong>suis les culturistes en voiture</strong>.
+<ul>
+<li class="alerte">⚠️ <strong>Garde le marqueur au-dessus d'eux blanc.</strong> Il devient <strong>jaune</strong> quand tu es trop près.</li>
+<li>Si c'est le cas, <strong>lève le pied et laisse une autre voiture s'intercaler</strong>.</li>
+<li>Le long trajet finit au <strong>Grand Majestic Aparthotel</strong>.</li>
+</ul>
+</li>
+<li><strong>Le toit</strong> : suis-les à l'intérieur et regarde-les prendre un ascenseur. Jason appelle un autre ascenseur, monte au dernier étage et suit le couloir jusqu'au toit.</li>
+</ol>
+<p>Karim découvre que le disque dur appartenait à <strong>Giorgio Gallo</strong>, héritier de la compagnie maritime <strong>Bilgeco</strong>. Retiens ce nom : c'est le fil rouge jusqu'à la fin du jeu.</p>
+<h3 id="photoshoot">Photo/Shoot</h3>
+<p>Elle se débloque après <em>Party Hard</em>, quand Dre'Quan demande de l'aide pour un shooting promo des Dimez.</p>
+<ol start="9">
+<li><strong>Tequesta</strong> : va au bâtiment marqué, suis-le dans l'ascenseur jusqu'au toit.</li>
+<li><strong>Les photos</strong> : quand l'hélicoptère décolle, tu contrôles <strong>Lucia</strong>. <strong>Utilise l'appareil du téléphone</strong> sur les Dimez qui posent dans l'hélico.</li>
+<li><strong>L'enlèvement</strong> : dans le hall, <strong>Cash City</strong> embarque Dre'Quan.
+<ul>
+<li>En <strong>Jason</strong>, <strong>pilote l'hélicoptère</strong> derrière la voiture. Quand elle entre dans un bâtiment, passe sur <strong>Lucia</strong>, qui suit <strong>à moto</strong> au niveau de la rue.</li>
+<li class="alerte">⚠️ <strong>La voiture des ravisseurs ne peut pas être détruite par les tirs.</strong></li>
+<li><strong>Après le deuxième saut, d'autres voitures arrivent. Celles-là peuvent être abattues</strong> : élimine-les avant qu'elles te percutent ou te tirent dessus.</li>
+</ul>
+</li>
+<li><strong>Le sauvetage</strong> : taille-toi un chemin jusqu'à Dre'Quan. Sous l'autoroute, surveille les <strong>renforts qui arrivent en voiture par la droite</strong> et les autres <strong>par les portes de garage de gauche</strong>. Nettoie la ruelle et rejoins la voiture au bout.</li>
+</ol>
+<p><strong>Récompense : 6 000 $.</strong></p>
+<h3 id="bad-driver-la-manquable-a-ne-pas-rater">Bad Driver! — la manquable à ne pas rater</h3>
+<p class="alerte">⚠️ <strong>Cette mission optionnelle disparaît définitivement si tu lances <em>Power Play</em> avant de la faire.</strong> Elle se débloque après <em>Party Hard</em>, quand Andrea te demande de régler le cas de <strong>Felipe</strong>, à <strong>Millport</strong>. <strong>Fais-la dès qu'elle apparaît.</strong></p>
+<ol start="13">
+<li><strong>Le bar</strong> : roule jusqu'au bar marqué de Millport et avance vers le fond. <strong>Felipe sort des toilettes et détale.</strong></li>
+<li><strong>La poursuite</strong> : il court vers les bois. <strong>Tire-lui dans les jambes ou dans le dos</strong>, rattrape-le et <strong>frappe-le</strong> pour qu'il abandonne.</li>
+<li><strong>Le sort de Felipe</strong> : interroge-le sur son lâchage pendant le braquage du cartel. <strong>Tu choisis la suite.</strong></li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Choix</th>
+<th>Conséquence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Le tuer</strong></td>
+<td><strong>20 000 $</strong> versés par Andrea. Tire sur lui à n'importe quel moment de la conversation</td>
+</tr>
+<tr>
+<td><strong>L'épargner</strong></td>
+<td>Felipe débloque plus tard la mission optionnelle <em>Collect Felipe's Gift</em>, où tu récupères <strong>un véhicule</strong> qu'il t'a laissé</td>
+</tr>
+</tbody>
+</table></div>
+<p>Les deux options ont une vraie valeur : 20 000 $ tout de suite, ou une voiture gratuite plus tard. <strong>Ce qui serait une erreur, c'est de ne pas faire la mission du tout.</strong></p>
+<h3 id="making-gainz">Making Gainz</h3>
+<p>Elle se débloque un ou deux jours en jeu après <em>Heavy Lifting</em>, quand Raul contacte Lucia. <strong>Tu joues Lucia seule.</strong></p>
+<p class="alerte">⚠️ <strong>À partir de cette mission et jusqu'à <em>VCIA Takedown</em>, Jason et Lucia ne peuvent plus être vus ensemble en public.</strong> Ils ne peuvent se retrouver que dans leur chambre du Y Hotel. <strong>Fais tes activités de couple avant de la lancer</strong>, ou enchaîne les missions suivantes d'affilée.</p>
+<ol start="16">
+<li><strong>La salle de planification</strong> : vas-y <strong>seule</strong>, avec Lucia.</li>
+<li><strong>Nate</strong> : après la cinématique, monte à la salle principale et trouve-le <strong>près des bancs de musculation</strong>. <strong>Parle-lui plusieurs fois</strong> jusqu'à ce qu'il fasse attention à elle.</li>
+<li><strong>L'entraînement</strong> : enchaîne le <strong>développé couché</strong> derrière lequel il se tient, puis le <strong>rack à squat</strong>, puis le <strong>soulevé de terre dehors</strong>. Quand Nate part avec Kordell, utilise le <strong>vélo d'appartement libre</strong> de l'autre côté de la piscine.</li>
+<li><strong>La montée en forme</strong> : un montage suit, Lucia s'entraînant avec Nate pendant des semaines. <strong>Continue à enchaîner les exercices et à parler à Nate.</strong></li>
+<li><strong>Le choix des stéroïdes</strong> : Nate en propose à Lucia.</li>
+</ol>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Choix</th>
+<th>Conséquence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Refuser</strong> <em>(par défaut)</em></td>
+<td>Le physique de Lucia reste identique</td>
+</tr>
+<tr>
+<td><strong>Accepter</strong> <em>(choix actif)</em></td>
+<td>⚠️ <strong>Change le physique de Lucia pour tout le reste du jeu</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ol start="21">
+<li><strong>Le Trauma Floor</strong> : après le montage, Nate montre à Lucia la salle privée de Kordell. Sors, retrouve Jason <strong>au nord du bâtiment</strong>. En <strong>Jason</strong>, roule jusqu'à la salle de planification et <strong>utilise l'interphone</strong>.</li>
+<li><strong>La confiance de la bande</strong> : en <strong>Lucia</strong>, <strong>change-toi au casier de droite du Trauma Floor</strong> et parle à Nate.
+<ul>
+<li>Entraîne-toi <strong>à côté des culturistes</strong> : d'abord près de <strong>Raina</strong>, puis près de <strong>Nate et Francisco</strong>, puis utilise le <strong>soulevé de terre de l'estrade</strong>, là où Kordell se trouve.</li>
+<li>Quand Kordell discute, <strong>réponds ce que tu veux</strong>, parle à la bande et quitte la salle.</li>
+</ul>
+</li>
+</ol>
+<h3 id="too-much-baggage">Too Much Baggage</h3>
+<p>Elle se débloque après <em>Making Gainz</em>. Raul envoie <strong>Jason</strong> repérer le <strong>Vice City International Airport</strong>.</p>
+<ol start="23">
+<li><strong>L'aéroport</strong> : roule, <strong>parle au garde</strong>, gare-toi dans le parking et va au bureau voisin retrouver Andrea.</li>
+<li><strong>Omar</strong> : le chef des bagagistes fait entrer Jason. <strong>En vue à la première personne, regarde chaque boîte blanche</strong> que les lunettes surlignent <strong>jusqu'à ce qu'elle devienne verte</strong>. Ce sont les points d'intérêt de Karim.</li>
+<li><strong>Le tracteur à bagages</strong> : suis Omar, monte dessus, <strong>recule dans les deux remorques</strong> pour les attacher, puis roule jusqu'à l'avion, au sud de l'aéroport.</li>
+<li><strong>Le chargement</strong> : <strong>lance les sacs à Omar</strong>. <strong>Maintiens le bouton pour remplir la jauge et relâche un peu avant la zone du milieu</strong> : la barre continue de monter brièvement après que tu aies lâché.</li>
+<li><strong>Le mouchard</strong> : trouve une excuse pour quitter Omar, sors de la soute, <strong>longe le mur vers le sud jusqu'aux dernières portes doubles à gauche</strong>.
+<ul>
+<li><strong>Suis le mur de gauche</strong> jusqu'au couloir, <strong>passe la porte bleue</strong> vers le bureau de sécurité, <strong>entre dans les toilettes à droite</strong> et <strong>place le dispositif derrière la cuvette</strong>.</li>
+</ul>
+</li>
+<li><strong>Le poste</strong> : retourne voir Omar. <strong>Concentre-toi sur lui</strong> et dis-lui que tu veux le job.</li>
+</ol>
+<h3 id="watch-it">Watch It</h3>
+<p>Elle se débloque après <em>Making Gainz</em>, quand Dre'Quan veut impressionner un patron de boîte de nuit.</p>
+<ol start="29">
+<li><strong>La boutique</strong> : va au magasin marqué, monte à l'étage, attends que Dre'Quan ait fini avec le vendeur et suis-le à la voiture.</li>
+<li><strong>Le parking Cruda</strong> : roule au sud, <strong>prends les rampes jusqu'au dernier étage</strong> et gare-toi à côté de la voiture marquée, où attendent les hommes qui lui ont vendu la montre.</li>
+<li><strong>La bagarre</strong> : aide Dre'Quan à <strong>assommer les deux hommes</strong>. Une voiture d'hommes armés arrive et tire immédiatement, puis d'autres ennemis viennent <strong>par l'escalier</strong>. Élimine-les tous, remonte en voiture et <strong>repars avant la police</strong>.</li>
+<li><strong>Nola</strong> : roule jusqu'à la boutique, vers le sud d'Ocean Beach. <strong>Choisis une des deux tenues sur les mannequins.</strong> Dre'Quan paie et prend l'autre.</li>
+<li><strong>Royce Jones</strong> : roule au nord jusqu'à l'hôtel <strong>Doight d'Or</strong>, suis Dre'Quan à travers le bâtiment et par l'arrière. La mission se termine après sa discussion avec le patron du <strong>VYB</strong>.</li>
+</ol>
+<h3 id="cash-injections">Cash Injections</h3>
+<p>Elle se débloque après <em>Amateur Hour</em>, quand Nate écrit à Lucia. <strong>Tu peux l'appeler</strong> ou attendre environ un jour.</p>
+<ol start="34">
+<li><strong>Muscle Beach</strong> : va à la salle d'Ocean Beach le retrouver.</li>
+<li><strong>Le deal de Synthol</strong> : suis-le hors de la plage jusqu'à sa voiture, monte, roule quelques rues au nord jusqu'à la ruelle. Quand il le demande, <strong>ouvre le coffre pour prendre le sac</strong>.</li>
+<li><strong>Le retournement</strong> : les acheteurs se retournent contre vous. <strong>Appuie sur l'indication</strong> pour sortir l'arme des mains de l'homme à côté de toi, puis élimine les ennemis autour de Nate pendant que l'un d'eux part avec sa voiture.</li>
+<li><strong>La poursuite</strong> : prends la voiture laissée dans la ruelle et suis le voleur. ⚠️ <strong>Tirer sur le conducteur ne sert à rien ici</strong> : reste collée à lui.</li>
+<li><strong>La reprise</strong> : la voiture s'arrête dans la ruelle d'un motel et plusieurs hommes armés en sortent. Nettoie la zone pour atteindre la voiture de Nate sur le parking, en surveillant les <strong>ennemis de l'étage du motel</strong> et ceux des <strong>portes latérales</strong>.</li>
+<li><strong>La sortie</strong> : repars immédiatement. Si la police te repère, <strong>sème-la d'abord</strong>. Nate offre une glace à Lucia : roule jusqu'au glacier du <strong>nord de Vice Beach</strong> pour terminer.</li>
+</ol>
+<h3 id="amateur-hour">Amateur Hour</h3>
+<p>Elle se débloque dans la foulée. <strong>Tu joues Lucia seule.</strong> Cinco objectifs.</p>
+<ol start="40">
+<li><strong>Francisco</strong> : trouve-le à l'<strong>Ajax Gym</strong>, sur le <strong>Trauma Floor</strong>, en train de faire du soulevé de terre sur l'estrade. <strong>Cisco</strong> veut de l'aide avec un réalisateur qui lui doit de l'argent.</li>
+<li><strong>La tenue</strong> : au casier de Lucia, <strong>change de tenue</strong>. Suis Cisco par la <strong>porte arrière du Trauma Floor</strong> jusqu'à sa voiture.</li>
+<li><strong>Washington Island</strong> : roule au nord jusqu'au point de rendez-vous et <strong>gare-toi à l'emplacement marqué</strong>. <strong>Assieds-toi sur le banc voisin</strong> pendant que Cisco se cache, et attends le camping-car.</li>
+<li><strong>La poursuite</strong> : saute dans la voiture de Cisco et poursuis le <strong>Coochie Camper</strong>. Cisco tire, et toi aussi.
+<ul>
+<li><strong>Vise les pneus</strong> : crevés, le camping-car s'arrête presque immédiatement.</li>
+</ul>
+</li>
+<li><strong>Le retour</strong> : <strong>Judd</strong> descend et Cisco récupère son argent. Ramène Cisco <strong>à l'arrière de l'Ajax Gym</strong> et gare-toi <strong>à sa place</strong> pour terminer.</li>
+</ol>
+<p><strong>Récompense : 1 000 $.</strong></p>
+<h3 id="dirty-work">Dirty Work</h3>
+<p>Elle se débloque quand <em>Too Much Baggage</em> <strong>et</strong> <em>Cash Injections</em> sont faites. Lucia a Cisco et Nate de son côté, mais pas <strong>Raina</strong>.</p>
+<ol start="45">
+<li><strong>La salle de planification</strong> : vas-y avec Jason ou Lucia pour lancer la mission. Andrea a un plan.</li>
+<li><strong>Le Velvet Palm Motel</strong> : en <strong>Lucia</strong>, roule jusqu'à <strong>Tequesta</strong>. <strong>Choisis un poste d'observation</strong> : les <strong>conteneurs que Jason indique</strong> donnent une vue directe sur les fenêtres du motel.</li>
+<li><strong>Le rendez-vous de Jason</strong> : il fait semblant d'engager Raina comme dominatrice. <strong>Appuie sur le bouton chaque fois qu'il apparaît</strong> pour lui résister, jusqu'à ce que Jason ouvre une fenêtre.</li>
+<li><strong>Les photos</strong> : en <strong>Lucia</strong>, <strong>photographie Raina et Jason par la fenêtre</strong>. Après quelques clichés, Lucia part d'elle-même.</li>
+<li><strong>Nate</strong> : en <strong>Jason</strong>, fais le tour du bâtiment pour retrouver Lucia dans la ruelle. Le lendemain, Lucia est à la salle : <strong>monte à l'étage, sors vers la piscine et parle à Nate sur une chaise longue</strong>.</li>
+</ol>
+<h3 id="adventures-in-babysitting">Adventures in Babysitting</h3>
+<p>Elle se débloque un temps après <em>Making Gainz</em>, quand Andrés rappelle Jason pour la sécurité. <strong>Neuf objectifs</strong>, et une des missions les plus longues du jeu. <strong>Tu joues Jason seul.</strong></p>
+<ol start="50">
+<li><strong>Starfish Island</strong> : roule jusqu'à la maison d'Andrés, suis <strong>Paulo</strong> par l'arrière pour le retrouver, puis roule jusqu'à la boîte <strong>The Vault</strong>.</li>
+<li><strong>L'entrée</strong> : intervient quand un homme ivre arrête Andrés à l'entrée.</li>
+<li><strong>Le verre</strong> : sur la première piste, <strong>commande au barman de gauche</strong>. Andrés l'a demandé <strong>sans citron</strong>, mais se tromper n'a aucune conséquence. Apporte-le-lui près de l'escalier, <strong>prends une photo de lui avec ses amis</strong>, puis suis-le à l'étage.</li>
+<li><strong>L'étage</strong> : <strong>invite le groupe de filles de droite</strong> au carré d'Andrés. <strong>Confirme la commande</strong> au barman et <strong>prends la place libre sur le canapé</strong>. Quand on te le demande, <strong>va parler à la sécurité de Donatello</strong> à l'autre carré, puis reviens.</li>
+<li><strong>La drogue</strong> : Andrés te tend un verre. ⚠️ <strong>Tu ne peux pas le refuser.</strong>
+<ul>
+<li>Un peu avant, il propose aussi de la drogue. <strong>Accepter ne change rien à long terme ; refuser ne sert à rien non plus, parce qu'il te drogue le verre de toute façon.</strong></li>
+</ul>
+</li>
+<li><strong>La recherche</strong> : suis-le au pupitre du DJ, au bureau, et retour. Sors du pupitre et cherche-le à la table. Ses amis t'orientent vers <strong>les toilettes de l'autre bout de l'étage</strong> : il est <strong>dans la dernière cabine</strong>.</li>
+<li><strong>La livraison</strong> : <strong>prends l'escalier principal</strong>, sors par la porte du bas et <strong>va à la voiture qui se gare au bout de la ruelle à droite</strong>. Reviens vite vers Andrés, <strong>au bar du coin sud-est</strong>.</li>
+<li><strong>L'attaque</strong> : les hommes du <strong>FAP</strong> prennent la boîte. ⚠️ <strong>La vision de Jason est fortement déformée par la drogue</strong> jusqu'à ce que tu sortes.
+<ul>
+<li>Combats à travers l'étage avec Andrés, <strong>en ramassant les armes des ennemis tombés</strong>.</li>
+<li>Surveille <strong>la voiture pleine d'hommes armés au bas de l'escalier</strong> et <strong>passe par la porte de droite</strong>.</li>
+<li>Quand un assaillant te plaque, <strong>martèle l'indication</strong> pour éviter le coup de couteau.</li>
+<li class="alerte">⚠️ <strong>Les civils qui courent pendant la fusillade comptent</strong> si tu veux garder une bonne note de profil criminel.</li>
+</ul>
+</li>
+<li><strong>La fuite en voiture</strong> : dehors, monte avec la sécurité d'Andrés et <strong>utilise le LMG à travers le toit</strong> pour détruire les véhicules qui vous poursuivent. ⚠️ <strong>Surveille la santé de Jason</strong>, il prend très cher là-haut.</li>
+<li><strong>L'héliport</strong> : suis Paulo dans l'escalator et le bâtiment, <strong>aide Andrés à traverser les voies ferrées</strong> et continue à nettoyer. Prends l'ascenseur, suis Paulo sur le toit, <strong>dégage l'héliport</strong> et <strong>pousse Andrés dans l'hélicoptère</strong>.</li>
+<li><strong>La défense de l'hélicoptère</strong> : utilise le <strong>fusil d'assaut à munitions illimitées</strong> sur les hélicos ennemis, <strong>en changeant de côté quand on te le demande</strong>.
+<ul>
+<li>Puis le <strong>lance-roquettes</strong> : <strong>attends que le carré sur chaque hélico devienne rouge</strong> pour verrouiller, et tire.</li>
+<li><strong>Vise les rotors de queue</strong> : ils tombent beaucoup plus vite qu'en visant les pilotes ou les tireurs.</li>
+</ul>
+</li>
+</ol>
+<p>De retour chez lui, Andrés apprend que son fils <strong>Rafa</strong> a été enlevé.</p>
+<h3 id="fresh-evidence-power-play-childs-play-et-headliners">Fresh Evidence, Power Play, Child's Play et Headliners</h3>
+<p>Les quatre dernières missions de cette partie enchaînent la suite directe : Jason et Dre'Quan vont chercher de quoi faire chanter quelqu'un, l'équipe de Kordell est infiltrée pour de bon, l'affaire Rafa se règle, et les Dimez montent sur la scène du <strong>VYB</strong>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Mission</th>
+<th>Personnage</th>
+<th>Ce que les sources en disent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Fresh Evidence</em></td>
+<td><strong>Jason</strong></td>
+<td>Jason et Dre'Quan partent chercher du matériel de chantage</td>
+</tr>
+<tr>
+<td><em>Power Play</em></td>
+<td><strong>Jason et Lucia</strong></td>
+<td>Aider l'équipe de Kordell et récolter des informations</td>
+</tr>
+<tr>
+<td><em>Child's Play</em></td>
+<td><strong>Jason et Lucia</strong></td>
+<td>L'affaire <strong>Rafa</strong> : le couple intervient pour aider une connaissance. Trophée <em>Family Matters</em></td>
+</tr>
+<tr>
+<td><em>Headliners</em></td>
+<td><strong>Jason et Lucia</strong></td>
+<td>Les Dimez se produisent au <strong>VYB</strong> et le couple aide à la soirée de lancement. Trophée <em>DWNFALL</em></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Ce que les sources en disent de plus</strong>, en étant clair sur leur fiabilité : les fiches détaillées de ces missions annoncent toutes leur soluce « à venir ». Les résumés ci-dessous viennent d'une seule source et d'une portion de page que l'outil de lecture a elle-même résumée : <strong>leur fiabilité est plus faible que le reste du guide</strong>.</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Mission</th>
+<th>Donneur d'ordre</th>
+<th>Ce qu'elle semble demander</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Fresh Evidence</em></td>
+<td><strong>Dre'Quan</strong></td>
+<td>Repérer le manoir de <strong>Dante Fresh</strong>, sur <strong>Starfish Island</strong>, pour y chercher des cassettes privées</td>
+</tr>
+<tr>
+<td><em>Power Play</em></td>
+<td><strong>Nate</strong></td>
+<td>Détaillée dans la <strong>partie 12</strong> : le siège de l'équipe de Kordell et le braquage du fourgon blindé</td>
+</tr>
+<tr>
+<td><em>Child's Play</em></td>
+<td><strong>Abe</strong>, par un appel de groupe</td>
+<td>Lucia fait traîner une remise de rançon dans une <strong>cimenterie au sud de l'aéroport</strong></td>
+</tr>
+<tr>
+<td><em>Headliners</em></td>
+<td><strong>Dre'Quan</strong></td>
+<td>Une nuit au club pendant que Dre'Quan négocie la tête d'affiche pour les Dimez</td>
+</tr>
+</tbody>
+</table></div>
+<p class="alerte" data-verif="05eaa0732ceb">⚠️ <strong>Le déroulé pas à pas de <em>Fresh Evidence</em>, <em>Child's Play</em> et <em>Headliners</em> reste non publié.</strong> À vérifier en jeu.</p>
+<p class="alerte">⚠️ <strong>Et une divergence d'ordre</strong> : une source place <em>Power Play</em> <strong>avant</strong> <em>Delivery Method</em> et <em>Close Surveillance</em>, l'autre après <em>Headliners</em>. Les deux s'accordent en revanche pour dire que <strong><em>Close Surveillance</em> et <em>Delivery Method</em> sont interchangeables</strong> <em>(partie 12)</em>.</p>
+<p class="alerte">⚠️ <strong>Et surtout</strong> : <em>Power Play</em> est la mission qui <strong>fait disparaître <em>Bad Driver!</em></strong>. Si tu ne l'as pas faite, <strong>arrête-toi ici et va la faire</strong>.</p>
+<h2 id="quetes-et-lieux-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-crest"/></svg></span><span>Quêtes et lieux</span></h2>
+<h3 id="les-culturistes-de-lajax-gym">Les culturistes de l'Ajax Gym</h3>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Personnage</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Kordell Grant</strong></td>
+<td>Le chef de l'équipe rivale, ancien associé de Raul. La cible du chapitre</td>
+</tr>
+<tr>
+<td><strong>Nate</strong></td>
+<td>Celui par qui Lucia entre dans la bande. Beaucoup de missions passent par lui</td>
+</tr>
+<tr>
+<td><strong>Raina</strong></td>
+<td>Celle qu'il faut faire plier, dans <em>Dirty Work</em></td>
+</tr>
+<tr>
+<td><strong>Francisco « Cisco »</strong></td>
+<td>Le culturiste d'<em>Amateur Hour</em></td>
+</tr>
+<tr>
+<td><strong>J-Wang</strong></td>
+<td>Le coach qui fait visiter la salle</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="le-trauma-floor">Le Trauma Floor</h3>
+<p>C'est l'étage privé de Kordell, et il revient dans trois missions. On y accède par la confiance de la bande, pas par la force. Le <strong>casier de droite</strong> sert à se changer, l'<strong>estrade</strong> porte le soulevé de terre de Kordell, et la <strong>porte arrière</strong> donne sur le parking de Cisco.</p>
+<h3 id="les-filatures-de-ce-chapitre">Les filatures de ce chapitre</h3>
+<p>Deux missions reposent dessus — <em>Heavy Lifting</em> et, plus tôt, <em>South Leonida Real Estate</em>. La règle est la même partout dans le jeu :</p>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Couleur du marqueur</th>
+<th>Ce que ça veut dire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Blanc</strong></td>
+<td>Bonne distance, continue</td>
+</tr>
+<tr>
+<td><strong>Jaune</strong></td>
+<td>⚠️ <strong>Trop près.</strong> Lève le pied et laisse une voiture s'intercaler</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="butin-exhaustif-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-chest"/></svg></span><span>Butin exhaustif</span></h2>
+<div class="tableau"><table>
+<thead>
+<tr>
+<th>Nom exact</th>
+<th>Type</th>
+<th>Où / comment l'obtenir</th>
+<th>Utilité</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Disque dur</strong></td>
+<td><span class="badge neutre">Objet de scénario</span></td>
+<td><em>Heavy Lifting</em> : dans le box du bâtiment de stockage</td>
+<td>Le fil rouge jusqu'à la fin du jeu. Il appartenait à <strong>Giorgio Gallo</strong>, héritier de <strong>Bilgeco</strong></td>
+</tr>
+<tr>
+<td><strong>Sangle de musculation</strong></td>
+<td><span class="badge neutre">Objet</span></td>
+<td><em>Heavy Lifting</em> : par terre dans la cabine de bronzage</td>
+<td><strong>Enfermer Nate</strong> dans le banc</td>
+</tr>
+<tr>
+<td><strong>Téléphone de Nate</strong></td>
+<td><span class="badge neutre">Objet de scénario</span></td>
+<td><em>Heavy Lifting</em> : dans son sac, appli <strong>WhatUp</strong></td>
+<td>Lire les messages de l'équipe</td>
+</tr>
+<tr>
+<td><strong>Tenue de sport</strong></td>
+<td><span class="badge neutre">Cosmétique</span></td>
+<td><em>Heavy Lifting</em> : au casier marqué de l'Ajax Gym</td>
+<td>Couverture, et <strong>styles découverts</strong></td>
+</tr>
+<tr>
+<td><strong>20 000 $</strong></td>
+<td><span class="badge gils">Argent</span></td>
+<td><em>Bad Driver!</em> : versés par Andrea <strong>si tu tues Felipe</strong></td>
+<td>⚠️ <strong>Manquable</strong> si tu lances <em>Power Play</em> avant</td>
+</tr>
+<tr>
+<td><strong>Véhicule de Felipe</strong></td>
+<td><span class="badge neutre">Véhicule</span></td>
+<td><em>Collect Felipe's Gift</em>, débloquée <strong>si tu l'épargnes</strong></td>
+<td>L'autre branche de <em>Bad Driver!</em></td>
+</tr>
+<tr>
+<td><strong>Tenue de Nola</strong></td>
+<td><span class="badge neutre">Cosmétique</span></td>
+<td><em>Watch It</em> : une des deux sur les mannequins, payée par Dre'Quan</td>
+<td>Tenue de soirée gratuite</td>
+</tr>
+<tr>
+<td><strong>Sac de Synthol</strong></td>
+<td><span class="badge neutre">Marchandise</span></td>
+<td><em>Cash Injections</em> : dans le coffre de la voiture de Nate</td>
+<td>Objectif de mission</td>
+</tr>
+<tr>
+<td><strong>1 000 $</strong></td>
+<td><span class="badge gils">Argent</span></td>
+<td><em>Amateur Hour</em> : payés par Cisco</td>
+<td>Argent</td>
+</tr>
+<tr>
+<td><strong>6 000 $</strong></td>
+<td><span class="badge gils">Argent</span></td>
+<td><em>Photo/Shoot</em></td>
+<td>Argent</td>
+</tr>
+<tr>
+<td><strong>LMG</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td><em>Adventures in Babysitting</em> : à travers le toit de la voiture de fuite</td>
+<td>Détruire les poursuivants</td>
+</tr>
+<tr>
+<td><strong>Fusil d'assaut</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td><em>Adventures in Babysitting</em> : dans l'hélicoptère, <strong>munitions illimitées</strong></td>
+<td>Abattre les hélicos ennemis</td>
+</tr>
+<tr>
+<td><strong>Lance-roquettes</strong></td>
+<td><span class="badge arme">Arme</span></td>
+<td><em>Adventures in Babysitting</em> : dans l'hélicoptère</td>
+<td><strong>Verrouiller au carré rouge</strong>, viser les rotors de queue</td>
+</tr>
+<tr>
+<td><strong>Dispositif d'écoute</strong></td>
+<td><span class="badge neutre">Objet</span></td>
+<td><em>Too Much Baggage</em> : fourni, à placer <strong>derrière la cuvette</strong> du bureau de sécurité</td>
+<td>Préparer le coup de l'aéroport</td>
+</tr>
+<tr>
+<td><strong>Appareil photo du téléphone</strong></td>
+<td><span class="badge neutre">Outil</span></td>
+<td><em>Photo/Shoot</em> et <em>Dirty Work</em></td>
+<td>Photos de mission</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="conseils-et-pieges-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-sigil"/></svg></span><span>Conseils et pièges</span></h2>
+<p><strong>Fais <em>Bad Driver!</em> avant <em>Power Play</em>.</strong> C'est le seul endroit du jeu où une mission optionnelle disparaît à cause d'une mission principale précise. Elle vaut 20 000 $ ou une voiture gratuite.</p>
+<p><strong>Réfléchis avant les stéroïdes.</strong> Le choix est actif, donc tu ne le feras pas par accident, mais il change le physique de Lucia <strong>pour tout le reste du jeu</strong>. Il n'y a pas de retour en arrière sans recharger une sauvegarde.</p>
+<p><strong>Le couple est en pause.</strong> Entre <em>Making Gainz</em> et <em>VCIA Takedown</em>, les retrouvailles ne se font que dans la chambre du Y Hotel. Si tu veux monter la relation — et tu le veux, c'est une condition des bonnes fins — <strong>fais-le avant</strong>, ou enchaîne les missions sans traîner.</p>
+<p><strong>Marqueur blanc, toujours.</strong> Les deux filatures du jeu se ratent de la même façon : en collant la cible.</p>
+<p><strong>Vise les pneus, encore.</strong> Le camping-car d'<em>Amateur Hour</em> s'arrête net, et les voitures de police aussi. C'est la solution à presque toutes les poursuites du jeu.</p>
+<p><strong>Les rotors de queue.</strong> Dans <em>Adventures in Babysitting</em>, les hélicoptères tombent bien plus vite en visant la queue qu'en tirant sur les occupants.</p>
+<p><strong>Attention aux civils.</strong> Les passants qui fuient pendant la fusillade de la boîte comptent pour ton profil criminel, et donc pour les bonnes fins.</p>
+<p><strong>Vire ton argent.</strong> 6 000 $ ici, 20 000 $ là, 1 000 $ ailleurs : tout cela va sur l'<strong>Épargne familiale</strong> <em>(partie 13)</em>.</p>
+<h2 id="alertes-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-flag"/></svg></span><span>Alertes</span></h2>
+<ul>
+<li class="alerte">⚠️ <strong>Manquable définitivement</strong> : <em>Bad Driver!</em> disparaît <strong>si tu lances <em>Power Play</em> avant de la faire</strong>. C'est la manquable la plus coûteuse du chapitre.</li>
+<li class="alerte">⚠️ <strong>Choix irréversible</strong> : accepter les stéroïdes de Nate dans <em>Making Gainz</em> change le physique de Lucia <strong>pour le reste du jeu</strong>.</li>
+<li class="alerte">⚠️ <strong>Fenêtre fermée</strong> : de <em>Making Gainz</em> à <em>VCIA Takedown</em>, le couple ne peut pas être vu ensemble en public.</li>
+<li class="alerte">⚠️ <strong>Filature ratée</strong> : marqueur jaune dans <em>Heavy Lifting</em>. Lève le pied.</li>
+<li class="alerte">⚠️ <strong>Profil criminel</strong> : les civils touchés pendant la fusillade de <em>Adventures in Babysitting</em>.</li>
+<li class="alerte" data-verif="d585dc449ef2">⚠️ <strong>Détail non publié</strong> : le déroulé de <em>Fresh Evidence</em>, <em>Power Play</em>, <em>Child's Play</em> et <em>Headliners</em>. À vérifier en jeu.</li>
+<li class="alerte">⚠️ <strong>Noms français non publiés</strong> : toutes les missions de cette partie.</li>
+</ul>
+<h2 id="check-list-12" class="h-chapitre"><span class="h-ic" aria-hidden="true"><svg><use href="#ic-check"/></svg></span><span>Check-list</span></h2>
+<ul>
+<li class="tache"><input type="checkbox"> <em>Heavy Lifting</em> : disque dur récupéré, Nate enfermé, <strong>filature réussie en blanc</strong></li>
+<li class="tache"><input type="checkbox"> <em>Photo/Shoot</em> : Dre'Quan récupéré <em>(6 000 $)</em></li>
+<li class="tache"><input type="checkbox"> <strong><em>Bad Driver!</em> faite AVANT <em>Power Play</em></strong></li>
+<li class="tache"><input type="checkbox"> Choix sur Felipe fait : <strong>20 000 $</strong> ou <em>Collect Felipe's Gift</em></li>
+<li class="tache"><input type="checkbox"> Activités de couple faites <strong>avant</strong> <em>Making Gainz</em></li>
+<li class="tache"><input type="checkbox"> <em>Making Gainz</em> : choix des stéroïdes fait en connaissance de cause, confiance de la bande gagnée</li>
+<li class="tache"><input type="checkbox"> <em>Too Much Baggage</em> : points d'intérêt passés au vert, <strong>mouchard placé derrière la cuvette</strong></li>
+<li class="tache"><input type="checkbox"> <em>Watch It</em> : tenue de Nola choisie, Royce Jones rencontré</li>
+<li class="tache"><input type="checkbox"> <em>Cash Injections</em> : voiture de Nate récupérée, glace livrée</li>
+<li class="tache"><input type="checkbox"> <em>Amateur Hour</em> : <strong>pneus du Coochie Camper crevés</strong> <em>(1 000 $)</em></li>
+<li class="tache"><input type="checkbox"> <em>Dirty Work</em> : photos prises par la fenêtre, Nate retrouvé à la piscine</li>
+<li class="tache"><input type="checkbox"> <em>Adventures in Babysitting</em> : hélicos abattus <strong>aux rotors de queue</strong>, civils épargnés</li>
+<li class="tache"><input type="checkbox"> <em>Fresh Evidence</em> terminée</li>
+<li class="tache"><input type="checkbox"> <em>Power Play</em> terminée</li>
+<li class="tache"><input type="checkbox"> <em>Child's Play</em> terminée <em>(trophée Family Matters)</em></li>
+<li class="tache"><input type="checkbox"> <em>Headliners</em> terminée <em>(trophée DWNFALL)</em></li>
+<li class="tache"><input type="checkbox"> Tous les gains virés sur l'<strong>Épargne familiale</strong></li>
+</ul>
+</div>
+</section>
+<nav class="gjv-suite no-print" aria-label="Autres parties du guide"><a class="prec" href="chapitre-4-la-belle-vie-au-y-hotel.html" rel="prev"><small>← Partie précédente</small><b>Chapitre 4 : la belle vie au Y Hotel</b></a><a class="suiv" href="chapitre-4-le-casse-de-laeroport-et-la-trahison.html" rel="next"><small>Partie suivante →</small><b>Chapitre 4 : le casse de l&#x27;aéroport et la trahison</b></a><a class="tout" href="gta-6.html">Lire tout le guide sur une seule page</a></nav>
+</main>
+</div>
+<footer class="pied">Grand Theft Auto VI · guide complet généré le 21 novembre 2026. Ta progression est enregistrée dans ce navigateur.</footer>
+<script>
+(function () {
+  // Lucioles
+  var pyre = document.getElementById("pyre");
+  if (pyre && !window.matchMedia("print").matches) {
+    var n = window.innerWidth < 600 ? 14 : 26;
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("span");
+      s.style.left = (Math.random() * 100) + "%";
+      s.style.top = (Math.random() * 100) + "%";
+      s.style.animationDelay = (Math.random() * 14) + "s";
+      s.style.animationDuration = (10 + Math.random() * 10) + "s";
+      pyre.appendChild(s);
+    }
+  }
+
+  // Cases à cocher mémorisées, progression globale et par partie
+  var cle = "guide-coches:" + document.body.getAttribute("data-guide");
+  var etat = {};
+  try { etat = JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { etat = {}; }
+  var cases = Array.prototype.slice.call(document.querySelectorAll("li.tache input"));
+  function idCase(c) {
+    var li = c.closest("li"), sec = c.closest("section");
+    return (sec ? sec.id : "") + "|" + li.textContent.trim().slice(0, 160);
+  }
+  function majProgression() {
+    var total = cases.length, faits = 0, parSection = {};
+    cases.forEach(function (c) {
+      var sec = c.closest("section"), id = sec ? sec.id : "";
+      parSection[id] = parSection[id] || [0, 0];
+      parSection[id][1]++;
+      if (c.checked) { faits++; parSection[id][0]++; }
+    });
+    var pct = total ? Math.round(faits / total * 100) : 0;
+    var t = document.getElementById("progressText");
+    if (t) t.textContent = faits + " / " + total + " objectifs cochés";
+    var p = document.getElementById("progressPct");
+    if (p) p.textContent = pct + " %";
+    var f = document.getElementById("progressFill");
+    if (f) f.style.width = pct + "%";
+    document.querySelectorAll(".sommaire li[data-section]").forEach(function (li) {
+      var v = parSection[li.getAttribute("data-section")], compte = li.querySelector(".compte");
+      if (!v) { if (compte) compte.textContent = ""; li.classList.remove("complet"); return; }
+      if (compte) compte.textContent = v[0] + "/" + v[1];
+      li.classList.toggle("complet", v[0] === v[1]);
+    });
+  }
+  cases.forEach(function (c) {
+    var id = idCase(c);
+    if (Object.prototype.hasOwnProperty.call(etat, id)) c.checked = etat[id];
+    c.addEventListener("change", function () {
+      etat[id] = c.checked;
+      try { localStorage.setItem(cle, JSON.stringify(etat)); } catch (e) {}
+      majProgression();
+    });
+  });
+  var reset = document.getElementById("resetBtn");
+  if (reset) reset.addEventListener("click", function () {
+    if (!window.confirm("Décocher toutes les cases de ce guide ?")) return;
+    etat = {};
+    cases.forEach(function (c) { c.checked = false; });
+    try { localStorage.removeItem(cle); } catch (e) {}
+    majProgression();
+  });
+  majProgression();
+
+  // Sommaire : ouverture sur mobile, partie en cours surlignée
+  var btn = document.getElementById("btnSommaire");
+  if (btn) btn.addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("toc-ouvert");
+    btn.setAttribute("aria-expanded", ouvert ? "true" : "false");
+  });
+  function fermerSommaire() {
+    document.body.classList.remove("toc-ouvert");
+    if (btn) btn.setAttribute("aria-expanded", "false");
+  }
+  var fermer = document.getElementById("fermerSommaire");
+  if (fermer) fermer.addEventListener("click", fermerSommaire);
+  document.querySelectorAll(".sommaire a").forEach(function (a) { a.addEventListener("click", fermerSommaire); });
+  // Partie en cours : le dernier titre de partie passé sous la barre du haut.
+  var reperes = [], actif = null, attente = false;
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    var el = document.getElementById(a.getAttribute("href").slice(1));
+    if (el) reperes.push({ el: el, a: a });
+  });
+  function majActif() {
+    attente = false;
+    var choisi = reperes.length ? reperes[0].a : null;
+    for (var i = 0; i < reperes.length; i++) {
+      if (reperes[i].el.getBoundingClientRect().top <= 140) choisi = reperes[i].a; else break;
+    }
+    if (choisi === actif) return;
+    if (actif) actif.classList.remove("actif");
+    actif = choisi;
+    if (actif) {
+      actif.classList.add("actif");
+      var nav = document.querySelector(".sommaire"), r = actif.getBoundingClientRect(), n = nav.getBoundingClientRect();
+      if (r.top < n.top || r.bottom > n.bottom) nav.scrollTop += r.top - n.top - n.height / 3;
+    }
+  }
+  window.addEventListener("scroll", function () {
+    if (!attente) { attente = true; window.requestAnimationFrame(majActif); }
+  }, { passive: true });
+  majActif();
+
+  // Parties dépliables : tout est replié au chargement pour garder la page lisible
+  var parties = Array.prototype.slice.call(document.querySelectorAll("section.section"));
+  var btnPlier = document.getElementById("btnPlier");
+  function deplier(sec, ouvrir) {
+    sec.classList.toggle("replie", !ouvrir);
+    var b = sec.querySelector(".bascule");
+    if (b) b.setAttribute("aria-expanded", ouvrir ? "true" : "false");
+  }
+  function majBtnPlier() {
+    if (!btnPlier) return;
+    var reste = parties.some(function (s) { return s.classList.contains("replie"); });
+    btnPlier.textContent = reste ? "Tout déplier" : "Tout replier";
+  }
+  parties.forEach(function (sec) {
+    var b = sec.querySelector(".bascule");
+    if (!b) return;
+    b.addEventListener("click", function () {
+      deplier(sec, sec.classList.contains("replie"));
+      majBtnPlier();
+    });
+  });
+  if (btnPlier) btnPlier.addEventListener("click", function () {
+    var ouvrir = parties.some(function (s) { return s.classList.contains("replie"); });
+    parties.forEach(function (s) { deplier(s, ouvrir); });
+    majBtnPlier();
+    if (!ouvrir) window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+  function ouvrirCible() {
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    var el = document.getElementById(id);
+    var sec = el && el.closest("section.section");
+    if (!sec) return;
+    deplier(sec, true);
+    majBtnPlier();
+    if (el.scrollIntoView) el.scrollIntoView();
+  }
+  window.addEventListener("hashchange", ouvrirCible);
+  document.querySelectorAll(".sommaire a").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var el = document.getElementById(a.getAttribute("href").slice(1));
+      var sec = el && el.closest("section.section");
+      if (sec) { deplier(sec, true); majBtnPlier(); }
+    });
+  });
+  majBtnPlier();
+  ouvrirCible();
+
+  // Recherche dans tout le guide (accents ignorés), surlignage et navigation
+  var champ = document.getElementById("searchInput");
+  var compteur = document.getElementById("searchCount");
+  var main = document.querySelector("main");
+  if (!champ || !main) return;
+  var surligne = !!(window.CSS && CSS.highlights && window.Highlight);
+  var noeuds = null, resultats = [], courant = -1, minuteur = null;
+  var ouvertsParRecherche = [];
+  function plier(s) {
+    var o = "";
+    for (var i = 0; i < s.length; i++) o += s[i].normalize("NFD").charAt(0).toLowerCase().charAt(0);
+    return o;
+  }
+  function indexer() {
+    noeuds = [];
+    var w = document.createTreeWalker(main, NodeFilter.SHOW_TEXT);
+    var n;
+    while ((n = w.nextNode())) {
+      if (n.nodeValue.trim()) noeuds.push({ n: n, t: plier(n.nodeValue) });
+    }
+  }
+  function afficherCompte() {
+    compteur.textContent = !champ.value.trim() ? "" :
+      (resultats.length ? (courant + 1) + " / " + resultats.length : "aucun résultat");
+  }
+  function aller(i) {
+    if (!resultats.length) return;
+    courant = (i + resultats.length) % resultats.length;
+    var r = resultats[courant];
+    if (surligne) CSS.highlights.set("recherche-courant", new Highlight(r));
+    var rect = r.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + rect.top - window.innerHeight / 3, behavior: "smooth" });
+    afficherCompte();
+  }
+  function chercher() {
+    var q = plier(champ.value.trim());
+    resultats = []; courant = -1;
+    // Les parties ouvertes par la recherche précédente se referment.
+    ouvertsParRecherche.forEach(function (s) { deplier(s, false); });
+    ouvertsParRecherche = [];
+    majBtnPlier();
+    if (surligne) { CSS.highlights.delete("recherche"); CSS.highlights.delete("recherche-courant"); }
+    if (q.length < 2) { afficherCompte(); return; }
+    if (!noeuds) indexer();
+    for (var k = 0; k < noeuds.length && resultats.length < 3000; k++) {
+      var e = noeuds[k], pos = e.t.indexOf(q);
+      while (pos !== -1 && resultats.length < 3000) {
+        var r = document.createRange();
+        r.setStart(e.n, pos); r.setEnd(e.n, pos + q.length);
+        resultats.push(r);
+        pos = e.t.indexOf(q, pos + q.length);
+      }
+    }
+    resultats.forEach(function (r) {
+      var n = r.startContainer, el = n.nodeType === 1 ? n : n.parentElement;
+      var sec = el && el.closest("section.section");
+      if (sec && sec.classList.contains("replie")) { deplier(sec, true); ouvertsParRecherche.push(sec); }
+    });
+    majBtnPlier();
+    if (surligne && resultats.length) CSS.highlights.set("recherche", construire(resultats));
+    if (resultats.length) aller(0); else afficherCompte();
+  }
+  function construire(liste) { var h = new Highlight(); liste.forEach(function (r) { h.add(r); }); return h; }
+  champ.addEventListener("input", function () { clearTimeout(minuteur); minuteur = setTimeout(chercher, 220); });
+  champ.addEventListener("keydown", function (ev) {
+    if (ev.key === "Enter") { ev.preventDefault(); aller(courant + (ev.shiftKey ? -1 : 1)); }
+    else if (ev.key === "Escape") { champ.value = ""; chercher(); }
+  });
+  document.getElementById("searchPrev").addEventListener("click", function () { aller(courant - 1); });
+  document.getElementById("searchNext").addEventListener("click", function () { aller(courant + 1); });
+})();
+</script>
+<script src="../../assets/firebase-config.js?v=41900d0d"></script>
+<script type="module" src="../../assets/compte.js?v=41900d0d"></script>
+<script data-goatcounter="https://manette-en-main.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script>
+/* Ajouté par outils/site.py : confort de lecture (rubriques, blocs repliables, taille du texte, mode Pas à pas, lecture à voix haute). */
+(function () {
+  var g = document.body.getAttribute("data-guide") || "", main = document.querySelector("main");
+  if (!main) return;
+  function lire(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function ecrire(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function sansAccent(s) { return s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim(); }
+  var RUBRIQUES = [["objectif", "objectif"], ["itineraire", "itineraire"], ["deroule", "deroule"], ["quetes", "quetes"],
+    ["butin", "butin"], ["conseils", "conseils"], ["alertes", "alertes"], ["check", "check"]];
+  var PLIEES = { quetes: 1, butin: 1, conseils: 1 };
+
+  // 1. Chaque rubrique (## …) devient un bloc coloré ; Quêtes, Butin et Conseils sont repliés.
+  main.querySelectorAll("h2.h-chapitre").forEach(function (h) {
+    var t = sansAccent(h.textContent), r = "autre";
+    RUBRIQUES.forEach(function (x) { if (t.indexOf(x[0]) === 0) r = x[1]; });
+    var bloc = document.createElement("div");
+    bloc.className = "gjv-bloc"; bloc.setAttribute("data-r", r); h.setAttribute("data-r", r);
+    var n = h.nextSibling;
+    while (n && !(n.nodeType === 1 && /^H[12]$/.test(n.tagName))) { var suiv = n.nextSibling; bloc.appendChild(n); n = suiv; }
+    h.parentNode.insertBefore(bloc, h.nextSibling);
+    if (PLIEES[r]) {
+      var nb = r === "butin" ? bloc.querySelectorAll("tbody tr").length : 0;
+      h.setAttribute("data-n", nb ? " (" + nb + " lignes)" : "");
+      h.classList.add("gjv-pliable", "gjv-ferme");
+      h.setAttribute("role", "button"); h.setAttribute("tabindex", "0"); h.setAttribute("aria-expanded", "false");
+      function basculer() { var f = h.classList.toggle("gjv-ferme"); h.setAttribute("aria-expanded", f ? "false" : "true"); }
+      h.addEventListener("click", basculer);
+      h.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); basculer(); } });
+    }
+  });
+  // Un lien vers un passage replié l'ouvre ; la recherche affiche tout.
+  function ouvrirAncre() {
+    var el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    var b = el && el.closest(".gjv-bloc"), h = el && el.classList.contains("gjv-pliable") ? el : b && b.previousElementSibling;
+    if (h && h.classList.contains("gjv-ferme")) { h.click(); el.scrollIntoView(); }
+  }
+  addEventListener("hashchange", ouvrirAncre); ouvrirAncre();
+  var champ = document.getElementById("searchInput");
+  if (champ) champ.addEventListener("input", function () { document.body.classList.toggle("gjv-recherche", champ.value.trim().length >= 2); });
+
+  // 2. Taille du texte (A− / A+), mémorisée.
+  var TAILLES = [0.9, 1, 1.1, 1.2, 1.32], ti = TAILLES.indexOf(parseFloat(lire("gjv:taille")));
+  if (ti < 0) ti = 1;
+  function appliquerTaille() { document.documentElement.style.setProperty("--gjv-t", TAILLES[ti]); ecrire("gjv:taille", TAILLES[ti]); }
+  appliquerTaille();
+  var barre = document.querySelector(".barre-inner"), recherche = barre && barre.querySelector(".search-box");
+  // Sur téléphone, le bouton Sommaire se réduit à ☰ pour laisser de la place à la recherche.
+  var bs = document.getElementById("btnSommaire");
+  if (bs && /^☰\s*Sommaire$/.test(bs.textContent.trim())) { bs.innerHTML = '☰<span class="gjv-lib"> Sommaire</span>'; bs.setAttribute("aria-label", "Sommaire"); }
+  function bouton(html, titre) {
+    var b = document.createElement("button"); b.type = "button"; b.className = "gjv-outil"; b.innerHTML = html; b.title = titre; b.setAttribute("aria-label", titre); return b;
+  }
+  if (barre) {
+    var grp = document.createElement("div"); grp.className = "gjv-tailles";
+    var moins = bouton("A−", "Texte plus petit"), plus = bouton("A+", "Texte plus grand");
+    moins.addEventListener("click", function () { if (ti > 0) { ti--; appliquerTaille(); } });
+    plus.addEventListener("click", function () { if (ti < TAILLES.length - 1) { ti++; appliquerTaille(); } });
+    grp.appendChild(moins); grp.appendChild(plus);
+    var pas = bouton("🎮<span class=\"gjv-lib\"> Pas à pas</span>", "Mode Pas à pas : une étape à la fois, lisible à voix haute");
+    pas.setAttribute("aria-pressed", "false");
+    barre.insertBefore(grp, recherche); barre.insertBefore(pas, recherche);
+  }
+
+  // 3. Mode « Pas à pas » : une étape du déroulé à la fois, Espace / flèches pour avancer.
+  var etapes = [].slice.call(main.querySelectorAll("[data-r=deroule] + .gjv-bloc ol > li")), cur = -1, K = "gjv:pas:" + g + (document.body.getAttribute("data-partie") ? ":" + document.body.getAttribute("data-partie") : "");
+  var bar = document.createElement("div"); bar.id = "gjv-pas"; bar.className = "no-print";
+  bar.innerHTML = '<button type="button" data-d="-1" aria-label="Étape précédente">◀</button><span class="gjv-ou"></span>' +
+    '<button type="button" data-d="1">Étape suivante ▶</button>' +
+    '<button type="button" data-voix aria-pressed="false" title="Lire les étapes à voix haute" aria-label="Lire les étapes à voix haute" hidden>🔊</button>' +
+    '<button type="button" data-relire title="Relire l\'étape" aria-label="Relire l\'étape" hidden>↻</button>' +
+    '<button type="button" data-q aria-label="Quitter le mode Pas à pas">✕</button>';
+  document.body.appendChild(bar);
+  var ou = bar.querySelector(".gjv-ou");
+
+  // 4. Lecture à voix haute (synthèse vocale du navigateur, rien ne part sur Internet) : en mode Pas à pas,
+  // chaque étape est lue à l'arrivée. Phrase par phrase, car Chrome coupe les textes longs.
+  var synth = window.speechSynthesis && window.SpeechSynthesisUtterance ? window.speechSynthesis : null;
+  var voix = false, voixFr = null, bVoix = bar.querySelector("[data-voix]"), bRelire = bar.querySelector("[data-relire]");
+  function choisirVoix() {
+    var v = synth.getVoices().filter(function (x) { return /^fr/i.test(x.lang); });
+    voixFr = v.filter(function (x) { return /fr[-_]FR/i.test(x.lang) && x.localService; })[0] || v.filter(function (x) { return /fr[-_]FR/i.test(x.lang); })[0] || v[0] || null;
+  }
+  function aDire(li) {
+    var c = li.cloneNode(true);
+    c.querySelectorAll("input, .gjv-verif, button, sup").forEach(function (n) { n.remove(); });
+    c.querySelectorAll("li").forEach(function (n) { n.insertAdjacentText("afterbegin", " "); n.insertAdjacentText("beforeend", ". "); });
+    return c.textContent.replace(/⚠️?/g, "Attention : ").replace(/⏳/g, "Manquable : ").replace(/[→➜]/g, ", puis ").replace(/\[(\d+)\]/g, " $1")
+      .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\uFE0F]/gu, "").replace(/\s*([.:;,])\s*(?=[.:;,])/g, "").replace(/\s+/g, " ").trim();
+  }
+  function dire(li) {
+    synth.cancel();
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    var phrases = ("Étape " + rang + ". " + aDire(li)).match(/[^.!?;]+[.!?;]*\s*/g) || [];
+    phrases.forEach(function (ph) {
+      if (!ph.trim()) return;
+      var u = new SpeechSynthesisUtterance(ph.trim());
+      u.lang = "fr-FR"; if (voixFr) u.voice = voixFr;
+      synth.speak(u);
+    });
+  }
+  function basculerVoix(on) {
+    if (!synth) return;
+    voix = on; ecrire("gjv:voix", on ? "1" : "0");
+    bVoix.setAttribute("aria-pressed", on ? "true" : "false"); bVoix.textContent = on ? "🔊" : "🔇";
+    bRelire.hidden = !on;
+    if (on && cur >= 0) dire(etapes[cur]); else synth.cancel();
+  }
+  if (synth && etapes.length) {
+    choisirVoix(); if (synth.addEventListener) synth.addEventListener("voiceschanged", choisirVoix);
+    bVoix.hidden = false; bVoix.textContent = "🔇";
+    if (lire("gjv:voix") === "1") { voix = true; bVoix.setAttribute("aria-pressed", "true"); bVoix.textContent = "🔊"; bRelire.hidden = false; }
+    addEventListener("pagehide", function () { synth.cancel(); });
+  }
+  function aller(i) {
+    if (!etapes.length) return;
+    i = Math.max(0, Math.min(etapes.length - 1, i));
+    if (cur >= 0) etapes[cur].classList.remove("gjv-actuelle");
+    cur = i; var li = etapes[i]; li.classList.add("gjv-actuelle"); ecrire(K, i);
+    var sec = li.closest("section.section");
+    if (sec && sec.classList.contains("replie")) { var bb = sec.querySelector(".bascule"); if (bb) bb.click(); }
+    var ey = sec && sec.querySelector(".eyebrow");
+    var rang = [].indexOf.call(li.parentNode.children, li) + (li.parentNode.start || 1);
+    ou.textContent = (ey ? ey.textContent + " · " : "") + "étape " + rang;
+    li.scrollIntoView({ block: "center", behavior: "smooth" });
+    if (voix) dire(li);
+  }
+  function actif() { return document.body.classList.contains("gjv-pas"); }
+  function basculerPas(on) {
+    document.body.classList.toggle("gjv-pas", on);
+    if (pas) pas.setAttribute("aria-pressed", on ? "true" : "false");
+    if (!on) { if (synth) synth.cancel(); return; }
+    // Reprend à la première étape visible à l'écran, sinon à la dernière étape mémorisée.
+    var depart = -1;
+    for (var k = 0; k < etapes.length; k++) { var r = etapes[k].getBoundingClientRect(); if (r.height && r.top > 60 && r.top < innerHeight) { depart = k; break; } }
+    if (depart < 0) depart = parseInt(lire(K), 10) || 0;
+    aller(depart);
+  }
+  if (pas) pas.addEventListener("click", function () { basculerPas(!actif()); });
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    if (b.hasAttribute("data-q")) basculerPas(false);
+    else if (b.hasAttribute("data-voix")) basculerVoix(!voix);
+    else if (b.hasAttribute("data-relire")) { if (cur >= 0) dire(etapes[cur]); }
+    else aller(cur + parseInt(b.getAttribute("data-d"), 10));
+  });
+  etapes.forEach(function (li, k) { li.addEventListener("click", function (e) { if (actif() && !e.target.closest("a, input")) aller(k); }); });
+  addEventListener("keydown", function (e) {
+    if (!actif() || e.target.closest("input, textarea, select, [contenteditable]")) return;
+    if (e.key === " " || e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); aller(cur + (e.key === " " && e.shiftKey ? -1 : 1)); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); aller(cur - 1); }
+    else if (e.key === "Escape") basculerPas(false);
+    else if ((e.key === "l" || e.key === "L") && synth) basculerVoix(!voix);
+    else if ((e.key === "r" || e.key === "R") && voix && cur >= 0) dire(etapes[cur]);
+  });
+})();
+</script>
+<script src="../../assets/glossaire.js?v=d9f5d1fa"></script>
+<script>
+/* Ajouté par outils/site.py : retient la partie en cours pour « Reprendre ta partie ». */
+(function () {
+  var g = document.body.getAttribute("data-guide"), K = "gjv:lectures", minuteur;
+  function noter() {
+    var l = {}; try { l = JSON.parse(localStorage.getItem(K)) || {}; } catch (e) {}
+    var x = l[g] || {}; x.t = Date.now();
+    var hp = document.body.getAttribute("data-partie");   // page d'une seule partie
+    if (hp) x.a = hp;
+    else if (window.scrollY > 300) {
+      var secs = document.querySelectorAll("section.section"), cur = null;
+      for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+      var h = cur && cur.querySelector("h1[id]"); if (h) x.a = h.id;
+    }
+    l[g] = x; try { localStorage.setItem(K, JSON.stringify(l)); } catch (e) {}
+  }
+  // Arrivée depuis la recherche ou le sommaire de la fiche (#ancre) : le guide déplie la bonne partie,
+  // mais défile avant la fin de la mise en page ; on recale une fois tout chargé.
+  function recaler() {
+    var id = decodeURIComponent(location.hash.slice(1)), el = id && document.getElementById(id);
+    if (el) el.scrollIntoView({ block: "start", behavior: "instant" });
+  }
+  if (location.hash) { addEventListener("load", function () { setTimeout(recaler, 60); }); }
+  // Liens vers les cartes interactives et les autres sites : nouvel onglet, pour ne pas perdre sa place dans le guide.
+  document.querySelectorAll('a[href^="http"]').forEach(function (l) {
+    if (l.host !== location.host) { l.target = "_blank"; l.rel = "noopener"; }
+  });
+  // « Signaler une erreur » : ouvre la messagerie avec le jeu, la partie en cours et l'adresse.
+  document.getElementById("gjv-signaler").addEventListener("click", function () {
+    var secs = document.querySelectorAll("section.section"), cur = null;
+    for (var i = 0; i < secs.length; i++) { if (secs[i].getBoundingClientRect().top <= innerHeight * 0.35) cur = secs[i]; else break; }
+    var h = cur && cur.querySelector("h1[id]"), jeu = document.title.split(" · ")[0];
+    var partie = h ? h.textContent.replace(/\s+/g, " ").trim() : "(début du guide)";
+    var lien = location.origin + location.pathname + (h ? "#" + h.id : "");
+    var corps = "Guide : " + jeu + "\nPartie : " + partie + "\nPage : " + lien +
+      "\n\nCe que dit le guide :\n\n\nCe que je vois à l'écran :\n\n\nPlateforme et version du jeu (si tu la connais) :\n";
+    location.href = "mailto:" + "docmaster.contact" + String.fromCharCode(64) + "proton.me" + "?subject=" + encodeURIComponent("Erreur dans le guide " + jeu + " · " + partie) + "&body=" + encodeURIComponent(corps);
+  });
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("/guides-jeux-video/sw.js", { scope: "/guides-jeux-video/" }).catch(function () {});
+  noter();
+  addEventListener("scroll", function () { clearTimeout(minuteur); minuteur = setTimeout(noter, 1200); }, { passive: true });
+  addEventListener("pagehide", noter);
+})();
+</script>
+</body>
+</html>

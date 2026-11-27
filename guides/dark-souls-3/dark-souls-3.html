@@ -630,10 +630,16 @@ body.gjv-sans-jargon .gjv-fil { display: none; }
     if (ev.target.closest(".cm-pt,.cm-bulle,.cm-zoom")) return;
     var r = vue.getBoundingClientRect(); zoom(2, ev.clientX - r.left, ev.clientY - r.top);
   });
-  function demarrer() { if (!pret && vue.clientWidth) { pret = true; carte(k); } else if (pret) ajuster(); }
+  var largeur = 0;
+  function demarrer() {
+    var w = vue.clientWidth;
+    if (!w || w === largeur) return;
+    largeur = w;
+    if (!pret) { pret = true; carte(k); } else ajuster();
+  }
   if (window.ResizeObserver) new ResizeObserver(demarrer).observe(vue); else window.addEventListener("load", demarrer);
   carte(k);
-  if (vue.clientWidth) pret = true;
+  if (vue.clientWidth) { pret = true; largeur = vue.clientWidth; }
 })();
 </script>
 </div><!--/cm-->
